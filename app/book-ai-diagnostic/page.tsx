@@ -66,6 +66,7 @@ function DiagnosticForm() {
   const [company, setCompany] = useState<string>('')
   const [role, setRole] = useState<string>('')
   const [submitted, setSubmitted] = useState<boolean>(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [refId, setRefId] = useState<string>('')
 
   useEffect(() => {
@@ -93,10 +94,44 @@ function DiagnosticForm() {
     }
   }
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    setIsSubmitting(true)
     const generatedRef = `TG-DIAG-${Math.floor(100000 + Math.random() * 900000)}`
     setRefId(generatedRef)
+
+    const payload = {
+      refId: generatedRef,
+      name,
+      email,
+      company,
+      role,
+      industry: selectedIndustry || 'Enterprise Cross-Industry',
+      solutions: selectedSolutions.length > 0
+        ? selectedSolutions.map(s => solutions.find(sol => sol.slug === s)?.shortTitle || s)
+        : ['Comprehensive AI Diagnostic'],
+      engagementModel: selectedModel || 'Architecture & Readiness Audit (2–4 wks)',
+      currentState: currentState || 'Not specified',
+      primaryBottleneck: primaryBottleneck || 'Not specified',
+      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://trustgrid.ai/book-ai-diagnostic',
+      timestamp: new Date().toISOString()
+    }
+
+    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
+    if (scriptUrl) {
+      try {
+        await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+      } catch (err) {
+        console.warn('Apps Script dispatch notice:', err)
+      }
+    }
+
+    setIsSubmitting(false)
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
