@@ -18,10 +18,14 @@ import {
   TrendingUp,
   FileCheck,
   Send,
+  AlertCircle,
+  Loader2
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { solutions, allIndustries } from '@/lib/solutions'
+import { submitTrustGridForm, validateEmail } from '@/lib/form-submission'
+import { initUtmTracking } from '@/lib/tracking'
 
 const engagementModelOptions = [
   {
@@ -51,23 +55,89 @@ const engagementModelOptions = [
   },
 ]
 
+const aiMaturityOptions = [
+  'Exploring AI',
+  'AI Proof of Concept',
+  'Multiple AI Pilots',
+  'Production AI',
+  'Enterprise AI at Scale'
+]
+
+const aiChallengeOptions = [
+  'AI Infrastructure',
+  'AI Agents',
+  'AI Security',
+  'AI Governance',
+  'AI Networking',
+  'AI Cost Optimization',
+  'AI Transformation',
+  'AI ROI / Value',
+  'Data Quality',
+  'Other'
+]
+
+const companySizeOptions = [
+  '1–50 employees',
+  '51–200 employees',
+  '201–500 employees',
+  '501–1,000 employees',
+  '1,000–5,000 employees',
+  '5,000+ Enterprise'
+]
+
+const businessFunctionOptions = [
+  'AI Engineering / Systems',
+  'IT & Cloud Infrastructure',
+  'C-Suite / Executive Leadership',
+  'Security, Risk & Compliance',
+  'Data Science & Analytics',
+  'Operations & Supply Chain',
+  'Product & Digital Innovation',
+  'Finance & Procurement',
+  'Other'
+]
+
+const timelineOptions = [
+  'Immediate (Next 1–2 weeks)',
+  'Within 30 Days',
+  'Next Quarter (Q1/Q2)',
+  'Strategic Planning Phase'
+]
+
 function DiagnosticForm() {
   const searchParams = useSearchParams()
   const initialSolution = searchParams.get('solution') || ''
   const initialModel = searchParams.get('model') || ''
 
-  const [selectedSolutions, setSelectedSolutions] = useState<string[]>([])
-  const [selectedIndustry, setSelectedIndustry] = useState<string>('')
-  const [selectedModel, setSelectedModel] = useState<string>('')
-  const [currentState, setCurrentState] = useState<string>('')
-  const [primaryBottleneck, setPrimaryBottleneck] = useState<string>('')
+  // 14 Core Fields State
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
+  const [phone, setPhone] = useState<string>('')
   const [company, setCompany] = useState<string>('')
-  const [role, setRole] = useState<string>('')
+  const [designation, setDesignation] = useState<string>('')
+  const [industry, setIndustry] = useState<string>('')
+  const [companySize, setCompanySize] = useState<string>('')
+  const [country, setCountry] = useState<string>('')
+  const [businessFunction, setBusinessFunction] = useState<string>('')
+  const [aiMaturity, setAiMaturity] = useState<string>('AI Proof of Concept')
+  const [selectedChallenges, setSelectedChallenges] = useState<string[]>(['AI Infrastructure', 'AI Governance'])
+  const [objective, setObjective] = useState<string>('')
+  const [preferredTimeline, setPreferredTimeline] = useState<string>('Immediate (Next 1–2 weeks)')
+  const [message, setMessage] = useState<string>('')
+
+  // Solution and Engagement Options
+  const [selectedSolutions, setSelectedSolutions] = useState<string[]>([])
+  const [selectedModel, setSelectedModel] = useState<string>('Architecture & Readiness Audit (2–4 weeks)')
+
+  // UI Flow State
   const [submitted, setSubmitted] = useState<boolean>(false)
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
   const [refId, setRefId] = useState<string>('')
+
+  useEffect(() => {
+    initUtmTracking()
+  }, [])
 
   useEffect(() => {
     if (initialSolution) {
@@ -82,7 +152,10 @@ function DiagnosticForm() {
 
   useEffect(() => {
     if (initialModel) {
-      setSelectedModel(initialModel)
+      const found = engagementModelOptions.find(o => o.id === initialModel || o.name.toLowerCase().includes(initialModel.toLowerCase()))
+      if (found) {
+        setSelectedModel(found.name)
+      }
     }
   }, [initialModel])
 
@@ -94,46 +167,66 @@ function DiagnosticForm() {
     }
   }
 
+  const toggleChallenge = (ch: string) => {
+    if (selectedChallenges.includes(ch)) {
+      setSelectedChallenges(selectedChallenges.filter(c => c !== ch))
+    } else {
+      setSelectedChallenges([...selectedChallenges, ch])
+    }
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    const generatedRef = `TG-DIAG-${Math.floor(100000 + Math.random() * 900000)}`
-    setRefId(generatedRef)
+    setErrorMessage('')
 
-    const payload = {
-      refId: generatedRef,
+    if (!name.trim()) {
+      setErrorMessage('Please enter your full name.')
+      return
+    }
+
+    if (!email.trim() || !validateEmail(email)) {
+      setErrorMessage('Please enter a valid work email address.')
+      return
+    }
+
+    if (!company.trim()) {
+      setErrorMessage('Please enter your company or organization name.')
+      return
+    }
+
+    setIsSubmitting(true)
+
+    const result = await submitTrustGridForm({
+      formName: 'AI Diagnostic Form',
       name,
       email,
+      phone,
       company,
-      role,
-      industry: selectedIndustry || 'Enterprise Cross-Industry',
-      solutions: selectedSolutions.length > 0
+      designation,
+      industry: industry || 'Enterprise Cross-Industry',
+      companySize: companySize || 'Unspecified',
+      country: country || 'Global',
+      businessFunction: businessFunction || 'AI & Engineering',
+      aiMaturity,
+      challenges: selectedChallenges,
+      objective: objective || 'Production AI Assessment & Acceleration',
+      preferredTimeline,
+      message,
+      selectedSolutions: selectedSolutions.length > 0
         ? selectedSolutions.map(s => solutions.find(sol => sol.slug === s)?.shortTitle || s)
-        : ['Comprehensive AI Diagnostic'],
-      engagementModel: selectedModel || 'Architecture & Readiness Audit (2–4 wks)',
-      currentState: currentState || 'Not specified',
-      primaryBottleneck: primaryBottleneck || 'Not specified',
-      sourceUrl: typeof window !== 'undefined' ? window.location.href : 'https://trustgrid.ai/book-ai-diagnostic',
-      timestamp: new Date().toISOString()
-    }
-
-    const scriptUrl = process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
-    if (scriptUrl) {
-      try {
-        await fetch(scriptUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        })
-      } catch (err) {
-        console.warn('Apps Script dispatch notice:', err)
-      }
-    }
+        : ['Comprehensive AI Operating Stack Diagnostic'],
+      engagementModel: selectedModel,
+    })
 
     setIsSubmitting(false)
-    setSubmitted(true)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    if (result.success) {
+      setRefId(result.submissionId || `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-0001`)
+      setSubmitted(true)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      setErrorMessage(result.message || 'Unable to submit diagnostic request. Please try again.')
+    }
   }
 
   return (
@@ -145,10 +238,10 @@ function DiagnosticForm() {
             <span className="success-ref">REF: {refId}</span>
           </div>
 
-          <h2 className="success-title">Your AI Diagnostic is scheduled.</h2>
+          <h2 className="success-title">Thank you. Your request has been received successfully.</h2>
 
           <p className="success-lead">
-            Thank you, <strong>{name}</strong>. Our senior AI architecture team has received your diagnostic request for <strong>{company}</strong>. A dedicated principal engineer will review your context and reach out within 24 hours.
+            Reference ID: <strong>{refId}</strong>. Our senior AI architecture and systems team has received your enterprise diagnostic request for <strong>{company}</strong>. A principal engineer will review your operational context and reach out directly.
           </p>
 
           <div className="success-summary-card animated-card reveal-up">
@@ -159,32 +252,41 @@ function DiagnosticForm() {
                 <strong>
                   {selectedSolutions.length > 0
                     ? selectedSolutions
-                        .map((s) => solutions.find((sol) => sol.slug === s)?.shortTitle)
-                        .filter(Boolean)
-                        .join(', ')
+                      .map((s) => solutions.find((sol) => sol.slug === s)?.shortTitle)
+                      .filter(Boolean)
+                      .join(', ')
                     : 'Comprehensive All-Stack Diagnostic'}
                 </strong>
               </div>
               <div className="summary-item">
                 <span className="summary-label">Target Industry:</span>
-                <strong>{selectedIndustry || 'Enterprise Cross-Industry'}</strong>
+                <strong>{industry || 'Enterprise Cross-Industry'}</strong>
+              </div>
+              <div className="summary-item">
+                <span className="summary-label">AI Maturity Stage:</span>
+                <strong>{aiMaturity}</strong>
               </div>
               <div className="summary-item">
                 <span className="summary-label">Engagement Format:</span>
-                <strong>{selectedModel || 'Architecture & Readiness Audit (2–4 wks)'}</strong>
+                <strong>{selectedModel}</strong>
               </div>
               <div className="summary-item">
-                <span className="summary-label">Primary Objective:</span>
-                <p>{primaryBottleneck || 'End-to-end production AI assessment and value acceleration.'}</p>
+                <span className="summary-label">Key Challenge Focus:</span>
+                <strong>{selectedChallenges.join(', ') || 'AI Architecture & Optimization'}</strong>
+              </div>
+              <div className="summary-item">
+                <span className="summary-label">Timeline:</span>
+                <strong>{preferredTimeline}</strong>
               </div>
             </div>
           </div>
 
           <div className="success-actions">
             <Link href="/" className="button button-primary">
-              Return to TrustGrid Home <ArrowUpRight size={17} />
+              <span>Return to TrustGrid Home</span>
+              <ArrowUpRight size={17} />
             </Link>
-            <a href="mailto:hello@trustgrid.ai" className="button button-ghost">
+            <a href="mailto:poojasri.trustgrid@gmail.com" className="button button-ghost">
               Direct Engineering Inquiries
             </a>
           </div>
@@ -195,7 +297,7 @@ function DiagnosticForm() {
           <div className="diagnostic-intro-col">
             <div className="diagnostic-badge-wrap">
               <span className="section-label" style={{ color: '#1d5cff' }}>
-                TRUSTGRID.AI / DIAGNOSTIC ENGAGEMENT
+                TRUSTGRID.AI / ENTERPRISE DIAGNOSTIC
               </span>
               <h1>
                 Find the fastest path from AI ambition to <span>operational value.</span>
@@ -237,35 +339,57 @@ function DiagnosticForm() {
 
             {/* LIVE PREVIEW BOX */}
             <div className="live-scope-card animated-card reveal-up">
-              <span className="scope-badge">LIVE SCOPE CONFIGURATOR</span>
-              <h4>Configured Diagnostic Scope</h4>
+              <span className="scope-badge">CONFIGURED SCOPE PREVIEW</span>
+              <h4>Diagnostic Scope Summary</h4>
               <ul className="scope-list">
                 <li>
                   <span>Solutions:</span>
                   <strong>
                     {selectedSolutions.length > 0
                       ? selectedSolutions
-                          .map((s) => solutions.find((sol) => sol.slug === s)?.shortTitle)
-                          .filter(Boolean)
-                          .join(' + ')
-                      : 'None selected (Click below)'}
+                        .map((s) => solutions.find((sol) => sol.slug === s)?.shortTitle)
+                        .filter(Boolean)
+                        .join(' + ')
+                      : 'All 6 Vertical Engineering Domains'}
                   </strong>
                 </li>
                 <li>
                   <span>Industry:</span>
-                  <strong>{selectedIndustry || 'Select industry'}</strong>
+                  <strong>{industry || 'Select Industry'}</strong>
+                </li>
+                <li>
+                  <span>AI Maturity:</span>
+                  <strong>{aiMaturity}</strong>
                 </li>
                 <li>
                   <span>Format:</span>
-                  <strong>{selectedModel || 'Select engagement format'}</strong>
+                  <strong>{selectedModel.split('(')[0]}</strong>
                 </li>
               </ul>
             </div>
           </div>
 
-          {/* RIGHT: THE INTERACTIVE 5-STEP FORM */}
+          {/* RIGHT: INTERACTIVE DIAGNOSTIC FORM */}
           <div className="diagnostic-form-col">
-            <form className="interactive-diagnostic-form" onSubmit={handleSubmit}>
+            <form className="interactive-diagnostic-form" onSubmit={handleSubmit} noValidate>
+
+              {errorMessage && (
+                <div style={{
+                  background: '#fef2f2',
+                  border: '1px solid #fecaca',
+                  borderRadius: '6px',
+                  padding: '12px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  color: '#991b1b',
+                  fontSize: '13.5px'
+                }}>
+                  <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                  <span>{errorMessage}</span>
+                </div>
+              )}
+
               {/* STEP 1: SOLUTION SELECTION */}
               <div className="form-step-section">
                 <div className="step-header">
@@ -295,70 +419,162 @@ function DiagnosticForm() {
                 </div>
               </div>
 
-              {/* STEP 2: INDUSTRY SELECTION */}
+              {/* STEP 2: INDUSTRY & ORGANIZATION PROFILE */}
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 02</span>
-                  <h3>Select Your Industry</h3>
-                  <p>Align the assessment with your industry's compliance and operational requirements:</p>
+                  <h3>Organization & Industry Profile</h3>
+                  <p>Align the assessment with your industry compliance and scale requirements:</p>
                 </div>
 
-                <div className="industry-select-wrap">
-                  <select
-                    className="industry-dropdown"
-                    value={selectedIndustry}
-                    onChange={(e) => setSelectedIndustry(e.target.value)}
-                    required
-                  >
-                    <option value="">-- Choose Industry Sector --</option>
-                    {allIndustries.map((ind) => (
-                      <option key={ind} value={ind}>
-                        {ind}
-                      </option>
-                    ))}
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="input-group">
+                    <span>Industry Sector *</span>
+                    <select
+                      className="industry-dropdown"
+                      value={industry}
+                      onChange={(e) => setIndustry(e.target.value)}
+                      required
+                    >
+                      <option value="">-- Select Industry Sector --</option>
+                      {allIndustries.map((ind) => (
+                        <option key={ind} value={ind}>
+                          {ind}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="input-group">
+                    <span>Company Size / Headcount *</span>
+                    <select
+                      className="industry-dropdown"
+                      value={companySize}
+                      onChange={(e) => setCompanySize(e.target.value)}
+                      required
+                    >
+                      <option value="">-- Select Organization Size --</option>
+                      {companySizeOptions.map((sz) => (
+                        <option key={sz} value={sz}>{sz}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="input-group">
+                    <span>Country / Geographic Region *</span>
+                    <input
+                      type="text"
+                      value={country}
+                      onChange={(e) => setCountry(e.target.value)}
+                      placeholder="e.g. United States, Singapore, India, UK..."
+                      required
+                    />
+                  </div>
+
+                  <div className="input-group">
+                    <span>Business Function *</span>
+                    <select
+                      className="industry-dropdown"
+                      value={businessFunction}
+                      onChange={(e) => setBusinessFunction(e.target.value)}
+                      required
+                    >
+                      <option value="">-- Select Primary Function --</option>
+                      {businessFunctionOptions.map((fn) => (
+                        <option key={fn} value={fn}>{fn}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
 
-              {/* STEP 3: DESCRIBE CURRENT STATE */}
+              {/* STEP 3: AI MATURITY & CHALLENGES */}
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 03</span>
-                  <h3>Describe Current State</h3>
-                  <p>Provide brief context on your current AI compute, agent prototypes, and operational objectives:</p>
+                  <h3>Current AI Maturity & Primary Challenges</h3>
+                  <p>Select your current stage and specific engineering bottlenecks:</p>
+                </div>
+
+                <div className="input-group" style={{ marginBottom: '18px' }}>
+                  <span>Current AI Maturity Stage *</span>
+                  <div className="solution-pills-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+                    {aiMaturityOptions.map((mat) => {
+                      const isSelected = aiMaturity === mat
+                      return (
+                        <button
+                          type="button"
+                          key={mat}
+                          className={`solution-pill-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => setAiMaturity(mat)}
+                          style={{ padding: '10px 12px' }}
+                        >
+                          <div className="pill-top">
+                            <span style={{ fontSize: '11px', fontWeight: 600 }}>{mat}</span>
+                            {isSelected && <Check size={14} className="pill-check" />}
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                <div className="input-group" style={{ marginBottom: '18px' }}>
+                  <span>Primary AI Challenges (Select all that apply) *</span>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
+                    {aiChallengeOptions.map((ch) => {
+                      const isSelected = selectedChallenges.includes(ch)
+                      return (
+                        <button
+                          type="button"
+                          key={ch}
+                          className={`solution-pill-btn ${isSelected ? 'selected' : ''}`}
+                          onClick={() => toggleChallenge(ch)}
+                          style={{ padding: '8px 12px', borderRadius: '4px', fontSize: '12px' }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            {isSelected && <Check size={13} className="pill-check" />}
+                            <span>{ch}</span>
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
                 </div>
 
                 <div className="text-fields-grid">
                   <label className="input-group">
-                    <span>Current AI Footprint & Infrastructure (e.g. Cloud GPUs, on-prem, models in use):</span>
+                    <span>Business Objective & Target Outcome *</span>
                     <textarea
-                      rows={3}
-                      value={currentState}
-                      onChange={(e) => setCurrentState(e.target.value)}
-                      placeholder="e.g. 64x H100 GPUs in hybrid cloud, experimenting with multi-agent customer service, inference bills growing 30% monthly..."
-                      required
-                    />
-                  </label>
-
-                  <label className="input-group">
-                    <span>Primary Challenge or Objective (e.g. Cost reduction, EU AI Act compliance, agent orchestration):</span>
-                    <textarea
-                      rows={3}
-                      value={primaryBottleneck}
-                      onChange={(e) => setPrimaryBottleneck(e.target.value)}
-                      placeholder="e.g. Need to slash inference cost by 40%, prepare for EU AI Act high-risk audit, and deploy a 24/7 finance agent swarm..."
+                      rows={2}
+                      value={objective}
+                      onChange={(e) => setObjective(e.target.value)}
+                      placeholder="e.g. Slash inference cost by 40%, prepare for EU AI Act high-risk audit, deploy multi-agent fleet..."
                       required
                     />
                   </label>
                 </div>
               </div>
 
-              {/* STEP 4: SELECT ENGAGEMENT MODEL */}
+              {/* STEP 4: ENGAGEMENT MODEL & TIMELINE */}
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 04</span>
-                  <h3>Select Engagement Model</h3>
-                  <p>Preferred scope and format for the diagnostic collaboration:</p>
+                  <h3>Engagement Format & Timeline</h3>
+                  <p>Preferred timeline and scope for the technical diagnostic:</p>
+                </div>
+
+                <div className="input-group" style={{ marginBottom: '16px' }}>
+                  <span>Preferred Engagement Timeline *</span>
+                  <select
+                    className="industry-dropdown"
+                    value={preferredTimeline}
+                    onChange={(e) => setPreferredTimeline(e.target.value)}
+                  >
+                    {timelineOptions.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="model-options-list">
@@ -375,7 +591,6 @@ function DiagnosticForm() {
                           value={opt.name}
                           checked={isSelected}
                           onChange={() => setSelectedModel(opt.name)}
-                          required
                         />
                         <div className="model-option-content">
                           <strong>{opt.name}</strong>
@@ -391,8 +606,8 @@ function DiagnosticForm() {
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 05</span>
-                  <h3>Organization & Contact Information</h3>
-                  <p>Where our principal architects should send the initial assessment schedule:</p>
+                  <h3>Contact & Executive Information</h3>
+                  <p>Where our senior architecture team should send your assessment schedule:</p>
                 </div>
 
                 <div className="contact-inputs-grid">
@@ -419,6 +634,16 @@ function DiagnosticForm() {
                   </label>
 
                   <label className="input-group">
+                    <span>Phone Number</span>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="e.g. +1 (555) 019-2834"
+                    />
+                  </label>
+
+                  <label className="input-group">
                     <span>Company / Organization *</span>
                     <input
                       type="text"
@@ -429,25 +654,49 @@ function DiagnosticForm() {
                     />
                   </label>
 
-                  <label className="input-group">
-                    <span>Job Title / Role *</span>
+                  <label className="input-group md:col-span-2">
+                    <span>Job Title / Designation *</span>
                     <input
                       type="text"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
+                      value={designation}
+                      onChange={(e) => setDesignation(e.target.value)}
                       required
-                      placeholder="e.g. VP of AI Engineering / Chief Technology Officer"
+                      placeholder="e.g. Chief Technology Officer / VP of AI Engineering"
+                    />
+                  </label>
+
+                  <label className="input-group md:col-span-2">
+                    <span>Additional Requirements / Message (Optional)</span>
+                    <textarea
+                      rows={3}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Specific GPU clusters, security clearance, or architectural considerations..."
                     />
                   </label>
                 </div>
 
-                <button type="submit" className="button button-submit-diag">
-                  <span>Submit Diagnostic Request</span>
-                  <Send size={16} />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="button button-submit-diag"
+                  style={{ opacity: isSubmitting ? 0.75 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer', marginTop: '16px' }}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Processing Request...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Submit AI Diagnostic Request</span>
+                      <Send size={16} />
+                    </>
+                  )}
                 </button>
 
                 <p className="privacy-note">
-                  🔒 Confidentiality guaranteed. TrustGrid does not sell or share information. All technical details are handled under strict NDA standards.
+                  🔒 Enterprise Confidentiality Guaranteed. All technical disclosures are handled under strict NDA standards. TrustGrid does not sell or share data.
                 </p>
               </div>
             </form>
@@ -471,8 +720,6 @@ export default function BookDiagnosticPage() {
       >
         <DiagnosticForm />
       </Suspense>
-
-      {/* FOOTER */}
       <SiteFooter />
     </main>
   )
