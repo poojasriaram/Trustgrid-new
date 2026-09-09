@@ -76,7 +76,7 @@ export default function AboutPage() {
       <section className="section mission-vision-section" id="mission-vision">
         <div className="mission-vision-grid">
           {/* Mission Card */}
-          <div className="mv-card mission-card">
+          <div className="mv-card mission-card animated-card reveal-up">
             <div className="mv-badge">
               <Compass size={16} />
               <span>CORE PURPOSE</span>
@@ -88,7 +88,7 @@ export default function AboutPage() {
           </div>
 
           {/* Vision Card */}
-          <div className="mv-card vision-card">
+          <div className="mv-card vision-card animated-card reveal-up">
             <div className="mv-badge">
               <Target size={16} />
               <span>NORTH STAR</span>
@@ -122,7 +122,7 @@ export default function AboutPage() {
 
         <div className="verticals-grid">
           {whatWeDoVerticals.map((v) => (
-            <div key={v.number} className="vertical-card">
+            <div key={v.number} className="vertical-card animated-card reveal-up">
               <span className="vertical-num">{v.number}</span>
               <h3>{v.title}</h3>
               <p>{v.description}</p>
@@ -148,7 +148,7 @@ export default function AboutPage() {
 
         <div className="metrics-cards-grid">
           {metricsFootprint.map((m, idx) => (
-            <div key={idx} className="metric-stat-card">
+            <div key={idx} className="metric-stat-card animated-card reveal-up">
               <div className="stat-val">{m.value}</div>
               <div className="stat-lbl">{m.label}</div>
               {m.sub && <div className="stat-sub">{m.sub}</div>}
@@ -176,7 +176,7 @@ export default function AboutPage() {
 
         <div className="societal-grid">
           {societalValueAddition.map((item, idx) => (
-            <div key={idx} className="societal-card">
+            <div key={idx} className="societal-card animated-card reveal-up">
               <span className="societal-cat">{item.category}</span>
               <h3>{item.title}</h3>
               <p>{item.description}</p>
@@ -204,7 +204,7 @@ export default function AboutPage() {
 
         <div className="culture-grid">
           {culturePrinciples.map((principle, idx) => (
-            <div key={idx} className="culture-card">
+            <div key={idx} className="culture-card animated-card reveal-up">
               <div className="culture-num">0{idx + 1}</div>
               <h3>{principle.title}</h3>
               <p>{principle.description}</p>
@@ -232,7 +232,7 @@ export default function AboutPage() {
 
         <div className="team-grid">
           {teamMembers.map((member, idx) => (
-            <div key={idx} className="member-card">
+            <div key={idx} className="member-card animated-card reveal-up">
               <div className="member-avatar-placeholder">
                 <Users size={24} />
               </div>
@@ -265,7 +265,7 @@ export default function AboutPage() {
 
         <div className="innovation-cards-grid">
           {openInnovationInitiatives.map((init, idx) => (
-            <div key={idx} className="innovation-card">
+            <div key={idx} className="innovation-card animated-card reveal-up">
               <div className="init-top">
                 <span className="init-badge">{init.badge}</span>
               </div>
@@ -323,7 +323,7 @@ export default function AboutPage() {
 
         <div className="case-studies-grid">
           {caseStudiesList.map((cs, idx) => (
-            <div key={idx} className="case-study-card">
+            <div key={idx} className="case-study-card animated-card reveal-up">
               <div className="cs-top">
                 <span className="cs-industry">{cs.industry}</span>
                 <h4>{cs.client}</h4>
@@ -371,7 +371,7 @@ export default function AboutPage() {
 
         <div className="offices-grid">
           {officeLocations.map((office, idx) => (
-            <div key={idx} className="office-card">
+            <div key={idx} className="office-card animated-card reveal-up">
               <div className="office-tag">{office.tag}</div>
               <h3>{office.city}</h3>
               <p className="office-region">{office.region}</p>
@@ -398,7 +398,7 @@ export default function AboutPage() {
 
       {/* CTA SECTION */}
       <section className="section cta-section" id="contact">
-        <div className="cta-panel">
+        <div className="cta-panel animated-card">
           <div className="cta-content">
             <span className="section-label" style={{ color: '#91b3ff' }}>SCHEDULE AN ENTERPRISE CONSULTATION</span>
             <h2>Speak with a TrustGrid.AI Principal Engineer</h2>

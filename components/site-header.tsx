@@ -38,17 +38,6 @@ import {
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
 
-const solutionSubSections = [
-  { label: 'Overview', hash: 'overview' },
-  { label: 'Offerings', hash: 'offerings' },
-  { label: 'Use Cases', hash: 'use-cases' },
-  { label: 'Industries', hash: 'industries' },
-  { label: 'Methodology', hash: 'methodology' },
-  { label: 'Key Metrics & Impact', hash: 'metrics' },
-  { label: 'Engagement Models', hash: 'engagement' },
-  { label: 'Capabilities', hash: 'capabilities' },
-]
-
 const methodologyCategories = [
   {
     title: 'AI Engineering',
@@ -194,9 +183,7 @@ const insightsMenuItems = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
-  const [expandedSolution, setExpandedSolution] = useState<string | null>(null)
   const [mobileSection, setMobileSection] = useState<string | null>(null)
-  const [mobileExpandedSol, setMobileExpandedSol] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
 
@@ -220,7 +207,6 @@ export function SiteHeader() {
 
   const closeAll = () => {
     setActiveMenu(null)
-    setExpandedSolution(null)
     setOpen(false)
   }
 
@@ -230,10 +216,6 @@ export function SiteHeader() {
 
   const toggleMobileSection = (sec: string) => {
     setMobileSection(mobileSection === sec ? null : sec)
-  }
-
-  const toggleMobileSolution = (slug: string) => {
-    setMobileExpandedSol(mobileExpandedSol === slug ? null : slug)
   }
 
   return (
@@ -267,7 +249,7 @@ export function SiteHeader() {
               <div className="mega-menu-header">
                 <div>
                   <span className="mega-menu-badge">THE ENTERPRISE AI OPERATING STACK</span>
-                  <p>6 Vertically Integrated Engineering Domains — Expand each solution for deep technical sections</p>
+                  <p>6 Vertically Integrated Engineering Domains for the Enterprise AI Operating Stack</p>
                 </div>
                 <Link href="/solutions/ai-infra-engineering" className="mega-header-link" onClick={closeAll}>
                   <span>Explore Full Architecture</span>
@@ -277,11 +259,10 @@ export function SiteHeader() {
 
               <div className="mega-menu-grid solutions-grid-6">
                 {solutions.map((sol) => {
-                  const isExpanded = expandedSolution === sol.slug
                   return (
                     <div
                       key={sol.slug}
-                      className={`mega-solution-card ${isExpanded ? 'is-expanded' : ''}`}
+                      className="mega-solution-card"
                     >
                       <div className="mega-sol-main">
                         <Link
@@ -296,35 +277,6 @@ export function SiteHeader() {
                           </div>
                           <p className="mega-item-desc">{sol.heroStatement.slice(0, 95)}...</p>
                         </Link>
-
-                        <button
-                          type="button"
-                          className="mega-sol-expand-btn"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            setExpandedSolution(isExpanded ? null : sol.slug)
-                          }}
-                          aria-label={`Expand sections for ${sol.shortTitle}`}
-                        >
-                          <span>{isExpanded ? 'Hide Sub-Sections' : 'Expand Sub-Sections (8)'}</span>
-                          <ChevronDown size={13} className={`chevron-icon ${isExpanded ? 'rotate-180' : ''}`} />
-                        </button>
-                      </div>
-
-                      {/* EXPANDED SUB-SECTIONS */}
-                      <div className={`mega-sol-subgrid ${isExpanded ? 'show' : ''}`}>
-                        {solutionSubSections.map((sub) => (
-                          <Link
-                            key={sub.hash}
-                            href={`/solutions/${sol.slug}#${sub.hash}`}
-                            className="mega-sol-sublink"
-                            onClick={closeAll}
-                          >
-                            <span className="sublink-dot" />
-                            <span>{sub.label}</span>
-                          </Link>
-                        ))}
                       </div>
                     </div>
                   )
@@ -621,20 +573,14 @@ export function SiteHeader() {
               Home
             </Link>
 
-            {/* Mobile Solutions Accordion */}
+            {/* Mobile Solutions Section (always expanded) */}
             <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('solutions')}
-              >
+              <span className="mobile-accordion-btn mobile-accordion-label">
                 <span>Solutions</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'solutions' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'solutions' && (
-                <div className="mobile-accordion-body">
-                  {solutions.map((s) => {
-                    const isExpanded = mobileExpandedSol === s.slug
-                    return (
+              </span>
+              <div className="mobile-accordion-body">
+                {solutions.map((s) => {
+                  return (
                       <div key={s.slug} className="mobile-sol-item">
                         <div className="mobile-sol-header-row">
                           <Link
@@ -645,34 +591,11 @@ export function SiteHeader() {
                             <span className="mob-num">{s.number}</span>
                             <span>{s.shortTitle}</span>
                           </Link>
-                          <button
-                            type="button"
-                            className="mobile-sol-toggle"
-                            onClick={() => toggleMobileSolution(s.slug)}
-                            aria-label={`Expand sections for ${s.shortTitle}`}
-                          >
-                            <ChevronDown size={14} className={`chevron-icon ${isExpanded ? 'rotate-180' : ''}`} />
-                          </button>
                         </div>
-                        {isExpanded && (
-                          <div className="mobile-sol-subsections">
-                            {solutionSubSections.map((sub) => (
-                              <Link
-                                key={sub.hash}
-                                href={`/solutions/${s.slug}#${sub.hash}`}
-                                className="mobile-sub-anchor"
-                                onClick={closeAll}
-                              >
-                                <span>↳ {sub.label}</span>
-                              </Link>
-                            ))}
-                          </div>
-                        )}
                       </div>
                     )
-                  })}
-                </div>
-              )}
+                })}
+              </div>
             </div>
 
             {/* Mobile Industries Accordion */}

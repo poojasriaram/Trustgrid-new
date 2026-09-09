@@ -151,7 +151,7 @@ function DiagnosticForm() {
             Thank you, <strong>{name}</strong>. Our senior AI architecture team has received your diagnostic request for <strong>{company}</strong>. A dedicated principal engineer will review your context and reach out within 24 hours.
           </p>
 
-          <div className="success-summary-card">
+          <div className="success-summary-card animated-card reveal-up">
             <h4>Diagnostic Scope Summary</h4>
             <div className="summary-grid">
               <div className="summary-item">
@@ -236,7 +236,7 @@ function DiagnosticForm() {
             </div>
 
             {/* LIVE PREVIEW BOX */}
-            <div className="live-scope-card">
+            <div className="live-scope-card animated-card reveal-up">
               <span className="scope-badge">LIVE SCOPE CONFIGURATOR</span>
               <h4>Configured Diagnostic Scope</h4>
               <ul className="scope-list">

@@ -22,7 +22,7 @@ import {
   Target,
   BarChart3,
 } from 'lucide-react'
-import { getSolution, solutions, allIndustries, Solution } from '@/lib/solutions'
+import { getSolution, solutions, allIndustries, Solution, logoUrl } from '@/lib/solutions'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
@@ -34,6 +34,16 @@ const solutionIcons = {
   'ai-networking': Network,
   'ai-value-engineering': TrendingUp,
 }
+
+// Decorative upward-trending analytic sparklines cycled across the engagement model cards
+const sparkPatterns = [
+  '0,26 15,20 30,22 45,14 60,16 75,8 90,10 105,4 120,6',
+  '0,24 15,26 30,18 45,20 60,12 75,14 90,6 105,8 120,2',
+  '0,28 15,22 30,24 45,16 60,18 75,10 90,12 105,5 120,3',
+  '0,20 15,24 30,16 45,18 60,10 75,12 90,5 105,7 120,2',
+  '0,26 15,18 30,20 45,12 60,14 75,6 90,8 105,3 120,5',
+  '0,22 15,16 30,18 45,10 60,12 75,4 90,6 105,2 120,4',
+]
 
 export function generateStaticParams() {
   const params: { slug: string }[] = []
@@ -184,7 +194,7 @@ export default async function SolutionDetailPage({
 
         <div className="offerings-grid-detailed">
           {solution.offerings.map((offering, idx) => (
-            <div key={offering.title} className="offering-card-detailed">
+            <div key={offering.title} className="offering-card-detailed animated-card reveal-up">
               <div className="offering-card-top">
                 <span className="offering-num">0{idx + 1}</span>
                 <h3 className="offering-title">{offering.title}</h3>
@@ -229,7 +239,7 @@ export default async function SolutionDetailPage({
 
         <div className="usecases-grid">
           {solution.useCases.map((useCase, idx) => (
-            <article key={useCase.title} className="usecase-card">
+            <article key={useCase.title} className="usecase-card animated-card reveal-up">
               <div className="usecase-card-header">
                 <span className="usecase-badge">USE CASE 0{idx + 1}</span>
                 <h4>{useCase.title}</h4>
@@ -261,7 +271,7 @@ export default async function SolutionDetailPage({
 
         <div className="industries-grid">
           {allIndustries.map((ind) => (
-            <div key={ind} className="industry-pill-card">
+            <div key={ind} className="industry-pill-card animated-card reveal-up">
               <Building2 size={18} className="text-blue-500 shrink-0" />
               <span>{ind}</span>
             </div>
@@ -365,7 +375,7 @@ export default async function SolutionDetailPage({
 
         <div className="capabilities-grid">
           {solution.capabilities.map((group) => (
-            <div key={group.category} className="capability-group-card">
+            <div key={group.category} className="capability-group-card animated-card reveal-up">
               <h4 className="capability-cat-title">{group.category}</h4>
               <ul className="capability-items-list">
                 {group.items.map((item) => (
@@ -441,24 +451,50 @@ export default async function SolutionDetailPage({
         </div>
 
         <div className="engagement-models-grid">
-          {solution.engagementModels.map((model) => (
-            <div key={model.title} className="engagement-model-card">
-              <div className="engagement-top">
-                <span className="engagement-num">{model.number}</span>
-                <span className="engagement-duration">
-                  <Calendar size={13} />
-                  {model.duration}
-                </span>
+          {solution.engagementModels.map((model, idx) => (
+            <div key={model.title} className="engagement-model-card animated-card reveal-up">
+              <div className={`engagement-visual theme-${(idx % 6) + 1}`}>
+                <div className="engagement-visual-row">
+                  <span className="engagement-visual-logo-badge">
+                    <img src={logoUrl} alt="TrustGrid.ai" />
+                  </span>
+                  <span className="engagement-visual-chip" aria-hidden="true" />
+                </div>
+                <div className="engagement-visual-mask" aria-hidden="true">
+                  <span>•••• ••••</span>
+                  <span>{model.number}</span>
+                </div>
+                <svg className="engagement-visual-spark" viewBox="0 0 120 34" preserveAspectRatio="none" aria-hidden="true">
+                  <polyline
+                    points={sparkPatterns[idx % sparkPatterns.length]}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                <span className="engagement-visual-label">TRUSTGRID.AI · {model.duration}</span>
               </div>
-              <h3 className="engagement-title">{model.title}</h3>
-              <p className="engagement-desc">{model.description}</p>
-              <Link
-                href={`/book-ai-diagnostic?solution=${solution.slug}&model=${encodeURIComponent(model.title)}`}
-                className="engagement-cta-link"
-              >
-                <span>Select this model</span>
-                <ArrowUpRight size={15} />
-              </Link>
+
+              <div className="engagement-body">
+                <div className="engagement-top">
+                  <span className="engagement-num">{model.number}</span>
+                  <span className="engagement-duration">
+                    <Calendar size={13} />
+                    {model.duration}
+                  </span>
+                </div>
+                <h3 className="engagement-title">{model.title}</h3>
+                <p className="engagement-desc">{model.description}</p>
+                <Link
+                  href={`/book-ai-diagnostic?solution=${solution.slug}&model=${encodeURIComponent(model.title)}`}
+                  className="engagement-cta-link"
+                >
+                  <span>Select this model</span>
+                  <ArrowUpRight size={15} />
+                </Link>
+              </div>
             </div>
           ))}
         </div>
@@ -466,7 +502,7 @@ export default async function SolutionDetailPage({
 
       {/* NEXT SOLUTION & CROSS-SOLUTION NAVIGATION */}
       <section className="section next-solution-section">
-        <div className="next-solution-card">
+        <div className="next-solution-card animated-card">
           <div className="next-solution-info">
             <span className="section-label" style={{ color: '#91b3ff' }}>NEXT IN THE OPERATING STACK</span>
             <h2>{nextSolution.label}</h2>

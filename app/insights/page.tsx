@@ -54,7 +54,7 @@ export default function InsightsPage() {
 
         {/* OPEN INNOVATION SPOTLIGHT BANNER */}
         <section className="section" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
-          <div className="hackathon-spotlight-banner">
+          <div className="hackathon-spotlight-banner animated-card reveal-up">
             <div className="spotlight-left">
               <div className="spotlight-badge">
                 <Trophy size={14} />
@@ -137,7 +137,7 @@ export default function InsightsPage() {
 
           <div className="insights-grid" style={{ marginTop: '32px' }}>
             {filteredArticles.map((article: InsightArticle) => (
-              <div key={article.id} className="insight-card">
+              <div key={article.id} className="insight-card animated-card reveal-up">
                 <div className="insight-card-meta">
                   <span className="insight-badge">{article.category}</span>
                   <div className="insight-meta-details">

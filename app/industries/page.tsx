@@ -80,7 +80,7 @@ export default function IndustriesPage() {
         <section className="section" style={{ paddingTop: '0px' }}>
           <div className="industries-deep-grid">
             {filteredIndustries.map((ind: IndustryDetail) => (
-              <div key={ind.id} className="industry-deep-card" id={ind.slug}>
+              <div key={ind.id} className="industry-deep-card animated-card reveal-up" id={ind.slug}>
                 <div className="ind-header-row">
                   <div className="ind-title-block">
                     <span className="ind-badge">{ind.badge}</span>
@@ -138,7 +138,7 @@ export default function IndustriesPage() {
                     </h4>
                     <div className="ind-solutions-stack">
                       {ind.solutionApplications.map((app, aIdx) => (
-                        <div key={aIdx} className="ind-solution-app-card">
+                        <div key={aIdx} className="ind-solution-app-card animated-card">
                           <div className="app-card-top">
                             <Cpu size={14} />
                             <Link href={`/solutions/${app.solutionSlug}`} className="app-title-link">
