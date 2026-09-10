@@ -302,130 +302,29 @@ export function SiteHeader() {
           Home
         </Link>
 
-        {/* 2. SOLUTIONS ▼ */}
-        <div className="nav-dropdown-wrapper">
-          <button
-            className={`nav-menu-trigger ${activeMenu === 'solutions' ? 'active' : ''}`}
-            onClick={() => toggleMenu('solutions')}
-            aria-expanded={activeMenu === 'solutions'}
-          >
-            <span>Solutions</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'solutions' ? 'rotate-180' : ''}`} />
-          </button>
-
-          {activeMenu === 'solutions' && (
-            <div className="mega-menu solutions-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">THE 6 AI ENGINEERING GROUPS</span>
-                  <p>Comprehensive 5-Level Architecture Model: From Autonomous Agents to AI Data Centers & Value Acceleration</p>
-                </div>
-                <Link href="/sitemap" className="mega-header-link" onClick={closeAll}>
-                  <span>Explore Complete 5-Level Site Map</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid solutions-grid-6">
-                {solutionGroups.map((grp) => {
-                  return (
-                    <div
-                      key={grp.slug}
-                      className="mega-solution-card"
-                    >
-                      <div className="mega-sol-main">
-                        <Link
-                          href={`/solutions/${grp.slug}`}
-                          className="mega-sol-title-link"
-                          onClick={closeAll}
-                        >
-                          <div className="mega-item-top">
-                            <span className="mega-item-num">{grp.groupTag}</span>
-                            <span className="mega-item-label">{grp.title}</span>
-                            <ArrowUpRight size={13} className="mega-sol-arrow" />
-                          </div>
-                          <p className="mega-item-desc">{grp.desc}</p>
-                        </Link>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="mega-menu-footer">
-                <Link href="/book-ai-diagnostic" className="mega-footer-link" onClick={closeAll}>
-                  <Sparkles size={14} />
-                  <span>Not sure which solution fits your workload? <strong>Book an AI Diagnostic Assessment</strong></span>
-                  <ArrowUpRight size={14} />
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 3. INDUSTRIES ▼ */}
-        <div className="nav-dropdown-wrapper">
-          <button
-            className={`nav-menu-trigger ${activeMenu === 'industries' ? 'active' : ''}`}
-            onClick={() => toggleMenu('industries')}
-            aria-expanded={activeMenu === 'industries'}
-          >
-            <span>Industries</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'industries' ? 'rotate-180' : ''}`} />
-          </button>
-
-          {activeMenu === 'industries' && (
-            <div className="mega-menu industries-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">12 REGULATED & MISSION-CRITICAL SECTORS</span>
-                  <p>Tailored AI Factories, Guardrails, and Methodologies by Vertical</p>
-                </div>
-                <Link href="/industries" className="mega-header-link" onClick={closeAll}>
-                  <span>View All 12 Industries Directory</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid industries-grid-12">
-                {industriesData.map((ind) => (
-                  <Link
-                    key={ind.id}
-                    href={`/industries#${ind.slug}`}
-                    className="mega-industry-item"
-                    onClick={closeAll}
-                  >
-                    <div className="ind-item-badge">{ind.badge}</div>
-                    <span className="ind-item-title">{ind.name}</span>
-                    <p className="ind-item-sub">{ind.tagline.slice(0, 68)}...</p>
-                  </Link>
-                ))}
-              </div>
-
-              <div className="mega-menu-footer">
-                <Link href="/industries" className="mega-footer-link" onClick={closeAll}>
-                  <Layers size={14} />
-                  <span>Explore deep technical architectures for your specific industry sector</span>
-                  <ArrowUpRight size={14} />
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 4. METHODOLOGY */}
-        <Link href="/methodology-engine" className="nav-link" onClick={closeAll}>
-          Methodology
+        {/* 2. AGENTIC ENTERPRISE */}
+        <Link href="/solutions/ai-agentic-factory" className="nav-link" onClick={closeAll}>
+          Agentic Enterprise
         </Link>
 
-        {/* 5. METRICS & BUSINESS IMPACT */}
-        <Link href="/sitemap#foundation" className="nav-link" onClick={closeAll}>
-          Metrics & Business Impact
+        {/* 3. AI INFRA & DATA CENTER */}
+        <Link href="/solutions/ai-infra-engineering" className="nav-link" onClick={closeAll}>
+          AI Infra & Data Center
         </Link>
 
-        {/* 6. ENGAGEMENT MODELS */}
-        <Link href="/sitemap#foundation" className="nav-link" onClick={closeAll}>
-          Engagement Models
+        {/* 4. AI NETWORKING */}
+        <Link href="/solutions/ai-networking" className="nav-link" onClick={closeAll}>
+          AI Networking
+        </Link>
+
+        {/* 5. AI CYBERSECURITY */}
+        <Link href="/solutions/ai-cybersecurity-quantum-safe" className="nav-link" onClick={closeAll}>
+          AI Cybersecurity
+        </Link>
+
+        {/* 6. AI VALUE ENGINEERING */}
+        <Link href="/solutions/ai-value-engineering" className="nav-link" onClick={closeAll}>
+          AI Value Engineering
         </Link>
 
         {/* 7. ABOUT US */}
@@ -488,13 +387,13 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 8. PRIMARY CTA: BOOK YOUR AI DIAGNOSTIC */}
+        {/* 8. PRIMARY CTA: CONTACT US */}
         <Link
-          href="/book-ai-diagnostic"
+          href="/contact"
           className="nav-cta"
           onClick={closeAll}
         >
-          <span>Book Your AI Diagnostic</span>
+          <span>Contact Us</span>
           <ArrowUpRight size={15} />
         </Link>
       </nav>
@@ -517,72 +416,24 @@ export function SiteHeader() {
               Home
             </Link>
 
-            {/* Mobile Solutions Section (6 Groups) */}
-            <div className="mobile-accordion">
-              <span className="mobile-accordion-btn mobile-accordion-label">
-                <span>Solutions (6 Groups)</span>
-              </span>
-              <div className="mobile-accordion-body">
-                {solutionGroups.map((g) => {
-                  return (
-                    <div key={g.slug} className="mobile-sol-item">
-                      <div className="mobile-sol-header-row">
-                        <Link
-                          href={`/solutions/${g.slug}`}
-                          className="mobile-sublink flex-1"
-                          onClick={closeAll}
-                        >
-                          <span className="mob-num">{g.groupTag}</span>
-                          <span>{g.title}</span>
-                        </Link>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Mobile Industries Accordion */}
-            <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('industries')}
-              >
-                <span>Industries</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'industries' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'industries' && (
-                <div className="mobile-accordion-body">
-                  <Link href="/industries" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>View All 12 Industries Directory →</span>
-                  </Link>
-                  {industriesData.map((ind) => (
-                    <Link
-                      key={ind.id}
-                      href={`/industries#${ind.slug}`}
-                      className="mobile-sublink"
-                      onClick={closeAll}
-                    >
-                      <span>{ind.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Methodology */}
-            <Link href="/methodology-engine" className="mobile-nav-link" onClick={closeAll}>
-              <span>Methodology</span>
+            <Link href="/solutions/ai-agentic-factory" className="mobile-nav-link" onClick={closeAll}>
+              Agentic Enterprise
             </Link>
 
-            {/* Mobile Metrics & Business Impact */}
-            <Link href="/sitemap#foundation" className="mobile-nav-link" onClick={closeAll}>
-              <span>Metrics & Business Impact</span>
+            <Link href="/solutions/ai-infra-engineering" className="mobile-nav-link" onClick={closeAll}>
+              AI Infra & Data Center
             </Link>
 
-            {/* Mobile Engagement Models */}
-            <Link href="/sitemap#foundation" className="mobile-nav-link" onClick={closeAll}>
-              <span>Engagement Models</span>
+            <Link href="/solutions/ai-networking" className="mobile-nav-link" onClick={closeAll}>
+              AI Networking
+            </Link>
+
+            <Link href="/solutions/ai-cybersecurity-quantum-safe" className="mobile-nav-link" onClick={closeAll}>
+              AI Cybersecurity
+            </Link>
+
+            <Link href="/solutions/ai-value-engineering" className="mobile-nav-link" onClick={closeAll}>
+              AI Value Engineering
             </Link>
 
             {/* Mobile About Us Accordion */}
@@ -615,11 +466,11 @@ export function SiteHeader() {
 
             <div className="mobile-cta-wrapper">
               <Link
-                href="/book-ai-diagnostic"
+                href="/contact"
                 className="button button-primary button-full"
                 onClick={closeAll}
               >
-                <span>Book Your AI Diagnostic</span>
+                <span>Contact Us</span>
                 <ArrowUpRight size={16} />
               </Link>
             </div>
