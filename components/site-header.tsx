@@ -186,6 +186,69 @@ const insightsMenuItems = [
   }
 ]
 
+const solutionGroups = [
+  {
+    num: '01',
+    groupTag: 'GROUP 1',
+    name: 'GROUP 1 — AGENTIC ENTERPRISE',
+    title: 'AGENTIC ENTERPRISE',
+    slug: 'ai-agentic-factory',
+    sitemapAnchor: 'group-1',
+    desc: 'Autonomous Agent Design, Multi-Agent Orchestration, Vertical Agent Fleets & Governed AgentOps',
+    icon: Bot,
+  },
+  {
+    num: '02',
+    groupTag: 'GROUP 2',
+    name: 'GROUP 2 — AI INFRASTRUCTURE & AI DATA CENTER ENGINEERING',
+    title: 'AI INFRASTRUCTURE & AI DATA CENTER ENGINEERING',
+    slug: 'ai-infra-engineering',
+    sitemapAnchor: 'group-2',
+    desc: 'Strategic Site Due Diligence, High-Density Facilities (30–100kW), GPU Acceleration & Cluster Fabric',
+    icon: Cpu,
+  },
+  {
+    num: '03',
+    groupTag: 'GROUP 3',
+    name: 'GROUP 3 — AI NETWORKING',
+    title: 'AI NETWORKING',
+    slug: 'ai-networking',
+    sitemapAnchor: 'group-3',
+    desc: 'Enterprise & DC Fabrics, Non-Terrestrial Networks (NTN / Satellite / FSO) & Autonomous AI NOC',
+    icon: Network,
+  },
+  {
+    num: '04',
+    groupTag: 'GROUP 4',
+    name: 'GROUP 4 — AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
+    title: 'AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
+    slug: 'ai-cybersecurity-quantum-safe',
+    sitemapAnchor: 'group-4',
+    desc: 'L1–L7 Post-Quantum Cryptography (PQC / CBOM), Agent Guardrails, Zero-Trust & Managed AI SOC',
+    icon: Lock,
+  },
+  {
+    num: '05',
+    groupTag: 'GROUP 5',
+    name: 'GROUP 5 — TRUSTED AI ENGINEERING',
+    title: 'TRUSTED AI ENGINEERING',
+    slug: 'trusted-ai-transformation',
+    sitemapAnchor: 'group-5',
+    desc: 'Mathematical Explainability (SHAP/LIME), Formal Robustness, Responsible AI & Continuous SPC',
+    icon: ShieldCheck,
+  },
+  {
+    num: '06',
+    groupTag: 'GROUP 6',
+    name: 'GROUP 6 — AI VALUE ENGINEERING & ACCELERATION',
+    title: 'AI VALUE ENGINEERING & ACCELERATION',
+    slug: 'ai-value-engineering',
+    sitemapAnchor: 'group-6',
+    desc: 'Value Discovery, FinOps Unit Economics, Acceleration Sprints & Enterprise Operating System',
+    icon: TrendingUp,
+  },
+]
+
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
@@ -239,7 +302,7 @@ export function SiteHeader() {
           Home
         </Link>
 
-        {/* 2. SOLUTIONS MEGA MENU */}
+        {/* 2. SOLUTIONS ▼ */}
         <div className="nav-dropdown-wrapper">
           <button
             className={`nav-menu-trigger ${activeMenu === 'solutions' ? 'active' : ''}`}
@@ -254,34 +317,34 @@ export function SiteHeader() {
             <div className="mega-menu solutions-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
               <div className="mega-menu-header">
                 <div>
-                  <span className="mega-menu-badge">THE ENTERPRISE AI OPERATING STACK</span>
-                  <p>6 Vertically Integrated Engineering Domains for the Enterprise AI Operating Stack</p>
+                  <span className="mega-menu-badge">THE 6 AI ENGINEERING GROUPS</span>
+                  <p>Comprehensive 5-Level Architecture Model: From Autonomous Agents to AI Data Centers & Value Acceleration</p>
                 </div>
                 <Link href="/sitemap" className="mega-header-link" onClick={closeAll}>
-                  <span>Explore 5-Level Architecture Map</span>
+                  <span>Explore Complete 5-Level Site Map</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
 
               <div className="mega-menu-grid solutions-grid-6">
-                {solutions.map((sol) => {
+                {solutionGroups.map((grp) => {
                   return (
                     <div
-                      key={sol.slug}
+                      key={grp.slug}
                       className="mega-solution-card"
                     >
                       <div className="mega-sol-main">
                         <Link
-                          href={`/solutions/${sol.slug}`}
+                          href={`/solutions/${grp.slug}`}
                           className="mega-sol-title-link"
                           onClick={closeAll}
                         >
                           <div className="mega-item-top">
-                            <span className="mega-item-num">{sol.number}</span>
-                            <span className="mega-item-label">{sol.shortTitle}</span>
+                            <span className="mega-item-num">{grp.groupTag}</span>
+                            <span className="mega-item-label">{grp.title}</span>
                             <ArrowUpRight size={13} className="mega-sol-arrow" />
                           </div>
-                          <p className="mega-item-desc">{sol.heroStatement.slice(0, 95)}...</p>
+                          <p className="mega-item-desc">{grp.desc}</p>
                         </Link>
                       </div>
                     </div>
@@ -300,7 +363,7 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 3. INDUSTRIES MEGA MENU */}
+        {/* 3. INDUSTRIES ▼ */}
         <div className="nav-dropdown-wrapper">
           <button
             className={`nav-menu-trigger ${activeMenu === 'industries' ? 'active' : ''}`}
@@ -350,72 +413,22 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 4. AI METHODOLOGY MEGA MENU */}
-        <div className="nav-dropdown-wrapper">
-          <button
-            className={`nav-menu-trigger ${activeMenu === 'methodology' ? 'active' : ''}`}
-            onClick={() => toggleMenu('methodology')}
-            aria-expanded={activeMenu === 'methodology'}
-          >
-            <span>AI Methodology</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'methodology' ? 'rotate-180' : ''}`} />
-          </button>
-
-          {activeMenu === 'methodology' && (
-            <div className="mega-menu methodology-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">PROPRIETARY METHODOLOGY ENGINES</span>
-                  <p>Industrial Engineering & Operational Excellence Rigor Across 4 Core Domains</p>
-                </div>
-                <Link href="/methodology-engine" className="mega-header-link" onClick={closeAll}>
-                  <span>Explore Methodology Engine Section</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid methodology-grid-4">
-                {methodologyCategories.map((cat, idx) => {
-                  const Icon = cat.icon
-                  return (
-                    <div key={idx} className="methodology-nav-card">
-                      <div className="method-card-header">
-                        <div className="method-icon-box">
-                          <Icon size={16} />
-                        </div>
-                        <h4>{cat.title}</h4>
-                      </div>
-                      <p className="method-card-desc">{cat.desc}</p>
-                      <ul className="method-items-list">
-                        {cat.items.map((item, itemIdx) => (
-                          <li key={itemIdx}>
-                            <span className="method-item-bullet" />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="mega-menu-footer">
-                <Link href="/methodology-engine" className="mega-footer-link" onClick={closeAll}>
-                  <Sparkles size={14} />
-                  <span>Learn how persistent AI agent fleets automate 80+ industrial engineering methodologies</span>
-                  <ArrowUpRight size={14} />
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 5. SITE MAP (V14.0) */}
-        <Link href="/sitemap" className="nav-link" onClick={closeAll}>
-          Site Map
+        {/* 4. METHODOLOGY */}
+        <Link href="/methodology-engine" className="nav-link" onClick={closeAll}>
+          Methodology
         </Link>
 
-        {/* 6. ABOUT US DROPDOWN / MEGA MENU */}
+        {/* 5. METRICS & BUSINESS IMPACT */}
+        <Link href="/sitemap#foundation" className="nav-link" onClick={closeAll}>
+          Metrics & Business Impact
+        </Link>
+
+        {/* 6. ENGAGEMENT MODELS */}
+        <Link href="/sitemap#foundation" className="nav-link" onClick={closeAll}>
+          Engagement Models
+        </Link>
+
+        {/* 7. ABOUT US */}
         <div className="nav-dropdown-wrapper">
           <button
             className={`nav-menu-trigger ${activeMenu === 'about' ? 'active' : ''}`}
@@ -475,87 +488,7 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 6. INSIGHTS DROPDOWN / MEGA MENU */}
-        <div className="nav-dropdown-wrapper">
-          <button
-            className={`nav-menu-trigger ${activeMenu === 'insights' ? 'active' : ''}`}
-            onClick={() => toggleMenu('insights')}
-            aria-expanded={activeMenu === 'insights'}
-          >
-            <span>Insights</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'insights' ? 'rotate-180' : ''}`} />
-          </button>
-
-          {activeMenu === 'insights' && (
-            <div className="mega-menu insights-dropdown-menu" onMouseLeave={() => setActiveMenu(null)}>
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">PUBLICATIONS, BENCHMARKS & RESEARCH</span>
-                  <p>AI Insights, Case Studies, Whitepapers, Research & Engineering Resources</p>
-                </div>
-                <Link href="/insights" className="mega-header-link" onClick={closeAll}>
-                  <span>View All Insights</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid insights-menu-grid">
-                {insightsMenuItems.map((item, idx) => {
-                  const Icon = item.icon
-                  return item.isExternal ? (
-                    <a
-                      key={idx}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="insights-item-card"
-                      onClick={closeAll}
-                    >
-                      <div className="insights-item-icon">
-                        <Icon size={16} />
-                      </div>
-                      <div className="insights-item-text">
-                        <div className="insights-item-heading">
-                          <span>{item.label}</span>
-                          <ArrowUpRight size={12} className="ml-auto opacity-70" />
-                        </div>
-                        <p>{item.desc}</p>
-                      </div>
-                    </a>
-                  ) : (
-                    <Link
-                      key={idx}
-                      href={item.href}
-                      className="insights-item-card"
-                      onClick={closeAll}
-                    >
-                      <div className="insights-item-icon">
-                        <Icon size={16} />
-                      </div>
-                      <div className="insights-item-text">
-                        <div className="insights-item-heading">
-                          <span>{item.label}</span>
-                          <ArrowUpRight size={12} className="ml-auto opacity-40 hover-show" />
-                        </div>
-                        <p>{item.desc}</p>
-                      </div>
-                    </Link>
-                  )
-                })}
-              </div>
-
-              <div className="mega-menu-footer">
-                <Link href="/insights" className="mega-footer-link" onClick={closeAll}>
-                  <BookOpen size={14} />
-                  <span>Access complete research library and token optimization frameworks</span>
-                  <ArrowUpRight size={14} />
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 7. PRIMARY CTA: BOOK YOUR AI DIAGNOSTIC */}
+        {/* 8. PRIMARY CTA: BOOK YOUR AI DIAGNOSTIC */}
         <Link
           href="/book-ai-diagnostic"
           className="nav-cta"
@@ -584,27 +517,27 @@ export function SiteHeader() {
               Home
             </Link>
 
-            {/* Mobile Solutions Section (always expanded) */}
+            {/* Mobile Solutions Section (6 Groups) */}
             <div className="mobile-accordion">
               <span className="mobile-accordion-btn mobile-accordion-label">
-                <span>Solutions</span>
+                <span>Solutions (6 Groups)</span>
               </span>
               <div className="mobile-accordion-body">
-                {solutions.map((s) => {
+                {solutionGroups.map((g) => {
                   return (
-                      <div key={s.slug} className="mobile-sol-item">
-                        <div className="mobile-sol-header-row">
-                          <Link
-                            href={`/solutions/${s.slug}`}
-                            className="mobile-sublink flex-1"
-                            onClick={closeAll}
-                          >
-                            <span className="mob-num">{s.number}</span>
-                            <span>{s.shortTitle}</span>
-                          </Link>
-                        </div>
+                    <div key={g.slug} className="mobile-sol-item">
+                      <div className="mobile-sol-header-row">
+                        <Link
+                          href={`/solutions/${g.slug}`}
+                          className="mobile-sublink flex-1"
+                          onClick={closeAll}
+                        >
+                          <span className="mob-num">{g.groupTag}</span>
+                          <span>{g.title}</span>
+                        </Link>
                       </div>
-                    )
+                    </div>
+                  )
                 })}
               </div>
             </div>
@@ -637,33 +570,19 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* Mobile Methodology Accordion */}
-            <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('methodology')}
-              >
-                <span>AI Methodology</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'methodology' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'methodology' && (
-                <div className="mobile-accordion-body">
-                  <Link href="/methodology-engine" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>Complete Methodology Engine →</span>
-                  </Link>
-                  {methodologyCategories.map((cat, i) => (
-                    <div key={i} className="mobile-method-block">
-                      <strong>{cat.title}</strong>
-                      <p>{cat.items.join(', ')}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* Mobile Methodology */}
+            <Link href="/methodology-engine" className="mobile-nav-link" onClick={closeAll}>
+              <span>Methodology</span>
+            </Link>
 
-            {/* Mobile Site Map Link */}
-            <Link href="/sitemap" className="mobile-nav-link" onClick={closeAll}>
-              <span>Site Map v14.0 (5-Levels)</span>
+            {/* Mobile Metrics & Business Impact */}
+            <Link href="/sitemap#foundation" className="mobile-nav-link" onClick={closeAll}>
+              <span>Metrics & Business Impact</span>
+            </Link>
+
+            {/* Mobile Engagement Models */}
+            <Link href="/sitemap#foundation" className="mobile-nav-link" onClick={closeAll}>
+              <span>Engagement Models</span>
             </Link>
 
             {/* Mobile About Us Accordion */}
@@ -690,44 +609,6 @@ export function SiteHeader() {
                       <span>{item.label}</span>
                     </Link>
                   ))}
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Insights Accordion */}
-            <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('insights')}
-              >
-                <span>Insights</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'insights' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'insights' && (
-                <div className="mobile-accordion-body">
-                  {insightsMenuItems.map((item, i) =>
-                    item.isExternal ? (
-                      <a
-                        key={i}
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mobile-sublink font-semibold text-blue-600"
-                        onClick={closeAll}
-                      >
-                        <span>{item.label} (Live App) ↗</span>
-                      </a>
-                    ) : (
-                      <Link
-                        key={i}
-                        href={item.href}
-                        className="mobile-sublink"
-                        onClick={closeAll}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
-                    )
-                  )}
                 </div>
               )}
             </div>
