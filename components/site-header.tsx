@@ -485,6 +485,16 @@ export function SiteHeader() {
             </div>
           )}
         </div>
+
+        {/* 9. CONTACT US — Primary CTA */}
+        <Link
+          href="/contact"
+          className="nav-cta"
+          onClick={closeAll}
+        >
+          <span>Contact Us</span>
+          <ArrowUpRight size={14} />
+        </Link>
       </nav>
 
       {/* MOBILE HAMBURGER BUTTON */}
@@ -576,6 +586,17 @@ export function SiteHeader() {
                   ))}
                 </div>
               )}
+            </div>
+
+            <div className="mobile-cta-wrapper">
+              <Link
+                href="/contact"
+                className="button button-primary button-full"
+                onClick={closeAll}
+              >
+                <span>Contact Us</span>
+                <ArrowUpRight size={16} />
+              </Link>
             </div>
           </div>
         </div>

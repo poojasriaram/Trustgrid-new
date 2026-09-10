@@ -8099,3 +8099,367 @@ body {
   }
 }
 
+/* ==========================================================================
+   ENTERPRISE OFFERINGS & ENGAGEMENT GRID (Reference Site Architecture)
+   ========================================================================== */
+
+.offerings-enterprise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.offering-enterprise-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 30px 28px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.offering-enterprise-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(29, 92, 255, 0.45);
+  box-shadow: 0 16px 36px -10px rgba(10, 25, 60, 0.12), 0 0 0 1px rgba(29, 92, 255, 0.2);
+}
+
+.offering-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.offering-icon-badge-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.offering-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--blue-subtle);
+  border: 1px solid rgba(29, 92, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.offering-enterprise-card:hover .offering-icon-wrap {
+  background: var(--blue);
+  color: #ffffff;
+  transform: scale(1.05);
+}
+
+.offering-enterprise-card:hover .offering-icon-wrap svg {
+  color: #ffffff !important;
+}
+
+.offering-group-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  text-transform: uppercase;
+}
+
+.offering-status-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #050d24;
+  background: #f1f5f9;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-top: 3px;
+}
+
+.offering-card-number {
+  font-family: 'IBM Plex Mono', monospace, monospace;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #cbd5e1;
+  line-height: 1;
+}
+
+.offering-card-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 14px 0;
+  line-height: 1.3;
+}
+
+.offering-card-heading a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.offering-card-heading a:hover {
+  color: var(--blue);
+}
+
+.offering-problem-box {
+  background: #f8fafc;
+  border-left: 3px solid #e2e8f0;
+  border-radius: 0 8px 8px 0;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+}
+
+.problem-tag {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 3px;
+}
+
+.offering-problem-box p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.offering-solution-scope {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+.offering-deliverables-list {
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.deliverables-heading {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+
+.offering-deliverables-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.offering-deliverables-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: var(--foreground);
+  line-height: 1.4;
+}
+
+.offering-card-impact-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px 14px;
+  background: var(--blue-subtle);
+  border: 1px solid rgba(29, 92, 255, 0.14);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.impact-metric-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--blue-hover);
+}
+
+.impact-duration-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.offering-card-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.card-quick-diag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.card-quick-diag:hover {
+  color: var(--blue-hover);
+  text-decoration: underline;
+}
+
+/* 6-Stage Engagement Grid */
+.engagement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 22px;
+  margin-top: 32px;
+}
+
+.engagement-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.engagement-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(29, 92, 255, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+.engagement-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.engagement-step-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--blue);
+  background: var(--blue-subtle);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.engagement-duration-badge {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.engagement-step-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+}
+
+.engagement-step-desc {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.engagement-deliverable-box {
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.deliverable-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.engagement-deliverable-box strong {
+  font-size: 0.82rem;
+  color: var(--foreground);
+}
+
+.engagement-cta-bar {
+  margin-top: 32px;
+  background: #050d24;
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 24px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.engagement-cta-bar strong {
+  font-size: 1.15rem;
+  color: #ffffff;
+}
+
+/* 20+ Regulated Industries Pill Grid */
+.industries-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.industry-coverage-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--primary);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.industry-coverage-card:hover {
+  border-color: var(--blue);
+  background: var(--blue-subtle);
+  transform: translateY(-2px);
+}
+

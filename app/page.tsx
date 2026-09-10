@@ -29,7 +29,12 @@ import {
   KeyRound,
   FileCheck,
   Eye,
-  Filter
+  Filter,
+  BarChart3,
+  Globe2,
+  FileSpreadsheet,
+  Award,
+  Users
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -40,15 +45,153 @@ import {
   architectureStack,
   differentiationData,
   operatingPrinciples,
+  allIndustries,
 } from '@/lib/solutions'
 
-const solutionIcons = [
-  Cpu,
-  Bot,
-  ShieldCheck,
-  Lock,
-  Network,
-  TrendingUp,
+const primaryOfferings = [
+  {
+    num: '01',
+    groupTag: 'GROUP 1',
+    title: 'Agentic Enterprise',
+    slug: 'ai-agentic-factory',
+    icon: Bot,
+    badge: 'AUTONOMOUS OPERATIONS',
+    problem: 'Enterprises remain trapped in fragile chatbot pilots unable to execute multi-step business operations.',
+    solution: 'Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics, and native Model Context Protocol (MCP) integrations.',
+    deliverables: [
+      'Autonomous Agent Design & Cognitive Blueprinting',
+      'Multi-Agent Orchestration (LangGraph / CrewAI / AutoGen)',
+      'Vertical Agent Fleets (Finance, Supply Chain, SRE)',
+      'Enterprise AgentOps, Tracing & Real-Time Guardrails'
+    ],
+    metric: '>95% Task Accuracy with Deterministic SLA',
+    duration: '6–12 Wks Sprints'
+  },
+  {
+    num: '02',
+    groupTag: 'GROUP 2',
+    title: 'AI Infra & Data Center',
+    slug: 'ai-infra-engineering',
+    icon: Cpu,
+    badge: 'HIGH-DENSITY COMPUTE',
+    problem: 'GPU clusters suffer from 30–50% utilization while data center power & cooling walls halt scale.',
+    solution: 'Turnkey engineering of high-density AI Factories (30–100kW/rack) with direct-to-chip liquid cooling, kernel-level accelerator tuning, and low-latency inference serving.',
+    deliverables: [
+      'High-Density Facility & Liquid Cooling Engineering',
+      'Accelerator Cluster Topology (Blackwell, HGX, MI300X)',
+      'Inference Optimization & KV-Cache Management',
+      '24/7 Managed AI Factory & Predictive Maintenance'
+    ],
+    metric: '30–60% Inference Cost Reduction (TCO)',
+    duration: '8–16 Wks Full Deployment'
+  },
+  {
+    num: '03',
+    groupTag: 'GROUP 3',
+    title: 'AI Networking',
+    slug: 'ai-networking',
+    icon: Network,
+    badge: 'LOSSLESS FABRIC',
+    problem: 'Inter-node latency spikes and silent packet drops stall distributed AI training and inference.',
+    solution: 'Ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, and autonomous NOC telemetry.',
+    deliverables: [
+      'Lossless RoCEv2 & Quantum-2 InfiniBand Fabrics',
+      'Rail-Optimized Dragonfly+ & Fat-Tree Topologies',
+      'Collective Communications Tuning (NCCL / RCCL)',
+      'Autonomous AI NOC & Telemetry-Driven Self-Healing'
+    ],
+    metric: 'Zero-Loss Packet Flow & Minimized Tail Jitter',
+    duration: '4–8 Wks Optimization'
+  },
+  {
+    num: '04',
+    groupTag: 'GROUP 4',
+    title: 'AI Cybersecurity',
+    slug: 'ai-cybersecurity-quantum-safe',
+    icon: Lock,
+    badge: 'QUANTUM-SAFE DEFENSE',
+    problem: 'Novel AI attack surfaces (prompt injection, agent hijacking) paired with Harvest Now Decrypt Later quantum threats.',
+    solution: 'Comprehensive security engineering protecting autonomous agents with zero-trust permissions while migrating enterprise cryptography to NIST Post-Quantum Cryptographic standards.',
+    deliverables: [
+      'L1–L7 Post-Quantum Cryptography (PQC / CBOM)',
+      'Agent Guardrails, Prompt Firewalls & Model Defense',
+      'Zero-Trust Identity for Non-Deterministic Agents',
+      '24/7 Managed AI Security Operations Center (AI SOC)'
+    ],
+    metric: '100% Cryptographic Bill of Materials (CBOM) Visibility',
+    duration: '6–12 Wks Transition'
+  },
+  {
+    num: '05',
+    groupTag: 'GROUP 5',
+    title: 'AI Value Engineering',
+    slug: 'ai-value-engineering',
+    icon: TrendingUp,
+    badge: 'FINANCIAL ATTRIBUTION',
+    problem: 'Opaque AI returns, untracked token sprawl, and failure to bridge compute spend directly to CFO balance sheets.',
+    solution: 'Industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) combined with AI FinOps to prioritize high-yield initiatives and ensure compounding business ROI.',
+    deliverables: [
+      'AI Value Discovery & Economic Opportunity Mapping',
+      'Unit Economics & Cost-Per-Task Token Modeling',
+      'Theory of Constraints (TOC) Bottleneck Removal',
+      'Value Realization Office (VRO) Governance & Dashboards'
+    ],
+    metric: '3–10x Measurable Production ROI in 90 Days',
+    duration: '4–12 Wks Value Sprint'
+  }
+]
+
+const proofMetrics = [
+  { val: '30–60%', label: 'Inference Cost Reduction', desc: 'Granular KV-cache & kernel optimization' },
+  { val: '30–100kW', label: 'High-Density Rack Envelope', desc: 'Liquid-cooled AI factory topologies' },
+  { val: 'Zero', label: 'Packet Drop AI Fabrics', desc: 'Lossless InfiniBand & RoCEv2 networks' },
+  { val: 'L1–L7', label: 'Post-Quantum Defense', desc: 'NIST PQC & CBOM cryptographic resilience' },
+  { val: '3–10x', label: 'Realized Enterprise ROI', desc: 'Lean & TOC economic value engineering' }
+]
+
+const engagementStages = [
+  {
+    step: '01',
+    name: 'Discover',
+    duration: '1–2 Wks',
+    desc: 'Map enterprise AI workflows, assess technical feasibility, and quantify economic opportunity candidates.',
+    deliverable: 'Opportunity Prioritization Matrix'
+  },
+  {
+    step: '02',
+    name: 'Diagnose',
+    duration: '2–4 Wks',
+    desc: 'Deep audit of compute infrastructure, cluster utilization, agent security posture, and token unit costs.',
+    deliverable: 'Full Architectural Diagnostic Report'
+  },
+  {
+    step: '03',
+    name: 'Design',
+    duration: '3–6 Wks',
+    desc: 'Formulate target state architectures, cognitive DAG blueprints, high-density topologies, and FinOps models.',
+    deliverable: 'Engineering Blueprint & Roadmap'
+  },
+  {
+    step: '04',
+    name: 'Engineer',
+    duration: '6–16 Wks',
+    desc: 'Deploy, configure, and validate production multi-agent systems, compute fabrics, and cryptographic guardrails.',
+    deliverable: 'Production-Ready Stack Deployment'
+  },
+  {
+    step: '05',
+    name: 'Optimize',
+    duration: 'Ongoing',
+    desc: 'Continuous kernel profiling, token cost reduction, agent accuracy calibration, and constraint elimination.',
+    deliverable: 'Weekly Telemetry & Value Metrics'
+  },
+  {
+    step: '06',
+    name: 'Scale',
+    duration: 'Continuous',
+    desc: 'Expand industrialized agent fleets and dedicated AI factories across business units with VRO governance.',
+    deliverable: 'Enterprise AI Operating System'
+  }
 ]
 
 const engineNodes = [
@@ -64,7 +207,6 @@ export default function HomePage() {
   const [activeEngineNode, setActiveEngineNode] = useState<number | null>(null)
   const [activeStackLayer, setActiveStackLayer] = useState<number>(0)
   const [activeGapIndex, setActiveGapIndex] = useState<number>(0)
-  const [solutionFilter, setSolutionFilter] = useState<string>('all')
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -72,15 +214,6 @@ export default function HomePage() {
     }, 3800)
     return () => clearInterval(interval)
   }, [])
-
-  const filteredSolutions = solutions.filter((sol) => {
-    if (solutionFilter === 'all') return true
-    if (solutionFilter === 'infra' && (sol.slug === 'ai-infra-engineering' || sol.slug === 'ai-networking')) return true
-    if (solutionFilter === 'agents' && (sol.slug === 'ai-agentic-factory')) return true
-    if (solutionFilter === 'trust' && (sol.slug === 'trusted-ai-transformation' || sol.slug === 'ai-cybersecurity-quantum-safe')) return true
-    if (solutionFilter === 'value' && (sol.slug === 'ai-value-engineering')) return true
-    return true
-  })
 
   return (
     <main className="page-wrapper">
@@ -96,17 +229,17 @@ export default function HomePage() {
             <div className="hero-badge-row">
               <span className="hero-badge">
                 <span className="hero-pulse-dot" />
-                THE ENTERPRISE AI OPERATING COMPANY
+                ENTERPRISE AI OPERATING COMPANY
               </span>
-              <span className="hero-badge-tag">AGI ERA ARCHITECTURE</span>
+              <span className="hero-badge-tag">OFFERING-LED • OUTCOME-DRIVEN</span>
             </div>
 
             <h1 className="hero-title">
-              The enterprise AI operating company for the <em>AGI era.</em>
+              From Infrastructure to Intelligence. <em>Engineered for Scale.</em>
             </h1>
 
             <p className="hero-copy">
-              TrustGrid is not an AI vendor. We are the engineering and operating company that enterprises trust to design, build, secure, govern, and continuously optimize the complete AI stack — from silicon to strategy, from infrastructure to autonomous agents, from first deployment to sustained enterprise value.
+              TrustGrid is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU infrastructure and lossless network fabrics to autonomous agent fleets and CFO-defensible ROI.
             </p>
 
             <div className="hero-thesis-pill">
@@ -114,36 +247,34 @@ export default function HomePage() {
                 <Sparkles size={16} />
               </div>
               <span>
-                <strong>Market Imperative:</strong> Intelligence without trust is risk. Infrastructure without autonomy is waste. TrustGrid delivers both.
+                <strong>Strategic Core:</strong> What business problem are we solving? Here is the offering engineered to deliver verifiable, compounding enterprise outcomes.
               </span>
             </div>
 
             <div className="hero-actions">
               <Link className="button button-primary hero-btn-main" href="/book-ai-diagnostic">
-                <span>Book an AI diagnostic</span>
+                <span>Book an AI Diagnostic</span>
                 <ArrowUpRight size={17} />
               </Link>
-              <a className="button button-ghost" href="#solutions">
-                <span>Explore the 6 solutions</span>
+              <a className="button button-ghost" href="#offerings">
+                <span>Explore 5 Core Offerings</span>
                 <ArrowDown size={17} />
               </a>
-              <a className="text-link" href="#stack">
-                <span>View operating stack</span>
+              <Link className="text-link" href="/contact">
+                <span>Talk to an Architect</span>
                 <ArrowRight size={15} />
-              </a>
+              </Link>
             </div>
           </div>
 
           {/* HERO INTERACTIVE OPERATING ENGINE DIAGRAM */}
           <div className="hero-aside" aria-label="TrustGrid Operating Engine Interactive Architecture">
             <div className="engine-orbit-canvas">
-              {/* Ambient circuit grid lines */}
               <svg className="engine-circuit-svg" viewBox="0 0 440 440" fill="none">
                 <circle cx="220" cy="220" r="190" stroke="rgba(29, 92, 255, 0.15)" strokeWidth="1" strokeDasharray="4 6" />
                 <circle cx="220" cy="220" r="130" stroke="rgba(56, 189, 248, 0.2)" strokeWidth="1" />
                 <circle cx="220" cy="220" r="70" stroke="rgba(29, 92, 255, 0.25)" strokeWidth="1.5" />
                 
-                {/* Connecting bus lines to nodes */}
                 <line x1="220" y1="220" x2="220" y2="40" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
                 <line x1="220" y1="220" x2="376" y2="130" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
                 <line x1="220" y1="220" x2="376" y2="310" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
@@ -152,7 +283,6 @@ export default function HomePage() {
                 <line x1="220" y1="220" x2="64" y2="130" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
               </svg>
 
-              {/* Central Engine Core */}
               <div className="orbit-core">
                 <div className="orbit-core-glow" />
                 <span className="orbit-label">TRUSTGRID</span>
@@ -164,7 +294,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* 6 Interconnected Orbit Nodes */}
               {engineNodes.map((node, index) => {
                 const Icon = node.icon
                 const isActive = activeEngineNode === index
@@ -189,7 +318,6 @@ export default function HomePage() {
               })}
             </div>
 
-            {/* Active Node Telemetry Live Card */}
             <div className="engine-telemetry-badge">
               <div className="telemetry-header">
                 <span className="telemetry-indicator" />
@@ -213,22 +341,105 @@ export default function HomePage() {
 
         {/* HERO PROOF METRICS STRIP */}
         <div className="hero-footer">
-          <div className="hero-footer-item">
-            <span className="footer-stat">30–60%</span>
-            <span className="footer-label">Inference Cost Reduction</span>
+          {proofMetrics.map((pm, idx) => (
+            <div key={idx} className="hero-footer-item">
+              <span className="footer-stat">{pm.val}</span>
+              <span className="footer-label">{pm.label}</span>
+              <span className="text-xs opacity-75 mt-0.5 block">{pm.desc}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 5 PRIMARY MARKET OFFERINGS SHOWCASE */}
+      <section className="section offerings-showcase" id="offerings">
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">01 / PRIMARY OFFERINGS</span>
+            <p className="section-label">Enterprise AI Offering Architecture</p>
           </div>
-          <div className="hero-footer-item">
-            <span className="footer-stat">&gt;95%</span>
-            <span className="footer-label">Multi-Step Agent Completion</span>
-          </div>
-          <div className="hero-footer-item">
-            <span className="footer-stat">100%</span>
-            <span className="footer-label">Cryptographic CBOM Visibility</span>
-          </div>
-          <div className="hero-footer-item">
-            <span className="footer-stat">90 Days</span>
-            <span className="footer-label">To Measurable Production ROI</span>
-          </div>
+          <span className="section-index">01</span>
+        </div>
+
+        <div className="showcase-header">
+          <h2>
+            Purpose-built offerings. <span>Engineered for enterprise outcomes.</span>
+          </h2>
+          <p>
+            Five dedicated engineering practices designed to solve the critical bottlenecks in compute efficiency, multi-agent autonomy, network throughput, cybersecurity, and financial realization.
+          </p>
+        </div>
+
+        <div className="offerings-enterprise-grid">
+          {primaryOfferings.map((offering) => {
+            const Icon = offering.icon
+            return (
+              <article key={offering.slug} className="offering-enterprise-card animated-card reveal-up">
+                <span className="card-corner-tl" />
+                <span className="card-corner-br" />
+
+                <div className="offering-card-head">
+                  <div className="offering-icon-badge-box">
+                    <div className="offering-icon-wrap">
+                      <Icon size={24} className="text-blue-500" />
+                    </div>
+                    <div>
+                      <span className="offering-group-tag">{offering.groupTag}</span>
+                      <span className="offering-status-badge">{offering.badge}</span>
+                    </div>
+                  </div>
+                  <span className="offering-card-number">{offering.num}</span>
+                </div>
+
+                <h3 className="offering-card-heading">
+                  <Link href={`/solutions/${offering.slug}`}>{offering.title}</Link>
+                </h3>
+
+                <div className="offering-problem-box">
+                  <span className="problem-tag">Buyer Problem Addressed:</span>
+                  <p>{offering.problem}</p>
+                </div>
+
+                <p className="offering-solution-scope">{offering.solution}</p>
+
+                <div className="offering-deliverables-list">
+                  <span className="deliverables-heading">Key Engineering Deliverables:</span>
+                  <ul>
+                    {offering.deliverables.map((item, i) => (
+                      <li key={i}>
+                        <Check size={14} className="text-blue-500 shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="offering-card-impact-bar">
+                  <div className="impact-metric-pill">
+                    <BarChart3 size={14} className="text-blue-500" />
+                    <span>{offering.metric}</span>
+                  </div>
+                  <div className="impact-duration-pill">
+                    <Clock size={13} className="text-slate-400" />
+                    <span>{offering.duration}</span>
+                  </div>
+                </div>
+
+                <div className="offering-card-footer-actions">
+                  <Link href={`/solutions/${offering.slug}`} className="button button-card">
+                    <span>Explore {offering.title}</span>
+                    <ArrowUpRight size={16} />
+                  </Link>
+                  <Link
+                    href={`/book-ai-diagnostic?solution=${offering.slug}`}
+                    className="card-quick-diag"
+                  >
+                    <span>Book Diagnostic →</span>
+                  </Link>
+                </div>
+              </article>
+            )
+          })}
         </div>
       </section>
 
@@ -236,10 +447,10 @@ export default function HomePage() {
       <section className="section why-section" id="why">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">01 / MARKET CONTEXT</span>
-            <p className="section-label">Why TrustGrid Exists — The Market Imperative</p>
+            <span className="section-badge">02 / MARKET CONTEXT</span>
+            <p className="section-label">Why TrustGrid Exists — The 5 Critical Gaps</p>
           </div>
-          <span className="section-index">01</span>
+          <span className="section-index">02</span>
         </div>
 
         <div className="why-heading">
@@ -247,11 +458,10 @@ export default function HomePage() {
             Five critical gaps stand between AI experimentation and <span>enterprise-grade operations.</span>
           </h2>
           <p>
-            The global enterprise AI market is undergoing a fundamental phase transition. Organizations are no longer asking whether to adopt AI — they are asking how to industrialize it, trust it, secure it, and extract compounding value from it at scale.
+            Organizations are moving beyond exploratory prototypes. They require industrial engineering rigor to solve infrastructure waste, unmonitored agent hallucination, network congestion, and ambiguous ROI.
           </p>
         </div>
 
-        {/* Interactive 5 Gaps Quick Navigation Pills */}
         <div className="gap-tab-bar">
           {marketGaps.map((gap, index) => (
             <button
@@ -271,12 +481,11 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* Interactive 5 Gaps Card Showcase */}
         <div className="gaps-horizontal-container">
           <div className="gap-grid">
             {marketGaps.map((gap, index) => {
               const resolutions = [
-                'Purpose-engineered AI Factories with 30–70% higher GPU utilization and low-latency scheduling.',
+                'Purpose-engineered AI Factories with 30–70% higher GPU utilization and low-latency serving.',
                 'Industrialized multi-agent systems with persistent memory, tool sandboxing, and deterministic verification.',
                 'First-class explainability, cryptographic audit trails, and automated EU AI Act / NIST alignment.',
                 'Zero-trust agent isolation, runtime anomaly detection, and post-quantum PQC cryptographic migration.',
@@ -320,10 +529,10 @@ export default function HomePage() {
       <section className="section stack-section" id="stack">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">02 / INTEGRATED OPERATING MODEL</span>
-            <p className="section-label">Cross-Solution Architecture Statement</p>
+            <span className="section-badge">03 / 5-LAYER OPERATING MODEL</span>
+            <p className="section-label">Integrated Full-Stack Architecture</p>
           </div>
-          <span className="section-index">02</span>
+          <span className="section-index">03</span>
         </div>
 
         <div className="stack-heading">
@@ -331,12 +540,11 @@ export default function HomePage() {
             A vertically integrated operating stack for <span>enterprise AI.</span>
           </h2>
           <p>
-            This is not a portfolio of disconnected services. Every layer reinforces every other layer, ensuring that your infrastructure, agents, trust, security, networking, transformation, and economics compound over time.
+            Every layer reinforces every adjacent layer. Infrastructure feeds lossless networks; networks sustain low-latency compute; compute powers autonomous agents; cybersecurity protects execution; and value engineering guarantees compounding financial yield.
           </p>
         </div>
 
         <div className="stack-interactive-layout">
-          {/* 7-Layer Architecture Stack List */}
           <div className="stack-flow-list">
             {architectureStack.map((item, index) => {
               const isSelected = activeStackLayer === index
@@ -376,7 +584,6 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Architecture Visual Preview Card */}
           <div className="stack-layer-preview-card animated-card">
             <span className="card-corner-tl" />
             <span className="card-corner-br" />
@@ -421,114 +628,53 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6 PRIMARY SOLUTIONS SHOWCASE */}
-      <section className="section solutions-showcase" id="solutions">
+      {/* 6-STAGE ENGAGEMENT JOURNEY */}
+      <section className="section engagement-section" id="engagement">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">03 / PRIMARY SOLUTIONS</span>
-            <p className="section-label">The 6 Solution Areas</p>
+            <span className="section-badge">04 / ENGAGEMENT JOURNEY</span>
+            <p className="section-label">The 6-Stage Path from Diagnostic to Production Scale</p>
           </div>
-          <span className="section-index">03</span>
+          <span className="section-index">04</span>
         </div>
 
-        <div className="showcase-header">
+        <div className="engagement-heading">
           <h2>
-            Engineered from silicon to strategy. <span>Explore each domain.</span>
+            Structured, accountable execution. <span>From Diagnostic to Compounding Value.</span>
           </h2>
           <p>
-            Dive deep into each of TrustGrid's 6 core solution practices. Built for enterprise scale, regulatory scrutiny, and compounding return.
+            We do not sell open-ended consulting hours or vague prototypes. Every engagement follows a deterministic engineering pathway with explicit deliverables, milestones, and verifiable business impact.
           </p>
         </div>
 
-        {/* Filter Pills for Solution Areas */}
-        <div className="solution-filter-bar">
-          <button
-            className={`filter-btn ${solutionFilter === 'all' ? 'active' : ''}`}
-            onClick={() => setSolutionFilter('all')}
-          >
-            All 6 Solutions
-          </button>
-          <button
-            className={`filter-btn ${solutionFilter === 'infra' ? 'active' : ''}`}
-            onClick={() => setSolutionFilter('infra')}
-          >
-            Compute & Fabrics
-          </button>
-          <button
-            className={`filter-btn ${solutionFilter === 'agents' ? 'active' : ''}`}
-            onClick={() => setSolutionFilter('agents')}
-          >
-            Agentic AI & Factory
-          </button>
-          <button
-            className={`filter-btn ${solutionFilter === 'trust' ? 'active' : ''}`}
-            onClick={() => setSolutionFilter('trust')}
-          >
-            Trust & Security
-          </button>
-          <button
-            className={`filter-btn ${solutionFilter === 'value' ? 'active' : ''}`}
-            onClick={() => setSolutionFilter('value')}
-          >
-            Value & P&L
-          </button>
+        <div className="engagement-grid">
+          {engagementStages.map((st) => (
+            <div key={st.step} className="engagement-card animated-card reveal-up">
+              <span className="card-corner-tl" />
+              <span className="card-corner-br" />
+              <div className="engagement-card-head">
+                <span className="engagement-step-num">{st.step}</span>
+                <span className="engagement-duration-badge">{st.duration}</span>
+              </div>
+              <h3 className="engagement-step-name">{st.name}</h3>
+              <p className="engagement-step-desc">{st.desc}</p>
+              <div className="engagement-deliverable-box">
+                <span className="deliverable-label">Key Deliverable:</span>
+                <strong>{st.deliverable}</strong>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="solutions-grid">
-          {filteredSolutions.map((solution) => {
-            const originalIndex = solutions.findIndex((s) => s.slug === solution.slug)
-            const Icon = solutionIcons[originalIndex] || Cpu
-
-            return (
-              <article key={solution.slug} className="solution-card animated-card reveal-up">
-                <span className="card-corner-tl" />
-                <span className="card-corner-br" />
-
-                <div className="solution-card-top">
-                  <div className="solution-card-icon-wrap">
-                    <Icon size={22} className="solution-card-icon" />
-                    <span className="solution-card-num">{solution.number}</span>
-                  </div>
-                  <span className="solution-card-tag">{solution.shortTitle}</span>
-                </div>
-
-                <h3 className="solution-card-title">{solution.label.split('. ')[1]}</h3>
-                <p className="solution-card-hero-stmt">{solution.heroStatement}</p>
-
-                <div className="solution-card-offerings">
-                  <div className="offerings-header-row">
-                    <span className="offerings-heading">Core Offerings</span>
-                  </div>
-                  <ul>
-                    {solution.offerings.map((offering) => (
-                      <li key={offering.title}>
-                        <Check size={14} className="text-blue-500 shrink-0 mt-0.5" />
-                        <span>{offering.title}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="solution-card-metric-highlight">
-                  <div className="metric-highlight-label">{solution.metrics[0].metric}</div>
-                  <div className="metric-highlight-val">{solution.metrics[0].range}</div>
-                </div>
-
-                <div className="solution-card-actions">
-                  <Link href={`/solutions/${solution.slug}`} className="button button-card">
-                    <span>Explore {solution.shortTitle}</span>
-                    <ArrowUpRight size={16} />
-                  </Link>
-                  <Link
-                    href={`/book-ai-diagnostic?solution=${solution.slug}`}
-                    className="card-quick-diag"
-                  >
-                    <span>Book Diagnostic</span>
-                  </Link>
-                </div>
-              </article>
-            )
-          })}
+        <div className="engagement-cta-bar">
+          <div>
+            <strong>Ready to begin your enterprise assessment?</strong>
+            <p className="text-sm opacity-80 mt-0.5">Start with a structured, senior architect-led AI Diagnostic.</p>
+          </div>
+          <Link href="/book-ai-diagnostic" className="button button-primary">
+            <span>Book Your AI Diagnostic</span>
+            <ArrowUpRight size={16} />
+          </Link>
         </div>
       </section>
 
@@ -542,7 +688,7 @@ export default function HomePage() {
         <div className="section-intro">
           <div className="intro-left">
             <span className="section-badge">05 / WHY TRUSTGRID IS DIFFERENT</span>
-            <p className="section-label">TrustGrid vs Typical AI Vendors & Consultants</p>
+            <p className="section-label">TrustGrid vs Typical AI Vendors & Strategy Consultancies</p>
           </div>
           <span className="section-index">05</span>
         </div>
@@ -552,7 +698,7 @@ export default function HomePage() {
             A fundamentally different model for <span>the AGI era.</span>
           </h2>
           <p>
-            Most AI vendors deliver isolated point solutions or high-level slide decks. TrustGrid provides vertically integrated engineering, first-class trust, and outcome accountability.
+            Most AI vendors deliver isolated point tools or PowerPoint strategy decks. TrustGrid delivers full-stack systems engineering, hardware-level rigor, and verifiable P&L outcome accountability.
           </p>
         </div>
 
@@ -587,14 +733,43 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 20+ REGULATED INDUSTRIES DOMAIN COVERAGE */}
+      <section className="section industries-section" id="industries">
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">06 / DOMAIN MASTERY</span>
+            <p className="section-label">Engineered Across 20+ Regulated Global Industries</p>
+          </div>
+          <span className="section-index">06</span>
+        </div>
+
+        <div className="industries-heading">
+          <h2>
+            Deep domain specialization. <span>Zero generic solutions.</span>
+          </h2>
+          <p>
+            Our engineering architectures, agent fleets, and compliance models are pre-calibrated to the strict regulatory and operational realities of mission-critical global industries.
+          </p>
+        </div>
+
+        <div className="industries-pill-grid">
+          {allIndustries.map((ind, i) => (
+            <div key={i} className="industry-coverage-card">
+              <Building2 size={16} className="text-blue-500 shrink-0" />
+              <span>{ind}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* OPERATING PRINCIPLES (CORE DNA) */}
       <section className="section principles-section" id="principles">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">06 / CORE DNA</span>
+            <span className="section-badge">07 / CORE DNA</span>
             <p className="section-label">TrustGrid Operating Principles</p>
           </div>
-          <span className="section-index">06</span>
+          <span className="section-index">07</span>
         </div>
 
         <div className="principles-grid">
@@ -649,6 +824,10 @@ export default function HomePage() {
               <span>Book your AI diagnostic</span>
               <ArrowUpRight size={17} />
             </Link>
+            <Link className="button button-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)' }} href="/contact">
+              <span>Contact Us Directly</span>
+              <ArrowRight size={16} />
+            </Link>
             <span className="cta-subtext">Typically 2–4 weeks structured engagement with senior AI architects.</span>
           </div>
         </div>
@@ -659,3 +838,4 @@ export default function HomePage() {
     </main>
   )
 }
+
