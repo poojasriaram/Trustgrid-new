@@ -257,8 +257,8 @@ export function SiteHeader() {
                   <span className="mega-menu-badge">THE ENTERPRISE AI OPERATING STACK</span>
                   <p>6 Vertically Integrated Engineering Domains for the Enterprise AI Operating Stack</p>
                 </div>
-                <Link href="/solutions/ai-infra-engineering" className="mega-header-link" onClick={closeAll}>
-                  <span>Explore Full Architecture</span>
+                <Link href="/sitemap" className="mega-header-link" onClick={closeAll}>
+                  <span>Explore 5-Level Architecture Map</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -410,7 +410,12 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 5. ABOUT US DROPDOWN / MEGA MENU */}
+        {/* 5. SITE MAP (V14.0) */}
+        <Link href="/sitemap" className="nav-link" onClick={closeAll}>
+          Site Map
+        </Link>
+
+        {/* 6. ABOUT US DROPDOWN / MEGA MENU */}
         <div className="nav-dropdown-wrapper">
           <button
             className={`nav-menu-trigger ${activeMenu === 'about' ? 'active' : ''}`}
@@ -655,6 +660,11 @@ export function SiteHeader() {
                 </div>
               )}
             </div>
+
+            {/* Mobile Site Map Link */}
+            <Link href="/sitemap" className="mobile-nav-link" onClick={closeAll}>
+              <span>Site Map v14.0 (5-Levels)</span>
+            </Link>
 
             {/* Mobile About Us Accordion */}
             <div className="mobile-accordion">
