@@ -54,6 +54,7 @@ export function SiteFooter() {
           <h4>Methodology & Insights</h4>
           <ul>
             <li><Link href="/methodology-engine">AI Methodology Engine</Link></li>
+            <li><Link href="/sitemap" style={{ color: '#60a5fa', fontWeight: 600 }}>Site Map v14.0 (5-Levels)</Link></li>
             <li><Link href="/insights">AI Insights & Papers</Link></li>
             <li><Link href="/about#case-studies">Enterprise Case Studies</Link></li>
             <li>
@@ -89,6 +90,7 @@ export function SiteFooter() {
         <p>© 2026 TrustGrid.ai. All rights reserved.</p>
         <div className="footer-bottom-links">
           <Link href="/">Home</Link>
+          <Link href="/sitemap">Site Map v14.0</Link>
           <Link href="/solutions/ai-infra-engineering">Solutions</Link>
           <Link href="/industries">Industries</Link>
           <Link href="/methodology-engine">AI Methodology</Link>

@@ -166,10 +166,16 @@ const insightsMenuItems = [
     desc: 'Engineering dispatches, architectural reviews, and operational methodologies.'
   },
   {
-    label: 'Resources',
+    label: 'Resources & Frameworks',
     href: '/insights',
     icon: FolderOpen,
     desc: 'Frameworks, maturity assessment models, and technical reference guides.'
+  },
+  {
+    label: 'Site Map v14.0',
+    href: '/sitemap',
+    icon: Layers,
+    desc: 'Complete 5-level expert content model spanning 6 Groups and 18 Engineering Areas.'
   },
   {
     label: 'Crowd Safety Predictor',
