@@ -100,8 +100,8 @@ body {
 .nav {
   display: flex;
   align-items: center;
-  gap: clamp(16px, 2.2vw, 32px);
-  font-size: 13.5px;
+  gap: clamp(6px, 1.1vw, 18px);
+  font-size: 13px;
   font-weight: 500;
   color: var(--ink-soft);
 }
@@ -119,16 +119,17 @@ body {
 .nav-menu-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   background: transparent;
   border: 0;
   color: var(--ink-soft);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .nav-menu-trigger:hover,
@@ -151,13 +152,14 @@ body {
 }
 
 .nav-link {
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink-soft);
   text-decoration: none;
-  padding: 6px 10px;
+  padding: 6px 8px;
   border-radius: var(--radius-sm);
   transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .nav-link:hover {
