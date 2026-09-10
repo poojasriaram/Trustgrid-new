@@ -185,6 +185,36 @@ body {
   transform: none;
 }
 
+.agentic-mega-menu {
+  width: 880px;
+  left: -60px;
+  transform: none;
+}
+
+.infra-mega-menu {
+  width: 980px;
+  left: -160px;
+  transform: none;
+}
+
+.networking-mega-menu {
+  width: 920px;
+  left: -240px;
+  transform: none;
+}
+
+.cybersecurity-mega-menu {
+  width: 920px;
+  left: -320px;
+  transform: none;
+}
+
+.value-mega-menu {
+  width: 940px;
+  left: -420px;
+  transform: none;
+}
+
 .industries-mega-menu {
   width: 980px;
   left: -280px;
@@ -207,6 +237,109 @@ body {
   width: 620px;
   left: -380px;
   transform: none;
+}
+
+.domain-mega-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.domain-mega-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.domain-mega-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ea-group-card {
+  background: var(--background);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.ea-group-card:hover {
+  border-color: rgba(29, 92, 255, 0.3);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(29, 92, 255, 0.06);
+}
+
+.ea-group-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.ea-group-tag {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--blue);
+  background: var(--blue-subtle);
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.ea-group-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.offering-row {
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding-top: 6px;
+  margin-top: 2px;
+}
+
+.offering-row-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.offering-row-desc {
+  font-size: 11px;
+  color: var(--ink-soft);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+
+.l5-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.l5-pill {
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--ink);
+  background: rgba(0, 0, 0, 0.04);
+  padding: 1px 6px;
+  border-radius: 3px;
+  line-height: 1.4;
+}
+
+.l5-pill.highlight {
+  color: var(--blue);
+  background: var(--blue-subtle);
+  font-weight: 600;
 }
 
 @keyframes megaFadeIn {
