@@ -8463,3 +8463,220 @@ body {
   transform: translateY(-2px);
 }
 
+/* ==========================================================================
+   7-LAYER SOLUTION DETAIL PAGE ARCHITECTURE (Reference Design System)
+   ========================================================================== */
+
+.solution-outcomes-bar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  padding: 24px clamp(20px, 4.5vw, 70px);
+}
+
+.outcomes-bar-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.outcome-metric-card {
+  border-left: 2px solid var(--blue);
+  padding-left: 16px;
+}
+
+.outcome-metric-val {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+}
+
+.outcome-metric-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+
+/* 5-Layer Engineering Architecture Cards */
+.five-layer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.five-layer-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.five-layer-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(29, 92, 255, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+.layer-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.layer-number-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--blue);
+  background: var(--blue-subtle);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.layer-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.layer-purpose {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.layer-components-box {
+  background: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  flex-grow: 1;
+}
+
+.components-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.layer-components-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.layer-components-box li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--foreground);
+  line-height: 1.35;
+}
+
+.layer-outcome-box {
+  background: var(--blue-subtle);
+  border: 1px solid rgba(29, 92, 255, 0.15);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.outcome-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--blue-hover);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.layer-outcome-box strong {
+  font-size: 0.82rem;
+  color: var(--primary);
+}
+
+/* Temporal Spectrum Grid */
+.temporal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.temporal-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.22s ease;
+}
+
+.temporal-card:hover {
+  border-color: var(--blue);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.temporal-phase-badge {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.temporal-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 0 8px 0;
+}
+
+.temporal-focus {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  flex-grow: 1;
+}
+
+.temporal-outcome-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--foreground);
+  background: #f8fafc;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #edf2f7;
+}
+
