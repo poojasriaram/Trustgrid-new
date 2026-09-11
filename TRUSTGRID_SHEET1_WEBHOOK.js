@@ -470,10 +470,43 @@ function sendAllSamplePreviewEmailsToPooja() {
   });
 }
 
+// 🗑️ 1-Click Cleaner: Deletes all previous/unwanted sheets, keeping only the 9 approved tabs
+function deleteOldUnwantedTabs() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var validTabNames = Object.keys(TAB_CONFIGS);
+
+  // 1. Ensure all 9 valid tabs exist first
+  initializeAllDatabaseTables();
+
+  var allSheets = ss.getSheets();
+  var deleted = [];
+
+  // 2. Iterate and delete any sheet that isn't in the 9 valid tabs
+  for (var i = 0; i < allSheets.length; i++) {
+    var sheet = allSheets[i];
+    var name = sheet.getName();
+    if (validTabNames.indexOf(name) === -1 && allSheets.length - deleted.length > 1) {
+      ss.deleteSheet(sheet);
+      deleted.push(name);
+    }
+  }
+
+  var msg = deleted.length > 0 
+    ? "Deleted " + deleted.length + " old sheets:\n" + deleted.join(", ") 
+    : "No unwanted sheets found. All 9 active tabs are clean!";
+  
+  try {
+    SpreadsheetApp.getUi().alert("🧹 Cleanup Complete", msg, SpreadsheetApp.getUi().ButtonSet.OK);
+  } catch(e) {}
+
+  return { success: true, deleted: deleted };
+}
+
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("🚀 TrustGrid Admin")
     .addItem("📊 Pre-Create All 9 Tabs", "initializeAllDatabaseTables")
+    .addItem("🧹 Delete Old / Unwanted Sheets", "deleteOldUnwantedTabs")
     .addItem("📧 Send Sample Preview Email", "sendAllSamplePreviewEmailsToPooja")
     .addToUi();
 }
