@@ -50,10 +50,13 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
         return;
     }
 
-    // Pulling Raw Ingestion Data from Sheet 1
-    var tSheet = db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
-    var eSheet = db.getSheetByName("engagement_metrics") || db.getSheetByName("EngagementMetrics");
-    var ubSheet = db.getSheetByName("user_behavior_library") || db.getSheetByName("UserBehaviorLibrary");
+    // Pulling Raw Ingestion Data from Sheet 1 (Exact Tab Matches)
+    var tSheet = db.getSheetByName("Page Views") || db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
+    var eSheet = db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
+    var ubSheet = db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
+    var leadsSheet = db.getSheetByName("Leads") || db.getSheetByName("contact_submissions");
+    var diagSheet = db.getSheetByName("AI Diagnostic Leads") || db.getSheetByName("ai_diagnostics");
+    var formsSheet = db.getSheetByName("Form Submissions");
 
     var tDataRaw = (tSheet && tSheet.getLastRow() > 0) ? tSheet.getDataRange().getValues() : [];
     var eDataRaw = (eSheet && eSheet.getLastRow() > 0) ? eSheet.getDataRange().getValues() : [];
