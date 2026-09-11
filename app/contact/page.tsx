@@ -53,11 +53,6 @@ export default function ContactPage() {
       return
     }
 
-    if (!company.trim()) {
-      setErrorMessage('Please enter your organization name.')
-      return
-    }
-
     setIsSubmitting(true)
 
     const result = await submitTrustGridForm({
@@ -65,11 +60,11 @@ export default function ContactPage() {
       name,
       email,
       phone,
-      company,
+      company: company || 'Not Specified',
       designation,
       industry: industry || 'Cross-Industry',
       subject: subject || 'General Strategic Inquiry',
-      message: message || 'General enterprise inquiry from contact page.'
+      message: message || 'Direct inquiry from contact page.'
     })
 
     setIsSubmitting(false)
@@ -223,7 +218,7 @@ export default function ContactPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Phone Number</span>
+                      <span>Phone Number (Optional)</span>
                       <input
                         type="tel"
                         value={phone}
@@ -233,18 +228,17 @@ export default function ContactPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Company / Organization *</span>
+                      <span>Company / Organization (Optional)</span>
                       <input
                         type="text"
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
-                        required
                         placeholder="e.g. Acme Corp"
                       />
                     </label>
 
                     <label className="input-group">
-                      <span>Job Title / Designation</span>
+                      <span>Job Title / Role (Optional)</span>
                       <input
                         type="text"
                         value={designation}
@@ -254,13 +248,13 @@ export default function ContactPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Industry Sector</span>
+                      <span>Industry Sector (Optional)</span>
                       <select
                         className="industry-dropdown"
                         value={industry}
                         onChange={(e) => setIndustry(e.target.value)}
                       >
-                        <option value="">-- Select Industry --</option>
+                        <option value="">-- Select Industry (Optional) --</option>
                         {allIndustries.map((ind) => (
                           <option key={ind} value={ind}>{ind}</option>
                         ))}
@@ -268,24 +262,22 @@ export default function ContactPage() {
                     </label>
 
                     <label className="input-group md:col-span-2">
-                      <span>Subject / Topic *</span>
+                      <span>Subject / Topic (Optional)</span>
                       <input
                         type="text"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
-                        required
                         placeholder="e.g. Inference Infrastructure Optimization & Advisory"
                       />
                     </label>
 
                     <label className="input-group md:col-span-2">
-                      <span>Message / Requirements *</span>
+                      <span>Message / Requirements (Optional)</span>
                       <textarea
                         rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        required
-                        placeholder="Please describe your AI workload, compute requirements, or strategic inquiry..."
+                        placeholder="Describe your AI workload, compute requirements, or strategic goals..."
                       />
                     </label>
                   </div>

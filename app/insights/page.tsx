@@ -48,13 +48,8 @@ export default function InsightsPage() {
     e.preventDefault()
     setNlError('')
 
-    if (!nlName.trim()) {
-      setNlError('Please provide your name.')
-      return
-    }
-
     if (!nlEmail.trim() || !validateEmail(nlEmail)) {
-      setNlError('Please provide a valid work email.')
+      setNlError('Please provide a valid work email address.')
       return
     }
 
@@ -62,9 +57,9 @@ export default function InsightsPage() {
 
     const res = await submitTrustGridForm({
       formName: 'Newsletter / Insights Subscription',
-      name: nlName,
-      email: nlEmail,
-      company: nlCompany || 'Enterprise Subscriber',
+      name: nlName.trim() || 'Subscriber',
+      email: nlEmail.trim(),
+      company: nlCompany.trim() || 'Enterprise Subscriber',
       industry: nlIndustry || 'Cross-Industry',
       message: 'Subscribed to TrustGrid Research & Whitepapers'
     })
@@ -314,13 +309,12 @@ export default function InsightsPage() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '12px', marginBottom: '16px' }}>
                   <div className="input-group">
-                    <span>Full Name *</span>
+                    <span>Full Name (Optional)</span>
                     <input
                       type="text"
                       value={nlName}
                       onChange={(e) => setNlName(e.target.value)}
                       placeholder="e.g. Elena Rostova"
-                      required
                     />
                   </div>
 
@@ -336,7 +330,7 @@ export default function InsightsPage() {
                   </div>
 
                   <div className="input-group">
-                    <span>Company</span>
+                    <span>Company (Optional)</span>
                     <input
                       type="text"
                       value={nlCompany}
@@ -346,13 +340,13 @@ export default function InsightsPage() {
                   </div>
 
                   <div className="input-group">
-                    <span>Industry</span>
+                    <span>Industry (Optional)</span>
                     <select
                       className="industry-dropdown"
                       value={nlIndustry}
                       onChange={(e) => setNlIndustry(e.target.value)}
                     >
-                      <option value="">-- Select Industry --</option>
+                      <option value="">-- Select Industry (Optional) --</option>
                       {allIndustries.map((ind) => (
                         <option key={ind} value={ind}>{ind}</option>
                       ))}

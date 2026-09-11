@@ -189,11 +189,6 @@ function DiagnosticForm() {
       return
     }
 
-    if (!company.trim()) {
-      setErrorMessage('Please enter your company or organization name.')
-      return
-    }
-
     setIsSubmitting(true)
 
     const result = await submitTrustGridForm({
@@ -201,21 +196,21 @@ function DiagnosticForm() {
       name,
       email,
       phone,
-      company,
-      designation,
+      company: company || 'Enterprise Client',
+      designation: designation || 'Executive / AI Leader',
       industry: industry || 'Enterprise Cross-Industry',
       companySize: companySize || 'Unspecified',
       country: country || 'Global',
       businessFunction: businessFunction || 'AI & Engineering',
-      aiMaturity,
+      aiMaturity: aiMaturity || 'Exploring Enterprise AI',
       challenges: selectedChallenges,
       objective: objective || 'Production AI Assessment & Acceleration',
-      preferredTimeline,
+      preferredTimeline: preferredTimeline || 'Immediate (Next 30 Days)',
       message,
       selectedSolutions: selectedSolutions.length > 0
         ? selectedSolutions.map(s => solutions.find(sol => sol.slug === s)?.shortTitle || s)
         : ['Comprehensive AI Operating Stack Diagnostic'],
-      engagementModel: selectedModel,
+      engagementModel: selectedModel || 'Fixed-Scope Technical Diagnostic',
     })
 
     setIsSubmitting(false)
@@ -429,14 +424,13 @@ function DiagnosticForm() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="input-group">
-                    <span>Industry Sector *</span>
+                    <span>Industry Sector (Optional)</span>
                     <select
                       className="industry-dropdown"
                       value={industry}
                       onChange={(e) => setIndustry(e.target.value)}
-                      required
                     >
-                      <option value="">-- Select Industry Sector --</option>
+                      <option value="">-- Select Industry Sector (Optional) --</option>
                       {allIndustries.map((ind) => (
                         <option key={ind} value={ind}>
                           {ind}
@@ -446,14 +440,13 @@ function DiagnosticForm() {
                   </div>
 
                   <div className="input-group">
-                    <span>Company Size / Headcount *</span>
+                    <span>Company Size / Headcount (Optional)</span>
                     <select
                       className="industry-dropdown"
                       value={companySize}
                       onChange={(e) => setCompanySize(e.target.value)}
-                      required
                     >
-                      <option value="">-- Select Organization Size --</option>
+                      <option value="">-- Select Organization Size (Optional) --</option>
                       {companySizeOptions.map((sz) => (
                         <option key={sz} value={sz}>{sz}</option>
                       ))}
@@ -461,25 +454,23 @@ function DiagnosticForm() {
                   </div>
 
                   <div className="input-group">
-                    <span>Country / Geographic Region *</span>
+                    <span>Country / Geographic Region (Optional)</span>
                     <input
                       type="text"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
                       placeholder="e.g. United States, Singapore, India, UK..."
-                      required
                     />
                   </div>
 
                   <div className="input-group">
-                    <span>Business Function *</span>
+                    <span>Business Function (Optional)</span>
                     <select
                       className="industry-dropdown"
                       value={businessFunction}
                       onChange={(e) => setBusinessFunction(e.target.value)}
-                      required
                     >
-                      <option value="">-- Select Primary Function --</option>
+                      <option value="">-- Select Primary Function (Optional) --</option>
                       {businessFunctionOptions.map((fn) => (
                         <option key={fn} value={fn}>{fn}</option>
                       ))}
@@ -492,12 +483,12 @@ function DiagnosticForm() {
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 03</span>
-                  <h3>Current AI Maturity & Primary Challenges</h3>
+                  <h3>Current AI Maturity & Primary Challenges (Optional)</h3>
                   <p>Select your current stage and specific engineering bottlenecks:</p>
                 </div>
 
                 <div className="input-group" style={{ marginBottom: '18px' }}>
-                  <span>Current AI Maturity Stage *</span>
+                  <span>Current AI Maturity Stage (Optional)</span>
                   <div className="solution-pills-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
                     {aiMaturityOptions.map((mat) => {
                       const isSelected = aiMaturity === mat
@@ -520,7 +511,7 @@ function DiagnosticForm() {
                 </div>
 
                 <div className="input-group" style={{ marginBottom: '18px' }}>
-                  <span>Primary AI Challenges (Select all that apply) *</span>
+                  <span>Primary AI Challenges (Optional - Select all that apply)</span>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '6px' }}>
                     {aiChallengeOptions.map((ch) => {
                       const isSelected = selectedChallenges.includes(ch)
@@ -544,13 +535,12 @@ function DiagnosticForm() {
 
                 <div className="text-fields-grid">
                   <label className="input-group">
-                    <span>Business Objective & Target Outcome *</span>
+                    <span>Business Objective & Target Outcome (Optional)</span>
                     <textarea
                       rows={2}
                       value={objective}
                       onChange={(e) => setObjective(e.target.value)}
-                      placeholder="e.g. Slash inference cost by 40%, prepare for EU AI Act high-risk audit, deploy multi-agent fleet..."
-                      required
+                      placeholder="e.g. Slash inference cost by 40%, prepare for EU AI Act compliance, deploy multi-agent fleet..."
                     />
                   </label>
                 </div>
@@ -560,12 +550,12 @@ function DiagnosticForm() {
               <div className="form-step-section">
                 <div className="step-header">
                   <span className="step-number">STEP 04</span>
-                  <h3>Engagement Format & Timeline</h3>
+                  <h3>Engagement Format & Timeline (Optional)</h3>
                   <p>Preferred timeline and scope for the technical diagnostic:</p>
                 </div>
 
                 <div className="input-group" style={{ marginBottom: '16px' }}>
-                  <span>Preferred Engagement Timeline *</span>
+                  <span>Preferred Engagement Timeline (Optional)</span>
                   <select
                     className="industry-dropdown"
                     value={preferredTimeline}
@@ -634,7 +624,7 @@ function DiagnosticForm() {
                   </label>
 
                   <label className="input-group">
-                    <span>Phone Number</span>
+                    <span>Phone Number (Optional)</span>
                     <input
                       type="tel"
                       value={phone}
@@ -644,23 +634,21 @@ function DiagnosticForm() {
                   </label>
 
                   <label className="input-group">
-                    <span>Company / Organization *</span>
+                    <span>Company / Organization (Optional)</span>
                     <input
                       type="text"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      required
                       placeholder="e.g. Global Financial Corp"
                     />
                   </label>
 
                   <label className="input-group md:col-span-2">
-                    <span>Job Title / Designation *</span>
+                    <span>Job Title / Role (Optional)</span>
                     <input
                       type="text"
                       value={designation}
                       onChange={(e) => setDesignation(e.target.value)}
-                      required
                       placeholder="e.g. Chief Technology Officer / VP of AI Engineering"
                     />
                   </label>

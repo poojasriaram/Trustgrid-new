@@ -47,7 +47,7 @@ const UTM_KEY = 'tg_utm_data'
 const PREV_PAGE_KEY = 'tg_previous_page'
 
 const DEFAULT_ENDPOINT =
-  'https://script.google.com/macros/s/AKfycbwm8aO6wqtwHNoMIkfDYJYTcx3jGgyUNaOVkMTViIHI6azip5aG7U52IGUgDurHV9_8/exec'
+  'https://script.google.com/macros/s/AKfycbxwUkYylflGO1ylxVtgb_qn9FlEuf4NP23CEqDX_FVXGbwg46q5bcXE71BErLTBIGCG/exec'
 
 /**
  * Gets or creates anonymous Session ID

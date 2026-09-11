@@ -60,11 +60,6 @@ export default function PartnersPage() {
       return
     }
 
-    if (!company.trim()) {
-      setErrorMessage('Please enter your company or organization name.')
-      return
-    }
-
     setIsSubmitting(true)
 
     const result = await submitTrustGridForm({
@@ -72,10 +67,10 @@ export default function PartnersPage() {
       name,
       email,
       phone,
-      company,
-      designation,
-      partnershipType,
-      message: message || 'Strategic partnership proposal from partners page.'
+      company: company.trim() || 'Strategic Partner Candidate',
+      designation: designation || 'Partner Lead',
+      partnershipType: partnershipType || 'Other Strategic Collaboration',
+      message: message || 'Strategic partnership proposal submitted via partners portal.'
     })
 
     setIsSubmitting(false)
@@ -227,7 +222,7 @@ export default function PartnersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Phone Number</span>
+                      <span>Phone Number (Optional)</span>
                       <input
                         type="tel"
                         value={phone}
@@ -237,18 +232,17 @@ export default function PartnersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Company / Organization *</span>
+                      <span>Company / Organization (Optional)</span>
                       <input
                         type="text"
                         value={company}
                         onChange={(e) => setCompany(e.target.value)}
-                        required
                         placeholder="e.g. Silicon GPU Systems"
                       />
                     </label>
 
                     <label className="input-group">
-                      <span>Job Title / Designation</span>
+                      <span>Job Title / Designation (Optional)</span>
                       <input
                         type="text"
                         value={designation}
@@ -258,7 +252,7 @@ export default function PartnersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Partnership Type *</span>
+                      <span>Partnership Type (Optional)</span>
                       <select
                         className="industry-dropdown"
                         value={partnershipType}
@@ -271,12 +265,11 @@ export default function PartnersPage() {
                     </label>
 
                     <label className="input-group md:col-span-2">
-                      <span>Partnership Proposal / Overview *</span>
+                      <span>Partnership Proposal / Overview (Optional)</span>
                       <textarea
                         rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        required
                         placeholder="Please describe your technology stack, co-selling goals, or collaborative research objectives..."
                       />
                     </label>

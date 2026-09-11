@@ -238,7 +238,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Phone Number</span>
+                      <span>Phone Number (Optional)</span>
                       <input
                         type="tel"
                         value={phone}
@@ -248,7 +248,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Role Applied For *</span>
+                      <span>Role Applied For (Optional)</span>
                       <select
                         className="industry-dropdown"
                         value={role}
@@ -261,7 +261,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Years of Experience *</span>
+                      <span>Years of Experience (Optional)</span>
                       <select
                         className="industry-dropdown"
                         value={experience}
@@ -274,7 +274,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>LinkedIn Profile URL</span>
+                      <span>LinkedIn Profile URL (Optional)</span>
                       <input
                         type="url"
                         value={linkedIn}
@@ -284,7 +284,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>GitHub / Portfolio / Research URL</span>
+                      <span>GitHub / Portfolio / Research URL (Optional)</span>
                       <input
                         type="url"
                         value={portfolio}
@@ -294,7 +294,7 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group">
-                      <span>Resume / CV Document Link (Google Drive, Dropbox, PDF URL)</span>
+                      <span>Resume / CV Document Link (Optional)</span>
                       <input
                         type="url"
                         value={resume}
@@ -304,12 +304,11 @@ export default function CareersPage() {
                     </label>
 
                     <label className="input-group md:col-span-2">
-                      <span>Cover Note / Technical Achievements *</span>
+                      <span>Cover Note / Technical Achievements (Optional)</span>
                       <textarea
                         rows={4}
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        required
                         placeholder="Tell us about the most complex systems problem you have solved or your key AI engineering contributions..."
                       />
                     </label>
