@@ -52,77 +52,72 @@ const EMAIL_CONFIG = {
 };
 
 // =========================================================================================
+// =========================================================================================
 // 2. DATABASE TABLE CONFIGURATIONS & HEADERS
 // =========================================================================================
 
-var masterBehaviorMetrics = [
-  "Session ID", "Visitor ID", "Event ID", "Event Type", "Page Path", "Page Title", "Page URL",
-  "Landing Page", "Referrer", "Previous Page", "Traffic Source",
-  "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-  "Element", "Element ID", "Element Text", "Section", "Destination",
-  "Device", "Browser", "OS", "Screen Resolution", "Scroll Depth", "Time on Page (sec)",
-  "Form Name", "Form ID", "Form Step", "Organization", "IP Location", "IP Address",
-  "Hot Lead Flag", "Intent Rank", "Engagement Score", "Timestamp"
-];
-
 var TAB_CONFIGS = {
+  // 1. Contact & AI Architect Consultations
   "contact_submissions": [
     "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
     "Service Interest", "Subject", "Message",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 2. AI Diagnostics, Readiness, Workshop & Proposal Requests
   "ai_diagnostics": [
     "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
     "AI Maturity Level", "Primary Objectives", "Selected Solutions", "Preferred Timeline", "Message",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 3. Strategic & Ecosystem Partner Applications
   "partner_applications": [
     "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
     "Partnership Type", "Expertise / Domain", "Collaboration Model", "Message",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 4. Engineering & Fellowship Career Applications
   "career_applications": [
     "Submission ID", "Name", "Email", "Phone", "Role", "Experience",
     "LinkedIn Profile", "Portfolio URL", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Note",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 5. Whitepapers & Insights Subscriptions
   "insights_subscriptions": [
     "Email", "Name", "Company", "Industry", "Topic Preferences",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 6. Essential Website Visitors & Traffic
   "traffic_analytics": [
     "Session ID", "Visitor ID", "Page Path", "Page Title", "Referrer", "Traffic Source",
     "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
     "Device", "Browser", "Operating System", "Screen Size",
     "Organization", "IP Location", "IP Address", "Timestamp"
-  ],
-  "user_behavior_library": masterBehaviorMetrics,
-  "engagement_metrics": [
-    "Session ID", "Visitor ID", "Page URL", "Duration (sec)", "Scroll Depth (%)", "Click Count",
-    "Engagement Score", "CTA Clicked", "Returning User", "Is Hot Lead", "Timestamp"
   ]
 };
 
 var SHEET_NAME_ALIASES = {
   // Contact
-  "contactform": "contact_submissions", "contact_submissions": "contact_submissions", "contact_form": "contact_submissions", "contact": "contact_submissions", "contactinquiry": "contact_submissions", "contacts": "contact_submissions", "ContactForm": "contact_submissions", "talktoaiarchitect": "contact_submissions", "architectconsultations": "contact_submissions",
+  "contactform": "contact_submissions", "contact_submissions": "contact_submissions", "contact_form": "contact_submissions", "contact": "contact_submissions", "contactinquiry": "contact_submissions", "contacts": "contact_submissions", "talktoaiarchitect": "contact_submissions", "architectconsultations": "contact_submissions",
   // AI Diagnostic
-  "aidiagnostic": "ai_diagnostics", "ai_diagnostics": "ai_diagnostics", "ai_diagnostic": "ai_diagnostics", "aidiagnosticform": "ai_diagnostics", "bookaidiagnostic": "ai_diagnostics", "diagnostic": "ai_diagnostics", "AIDiagnostic": "ai_diagnostics", "requestproposal": "ai_diagnostics", "proposalrequests": "ai_diagnostics", "aireadiness": "ai_diagnostics", "usecaseworkshops": "ai_diagnostics",
+  "aidiagnostic": "ai_diagnostics", "ai_diagnostics": "ai_diagnostics", "ai_diagnostic": "ai_diagnostics", "aidiagnosticform": "ai_diagnostics", "bookaidiagnostic": "ai_diagnostics", "diagnostic": "ai_diagnostics", "requestproposal": "ai_diagnostics", "proposalrequests": "ai_diagnostics", "aireadiness": "ai_diagnostics", "usecaseworkshops": "ai_diagnostics",
   // Partner Applications
-  "partnerapps": "partner_applications", "partner_applications": "partner_applications", "partner_application": "partner_applications", "partners": "partner_applications", "partnership": "partner_applications", "partnershipinquiry": "partner_applications", "PartnerApps": "partner_applications",
+  "partnerapps": "partner_applications", "partner_applications": "partner_applications", "partner_application": "partner_applications", "partners": "partner_applications", "partnership": "partner_applications", "partnershipinquiry": "partner_applications",
   // Career Applications
-  "careerapplications": "career_applications", "career_applications": "career_applications", "career_application": "career_applications", "careers": "career_applications", "career": "career_applications", "jobs": "career_applications", "CareerApplications": "career_applications",
+  "careerapplications": "career_applications", "career_applications": "career_applications", "career_application": "career_applications", "careers": "career_applications", "career": "career_applications", "jobs": "career_applications",
   // Insights & Newsletter
-  "insightssubscriptions": "insights_subscriptions", "insights_subscriptions": "insights_subscriptions", "insights_subscription": "insights_subscriptions", "newsletter": "insights_subscriptions", "insights": "insights_subscriptions", "subscribers": "insights_subscriptions", "InsightsSubscriptions": "insights_subscriptions",
-  // Telemetry
-  "trafficanalytics": "traffic_analytics", "traffic_analytics": "traffic_analytics", "traffic": "traffic_analytics", "TrafficAnalytics": "traffic_analytics",
-  "engagementmetrics": "engagement_metrics", "engagement_metrics": "engagement_metrics", "engagement": "engagement_metrics", "EngagementMetrics": "engagement_metrics",
-  "userbehaviorlibrary": "user_behavior_library", "user_behavior_library": "user_behavior_library", "behavior": "user_behavior_library", "telemetry": "user_behavior_library", "UserBehaviorLibrary": "user_behavior_library"
+  "insightssubscriptions": "insights_subscriptions", "insights_subscriptions": "insights_subscriptions", "insights_subscription": "insights_subscriptions", "newsletter": "insights_subscriptions", "insights": "insights_subscriptions", "subscribers": "insights_subscriptions",
+  // Telemetry & Visitor Traffic
+  "trafficanalytics": "traffic_analytics", "traffic_analytics": "traffic_analytics", "traffic": "traffic_analytics", "visitors": "traffic_analytics", "website_visitors": "traffic_analytics", "telemetry": "traffic_analytics"
 };
 
 function findSheetFlexible(spreadsheet, requestedName) {
@@ -256,30 +251,16 @@ function doPost(e) {
 function handleTelemetryEvent(data) {
   try {
     var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
-    if (data.eventType === "PAGE_VIEW") {
-      var tSheet = findSheetFlexible(ss, "traffic_analytics");
-      if (!tSheet) {
-        tSheet = ss.insertSheet("traffic_analytics");
-        var hd = TAB_CONFIGS["traffic_analytics"];
-        tSheet.getRange(1, 1, 1, hd.length).setValues([hd]).setFontWeight("bold").setBackground("#0f172a").setFontColor("#38bdf8");
-        tSheet.setFrozenRows(1);
-      }
-      var tHeaders = tSheet.getRange(1, 1, 1, Math.max(tSheet.getLastColumn(), 1)).getValues()[0];
-      var tRow = tHeaders.map(function(h) { return resolveField(h, data); });
-      tSheet.appendRow(tRow);
+    var tSheet = findSheetFlexible(ss, "traffic_analytics");
+    if (!tSheet) {
+      tSheet = ss.insertSheet("traffic_analytics");
+      var hd = TAB_CONFIGS["traffic_analytics"];
+      tSheet.getRange(1, 1, 1, hd.length).setValues([hd]).setFontWeight("bold").setBackground("#0f172a").setFontColor("#38bdf8");
+      tSheet.setFrozenRows(1);
     }
-
-    var ubSheet = findSheetFlexible(ss, "user_behavior_library");
-    if (!ubSheet) {
-      ubSheet = ss.insertSheet("user_behavior_library");
-      var ubHeaders = TAB_CONFIGS["user_behavior_library"];
-      ubSheet.getRange(1, 1, 1, ubHeaders.length).setValues([ubHeaders]).setFontWeight("bold").setBackground("#0f172a").setFontColor("#818cf8");
-      ubSheet.setFrozenRows(1);
-    }
-    var uHeaders = ubSheet.getRange(1, 1, 1, Math.max(ubSheet.getLastColumn(), 1)).getValues()[0];
-    var uRow = uHeaders.map(function(h) { return resolveField(h, data); });
-    ubSheet.appendRow(uRow);
-
+    var tHeaders = tSheet.getRange(1, 1, 1, Math.max(tSheet.getLastColumn(), 1)).getValues()[0];
+    var tRow = tHeaders.map(function(h) { return resolveField(h, data); });
+    tSheet.appendRow(tRow);
   } catch (e) {
     console.error("Telemetry error:", e.toString());
   }

@@ -34,15 +34,13 @@ This guide explains how to configure your 2-Sheet system for **TrustGrid.AI**.
 1. Open your **Sheet 1 Spreadsheet** (`1cK4aA9usPB5lIWDlPEdV04zB_mOrHTLUYEys1p8gb80`).
 2. Go to **Extensions $\rightarrow$ Apps Script**.
 3. Ensure [`TRUSTGRID_SHEET1_WEBHOOK.js`](file:///c:/Users/srimp/Downloads/TRUSTGRID.NEW/TRUSTGRID_SHEET1_WEBHOOK.js) is pasted.
-4. **Pre-Create Database Tables**: In the function dropdown, select `initializeAllDatabaseTables` and click **Run**. This auto-creates:
+4. **Pre-Create Database Tables**: In the function dropdown, select `initializeAllDatabaseTables` and click **Run**. This auto-creates the essential tables:
    - `contact_submissions` *(Contact Page & AI Architect Consultations)*
    - `ai_diagnostics` *(Book AI Diagnostic, AI Readiness, Use-Case Workshop & Proposal RFP)*
    - `partner_applications` *(Ecosystem & Strategic Partnerships)*
    - `career_applications` *(Engineering Careers & Fellowships with Drive resume archiving)*
    - `insights_subscriptions` *(Whitepapers & Research Newsletter Subscriptions)*
-   - `traffic_analytics` *(Page views, visitors, referrers & UTM campaign parameters)*
-   - `user_behavior_library` *(Session clickstreams, scroll depths & engagement metrics)*
-   - `engagement_metrics` *(Time on page, interaction counts & hot lead flags)*
+   - `traffic_analytics` *(Visitors, page views, referrers & UTM campaign parameters)*
 5. *(Optional Test)* Select `sendAllSamplePreviewEmailsToPooja` and click **Run** to verify email delivery to `poojasri.aram@gmail.com`.
 6. Select `setupAllTrustGridTriggers` and click **Run** to enable daily/weekly automated digests and monthly candidate resume digests.
 
