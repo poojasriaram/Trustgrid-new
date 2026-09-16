@@ -19,6 +19,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { PageBannerHero } from '@/components/ui/page-banner-hero'
+import { officeLocations } from '@/lib/about-data'
 
 export default function ContactPage() {
   return (
@@ -45,24 +46,24 @@ export default function ContactPage() {
           }}
           quickNavItems={[
             { label: "1. Message Form", href: "#contact-form-section" },
-            { label: "2. Global Labs", href: "/about#locations" },
+            { label: "2. Global Offices", href: "#global-offices" },
             { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic" },
             { label: "4. Solutions Portfolio", href: "/offerings" }
           ]}
           metrics={{
-            statValue: "Global",
-            statLabel: "R&D Presence",
+            statValue: "5 Global",
+            statLabel: "Offices & R&D Labs",
             icon: Globe2,
             features: [
-              "Silicon Valley (USA)",
-              "Singapore Hub",
-              "Chennai R&D (India)"
+              "Tampa, Florida (USA HQ)",
+              "Singapore (APAC Hub)",
+              "Bengaluru & Mumbai (India R&D)"
             ]
           }}
         />
 
         {/* CONTENT & FORM GRID */}
-        <section className="section" id="contact-form-section" style={{ paddingTop: '30px', paddingBottom: '60px' }}>
+        <section className="section" id="contact-form-section" style={{ paddingTop: '30px', paddingBottom: '40px' }}>
           <div className="diagnostic-grid-layout">
             {/* LEFT: CONTACT DETAILS & CHANNELS */}
             <div className="diagnostic-intro-col">
@@ -82,8 +83,15 @@ export default function ContactPage() {
                     <Mail size={16} />
                   </div>
                   <div>
-                    <strong>Direct Email</strong>
-                    <p><a href="mailto:poojasri.trustgrid@gmail.com" style={{ color: '#1d5cff', textDecoration: 'none' }}>poojasri.trustgrid@gmail.com</a></p>
+                    <strong>Global Direct Email</strong>
+                    <p style={{ margin: '4px 0 2px' }}>
+                      <a href="mailto:connect@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
+                        connect@trustgrid.ai
+                      </a>
+                    </p>
+                    <p style={{ fontSize: '12px', color: '#64748b' }}>
+                      India Operations: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a>
+                    </p>
                   </div>
                 </div>
 
@@ -93,7 +101,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>Executive HQ & Labs</strong>
-                    <p>US Systems Architecture • Singapore APAC Office • India R&D Labs</p>
+                    <p>US Americas HQ (Tampa) • Singapore APAC Hub • Bengaluru & Mumbai R&D</p>
                   </div>
                 </div>
 
@@ -116,7 +124,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>SLA Commitment</strong>
-                    <p>Direct response from a senior technical architect within 24 business hours.</p>
+                    <p>Direct response from a senior technical architect within 24–48 business hours.</p>
                   </div>
                 </div>
               </div>
@@ -133,9 +141,56 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
+
+        {/* GLOBAL OFFICES & PHYSICAL ADDRESSES DIRECTORY */}
+        <section className="section presence-section" id="global-offices" style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+          <div className="section-intro">
+            <div className="intro-left">
+              <span className="section-badge">GLOBAL DIRECTORY</span>
+              <p className="section-label">Worldwide Offices, Systems Labs & Mailing Addresses</p>
+            </div>
+            <span className="section-index">ADDRESSES</span>
+          </div>
+
+          <div className="presence-header">
+            <h2>Our Global Operations & R&D Presence</h2>
+            <p>Direct contact details, physical office addresses, and telephone lines across the US, Singapore, and India.</p>
+          </div>
+
+          <div className="offices-grid">
+            {officeLocations.map((office, idx) => (
+              <div key={idx} className="office-card animated-card reveal-up">
+                <div className="office-tag">{office.tag}</div>
+                <h3>{office.city}</h3>
+                <p className="office-region">{office.region}</p>
+                <div className="office-address">
+                  <MapPin size={15} />
+                  <span>{office.address}</span>
+                </div>
+                <div className="office-contacts">
+                  {office.phone && (
+                    <div className="contact-row">
+                      <Phone size={14} />
+                      <a href={`tel:${office.phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        {office.phone}
+                      </a>
+                    </div>
+                  )}
+                  <div className="contact-row">
+                    <Mail size={14} />
+                    <a href={`mailto:${office.email}`} style={{ color: '#60a5fa', textDecoration: 'none' }}>
+                      {office.email}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       <SiteFooter />
     </div>
   )
 }
+

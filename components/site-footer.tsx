@@ -13,6 +13,16 @@ export function SiteFooter() {
           <p>
             The Enterprise AI Operating Company for the AGI Era. Engineering the complete vertical stack from silicon to strategy.
           </p>
+          <div style={{ marginTop: '12px', fontSize: '13px', color: '#94a3b8' }}>
+            <div style={{ marginBottom: '4px' }}>
+              <span style={{ color: '#64748b' }}>Global Inquiries: </span>
+              <a href="mailto:connect@trustgrid.ai" style={{ color: '#60a5fa', textDecoration: 'none' }}>connect@trustgrid.ai</a>
+            </div>
+            <div>
+              <span style={{ color: '#64748b' }}>Support & Operations: </span>
+              <a href="mailto:cs@trustgrid.in" style={{ color: '#60a5fa', textDecoration: 'none' }}>cs@trustgrid.in</a>
+            </div>
+          </div>
           <div style={{ marginTop: '16px' }}>
             <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
               <span>Book Your AI Diagnostic</span>

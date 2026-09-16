@@ -222,7 +222,7 @@ export const officeLocations: OfficeLocation[] = [
     city: "Tampa, Florida",
     region: "United States (Americas HQ)",
     tag: "US Executive Office",
-    address: "TrustGrid.AI Americas Operations, Tampa, FL, USA",
+    address: "501 E Kennedy Blvd Suite 1400, Tampa, FL 33602, United States (Mailing: 400 N Ashley Dr, Suite 1900, Tampa, FL 33602, USA)",
     phone: "+91 9513288612",
     email: "connect@trustgrid.ai"
   },
@@ -230,15 +230,23 @@ export const officeLocations: OfficeLocation[] = [
     city: "Singapore",
     region: "Asia-Pacific (APAC HQ)",
     tag: "APAC Operations",
-    address: "TrustGrid.AI APAC Pte. Ltd., Marina Bay Financial Centre, Singapore",
+    address: "5 Temasek Boulevard, 17th Floor, Singapore 038985",
     phone: "+65 6050 5235",
     email: "connect@trustgrid.ai"
   },
   {
-    city: "Bengaluru (Indiranagar)",
-    region: "India (R&D Center & Innovation Labs)",
-    tag: "Primary R&D Center",
-    address: "TRUSTGRID.AI INNOVATION PVT LTD, Indiranagar, Bengaluru, Karnataka, India",
+    city: "Bengaluru (Indiranagar HQ)",
+    region: "India (Global R&D Center)",
+    tag: "India Headquarters",
+    address: "TRUSTGRID.AI INNOVATION PVT LTD, Suite : 32 , 235, BINNAMANGALA, 2nd Floor, 13th Cross Road, Indira Nagar 2nd Stage, Hoysala Nagar, Bengaluru – 560038 , India",
+    phone: "+91 9513088612",
+    email: "cs@trustgrid.in"
+  },
+  {
+    city: "Mumbai",
+    region: "India (Western Operations)",
+    tag: "Mumbai Office",
+    address: "WeWork, Raheja Platinum, Road, off Andheri - Kurla Road, Sag Baug, Marol, Andheri East, Mumbai, Maharashtra 400059",
     phone: "+91 9513088612",
     email: "cs@trustgrid.in"
   },
@@ -246,7 +254,7 @@ export const officeLocations: OfficeLocation[] = [
     city: "Bengaluru (Tin Factory)",
     region: "India (Hardware & Systems Lab)",
     tag: "AI Systems Engineering Lab",
-    address: "TRUSTGRID.AI Systems Lab, Tin Factory Hub, Bengaluru, Karnataka, India",
+    address: "WeWork, 13th floor, Tin Factory, Salarpuria Magnificia, 78, Old Madras Rd, next to KR Puram, Mahadevapura, Bengaluru, Karnataka 560016",
     phone: "+91 9513088612",
     email: "cs@trustgrid.in"
   }

@@ -165,7 +165,7 @@ export async function submitTrustGridForm(
     console.error('TrustGrid form submission error:', error)
     return {
       success: false,
-      message: 'Unable to process submission. Please try again or contact hello@trustgrid.ai directly.',
+      message: 'Unable to process submission. Please try again or contact connect@trustgrid.ai directly.',
     }
   }
 }

@@ -36,7 +36,7 @@ const CONFIG = {
 const EMAIL_CONFIG = {
   name: "TrustGrid AI Intelligence",
   primaryAdmin: "poojasri.trustgrid@gmail.com",
-  replyTo: "hello@trustgrid.ai",
+  replyTo: "connect@trustgrid.ai",
   website: "https://www.trustgrid.ai"
 };
 
