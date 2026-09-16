@@ -28,6 +28,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { AboutStorySlider } from '@/components/ui/about-story-slider'
 import { ICPSlider } from '@/components/ui/icp-slider'
+import { PageBannerHero } from '@/components/ui/page-banner-hero'
 import {
   aboutHero,
   missionVision,
@@ -52,27 +53,29 @@ export default function AboutPage() {
     <main className="page-wrapper">
       <SiteHeader />
 
-      {/* ABOUT HERO */}
-      <section className="about-hero-section">
-        <div className="about-hero-badge-row">
-          <span className="section-badge">ABOUT TRUSTGRID.AI</span>
-          <span className="hero-badge-tag">{aboutHero.eyebrow}</span>
-        </div>
-
-        <h1 className="about-hero-title">
-          Engineering the resilient, hyper-optimized backbone of the <em>AI economy.</em>
-        </h1>
-
-        <p className="about-hero-desc">{aboutHero.description}</p>
-
-        <div className="about-quick-nav">
-          {aboutNavMenu.map((item, idx) => (
-            <Link key={idx} href={item.href} className="quick-nav-pill">
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* STANDARD PAGE BANNER HERO */}
+      <PageBannerHero
+        badge="ABOUT TRUSTGRID.AI"
+        badgeTag={aboutHero.eyebrow}
+        title="Engineering the resilient, hyper-optimized backbone of the"
+        titleHighlight="AI economy."
+        description={aboutHero.description}
+        thesisHighlight="Strategic Pedigree: Industrial engineering disciplines fused with silicon-level AI architecture and sovereign cybersecurity."
+        image="/images/hero-ai-infra.jpg"
+        primaryCta={{ text: 'Book AI Diagnostic', href: '/book-ai-diagnostic' }}
+        secondaryCta={{ text: 'Meet Our Leadership', href: '#leadership' }}
+        quickNavItems={aboutNavMenu}
+        metrics={{
+          statValue: '$180M+',
+          statLabel: 'Enterprise AI Value Realized',
+          icon: Award,
+          features: [
+            'NVIDIA, AMD & Custom ASIC Acceleration',
+            'Sovereign PQC & Agent Zero-Trust Security',
+            'Full-Stack Industrial TOC & DMAIC Rigor'
+          ]
+        }}
+      />
 
       {/* TRUSTGRID STORY & PHILOSOPHY SLIDER */}
       <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>

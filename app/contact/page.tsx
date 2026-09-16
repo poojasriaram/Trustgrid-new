@@ -11,12 +11,14 @@ import {
   Sparkles,
   MessageCircle,
   Clock,
-  ShieldCheck
+  ShieldCheck,
+  Globe2
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
+import { PageBannerHero } from '@/components/ui/page-banner-hero'
 
 export default function ContactPage() {
   return (
@@ -24,25 +26,43 @@ export default function ContactPage() {
       <SiteHeader />
 
       <main className="main-content">
-        {/* HERO */}
-        <section className="about-hero-section">
-          <div className="about-hero-bg" />
-          <div className="about-hero-content">
-            <div className="about-hero-badge">
-              <span className="dot" />
-              <span>GLOBAL ENTERPRISE ENGAGEMENT</span>
-            </div>
-            <h1 className="about-hero-title">
-              Connect with TrustGrid.AI Engineering
-            </h1>
-            <p className="about-hero-subtitle">
-              Reach out to our global architecture leads, systems engineers, and strategic advisors across the United States, Singapore, and India R&D labs.
-            </p>
-          </div>
-        </section>
+        {/* STANDARD PAGE BANNER HERO */}
+        <PageBannerHero
+          badge="GLOBAL ENGAGEMENT"
+          badgeTag="DIRECT ARCHITECT ACCESS"
+          title="Connect with TrustGrid.AI Global Systems &"
+          titleHighlight="Architecture Engineering Leads"
+          description="Reach out to our principal architecture leads, GPU compute engineers, and strategic enterprise advisors across the United States, Singapore, and India R&D labs."
+          thesisHighlight="US, Singapore & India R&D Centers • 24-Hour Turnaround • Direct Architect Scoping"
+          image="/images/hero-ai-infra.jpg"
+          primaryCta={{
+            label: "Send Engineering Message",
+            href: "#contact-form-section"
+          }}
+          secondaryCta={{
+            label: "Book AI Diagnostic",
+            href: "/book-ai-diagnostic"
+          }}
+          quickNavItems={[
+            { label: "1. Message Form", href: "#contact-form-section" },
+            { label: "2. Global Labs", href: "/about#locations" },
+            { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic" },
+            { label: "4. Solutions Portfolio", href: "/offerings" }
+          ]}
+          metrics={{
+            statValue: "Global",
+            statLabel: "R&D Presence",
+            icon: Globe2,
+            features: [
+              "Silicon Valley (USA)",
+              "Singapore Hub",
+              "Chennai R&D (India)"
+            ]
+          }}
+        />
 
         {/* CONTENT & FORM GRID */}
-        <section className="section" style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+        <section className="section" id="contact-form-section" style={{ paddingTop: '30px', paddingBottom: '60px' }}>
           <div className="diagnostic-grid-layout">
             {/* LEFT: CONTACT DETAILS & CHANNELS */}
             <div className="diagnostic-intro-col">

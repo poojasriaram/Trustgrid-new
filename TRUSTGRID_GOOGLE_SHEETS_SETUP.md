@@ -1,4 +1,4 @@
-# 🚀 TrustGrid.AI — Google Sheets & Analytics Setup Guide
+![alt text](image.png)# 🚀 TrustGrid.AI — Google Sheets & Analytics Setup Guide
 
 This guide explains how to configure your 2-Sheet system for **TrustGrid.AI**.
 

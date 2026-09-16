@@ -14,6 +14,7 @@ import {
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
+import { PageBannerHero } from '@/components/ui/page-banner-hero'
 
 export default function PartnersPage() {
   return (
@@ -21,25 +22,43 @@ export default function PartnersPage() {
       <SiteHeader />
 
       <main className="main-content">
-        {/* HERO */}
-        <section className="about-hero-section">
-          <div className="about-hero-bg" />
-          <div className="about-hero-content">
-            <div className="about-hero-badge">
-              <span className="dot" />
-              <span>GLOBAL ECOSYSTEM & ALLIANCES</span>
-            </div>
-            <h1 className="about-hero-title">
-              Partner with TrustGrid.AI
-            </h1>
-            <p className="about-hero-subtitle">
-              Join our global network of GPU compute providers, systems integrators, academic research labs, and enterprise technology innovators.
-            </p>
-          </div>
-        </section>
+        {/* STANDARD PAGE BANNER HERO */}
+        <PageBannerHero
+          badge="ECOSYSTEM ALLIANCES"
+          badgeTag="STRATEGIC PARTNERSHIPS"
+          title="Accelerating the Frontier AI Economy with"
+          titleHighlight="Strategic Enterprise Partners"
+          description="Join our global network of GPU compute providers, systems integrators, academic research labs, and enterprise technology innovators."
+          thesisHighlight="Hyperscaler Alliances • Silicon & Hardware Partners • Global Systems Integrators"
+          image="/images/offering-security.jpg"
+          primaryCta={{
+            label: "Join Partner Ecosystem",
+            href: "#partner-form-section"
+          }}
+          secondaryCta={{
+            label: "Explore Offerings",
+            href: "/offerings"
+          }}
+          quickNavItems={[
+            { label: "1. Partner Application", href: "#partner-form-section" },
+            { label: "2. Strategic Alliances", href: "/about#footprint" },
+            { label: "3. Open Initiatives", href: "/about#open-innovation" },
+            { label: "4. Contact Team", href: "/contact" }
+          ]}
+          metrics={{
+            statValue: "Ecosystem",
+            statLabel: "Strategic Alliances",
+            icon: Handshake,
+            features: [
+              "OEM & Silicon Integrations",
+              "Hyperscale Cloud Alliances",
+              "Academic AI Research Labs"
+            ]
+          }}
+        />
 
         {/* CONTENT & FORM */}
-        <section className="section" style={{ paddingTop: '20px', paddingBottom: '60px' }}>
+        <section className="section" id="partner-form-section" style={{ paddingTop: '30px', paddingBottom: '60px' }}>
           <div className="diagnostic-grid-layout">
             <div className="diagnostic-intro-col">
               <div className="diagnostic-badge-wrap">

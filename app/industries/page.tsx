@@ -2,10 +2,21 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import {
+  Building2,
+  ShieldCheck,
+  TrendingUp,
+  Layers,
+  Cpu,
+  ArrowUpRight,
+  CheckCircle2,
+  Sparkles,
+  ChevronRight
+} from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { industriesData, IndustryDetail } from '@/lib/industries-data'
-import { ArrowUpRight, CheckCircle2, ChevronRight, Filter, Layers, ShieldCheck, Sparkles, TrendingUp, Cpu } from 'lucide-react'
+import { PageBannerHero } from '@/components/ui/page-banner-hero'
 import { IndustryVerticalsSlider } from '@/components/ui/industry-verticals-slider'
 
 export default function IndustriesPage() {
@@ -20,33 +31,28 @@ export default function IndustriesPage() {
       <SiteHeader />
 
       <main className="main-content">
-        {/* HERO SECTION */}
-        <section className="about-hero-section">
-          <div className="about-hero-bg" />
-          <div className="about-hero-content">
-            <div className="about-hero-badge">
-              <span className="dot" />
-              <span>MISSION-CRITICAL & REGULATED SECTORS</span>
-            </div>
-            <h1 className="about-hero-title">
-              Industrial-Grade AI Engineering Across Regulated Verticals
-            </h1>
-            <p className="about-hero-subtitle">
-              From sovereign high-frequency banking enclaves and FDA-compliant clinical AI to air-gapped defense meshes and discrete shop floors. We engineer the hardware, agent architectures, and operational excellence for the world's most demanding enterprises.
-            </p>
-
-            <div className="about-hero-actions">
-              <Link href="/book-ai-diagnostic" className="button button-primary">
-                <span>Book Industry AI Diagnostic</span>
-                <ArrowUpRight size={16} />
-              </Link>
-              <Link href="/solutions/ai-infra-engineering" className="button button-ghost">
-                <span>Explore Solutions Stack</span>
-                <ChevronRight size={16} />
-              </Link>
-            </div>
-          </div>
-        </section>
+        {/* STANDARD PAGE BANNER HERO */}
+        <PageBannerHero
+          badge="MISSION-CRITICAL & REGULATED SECTORS"
+          badgeTag="12 INDUSTRY BLUEPRINTS"
+          title="Industrial-Grade AI Engineering Across"
+          titleHighlight="Regulated Verticals."
+          description="From sovereign high-frequency banking enclaves and FDA-compliant clinical AI to air-gapped defense meshes and discrete shop floors. We engineer the hardware, agent architectures, and operational excellence for the world's most demanding enterprises."
+          thesisHighlight="Domain Rigor: Zero-downtime, mathematically verified, and compliance-ready architectures engineered for high-stakes environments."
+          image="/images/industry-manufacturing.jpg"
+          primaryCta={{ text: 'Book Industry Diagnostic', href: '/book-ai-diagnostic' }}
+          secondaryCta={{ text: 'Explore All 12 Verticals', href: '#industries-list' }}
+          metrics={{
+            statValue: '12 Sectors',
+            statLabel: 'Turnkey Industry Blueprints',
+            icon: Building2,
+            features: [
+              'Banking & High-Frequency Trading (HFT)',
+              'Healthcare, Biopharma & FDA AI Validation',
+              'Energy, Smart Grids & Defense Grade Meshes'
+            ]
+          }}
+        />
 
         {/* ENTERPRISE INDUSTRY VERTICALS SLIDER */}
         <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>

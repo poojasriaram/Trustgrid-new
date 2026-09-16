@@ -6,6 +6,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { insightsArticles, InsightArticle } from '@/lib/insights-data'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
+import { PageBannerHero } from '@/components/ui/page-banner-hero'
 import {
   ArrowUpRight,
   BookOpen,
@@ -33,41 +34,44 @@ export default function InsightsPage() {
       <SiteHeader />
 
       <main className="main-content">
-        {/* HERO SECTION */}
-        <section className="about-hero-section">
-          <div className="about-hero-bg" />
-          <div className="about-hero-content">
-            <div className="about-hero-badge">
-              <span className="dot" />
-              <span>RESEARCH, CASE STUDIES & BENCHMARKS</span>
-            </div>
-            <h1 className="about-hero-title">
-              Frontier AI Engineering Insights & Technical Whitepapers
-            </h1>
-            <p className="about-hero-subtitle">
-              Rigorous architectural papers, real-world enterprise outcomes, post-quantum research, and open innovation breakthroughs from the engineers at TrustGrid.AI.
-            </p>
-
-            <div className="about-hero-actions">
-              <Link href="/book-ai-diagnostic" className="button button-primary">
-                <span>Request Executive Briefing</span>
-                <ArrowUpRight size={16} />
-              </Link>
-              <a
-                href="https://crowd-safety-predictor.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button button-ghost"
-              >
-                <span>Launch Crowd Safety Predictor</span>
-                <ArrowUpRight size={16} />
-              </a>
-            </div>
-          </div>
-        </section>
+        {/* STANDARD PAGE BANNER HERO */}
+        <PageBannerHero
+          badge="RESEARCH & BENCHMARKS"
+          badgeTag="FRONTIER AI INTELLIGENCE"
+          title="Frontier AI Engineering Insights, Whitepapers &"
+          titleHighlight="Technical Breakthroughs"
+          description="Rigorous architectural papers, real-world enterprise outcomes, post-quantum research, and open innovation breakthroughs from the engineers at TrustGrid.AI."
+          thesisHighlight="Empirical Systems Benchmarks • Multi-Agent Blueprints • Production Case Studies"
+          image="/images/offering-trusted-ai.jpg"
+          primaryCta={{
+            label: "Request Executive Briefing",
+            href: "/book-ai-diagnostic"
+          }}
+          secondaryCta={{
+            label: "Launch Crowd Safety App",
+            href: "https://crowd-safety-predictor.vercel.app/",
+            isExternal: true
+          }}
+          quickNavItems={[
+            { label: "All Insights", href: "#articles-grid" },
+            { label: "Featured Innovation", href: "#innovation-spotlight" },
+            { label: "Case Studies", href: "/case-studies" },
+            { label: "Executive Diagnostic", href: "/book-ai-diagnostic" }
+          ]}
+          metrics={{
+            statValue: "Frontier",
+            statLabel: "Whitepapers & Tools",
+            icon: BookOpen,
+            features: [
+              "Distributed GPU Benchmarks",
+              "Post-Quantum Cryptography",
+              "Real-Time Spatial Telemetry"
+            ]
+          }}
+        />
 
         {/* OPEN INNOVATION SPOTLIGHT BANNER */}
-        <section className="section" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
+        <section className="section" id="innovation-spotlight" style={{ paddingTop: '30px', paddingBottom: '30px' }}>
           <div className="hackathon-spotlight-banner animated-card reveal-up">
             <div className="spotlight-left">
               <div className="spotlight-badge">
