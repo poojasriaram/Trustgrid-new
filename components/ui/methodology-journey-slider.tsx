@@ -311,22 +311,24 @@ export function MethodologyJourneySlider() {
 
             {/* Footer Actions & Navigation */}
             <div className="meth-actions-footer">
-              <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
-                <span>Initiate {current.name} Stage</span>
-                <ArrowUpRight size={15} />
-              </Link>
-              <Link href="/request-proposal" className="button button-ghost button-sm">
-                <span>Request Custom Proposal</span>
-              </Link>
+              <div className="meth-cta-group">
+                <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
+                  <span>Initiate {current.name} Stage</span>
+                  <ArrowUpRight size={15} />
+                </Link>
+                <Link href="/request-proposal" className="button button-ghost button-sm">
+                  <span>Request Custom Proposal</span>
+                </Link>
+              </div>
 
-              <div className="meth-nav-arrows ml-auto">
+              <div className="meth-nav-arrows">
                 <button
                   type="button"
                   className="slider-arrow-btn"
                   onClick={handlePrev}
                   aria-label="Previous methodology stage"
                 >
-                  <ChevronLeft size={16} />
+                  <ChevronLeft size={18} />
                 </button>
                 <button
                   type="button"
@@ -334,7 +336,7 @@ export function MethodologyJourneySlider() {
                   onClick={handleNext}
                   aria-label="Next methodology stage"
                 >
-                  <ChevronRight size={16} />
+                  <ChevronRight size={18} />
                 </button>
               </div>
             </div>

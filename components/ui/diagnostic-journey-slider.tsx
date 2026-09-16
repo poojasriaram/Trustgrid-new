@@ -219,7 +219,7 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
 
             <div className="diag-objective-box">
               <div className="box-flag">
-                <Sparkles size={15} className="text-blue-500" />
+                <Sparkles size={15} className="text-blue-400" />
                 <span>Diagnostic Objective</span>
               </div>
               <p>{current.objective}</p>
@@ -242,7 +242,7 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
 
             <div className="diag-stakeholders-box">
               <span className="box-title">
-                <Users size={14} className="text-blue-500" />
+                <Users size={14} className="text-blue-400" />
                 Stakeholder Engagement:
               </span>
               <div className="stakeholders-tags">
@@ -257,13 +257,13 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
           <div className="diag-right-col">
             <div className="diag-deliverables-box">
               <span className="section-label">
-                <FileCheck size={14} className="text-blue-500" />
+                <FileCheck size={14} className="text-blue-400" />
                 Tangible Diagnostic Deliverables
               </span>
               <ul className="deliverables-checklist">
                 {current.deliverables.map((del, i) => (
                   <li key={i}>
-                    <CheckCircle2 size={14} className="text-blue-500 shrink-0 mt-0.5" />
+                    <CheckCircle2 size={14} className="text-blue-400 shrink-0 mt-0.5" />
                     <span>{del}</span>
                   </li>
                 ))}
@@ -272,7 +272,7 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
 
             <div className="diag-outcome-banner">
               <div className="outcome-banner-head">
-                <TrendingUp size={15} className="text-blue-500" />
+                <TrendingUp size={15} className="text-blue-400" />
                 <span>Expected Enterprise Outcome</span>
               </div>
               <p>{current.expectedOutcome}</p>
@@ -280,22 +280,24 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
 
             {/* Actions & Navigation */}
             <div className="diag-actions-footer">
-              <a href="#intake-form" className="button button-primary button-sm">
-                <span>Start with {current.name}</span>
-                <ArrowUpRight size={15} />
-              </a>
-              <Link href="/contact" className="button button-ghost button-sm">
-                <span>Consult Senior Architect</span>
-              </Link>
+              <div className="diag-cta-group">
+                <a href="#intake-form" className="button button-primary button-sm">
+                  <span>Start with {current.name}</span>
+                  <ArrowUpRight size={15} />
+                </a>
+                <Link href="/contact" className="button button-ghost button-sm">
+                  <span>Consult Senior Architect</span>
+                </Link>
+              </div>
 
-              <div className="diag-nav-arrows ml-auto">
+              <div className="diag-nav-arrows">
                 <button
                   type="button"
                   className="slider-arrow-btn"
                   onClick={handlePrev}
                   aria-label="Previous diagnostic stage"
                 >
-                  <ChevronLeft size={16} />
+                  <ChevronLeft size={18} />
                 </button>
                 <button
                   type="button"
@@ -303,7 +305,7 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
                   onClick={handleNext}
                   aria-label="Next diagnostic stage"
                 >
-                  <ChevronRight size={16} />
+                  <ChevronRight size={18} />
                 </button>
               </div>
             </div>
