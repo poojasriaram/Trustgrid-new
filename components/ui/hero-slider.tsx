@@ -207,12 +207,12 @@ export function HeroSlider() {
     setCurrentSlideIndex((prev) => (prev - 1 + total) % total)
   }, [total])
 
-  // Autoplay cycle (5.5s with pause on hover)
+  // Autoplay cycle (4s with pause on hover)
   useEffect(() => {
     if (isPaused || isDragging) return
     const timer = setInterval(() => {
       goToNext()
-    }, 5500)
+    }, 4000)
     return () => clearInterval(timer)
   }, [isPaused, isDragging, goToNext])
 
@@ -264,6 +264,28 @@ export function HeroSlider() {
       <HeroCanvas />
       <div className="hero-grid-bg" />
       <div className="hero-glow-sphere" />
+
+      {/* 6 FLOATING SIDE DOTS WITH DOMAIN TOOLTIPS */}
+      <div className="hero-side-dots-bar" aria-label="Hero slide indicators">
+        {heroSlidesData.map((slide, idx) => {
+          const isActive = idx === currentSlideIndex
+          return (
+            <button
+              key={slide.id}
+              type="button"
+              className={`hero-side-dot ${isActive ? 'active' : ''}`}
+              onClick={() => setCurrentSlideIndex(idx)}
+              aria-label={`Jump to ${slide.layerTag}`}
+            >
+              <span className="hero-side-dot-circle" />
+              <span className="hero-side-dot-tooltip">
+                <span className="tooltip-num">0{idx + 1}</span>
+                <span className="tooltip-text">{slide.layerTag.split('(')[0].trim()}</span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
 
       {/* MAIN HERO SLIDER DUAL-COLUMN CONTENT LAYOUT */}
       <div
