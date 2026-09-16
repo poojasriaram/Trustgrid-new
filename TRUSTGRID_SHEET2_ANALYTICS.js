@@ -54,13 +54,22 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var tSheet = db.getSheetByName("Page Views") || db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
     var eSheet = db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
     var ubSheet = db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
-    var leadsSheet = db.getSheetByName("Leads") || db.getSheetByName("contact_submissions");
+    var contactSheet = db.getSheetByName("Contact Leads") || db.getSheetByName("Leads") || db.getSheetByName("contact_submissions");
     var diagSheet = db.getSheetByName("AI Diagnostic Leads") || db.getSheetByName("ai_diagnostics");
+    var careerSheet = db.getSheetByName("Career Applications");
+    var partnerSheet = db.getSheetByName("Partner Applications");
+    var newsletterSheet = db.getSheetByName("Newsletter Subscribers");
     var formsSheet = db.getSheetByName("Form Submissions");
 
     var tDataRaw = (tSheet && tSheet.getLastRow() > 0) ? tSheet.getDataRange().getValues() : [];
     var eDataRaw = (eSheet && eSheet.getLastRow() > 0) ? eSheet.getDataRange().getValues() : [];
     var ubDataRaw = (ubSheet && ubSheet.getLastRow() > 0) ? ubSheet.getDataRange().getValues() : [];
+    var contactData = (contactSheet && contactSheet.getLastRow() > 0) ? contactSheet.getDataRange().getValues() : [];
+    var diagData = (diagSheet && diagSheet.getLastRow() > 0) ? diagSheet.getDataRange().getValues() : [];
+    var careerData = (careerSheet && careerSheet.getLastRow() > 0) ? careerSheet.getDataRange().getValues() : [];
+    var partnerData = (partnerSheet && partnerSheet.getLastRow() > 0) ? partnerSheet.getDataRange().getValues() : [];
+    var newsletterData = (newsletterSheet && newsletterSheet.getLastRow() > 0) ? newsletterSheet.getDataRange().getValues() : [];
+    var formsData = (formsSheet && formsSheet.getLastRow() > 0) ? formsSheet.getDataRange().getValues() : [];
 
     // ── LOCALHOST & DEV SANITIZATION ENGINE ──
     var tData = filterLocalhostData(tDataRaw);
@@ -83,7 +92,7 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var devRecordsPurged = (tDataRaw.length - tData.length) + (ubDataRaw.length - ubData.length);
     // ─────────────────────────────────────────
 
-    // Build all 15 Intelligence Tabs
+    // Build all 16 Intelligence Tabs
     try { buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged); } catch (err) { console.error("Tab 1 Error: " + err.toString()); }
     try { buildExecutiveDashboard(tData, eData); } catch (err) { console.error("Tab 2 Error: " + err.toString()); }
     try { buildGeoMapProfile(tData); } catch (err) { console.error("Tab 3 Error: " + err.toString()); }
@@ -99,8 +108,17 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     try { buildCoOccurrenceMatrix(tData, eData); } catch (err) { console.error("Tab 13 Error: " + err.toString()); }
     try { buildFunnelDropOffSheet(tData, db); } catch (err) { console.error("Tab 14 Error: " + err.toString()); }
     try { buildLeadScoringEngine(tData, eData); } catch (err) { console.error("Tab 15 Error: " + err.toString()); }
+    try {
+      buildLeadsConversionsIntelligence([
+        { name: "Contact Leads", data: contactData },
+        { name: "AI Diagnostic Leads", data: diagData },
+        { name: "Career Applications", data: careerData },
+        { name: "Partner Applications", data: partnerData },
+        { name: "Newsletter Subscribers", data: newsletterData }
+      ], formsData, tData);
+    } catch (err) { console.error("Tab 16 Error: " + err.toString()); }
 
-    if (ui) ui.alert("✅ SUCCESS! 15 TrustGrid Analytics Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
+    if (ui) ui.alert("✅ SUCCESS! 16 TrustGrid Analytics Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
 }
 
 function filterLocalhostData(data) {
@@ -450,8 +468,10 @@ function buildIdentityLinkerSheet(ubData, db) {
     if (!ubData || ubData.length < 2) return;
     var vidCol = ubData[0].indexOf("Visitor ID");
     var idents = {};
-    ["contact_submissions", "ai_diagnostics", "proposal_requests", "architect_consultations", "partner_applications", "ContactForm", "AIDiagnostic", "ProposalRequests", "ArchitectConsultations", "PartnerApps"].forEach(function (tab) {
-        var s = db.getSheetByName(tab); if (!s) return;
+    // Current Sheet 1 schema (Visitor ID / Session ID were added to these lead tabs); legacy
+    // tab names kept as a fallback for older spreadsheets that haven't been migrated yet.
+    ["Contact Leads", "AI Diagnostic Leads", "Career Applications", "Partner Applications", "Newsletter Subscribers", "Form Submissions", "Leads", "contact_submissions", "ai_diagnostics", "partner_applications"].forEach(function (tab) {
+        var s = db.getSheetByName(tab); if (!s || s.getLastRow() < 2) return;
         var d = s.getDataRange().getValues(), vC = d[0].indexOf("Visitor ID"), eC = d[0].indexOf("Email"), nC = d[0].indexOf("Name");
         if (vC > -1 && eC > -1) {
             for (var i = 1; i < d.length; i++) if (d[i][vC] && d[i][eC]) idents[d[i][vC]] = { n: d[i][nC] || "Enterprise User", e: d[i][eC], t: tab };
@@ -462,6 +482,7 @@ function buildIdentityLinkerSheet(ubData, db) {
     }
     sh.getRange(3, 1, 1, 4).setValues([["Visitor ID", "Lead Name", "Email", "Conversion Form"]]).setBackground(C.pu).setFontColor(C.w);
     if (results.length > 0) sh.getRange(4, 1, results.length, 4).setValues(results).setBackground(C.r1);
+    else sh.getRange(4, 1).setValue("No identity matches yet — run migrateAddVisitorTrackingColumns() in Sheet 1 if this is a pre-existing spreadsheet.").setFontColor(C.m);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -622,11 +643,142 @@ function buildLeadScoringEngine(tData, eData) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// TAB 16: LEADS & CONVERSIONS INTELLIGENCE
+// ══════════════════════════════════════════════════════════════════════════════
+// leadTabs: [{ name: "Contact Leads", data: [[headers...], [row...], ...] }, ...]
+function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
+    var sh = getOrCreateTab("📋 Leads & Conversions");
+    styleTitle(sh, "📋 Leads, Diagnostic Requests & Form Submissions Intelligence", 12, C.pu);
+    setColWidths(sh, 1, [20, 200, 160, 40, 200, 160, 40, 200, 160, 40, 200]);
+
+    // Flatten every lead tab into { tab, head, row } so stats can be computed generically,
+    // since each per-form sheet has a different column layout.
+    var allRows = [];
+    (leadTabs || []).forEach(function (t) {
+        var head = (t.data && t.data[0]) || [];
+        var rows = (t.data && t.data.length > 1) ? t.data.slice(1) : [];
+        rows.forEach(function (r) { allRows.push({ tab: t.name, head: head, row: r }); });
+    });
+
+    var formsRows = (formsData && formsData.length > 1) ? formsData.slice(1) : [];
+    var fHead = formsData[0] || [];
+
+    if (allRows.length === 0 && formsRows.length === 0) {
+        sh.getRange(4, 2).setValue("Waiting for lead / form submission data in Sheet 1...").setFontColor(C.m);
+        return;
+    }
+
+    // ── Mega stat row ──
+    var totalVisits = (tData && tData.length > 1) ? tData.length - 1 : 0;
+    var byTabCount = {};
+    allRows.forEach(function (item) { byTabCount[item.tab] = (byTabCount[item.tab] || 0) + 1; });
+    var totalLeads = allRows.length;
+    var totalDiag = byTabCount["AI Diagnostic Leads"] || 0;
+    var convRate = totalVisits > 0 ? ((totalLeads / totalVisits) * 100).toFixed(1) + "%" : "N/A";
+
+    var drawMegaStat = function (row, col, title, value, color) {
+        sh.getRange(row, col, 1, 1).setValue(title.toUpperCase()).setBackground(C.t).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setFontSize(9);
+        sh.getRange(row + 1, col, 2, 1).merge().setValue(value).setBackground(color).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setFontSize(22);
+    };
+    drawMegaStat(4, 2, "📥 Total Leads (All Forms)", totalLeads, C.pu);
+    drawMegaStat(4, 3, "🎯 Diagnostic Requests", totalDiag, C.re);
+    drawMegaStat(4, 5, "📝 Form Submissions", formsRows.length, C.g);
+    drawMegaStat(4, 6, "📈 Visit-to-Lead Rate", convRate, C.o);
+
+    // ── Leads by Form Type (one bucket per dedicated sheet) ──
+    var formTypeRows = Object.keys(byTabCount).map(function (k) { return [k, byTabCount[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+
+    sh.getRange(9, 2, 1, 2).merge().setValue("📊 Leads by Form Type").setBackground(C.pu).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(10, 2, 1, 2).setValues([["Form Type", "Count"]]).setBackground(C.p).setFontWeight("bold");
+    if (formTypeRows.length > 0) {
+        sh.getRange(11, 2, formTypeRows.length, 2).setValues(formTypeRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(10, 2, formTypeRows.length + 1, 2)).setPosition(9, 4, 0, 0).setOption("pieHole", 0.5).setOption("title", "Form Type Split").setOption("width", 340).setOption("height", 260).build());
+        } catch (e) {}
+    }
+
+    // ── Leads by Status (tabs without a Status column, e.g. Newsletter, are marked N/A) ──
+    var byStatus = {};
+    allRows.forEach(function (item) {
+        var sIdx = item.head.indexOf("Status");
+        var s = sIdx > -1 ? (item.row[sIdx] || "New") : "N/A";
+        byStatus[s] = (byStatus[s] || 0) + 1;
+    });
+    var statusRows = Object.keys(byStatus).map(function (k) { return [k, byStatus[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+
+    sh.getRange(9, 8, 1, 2).merge().setValue("🚦 Leads by Status").setBackground(C.re).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(10, 8, 1, 2).setValues([["Status", "Count"]]).setBackground(C.p).setFontWeight("bold");
+    if (statusRows.length > 0) sh.getRange(11, 8, statusRows.length, 2).setValues(statusRows).setBackground(C.r1);
+
+    // ── Lead Attribution by UTM Source ──
+    var bySource = {};
+    allRows.forEach(function (item) {
+        var uIdx = item.head.indexOf("UTM Source");
+        var s = (uIdx > -1 ? item.row[uIdx] : "") || "Direct / Organic";
+        bySource[s] = (bySource[s] || 0) + 1;
+    });
+    var sourceRows = Object.keys(bySource).map(function (k) { return [k, bySource[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+
+    sh.getRange(24, 2, 1, 2).merge().setValue("🌐 Lead Attribution by Source").setBackground(C.c).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(25, 2, 1, 2).setValues([["UTM Source", "Leads"]]).setBackground(C.p).setFontWeight("bold");
+    if (sourceRows.length > 0) sh.getRange(26, 2, sourceRows.length, 2).setValues(sourceRows).setBackground(C.r1);
+
+    // ── AI Diagnostic breakdowns: Industry & Company Size ──
+    var diagOnly = allRows.filter(function (item) { return item.tab === "AI Diagnostic Leads"; });
+    var byIndustry = {}, bySize = {};
+    diagOnly.forEach(function (item) {
+        var indIdx = item.head.indexOf("Industry"), sizeIdx = item.head.indexOf("Company Size");
+        var ind = (indIdx > -1 ? item.row[indIdx] : "") || "Unspecified"; byIndustry[ind] = (byIndustry[ind] || 0) + 1;
+        var sz = (sizeIdx > -1 ? item.row[sizeIdx] : "") || "Unspecified"; bySize[sz] = (bySize[sz] || 0) + 1;
+    });
+    var indRows = Object.keys(byIndustry).map(function (k) { return [k, byIndustry[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+    var sizeRows = Object.keys(bySize).map(function (k) { return [k, bySize[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+
+    sh.getRange(24, 8, 1, 2).merge().setValue("🏭 Diagnostic Leads by Industry").setBackground(C.o).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(25, 8, 1, 2).setValues([["Industry", "Count"]]).setBackground(C.p).setFontWeight("bold");
+    if (indRows.length > 0) sh.getRange(26, 8, indRows.length, 2).setValues(indRows).setBackground(C.r1);
+
+    sh.getRange(24, 11, 1, 2).merge().setValue("🏢 Diagnostic Leads by Company Size").setBackground("#6366f1").setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(25, 11, 1, 2).setValues([["Company Size", "Count"]]).setBackground(C.p).setFontWeight("bold");
+    if (sizeRows.length > 0) sh.getRange(26, 11, sizeRows.length, 2).setValues(sizeRows).setBackground(C.r1);
+
+    // ── Leads Captured Per Day (Trend, all forms combined) ──
+    var daily = {};
+    allRows.forEach(function (item) {
+        var tIdx = item.head.indexOf("Timestamp");
+        var ts = tIdx > -1 ? item.row[tIdx] : null; if (!ts) return;
+        var key = Utilities.formatDate(new Date(ts), Session.getScriptTimeZone(), "yyyy-MM-dd");
+        daily[key] = (daily[key] || 0) + 1;
+    });
+    var dateKeys = Object.keys(daily).sort();
+    var trendRows = dateKeys.map(function (d) { return [d, daily[d]]; });
+
+    sh.getRange(40, 2, 1, 2).merge().setValue("📈 Leads Captured Per Day").setBackground(C.g).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(41, 2, 1, 2).setValues([["Date", "Leads"]]).setBackground(C.p).setFontWeight("bold");
+    if (trendRows.length > 0) {
+        sh.getRange(42, 2, trendRows.length, 2).setValues(trendRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.LINE).addRange(sh.getRange(41, 2, trendRows.length + 1, 2)).setPosition(40, 4, 0, 0).setOption("width", 500).setOption("title", "Daily Lead Volume").build());
+        } catch (e) {}
+    }
+
+    // ── Career Resume Submissions (Drive links captured via Form Submissions) ──
+    var linkIdx = fHead.indexOf("Resume Drive Link"), nameIdx = fHead.indexOf("Name"), roleIdx = fHead.indexOf("Role"), fTsIdx = fHead.indexOf("Timestamp");
+    var resumeRows = formsRows.filter(function (r) { return r[linkIdx]; }).map(function (r) {
+        return [r[nameIdx] || "", r[roleIdx] || "", r[fTsIdx] || "", r[linkIdx]];
+    });
+
+    sh.getRange(58, 2, 1, 4).merge().setValue("📄 Career Resume Submissions (" + resumeRows.length + ")").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(59, 2, 1, 4).setValues([["Candidate", "Role", "Submitted", "Resume Link"]]).setBackground(C.p).setFontWeight("bold");
+    if (resumeRows.length > 0) sh.getRange(60, 2, resumeRows.length, 4).setValues(resumeRows).setBackground(C.r1);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // CUSTOM MENU SETUP
 // ══════════════════════════════════════════════════════════════════════════════
 function onOpen() {
     SpreadsheetApp.getUi()
         .createMenu('🚀 TRUSTGRID ANALYTICS')
-        .addItem('🔄 Refresh All 15 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
+        .addItem('🔄 Refresh All 16 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
         .addToUi();
 }

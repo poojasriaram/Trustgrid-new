@@ -1,12 +1,13 @@
 /**
  * TrustGrid.AI - Attribution & System Tracking Engine
- * Captures UTM parameters, referrer, landing page, device, OS, browser, and screen size.
+ * Captures First-Touch and Last-Touch UTM parameters, referrer, landing page, device, OS, browser, and screen size.
  */
 
 export interface TrackingMetadata {
   submissionId?: string
   timestamp: string
   formName: string
+  formId?: string
   pageUrl: string
   landingPage: string
   referrer: string
@@ -20,6 +21,10 @@ export interface TrackingMetadata {
   utmCampaign: string
   utmTerm: string
   utmContent: string
+  firstTouchSource?: string
+  lastTouchSource?: string
+  ctaSource?: string
+  leadSource?: string
   country?: string
   region?: string
   city?: string
@@ -28,6 +33,8 @@ export interface TrackingMetadata {
 const UTM_STORAGE_KEY = 'trustgrid_utm_data'
 const LANDING_STORAGE_KEY = 'trustgrid_landing_page'
 const REFERRER_STORAGE_KEY = 'trustgrid_referrer'
+const FIRST_TOUCH_STORAGE_KEY = 'trustgrid_first_touch'
+const LAST_TOUCH_STORAGE_KEY = 'trustgrid_last_touch'
 
 /**
  * Initializes and stores UTM parameters from the current URL on first arrival.
@@ -43,6 +50,23 @@ export function initUtmTracking(): void {
     const utmCampaign = urlParams.get('utm_campaign')
     const utmTerm = urlParams.get('utm_term')
     const utmContent = urlParams.get('utm_content')
+
+    const currentSourceString = utmSource
+      ? `${utmSource} / ${utmMedium || 'cpc'}`
+      : document.referrer && !document.referrer.includes(window.location.hostname)
+      ? `Referral: ${new URL(document.referrer).hostname}`
+      : 'Direct / Organic'
+
+    // First Touch
+    if (!localStorage.getItem(FIRST_TOUCH_STORAGE_KEY)) {
+      localStorage.setItem(FIRST_TOUCH_STORAGE_KEY, currentSourceString)
+    }
+
+    // Last Touch
+    if (utmSource || utmMedium || utmCampaign) {
+      sessionStorage.setItem(LAST_TOUCH_STORAGE_KEY, currentSourceString)
+      localStorage.setItem(LAST_TOUCH_STORAGE_KEY, currentSourceString)
+    }
 
     // If new UTM parameters exist in current URL, save/update them
     if (utmSource || utmMedium || utmCampaign || utmTerm || utmContent) {
@@ -100,7 +124,6 @@ function detectBrowser(): string {
   if (ua.indexOf('Firefox') > -1) return 'Firefox'
   if (ua.indexOf('SamsungBrowser') > -1) return 'Samsung Internet'
   if (ua.indexOf('Opera') > -1 || ua.indexOf('OPR') > -1) return 'Opera'
-  if (ua.indexOf('Trident') > -1) return 'Internet Explorer'
   if (ua.indexOf('Edge') > -1 || ua.indexOf('Edg') > -1) return 'Microsoft Edge'
   if (ua.indexOf('Chrome') > -1) return 'Chrome'
   if (ua.indexOf('Safari') > -1) return 'Safari'
@@ -118,18 +141,19 @@ function detectOS(): string {
   if (ua.indexOf('Mac') !== -1 && ua.indexOf('iPhone') === -1 && ua.indexOf('iPad') === -1) return 'macOS'
   if (ua.indexOf('Linux') !== -1) return 'Linux'
   if (ua.indexOf('Android') !== -1) return 'Android'
-  if (ua.indexOf('iPhone') !== -1 || ua.indexOf('iPad') !== -1 || ua.indexOf('iPod') !== -1) return 'iOS'
+  if (/iPhone|iPad|iPod/.test(ua)) return 'iOS'
   return 'Other OS'
 }
 
 /**
  * Retrieves all captured metadata for form submissions.
  */
-export function getTrackingMetadata(formName: string): TrackingMetadata {
+export function getTrackingMetadata(formName: string, formId?: string, ctaSource?: string): TrackingMetadata {
   if (typeof window === 'undefined') {
     return {
       timestamp: new Date().toISOString(),
       formName,
+      formId: formId || formName,
       pageUrl: '',
       landingPage: '',
       referrer: '',
@@ -143,6 +167,10 @@ export function getTrackingMetadata(formName: string): TrackingMetadata {
       utmCampaign: '',
       utmTerm: '',
       utmContent: '',
+      firstTouchSource: 'Direct / Organic',
+      lastTouchSource: 'Direct / Organic',
+      ctaSource: ctaSource || 'direct',
+      leadSource: formName
     }
   }
 
@@ -157,15 +185,16 @@ export function getTrackingMetadata(formName: string): TrackingMetadata {
     console.warn('Error reading stored UTM data:', err)
   }
 
-  // Check URL query parameters as direct fallback
   const urlParams = new URLSearchParams(window.location.search)
-
   const landingPage = sessionStorage.getItem(LANDING_STORAGE_KEY) || localStorage.getItem(LANDING_STORAGE_KEY) || window.location.href
   const referrer = sessionStorage.getItem(REFERRER_STORAGE_KEY) || localStorage.getItem(REFERRER_STORAGE_KEY) || document.referrer || 'Direct'
+  const firstTouchSource = localStorage.getItem(FIRST_TOUCH_STORAGE_KEY) || 'Direct / Organic'
+  const lastTouchSource = sessionStorage.getItem(LAST_TOUCH_STORAGE_KEY) || localStorage.getItem(LAST_TOUCH_STORAGE_KEY) || firstTouchSource
 
   return {
     timestamp: new Date().toISOString(),
     formName,
+    formId: formId || formName,
     pageUrl: window.location.href,
     landingPage,
     referrer,
@@ -179,5 +208,9 @@ export function getTrackingMetadata(formName: string): TrackingMetadata {
     utmCampaign: urlParams.get('utm_campaign') || savedUtm.utmCampaign || '',
     utmTerm: urlParams.get('utm_term') || savedUtm.utmTerm || '',
     utmContent: urlParams.get('utm_content') || savedUtm.utmContent || '',
+    firstTouchSource,
+    lastTouchSource,
+    ctaSource: ctaSource || 'website_form',
+    leadSource: formName
   }
 }

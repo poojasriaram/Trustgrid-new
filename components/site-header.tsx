@@ -227,9 +227,8 @@ const insightsMenuItems = [
 
 const solutionGroups = [
   {
-    num: '01',
-    groupTag: 'GROUP 1',
-    name: 'GROUP 1 — AGENTIC ENTERPRISE',
+    groupTag: 'AGENTIC ENTERPRISE',
+    name: 'AGENTIC ENTERPRISE',
     title: 'AGENTIC ENTERPRISE',
     slug: 'ai-agentic-factory',
     sitemapAnchor: 'group-1',
@@ -237,9 +236,8 @@ const solutionGroups = [
     icon: Bot,
   },
   {
-    num: '02',
-    groupTag: 'GROUP 2',
-    name: 'GROUP 2 — AI INFRASTRUCTURE & AI DATA CENTER ENGINEERING',
+    groupTag: 'AI INFRASTRUCTURE',
+    name: 'AI INFRASTRUCTURE & AI DATA CENTER ENGINEERING',
     title: 'AI INFRASTRUCTURE & AI DATA CENTER ENGINEERING',
     slug: 'ai-infra-engineering',
     sitemapAnchor: 'group-2',
@@ -247,9 +245,8 @@ const solutionGroups = [
     icon: Cpu,
   },
   {
-    num: '03',
-    groupTag: 'GROUP 3',
-    name: 'GROUP 3 — AI NETWORKING',
+    groupTag: 'AI NETWORKING',
+    name: 'AI NETWORKING',
     title: 'AI NETWORKING',
     slug: 'ai-networking',
     sitemapAnchor: 'group-3',
@@ -257,9 +254,8 @@ const solutionGroups = [
     icon: Network,
   },
   {
-    num: '04',
-    groupTag: 'GROUP 4',
-    name: 'GROUP 4 — AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
+    groupTag: 'AI CYBERSECURITY',
+    name: 'AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
     title: 'AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
     slug: 'ai-cybersecurity-quantum-safe',
     sitemapAnchor: 'group-4',
@@ -267,9 +263,8 @@ const solutionGroups = [
     icon: Lock,
   },
   {
-    num: '05',
-    groupTag: 'GROUP 5',
-    name: 'GROUP 5 — TRUSTED AI ENGINEERING',
+    groupTag: 'TRUSTED AI',
+    name: 'TRUSTED AI ENGINEERING',
     title: 'TRUSTED AI ENGINEERING',
     slug: 'trusted-ai-transformation',
     sitemapAnchor: 'group-5',
@@ -277,9 +272,8 @@ const solutionGroups = [
     icon: ShieldCheck,
   },
   {
-    num: '06',
-    groupTag: 'GROUP 6',
-    name: 'GROUP 6 — AI VALUE ENGINEERING & ACCELERATION',
+    groupTag: 'VALUE ENGINEERING',
+    name: 'AI VALUE ENGINEERING & ACCELERATION',
     title: 'AI VALUE ENGINEERING & ACCELERATION',
     slug: 'ai-value-engineering',
     sitemapAnchor: 'group-6',
@@ -341,14 +335,14 @@ export function SiteHeader() {
           Home
         </Link>
 
-        {/* 2. AGENTIC ENTERPRISE */}
-        <Link href="/solutions/ai-agentic-factory" className="nav-link" onClick={closeAll}>
-          Agentic Enterprise
-        </Link>
-
-        {/* 3. AI INFRA & DATA CENTER */}
+        {/* 2. AI INFRA & DATA CENTER */}
         <Link href="/solutions/ai-infra-engineering" className="nav-link" onClick={closeAll}>
           AI Infra & Data Center
+        </Link>
+
+        {/* 3. AGENTIC ENTERPRISE */}
+        <Link href="/solutions/ai-agentic-factory" className="nav-link" onClick={closeAll}>
+          Agentic Enterprise
         </Link>
 
         {/* 4. AI NETWORKING */}
@@ -515,12 +509,12 @@ export function SiteHeader() {
               Home
             </Link>
 
-            <Link href="/solutions/ai-agentic-factory" className="mobile-nav-link" onClick={closeAll}>
-              Agentic Enterprise
-            </Link>
-
             <Link href="/solutions/ai-infra-engineering" className="mobile-nav-link" onClick={closeAll}>
               AI Infra & Data Center
+            </Link>
+
+            <Link href="/solutions/ai-agentic-factory" className="mobile-nav-link" onClick={closeAll}>
+              Agentic Enterprise
             </Link>
 
             <Link href="/solutions/ai-networking" className="mobile-nav-link" onClick={closeAll}>

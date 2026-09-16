@@ -1,9 +1,14 @@
 /**
  * ============================================================================
- * TRUSTGRID.AI — COMPREHENSIVE CLIENT-SIDE ANALYTICS & TELEMETRY ENGINE
+ * TRUSTGRID.AI — COMPREHENSIVE FORM & TRAFFIC ANALYTICS ENGINE
  * ============================================================================
- * Asynchronous, non-blocking telemetry engine for Page Views, Sessions,
- * CTA Clicks, Navigation Clicks, Form Lifecycles, Scroll Depth, and Outbound Links.
+ * Enterprise-grade telemetry engine providing:
+ * 1. Form-wise funnel analytics (view -> start -> field -> error -> abandon -> submit -> success -> lead)
+ * 2. Multi-touch UTM and traffic attribution (first-touch, last-touch, landing, referrer)
+ * 3. Chatbot funnel & lead attribution tracking
+ * 4. WhatsApp CTA click & context tracking
+ * 5. Google Analytics 4 (GA4) / GTM dataLayer push compatibility
+ * 6. Non-blocking delivery via Beacon API & no-cors fetch
  */
 
 export interface TrackingEvent {
@@ -22,20 +27,43 @@ export interface TrackingEvent {
   elementText?: string
   section?: string
   destination?: string
+  
+  // Traffic & Attribution
   utmSource: string
   utmMedium: string
   utmCampaign: string
   utmTerm: string
   utmContent: string
+  firstTouchSource?: string
+  lastTouchSource?: string
+  
+  // Device & Environment
   device: string
   browser: string
   operatingSystem: string
   screenSize: string
   scrollDepth?: number
   timeOnPage?: number
-  formName?: string
+  
+  // Form Funnel Attributes
   formId?: string
+  formName?: string
+  formType?: string
   formStep?: string | number
+  fieldName?: string
+  ctaSource?: string
+  leadSource?: string
+  leadStatus?: string
+  
+  // Chatbot Telemetry
+  chatSessionId?: string
+  chatIntent?: string
+  offeringInterest?: string
+  industryInterest?: string
+  
+  // WhatsApp Telemetry
+  whatsappPosition?: string
+  
   metadata?: Record<string, any>
 }
 
@@ -44,6 +72,8 @@ const SESSION_START_KEY = 'tg_session_start'
 const LANDING_KEY = 'tg_landing_page'
 const REFERRER_KEY = 'tg_initial_referrer'
 const UTM_KEY = 'tg_utm_data'
+const FIRST_TOUCH_KEY = 'tg_first_touch'
+const LAST_TOUCH_KEY = 'tg_last_touch'
 const PREV_PAGE_KEY = 'tg_previous_page'
 
 const DEFAULT_ENDPOINT =
@@ -67,34 +97,81 @@ export function getOrCreateSessionId(): string {
 }
 
 /**
- * Reads & persists UTM parameters
+ * Reads & persists UTM parameters with First-Touch and Last-Touch logic
  */
 export function getStoredUtmData() {
   if (typeof window === 'undefined') {
-    return { utmSource: '', utmMedium: '', utmCampaign: '', utmTerm: '', utmContent: '' }
+    return {
+      utmSource: '',
+      utmMedium: '',
+      utmCampaign: '',
+      utmTerm: '',
+      utmContent: '',
+      firstTouch: 'Direct / Organic',
+      lastTouch: 'Direct / Organic'
+    }
   }
 
   const urlParams = new URLSearchParams(window.location.search)
+  const sourceParam = urlParams.get('utm_source')
+  const mediumParam = urlParams.get('utm_medium')
+  const campaignParam = urlParams.get('utm_campaign')
+  const termParam = urlParams.get('utm_term')
+  const contentParam = urlParams.get('utm_content')
+
+  const currentSourceString = sourceParam
+    ? `${sourceParam} / ${mediumParam || 'cpc'}`
+    : document.referrer && !document.referrer.includes(window.location.hostname)
+    ? `Referral: ${new URL(document.referrer).hostname}`
+    : 'Direct / Organic'
+
+  // 1. First Touch Attribution (persisted permanently in localStorage)
+  let firstTouch = localStorage.getItem(FIRST_TOUCH_KEY)
+  if (!firstTouch) {
+    firstTouch = currentSourceString
+    localStorage.setItem(FIRST_TOUCH_KEY, firstTouch)
+  }
+
+  // 2. Last Touch Attribution (updated per session / campaign)
+  let lastTouch = currentSourceString
+  if (sourceParam || mediumParam || campaignParam) {
+    sessionStorage.setItem(LAST_TOUCH_KEY, lastTouch)
+    localStorage.setItem(LAST_TOUCH_KEY, lastTouch)
+  } else {
+    lastTouch = sessionStorage.getItem(LAST_TOUCH_KEY) || localStorage.getItem(LAST_TOUCH_KEY) || firstTouch
+  }
+
   const currentUtm = {
-    utmSource: urlParams.get('utm_source') || '',
-    utmMedium: urlParams.get('utm_medium') || '',
-    utmCampaign: urlParams.get('utm_campaign') || '',
-    utmTerm: urlParams.get('utm_term') || '',
-    utmContent: urlParams.get('utm_content') || '',
+    utmSource: sourceParam || '',
+    utmMedium: mediumParam || '',
+    utmCampaign: campaignParam || '',
+    utmTerm: termParam || '',
+    utmContent: contentParam || '',
   }
 
   if (currentUtm.utmSource || currentUtm.utmMedium || currentUtm.utmCampaign) {
     sessionStorage.setItem(UTM_KEY, JSON.stringify(currentUtm))
     localStorage.setItem(UTM_KEY, JSON.stringify(currentUtm))
-    return currentUtm
+    return { ...currentUtm, firstTouch, lastTouch }
   }
 
   try {
     const stored = sessionStorage.getItem(UTM_KEY) || localStorage.getItem(UTM_KEY)
-    if (stored) return JSON.parse(stored)
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      return { ...parsed, firstTouch, lastTouch }
+    }
   } catch (e) {}
 
-  return { utmSource: 'Direct / Organic', utmMedium: 'None', utmCampaign: 'None', utmTerm: 'None', utmContent: 'None' }
+  return {
+    utmSource: 'Direct / Organic',
+    utmMedium: 'None',
+    utmCampaign: 'None',
+    utmTerm: 'None',
+    utmContent: 'None',
+    firstTouch,
+    lastTouch
+  }
 }
 
 function detectDevice(): string {
@@ -132,7 +209,7 @@ function detectOS(): string {
 /**
  * Builds base event context payload
  */
-function buildBaseEvent(eventType: string, extraData: Partial<TrackingEvent> = {}): TrackingEvent {
+export function buildBaseEvent(eventType: string, extraData: Partial<TrackingEvent> = {}): TrackingEvent {
   const sessionId = getOrCreateSessionId()
   const utm = getStoredUtmData()
 
@@ -167,6 +244,8 @@ function buildBaseEvent(eventType: string, extraData: Partial<TrackingEvent> = {
     utmCampaign: utm.utmCampaign || 'None',
     utmTerm: utm.utmTerm || 'None',
     utmContent: utm.utmContent || 'None',
+    firstTouchSource: utm.firstTouch,
+    lastTouchSource: utm.lastTouch,
     device: detectDevice(),
     browser: detectBrowser(),
     operatingSystem: detectOS(),
@@ -176,11 +255,23 @@ function buildBaseEvent(eventType: string, extraData: Partial<TrackingEvent> = {
 }
 
 /**
- * Non-blocking dispatch to Google Apps Script #1
+ * Non-blocking dispatch to Google Apps Script & Google Tag Manager dataLayer
  */
 export function sendAnalyticsEvent(event: TrackingEvent): void {
   if (typeof window === 'undefined') return
 
+  // 1. Push to GTM / GA4 dataLayer if available
+  try {
+    const w = window as any
+    if (w.dataLayer && Array.isArray(w.dataLayer)) {
+      w.dataLayer.push({
+        event: event.eventType.toLowerCase(),
+        ...event
+      })
+    }
+  } catch (e) {}
+
+  // 2. Dispatch to Apps Script webhook
   const endpoint =
     process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
     process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
@@ -189,7 +280,6 @@ export function sendAnalyticsEvent(event: TrackingEvent): void {
   const payloadStr = JSON.stringify(event)
 
   try {
-    // 1. Try sendBeacon for zero impact on navigation/page teardown
     if (navigator.sendBeacon && typeof Blob !== 'undefined') {
       const blob = new Blob([payloadStr], { type: 'text/plain;charset=utf-8' })
       const sent = navigator.sendBeacon(endpoint, blob)
@@ -197,7 +287,6 @@ export function sendAnalyticsEvent(event: TrackingEvent): void {
     }
   } catch (e) {}
 
-  // 2. Fallback to background fetch with mode: 'no-cors'
   try {
     fetch(endpoint, {
       method: 'POST',
@@ -212,14 +301,13 @@ export function sendAnalyticsEvent(event: TrackingEvent): void {
 }
 
 /**
- * 1. Track Page View
+ * Page View
  */
 export function trackPageView(pagePath?: string, pageTitle?: string): void {
   const event = buildBaseEvent('PAGE_VIEW', {
     pagePath: pagePath || (typeof window !== 'undefined' ? window.location.pathname : ''),
     pageTitle: pageTitle || (typeof window !== 'undefined' ? document.title : ''),
   })
-
   sendAnalyticsEvent(event)
 
   if (typeof window !== 'undefined') {
@@ -228,20 +316,21 @@ export function trackPageView(pagePath?: string, pageTitle?: string): void {
 }
 
 /**
- * 2. Track CTA Click
+ * CTA Tracking
  */
-export function trackCTA(ctaName: string, destination?: string, section?: string): void {
+export function trackCTA(ctaName: string, destination?: string, section?: string, ctaSource?: string): void {
   const event = buildBaseEvent('CTA_CLICK', {
     element: 'CTA Button / Link',
     elementText: ctaName,
     destination: destination || '',
     section: section || 'Main Body',
+    ctaSource: ctaSource || section || 'website_cta'
   })
   sendAnalyticsEvent(event)
 }
 
 /**
- * 3. Track Navigation Click
+ * Navigation Menu Click
  */
 export function trackNavigation(menuName: string, menuItem: string, destination?: string): void {
   const event = buildBaseEvent('NAVIGATION_CLICK', {
@@ -254,44 +343,116 @@ export function trackNavigation(menuName: string, menuItem: string, destination?
 }
 
 /**
- * 4. Track Form Lifecycle Events
+ * ============================================================================
+ * FORM-WISE FUNNEL TRACKING
+ * ============================================================================
  */
-export function trackFormView(formName: string, formId?: string): void {
+export function trackFormView(formId: string, formName: string, formType = 'lead_form', ctaSource = 'page_embed'): void {
   const event = buildBaseEvent('FORM_VIEW', {
+    formId,
     formName,
-    formId: formId || formName,
+    formType,
+    ctaSource,
+    element: 'Form Container',
+    elementText: `Viewed ${formName}`
   })
   sendAnalyticsEvent(event)
 }
 
-export function trackFormStart(formName: string, formId?: string): void {
+export function trackFormStart(formId: string, formName: string, firstField = 'name'): void {
   const event = buildBaseEvent('FORM_START', {
+    formId,
     formName,
-    formId: formId || formName,
+    fieldName: firstField,
+    elementText: `Started ${formName} at field ${firstField}`
   })
   sendAnalyticsEvent(event)
 }
 
-export function trackFormStep(formName: string, stepNumber: number | string, stepTitle?: string): void {
-  const event = buildBaseEvent('FORM_STEP_COMPLETED', {
+export function trackFormFieldInteraction(formId: string, formName: string, fieldName: string): void {
+  const event = buildBaseEvent('FORM_FIELD_INTERACTION', {
+    formId,
     formName,
-    formStep: stepNumber,
-    elementText: stepTitle || `Step ${stepNumber}`,
+    fieldName,
+    elementText: `Interacted with field: ${fieldName}`
   })
   sendAnalyticsEvent(event)
 }
 
-export function trackFormSubmit(formName: string, success: boolean, submissionId?: string, errorMsg?: string): void {
-  const event = buildBaseEvent(success ? 'FORM_SUCCESS' : 'FORM_ERROR', {
+export function trackFormValidationError(formId: string, formName: string, fieldName: string, errorMsg: string): void {
+  const event = buildBaseEvent('FORM_VALIDATION_ERROR', {
+    formId,
+    formName,
+    fieldName,
+    elementText: errorMsg
+  })
+  sendAnalyticsEvent(event)
+}
+
+export function trackFormAbandon(formId: string, formName: string, lastFieldInteracted?: string): void {
+  const event = buildBaseEvent('FORM_ABANDON', {
+    formId,
+    formName,
+    fieldName: lastFieldInteracted,
+    elementText: `Abandoned ${formName} after ${lastFieldInteracted || 'initial input'}`
+  })
+  sendAnalyticsEvent(event)
+}
+
+export function trackFormSubmit(formId: string, formName: string, isSuccess: boolean, submissionId?: string, errorMsg?: string): void {
+  const event = buildBaseEvent(isSuccess ? 'FORM_SUCCESS' : 'FORM_FAILURE', {
+    formId,
     formName,
     elementId: submissionId,
-    elementText: errorMsg || 'Submission Complete',
+    elementText: isSuccess ? 'Form Submitted Successfully' : (errorMsg || 'Form Submission Failed'),
+    leadStatus: isSuccess ? 'SUBMITTED' : 'FAILED'
+  })
+  sendAnalyticsEvent(event)
+
+  if (isSuccess) {
+    const leadEvent = buildBaseEvent('LEAD_CREATED', {
+      formId,
+      formName,
+      elementId: submissionId,
+      leadSource: formName,
+      elementText: `New Lead Created: ${submissionId}`
+    })
+    sendAnalyticsEvent(leadEvent)
+  }
+}
+
+/**
+ * ============================================================================
+ * CHATBOT TELEMETRY
+ * ============================================================================
+ */
+export function trackChatbotEvent(eventType: string, extraData: Partial<TrackingEvent> = {}): void {
+  const event = buildBaseEvent(`CHAT_${eventType.toUpperCase()}`, {
+    formId: 'form_chat_lead',
+    formName: 'Chatbot Lead Capture',
+    ...extraData
   })
   sendAnalyticsEvent(event)
 }
 
 /**
- * 5. Track Outbound Links, Phone & Email clicks
+ * ============================================================================
+ * WHATSAPP CONVERSION TRACKING
+ * ============================================================================
+ */
+export function trackWhatsAppClick(source = 'floating_cta', position = 'bottom-right', contextTopic?: string): void {
+  const event = buildBaseEvent('WHATSAPP_CLICK', {
+    element: 'WhatsApp CTA',
+    ctaSource: source,
+    whatsappPosition: position,
+    elementText: contextTopic ? `WhatsApp Inquiry: ${contextTopic}` : 'WhatsApp Direct Chat',
+    destination: 'https://wa.me/'
+  })
+  sendAnalyticsEvent(event)
+}
+
+/**
+ * Outbound Link Clicks
  */
 export function trackOutboundClick(url: string, linkText?: string): void {
   let eventType = 'OUTBOUND_LINK_CLICK'
@@ -306,7 +467,7 @@ export function trackOutboundClick(url: string, linkText?: string): void {
 }
 
 /**
- * 6. Track Scroll Depth
+ * Scroll Depth Tracking
  */
 const trackedDepths = new Set<number>()
 
@@ -321,8 +482,8 @@ export function initScrollTracking(): () => void {
     if (docHeight <= 0) return
 
     const percent = Math.round((scrollY / docHeight) * 100)
-
     const milestones = [25, 50, 75, 90, 100]
+    
     for (const milestone of milestones) {
       if (percent >= milestone && !trackedDepths.has(milestone)) {
         trackedDepths.add(milestone)

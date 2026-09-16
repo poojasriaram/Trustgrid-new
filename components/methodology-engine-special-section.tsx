@@ -102,7 +102,7 @@ export function MethodologyEngineSpecialSection() {
         <div className="diagram-flow-grid">
           {engineStages.map((stg, i) => (
             <button
-              key={stg.number}
+              key={stg.name}
               className={`flow-card ${activeStage === i ? 'flow-card-active' : ''}`}
               onClick={() => {
                 setActiveStage(i)
@@ -110,8 +110,7 @@ export function MethodologyEngineSpecialSection() {
               }}
             >
               <div className="flow-card-header">
-                <span className="flow-num">{stg.number}</span>
-                <span className="flow-name">{stg.name}</span>
+                <span className="flow-num">{stg.name}</span>
               </div>
               <p className="flow-sub">({stg.subtitle.split('—')[0]})</p>
               <div className="flow-fleet-tag">{stg.agentFleetName}</div>
@@ -137,7 +136,7 @@ export function MethodologyEngineSpecialSection() {
           onClick={() => setActiveTab('stages')}
         >
           <Layers size={16} />
-          <span>The 6 Implementation Stages</span>
+          <span>Implementation Stages</span>
         </button>
         <button
           className={`engine-tab-btn ${activeTab === 'comparison' ? 'active' : ''}`}
@@ -151,29 +150,28 @@ export function MethodologyEngineSpecialSection() {
           onClick={() => setActiveTab('industries')}
         >
           <Building2 size={16} />
-          <span>12 Industry Applications</span>
+          <span>Industry Applications</span>
         </button>
         <button
           className={`engine-tab-btn ${activeTab === 'models' ? 'active' : ''}`}
           onClick={() => setActiveTab('models')}
         >
           <Briefcase size={16} />
-          <span>6 Engagement Models</span>
+          <span>Engagement Frameworks</span>
         </button>
       </div>
 
-      {/* TAB 1: THE 6 STAGES */}
+      {/* TAB 1: THE STAGES */}
       {activeTab === 'stages' && (
         <div className="engine-stage-detail-wrapper">
           {/* Stage Selector Pills */}
           <div className="stage-pills-bar">
             {engineStages.map((stage, idx) => (
               <button
-                key={stage.number}
+                key={stage.name}
                 className={`stage-pill ${activeStage === idx ? 'stage-pill-active' : ''}`}
                 onClick={() => setActiveStage(idx)}
               >
-                <span className="pill-num">{stage.number}</span>
                 <span className="pill-name">{stage.name}</span>
               </button>
             ))}
@@ -183,7 +181,7 @@ export function MethodologyEngineSpecialSection() {
           <div className="stage-content-card">
             <div className="stage-card-header">
               <div>
-                <span className="stage-sub-badge">STAGE {engineStages[activeStage].number}</span>
+                <span className="stage-sub-badge">{engineStages[activeStage].name}</span>
                 <h3>{engineStages[activeStage].name} — <em>{engineStages[activeStage].subtitle}</em></h3>
               </div>
               <div className="stage-duration-tag">
@@ -382,11 +380,11 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
         </div>
       )}
 
-      {/* TAB 3: 12 INDUSTRY APPLICATIONS */}
+      {/* TAB 3: INDUSTRY APPLICATIONS */}
       {activeTab === 'industries' && (
         <div className="engine-industries-wrapper">
           <div className="industries-intro">
-            <h3>12 Industry Applications: AI-Driven Methodology in Every Sector</h3>
+            <h3>Industry Applications: AI-Driven Methodology Across Regulated Sectors</h3>
             <p>Select an industry to explore tailored priority methodologies, agentic automation opportunities, and timelines.</p>
           </div>
 
@@ -398,7 +396,6 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                 className={`industry-select-btn ${activeIndustryId === ind.id ? 'active' : ''}`}
                 onClick={() => setActiveIndustryId(ind.id)}
               >
-                <span className="ind-num">{ind.number}</span>
                 <span className="ind-name">{ind.name}</span>
               </button>
             ))}
@@ -408,7 +405,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
           <div className="active-industry-card">
             <div className="ind-card-header">
               <div>
-                <span className="stage-sub-badge">INDUSTRY {currentIndustry.number}</span>
+                <span className="stage-sub-badge">SECTOR: {currentIndustry.name}</span>
                 <h3>{currentIndustry.name}</h3>
               </div>
               <div className="ind-meta-tags">
@@ -429,8 +426,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                 <table className="engine-table">
                   <thead>
                     <tr>
-                      <th style={{ width: '6%' }}>#</th>
-                      <th style={{ width: '22%' }}>Methodology</th>
+                      <th style={{ width: '28%' }}>Methodology</th>
                       <th style={{ width: '36%' }}>Application in {currentIndustry.name}</th>
                       <th style={{ width: '36%' }}>AI-Driven Value</th>
                     </tr>
@@ -438,7 +434,6 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                   <tbody>
                     {currentIndustry.priorityMethodologies.map((pm, pIdx) => (
                       <tr key={pIdx}>
-                        <td className="text-center font-bold text-slate-500">{pm.number}</td>
                         <td className="font-semibold text-blue-700">{pm.methodology}</td>
                         <td className="text-slate-700">{pm.application}</td>
                         <td className="trustgrid-cell">{pm.aiValue}</td>
@@ -481,7 +476,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
             </div>
           </div>
 
-          {/* Consolidated 12-Industry Matrix */}
+          {/* Consolidated Industry Matrix */}
           <div className="consolidated-matrix-card">
             <h4>Consolidated Industry Engagement Timeline Matrix</h4>
             <div className="table-responsive">
@@ -515,13 +510,13 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
               </table>
             </div>
             <p className="consolidated-note">
-              <strong>Note:</strong> Timelines represent the path to First Compounding Value — the milestone at which AI agent fleets are live and the self-improving loop is active. Stage 6 (Accelerate) continues permanently.
+              <strong>Note:</strong> Timelines represent the path to First Compounding Value — the milestone at which AI agent fleets are live and the self-improving loop is active. Stage Acceleration continues permanently.
             </p>
           </div>
         </div>
       )}
 
-      {/* TAB 4: 6 ENGAGEMENT MODELS */}
+      {/* TAB 4: ENGAGEMENT MODELS */}
       {activeTab === 'models' && (
         <div className="engine-models-wrapper">
           <div className="models-intro">
@@ -531,9 +526,9 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
 
           <div className="models-grid">
             {engagementModels.map((model) => (
-              <div key={model.number} className="eng-model-card">
+              <div key={model.title} className="eng-model-card">
                 <div className="model-top">
-                  <span className="model-num">{model.number}</span>
+                  <span className="model-num">{model.title.split(' ')[0].toUpperCase()}</span>
                   <span className="model-dur">{model.duration}</span>
                 </div>
                 <h4>{model.title}</h4>

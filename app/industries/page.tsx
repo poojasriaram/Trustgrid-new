@@ -6,6 +6,7 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { industriesData, IndustryDetail } from '@/lib/industries-data'
 import { ArrowUpRight, CheckCircle2, ChevronRight, Filter, Layers, ShieldCheck, Sparkles, TrendingUp, Cpu } from 'lucide-react'
+import { IndustryVerticalsSlider } from '@/components/ui/industry-verticals-slider'
 
 export default function IndustriesPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('all')
@@ -28,7 +29,7 @@ export default function IndustriesPage() {
               <span>MISSION-CRITICAL & REGULATED SECTORS</span>
             </div>
             <h1 className="about-hero-title">
-              Industrial-Grade AI Engineering Across 12 Regulated Verticals
+              Industrial-Grade AI Engineering Across Regulated Verticals
             </h1>
             <p className="about-hero-subtitle">
               From sovereign high-frequency banking enclaves and FDA-compliant clinical AI to air-gapped defense meshes and discrete shop floors. We engineer the hardware, agent architectures, and operational excellence for the world's most demanding enterprises.
@@ -45,6 +46,11 @@ export default function IndustriesPage() {
               </Link>
             </div>
           </div>
+        </section>
+
+        {/* ENTERPRISE INDUSTRY VERTICALS SLIDER */}
+        <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+          <IndustryVerticalsSlider />
         </section>
 
         {/* INDUSTRY FILTER PILLS */}

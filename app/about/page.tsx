@@ -26,6 +26,8 @@ import {
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { AboutStorySlider } from '@/components/ui/about-story-slider'
+import { ICPSlider } from '@/components/ui/icp-slider'
 import {
   aboutHero,
   missionVision,
@@ -72,6 +74,11 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* TRUSTGRID STORY & PHILOSOPHY SLIDER */}
+      <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
+        <AboutStorySlider />
+      </section>
+
       {/* MISSION & VISION */}
       <section className="section mission-vision-section" id="mission-vision">
         <div className="mission-vision-grid">
@@ -108,7 +115,7 @@ export default function AboutPage() {
             <span className="section-badge">DEEP-TECH SPECIALIZATION</span>
             <p className="section-label">What We Do</p>
           </div>
-          <span className="section-index">01</span>
+          <span className="section-index">CAPABILITIES</span>
         </div>
 
         <div className="what-we-do-header">
@@ -116,19 +123,24 @@ export default function AboutPage() {
             We do not build AI models; <span>we build the engines that make AI work at scale.</span>
           </h2>
           <p>
-            TrustGrid.AI specializes in deep-tech professional services across five interconnected architectural verticals.
+            TrustGrid.AI specializes in deep-tech professional services across interconnected architectural verticals.
           </p>
         </div>
 
         <div className="verticals-grid">
           {whatWeDoVerticals.map((v) => (
             <div key={v.number} className="vertical-card animated-card reveal-up">
-              <span className="vertical-num">{v.number}</span>
+              <span className="vertical-num">{v.title.split(' ')[0]}</span>
               <h3>{v.title}</h3>
               <p>{v.description}</p>
             </div>
           ))}
         </div>
+      </section>
+
+      {/* ICP PERSONA MAPPINGS SLIDER */}
+      <section className="section" style={{ paddingTop: '10px', paddingBottom: '20px' }}>
+        <ICPSlider />
       </section>
 
       {/* METRICS FOOTPRINT */}
@@ -138,7 +150,7 @@ export default function AboutPage() {
             <span className="section-badge">GLOBAL IMPACT</span>
             <p className="section-label">Our Metrics Footprint</p>
           </div>
-          <span className="section-index">02</span>
+          <span className="section-index">ENTERPRISE SCALE</span>
         </div>
 
         <div className="metrics-banner">
@@ -164,7 +176,7 @@ export default function AboutPage() {
             <span className="section-badge">PURPOSE-DRIVEN</span>
             <p className="section-label">Accelerating AI for Society</p>
           </div>
-          <span className="section-index">03</span>
+          <span className="section-index">IMPACT</span>
         </div>
 
         <div className="societal-intro-banner">
@@ -192,7 +204,7 @@ export default function AboutPage() {
             <span className="section-badge">CORE DNA</span>
             <p className="section-label">Our Culture</p>
           </div>
-          <span className="section-index">04</span>
+          <span className="section-index">PRINCIPLES</span>
         </div>
 
         <div className="culture-header">
@@ -205,7 +217,7 @@ export default function AboutPage() {
         <div className="culture-grid">
           {culturePrinciples.map((principle, idx) => (
             <div key={idx} className="culture-card animated-card reveal-up">
-              <div className="culture-num">0{idx + 1}</div>
+              <div className="culture-num">PRIN</div>
               <h3>{principle.title}</h3>
               <p>{principle.description}</p>
             </div>
@@ -220,7 +232,7 @@ export default function AboutPage() {
             <span className="section-badge">WORLD-CLASS TALENT</span>
             <p className="section-label">Leadership & Teams</p>
           </div>
-          <span className="section-index">05</span>
+          <span className="section-index">TALENT</span>
         </div>
 
         <div className="team-header">
@@ -253,7 +265,7 @@ export default function AboutPage() {
             <span className="section-badge">COMMUNITY & TALENT</span>
             <p className="section-label">Careers, Hackathons & Open Innovation</p>
           </div>
-          <span className="section-index">06</span>
+          <span className="section-index">ECOSYSTEM</span>
         </div>
 
         <div className="innovation-header">
@@ -313,7 +325,7 @@ export default function AboutPage() {
             <span className="section-badge">PROVEN OUTCOMES</span>
             <p className="section-label">Enterprise Case Studies</p>
           </div>
-          <span className="section-index">07</span>
+          <span className="section-index">VALIDATION</span>
         </div>
 
         <div className="case-studies-header">
@@ -361,7 +373,7 @@ export default function AboutPage() {
             <span className="section-badge">WORLDWIDE FOOTPRINT</span>
             <p className="section-label">Global Operations & Offices</p>
           </div>
-          <span className="section-index">08</span>
+          <span className="section-index">LOCATIONS</span>
         </div>
 
         <div className="presence-header">

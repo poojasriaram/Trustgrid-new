@@ -1,13 +1,11 @@
 'use client'
 
-import { FormEvent, useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { insightsArticles, InsightArticle } from '@/lib/insights-data'
-import { allIndustries } from '@/lib/solutions'
-import { submitTrustGridForm, validateEmail } from '@/lib/form-submission'
-import { initUtmTracking } from '@/lib/tracking'
+import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import {
   ArrowUpRight,
   BookOpen,
@@ -26,53 +24,9 @@ import {
 export default function InsightsPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
-  // Newsletter Form State
-  const [nlName, setNlName] = useState('')
-  const [nlEmail, setNlEmail] = useState('')
-  const [nlCompany, setNlCompany] = useState('')
-  const [nlIndustry, setNlIndustry] = useState('')
-  const [nlSubmitting, setNlSubmitting] = useState(false)
-  const [nlSuccess, setNlSuccess] = useState(false)
-  const [nlError, setNlError] = useState('')
-  const [nlRefId, setNlRefId] = useState('')
-
-  useEffect(() => {
-    initUtmTracking()
-  }, [])
-
   const filteredArticles = activeCategory === 'all'
     ? insightsArticles
     : insightsArticles.filter((art) => art.category.toLowerCase().replace(' ', '-') === activeCategory)
-
-  const handleNewsletterSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setNlError('')
-
-    if (!nlEmail.trim() || !validateEmail(nlEmail)) {
-      setNlError('Please provide a valid work email address.')
-      return
-    }
-
-    setNlSubmitting(true)
-
-    const res = await submitTrustGridForm({
-      formName: 'Newsletter / Insights Subscription',
-      name: nlName.trim() || 'Subscriber',
-      email: nlEmail.trim(),
-      company: nlCompany.trim() || 'Enterprise Subscriber',
-      industry: nlIndustry || 'Cross-Industry',
-      message: 'Subscribed to TrustGrid Research & Whitepapers'
-    })
-
-    setNlSubmitting(false)
-
-    if (res.success) {
-      setNlRefId(res.submissionId || `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-0001`)
-      setNlSuccess(true)
-    } else {
-      setNlError(res.message || 'Unable to subscribe. Please try again.')
-    }
-  }
 
   return (
     <div className="page-shell">
@@ -269,113 +223,14 @@ export default function InsightsPage() {
               </p>
             </div>
 
-            {nlSuccess ? (
-              <div style={{
-                background: '#f0fdf4',
-                border: '1px solid #bbf7d0',
-                borderRadius: '8px',
-                padding: '24px',
-                textAlign: 'center',
-                maxWidth: '600px',
-                margin: '0 auto'
-              }}>
-                <CheckCircle2 size={32} style={{ color: '#16a34a', margin: '0 auto 12px' }} />
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#166534', margin: '0 0 6px' }}>
-                  Thank you. Your subscription has been confirmed.
-                </h3>
-                <p style={{ fontSize: '13.5px', color: '#15803d', margin: 0 }}>
-                  Reference ID: <strong>{nlRefId}</strong>. You will receive our next quarterly architecture whitepaper.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleNewsletterSubmit} style={{ maxWidth: '780px', margin: '0 auto' }} noValidate>
-                {nlError && (
-                  <div style={{
-                    background: '#fef2f2',
-                    border: '1px solid #fecaca',
-                    borderRadius: '6px',
-                    padding: '10px 14px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    color: '#991b1b',
-                    fontSize: '13px',
-                    marginBottom: '16px'
-                  }}>
-                    <AlertCircle size={16} />
-                    <span>{nlError}</span>
-                  </div>
-                )}
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(170px, 1fr))', gap: '12px', marginBottom: '16px' }}>
-                  <div className="input-group">
-                    <span>Full Name (Optional)</span>
-                    <input
-                      type="text"
-                      value={nlName}
-                      onChange={(e) => setNlName(e.target.value)}
-                      placeholder="e.g. Elena Rostova"
-                    />
-                  </div>
-
-                  <div className="input-group">
-                    <span>Work Email *</span>
-                    <input
-                      type="email"
-                      value={nlEmail}
-                      onChange={(e) => setNlEmail(e.target.value)}
-                      placeholder="e.g. elena@company.com"
-                      required
-                    />
-                  </div>
-
-                  <div className="input-group">
-                    <span>Company (Optional)</span>
-                    <input
-                      type="text"
-                      value={nlCompany}
-                      onChange={(e) => setNlCompany(e.target.value)}
-                      placeholder="e.g. TechCorp"
-                    />
-                  </div>
-
-                  <div className="input-group">
-                    <span>Industry (Optional)</span>
-                    <select
-                      className="industry-dropdown"
-                      value={nlIndustry}
-                      onChange={(e) => setNlIndustry(e.target.value)}
-                    >
-                      <option value="">-- Select Industry (Optional) --</option>
-                      {allIndustries.map((ind) => (
-                        <option key={ind} value={ind}>{ind}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div style={{ textAlign: 'center' }}>
-                  <button
-                    type="submit"
-                    disabled={nlSubmitting}
-                    className="button button-card"
-                    style={{ display: 'inline-flex', width: 'auto', padding: '12px 32px', gap: '8px' }}
-                  >
-                    {nlSubmitting ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" />
-                        <span>Subscribing...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Subscribe to Whitepapers</span>
-                        <Send size={15} />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-            )}
+            <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+              <TrustGridForm
+                variant="newsletter"
+                formId="form_newsletter_subscription"
+                formName="Newsletter Subscription Form"
+                ctaSource="insights_page"
+              />
+            </div>
           </div>
         </section>
 

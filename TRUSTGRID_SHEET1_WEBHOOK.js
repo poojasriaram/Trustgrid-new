@@ -20,7 +20,17 @@ const CONFIG = {
 
   // Drive folder for candidate resumes
   CAREER_RESUMES_FOLDER_NAME: "TrustGrid_Career_Resumes",
-  CAREER_RESUMES_FOLDER_ID: ""
+  CAREER_RESUMES_FOLDER_ID: "",
+
+  // Honeypot field name(s) — real visitors never fill these (keep hidden via CSS on the form)
+  HONEYPOT_FIELDS: ["honeypot", "_gotcha", "website_url", "hp_field"],
+
+  // Seconds within which an identical (email + formType) resubmission is treated as a duplicate
+  DUPLICATE_WINDOW_SECONDS: 30,
+
+  // Hard caps to stop payload / spam abuse
+  MAX_TEXT_FIELD_LENGTH: 5000,
+  MAX_URLS_IN_MESSAGE: 4
 };
 
 const EMAIL_CONFIG = {
@@ -57,7 +67,7 @@ var TAB_CONFIGS = {
   "Form Submissions": [
     "Submission ID", "Form Name", "Name", "Email", "Company / Org", "Role", "Phone",
     "Message / Details", "Resume Drive Link", "Drive File ID",
-    "UTM Source", "UTM Campaign", "IP Location", "IP Address", "Timestamp"
+    "UTM Source", "UTM Campaign", "IP Location", "IP Address", "Timestamp", "Visitor ID", "Session ID"
   ],
 
   // 5. Sessions (Unique visitor sessions)
@@ -77,18 +87,42 @@ var TAB_CONFIGS = {
     "Session ID", "Error Message", "Error Stack", "Page URL", "Device", "IP Address", "Timestamp"
   ],
 
-  // 8. Leads (Inbound contact inquiries, partners, careers)
-  "Leads": [
+  // 8. Contact Leads (General contact inquiries / "Talk to an AI Architect")
+  "Contact Leads": [
     "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
-    "Form Type", "Service Interest", "Subject", "Message",
-    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp"
+    "Subject", "Service Interest", "Message",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
   ],
 
   // 9. AI Diagnostic Leads (Dedicated enterprise diagnostic submissions)
   "AI Diagnostic Leads": [
     "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
     "AI Maturity Level", "Primary Objectives", "Selected Solutions", "Preferred Timeline", "Notes",
-    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp"
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 10. Career Applications (Engineering / fellowship candidates, incl. resume link)
+  "Career Applications": [
+    "Submission ID", "Name", "Email", "Phone", "Role Applied For", "Experience",
+    "LinkedIn", "Portfolio", "Resume Link", "Message",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 11. Partner Applications (Ecosystem & strategic partnerships)
+  "Partner Applications": [
+    "Submission ID", "Name", "Email", "Company", "Designation", "Phone", "Partnership Type", "Message",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 12. Newsletter Subscribers (Insights / whitepaper opt-ins)
+  "Newsletter Subscribers": [
+    "Submission ID", "Name", "Email", "Company", "Industry",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 13. Spam Blocked (Honeypot / heuristic bot submissions kept for audit, excluded from lead tabs)
+  "Spam Blocked": [
+    "Submission ID", "Form Type", "Name", "Email", "Reason", "Message Snippet", "IP Address", "Timestamp"
   ]
 };
 
@@ -132,7 +166,7 @@ function styleHeaderRow(sheet, numCols) {
   sheet.setFrozenRows(1);
 }
 
-// 🚀 Pre-creates all 9 requested tabs in Sheet 1 with dark header formatting
+// 🚀 Pre-creates all configured tabs in Sheet 1 with dark header formatting
 function initializeAllDatabaseTables() {
   var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var created = [];
@@ -196,6 +230,79 @@ function saveResumeToDrive(base64Data, originalFileName, candidateName, role) {
   } catch (err) {
     return null;
   }
+}
+
+// =========================================================================================
+// 3.5 SECURITY, VALIDATION & SPAM PROTECTION
+// =========================================================================================
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function isValidEmail(email) {
+  if (!email) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim());
+}
+
+// Strips tags and trims oversized text before it ever reaches a sheet or outbound email
+function sanitizeText(value) {
+  if (value === null || value === undefined) return "";
+  var str = String(value).replace(/<[^>]*>/g, "").trim();
+  if (str.length > CONFIG.MAX_TEXT_FIELD_LENGTH) {
+    str = str.substring(0, CONFIG.MAX_TEXT_FIELD_LENGTH) + "…";
+  }
+  return str;
+}
+
+function isHoneypotTriggered(data) {
+  for (var i = 0; i < CONFIG.HONEYPOT_FIELDS.length; i++) {
+    var field = CONFIG.HONEYPOT_FIELDS[i];
+    if (data[field] && String(data[field]).trim() !== "") return true;
+  }
+  return false;
+}
+
+// Lightweight heuristic: excessive links or a URL stuffed into the name field are classic spam tells
+function isLikelySpam(data) {
+  var text = [data.message, data.notes, data.coverNote].filter(Boolean).join(" ");
+  var urlMatches = text.match(/https?:\/\//gi);
+  if (urlMatches && urlMatches.length > CONFIG.MAX_URLS_IN_MESSAGE) return true;
+  if (data.fullName && /https?:\/\//i.test(data.fullName)) return true;
+  if (data.name && /https?:\/\//i.test(data.name)) return true;
+  return false;
+}
+
+// Uses CacheService (per-script) to block rapid duplicate resubmissions (double-click, retries, bots)
+function isDuplicateSubmission(email, formType) {
+  var cache = CacheService.getScriptCache();
+  var key = "dup_" + (email || "anon").toLowerCase() + "_" + (formType || "").toLowerCase();
+  if (cache.get(key)) return true;
+  cache.put(key, "1", CONFIG.DUPLICATE_WINDOW_SECONDS);
+  return false;
+}
+
+function logSpamBlocked(reason, data, ipAddress) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var sheet = getOrCreateTab(ss, "Spam Blocked");
+    sheet.appendRow([
+      "SPB-" + Date.now().toString(36),
+      data.formType || data.formName || data.type || "unknown",
+      data.fullName || data.name || "",
+      data.email || "",
+      reason,
+      sanitizeText(data.message || data.notes || "").substring(0, 200),
+      ipAddress || "",
+      new Date()
+    ]);
+  } catch (e) {}
 }
 
 // =========================================================================================
@@ -336,6 +443,25 @@ function doPost(e) {
     var formType = data.formType || data.formName || data.type || "contact";
     var normForm = formType.toLowerCase().replace(/[\s\-_]/g, '');
     var submissionId = data.submissionId || ("TG-" + Utilities.formatDate(timestamp, "GMT", "yyyyMMdd-HHmmss-") + Math.floor(Math.random() * 1000));
+    var submitterEmail = data.email || "";
+
+    // ── Spam / bot defenses ──
+    if (isHoneypotTriggered(data)) {
+      logSpamBlocked("Honeypot field filled", data, ipAddress);
+      return ContentService.createTextOutput(JSON.stringify({ success: true, submissionId: submissionId })).setMimeType(ContentService.MimeType.JSON);
+    }
+    if (isLikelySpam(data)) {
+      logSpamBlocked("Heuristic spam pattern (excess links / suspicious name)", data, ipAddress);
+      return ContentService.createTextOutput(JSON.stringify({ success: true, submissionId: submissionId })).setMimeType(ContentService.MimeType.JSON);
+    }
+    if (isDuplicateSubmission(submitterEmail, formType)) {
+      return ContentService.createTextOutput(JSON.stringify({ success: true, submissionId: submissionId, duplicate: true })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Sanitize free-text fields before they ever reach a sheet or outbound email
+    var cleanMessage = sanitizeText(data.message || data.notes || data.coverNote || (Array.isArray(data.challenges) ? data.challenges.join(", ") : ""));
+    var emailLooksValid = !submitterEmail || isValidEmail(submitterEmail);
+    var leadStatus = emailLooksValid ? "New" : "Needs Review (Invalid Email)";
 
     var resumeDriveInfo = null;
     if (data.resumeBase64 || data.resumeData || data.resumeBlob) {
@@ -348,14 +474,15 @@ function doPost(e) {
       submissionId,
       formType,
       data.fullName || data.name || "",
-      data.email || "",
+      submitterEmail,
       data.company || data.organization || "",
       data.role || data.designation || data.position || "",
       data.phone || "",
-      data.message || data.notes || data.coverNote || (Array.isArray(data.challenges) ? data.challenges.join(", ") : ""),
-      resumeDriveInfo ? resumeDriveInfo.viewUrl : (data.resumeUrl || ""),
+      cleanMessage,
+      resumeDriveInfo ? resumeDriveInfo.viewUrl : (data.resumeUrl || data.resume || ""),
       resumeDriveInfo ? resumeDriveInfo.fileId : "",
-      utmSource, utmCampaign, ipLocation, ipAddress, timestamp
+      utmSource, utmCampaign, ipLocation, ipAddress, timestamp,
+      visitorId, sessionId
     ]);
 
     // 2. AI Diagnostic Dedicated Leads Tab
@@ -364,7 +491,7 @@ function doPost(e) {
       diagSheet.appendRow([
         submissionId,
         data.fullName || data.name || "",
-        data.email || "",
+        submitterEmail,
         data.company || data.organization || "",
         data.role || data.designation || "",
         data.companySize || data.organizationSize || "",
@@ -373,27 +500,80 @@ function doPost(e) {
         Array.isArray(data.primaryObjectives) ? data.primaryObjectives.join(", ") : (data.primaryObjectives || data.challenges || ""),
         Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || ""),
         data.preferredTimeline || data.timeline || "",
-        data.message || data.notes || "",
-        utmSource, utmMedium, utmCampaign, ipLocation, "New", timestamp
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
       ]);
       sendExecutiveAlert("AI Diagnostic Request: " + (data.company || data.fullName || "Enterprise Lead"), data);
     }
 
-    // 3. Consolidated Inbound Leads Tab
-    else {
-      var leadsSheet = getOrCreateTab(ss, "Leads");
-      leadsSheet.appendRow([
+    // 3. Career Applications (dedicated tab, incl. resume link)
+    else if (normForm.indexOf('career') > -1) {
+      var careerSheet = getOrCreateTab(ss, "Career Applications");
+      careerSheet.appendRow([
         submissionId,
         data.fullName || data.name || "",
-        data.email || "",
+        submitterEmail,
+        data.phone || "",
+        data.role || data.designation || data.position || "",
+        data.experience || "",
+        data.linkedIn || data.linkedin || "",
+        data.portfolio || "",
+        resumeDriveInfo ? resumeDriveInfo.viewUrl : (data.resumeUrl || data.resume || ""),
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("Career Application: " + (data.fullName || data.name || "New Applicant"), data, resumeDriveInfo);
+    }
+
+    // 4. Partner Applications (dedicated tab)
+    else if (normForm.indexOf('partner') > -1) {
+      var partnerSheet = getOrCreateTab(ss, "Partner Applications");
+      partnerSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
         data.company || data.organization || "",
         data.designation || data.role || data.position || "",
         data.phone || "",
-        formType,
-        data.serviceInterest || data.services || data.partnershipType || "",
+        data.partnershipType || data.engagementModel || "",
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("Partnership Inquiry: " + (data.company || data.fullName || "New Partner Lead"), data);
+    }
+
+    // 5. Newsletter / Insights Subscribers (dedicated tab, low-priority — no exec alert)
+    else if (normForm.indexOf('newsletter') > -1 || normForm.indexOf('insight') > -1 || normForm.indexOf('subscri') > -1) {
+      var newsletterSheet = getOrCreateTab(ss, "Newsletter Subscribers");
+      newsletterSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.industry || "",
+        utmSource, utmMedium, utmCampaign, ipLocation, timestamp,
+        visitorId, sessionId
+      ]);
+    }
+
+    // 6. Contact Leads (default: general inquiries, "Talk to an AI Architect")
+    else {
+      var contactSheet = getOrCreateTab(ss, "Contact Leads");
+      contactSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.designation || data.role || data.position || "",
+        data.phone || "",
         data.subject || "Website Submission",
-        data.message || data.coverNote || "",
-        utmSource, utmMedium, utmCampaign, ipLocation, "New", timestamp
+        data.serviceInterest || data.services || "",
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
       ]);
       sendExecutiveAlert(formType + " Lead: " + (data.fullName || data.company || "New Lead"), data, resumeDriveInfo);
     }
@@ -415,12 +595,13 @@ function sendExecutiveAlert(subjectTitle, data, resumeInfo) {
     var subject = "🚀 [TrustGrid.AI] " + subjectTitle;
 
     var rowsHtml = "";
-    var ignoredKeys = ["resumeBase64", "resumeData", "resumeBlob", "metadata", "ipInfo", "utm"];
+    var ignoredKeys = ["resumeBase64", "resumeData", "resumeBlob", "metadata", "ipInfo", "utm"].concat(CONFIG.HONEYPOT_FIELDS);
 
     for (var key in data) {
       if (ignoredKeys.indexOf(key) === -1 && data[key] !== "" && data[key] !== null && data[key] !== undefined) {
-        var label = key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
-        var val = Array.isArray(data[key]) ? data[key].join(", ") : data[key].toString();
+        var label = escapeHtml(key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); }));
+        var rawVal = Array.isArray(data[key]) ? data[key].join(", ") : data[key].toString();
+        var val = escapeHtml(rawVal);
         rowsHtml += '<tr><td style="padding: 10px 14px; font-weight: 600; color: #475569; width: 35%; border-bottom: 1px solid #f1f5f9; background: #fafafa;">' + label + '</td>' +
                     '<td style="padding: 10px 14px; color: #0f172a; border-bottom: 1px solid #f1f5f9;">' + val + '</td></tr>';
       }
@@ -428,13 +609,13 @@ function sendExecutiveAlert(subjectTitle, data, resumeInfo) {
 
     if (resumeInfo) {
       rowsHtml += '<tr><td style="padding: 10px 14px; font-weight: 600; color: #475569; border-bottom: 1px solid #f1f5f9; background: #fafafa;">Resume Attachment</td>' +
-                  '<td style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9;"><a href="' + resumeInfo.viewUrl + '" style="color: #4f46e5; font-weight: 600; text-decoration: underline;">📄 View in Google Drive (' + resumeInfo.fileName + ')</a></td></tr>';
+                  '<td style="padding: 10px 14px; border-bottom: 1px solid #f1f5f9;"><a href="' + resumeInfo.viewUrl + '" style="color: #4f46e5; font-weight: 600; text-decoration: underline;">📄 View in Google Drive (' + escapeHtml(resumeInfo.fileName) + ')</a></td></tr>';
     }
 
     var htmlBody = '<div style="font-family: Inter, -apple-system, sans-serif; max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">' +
       '<div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); padding: 24px 28px; color: #ffffff;">' +
         '<div style="font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #818cf8; margin-bottom: 6px;">TRUSTGRID.AI INTELLIGENCE</div>' +
-        '<div style="font-size: 20px; font-weight: 700; color: #ffffff;">' + subjectTitle + '</div>' +
+        '<div style="font-size: 20px; font-weight: 700; color: #ffffff;">' + escapeHtml(subjectTitle) + '</div>' +
       '</div>' +
       '<div style="padding: 24px 28px;">' +
         '<table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 20px;">' +
@@ -470,18 +651,18 @@ function sendAllSamplePreviewEmailsToPooja() {
   });
 }
 
-// 🗑️ 1-Click Cleaner: Deletes all previous/unwanted sheets, keeping only the 9 approved tabs
+// 🗑️ 1-Click Cleaner: Deletes all previous/unwanted sheets, keeping only the approved tabs
 function deleteOldUnwantedTabs() {
   var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var validTabNames = Object.keys(TAB_CONFIGS);
 
-  // 1. Ensure all 9 valid tabs exist first
+  // 1. Ensure all valid tabs exist first
   initializeAllDatabaseTables();
 
   var allSheets = ss.getSheets();
   var deleted = [];
 
-  // 2. Iterate and delete any sheet that isn't in the 9 valid tabs
+  // 2. Iterate and delete any sheet that isn't in the valid tab list
   for (var i = 0; i < allSheets.length; i++) {
     var sheet = allSheets[i];
     var name = sheet.getName();
@@ -493,7 +674,7 @@ function deleteOldUnwantedTabs() {
 
   var msg = deleted.length > 0 
     ? "Deleted " + deleted.length + " old sheets:\n" + deleted.join(", ") 
-    : "No unwanted sheets found. All 9 active tabs are clean!";
+    : "No unwanted sheets found. All active tabs are clean!";
   
   try {
     SpreadsheetApp.getUi().alert("🧹 Cleanup Complete", msg, SpreadsheetApp.getUi().ButtonSet.OK);
@@ -505,8 +686,208 @@ function deleteOldUnwantedTabs() {
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("🚀 TrustGrid Admin")
-    .addItem("📊 Pre-Create All 9 Tabs", "initializeAllDatabaseTables")
+    .addItem("📊 Pre-Create All Tabs", "initializeAllDatabaseTables")
+    .addItem("🧬 Migrate Visitor/Session Columns", "migrateAddVisitorTrackingColumns")
+    .addItem("🔀 Migrate Legacy Leads to Per-Form Tabs", "migrateLeadsToPerFormSheets")
     .addItem("🧹 Delete Old / Unwanted Sheets", "deleteOldUnwantedTabs")
+    .addSeparator()
+    .addItem("⏰ Setup Daily/Weekly/Monthly Triggers", "setupAllTrustGridTriggers")
+    .addItem("📬 Send Daily Digest Now", "sendDailyDigest")
+    .addItem("📈 Send Weekly Digest Now", "sendWeeklyDigest")
+    .addItem("📁 Send Monthly Resume Digest Now", "sendMonthlyResumeDigest")
+    .addSeparator()
     .addItem("📧 Send Sample Preview Email", "sendAllSamplePreviewEmailsToPooja")
     .addToUi();
+}
+
+// =========================================================================================
+// 6. SCHEMA MIGRATION (adds Visitor ID / Session ID tracking columns to already-live tabs)
+// =========================================================================================
+
+function migrateAddVisitorTrackingColumns() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var targets = ["Contact Leads", "AI Diagnostic Leads", "Career Applications", "Partner Applications", "Newsletter Subscribers", "Form Submissions", "Leads"];
+  var updated = [];
+
+  targets.forEach(function (tabName) {
+    var sheet = ss.getSheetByName(tabName);
+    if (!sheet) return;
+    var lastCol = sheet.getLastColumn();
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var missing = ["Visitor ID", "Session ID"].filter(function (h) { return headers.indexOf(h) === -1; });
+    if (missing.length > 0) {
+      sheet.getRange(1, lastCol + 1, 1, missing.length).setValues([missing]);
+      styleHeaderRow(sheet, lastCol + missing.length);
+      updated.push(tabName + " (+" + missing.join(", ") + ")");
+    }
+  });
+
+  var msg = updated.length > 0 ? "Migrated:\n" + updated.join("\n") : "All tabs already have Visitor ID / Session ID columns.";
+  try { SpreadsheetApp.getUi().alert("🧬 Schema Migration", msg, SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+  return { success: true, updated: updated };
+}
+
+// Redistributes rows from the old consolidated "Leads" tab into the new per-form tabs
+// (Contact Leads / Career Applications / Partner Applications / Newsletter Subscribers).
+function migrateLeadsToPerFormSheets() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var oldSheet = ss.getSheetByName("Leads");
+  if (!oldSheet || oldSheet.getLastRow() < 2) {
+    try { SpreadsheetApp.getUi().alert("🔀 Migration", "No legacy 'Leads' tab data found to migrate.", SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+    return { success: true, migrated: 0 };
+  }
+
+  var data = oldSheet.getDataRange().getValues();
+  var h = data[0];
+  var idx = {
+    submissionId: h.indexOf("Submission ID"), name: h.indexOf("Name"), email: h.indexOf("Email"),
+    company: h.indexOf("Company"), designation: h.indexOf("Designation"), phone: h.indexOf("Phone"),
+    formType: h.indexOf("Form Type"), serviceInterest: h.indexOf("Service Interest"), subject: h.indexOf("Subject"),
+    message: h.indexOf("Message"), utmSource: h.indexOf("UTM Source"), utmMedium: h.indexOf("UTM Medium"),
+    utmCampaign: h.indexOf("UTM Campaign"), ipLocation: h.indexOf("IP Location"), status: h.indexOf("Status"),
+    timestamp: h.indexOf("Timestamp"), visitorId: h.indexOf("Visitor ID"), sessionId: h.indexOf("Session ID")
+  };
+  var get = function (row, key) { return idx[key] > -1 ? row[idx[key]] : ""; };
+
+  var migrated = 0;
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var normForm = String(get(row, "formType") || "").toLowerCase().replace(/[\s\-_]/g, '');
+    var targetTab = normForm.indexOf('career') > -1 ? "Career Applications"
+      : normForm.indexOf('partner') > -1 ? "Partner Applications"
+      : (normForm.indexOf('newsletter') > -1 || normForm.indexOf('insight') > -1 || normForm.indexOf('subscri') > -1) ? "Newsletter Subscribers"
+      : "Contact Leads";
+
+    var sheet = getOrCreateTab(ss, targetTab);
+    if (targetTab === "Career Applications") {
+      sheet.appendRow([get(row, "submissionId"), get(row, "name"), get(row, "email"), get(row, "phone"), get(row, "designation"), "", "", "", "", get(row, "message"), get(row, "utmSource"), get(row, "utmMedium"), get(row, "utmCampaign"), get(row, "ipLocation"), get(row, "status"), get(row, "timestamp"), get(row, "visitorId"), get(row, "sessionId")]);
+    } else if (targetTab === "Partner Applications") {
+      sheet.appendRow([get(row, "submissionId"), get(row, "name"), get(row, "email"), get(row, "company"), get(row, "designation"), get(row, "phone"), get(row, "serviceInterest"), get(row, "message"), get(row, "utmSource"), get(row, "utmMedium"), get(row, "utmCampaign"), get(row, "ipLocation"), get(row, "status"), get(row, "timestamp"), get(row, "visitorId"), get(row, "sessionId")]);
+    } else if (targetTab === "Newsletter Subscribers") {
+      sheet.appendRow([get(row, "submissionId"), get(row, "name"), get(row, "email"), get(row, "company"), "", get(row, "utmSource"), get(row, "utmMedium"), get(row, "utmCampaign"), get(row, "ipLocation"), get(row, "timestamp"), get(row, "visitorId"), get(row, "sessionId")]);
+    } else {
+      sheet.appendRow([get(row, "submissionId"), get(row, "name"), get(row, "email"), get(row, "company"), get(row, "designation"), get(row, "phone"), get(row, "subject"), get(row, "serviceInterest"), get(row, "message"), get(row, "utmSource"), get(row, "utmMedium"), get(row, "utmCampaign"), get(row, "ipLocation"), get(row, "status"), get(row, "timestamp"), get(row, "visitorId"), get(row, "sessionId")]);
+    }
+    migrated++;
+  }
+
+  var msg = "Migrated " + migrated + " legacy lead(s) into Contact Leads / Career Applications / Partner Applications / Newsletter Subscribers.\n\nYou can now delete the old 'Leads' tab via '🧹 Delete Old / Unwanted Sheets'.";
+  try { SpreadsheetApp.getUi().alert("🔀 Migration Complete", msg, SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+  return { success: true, migrated: migrated };
+}
+
+// =========================================================================================
+// 7. TIME-DRIVEN TRIGGERS & EXECUTIVE DIGESTS
+// =========================================================================================
+
+function setupAllTrustGridTriggers() {
+  deleteAllTrustGridTriggers();
+  ScriptApp.newTrigger("sendDailyDigest").timeBased().atHour(8).everyDays(1).create();
+  ScriptApp.newTrigger("sendWeeklyDigest").timeBased().atHour(8).onWeekDay(ScriptApp.WeekDay.MONDAY).create();
+  ScriptApp.newTrigger("sendMonthlyResumeDigest").timeBased().atHour(9).onMonthDay(1).create();
+  try { SpreadsheetApp.getUi().alert("⏰ Triggers Installed", "Daily digest (8am), Weekly digest (Mon 8am) and Monthly resume digest (1st, 9am) are now scheduled.", SpreadsheetApp.getUi().ButtonSet.OK); } catch (e) {}
+  return { success: true };
+}
+
+function deleteAllTrustGridTriggers() {
+  var triggers = ScriptApp.getProjectTriggers();
+  var digestFns = ["sendDailyDigest", "sendWeeklyDigest", "sendMonthlyResumeDigest"];
+  triggers.forEach(function (t) {
+    if (digestFns.indexOf(t.getHandlerFunction()) > -1) ScriptApp.deleteTrigger(t);
+  });
+}
+
+function getRowsSince(sheet, sinceDate) {
+  if (!sheet || sheet.getLastRow() < 2) return { headers: [], rows: [] };
+  var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  var tsCol = headers.indexOf("Timestamp");
+  if (tsCol === -1) return { headers: headers, rows: [] };
+  var rows = data.slice(1).filter(function (row) {
+    var ts = row[tsCol];
+    return ts && new Date(ts) >= sinceDate;
+  });
+  return { headers: headers, rows: rows };
+}
+
+function buildDigestSummaryHtml(title, sinceLabel, ss) {
+  var since = new Date();
+  if (sinceLabel === "24 hours") since.setDate(since.getDate() - 1);
+  else since.setDate(since.getDate() - 7);
+
+  var leads = getRowsSince(ss.getSheetByName("Leads"), since);
+  var diag = getRowsSince(ss.getSheetByName("AI Diagnostic Leads"), since);
+  var forms = getRowsSince(ss.getSheetByName("Form Submissions"), since);
+  var views = getRowsSince(ss.getSheetByName("Page Views"), since);
+
+  var statRow = function (label, value, color) {
+    return '<td style="padding:16px;text-align:center;background:#f8fafc;border-radius:8px;">' +
+      '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">' + escapeHtml(label) + '</div>' +
+      '<div style="font-size:28px;font-weight:800;color:' + color + ';margin-top:4px;">' + value + '</div></td>';
+  };
+
+  var html = '<div style="font-family:Inter,-apple-system,sans-serif;max-width:640px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">' +
+    '<div style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);padding:24px 28px;color:#fff;">' +
+      '<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#818cf8;">TRUSTGRID.AI INTELLIGENCE</div>' +
+      '<div style="font-size:20px;font-weight:700;">' + escapeHtml(title) + '</div>' +
+      '<div style="font-size:12px;color:#cbd5e1;margin-top:4px;">Window: past ' + escapeHtml(sinceLabel) + '</div>' +
+    '</div>' +
+    '<div style="padding:24px 28px;">' +
+      '<table style="width:100%;border-spacing:8px 0;"><tr>' +
+        statRow("New Leads", leads.rows.length, "#4f46e5") +
+        statRow("Diagnostic Requests", diag.rows.length, "#ef4444") +
+        statRow("Form Submissions", forms.rows.length, "#10b981") +
+        statRow("Page Views", views.rows.length, "#0ea5e9") +
+      '</tr></table>' +
+      '<div style="text-align:center;margin-top:24px;">' +
+        '<a href="https://docs.google.com/spreadsheets/d/' + CONFIG.MAIN_SPREADSHEET_ID + '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">Open Sheet 1 Database</a>' +
+      '</div>' +
+    '</div>' +
+    '<div style="background:#f8fafc;padding:16px 28px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #f1f5f9;">Automated ' + escapeHtml(sinceLabel) + ' digest from TrustGrid.AI</div>' +
+  '</div>';
+
+  return html;
+}
+
+function sendDailyDigest() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var html = buildDigestSummaryHtml("📬 Daily Executive Digest", "24 hours", ss);
+  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📬 [TrustGrid.AI] Daily Digest — " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
+}
+
+function sendWeeklyDigest() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var html = buildDigestSummaryHtml("📈 Weekly Executive Digest", "7 days", ss);
+  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📈 [TrustGrid.AI] Weekly Digest — Week of " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
+}
+
+function sendMonthlyResumeDigest() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var sheet = ss.getSheetByName("Form Submissions");
+  if (!sheet || sheet.getLastRow() < 2) return;
+
+  var since = new Date();
+  since.setMonth(since.getMonth() - 1);
+  var data = sheet.getDataRange().getValues();
+  var headers = data[0];
+  var tsCol = headers.indexOf("Timestamp"), linkCol = headers.indexOf("Resume Drive Link"), nameCol = headers.indexOf("Name"), roleCol = headers.indexOf("Role");
+
+  var rowsHtml = "";
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    if (!row[linkCol] || !row[tsCol] || new Date(row[tsCol]) < since) continue;
+    rowsHtml += '<tr><td style="padding:8px 14px;border-bottom:1px solid #f1f5f9;">' + escapeHtml(row[nameCol]) + '</td>' +
+      '<td style="padding:8px 14px;border-bottom:1px solid #f1f5f9;">' + escapeHtml(row[roleCol]) + '</td>' +
+      '<td style="padding:8px 14px;border-bottom:1px solid #f1f5f9;"><a href="' + row[linkCol] + '">View Resume</a></td></tr>';
+  }
+  if (!rowsHtml) return;
+
+  var html = '<div style="font-family:Inter,-apple-system,sans-serif;max-width:640px;margin:0 auto;">' +
+    '<h2 style="color:#0f172a;">📁 Monthly Candidate Resume Digest</h2>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:14px;">' +
+      '<tr><th style="text-align:left;padding:8px 14px;background:#0f172a;color:#fff;">Candidate</th><th style="text-align:left;padding:8px 14px;background:#0f172a;color:#fff;">Role</th><th style="text-align:left;padding:8px 14px;background:#0f172a;color:#fff;">Resume</th></tr>' +
+      rowsHtml +
+    '</table></div>';
+
+  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📁 [TrustGrid.AI] Monthly Resume Digest", htmlBody: html });
 }

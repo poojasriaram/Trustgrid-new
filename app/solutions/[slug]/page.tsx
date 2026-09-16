@@ -27,11 +27,18 @@ import {
   ArrowRight,
   ShieldAlert,
   SlidersHorizontal,
-  FileSpreadsheet
+  FileSpreadsheet,
+  MessageCircle
 } from 'lucide-react'
 import { getSolution, solutions, allIndustries, Solution, logoUrl, differentiationData } from '@/lib/solutions'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { UseCaseSlider } from '@/components/ui/use-case-slider'
+import { TrustGridForm } from '@/components/ui/trustgrid-form'
+import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
+import { KPIMetricCard, KPIMetric } from '@/components/ui/kpi-metric-card'
+import { SolutionJourneySlider } from '@/components/ui/solution-journey-slider'
+import { ICPSlider } from '@/components/ui/icp-slider'
 
 const solutionIcons = {
   'ai-infra-engineering': Cpu,
@@ -72,6 +79,13 @@ const fiveLayerModels: Record<string, { name: string; purpose: string; component
     { name: 'Layer 04: Zero-Trust Agent IAM & AI SOC', purpose: 'Enforce ephemeral permissions and monitor agent execution paths 24/7.', components: ['Ephemeral tool-access tokens', 'AI-aware SIEM/SOC correlation', 'Tamper-proof immutable audit logs'], outcome: 'Least-privilege agent autonomy and instant threat containment' },
     { name: 'Layer 05: Enterprise Trust & Regulatory Posture', purpose: 'Provide verifiable compliance with global AI and data protection standards.', components: ['NIST AI RMF & ISO 42001 governance', 'EU AI Act compliance reporting', 'Board-level cyber risk dashboards'], outcome: 'Confident, board-approved enterprise AI scaling' }
   ],
+  'trusted-ai-transformation': [
+    { name: 'Layer 01: Mathematical Foundation', purpose: 'Implement formal explainability algorithms (SHAP/LIME/Integrated Gradients).', components: ['Local feature attribution', 'Global surrogate modeling', 'Counterfactual explanation engines'], outcome: '100% auditable model decision reasoning' },
+    { name: 'Layer 02: Deterministic Safety Gateways', purpose: 'Enforce rigid policy bounds and boundary testing on model outputs.', components: ['Formal robustness verification', 'Semantic invariant checks', 'Automated red-teaming harnesses'], outcome: 'Zero out-of-distribution hallucinations' },
+    { name: 'Layer 03: Continuous SPC & Quality Assurance', purpose: 'Apply statistical process control to detect model drift and data anomalies.', components: ['Control charts (Shewhart / CUSUM)', 'Population Stability Index (PSI)', 'Real-time concept drift telemetry'], outcome: 'Sub-second anomaly intervention and continuous precision' },
+    { name: 'Layer 04: Regulatory Compliance Automation', purpose: 'Continuous alignment with global AI governance standards.', components: ['EU AI Act Conformity Assessment Gateways', 'NIST AI RMF risk matrices', 'ISO 42001 compliance reporting'], outcome: 'Automated, audit-ready regulatory clearance' },
+    { name: 'Layer 05: Board-Level Audit & Provenance', purpose: 'Maintain immutable cryptographic decision logs for legal accountability.', components: ['Cryptographic decision hashing', 'Causal provenance trees', 'Immutable audit replay sandbox'], outcome: 'Complete enterprise trust and stakeholder defense' }
+  ],
   'ai-value-engineering': [
     { name: 'Layer 01: Economic Value Discovery', purpose: 'Identify and prioritize high-yield enterprise AI opportunities.', components: ['Value stream opportunity mapping', 'Technical feasibility scoring', 'Preliminary ROI business case modeling'], outcome: 'Prioritized roadmap of high-yield AI initiatives' },
     { name: 'Layer 02: Unit Economics & FinOps Modeling', purpose: 'Establish transparent cost-per-task and token consumption attribution.', components: ['Granular inference cost models', 'Total Cost of Ownership (TCO) calculators', 'Cloud vs on-prem cost benchmarking'], outcome: 'Predictable, margin-preserving AI unit economics' },
@@ -89,6 +103,15 @@ const temporalSpectrums: Record<string, { phase: string; title: string; focus: s
     { phase: 'SCALE', title: 'Industrialize & Expand', focus: 'Roll out enterprise-grade fleets, high-density pods, and multi-tenant operations.', outcome: 'Predictable, continuous enterprise-wide scaling' },
     { phase: 'FUTURE', title: 'Autonomous Compounding', focus: 'Self-tuning architectures, closed-loop telemetry, and quantum-hybrid readiness.', outcome: 'Defensible, compounding competitive advantage' }
   ]
+}
+
+const solutionImages: Record<string, string> = {
+  'ai-agentic-factory': '/images/offering-agentic.jpg',
+  'ai-infra-engineering': '/images/offering-infra.jpg',
+  'ai-networking': '/images/offering-networking.jpg',
+  'ai-cybersecurity-quantum-safe': '/images/offering-security.jpg',
+  'ai-value-engineering': '/images/offering-value.jpg',
+  'trusted-ai-transformation': '/images/offering-security.jpg',
 }
 
 export function generateStaticParams() {
@@ -112,7 +135,7 @@ export async function generateMetadata({
   if (!solution) return {}
 
   return {
-    title: `${solution.label} | TrustGrid.ai`,
+    title: `${solution.label} | TrustGrid.ai — Enterprise AI Engineering`,
     description: solution.heroStatement,
     alternates: { canonical: `/solutions/${solution.slug}` },
     openGraph: {
@@ -136,6 +159,7 @@ export default async function SolutionDetailPage({
   const SolutionIcon = solutionIcons[solution.slug as keyof typeof solutionIcons] || Cpu
   const fiveLayerModel = fiveLayerModels[solution.slug] || fiveLayerModels['ai-agentic-factory']
   const temporalSpectrum = temporalSpectrums[solution.slug] || temporalSpectrums['default']
+  const featuredImage = solutionImages[solution.slug] || '/images/hero-ai-infra.jpg'
 
   return (
     <main className="page-wrapper">
@@ -144,31 +168,46 @@ export default async function SolutionDetailPage({
       {/* LAYER 01: HERO HEADER & POSITIONING */}
       <section className="solution-hero">
         <div className="hero-grid" />
-        <div className="hero-content">
-          <div className="solution-badge-row">
-            <span className="solution-badge-num">{solution.number}</span>
-            <span className="solution-badge-label">{solution.label}</span>
+        <div className="hero-content solution-hero-grid-split">
+          <div className="solution-hero-text-col">
+            <div className="solution-badge-row">
+              <span className="solution-badge-label">{solution.label}</span>
+            </div>
+
+            <h1 className="solution-hero-title">{solution.shortTitle}</h1>
+            <p className="solution-hero-copy">{solution.heroStatement}</p>
+
+            <div className="solution-hero-actions">
+              <Link
+                className="button button-primary"
+                href={`/book-ai-diagnostic?solution=${solution.slug}`}
+              >
+                <span>Book {solution.shortTitle} Diagnostic</span>
+                <ArrowUpRight size={17} />
+              </Link>
+              <WhatsAppCTA inline label="Discuss on WhatsApp" />
+              <a className="button button-ghost" href="#architecture">
+                <span>View Architecture Blueprint</span>
+                <ChevronRight size={16} />
+              </a>
+            </div>
           </div>
 
-          <h1 className="solution-hero-title">{solution.shortTitle}</h1>
-          <p className="solution-hero-copy">{solution.heroStatement}</p>
-
-          <div className="solution-hero-actions">
-            <Link
-              className="button button-primary"
-              href={`/book-ai-diagnostic?solution=${solution.slug}`}
-            >
-              <span>Book {solution.shortTitle} Diagnostic</span>
-              <ArrowUpRight size={17} />
-            </Link>
-            <a className="button button-ghost" href="#architecture">
-              <span>View 5-Layer Model</span>
-              <ChevronRight size={16} />
-            </a>
-            <a className="text-link" href="#engagement">
-              <span>Engagement Journey</span>
-              <ArrowRight size={15} />
-            </a>
+          <div className="solution-hero-media-col">
+            <div className="solution-featured-image-frame animated-card">
+              <span className="card-corner-tl" />
+              <span className="card-corner-br" />
+              <img
+                src={featuredImage}
+                alt={solution.shortTitle}
+                className="solution-hero-image"
+              />
+              <div className="solution-image-overlay" />
+              <div className="solution-image-chip">
+                <SolutionIcon size={16} className="text-cyan-400" />
+                <span>{solution.shortTitle.toUpperCase()}</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -179,7 +218,7 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 02: OUTCOMES / PROOF BAR */}
+      {/* LAYER 02: VERIFIED OUTCOMES & KPI BAR */}
       <section className="solution-outcomes-bar">
         <div className="outcomes-bar-inner">
           {solution.metrics.slice(0, 4).map((m, idx) => (
@@ -191,14 +230,19 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 03: THE ENTERPRISE CHALLENGE / PAIN POINTS */}
+      {/* SOLUTION JOURNEY SLIDER: PROBLEM -> SOLUTION -> CAPABILITIES -> USE CASES -> ICP -> OUTCOME -> CTA */}
+      <section className="section" style={{ paddingTop: '20px', paddingBottom: '10px' }}>
+        <SolutionJourneySlider />
+      </section>
+
+      {/* LAYER: THE ENTERPRISE CHALLENGE / PAIN POINTS */}
       <section className="section solution-context-section" id="challenge">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">01 / THE ENTERPRISE CHALLENGE</span>
+            <span className="section-badge">THE ENTERPRISE CHALLENGE</span>
             <p className="section-label">Operational Realities & Architectural Friction</p>
           </div>
-          <span className="section-index">01</span>
+          <span className="section-index">CHALLENGE</span>
         </div>
 
         <div className="context-two-col">
@@ -234,19 +278,19 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 04: 5-LAYER ENGINEERING ARCHITECTURE MODEL */}
+      {/* LAYER: 5-LAYER ENGINEERING ARCHITECTURE MODEL */}
       <section className="section solution-architecture-section" id="architecture">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">02 / 5-LAYER ENGINEERING MODEL</span>
+            <span className="section-badge">ENGINEERING MODEL</span>
             <p className="section-label">Full-Stack Architectural Blueprint</p>
           </div>
-          <span className="section-index">02</span>
+          <span className="section-index">ARCHITECTURE</span>
         </div>
 
         <div className="offerings-header">
           <h2>
-            A rigorous 5-layer engineering model. <span>From Foundation to Business Outcome.</span>
+            A rigorous engineering model. <span>From Foundation to Business Outcome.</span>
           </h2>
           <p>
             Every layer is purpose-engineered to solve specific technical constraints and deliver verifiable, compounding performance.
@@ -257,7 +301,6 @@ export default async function SolutionDetailPage({
           {fiveLayerModel.map((layer, idx) => (
             <div key={idx} className="five-layer-card animated-card reveal-up">
               <div className="layer-card-head">
-                <span className="layer-number-pill">0{idx + 1}</span>
                 <h3 className="layer-name">{layer.name}</h3>
               </div>
               <p className="layer-purpose">{layer.purpose}</p>
@@ -283,14 +326,14 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 05: TEMPORAL SPECTRUM / MATURITY ROADMAP */}
+      {/* LAYER: TEMPORAL SPECTRUM / MATURITY ROADMAP */}
       <section className="section solution-temporal-section" id="maturity">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">03 / TEMPORAL SPECTRUM</span>
+            <span className="section-badge">TEMPORAL SPECTRUM</span>
             <p className="section-label">Enterprise AI Maturity & Compounding Progression</p>
           </div>
-          <span className="section-index">03</span>
+          <span className="section-index">MATURITY</span>
         </div>
 
         <div className="offerings-header">
@@ -317,14 +360,14 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 06: DIFFERENTIATION (CONVENTIONAL VS TRUSTGRID) */}
+      {/* LAYER: DIFFERENTIATION */}
       <section className="section solution-diff-section" id="differentiation">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">04 / DIFFERENTIATION</span>
+            <span className="section-badge">DIFFERENTIATION</span>
             <p className="section-label">Conventional Approach vs. TrustGrid Operating Model</p>
           </div>
-          <span className="section-index">04</span>
+          <span className="section-index">COMPARISON</span>
         </div>
 
         <div className="offerings-header">
@@ -367,14 +410,19 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* LAYER 07: 6-STAGE ENGAGEMENT JOURNEY */}
+      {/* STAKEHOLDER & ICP PERSONA MAPPINGS */}
+      <section className="section" style={{ paddingTop: '10px', paddingBottom: '20px' }}>
+        <ICPSlider />
+      </section>
+
+      {/* LAYER: ENGAGEMENT JOURNEY */}
       <section className="section solution-engagement-section" id="engagement">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">05 / ENGAGEMENT JOURNEY</span>
+            <span className="section-badge">ENGAGEMENT JOURNEY</span>
             <p className="section-label">Structured Paths from Diagnostic to Operations</p>
           </div>
-          <span className="section-index">05</span>
+          <span className="section-index">FRAMEWORKS</span>
         </div>
 
         <div className="engagement-header">
@@ -391,7 +439,6 @@ export default async function SolutionDetailPage({
             <div key={model.title} className="engagement-model-card animated-card reveal-up">
               <div className="engagement-body">
                 <div className="engagement-top">
-                  <span className="engagement-num">{model.number}</span>
                   <span className="engagement-duration">
                     <Calendar size={13} />
                     {model.duration}
@@ -416,10 +463,10 @@ export default async function SolutionDetailPage({
       <section className="section solution-usecases-section" id="use-cases">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">06 / PRODUCTION USE CASES</span>
+            <span className="section-badge">PRODUCTION USE CASES</span>
             <p className="section-label">Where the Engineering Becomes Real</p>
           </div>
-          <span className="section-index">06</span>
+          <span className="section-index">USE CASES</span>
         </div>
 
         <div className="usecases-header">
@@ -431,27 +478,17 @@ export default async function SolutionDetailPage({
           </p>
         </div>
 
-        <div className="usecases-grid">
-          {solution.useCases.map((useCase, idx) => (
-            <article key={useCase.title} className="usecase-card animated-card reveal-up">
-              <div className="usecase-card-header">
-                <span className="usecase-badge">USE CASE 0{idx + 1}</span>
-                <h4>{useCase.title}</h4>
-              </div>
-              <p>{useCase.description}</p>
-            </article>
-          ))}
-        </div>
+        <UseCaseSlider useCases={solution.useCases} solutionTitle={solution.shortTitle} />
       </section>
 
       {/* METHODOLOGY ENGINE APPLICATION */}
       <section className="section solution-methodology-section" id="methodology">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">07 / METHODOLOGY ENGINE</span>
+            <span className="section-badge">METHODOLOGY ENGINE</span>
             <p className="section-label">{solution.methodologyDomain || 'AI Methodology Engine'}</p>
           </div>
-          <span className="section-index">07</span>
+          <span className="section-index">METHODOLOGY</span>
         </div>
 
         <div className="methodology-domain-header">
@@ -488,6 +525,27 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
+      {/* DIRECT SOLUTION INTAKE FORM */}
+      <section className="section solution-form-section" id="intake-form" style={{ paddingTop: '20px', paddingBottom: '40px' }}>
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">TECHNICAL INTAKE</span>
+            <p className="section-label">Request an Architecture Audit for {solution.shortTitle}</p>
+          </div>
+          <span className="section-index">DIRECT EVALUATION</span>
+        </div>
+
+        <div style={{ maxWidth: '840px', margin: '0 auto' }}>
+          <TrustGridForm
+            variant="diagnostic"
+            formId={`form_${solution.slug}`}
+            formName={`${solution.shortTitle} Diagnostic`}
+            defaultSolution={solution.slug}
+            ctaSource={`solution_page_${solution.slug}`}
+          />
+        </div>
+      </section>
+
       {/* NEXT SOLUTION & CROSS-SOLUTION NAVIGATION */}
       <section className="section next-solution-section">
         <div className="next-solution-card animated-card">
@@ -503,33 +561,8 @@ export default async function SolutionDetailPage({
         </div>
       </section>
 
-      {/* FINAL SOLUTION CTA */}
-      <section className="section solution-cta-final">
-        <div className="solution-cta-panel">
-          <div className="cta-left">
-            <span className="section-label" style={{ color: '#91b3ff' }}>START WITH THE SIGNAL</span>
-            <h2>
-              Ready to engineer <span>{solution.shortTitle}?</span>
-            </h2>
-            <p>
-              Begin with a structured AI Diagnostic Assessment. Our senior architects will evaluate your current architecture, identify bottlenecks, and deliver an actionable execution roadmap.
-            </p>
-          </div>
-          <div className="cta-right">
-            <Link
-              className="button button-light"
-              href={`/book-ai-diagnostic?solution=${solution.slug}`}
-            >
-              <span>Book {solution.shortTitle} Diagnostic</span>
-              <ArrowUpRight size={17} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <SiteFooter />
     </main>
   )
 }
-

@@ -1,83 +1,24 @@
 'use client'
 
-import { FormEvent, useState, useEffect } from 'react'
+import React from 'react'
 import Link from 'next/link'
 import {
   ArrowUpRight,
-  Send,
   Building2,
   Mail,
   Phone,
   MapPin,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  Sparkles
+  Sparkles,
+  MessageCircle,
+  Clock,
+  ShieldCheck
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { allIndustries } from '@/lib/solutions'
-import { submitTrustGridForm, validateEmail } from '@/lib/form-submission'
-import { initUtmTracking } from '@/lib/tracking'
+import { TrustGridForm } from '@/components/ui/trustgrid-form'
+import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 
 export default function ContactPage() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [company, setCompany] = useState('')
-  const [designation, setDesignation] = useState('')
-  const [industry, setIndustry] = useState('')
-  const [subject, setSubject] = useState('')
-  const [message, setMessage] = useState('')
-
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [refId, setRefId] = useState('')
-
-  useEffect(() => {
-    initUtmTracking()
-  }, [])
-
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setErrorMessage('')
-
-    if (!name.trim()) {
-      setErrorMessage('Please enter your full name.')
-      return
-    }
-
-    if (!email.trim() || !validateEmail(email)) {
-      setErrorMessage('Please enter a valid work email address.')
-      return
-    }
-
-    setIsSubmitting(true)
-
-    const result = await submitTrustGridForm({
-      formName: 'Contact Inquiry',
-      name,
-      email,
-      phone,
-      company: company || 'Not Specified',
-      designation,
-      industry: industry || 'Cross-Industry',
-      subject: subject || 'General Strategic Inquiry',
-      message: message || 'Direct inquiry from contact page.'
-    })
-
-    setIsSubmitting(false)
-
-    if (result.success) {
-      setRefId(result.submissionId || `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-0001`)
-      setSubmitted(true)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      setErrorMessage(result.message || 'Unable to process your inquiry. Please try again.')
-    }
-  }
-
   return (
     <div className="page-shell">
       <SiteHeader />
@@ -103,7 +44,7 @@ export default function ContactPage() {
         {/* CONTENT & FORM GRID */}
         <section className="section" style={{ paddingTop: '20px', paddingBottom: '60px' }}>
           <div className="diagnostic-grid-layout">
-            {/* LEFT: CONTACT DETAILS */}
+            {/* LEFT: CONTACT DETAILS & CHANNELS */}
             <div className="diagnostic-intro-col">
               <div className="diagnostic-badge-wrap">
                 <span className="section-label" style={{ color: '#1d5cff' }}>
@@ -122,7 +63,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>Direct Email</strong>
-                    <p><a href="mailto:poojasri.trustgrid@gmail.com" style={{ color: '#1d5cff' }}>poojasri.trustgrid@gmail.com</a></p>
+                    <p><a href="mailto:poojasri.trustgrid@gmail.com" style={{ color: '#1d5cff', textDecoration: 'none' }}>poojasri.trustgrid@gmail.com</a></p>
                   </div>
                 </div>
 
@@ -138,170 +79,37 @@ export default function ContactPage() {
 
                 <div className="value-point">
                   <div className="value-point-icon">
-                    <Sparkles size={16} />
+                    <MessageCircle size={16} />
                   </div>
                   <div>
-                    <strong>AI Diagnostic Assessments</strong>
-                    <p>For structured technical roadmaps and TCO audits, book an AI Diagnostic session.</p>
+                    <strong>Instant WhatsApp Line</strong>
+                    <p>Connect with our senior architects for rapid technical consultation.</p>
+                    <div style={{ marginTop: '8px' }}>
+                      <WhatsAppCTA inline label="Chat on WhatsApp" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="value-point">
+                  <div className="value-point-icon">
+                    <Clock size={16} />
+                  </div>
+                  <div>
+                    <strong>SLA Commitment</strong>
+                    <p>Direct response from a senior technical architect within 24 business hours.</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: FORM */}
+            {/* RIGHT: STANDARDIZED CONTACT FORM */}
             <div className="diagnostic-form-col">
-              {submitted ? (
-                <div className="diagnostic-success-box" style={{ padding: '36px' }}>
-                  <div className="success-badge-row">
-                    <span className="success-badge">INQUIRY RECEIVED</span>
-                    <span className="success-ref">REF: {refId}</span>
-                  </div>
-
-                  <h2 className="success-title">Thank you. Your request has been received successfully.</h2>
-                  <p className="success-lead">
-                    Reference ID: <strong>{refId}</strong>. Our enterprise relations and architecture team will review your message for <strong>{company}</strong> and get back to you shortly.
-                  </p>
-
-                  <div className="success-actions" style={{ marginTop: '24px' }}>
-                    <Link href="/" className="button button-primary">
-                      <span>Return to TrustGrid Home</span>
-                      <ArrowUpRight size={16} />
-                    </Link>
-                  </div>
-                </div>
-              ) : (
-                <form className="interactive-diagnostic-form" onSubmit={handleSubmit} noValidate>
-                  <div className="step-header">
-                    <span className="step-number">GET IN TOUCH</span>
-                    <h3>General & Strategic Inquiries</h3>
-                    <p>Fill out the details below to connect directly with our engineering team:</p>
-                  </div>
-
-                  {errorMessage && (
-                    <div style={{
-                      background: '#fef2f2',
-                      border: '1px solid #fecaca',
-                      borderRadius: '6px',
-                      padding: '12px 16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      color: '#991b1b',
-                      fontSize: '13.5px'
-                    }}>
-                      <AlertCircle size={18} style={{ flexShrink: 0 }} />
-                      <span>{errorMessage}</span>
-                    </div>
-                  )}
-
-                  <div className="contact-inputs-grid">
-                    <label className="input-group">
-                      <span>Full Name *</span>
-                      <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                        placeholder="e.g. David Sterling"
-                      />
-                    </label>
-
-                    <label className="input-group">
-                      <span>Work Email *</span>
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                        placeholder="e.g. d.sterling@enterprise.com"
-                      />
-                    </label>
-
-                    <label className="input-group">
-                      <span>Phone Number (Optional)</span>
-                      <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="e.g. +1 (555) 012-3456"
-                      />
-                    </label>
-
-                    <label className="input-group">
-                      <span>Company / Organization (Optional)</span>
-                      <input
-                        type="text"
-                        value={company}
-                        onChange={(e) => setCompany(e.target.value)}
-                        placeholder="e.g. Acme Corp"
-                      />
-                    </label>
-
-                    <label className="input-group">
-                      <span>Job Title / Role (Optional)</span>
-                      <input
-                        type="text"
-                        value={designation}
-                        onChange={(e) => setDesignation(e.target.value)}
-                        placeholder="e.g. Director of Infrastructure"
-                      />
-                    </label>
-
-                    <label className="input-group">
-                      <span>Industry Sector (Optional)</span>
-                      <select
-                        className="industry-dropdown"
-                        value={industry}
-                        onChange={(e) => setIndustry(e.target.value)}
-                      >
-                        <option value="">-- Select Industry (Optional) --</option>
-                        {allIndustries.map((ind) => (
-                          <option key={ind} value={ind}>{ind}</option>
-                        ))}
-                      </select>
-                    </label>
-
-                    <label className="input-group md:col-span-2">
-                      <span>Subject / Topic (Optional)</span>
-                      <input
-                        type="text"
-                        value={subject}
-                        onChange={(e) => setSubject(e.target.value)}
-                        placeholder="e.g. Inference Infrastructure Optimization & Advisory"
-                      />
-                    </label>
-
-                    <label className="input-group md:col-span-2">
-                      <span>Message / Requirements (Optional)</span>
-                      <textarea
-                        rows={4}
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        placeholder="Describe your AI workload, compute requirements, or strategic goals..."
-                      />
-                    </label>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="button button-submit-diag"
-                    style={{ opacity: isSubmitting ? 0.75 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" />
-                        <span>Sending Message...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Submit Inquiry</span>
-                        <Send size={16} />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
+              <TrustGridForm
+                variant="contact"
+                formId="form_contact"
+                formName="Contact Form"
+                ctaSource="contact_page"
+              />
             </div>
           </div>
         </section>

@@ -1,12 +1,14 @@
 /**
- * TrustGrid.AI - Form Submission Service
- * Connects frontend forms directly to Google Apps Script #1 Web App.
+ * TrustGrid.AI - Form Submission & Lead Dispatch Service
+ * Connects frontend forms and chatbot lead capture directly to Google Apps Script Webhooks.
  */
 
 import { getTrackingMetadata, TrackingMetadata } from './tracking'
+import { trackFormSubmit } from './analytics'
 
 export interface TrustGridFormData {
   submissionId?: string
+  formId?: string
   formName: string
   name: string
   email: string
@@ -32,6 +34,9 @@ export interface TrustGridFormData {
   additionalRequirements?: string
   engagementModel?: string
   selectedSolutions?: string[]
+  ctaSource?: string
+  leadSource?: string
+  chatIntent?: string
   metadata?: TrackingMetadata
 }
 
@@ -42,7 +47,7 @@ export interface SubmissionResponse {
   leadScore?: number
 }
 
-// Global flag to prevent double clicks across forms
+// Global flag to debounce rapid duplicate clicks
 let isSubmittingGlobal = false
 
 /**
@@ -64,16 +69,15 @@ export function validatePhone(phone?: string): boolean {
 }
 
 /**
- * Submits form data to Google Apps Script Web App #1
+ * Submits form data to Google Apps Script Web App #1 (Leads)
  */
 export async function submitTrustGridForm(
   formData: TrustGridFormData
 ): Promise<SubmissionResponse> {
-  // Prevent duplicate submissions in-flight
   if (isSubmittingGlobal) {
     return {
       success: false,
-      message: 'A submission is already in progress. Please wait a moment.',
+      message: 'A submission is currently in progress. Please wait a moment.',
     }
   }
 
@@ -93,16 +97,17 @@ export async function submitTrustGridForm(
   isSubmittingGlobal = true
 
   try {
-    // Generate fallback submission ID in case backend connection operates in no-cors
     const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '')
     const randomSuffix = Math.floor(1000 + Math.random() * 9000)
-    const clientSubmissionId = `TG-${dateStr}-${randomSuffix}`
+    const clientSubmissionId = formData.submissionId || `TG-${dateStr}-${randomSuffix}`
+    const formId = formData.formId || formData.formName.toLowerCase().replace(/\s+/g, '_')
 
     // Attach tracking metadata
-    const tracking = getTrackingMetadata(formData.formName)
+    const tracking = getTrackingMetadata(formData.formName, formId, formData.ctaSource)
     const payload = {
       ...formData,
-      submissionId: formData.submissionId || clientSubmissionId,
+      formId,
+      submissionId: clientSubmissionId,
       challenges: Array.isArray(formData.challenges)
         ? formData.challenges.join(', ')
         : formData.challenges || '',
@@ -122,10 +127,9 @@ export async function submitTrustGridForm(
 
     if (apiUrl && apiUrl.startsWith('http')) {
       try {
-        // Attempt POST to Apps Script Webhook
         await fetch(apiUrl, {
           method: 'POST',
-          mode: 'no-cors', // Ensures cross-origin redirects in all browsers execute cleanly
+          mode: 'no-cors',
           headers: {
             'Content-Type': 'text/plain;charset=utf-8',
           },
@@ -133,7 +137,6 @@ export async function submitTrustGridForm(
         })
       } catch (postErr) {
         console.warn('Primary fetch notice:', postErr)
-        // Secondary attempt
         try {
           await fetch(apiUrl, {
             method: 'POST',
@@ -142,11 +145,12 @@ export async function submitTrustGridForm(
             },
             body: JSON.stringify(payload),
           })
-        } catch (e) {
-          console.warn('Secondary fetch notice:', e)
-        }
+        } catch (e) {}
       }
     }
+
+    // Trigger form submit and lead creation analytics telemetry
+    trackFormSubmit(formId, formData.formName, true, clientSubmissionId)
 
     isSubmittingGlobal = false
     return {
@@ -154,8 +158,10 @@ export async function submitTrustGridForm(
       message: 'Form submitted successfully',
       submissionId: clientSubmissionId,
     }
-  } catch (error) {
+  } catch (error: any) {
     isSubmittingGlobal = false
+    const formId = formData.formId || formData.formName.toLowerCase().replace(/\s+/g, '_')
+    trackFormSubmit(formId, formData.formName, false, undefined, error?.message || 'Submission failed')
     console.error('TrustGrid form submission error:', error)
     return {
       success: false,

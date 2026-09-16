@@ -4,10 +4,12 @@ import Script from 'next/script'
 import './globals.css'
 import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
+import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
+import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 
 export const metadata: Metadata = {
-  title: 'TrustGrid.ai — Build what can be trusted',
-  description: 'TrustGrid.ai helps ambitious organizations turn AI from a source of uncertainty into a durable advantage.',
+  title: 'TrustGrid.ai — Enterprise AI Engineering Operating Company',
+  description: 'TrustGrid.ai architects, deploys, optimizes, and secures full-stack enterprise AI infrastructure, GPU factories, autonomous agent fleets, and quantum-safe networks.',
   generator: 'v0.app',
 }
 
@@ -28,7 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-            })(window, document, "clarity", "script", "yfq82hsy3o");
+            })(window, document, "clarity", "script", "yj0srnjmcb");
           `}
         </Script>
       </head>
@@ -36,10 +38,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AnalyticsTracker />
         {children}
         <ScrollRevealObserver />
+        <AIArchitectChatbot />
+        <WhatsAppCTA position="bottom-left" />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
 }
-
-
