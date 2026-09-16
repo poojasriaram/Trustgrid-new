@@ -360,9 +360,6 @@ export function HeroSlider() {
               >
                 <ChevronLeft size={16} />
               </button>
-              <span className="hero-slide-counter">
-                0{currentSlideIndex + 1} / 0{total}
-              </span>
               <button
                 type="button"
                 className="hero-arrow-btn"
