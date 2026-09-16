@@ -10995,6 +10995,42 @@ body {
   overflow: hidden;
 }
 
+.hero-banner-image-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.18;
+  filter: saturate(1.2) brightness(0.7);
+  transform: scale(1.04);
+  animation: heroImgFadeIn 0.8s ease-out forwards;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 60% 40%, rgba(6, 14, 34, 0.4) 0%, rgba(6, 14, 34, 0.94) 75%);
+}
+
+@keyframes heroImgFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+  to {
+    opacity: 0.18;
+    transform: scale(1.04);
+  }
+}
+
 .hero-slider-tabs-container {
   display: flex;
   align-items: center;

@@ -34,6 +34,7 @@ export interface HeroSlideData {
   solutionSlug: string
   engineLayerIndex: number
   icon: LucideIcon
+  image: string
 }
 
 export const heroSlidesData: HeroSlideData[] = [
@@ -51,7 +52,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/ai-infra-engineering',
     solutionSlug: 'ai-infra-engineering',
     engineLayerIndex: 0,
-    icon: Cpu
+    icon: Cpu,
+    image: '/images/hero-ai-infra.jpg'
   },
   {
     id: 'agentic',
@@ -67,7 +69,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/ai-agentic-factory',
     solutionSlug: 'ai-agentic-factory',
     engineLayerIndex: 1,
-    icon: Bot
+    icon: Bot,
+    image: '/images/offering-agentic.jpg'
   },
   {
     id: 'networking',
@@ -83,7 +86,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/ai-networking',
     solutionSlug: 'ai-networking',
     engineLayerIndex: 4,
-    icon: Network
+    icon: Network,
+    image: '/images/offering-networking.jpg'
   },
   {
     id: 'security',
@@ -99,7 +103,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/ai-cybersecurity-quantum-safe',
     solutionSlug: 'ai-cybersecurity-quantum-safe',
     engineLayerIndex: 3,
-    icon: Lock
+    icon: Lock,
+    image: '/images/offering-security.jpg'
   },
   {
     id: 'trusted',
@@ -115,7 +120,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/trusted-ai-transformation',
     solutionSlug: 'trusted-ai-transformation',
     engineLayerIndex: 2,
-    icon: ShieldCheck
+    icon: ShieldCheck,
+    image: '/images/offering-trusted-ai.jpg'
   },
   {
     id: 'value',
@@ -131,7 +137,8 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaLink: '/solutions/ai-value-engineering',
     solutionSlug: 'ai-value-engineering',
     engineLayerIndex: 5,
-    icon: TrendingUp
+    icon: TrendingUp,
+    image: '/images/offering-value.jpg'
   }
 ]
 
@@ -160,12 +167,12 @@ export function HeroSlider() {
     setCurrentSlideIndex((prev) => (prev - 1 + total) % total)
   }, [total])
 
-  // Autoplay cycle
+  // Autoplay cycle (5.5s with pause on hover)
   useEffect(() => {
     if (isPaused || isDragging) return
     const timer = setInterval(() => {
       goToNext()
-    }, 7500)
+    }, 5500)
     return () => clearInterval(timer)
   }, [isPaused, isDragging, goToNext])
 
@@ -204,6 +211,16 @@ export function HeroSlider() {
         if (isDragging) setIsDragging(false)
       }}
     >
+      {/* Dynamic Background Banner Image with Space-Grade Glassmorphic Overlay */}
+      <div className="hero-banner-image-backdrop" key={currentSlide.id + '-backdrop'}>
+        <img
+          src={currentSlide.image}
+          alt={currentSlide.title}
+          className="hero-banner-img"
+        />
+        <div className="hero-banner-overlay" />
+      </div>
+
       <HeroCanvas />
       <div className="hero-grid-bg" />
       <div className="hero-glow-sphere" />
