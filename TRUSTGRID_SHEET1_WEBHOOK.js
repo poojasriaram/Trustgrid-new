@@ -35,7 +35,7 @@ const CONFIG = {
 
 const EMAIL_CONFIG = {
   name: "TrustGrid AI Intelligence",
-  primaryAdmin: "poojasri.aram@gmail.com",
+  primaryAdmin: "poojasri.trustgrid@gmail.com",
   replyTo: "hello@trustgrid.ai",
   website: "https://www.trustgrid.ai"
 };
@@ -783,17 +783,195 @@ function sendExecutiveAlert(subjectTitle, data, resumeInfo) {
   } catch (err) {}
 }
 
-function sendAllSamplePreviewEmailsToPooja() {
-  sendExecutiveAlert("TEST: AI Diagnostic Assessment", {
-    fullName: "Pooja Sri",
-    email: "poojasri.aram@gmail.com",
-    company: "Enterprise AI Labs",
-    role: "VP of Enterprise Infrastructure",
-    companySize: "1,000 - 5,000 employees",
-    industry: "Fintech",
-    primaryObjectives: ["AI Infrastructure Scalability", "Low-Latency Model Serving"],
-    selectedSolutions: ["Custom Model Inference", "High-Throughput Vector DB"]
+// 🚀 1-Click Multi-Form Sample Submissions Generator
+// Populates all 10 dedicated lead tabs with realistic sample enterprise data and sends HTML alert emails to poojasri.trustgrid@gmail.com
+function sendAllSampleSubmissionsToPooja() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  initializeAllDatabaseTables();
+
+  var sampleDataList = [
+    {
+      formType: "Contact Leads",
+      data: {
+        formType: "Contact Leads",
+        fullName: "Marcus Vance",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Global Nexus Bank",
+        designation: "Chief Information Officer",
+        phone: "+1 (415) 890-2341",
+        subject: "Enterprise AI Infrastructure Modernization",
+        serviceInterest: "AI Infra & Data Center Engineering",
+        message: "We are scaling our on-premise GPU cluster to 256 H100 nodes and require immediate architecture review for liquid cooling and RoCEv2 fabric.",
+        utm_source: "linkedin",
+        utm_medium: "cpc",
+        utm_campaign: "enterprise_q3"
+      }
+    },
+    {
+      formType: "AI Diagnostic Leads",
+      data: {
+        formType: "AI Diagnostic Leads",
+        fullName: "Elena Rostova",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Aether Health Systems",
+        role: "VP of Enterprise AI",
+        companySize: "1,000–5,000 employees",
+        industry: "Healthcare & Life Sciences",
+        aiMaturityLevel: "Multiple Pilot Deployments",
+        primaryObjectives: ["GPU Infrastructure Scalability", "Inference Latency & Token Economics", "EU AI Act Governance"],
+        selectedSolutions: ["AI Infra & Data Center", "Trusted AI Engineering"],
+        preferredTimeline: "Immediate (Next 1–2 weeks)",
+        notes: "Evaluating regulatory guardrails for clinical decision support models with strict latency SLAs.",
+        utm_source: "google",
+        utm_medium: "search",
+        utm_campaign: "diagnostic_intent"
+      }
+    },
+    {
+      formType: "AI Readiness Leads",
+      data: {
+        formType: "AI Readiness Leads",
+        fullName: "David Chen",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Apex Autonomous Logistics",
+        role: "Head of AI Architecture",
+        companySize: "501–1,000 employees",
+        industry: "Manufacturing & Robotics",
+        aiMaturityLevel: "Active Proof of Concept (POC)",
+        challenges: ["GPU Utilization & Thermals", "Multi-Agent System Orchestration"],
+        selectedSolutions: ["Agentic Enterprise", "AI Networking"],
+        preferredTimeline: "Within 30 Days",
+        notes: "Assessing readiness for deploying 40+ autonomous supply-chain execution agents.",
+        utm_source: "direct",
+        utm_campaign: "readiness_assessment"
+      }
+    },
+    {
+      formType: "Workshop Requests",
+      data: {
+        formType: "Workshop Requests",
+        fullName: "Sarah Jenkins",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Vanguard Aerospace",
+        role: "Director of Systems Engineering",
+        companySize: "5,000+ Enterprise",
+        industry: "Aerospace & Defense",
+        selectedSolutions: ["AI Value Engineering", "AI Cybersecurity"],
+        preferredTimeline: "Next Quarter (Q1/Q2)",
+        notes: "Requesting a 2-day on-site value engineering workshop for 15 technical leads to map token cost reduction.",
+        utm_source: "referral",
+        utm_campaign: "defense_summit"
+      }
+    },
+    {
+      formType: "RFP Proposals",
+      data: {
+        formType: "RFP Proposals",
+        fullName: "Robert Sterling",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Nordic Energy Grid",
+        role: "Chief Technology Officer",
+        companySize: "5,000+ Enterprise",
+        industry: "Energy & Utilities",
+        selectedSolutions: ["AI Infra & Data Center", "AI Networking"],
+        preferredTimeline: "Within 30 Days",
+        notes: "RFP for turnkey design of a 4MW high-density data center with direct liquid cooling and lossless RoCEv2 fabrics.",
+        utm_source: "email",
+        utm_campaign: "rfp_submission"
+      }
+    },
+    {
+      formType: "Talk to Architect",
+      data: {
+        formType: "Talk to Architect",
+        fullName: "Aarav Patel",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "FinScale Trading",
+        role: "Principal Quant Architect",
+        phone: "+44 20 7946 0912",
+        selectedSolutions: ["AI Networking", "AI Infra & Data Center"],
+        notes: "Need direct consultation on sub-microsecond inference optimization and NCCL collective communication tuning.",
+        utm_source: "website",
+        utm_campaign: "architect_chat"
+      }
+    },
+    {
+      formType: "Chatbot Leads",
+      data: {
+        formType: "Chatbot Leads",
+        fullName: "Chloe Dubois",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Luxe Retail Group",
+        role: "VP Digital Transformation",
+        phone: "+33 1 42 68 55 00",
+        summary: "Inquired about Agentic Enterprise and multi-agent customer personalization fleets.",
+        selectedSolutions: ["Agentic Enterprise", "AI Value Engineering"],
+        utm_source: "organic",
+        utm_campaign: "chatbot_conversion"
+      }
+    },
+    {
+      formType: "Career Applications",
+      data: {
+        formType: "Career Applications",
+        fullName: "Vikram Malhotra",
+        email: "poojasri.trustgrid@gmail.com",
+        phone: "+1 (650) 555-0199",
+        role: "Principal AI Infrastructure Engineer",
+        experience: "12+ Years (Distributed GPU Systems, NCCL, Liquid Cooling)",
+        linkedIn: "https://linkedin.com/in/vikram-ai-infra",
+        portfolio: "https://github.com/vikram-systems",
+        message: "Excited about TrustGrid's AI Factory architectures and high-density liquid cooling designs.",
+        utm_source: "careers_page",
+        utm_campaign: "talent_drive"
+      }
+    },
+    {
+      formType: "Partner Applications",
+      data: {
+        formType: "Partner Applications",
+        fullName: "Hanna Lindqvist",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Nordic Silicon Systems",
+        designation: "Head of Global Alliances",
+        phone: "+46 8 123 4567",
+        partnershipType: "Hardware / Silicon OEM Vendor",
+        message: "Proposal to integrate next-gen NPU acceleration hardware into TrustGrid's turn-key AI Factory stack.",
+        utm_source: "partnerships",
+        utm_campaign: "ecosystem_outreach"
+      }
+    },
+    {
+      formType: "Newsletter Subscribers",
+      data: {
+        formType: "Newsletter Subscribers",
+        fullName: "Julian Thorne",
+        email: "poojasri.trustgrid@gmail.com",
+        company: "Thorne Capital",
+        industry: "Financial Services",
+        utm_source: "insights_whitepaper",
+        utm_campaign: "q3_macro_report"
+      }
+    }
+  ];
+
+  var sentCount = 0;
+  sampleDataList.forEach(function (sample) {
+    var mockEvent = {
+      postData: {
+        contents: JSON.stringify(sample.data)
+      }
+    };
+    doPost(mockEvent);
+    sentCount++;
   });
+
+  var alertMsg = "✅ SUCCESS! " + sentCount + " sample submissions created across all 10 separate tabs.\n\nExecutive notification emails sent to: " + EMAIL_CONFIG.primaryAdmin;
+  try {
+    SpreadsheetApp.getUi().alert("🚀 Sample Submissions Sent", alertMsg, SpreadsheetApp.getUi().ButtonSet.OK);
+  } catch (e) {}
+
+  return { success: true, count: sentCount, email: EMAIL_CONFIG.primaryAdmin };
 }
 
 // 🗑️ 1-Click Cleaner: Deletes all previous/unwanted sheets, keeping only the approved tabs
@@ -831,7 +1009,8 @@ function deleteOldUnwantedTabs() {
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("🚀 TrustGrid Admin")
-    .addItem("📊 Pre-Create All Tabs", "initializeAllDatabaseTables")
+    .addItem("📊 Pre-Create All 18 Tabs", "initializeAllDatabaseTables")
+    .addItem("📨 Send All 10 Sample Submissions to Pooja", "sendAllSampleSubmissionsToPooja")
     .addItem("🧬 Migrate Visitor/Session Columns", "migrateAddVisitorTrackingColumns")
     .addItem("🔀 Migrate Legacy Leads to Per-Form Tabs", "migrateLeadsToPerFormSheets")
     .addItem("🧹 Delete Old / Unwanted Sheets", "deleteOldUnwantedTabs")
@@ -840,8 +1019,6 @@ function onOpen() {
     .addItem("📬 Send Daily Digest Now", "sendDailyDigest")
     .addItem("📈 Send Weekly Digest Now", "sendWeeklyDigest")
     .addItem("📁 Send Monthly Resume Digest Now", "sendMonthlyResumeDigest")
-    .addSeparator()
-    .addItem("📧 Send Sample Preview Email", "sendAllSamplePreviewEmailsToPooja")
     .addToUi();
 }
 

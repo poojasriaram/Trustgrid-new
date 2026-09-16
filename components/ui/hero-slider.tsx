@@ -14,10 +14,14 @@ import {
   Lock,
   ShieldCheck,
   TrendingUp,
+  Activity,
+  CheckCircle2,
+  Zap,
+  Gauge,
+  Layers,
   LucideIcon
 } from 'lucide-react'
 import { HeroCanvas } from '@/components/ui/hero-canvas'
-import { AnimatedMetricCard } from '@/components/ui/animated-metric-card'
 
 export interface HeroSlideData {
   id: string
@@ -35,16 +39,19 @@ export interface HeroSlideData {
   engineLayerIndex: number
   icon: LucideIcon
   image: string
+  statMetric: string
+  statLabel: string
+  keyFeatures: string[]
 }
 
 export const heroSlidesData: HeroSlideData[] = [
   {
     id: 'infra',
     pillBadge: 'ENTERPRISE AI OPERATING COMPANY',
-    layerTag: 'HIGH-DENSITY COMPUTE',
+    layerTag: 'HIGH-DENSITY COMPUTE (30–100kW)',
     title: 'From Infrastructure to Intelligence.',
     titleHighlight: 'Engineered for Scale.',
-    copy: 'TrustGrid is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories (30–100kW/rack) and direct-to-chip liquid cooling to low-latency inference serving.',
+    copy: 'TrustGrid is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories with direct-to-chip liquid cooling to low-latency inference serving.',
     thesisHighlight: 'Strategic Core: Purpose-engineered AI Factories delivering maximum intelligence per dollar and watt with 30–70% higher accelerator utilization.',
     primaryCtaText: 'Book an AI Diagnostic',
     primaryCtaLink: '/book-ai-diagnostic',
@@ -53,12 +60,19 @@ export const heroSlidesData: HeroSlideData[] = [
     solutionSlug: 'ai-infra-engineering',
     engineLayerIndex: 0,
     icon: Cpu,
-    image: '/images/hero-ai-infra.jpg'
+    image: '/images/hero-ai-infra.jpg',
+    statMetric: '30–60% TCO Reduction',
+    statLabel: 'Direct-to-Chip Liquid Cooled',
+    keyFeatures: [
+      '30–100kW/Rack AI Factory Engineering',
+      'Blackwell & Hopper GPU Kernel Tuning',
+      '24/7 Managed Predictive Maintenance'
+    ]
   },
   {
     id: 'agentic',
     pillBadge: 'AUTONOMOUS OPERATIONS PLATFORM',
-    layerTag: 'MULTI-AGENT FLEETS',
+    layerTag: 'MULTI-AGENT FLEETS & ORCHESTRATION',
     title: 'From Simple Chatbots to',
     titleHighlight: 'Autonomous Agent Fleets.',
     copy: 'Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics, tool sandboxing, and native Model Context Protocol (MCP) integrations across enterprise systems.',
@@ -70,12 +84,19 @@ export const heroSlidesData: HeroSlideData[] = [
     solutionSlug: 'ai-agentic-factory',
     engineLayerIndex: 1,
     icon: Bot,
-    image: '/images/offering-agentic.jpg'
+    image: '/images/offering-agentic.jpg',
+    statMetric: '>95% Task Accuracy',
+    statLabel: 'Deterministic Multi-Agent DAGs',
+    keyFeatures: [
+      'Autonomous Reasoning & Cognitive Blueprinting',
+      'LangGraph & CrewAI Production Orchestration',
+      'Enterprise AgentOps & Real-Time Guardrails'
+    ]
   },
   {
     id: 'networking',
     pillBadge: 'HIGH-PERFORMANCE AI NETWORKING',
-    layerTag: 'LOSSLESS FABRIC',
+    layerTag: 'LOSSLESS RoCEv2 & INFINIBAND FABRICS',
     title: 'Ultra-Low Latency AI Fabrics.',
     titleHighlight: 'Zero Packet Drops.',
     copy: 'Ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, and autonomous NOC telemetry for massive distributed AI training and inference.',
@@ -85,14 +106,21 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaText: 'Explore AI Networking',
     secondaryCtaLink: '/solutions/ai-networking',
     solutionSlug: 'ai-networking',
-    engineLayerIndex: 4,
+    engineLayerIndex: 2,
     icon: Network,
-    image: '/images/offering-networking.jpg'
+    image: '/images/offering-networking.jpg',
+    statMetric: '0.00% Packet Loss',
+    statLabel: 'Rail-Optimized Fabric Throughput',
+    keyFeatures: [
+      'Quantum-2 InfiniBand & Lossless RoCEv2',
+      'NCCL Collective Communications Optimization',
+      'Autonomous AI NOC & Telemetry Telemetry'
+    ]
   },
   {
     id: 'security',
     pillBadge: 'POST-QUANTUM & AGENT DEFENSE',
-    layerTag: 'QUANTUM-SAFE DEFENSE',
+    layerTag: 'QUANTUM-SAFE DEFENSE & CBOM',
     title: 'Defending Autonomous AI &',
     titleHighlight: 'Post-Quantum Resilience.',
     copy: 'Comprehensive security engineering protecting autonomous agents with zero-trust permissions and runtime prompt firewalls while transitioning enterprise cryptography to NIST Post-Quantum Cryptographic standards.',
@@ -104,12 +132,19 @@ export const heroSlidesData: HeroSlideData[] = [
     solutionSlug: 'ai-cybersecurity-quantum-safe',
     engineLayerIndex: 3,
     icon: Lock,
-    image: '/images/offering-security.jpg'
+    image: '/images/offering-security.jpg',
+    statMetric: '100% CBOM Visibility',
+    statLabel: 'NIST PQC & Zero-Trust Agent Defense',
+    keyFeatures: [
+      'L1–L7 Post-Quantum Cryptography (PQC)',
+      'Agent Guardrails & Runtime Prompt Firewalls',
+      '24/7 Managed AI Security Operations Center'
+    ]
   },
   {
     id: 'trusted',
     pillBadge: 'CONTINUOUS AI GOVERNANCE',
-    layerTag: 'EXPLAINABLE & GOVERNED',
+    layerTag: 'EXPLAINABLE & GOVERNED SYSTEMS',
     title: 'Explainable, Robust & Governed.',
     titleHighlight: 'Zero Black-Box Risk.',
     copy: 'Rigorous engineering of mathematical explainability (SHAP/LIME), continuous statistical process control (SPC), formal robustness verification, and immutable cryptographic decision audit trails for EU AI Act & NIST AI RMF compliance.',
@@ -119,14 +154,21 @@ export const heroSlidesData: HeroSlideData[] = [
     secondaryCtaText: 'Explore Trusted AI',
     secondaryCtaLink: '/solutions/trusted-ai-transformation',
     solutionSlug: 'trusted-ai-transformation',
-    engineLayerIndex: 2,
+    engineLayerIndex: 4,
     icon: ShieldCheck,
-    image: '/images/offering-trusted-ai.jpg'
+    image: '/images/offering-trusted-ai.jpg',
+    statMetric: 'Zero Black-Box Risk',
+    statLabel: 'EU AI Act & NIST AI RMF Verified',
+    keyFeatures: [
+      'SHAP & Integrated Gradients Explainability',
+      'Continuous Statistical Process Control (SPC)',
+      'Cryptographic Decision Audit Trails'
+    ]
   },
   {
     id: 'value',
     pillBadge: 'ECONOMIC VALUE REALIZATION',
-    layerTag: 'FINANCIAL ATTRIBUTION',
+    layerTag: 'FINANCIAL ATTRIBUTION & FinOps',
     title: 'CFO-Defensible AI Returns.',
     titleHighlight: 'Measurable P&L Impact.',
     copy: 'Industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) combined with AI FinOps to prioritize high-yield initiatives, eliminate token sprawl, and ensure compounding business ROI tied to CFO balance sheets.',
@@ -138,17 +180,15 @@ export const heroSlidesData: HeroSlideData[] = [
     solutionSlug: 'ai-value-engineering',
     engineLayerIndex: 5,
     icon: TrendingUp,
-    image: '/images/offering-value.jpg'
+    image: '/images/offering-value.jpg',
+    statMetric: '4.2x Average ROI',
+    statLabel: 'TOC, Lean & FinOps Attribution',
+    keyFeatures: [
+      'Value Discovery & Economic Opportunity Mapping',
+      'Unit Economics & Cost-Per-Task Modeling',
+      'Continuous FinOps Value Governance'
+    ]
   }
-]
-
-const engineNodes = [
-  { id: 'infra', label: 'Infra Factory', icon: Cpu, desc: 'AI Factories, GPU cluster orchestration & 30–70% utilization gains' },
-  { id: 'agents', label: 'Agent Fleets', icon: Bot, desc: 'Industrialized multi-agent DAGs with persistent memory & deterministic execution' },
-  { id: 'trust', label: 'Trusted AI', icon: ShieldCheck, desc: 'Continuous assurance, explainability & EU AI Act / NIST governance' },
-  { id: 'security', label: 'Quantum-Safe', icon: Lock, desc: 'Zero-trust agent sandboxing, CBOM visibility & post-quantum cryptography' },
-  { id: 'networking', label: 'AI Fabrics', icon: Network, desc: 'Ultra-low latency RoCEv2/InfiniBand & congestion-free lossless fabrics' },
-  { id: 'value', label: 'Value Eng', icon: TrendingUp, desc: 'TOC, Lean, DMAIC & FinOps tied directly to P&L business impact' }
 ]
 
 export function HeroSlider() {
@@ -177,7 +217,7 @@ export function HeroSlider() {
   }, [isPaused, isDragging, goToNext])
 
   const currentSlide = heroSlidesData[currentSlideIndex]
-  const activeEngineIndex = currentSlide.engineLayerIndex
+  const Icon = currentSlide.icon
 
   // Drag handlers
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -225,26 +265,30 @@ export function HeroSlider() {
       <div className="hero-grid-bg" />
       <div className="hero-glow-sphere" />
 
-      {/* HERO SLIDER CONTROLS BAR (CLEAN CAROUSEL NAVIGATION) */}
-      <div className="hero-slider-tabs-container">
-        <div className="hero-slider-dots-wrap">
-          <span className="hero-slider-step-badge">
-            <span className="hero-pulse-dot" />
-            {currentSlide.layerTag}
-          </span>
-          <div className="hero-slider-dot-indicators">
-            {heroSlidesData.map((_, i) => (
+      {/* TOP PILLAR NAVIGATION BAR (CLICKABLE TABS FOR ALL 6 SLIDES) */}
+      <div className="hero-pillar-tabs-bar">
+        <div className="hero-pillar-tabs-list">
+          {heroSlidesData.map((slide, idx) => {
+            const SlideIcon = slide.icon
+            const isActive = idx === currentSlideIndex
+            return (
               <button
-                key={i}
-                className={`hero-nav-dot ${i === currentSlideIndex ? 'active' : ''}`}
-                onClick={() => setCurrentSlideIndex(i)}
-                aria-label={`Jump to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+                key={slide.id}
+                className={`hero-pillar-tab-btn ${isActive ? 'active' : ''}`}
+                onClick={() => setCurrentSlideIndex(idx)}
+                aria-label={`Switch to ${slide.layerTag}`}
+              >
+                <div className="pillar-tab-icon">
+                  <SlideIcon size={14} />
+                </div>
+                <span className="pillar-tab-text">{slide.layerTag.split('(')[0].trim()}</span>
+                {isActive && <span className="pillar-tab-indicator" />}
+              </button>
+            )
+          })}
         </div>
 
-        {/* Arrow Controls */}
+        {/* Carousel Arrow Controls */}
         <div className="hero-slider-nav-arrows">
           <button
             className="hero-arrow-btn"
@@ -253,6 +297,9 @@ export function HeroSlider() {
           >
             <ChevronLeft size={16} />
           </button>
+          <span className="hero-slide-counter">
+            0{currentSlideIndex + 1} / 0{total}
+          </span>
           <button
             className="hero-arrow-btn"
             onClick={goToNext}
@@ -263,13 +310,14 @@ export function HeroSlider() {
         </div>
       </div>
 
-      {/* MAIN HERO SLIDER CONTENT LAYOUT */}
+      {/* MAIN HERO SLIDER DUAL-COLUMN CONTENT LAYOUT */}
       <div
         className="hero-main-layout hero-slide-transition-wrap"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
+        {/* LEFT COLUMN: CRISP TYPOGRAPHY & STRATEGIC CONTENT */}
         <div className="hero-content hero-slide-animated" key={currentSlide.id}>
           <div className="hero-badge-row">
             <span className="hero-badge">
@@ -313,77 +361,67 @@ export function HeroSlider() {
           </div>
         </div>
 
-        {/* HERO INTERACTIVE OPERATING ENGINE DIAGRAM (SYNCHRONIZED WITH ACTIVE SLIDE) */}
-        <div className="hero-aside" aria-label="TrustGrid Operating Engine Interactive Architecture">
-          <div className="engine-orbit-canvas">
-            <svg className="engine-circuit-svg" viewBox="0 0 440 440" fill="none">
-              <circle cx="220" cy="220" r="190" stroke="rgba(29, 92, 255, 0.15)" strokeWidth="1" strokeDasharray="4 6" />
-              <circle cx="220" cy="220" r="130" stroke="rgba(56, 189, 248, 0.2)" strokeWidth="1" />
-              <circle cx="220" cy="220" r="70" stroke="rgba(29, 92, 255, 0.25)" strokeWidth="1.5" />
-              
-              <line x1="220" y1="220" x2="220" y2="40" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="220" y1="220" x2="376" y2="130" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="220" y1="220" x2="376" y2="310" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="220" y1="220" x2="220" y2="400" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="220" y1="220" x2="64" y2="310" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-              <line x1="220" y1="220" x2="64" y2="130" stroke="rgba(29, 92, 255, 0.3)" strokeWidth="1.5" strokeDasharray="3 3" />
-            </svg>
+        {/* RIGHT COLUMN: HIGH-IMPACT ENTERPRISE BANNER VISUAL SHOWCASE */}
+        <div className="hero-aside-banner-card" aria-label="TrustGrid Offering Banner Showcase">
+          <div className="banner-card-frame">
+            {/* The Main High-Res Thematic Image */}
+            <div className="banner-card-image-wrap">
+              <img
+                src={currentSlide.image}
+                alt={currentSlide.title}
+                className="banner-card-img"
+              />
+              <div className="banner-card-glow-overlay" />
+              <div className="banner-card-scanline" />
+            </div>
 
-            <div className="orbit-core">
-              <div className="orbit-core-glow" />
-              <span className="orbit-label">TRUSTGRID</span>
-              <strong>OPERATING</strong>
-              <strong>ENGINE</strong>
-              <div className="orbit-status-tag">
+            {/* Top Live Domain Status Chip */}
+            <div className="banner-card-top-chip">
+              <div className="banner-chip-pulse">
                 <span className="live-pulse" />
-                ACTIVE MESH
+                <span>ACTIVE ENTERPRISE DOMAIN</span>
               </div>
+              <span className="banner-chip-domain">{currentSlide.layerTag.split('(')[0].trim()}</span>
             </div>
 
-            {engineNodes.map((node, index) => {
-              const Icon = node.icon
-              const isActive = activeEngineIndex === index
-              return (
-                <div
-                  key={node.id}
-                  className={`orbit-node node-${index + 1} ${isActive ? 'active' : ''}`}
-                  onClick={() => {
-                    const matchedSlideIdx = heroSlidesData.findIndex((s) => s.engineLayerIndex === index)
-                    if (matchedSlideIdx !== -1) {
-                      setCurrentSlideIndex(matchedSlideIdx)
-                    }
-                  }}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`${node.label}: ${node.desc}`}
-                >
-                  <div className="node-icon-wrap">
-                    <Icon size={16} />
-                  </div>
-                  <div className="node-text-wrap">
-                    <span className="node-title">{node.label}</span>
-                  </div>
+            {/* Key Capability Chips Overlaid */}
+            <div className="banner-card-capabilities-stack">
+              {currentSlide.keyFeatures.map((feat, i) => (
+                <div key={i} className="banner-capability-pill">
+                  <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                  <span>{feat}</span>
                 </div>
-              )
-            })}
-          </div>
-
-          <div className="engine-telemetry-badge">
-            <div className="telemetry-header">
-              <span className="telemetry-indicator" />
-              <span className="telemetry-title">
-                {engineNodes[activeEngineIndex]?.label}
-              </span>
-              <span className="telemetry-layer">
-                ACTIVE DOMAIN
-              </span>
+              ))}
             </div>
-            <p className="telemetry-desc">
-              {engineNodes[activeEngineIndex]?.desc}
-            </p>
+
+            {/* Bottom Glassmorphic Metric Footer */}
+            <div className="banner-card-footer">
+              <div className="banner-footer-stat-group">
+                <div className="banner-footer-stat-value">
+                  <Icon size={20} className="banner-stat-icon" />
+                  <span>{currentSlide.statMetric}</span>
+                </div>
+                <span className="banner-footer-stat-label">{currentSlide.statLabel}</span>
+              </div>
+
+              <Link
+                href={currentSlide.secondaryCtaLink}
+                className="banner-footer-action-btn"
+                aria-label={`Explore ${currentSlide.layerTag}`}
+              >
+                <span>View Architecture</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
 
-          <span className="orbit-caption">VERIFIABLE • AUTONOMOUS • COMPOUNDING</span>
+          <div className="banner-card-sub-telemetry">
+            <span className="sub-telemetry-item">VERIFIABLE</span>
+            <span className="sub-telemetry-dot">•</span>
+            <span className="sub-telemetry-item">AUTONOMOUS</span>
+            <span className="sub-telemetry-dot">•</span>
+            <span className="sub-telemetry-item">COMPOUNDING VALUE</span>
+          </div>
         </div>
       </div>
     </section>

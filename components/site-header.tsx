@@ -117,8 +117,8 @@ const commonFoundationMenuItems = [
     desc: 'Diagnostic, sprint, co-engineering, and turnkey delivery frameworks'
   },
   {
-    label: 'Key Metrics',
-    href: '/sitemap',
+    label: 'Case Studies & Metrics',
+    href: '/case-studies',
     icon: BarChart3,
     desc: 'Measurable enterprise impact, GPU yield, latency & P&L outcomes'
   },
@@ -145,13 +145,13 @@ const aboutMenuItems = [
   },
   {
     label: 'Leadership & Teams',
-    href: '/about#teams',
+    href: '/leadership',
     icon: Users,
     desc: 'World-class AI architects, systems leads, and advisory board'
   },
   {
-    label: 'Careers & Hackathons',
-    href: '/about#careers-hackathons',
+    label: 'Careers & Fellowships',
+    href: '/careers',
     icon: Award,
     desc: 'Frontier AI hackathons, research fellowships, and open roles'
   },
@@ -163,7 +163,7 @@ const aboutMenuItems = [
   },
   {
     label: 'Case Studies',
-    href: '/about#case-studies',
+    href: '/case-studies',
     icon: FileText,
     desc: 'Production outcomes across defense, banking, and enterprise AI'
   },
@@ -184,7 +184,7 @@ const insightsMenuItems = [
   },
   {
     label: 'Case Studies',
-    href: '/about#case-studies',
+    href: '/case-studies',
     icon: FileText,
     desc: 'Production outcomes in defense, tier-1 banking, healthcare, and industrial manufacturing.'
   },

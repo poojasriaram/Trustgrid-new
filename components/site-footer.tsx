@@ -56,7 +56,7 @@ export function SiteFooter() {
             <li><Link href="/methodology-engine">AI Methodology Engine</Link></li>
             <li><Link href="/sitemap" style={{ color: '#60a5fa', fontWeight: 600 }}>Site Map v14.0 (5-Levels)</Link></li>
             <li><Link href="/insights">AI Insights & Papers</Link></li>
-            <li><Link href="/about#case-studies">Enterprise Case Studies</Link></li>
+            <li><Link href="/case-studies">Enterprise Case Studies</Link></li>
             <li>
               <a
                 href="https://crowd-safety-predictor.vercel.app/"
@@ -77,10 +77,11 @@ export function SiteFooter() {
           <h4>Company</h4>
           <ul>
             <li><Link href="/about">About TrustGrid.AI</Link></li>
-            <li><Link href="/about#teams">Leadership & Teams</Link></li>
-            <li><Link href="/about#careers-hackathons">Careers & Fellowships</Link></li>
+            <li><Link href="/leadership">Leadership & Teams</Link></li>
+            <li><Link href="/careers">Careers & Fellowships</Link></li>
+            <li><Link href="/partners">Ecosystem Partners</Link></li>
             <li><Link href="/about#presence">Global Offices & Labs</Link></li>
-            <li><Link href="/about#value-addition">Societal Value Addition</Link></li>
+            <li><Link href="/contact">Contact & Inquiries</Link></li>
             <li><Link href="/book-ai-diagnostic">AI Diagnostic Assessment</Link></li>
           </ul>
         </div>
