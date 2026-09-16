@@ -45,6 +45,7 @@ const EMAIL_CONFIG = {
 // =========================================================================================
 
 var TAB_CONFIGS = {
+  // ── VISITOR TELEMETRY TABS ───────────────────────────────────────────────
   // 1. Website Events (General interactions, navigation, scroll milestones)
   "Website Events": [
     "Session ID", "Visitor ID", "Event Type", "Element", "Element Text", "Page Path",
@@ -63,7 +64,7 @@ var TAB_CONFIGS = {
     "Device", "Timestamp"
   ],
 
-  // 4. Form Submissions (Consolidated form log with Drive resume link for Careers)
+  // 4. Form Submissions (Master Consolidated Backup of EVERY form submission)
   "Form Submissions": [
     "Submission ID", "Form Name", "Name", "Email", "Company / Org", "Role", "Phone",
     "Message / Details", "Resume Drive Link", "Drive File ID",
@@ -87,40 +88,76 @@ var TAB_CONFIGS = {
     "Session ID", "Error Message", "Error Stack", "Page URL", "Device", "IP Address", "Timestamp"
   ],
 
-  // 8. Contact Leads (General contact inquiries / "Talk to an AI Architect")
+  // ── SEPARATE DEDICATED FORM TABS ─────────────────────────────────────────
+  // 8. Contact Leads (General contact inquiries & consultation requests)
   "Contact Leads": [
     "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
     "Subject", "Service Interest", "Message",
     "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
   ],
 
-  // 9. AI Diagnostic Leads (Dedicated enterprise diagnostic submissions)
+  // 9. AI Diagnostic Leads (Dedicated enterprise AI diagnostic bookings)
   "AI Diagnostic Leads": [
     "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
     "AI Maturity Level", "Primary Objectives", "Selected Solutions", "Preferred Timeline", "Notes",
     "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
   ],
 
-  // 10. Career Applications (Engineering / fellowship candidates, incl. resume link)
+  // 10. AI Readiness Leads (AI readiness & infrastructure maturity assessments)
+  "AI Readiness Leads": [
+    "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
+    "AI Maturity Level", "Key Challenges", "Selected Solutions", "Preferred Timeline", "Notes",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 11. Workshop Requests (AI Use-Case & Value workshops)
+  "Workshop Requests": [
+    "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
+    "Selected Solutions", "Preferred Timeline", "Workshop Objectives / Notes",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 12. RFP Proposals (Enterprise Request for Proposal / Scope)
+  "RFP Proposals": [
+    "Submission ID", "Name", "Email", "Company", "Role", "Company Size", "Industry",
+    "Project Scope / Solutions", "Preferred Timeline", "Proposal Requirements / Notes",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 13. Talk to Architect (Direct Senior AI Architect technical consultation)
+  "Talk to Architect": [
+    "Submission ID", "Name", "Email", "Company", "Role", "Phone",
+    "Architecture Focus / Solutions", "Technical Requirements / Notes",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 14. Chatbot Leads (AI Architect Interactive Chatbot lead captures)
+  "Chatbot Leads": [
+    "Submission ID", "Name", "Email", "Company", "Role", "Phone",
+    "Conversation Summary", "Selected Solutions",
+    "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
+  ],
+
+  // 15. Career Applications (Engineering / fellowship candidates with Google Drive resume link)
   "Career Applications": [
     "Submission ID", "Name", "Email", "Phone", "Role Applied For", "Experience",
-    "LinkedIn", "Portfolio", "Resume Link", "Message",
+    "LinkedIn", "Portfolio", "Resume Link", "Drive File ID", "Cover Note / Message",
     "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
   ],
 
-  // 11. Partner Applications (Ecosystem & strategic partnerships)
+  // 16. Partner Applications (Ecosystem & Strategic SI / Cloud Partnerships)
   "Partner Applications": [
-    "Submission ID", "Name", "Email", "Company", "Designation", "Phone", "Partnership Type", "Message",
+    "Submission ID", "Name", "Email", "Company", "Designation", "Phone", "Partnership Type", "Message / Value Proposition",
     "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Status", "Timestamp", "Visitor ID", "Session ID"
   ],
 
-  // 12. Newsletter Subscribers (Insights / whitepaper opt-ins)
+  // 17. Newsletter Subscribers (Executive Insights & Whitepapers opt-ins)
   "Newsletter Subscribers": [
     "Submission ID", "Name", "Email", "Company", "Industry",
     "UTM Source", "UTM Medium", "UTM Campaign", "IP Location", "Timestamp", "Visitor ID", "Session ID"
   ],
 
-  // 13. Spam Blocked (Honeypot / heuristic bot submissions kept for audit, excluded from lead tabs)
+  // 18. Spam Blocked (Honeypot & heuristic spam blocked for audit)
   "Spam Blocked": [
     "Submission ID", "Form Type", "Name", "Email", "Reason", "Message Snippet", "IP Address", "Timestamp"
   ]
@@ -128,12 +165,20 @@ var TAB_CONFIGS = {
 
 // Aliases to route incoming submissions flexibly
 var SHEET_NAME_ALIASES = {
-  "leads": "Leads", "contact": "Leads", "contactform": "Leads", "contact_submissions": "Leads", "talktoaiarchitect": "Leads",
-  "aidiagnosticleads": "AI Diagnostic Leads", "ai_diagnostics": "AI Diagnostic Leads", "aidiagnostic": "AI Diagnostic Leads", "bookaidiagnostic": "AI Diagnostic Leads", "diagnostic": "AI Diagnostic Leads", "requestproposal": "AI Diagnostic Leads",
-  "formsubmissions": "Form Submissions", "form_submissions": "Form Submissions", "forms": "Form Submissions", "careerapplications": "Form Submissions", "career_applications": "Form Submissions", "partnerapplications": "Form Submissions", "partner_applications": "Form Submissions", "insightssubscriptions": "Form Submissions",
+  "contact": "Contact Leads", "contactform": "Contact Leads", "contact_leads": "Contact Leads", "leads": "Contact Leads", "contact_submissions": "Contact Leads",
+  "aidiagnosticleads": "AI Diagnostic Leads", "ai_diagnostics": "AI Diagnostic Leads", "aidiagnostic": "AI Diagnostic Leads", "bookaidiagnostic": "AI Diagnostic Leads", "diagnostic": "AI Diagnostic Leads",
+  "aireadiness": "AI Readiness Leads", "readiness": "AI Readiness Leads", "ai_readiness": "AI Readiness Leads", "aireadinessassessment": "AI Readiness Leads", "readinessassessment": "AI Readiness Leads",
+  "workshop": "Workshop Requests", "workshoprequests": "Workshop Requests", "usecaseworkshop": "Workshop Requests", "ai_workshop": "Workshop Requests", "workshop_requests": "Workshop Requests",
+  "proposal": "RFP Proposals", "rfp": "RFP Proposals", "requestproposal": "RFP Proposals", "rfpproposals": "RFP Proposals", "rfp_proposals": "RFP Proposals",
+  "talktoarchitect": "Talk to Architect", "talk_to_architect": "Talk to Architect", "talktoaiarchitect": "Talk to Architect", "architect": "Talk to Architect", "talk_to_ai_architect": "Talk to Architect",
+  "chatlead": "Chatbot Leads", "chat_lead": "Chatbot Leads", "chatbot": "Chatbot Leads", "ai_chatbot": "Chatbot Leads", "chatbotleads": "Chatbot Leads", "chatbot_leads": "Chatbot Leads",
+  "careerapplications": "Career Applications", "career_applications": "Career Applications", "careers": "Career Applications", "career": "Career Applications", "fellowship": "Career Applications",
+  "partnerapplications": "Partner Applications", "partner_applications": "Partner Applications", "partners": "Partner Applications", "partner": "Partner Applications", "ecosystem": "Partner Applications",
+  "newslettersubscribers": "Newsletter Subscribers", "newsletter_subscribers": "Newsletter Subscribers", "newsletter": "Newsletter Subscribers", "insights": "Newsletter Subscribers", "subscriptions": "Newsletter Subscribers",
+  "formsubmissions": "Form Submissions", "form_submissions": "Form Submissions", "forms": "Form Submissions",
   "pageviews": "Page Views", "page_views": "Page Views", "trafficanalytics": "Page Views", "traffic_analytics": "Page Views",
   "sessions": "Sessions", "ctaclicks": "CTA Clicks", "cta_clicks": "CTA Clicks",
-  "utmdata": "UTM Data", "utm_data": "UTM Data", "websiteevents": "Website Events", "website_events": "Website Events", "errors": "Errors"
+  "utmdata": "UTM Data", "utm_data": "UTM Data", "websiteevents": "Website Events", "website_events": "Website Events", "errors": "Errors", "spamblocked": "Spam Blocked"
 };
 
 function getOrCreateTab(spreadsheet, tabName) {
@@ -485,8 +530,71 @@ function doPost(e) {
       visitorId, sessionId
     ]);
 
-    // 2. AI Diagnostic Dedicated Leads Tab
-    if (normForm.indexOf('diagnostic') > -1 || normForm.indexOf('readiness') > -1 || normForm.indexOf('proposal') > -1 || normForm.indexOf('workshop') > -1) {
+    // ── DEDICATED SEPARATE FORM ROUTING ──────────────────────────────────
+    // 2. AI Readiness Leads (AI readiness & infrastructure maturity)
+    if (normForm.indexOf('readiness') > -1 || normForm.indexOf('assessment') > -1) {
+      var readinessSheet = getOrCreateTab(ss, "AI Readiness Leads");
+      readinessSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.role || data.designation || "",
+        data.companySize || data.organizationSize || "",
+        data.industry || "",
+        data.aiMaturityLevel || data.maturityLevel || data.aiMaturity || "",
+        Array.isArray(data.challenges) ? data.challenges.join(", ") : (data.challenges || ""),
+        Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || ""),
+        data.preferredTimeline || data.timeline || "",
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("AI Readiness Assessment: " + (data.company || data.fullName || "Enterprise Lead"), data);
+    }
+
+    // 3. Workshop Requests (AI Use-Case & Value Workshop)
+    else if (normForm.indexOf('workshop') > -1) {
+      var workshopSheet = getOrCreateTab(ss, "Workshop Requests");
+      workshopSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.role || data.designation || "",
+        data.companySize || data.organizationSize || "",
+        data.industry || "",
+        Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || ""),
+        data.preferredTimeline || data.timeline || "",
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("AI Workshop Request: " + (data.company || data.fullName || "Enterprise Lead"), data);
+    }
+
+    // 4. RFP Proposals (Enterprise Request for Proposal)
+    else if (normForm.indexOf('proposal') > -1 || normForm.indexOf('rfp') > -1) {
+      var rfpSheet = getOrCreateTab(ss, "RFP Proposals");
+      rfpSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.role || data.designation || "",
+        data.companySize || data.organizationSize || "",
+        data.industry || "",
+        Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || ""),
+        data.preferredTimeline || data.timeline || "",
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("RFP Proposal Request: " + (data.company || data.fullName || "Enterprise Lead"), data);
+    }
+
+    // 5. AI Diagnostic Dedicated Leads Tab
+    else if (normForm.indexOf('diagnostic') > -1) {
       var diagSheet = getOrCreateTab(ss, "AI Diagnostic Leads");
       diagSheet.appendRow([
         submissionId,
@@ -507,8 +615,44 @@ function doPost(e) {
       sendExecutiveAlert("AI Diagnostic Request: " + (data.company || data.fullName || "Enterprise Lead"), data);
     }
 
-    // 3. Career Applications (dedicated tab, incl. resume link)
-    else if (normForm.indexOf('career') > -1) {
+    // 6. Chatbot Leads (AI Architect Interactive Chatbot lead capture)
+    else if (normForm.indexOf('chat') > -1 || normForm.indexOf('bot') > -1) {
+      var chatSheet = getOrCreateTab(ss, "Chatbot Leads");
+      chatSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.role || data.designation || "",
+        data.phone || "",
+        cleanMessage || data.summary || "Interactive Chatbot Inquiry",
+        Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || ""),
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("AI Chatbot Lead: " + (data.fullName || data.company || "Interactive Visitor"), data);
+    }
+
+    // 7. Talk to Architect (Direct technical consultation)
+    else if (normForm.indexOf('architect') > -1) {
+      var archSheet = getOrCreateTab(ss, "Talk to Architect");
+      archSheet.appendRow([
+        submissionId,
+        data.fullName || data.name || "",
+        submitterEmail,
+        data.company || data.organization || "",
+        data.role || data.designation || "",
+        data.phone || "",
+        Array.isArray(data.selectedSolutions) ? data.selectedSolutions.join(", ") : (data.selectedSolutions || data.serviceInterest || "AI Architecture"),
+        cleanMessage,
+        utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
+        visitorId, sessionId
+      ]);
+      sendExecutiveAlert("Talk to AI Architect: " + (data.company || data.fullName || "Senior Lead"), data);
+    }
+
+    // 8. Career Applications (dedicated tab, incl. Drive resume link)
+    else if (normForm.indexOf('career') > -1 || normForm.indexOf('job') > -1 || normForm.indexOf('fellowship') > -1 || normForm.indexOf('resume') > -1) {
       var careerSheet = getOrCreateTab(ss, "Career Applications");
       careerSheet.appendRow([
         submissionId,
@@ -520,6 +664,7 @@ function doPost(e) {
         data.linkedIn || data.linkedin || "",
         data.portfolio || "",
         resumeDriveInfo ? resumeDriveInfo.viewUrl : (data.resumeUrl || data.resume || ""),
+        resumeDriveInfo ? resumeDriveInfo.fileId : "",
         cleanMessage,
         utmSource, utmMedium, utmCampaign, ipLocation, leadStatus, timestamp,
         visitorId, sessionId
@@ -527,8 +672,8 @@ function doPost(e) {
       sendExecutiveAlert("Career Application: " + (data.fullName || data.name || "New Applicant"), data, resumeDriveInfo);
     }
 
-    // 4. Partner Applications (dedicated tab)
-    else if (normForm.indexOf('partner') > -1) {
+    // 9. Partner Applications (ecosystem & strategic SI partnerships)
+    else if (normForm.indexOf('partner') > -1 || normForm.indexOf('ecosystem') > -1) {
       var partnerSheet = getOrCreateTab(ss, "Partner Applications");
       partnerSheet.appendRow([
         submissionId,
@@ -545,7 +690,7 @@ function doPost(e) {
       sendExecutiveAlert("Partnership Inquiry: " + (data.company || data.fullName || "New Partner Lead"), data);
     }
 
-    // 5. Newsletter / Insights Subscribers (dedicated tab, low-priority — no exec alert)
+    // 10. Newsletter / Insights Subscribers (dedicated tab, low-priority)
     else if (normForm.indexOf('newsletter') > -1 || normForm.indexOf('insight') > -1 || normForm.indexOf('subscri') > -1) {
       var newsletterSheet = getOrCreateTab(ss, "Newsletter Subscribers");
       newsletterSheet.appendRow([
@@ -559,7 +704,7 @@ function doPost(e) {
       ]);
     }
 
-    // 6. Contact Leads (default: general inquiries, "Talk to an AI Architect")
+    // 11. Contact Leads (default: general inquiries & consultations)
     else {
       var contactSheet = getOrCreateTab(ss, "Contact Leads");
       contactSheet.appendRow([
@@ -815,7 +960,18 @@ function buildDigestSummaryHtml(title, sinceLabel, ss) {
   if (sinceLabel === "24 hours") since.setDate(since.getDate() - 1);
   else since.setDate(since.getDate() - 7);
 
-  var leads = getRowsSince(ss.getSheetByName("Leads"), since);
+  var leadTabs = [
+    "Contact Leads", "AI Diagnostic Leads", "AI Readiness Leads", "Workshop Requests",
+    "RFP Proposals", "Talk to Architect", "Chatbot Leads", "Career Applications",
+    "Partner Applications", "Newsletter Subscribers"
+  ];
+
+  var totalLeadCount = 0;
+  leadTabs.forEach(function (tab) {
+    var r = getRowsSince(ss.getSheetByName(tab), since);
+    totalLeadCount += r.rows.length;
+  });
+
   var diag = getRowsSince(ss.getSheetByName("AI Diagnostic Leads"), since);
   var forms = getRowsSince(ss.getSheetByName("Form Submissions"), since);
   var views = getRowsSince(ss.getSheetByName("Page Views"), since);
@@ -834,7 +990,7 @@ function buildDigestSummaryHtml(title, sinceLabel, ss) {
     '</div>' +
     '<div style="padding:24px 28px;">' +
       '<table style="width:100%;border-spacing:8px 0;"><tr>' +
-        statRow("New Leads", leads.rows.length, "#4f46e5") +
+        statRow("Total Leads", totalLeadCount, "#4f46e5") +
         statRow("Diagnostic Requests", diag.rows.length, "#ef4444") +
         statRow("Form Submissions", forms.rows.length, "#10b981") +
         statRow("Page Views", views.rows.length, "#0ea5e9") +

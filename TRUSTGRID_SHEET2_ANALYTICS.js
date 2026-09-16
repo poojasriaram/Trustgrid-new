@@ -50,12 +50,19 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
         return;
     }
 
-    // Pulling Raw Ingestion Data from Sheet 1 (Exact Tab Matches)
+    // Pulling Raw Ingestion Data from Sheet 1 (Exact Tab Matches for all 18 tabs)
     var tSheet = db.getSheetByName("Page Views") || db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
     var eSheet = db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
     var ubSheet = db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
+    
+    // Separate Lead & Form Sheets
     var contactSheet = db.getSheetByName("Contact Leads") || db.getSheetByName("Leads") || db.getSheetByName("contact_submissions");
     var diagSheet = db.getSheetByName("AI Diagnostic Leads") || db.getSheetByName("ai_diagnostics");
+    var readinessSheet = db.getSheetByName("AI Readiness Leads");
+    var workshopSheet = db.getSheetByName("Workshop Requests");
+    var rfpSheet = db.getSheetByName("RFP Proposals");
+    var archSheet = db.getSheetByName("Talk to Architect");
+    var chatSheet = db.getSheetByName("Chatbot Leads");
     var careerSheet = db.getSheetByName("Career Applications");
     var partnerSheet = db.getSheetByName("Partner Applications");
     var newsletterSheet = db.getSheetByName("Newsletter Subscribers");
@@ -66,6 +73,11 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var ubDataRaw = (ubSheet && ubSheet.getLastRow() > 0) ? ubSheet.getDataRange().getValues() : [];
     var contactData = (contactSheet && contactSheet.getLastRow() > 0) ? contactSheet.getDataRange().getValues() : [];
     var diagData = (diagSheet && diagSheet.getLastRow() > 0) ? diagSheet.getDataRange().getValues() : [];
+    var readinessData = (readinessSheet && readinessSheet.getLastRow() > 0) ? readinessSheet.getDataRange().getValues() : [];
+    var workshopData = (workshopSheet && workshopSheet.getLastRow() > 0) ? workshopSheet.getDataRange().getValues() : [];
+    var rfpData = (rfpSheet && rfpSheet.getLastRow() > 0) ? rfpSheet.getDataRange().getValues() : [];
+    var archData = (archSheet && archSheet.getLastRow() > 0) ? archSheet.getDataRange().getValues() : [];
+    var chatData = (chatSheet && chatSheet.getLastRow() > 0) ? chatSheet.getDataRange().getValues() : [];
     var careerData = (careerSheet && careerSheet.getLastRow() > 0) ? careerSheet.getDataRange().getValues() : [];
     var partnerData = (partnerSheet && partnerSheet.getLastRow() > 0) ? partnerSheet.getDataRange().getValues() : [];
     var newsletterData = (newsletterSheet && newsletterSheet.getLastRow() > 0) ? newsletterSheet.getDataRange().getValues() : [];
@@ -112,6 +124,11 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
       buildLeadsConversionsIntelligence([
         { name: "Contact Leads", data: contactData },
         { name: "AI Diagnostic Leads", data: diagData },
+        { name: "AI Readiness Leads", data: readinessData },
+        { name: "Workshop Requests", data: workshopData },
+        { name: "RFP Proposals", data: rfpData },
+        { name: "Talk to Architect", data: archData },
+        { name: "Chatbot Leads", data: chatData },
         { name: "Career Applications", data: careerData },
         { name: "Partner Applications", data: partnerData },
         { name: "Newsletter Subscribers", data: newsletterData }
