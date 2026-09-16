@@ -118,7 +118,7 @@ export async function submitTrustGridForm(
     }
 
     const defaultWebhookUrl =
-      'https://script.google.com/macros/s/AKfycbxwUkYylflGO1ylxVtgb_qn9FlEuf4NP23CEqDX_FVXGbwg46q5bcXE71BErLTBIGCG/exec'
+      'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
     const apiUrl =
       process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||

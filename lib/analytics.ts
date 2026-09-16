@@ -77,7 +77,7 @@ const LAST_TOUCH_KEY = 'tg_last_touch'
 const PREV_PAGE_KEY = 'tg_previous_page'
 
 const DEFAULT_ENDPOINT =
-  'https://script.google.com/macros/s/AKfycbxwUkYylflGO1ylxVtgb_qn9FlEuf4NP23CEqDX_FVXGbwg46q5bcXE71BErLTBIGCG/exec'
+  'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
 /**
  * Gets or creates anonymous Session ID

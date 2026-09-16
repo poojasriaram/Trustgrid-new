@@ -16,7 +16,7 @@
 
 const CONFIG = {
   // Main TrustGrid Spreadsheet ID (Sheet 1)
-  MAIN_SPREADSHEET_ID: "1cK4aA9usPB5lIWDlPEdV04zB_mOrHTLUYEys1p8gb80",
+  MAIN_SPREADSHEET_ID: "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0",
 
   // Drive folder for candidate resumes
   CAREER_RESUMES_FOLDER_NAME: "TrustGrid_Career_Resumes",
