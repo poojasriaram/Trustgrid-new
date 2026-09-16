@@ -5,7 +5,6 @@ import './globals.css'
 import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
 import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
-import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 
 export const metadata: Metadata = {
   title: 'TrustGrid.ai — Enterprise AI Engineering Operating Company',
@@ -39,7 +38,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <ScrollRevealObserver />
         <AIArchitectChatbot />
-        <WhatsAppCTA position="bottom-left" />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
