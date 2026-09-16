@@ -265,51 +265,6 @@ export function HeroSlider() {
       <div className="hero-grid-bg" />
       <div className="hero-glow-sphere" />
 
-      {/* TOP PILLAR NAVIGATION BAR (CLICKABLE TABS FOR ALL 6 SLIDES) */}
-      <div className="hero-pillar-tabs-bar">
-        <div className="hero-pillar-tabs-list">
-          {heroSlidesData.map((slide, idx) => {
-            const SlideIcon = slide.icon
-            const isActive = idx === currentSlideIndex
-            return (
-              <button
-                key={slide.id}
-                className={`hero-pillar-tab-btn ${isActive ? 'active' : ''}`}
-                onClick={() => setCurrentSlideIndex(idx)}
-                aria-label={`Switch to ${slide.layerTag}`}
-              >
-                <div className="pillar-tab-icon">
-                  <SlideIcon size={14} />
-                </div>
-                <span className="pillar-tab-text">{slide.layerTag.split('(')[0].trim()}</span>
-                {isActive && <span className="pillar-tab-indicator" />}
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Carousel Arrow Controls */}
-        <div className="hero-slider-nav-arrows">
-          <button
-            className="hero-arrow-btn"
-            onClick={goToPrev}
-            aria-label="Previous hero slide"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <span className="hero-slide-counter">
-            0{currentSlideIndex + 1} / 0{total}
-          </span>
-          <button
-            className="hero-arrow-btn"
-            onClick={goToNext}
-            aria-label="Next hero slide"
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
-      </div>
-
       {/* MAIN HERO SLIDER DUAL-COLUMN CONTENT LAYOUT */}
       <div
         className="hero-main-layout hero-slide-transition-wrap"
@@ -358,6 +313,43 @@ export function HeroSlider() {
               <span>Talk to an Architect</span>
               <ArrowRight size={15} />
             </Link>
+          </div>
+
+          {/* Minimalist Slide Progress Dots & Arrow Controls */}
+          <div className="hero-bottom-controls">
+            <div className="hero-indicator-dots">
+              {heroSlidesData.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className={`hero-dot-pill ${idx === currentSlideIndex ? 'active' : ''}`}
+                  onClick={() => setCurrentSlideIndex(idx)}
+                  aria-label={`Jump to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            <div className="hero-slider-nav-arrows">
+              <button
+                type="button"
+                className="hero-arrow-btn"
+                onClick={goToPrev}
+                aria-label="Previous hero slide"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <span className="hero-slide-counter">
+                0{currentSlideIndex + 1} / 0{total}
+              </span>
+              <button
+                type="button"
+                className="hero-arrow-btn"
+                onClick={goToNext}
+                aria-label="Next hero slide"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
           </div>
         </div>
 
