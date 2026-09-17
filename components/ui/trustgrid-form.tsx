@@ -224,32 +224,44 @@ export function TrustGridForm({
     e.preventDefault()
     setErrorMessage('')
 
-    if (variant !== 'newsletter' && !name.trim()) {
-      const err = 'Please enter your full name.'
-      setErrorMessage(err)
-      trackFormValidationError(resolvedFormId, resolvedFormName, 'name', err)
-      return
+    // EXACTLY 3 MANDATORY FIELDS ACROSS ALL FORMS:
+    if (!name.trim()) {
+      errors.name = 'Please provide your full name.'
     }
 
     if (!email.trim() || !validateEmail(email)) {
-      const err = 'Please enter a valid work email address.'
-      setErrorMessage(err)
-      trackFormValidationError(resolvedFormId, resolvedFormName, 'email', err)
-      return
+      errors.email = 'Please provide a valid work email address.'
     }
 
-    if (phone && !validatePhone(phone)) {
-      const err = 'Please enter a valid phone number.'
-      setErrorMessage(err)
-      trackFormValidationError(resolvedFormId, resolvedFormName, 'phone', err)
+    if (!phone.trim()) {
+      errors.phone = 'Please provide your phone / WhatsApp number for callback.'
+    } else if (!validatePhone(phone)) {
+      errors.phone = 'Please provide a valid phone number (e.g. +1 555-0123 or +91 9876543210).'
+    }
+
+    if (Object.keys(errors).length > 0) {
+      const firstErr = Object.values(errors)[0]
+      setErrorMessage(firstErr)
+      trackFormValidationError(resolvedFormId, resolvedFormName, Object.keys(errors)[0], firstErr)
       return
     }
 
     setIsSubmitting(true)
 
+    const formType = 
+      variant === 'diagnostic' ? 'AI_DIAGNOSTIC' :
+      variant === 'contact' ? 'CONTACT' :
+      variant === 'proposal' ? 'PROPOSAL' :
+      variant === 'career' ? 'CAREER' :
+      variant === 'partner' ? 'PARTNER' :
+      variant === 'newsletter' ? 'NEWSLETTER' :
+      variant === 'workshop' ? 'WORKSHOP' :
+      'GENERAL_LEAD'
+
     const result = await submitTrustGridForm({
       formId: resolvedFormId,
       formName: resolvedFormName,
+      form_type: formType,
       name: name.trim() || (variant === 'newsletter' ? 'Subscriber' : 'Enterprise Inquiry'),
       email: email.trim(),
       phone: phone.trim(),
@@ -286,7 +298,7 @@ export function TrustGridForm({
 
   if (submitted) {
     return (
-      <div className="diagnostic-success-box animated-card" style={{ padding: 'clamp(24px, 4vw, 36px)' }}>
+      <div className="diagnostic-success-box tg-card-interactive" style={{ padding: 'clamp(24px, 4vw, 36px)' }}>
         <div className="success-badge-row">
           <span className="success-badge">CONFIRMED</span>
           <span className="success-ref">REF: {refId}</span>
@@ -294,7 +306,7 @@ export function TrustGridForm({
 
         <h3 className="success-title">Thank you. Your request has been received.</h3>
         <p className="success-lead">
-          Reference ID: <strong>{refId}</strong>. Our enterprise engineering and architecture team will review your specifications and get in touch directly.
+          Reference ID: <strong>{refId}</strong>. Our senior TRUSTGRID.AI architecture and engineering team will review your specifications and get in touch within 24–48 hours.
         </p>
 
         <div className="success-actions" style={{ marginTop: '20px' }}>
@@ -305,6 +317,8 @@ export function TrustGridForm({
               setSubmitted(false)
               setName('')
               setEmail('')
+              setPhone('')
+              setCompany('')
               setMessage('')
               hasStartedRef.current = false
             }}
@@ -319,7 +333,7 @@ export function TrustGridForm({
   return (
     <form
       ref={formRef}
-      className={`interactive-diagnostic-form ${compact ? 'form-compact' : ''}`}
+      className={`interactive-diagnostic-form tg-card-interactive ${compact ? 'form-compact' : ''}`}
       onSubmit={handleSubmit}
       noValidate
     >
@@ -328,7 +342,7 @@ export function TrustGridForm({
           style={{
             background: '#fef2f2',
             border: '1px solid #fecaca',
-            borderRadius: '6px',
+            borderRadius: '8px',
             padding: '10px 14px',
             display: 'flex',
             alignItems: 'center',
@@ -343,11 +357,22 @@ export function TrustGridForm({
         </div>
       )}
 
-      {/* 1. NEWSLETTER SIMPLE FORM */}
+      {/* 1. NEWSLETTER SIMPLE FORM (3 Mandatory Fields) */}
       {variant === 'newsletter' && (
         <div className="contact-inputs-grid">
           <label className="input-group">
-            <span>Work Email *</span>
+            <span>Full Name <strong style={{ color: '#ef4444' }}>*</strong></span>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onFocus={() => handleFieldFocusOrChange('name')}
+              required
+              placeholder="e.g. Alexander Scott"
+            />
+          </label>
+          <label className="input-group">
+            <span>Work Email <strong style={{ color: '#ef4444' }}>*</strong></span>
             <input
               type="email"
               value={email}
@@ -355,6 +380,17 @@ export function TrustGridForm({
               onFocus={() => handleFieldFocusOrChange('email')}
               required
               placeholder="e.g. name@enterprise.com"
+            />
+          </label>
+          <label className="input-group">
+            <span>Phone / WhatsApp <strong style={{ color: '#ef4444' }}>*</strong></span>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              onFocus={() => handleFieldFocusOrChange('phone')}
+              required
+              placeholder="e.g. +1 (555) 012-3456 or +91 98765 43210"
             />
           </label>
           <label className="input-group">
@@ -370,14 +406,14 @@ export function TrustGridForm({
         </div>
       )}
 
-      {/* 2. DIAGNOSTIC / PROPOSAL FORM MULTI-STEP */}
+      {/* 2. DIAGNOSTIC / PROPOSAL / WORKSHOP FORM */}
       {(variant === 'diagnostic' || variant === 'proposal' || variant === 'workshop') && (
         <>
           {/* Solution Selector */}
           <div className="form-step-section" style={{ marginBottom: '20px' }}>
-            <span className="step-number">DOMAIN SELECTION</span>
+            <span className="step-number">STEP 1 • DOMAIN SELECTION (OPTIONAL)</span>
             <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '4px 0 10px' }}>
-              Select Engineering Domain(s)
+              Select Engineering Domain(s) (Optional)
             </h4>
             <div className="solution-pills-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '8px' }}>
               {solutions.map((sol) => {
@@ -400,15 +436,15 @@ export function TrustGridForm({
             </div>
           </div>
 
-          {/* Organization & Industry Profile */}
+          {/* Optional Profile Parameters */}
           <div className="form-step-section" style={{ marginBottom: '20px' }}>
-            <span className="step-number">ORGANIZATION PROFILE</span>
+            <span className="step-number">STEP 2 • WORKLOAD CONTEXT (OPTIONAL)</span>
             <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '4px 0 10px' }}>
               Organization & Workload Profile
             </h4>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
               <div className="input-group">
-                <span>Industry Sector</span>
+                <span>Industry Sector (Optional)</span>
                 <select
                   className="industry-dropdown"
                   value={industry}
@@ -425,7 +461,7 @@ export function TrustGridForm({
               </div>
 
               <div className="input-group">
-                <span>Company Size</span>
+                <span>Company Size (Optional)</span>
                 <select
                   className="industry-dropdown"
                   value={companySize}
@@ -442,7 +478,7 @@ export function TrustGridForm({
               </div>
 
               <div className="input-group">
-                <span>AI Maturity Stage</span>
+                <span>AI Maturity Stage (Optional)</span>
                 <select
                   className="industry-dropdown"
                   value={aiMaturity}
@@ -458,7 +494,7 @@ export function TrustGridForm({
               </div>
 
               <div className="input-group">
-                <span>Timeline</span>
+                <span>Timeline (Optional)</span>
                 <select
                   className="industry-dropdown"
                   value={timeline}
@@ -480,9 +516,10 @@ export function TrustGridForm({
       {/* 3. CAREER SPECIFIC FIELDS */}
       {variant === 'career' && (
         <div className="form-step-section" style={{ marginBottom: '20px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+          <span className="step-number">ROLE SELECTION (OPTIONAL)</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px', marginTop: '8px' }}>
             <div className="input-group">
-              <span>Role Applied For</span>
+              <span>Role Applied For (Optional)</span>
               <select
                 className="industry-dropdown"
                 value={roleApplied}
@@ -498,7 +535,7 @@ export function TrustGridForm({
             </div>
 
             <div className="input-group">
-              <span>GitHub / Portfolio URL</span>
+              <span>GitHub / Portfolio URL (Optional)</span>
               <input
                 type="url"
                 value={portfolio}
@@ -514,8 +551,9 @@ export function TrustGridForm({
       {/* 4. PARTNER SPECIFIC FIELDS */}
       {variant === 'partner' && (
         <div className="form-step-section" style={{ marginBottom: '20px' }}>
-          <div className="input-group">
-            <span>Partnership Scope</span>
+          <span className="step-number">PARTNERSHIP SCOPE (OPTIONAL)</span>
+          <div className="input-group" style={{ marginTop: '8px' }}>
+            <span>Partnership Type (Optional)</span>
             <select
               className="industry-dropdown"
               value={partnershipType}
@@ -532,19 +570,19 @@ export function TrustGridForm({
         </div>
       )}
 
-      {/* 5. CORE CONTACT DETAILS (FOR ALL FORMS EXCEPT NEWSLETTER) */}
+      {/* 5. CORE CONTACT DETAILS (MANDATORY 3 FIELDS ACROSS ALL FORMS) */}
       {variant !== 'newsletter' && (
         <div className="form-step-section" style={{ marginBottom: '20px' }}>
-          {(variant === 'diagnostic' || variant === 'proposal') && (
-            <span className="step-number">CONTACT DETAILS</span>
+          {(variant === 'diagnostic' || variant === 'proposal' || variant === 'workshop') && (
+            <span className="step-number">STEP 3 • MANDATORY CONTACT INFORMATION</span>
           )}
           <h4 style={{ fontSize: '15px', fontWeight: 700, margin: '4px 0 10px' }}>
-            Executive & Contact Information
+            Contact & Executive Details
           </h4>
 
           <div className="contact-inputs-grid">
             <label className="input-group">
-              <span>Full Name *</span>
+              <span>Full Name <strong style={{ color: '#ef4444' }}>*</strong></span>
               <input
                 type="text"
                 value={name}
@@ -556,7 +594,7 @@ export function TrustGridForm({
             </label>
 
             <label className="input-group">
-              <span>Work Email *</span>
+              <span>Work Email <strong style={{ color: '#ef4444' }}>*</strong></span>
               <input
                 type="email"
                 value={email}
@@ -568,18 +606,19 @@ export function TrustGridForm({
             </label>
 
             <label className="input-group">
-              <span>Phone / WhatsApp (Optional)</span>
+              <span>Phone / WhatsApp <strong style={{ color: '#ef4444' }}>*</strong></span>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('phone')}
-                placeholder="e.g. +1 (555) 012-3456"
+                required
+                placeholder="e.g. +1 (555) 012-3456 or +91 98765 43210"
               />
             </label>
 
             <label className="input-group">
-              <span>Company / Organization</span>
+              <span>Company (Optional)</span>
               <input
                 type="text"
                 value={company}
@@ -590,7 +629,7 @@ export function TrustGridForm({
             </label>
 
             <label className="input-group">
-              <span>Job Role / Designation</span>
+              <span>Job Role / Designation (Optional)</span>
               <input
                 type="text"
                 value={designation}
@@ -602,7 +641,7 @@ export function TrustGridForm({
 
             {variant === 'contact' && (
               <label className="input-group">
-                <span>Industry Sector</span>
+                <span>Industry Sector (Optional)</span>
                 <select
                   className="industry-dropdown"
                   value={industry}
@@ -637,7 +676,7 @@ export function TrustGridForm({
       <button
         type="submit"
         disabled={isSubmitting}
-        className="button button-submit-diag"
+        className="button button-submit-diag tg-btn-shine"
         style={{
           opacity: isSubmitting ? 0.75 : 1,
           cursor: isSubmitting ? 'not-allowed' : 'pointer',

@@ -107,8 +107,8 @@ export function PageBannerHero({
                 <Sparkles size={16} />
               </div>
               <span>
-                <strong>{thesisHighlight.includes(':') ? thesisHighlight.split(':')[0] + ':' : 'Core Focus:'}</strong>
-                {thesisHighlight.includes(':') ? thesisHighlight.substring(thesisHighlight.indexOf(':') + 1) : thesisHighlight}
+                <strong>{thesisHighlight.includes(':') ? thesisHighlight.split(':')[0] + ': ' : 'Core Focus: '}</strong>
+                {thesisHighlight.includes(':') ? thesisHighlight.substring(thesisHighlight.indexOf(':') + 1).trim() : thesisHighlight}
               </span>
             </div>
           )}

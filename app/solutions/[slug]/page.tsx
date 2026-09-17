@@ -135,11 +135,11 @@ export async function generateMetadata({
   if (!solution) return {}
 
   return {
-    title: `${solution.label} | TrustGrid.ai — Enterprise AI Engineering`,
+    title: `${solution.label} | TRUSTGRID.AI — Enterprise AI Engineering`,
     description: solution.heroStatement,
     alternates: { canonical: `/solutions/${solution.slug}` },
     openGraph: {
-      title: `${solution.label} | TrustGrid.ai`,
+      title: `${solution.label} | TRUSTGRID.AI`,
       description: solution.heroStatement,
     },
   }

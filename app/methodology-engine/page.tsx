@@ -7,8 +7,8 @@ import { PageBannerHero } from '@/components/ui/page-banner-hero'
 import { Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'AI-Driven Methodology Engine: From Diagnostics to Compounding Value | TrustGrid.ai',
-  description: "TrustGrid's Proprietary Approach to Implementing, Automating, and Sustaining Operational Excellence Through Agentic AI. Multi-Stage Compounding Value.",
+  title: 'AI-Driven Methodology Engine: From Diagnostics to Compounding Value | TRUSTGRID.AI',
+  description: "TRUSTGRID.AI's Proprietary Approach to Implementing, Automating, and Sustaining Operational Excellence Through Agentic AI. Multi-Stage Compounding Value.",
 }
 
 export default function MethodologyEnginePage() {

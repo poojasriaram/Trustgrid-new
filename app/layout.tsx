@@ -2,14 +2,14 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import './globals.css'
+import './sitemap-styles.css'
 import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
 import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
 
 export const metadata: Metadata = {
-  title: 'TrustGrid.ai — Enterprise AI Engineering Operating Company',
-  description: 'TrustGrid.ai architects, deploys, optimizes, and secures full-stack enterprise AI infrastructure, GPU factories, autonomous agent fleets, and quantum-safe networks.',
-  generator: 'v0.app',
+  title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
+  description: 'TRUSTGRID.AI architects, deploys, optimizes, and secures full-stack enterprise AI infrastructure, GPU factories, autonomous agent fleets, and quantum-safe networks.',
 }
 
 export const viewport: Viewport = {

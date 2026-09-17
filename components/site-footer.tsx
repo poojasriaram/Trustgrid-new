@@ -7,8 +7,8 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="footer-top">
         <div className="footer-brand-col">
-          <Link href="/" className="footer-brand-link" aria-label="TrustGrid.ai home">
-            <img src={logoUrl} alt="TrustGrid.ai" />
+          <Link href="/" className="footer-brand-link" aria-label="TRUSTGRID.AI home">
+            <img src={logoUrl} alt="TRUSTGRID.AI" />
           </Link>
           <p>
             The Enterprise AI Operating Company for the AGI Era. Engineering the complete vertical stack from silicon to strategy.
@@ -98,7 +98,7 @@ export function SiteFooter() {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 TrustGrid.ai. All rights reserved.</p>
+        <p>© 2026 TRUSTGRID.AI. All rights reserved.</p>
         <div className="footer-bottom-links">
           <Link href="/">Home</Link>
           <Link href="/sitemap">Site Map v14.0</Link>

@@ -141,7 +141,8 @@ export function WhatsAppCTA({
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => handleClick('floating_widget')}
-        aria-label="Contact TrustGrid on WhatsApp"
+        aria-label="Contact TRUSTGRID.AI on WhatsApp"
+        className="tg-btn-shine tg-card-interactive"
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -155,9 +156,12 @@ export function WhatsAppCTA({
           fontWeight: 600,
           fontSize: '13px',
           border: '1px solid rgba(255,255,255,0.3)',
-          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
         }}
       >
+        <span style={{ position: 'relative', display: 'flex', height: '9px', width: '9px' }}>
+          <span style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '999px', background: '#ffffff', opacity: 0.75, animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite' }} />
+          <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '999px', height: '9px', width: '9px', background: '#ffffff' }} />
+        </span>
         <MessageCircle size={18} />
         <span>WhatsApp Advisory</span>
       </a>

@@ -1144,39 +1144,146 @@ function buildDigestSummaryHtml(title, sinceLabel, ss) {
   ];
 
   var totalLeadCount = 0;
+  var leadsByType = {};
   leadTabs.forEach(function (tab) {
     var r = getRowsSince(ss.getSheetByName(tab), since);
     totalLeadCount += r.rows.length;
+    if (r.rows.length > 0) {
+      leadsByType[tab] = r.rows.length;
+    }
   });
 
-  var diag = getRowsSince(ss.getSheetByName("AI Diagnostic Leads"), since);
-  var forms = getRowsSince(ss.getSheetByName("Form Submissions"), since);
-  var views = getRowsSince(ss.getSheetByName("Page Views"), since);
+  var diagSheet = ss.getSheetByName("AI Diagnostic Leads");
+  var diag = getRowsSince(diagSheet, since);
+  var formsSheet = ss.getSheetByName("Form Submissions");
+  var forms = getRowsSince(formsSheet, since);
+  var viewsSheet = ss.getSheetByName("Page Views") || ss.getSheetByName("Traffic");
+  var views = getRowsSince(viewsSheet, since);
+  var totalViews = views.rows.length;
 
-  var statRow = function (label, value, color) {
-    return '<td style="padding:16px;text-align:center;background:#f8fafc;border-radius:8px;">' +
-      '<div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">' + escapeHtml(label) + '</div>' +
-      '<div style="font-size:28px;font-weight:800;color:' + color + ';margin-top:4px;">' + value + '</div></td>';
+  // Extract traffic sources
+  var sourcesMap = {};
+  if (views.headers.length > 0 && views.rows.length > 0) {
+    var srcIdx = views.headers.indexOf("UTM Source");
+    if (srcIdx === -1) srcIdx = views.headers.indexOf("utm_source");
+    if (srcIdx === -1) srcIdx = views.headers.indexOf("Traffic Source");
+    
+    views.rows.forEach(function (row) {
+      var s = (srcIdx > -1 && row[srcIdx]) ? String(row[srcIdx]).trim() : "Direct / Organic";
+      if (!s || s === "null" || s === "undefined") s = "Direct / Organic";
+      sourcesMap[s] = (sourcesMap[s] || 0) + 1;
+    });
+  }
+
+  // Conversion rate calculation
+  var convRate = totalViews > 0 ? ((totalLeadCount / totalViews) * 100).toFixed(1) + "%" : "0.0%";
+
+  // KPI Card component
+  var kpiCard = function (label, value, subtext, color) {
+    return '<td style="width:25%;padding:14px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;vertical-align:top;">' +
+      '<div style="font-size:10.5px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.6px;">' + escapeHtml(label) + '</div>' +
+      '<div style="font-size:24px;font-weight:800;color:' + color + ';margin:4px 0 2px;line-height:1.2;">' + escapeHtml(String(value)) + '</div>' +
+      '<div style="font-size:11px;color:#94a3b8;">' + escapeHtml(subtext) + '</div>' +
+      '</td>';
   };
 
-  var html = '<div style="font-family:Inter,-apple-system,sans-serif;max-width:640px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;">' +
-    '<div style="background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%);padding:24px 28px;color:#fff;">' +
-      '<div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#818cf8;">TRUSTGRID.AI INTELLIGENCE</div>' +
-      '<div style="font-size:20px;font-weight:700;">' + escapeHtml(title) + '</div>' +
-      '<div style="font-size:12px;color:#cbd5e1;margin-top:4px;">Window: past ' + escapeHtml(sinceLabel) + '</div>' +
+  // Build Traffic Sources Table
+  var sourcesHtml = '';
+  var sourceKeys = Object.keys(sourcesMap).sort(function(a,b){ return sourcesMap[b] - sourcesMap[a]; });
+  if (sourceKeys.length > 0) {
+    sourceKeys.slice(0, 5).forEach(function (src) {
+      var count = sourcesMap[src];
+      var pct = totalViews > 0 ? Math.round((count / totalViews) * 100) + '%' : '0%';
+      sourcesHtml += '<tr>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#1e293b;font-weight:600;">' + escapeHtml(src) + '</td>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#475569;text-align:right;">' + count + '</td>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#4f46e5;font-weight:700;text-align:right;">' + pct + '</td>' +
+        '</tr>';
+    });
+  } else {
+    sourcesHtml = '<tr><td colspan="3" style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;font-style:italic;">No traffic data available for the selected period.</td></tr>';
+  }
+
+  // Build Leads by Form Type Table
+  var leadsHtml = '';
+  var leadTypes = Object.keys(leadsByType);
+  if (leadTypes.length > 0) {
+    leadTypes.forEach(function (type) {
+      var count = leadsByType[type];
+      leadsHtml += '<tr>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#1e293b;font-weight:600;">' + escapeHtml(type) + '</td>' +
+        '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;color:#0ea5e9;font-weight:700;text-align:right;">' + count + '</td>' +
+        '</tr>';
+    });
+  } else {
+    leadsHtml = '<tr><td colspan="2" style="padding:16px;text-align:center;color:#94a3b8;font-size:13px;font-style:italic;">No lead activity recorded for the selected period.</td></tr>';
+  }
+
+  var html = '<div style="font-family:Inter,-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,sans-serif;max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.06);">' +
+    // Header
+    '<div style="background:linear-gradient(135deg,#060e22 0%,#0b1528 50%,#1e1b4b 100%);padding:28px 32px;color:#ffffff;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+        '<span style="font-size:11px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#38bdf8;">TRUSTGRID.AI • EXECUTIVE INTELLIGENCE</span>' +
+        '<span style="font-size:11px;color:#94a3b8;background:rgba(255,255,255,0.08);padding:3px 8px;border-radius:4px;">CONFIDENTIAL</span>' +
+      '</div>' +
+      '<div style="font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.02em;">' + escapeHtml(title) + '</div>' +
+      '<div style="font-size:12.5px;color:#cbd5e1;margin-top:6px;">Window: past ' + escapeHtml(sinceLabel) + ' • Generated ' + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy HH:mm z") + '</div>' +
     '</div>' +
-    '<div style="padding:24px 28px;">' +
-      '<table style="width:100%;border-spacing:8px 0;"><tr>' +
-        statRow("Total Leads", totalLeadCount, "#4f46e5") +
-        statRow("Diagnostic Requests", diag.rows.length, "#ef4444") +
-        statRow("Form Submissions", forms.rows.length, "#10b981") +
-        statRow("Page Views", views.rows.length, "#0ea5e9") +
+
+    // Body
+    '<div style="padding:28px 32px;">' +
+      // Executive Summary Note
+      '<div style="background:#f0f9ff;border-left:4px solid #0ea5e9;padding:14px 16px;border-radius:0 8px 8px 0;margin-bottom:24px;">' +
+        '<div style="font-size:12px;font-weight:700;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;">Executive Summary</div>' +
+        '<div style="font-size:13.5px;color:#0c4a6e;line-height:1.5;">' +
+          (totalLeadCount > 0 
+            ? 'Captured <strong>' + totalLeadCount + '</strong> enterprise inquiries and <strong>' + totalViews + '</strong> telemetry sessions over the past ' + escapeHtml(sinceLabel) + ' with a <strong>' + convRate + '</strong> conversion rate.'
+            : 'Telemetry engine recorded <strong>' + totalViews + '</strong> visitor sessions. All automated intake pipelines and webhooks are healthy.') +
+        '</div>' +
+      '</div>' +
+
+      // 1. KPI Summary Cards (4-Columns)
+      '<div style="font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Executive KPI Summary</div>' +
+      '<table style="width:100%;border-collapse:separate;border-spacing:8px 0;margin-bottom:24px;"><tr>' +
+        kpiCard("Total Visits", totalViews, "Telemetry pageviews", "#0ea5e9") +
+        kpiCard("Total Leads", totalLeadCount, "All form submissions", "#4f46e5") +
+        kpiCard("Diagnostics", diag.rows.length, "High-intent audits", "#ef4444") +
+        kpiCard("Conversion", convRate, "Visit-to-lead ratio", "#10b981") +
       '</tr></table>' +
-      '<div style="text-align:center;margin-top:24px;">' +
-        '<a href="https://docs.google.com/spreadsheets/d/' + CONFIG.MAIN_SPREADSHEET_ID + '" style="display:inline-block;padding:12px 24px;background:#4f46e5;color:#fff;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">Open Sheet 1 Database</a>' +
+
+      // 2. Traffic Sources Breakdown Table
+      '<div style="font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Traffic Acquisition Sources</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:24px;">' +
+        '<tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">' +
+          '<th style="padding:10px 14px;text-align:left;font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;">Source / Channel</th>' +
+          '<th style="padding:10px 14px;text-align:right;font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;">Sessions</th>' +
+          '<th style="padding:10px 14px;text-align:right;font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;">Share %</th>' +
+        '</tr>' +
+        sourcesHtml +
+      '</table>' +
+
+      // 3. Leads by Ingestion Form Table
+      '<div style="font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Inquiries by Form Type</div>' +
+      '<table style="width:100%;border-collapse:collapse;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;margin-bottom:28px;">' +
+        '<tr style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">' +
+          '<th style="padding:10px 14px;text-align:left;font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;">Pipeline Category</th>' +
+          '<th style="padding:10px 14px;text-align:right;font-size:11.5px;font-weight:700;color:#64748b;text-transform:uppercase;">Count</th>' +
+        '</tr>' +
+        leadsHtml +
+      '</table>' +
+
+      // CTA Action Button
+      '<div style="text-align:center;padding:12px 0 6px;">' +
+        '<a href="https://docs.google.com/spreadsheets/d/' + CONFIG.MAIN_SPREADSHEET_ID + '" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#1d5cff 0%,#4f46e5 100%);color:#ffffff;text-decoration:none;border-radius:8px;font-weight:700;font-size:13.5px;box-shadow:0 4px 12px rgba(29,92,255,0.25);">' +
+          'Access Sheet 1 Live Database →' +
+        '</a>' +
       '</div>' +
     '</div>' +
-    '<div style="background:#f8fafc;padding:16px 28px;text-align:center;font-size:12px;color:#64748b;border-top:1px solid #f1f5f9;">Automated ' + escapeHtml(sinceLabel) + ' digest from TrustGrid.AI</div>' +
+
+    // Footer
+    '<div style="background:#f8fafc;padding:18px 32px;text-align:center;font-size:11.5px;color:#64748b;border-top:1px solid #f1f5f9;">' +
+      'Automated Executive Digest generated by <strong>TRUSTGRID.AI</strong> Enterprise Analytics Engine' +
+    '</div>' +
   '</div>';
 
   return html;
@@ -1185,13 +1292,13 @@ function buildDigestSummaryHtml(title, sinceLabel, ss) {
 function sendDailyDigest() {
   var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var html = buildDigestSummaryHtml("📬 Daily Executive Digest", "24 hours", ss);
-  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📬 [TrustGrid.AI] Daily Digest — " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
+  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📬 [TRUSTGRID.AI] Daily Digest — " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
 }
 
 function sendWeeklyDigest() {
   var ss = SpreadsheetApp.getActiveSpreadsheet() || SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var html = buildDigestSummaryHtml("📈 Weekly Executive Digest", "7 days", ss);
-  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📈 [TrustGrid.AI] Weekly Digest — Week of " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
+  MailApp.sendEmail({ to: EMAIL_CONFIG.primaryAdmin, subject: "📈 [TRUSTGRID.AI] Weekly Digest — Week of " + Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMM d, yyyy"), htmlBody: html });
 }
 
 function sendMonthlyResumeDigest() {

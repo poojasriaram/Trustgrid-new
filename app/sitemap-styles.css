@@ -11250,26 +11250,62 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  opacity: 0.18;
-  filter: saturate(1.2) brightness(0.7);
-  transform: scale(1.04);
+  opacity: 0.16;
+  filter: blur(14px) saturate(1.2) brightness(0.45);
+  transform: scale(1.08);
   animation: heroImgFadeIn 0.8s ease-out forwards;
 }
 
 .hero-banner-overlay {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 60% 40%, rgba(6, 14, 34, 0.4) 0%, rgba(6, 14, 34, 0.94) 75%);
+  background: 
+    linear-gradient(90deg, #060e22 0%, #060e22 45%, rgba(6, 14, 34, 0.82) 75%, rgba(6, 14, 34, 0.95) 100%),
+    radial-gradient(circle at 75% 40%, rgba(29, 92, 255, 0.12) 0%, rgba(6, 14, 34, 0.95) 70%);
+}
+
+.page-banner-quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+  z-index: 5;
+}
+
+.page-banner-quick-nav .quick-nav-pill {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(226, 232, 240, 0.9) !important;
+  background: rgba(15, 23, 42, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-banner-quick-nav .quick-nav-pill:hover {
+  background: rgba(56, 189, 248, 0.18) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.6) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(56, 189, 248, 0.2);
 }
 
 @keyframes heroImgFadeIn {
   from {
     opacity: 0;
-    transform: scale(1.08);
+    transform: scale(1.12);
   }
   to {
-    opacity: 0.18;
-    transform: scale(1.04);
+    opacity: 0.16;
+    transform: scale(1.08);
   }
 }
 
@@ -13183,4 +13219,192 @@ body {
   }
 }
 
+/* ==============================================================================
+   TRUSTGRID.AI — SYMMETRIC RESPONSIVE CARD GRIDS & 21ST.DEV MICRO-ANIMATIONS
+   ============================================================================== */
 
+/* 1. SYMMETRIC GRID UTILITIES */
+.tg-grid {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  width: 100%;
+}
+
+.tg-grid-2,
+.tg-grid-2x2,
+.tg-grid-2x3,
+.tg-grid-2x4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.tg-grid-3,
+.tg-grid-3x2,
+.tg-grid-3x3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.tg-grid-4,
+.tg-grid-4x2 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+/* 2. EQUAL HEIGHT & BALANCED CARD INTERNALS */
+.tg-card-equal-height {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--radius-md);
+  box-sizing: border-box;
+}
+
+.tg-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.tg-card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+/* 3. 21ST.DEV-STYLE MODERN CARD MICRO-ANIMATIONS */
+.tg-card-interactive {
+  position: relative;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.tg-card-interactive:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.42) !important;
+  box-shadow: 0 16px 32px -10px rgba(7, 20, 61, 0.12),
+              0 0 0 1px rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Subtle glow accent */
+.tg-glow-subtle {
+  position: relative;
+  overflow: hidden;
+}
+
+.tg-glow-subtle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.8), rgba(99, 102, 241, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.tg-glow-subtle:hover::before {
+  opacity: 1;
+}
+
+/* Button Subtle Shine */
+.tg-btn-shine {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tg-btn-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 40%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg);
+  transition: all 0.6s ease;
+}
+
+.tg-btn-shine:hover::after {
+  left: 130%;
+}
+
+/* SCROLL REVEAL OPTIMIZATION */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* RESPONSIVE BREAKPOINT ADAPTATION */
+@media (max-width: 1024px) {
+  .tg-grid-4,
+  .tg-grid-4x2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .tg-grid-3,
+  .tg-grid-3x2,
+  .tg-grid-3x3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .tg-grid-4,
+  .tg-grid-4x2,
+  .tg-grid-3,
+  .tg-grid-3x2,
+  .tg-grid-3x3,
+  .tg-grid-2,
+  .tg-grid-2x2,
+  .tg-grid-2x3,
+  .tg-grid-2x4 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .tg-card-interactive:hover {
+    transform: none; /* Disable transform on mobile touch for better scroll stability */
+  }
+}
+
+/* RESPECT PREFERS-REDUCED-MOTION */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+}
+
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}

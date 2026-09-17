@@ -40,7 +40,7 @@ export default function InsightsPage() {
           badgeTag="FRONTIER AI INTELLIGENCE"
           title="Frontier AI Engineering Insights, Whitepapers &"
           titleHighlight="Technical Breakthroughs"
-          description="Rigorous architectural papers, real-world enterprise outcomes, post-quantum research, and open innovation breakthroughs from the engineers at TrustGrid.AI."
+          description="Rigorous architectural papers, real-world enterprise outcomes, post-quantum research, and open innovation breakthroughs from the engineers at TRUSTGRID.AI."
           thesisHighlight="Empirical Systems Benchmarks • Multi-Agent Blueprints • Production Case Studies"
           image="/images/offering-trusted-ai.jpg"
           primaryCta={{

@@ -1,6 +1,6 @@
 # TrustGrid.AI — Google Apps Script Backend Engines
 
-This folder contains two enterprise-grade Google Apps Script engines designed to capture all form submissions, chatbot leads, traffic attribution, and funnel telemetry across the entire TrustGrid.ai platform.
+This folder contains two enterprise-grade Google Apps Script engines designed to capture all form submissions, chatbot leads, traffic attribution, and funnel telemetry across the entire TRUSTGRID.AI platform.
 
 ---
 

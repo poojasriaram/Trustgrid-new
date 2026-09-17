@@ -327,8 +327,8 @@ export function SiteHeader() {
       ref={headerRef}
       className={`site-header ${scrolled ? 'site-header-scrolled' : ''}`}
     >
-      <Link className="brand" href="/" aria-label="TrustGrid.ai home" onClick={closeAll}>
-        <img src={logoUrl} alt="TrustGrid.ai" />
+      <Link className="brand" href="/" aria-label="TRUSTGRID.AI home" onClick={closeAll}>
+        <img src={logoUrl} alt="TRUSTGRID.AI" />
       </Link>
 
       <nav className={`nav ${open ? 'nav-open' : ''}`} aria-label="Primary navigation">

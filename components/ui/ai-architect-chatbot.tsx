@@ -263,8 +263,18 @@ export function AIArchitectChatbot() {
   const handleLeadSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
+    if (!leadData.name || !leadData.name.trim()) {
+      alert('Please enter your full name.')
+      return
+    }
+
     if (!leadData.email || !validateEmail(leadData.email)) {
       alert('Please enter a valid work email address.')
+      return
+    }
+
+    if (!leadData.phone || !leadData.phone.trim()) {
+      alert('Please provide your phone number for callback.')
       return
     }
 
@@ -273,11 +283,12 @@ export function AIArchitectChatbot() {
     const res = await submitTrustGridForm({
       formId: 'form_chat_lead',
       formName: 'Chatbot Lead Capture',
+      form_type: 'CHATBOT',
       name: leadData.name.trim() || 'Chatbot Visitor',
       email: leadData.email.trim(),
-      company: leadData.company.trim() || 'Enterprise Chat Visitor',
+      company: leadData.company.trim() || 'Enterprise Organization',
       phone: leadData.phone.trim(),
-      message: `Chatbot Inquiry: ${leadData.requirement || 'Requested contact via AI Architect Chatbot'}`,
+      message: `Chatbot Inquiry: ${leadData.requirement || 'Requested consultation via AI Architect Chatbot'}`,
       selectedSolutions: [leadData.offering || 'Enterprise AI Architecture'],
       chatIntent: 'AI Architect Chatbot Lead',
       ctaSource: 'chatbot_modal'
@@ -290,7 +301,7 @@ export function AIArchitectChatbot() {
       const confirmationMsg: ChatMessage = {
         id: `bot-lead-conf-${Date.now()}`,
         sender: 'bot',
-        text: `Thank you, ${leadData.name || 'there'}. Your consultation request has been registered (Ref: ${res.submissionId}). A senior TrustGrid AI architect will review your requirement for ${leadData.company || 'your organization'} and contact you via ${leadData.email}.`,
+        text: `Thank you, ${leadData.name || 'there'}. Your consultation request has been registered (Ref: ${res.submissionId}). A senior TRUSTGRID.AI architect will review your specifications for ${leadData.company || 'your organization'} and reach out shortly.`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
       setMessages((prev) => [...prev, confirmationMsg])
@@ -550,17 +561,18 @@ export function AIArchitectChatbot() {
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <input
-                        type="text"
-                        placeholder="Company Name"
-                        value={leadData.company}
-                        onChange={(e) => setLeadData({ ...leadData, company: e.target.value })}
+                        type="tel"
+                        placeholder="Phone / WhatsApp *"
+                        value={leadData.phone}
+                        onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                        required
                         style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
                       />
                       <input
-                        type="tel"
-                        placeholder="Phone (Optional)"
-                        value={leadData.phone}
-                        onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                        type="text"
+                        placeholder="Company (Optional)"
+                        value={leadData.company}
+                        onChange={(e) => setLeadData({ ...leadData, company: e.target.value })}
                         style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
                       />
                     </div>

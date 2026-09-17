@@ -21,7 +21,7 @@ export function KPIMetricCard({ metric, className = '' }: KPIMetricCardProps) {
   const Icon = metric.icon || TrendingUp
 
   return (
-    <div className={`metric-kpi-card animated-card reveal-up ${className}`} style={{
+    <div className={`metric-kpi-card tg-card-interactive tg-card-equal-height reveal-up ${className}`} style={{
       background: '#ffffff',
       border: '1px solid var(--border)',
       borderRadius: 'var(--radius-md)',
@@ -31,7 +31,9 @@ export function KPIMetricCard({ metric, className = '' }: KPIMetricCardProps) {
       justifyContent: 'space-between',
       boxShadow: 'var(--shadow-sm)',
       position: 'relative',
-      transition: 'all 0.25s ease'
+      height: '100%',
+      boxSizing: 'border-box',
+      transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
     }}>
       <span className="card-corner-tl" />
       <span className="card-corner-br" />
