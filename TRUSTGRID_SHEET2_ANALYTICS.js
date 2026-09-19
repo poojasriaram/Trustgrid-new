@@ -1,6 +1,6 @@
 /**
  * ═════════════════════════════════════════════════════════════════════════════
- * TRUSTGRID.AI - ENTERPRISE ANALYTICS DASHBOARD ENGINE (SHEET 2)
+ * PROFIT MACHINES - ENTERPRISE ANALYTICS DASHBOARD ENGINE (SHEET 2)
  * ═════════════════════════════════════════════════════════════════════════════
  * This script runs entirely in your Analytics Spreadsheet (Sheet 2).
  * It reads raw multi-form & telemetry data from Sheet 1, purges localhost/dev
@@ -9,10 +9,10 @@
  */
 
 // 🔴 SHEET 1 ID (DATA COLLECTION SPREADSHEET WHERE WEBHOOK SAVES RAW DATA)
-var DATA_SHEET_ID = "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0";
+var DATA_SHEET_ID = "1fdZl2it4O86OUB92DvBaeeEM75fXue1yqjcvLq51gVs";
 
-// 🔴 WEBSITE URL (For Automated QA Audits)
-var SITE_BASE_URL = "https://www.trustgrid.ai";
+// 🔴 WEBSITE URL (For Automated QA Audits — Enter once deployed)
+var SITE_BASE_URL = "";
 
 // ── SaaS Dark / Slate Enterprise Theme ──────────────────────────────────────────
 var C = {
@@ -23,7 +23,7 @@ var C = {
     t: "#0f172a",  // Slate-900 primary dark text
     m: "#64748b",  // Slate-500 muted text
     w: "#ffffff",  // White text for dark headers
-    pu: "#4f46e5", // Indigo accent (TrustGrid Primary)
+    pu: "#4f46e5", // Indigo accent (Profit Machines Primary)
     g: "#10b981",  // Emerald green (Conversions)
     o: "#f59e0b",  // Amber orange (Pipeline)
     c: "#0ea5e9",  // Sky blue (Telemetry)
@@ -51,36 +51,33 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     }
 
     // Pulling Raw Ingestion Data from Sheet 1 (Exact Tab Matches for all 18 tabs)
-    var tSheet = db.getSheetByName("Page Views") || db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
-    var eSheet = db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
-    var ubSheet = db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
+    // Live_Traffic_Events is the real master telemetry sheet the webhook actually writes every
+    // page view/session to (SCHEMA_95, snake_case columns) — checked first so real data is used
+    // instead of legacy tabs that may be empty.
+    var tSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Page Views") || db.getSheetByName("traffic_analytics") || db.getSheetByName("TrafficAnalytics");
+    var eSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
+    var ubSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
     
-    // Separate Lead & Form Sheets
-    var contactSheet = db.getSheetByName("Contact Leads") || db.getSheetByName("Leads") || db.getSheetByName("contact_submissions");
-    var diagSheet = db.getSheetByName("AI Diagnostic Leads") || db.getSheetByName("ai_diagnostics");
-    var readinessSheet = db.getSheetByName("AI Readiness Leads");
-    var workshopSheet = db.getSheetByName("Workshop Requests");
-    var rfpSheet = db.getSheetByName("RFP Proposals");
-    var archSheet = db.getSheetByName("Talk to Architect");
-    var chatSheet = db.getSheetByName("Chatbot Leads");
-    var careerSheet = db.getSheetByName("Career Applications");
-    var partnerSheet = db.getSheetByName("Partner Applications");
-    var newsletterSheet = db.getSheetByName("Newsletter Subscribers");
-    var formsSheet = db.getSheetByName("Form Submissions");
+        // Profit Machines Dedicated Form Sheets
+    var inboundSheet = db.getSheetByName("Form_Inbound_Leads") || db.getSheetByName("Inbound Leads");
+    var consultSheet = db.getSheetByName("Form_Consultation_Bookings") || db.getSheetByName("Consultation Bookings") || db.getSheetByName("Book for Consultation");
+    var expertSheet = db.getSheetByName("Form_Expert_Consulting") || db.getSheetByName("Talk to Expert") || db.getSheetByName("Expert Consulting");
+    var diagSheet = db.getSheetByName("Form_Diagnostic_Assessments") || db.getSheetByName("Diagnostic Forms") || db.getSheetByName("Profit Pool Diagnostics");
+    var partnerSheet = db.getSheetByName("Form_Partner_Applications") || db.getSheetByName("Partners") || db.getSheetByName("Partner Applications");
+    var careerSheet = db.getSheetByName("Form_Career_Applications") || db.getSheetByName("Job Applications") || db.getSheetByName("Career Applications");
+    var chatSheet = db.getSheetByName("Form_Chatbot_Conversations") || db.getSheetByName("Chatbot Leads") || db.getSheetByName("Chatbot");
+    var formsSheet = db.getSheetByName("Form_Submissions");
 
-    var tDataRaw = (tSheet && tSheet.getLastRow() > 0) ? tSheet.getDataRange().getValues() : [];
+    var tDataRaw = normalizeTrafficHeaders((tSheet && tSheet.getLastRow() > 0) ? tSheet.getDataRange().getValues() : []);
     var eDataRaw = (eSheet && eSheet.getLastRow() > 0) ? eSheet.getDataRange().getValues() : [];
-    var ubDataRaw = (ubSheet && ubSheet.getLastRow() > 0) ? ubSheet.getDataRange().getValues() : [];
-    var contactData = (contactSheet && contactSheet.getLastRow() > 0) ? contactSheet.getDataRange().getValues() : [];
+    var ubDataRaw = normalizeTrafficHeaders((ubSheet && ubSheet.getLastRow() > 0) ? ubSheet.getDataRange().getValues() : []);
+    var inboundData = (inboundSheet && inboundSheet.getLastRow() > 0) ? inboundSheet.getDataRange().getValues() : [];
+    var consultData = (consultSheet && consultSheet.getLastRow() > 0) ? consultSheet.getDataRange().getValues() : [];
+    var expertData = (expertSheet && expertSheet.getLastRow() > 0) ? expertSheet.getDataRange().getValues() : [];
     var diagData = (diagSheet && diagSheet.getLastRow() > 0) ? diagSheet.getDataRange().getValues() : [];
-    var readinessData = (readinessSheet && readinessSheet.getLastRow() > 0) ? readinessSheet.getDataRange().getValues() : [];
-    var workshopData = (workshopSheet && workshopSheet.getLastRow() > 0) ? workshopSheet.getDataRange().getValues() : [];
-    var rfpData = (rfpSheet && rfpSheet.getLastRow() > 0) ? rfpSheet.getDataRange().getValues() : [];
-    var archData = (archSheet && archSheet.getLastRow() > 0) ? archSheet.getDataRange().getValues() : [];
-    var chatData = (chatSheet && chatSheet.getLastRow() > 0) ? chatSheet.getDataRange().getValues() : [];
-    var careerData = (careerSheet && careerSheet.getLastRow() > 0) ? careerSheet.getDataRange().getValues() : [];
     var partnerData = (partnerSheet && partnerSheet.getLastRow() > 0) ? partnerSheet.getDataRange().getValues() : [];
-    var newsletterData = (newsletterSheet && newsletterSheet.getLastRow() > 0) ? newsletterSheet.getDataRange().getValues() : [];
+    var careerData = (careerSheet && careerSheet.getLastRow() > 0) ? careerSheet.getDataRange().getValues() : [];
+    var chatData = (chatSheet && chatSheet.getLastRow() > 0) ? chatSheet.getDataRange().getValues() : [];
     var formsData = (formsSheet && formsSheet.getLastRow() > 0) ? formsSheet.getDataRange().getValues() : [];
 
     // ── LOCALHOST & DEV SANITIZATION ENGINE ──
@@ -120,22 +117,19 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     try { buildCoOccurrenceMatrix(tData, eData); } catch (err) { console.error("Tab 13 Error: " + err.toString()); }
     try { buildFunnelDropOffSheet(tData, db); } catch (err) { console.error("Tab 14 Error: " + err.toString()); }
     try { buildLeadScoringEngine(tData, eData); } catch (err) { console.error("Tab 15 Error: " + err.toString()); }
-    try {
+        try {
       buildLeadsConversionsIntelligence([
-        { name: "Contact Leads", data: contactData },
-        { name: "AI Diagnostic Leads", data: diagData },
-        { name: "AI Readiness Leads", data: readinessData },
-        { name: "Workshop Requests", data: workshopData },
-        { name: "RFP Proposals", data: rfpData },
-        { name: "Talk to Architect", data: archData },
-        { name: "Chatbot Leads", data: chatData },
-        { name: "Career Applications", data: careerData },
+        { name: "Inbound Leads", data: inboundData },
+        { name: "Consultation Bookings", data: consultData },
+        { name: "Expert Advisory Inquiries", data: expertData },
+        { name: "Profit Pool Diagnostics", data: diagData },
         { name: "Partner Applications", data: partnerData },
-        { name: "Newsletter Subscribers", data: newsletterData }
+        { name: "Career Applications", data: careerData },
+        { name: "Chatbot Conversations", data: chatData }
       ], formsData, tData);
     } catch (err) { console.error("Tab 16 Error: " + err.toString()); }
 
-    if (ui) ui.alert("✅ SUCCESS! 16 TrustGrid Analytics Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
+    if (ui) ui.alert("✅ SUCCESS! 16 Profit Machines Analytics Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
 }
 
 function filterLocalhostData(data) {
@@ -153,6 +147,46 @@ function filterLocalhostData(data) {
         }
     }
     return filtered;
+}
+
+// Maps Live_Traffic_Events' SCHEMA_95 snake_case columns onto the Title-Case names every
+// tab builder below expects, so real telemetry is used instead of legacy empty tabs.
+var TRAFFIC_HEADER_ALIASES = {
+    "ip_address": "IP Address",
+    "session_id": "Session ID",
+    "user_id": "Visitor ID",
+    "page": "Page Path",
+    "page_url": "Page Path",
+    "page_title": "Page Title",
+    "referrer_url": "Referrer",
+    "traffic_source": "Traffic Source",
+    "utm_source": "UTM Source",
+    "utm_medium": "UTM Medium",
+    "utm_campaign": "UTM Campaign",
+    "device_type": "Device",
+    "operating_system": "OS",
+    "browser": "Browser",
+    "timestamp": "Timestamp"
+};
+
+function normalizeTrafficHeaders(data) {
+    if (!data || data.length < 1) return data || [];
+    var headers = data[0];
+    if (headers.indexOf("session_id") === -1 && headers.indexOf("ip_address") === -1) return data; // already Title Case
+    var renamed = headers.map(function (h) { return TRAFFIC_HEADER_ALIASES[h] || h; });
+
+    // Synthesize a combined "IP Location" column from the separate geo_* fields if present
+    var cityIdx = headers.indexOf("geo_city"), stateIdx = headers.indexOf("geo_state"), countryIdx = headers.indexOf("geo_country");
+    if (renamed.indexOf("IP Location") === -1 && (cityIdx > -1 || stateIdx > -1 || countryIdx > -1)) {
+        renamed.push("IP Location");
+        var out = [renamed];
+        for (var i = 1; i < data.length; i++) {
+            var parts = [cityIdx > -1 ? data[i][cityIdx] : "", stateIdx > -1 ? data[i][stateIdx] : "", countryIdx > -1 ? data[i][countryIdx] : ""].filter(Boolean);
+            out.push(data[i].concat([parts.join(", ") || "Unknown"]));
+        }
+        return out;
+    }
+    return [renamed].concat(data.slice(1));
 }
 
 function getOrCreateTab(name) {
@@ -178,7 +212,7 @@ function styleTitle(sh, text, c_span, bg) {
     sh.getRange(1, 1, 1, Math.max(c_span, 1)).merge().setValue(text).setBackground(bg).setFontColor(C.w).setFontWeight("bold").setFontSize(16).setHorizontalAlignment("center").setVerticalAlignment("middle");
     sh.setRowHeight(1, 55);
     sh.setFrozenRows(2);
-    sh.getRange("A2").setValue("TRUSTGRID ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString()).setBackground(C.bg).setFontColor(C.m).setFontSize(10).setFontStyle("italic");
+    sh.getRange("A2").setValue("PROFIT MACHINES ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString()).setBackground(C.bg).setFontColor(C.m).setFontSize(10).setFontStyle("italic");
 }
 
 function setColWidths(sh, startCol, widths) {
@@ -191,7 +225,7 @@ function setColWidths(sh, startCol, widths) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
     var sh = getOrCreateTab("🛰️ Mission Control");
-    styleTitle(sh, "🛰️ TRUSTGRID.AI — CENTRAL COMMAND & MISSION CONTROL", 12, C.t);
+    styleTitle(sh, "🛰️ PROFIT MACHINES — CENTRAL COMMAND & MISSION CONTROL", 12, C.t);
     sh.getRange("A1:Z100").setBackground(C.bg);
     setColWidths(sh, 1, [20, 200, 200, 200, 200, 200, 20].concat(new Array(10).fill(100)));
 
@@ -274,9 +308,9 @@ function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
         } catch(e) {}
     }
 
-    sh.getRange(21, 2, 1, 5).merge().setValue("TRUSTGRID SYSTEM TERMINAL FEED").setBackground(C.t).setFontColor(C.g).setFontWeight("bold").setFontFamily("Courier New");
+    sh.getRange(21, 2, 1, 5).merge().setValue("PROFIT MACHINES SYSTEM TERMINAL FEED").setBackground(C.t).setFontColor(C.g).setFontWeight("bold").setFontFamily("Courier New");
     sh.getRange(22, 2, 5, 5).merge().setBackground("#000000").setFontColor("#00ff00").setFontFamily("Courier New").setVerticalAlignment("top").setWrap(true)
-        .setValue("> TRUSTGRID AI DATA LINK ONLINE... \n> " + totalVisits + " TELEMETRY LOGS COMPILED... \n> DEV SANITIZATION: " + (devRecordsPurged || 0) + " LOCALHOST RECORDS PURGED... \n> AI LEAD ENGINE ACTIVE... \n> READY FOR EXECUTIVE QUERY.");
+        .setValue("> PROFIT MACHINES AI DATA LINK ONLINE... \n> " + totalVisits + " TELEMETRY LOGS COMPILED... \n> DEV SANITIZATION: " + (devRecordsPurged || 0) + " LOCALHOST RECORDS PURGED... \n> AI LEAD ENGINE ACTIVE... \n> READY FOR EXECUTIVE QUERY.");
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -284,7 +318,7 @@ function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildExecutiveDashboard(tData, eData) {
     var sh = getOrCreateTab("🚦 Executive KPIs");
-    styleTitle(sh, "🚦 TrustGrid Executive Dashboard & Core Performance Metrics", 10, C.pu);
+    styleTitle(sh, "🚦 Profit Machines Executive Dashboard & Core Performance Metrics", 10, C.pu);
     setColWidths(sh, 1, [250, 100, 100, 40, 600, 40, 250, 100, 100, 40, 600]);
 
     if (!tData || tData.length < 2) return;
@@ -324,19 +358,34 @@ function buildExecutiveDashboard(tData, eData) {
     }
     var topIPs = Object.keys(ipCounts).map(function (k) { return [k, ipLocs[k] || "Unknown", ipCounts[k]] }).filter(function (x) { return x[2] > 1 }).sort(function (a, b) { return b[2] - a[2] });
 
-    var drawTable = function (startRow, themeColor, icon, title, headers, rowData) {
+    var drawTable = function (startRow, themeColor, icon, title, headers, rowData, chartValueCol) {
         sh.getRange(startRow, 1, 1, headers.length).merge().setValue(icon + " " + title).setBackground(themeColor).setFontColor(C.w).setFontWeight("bold");
         sh.getRange(startRow + 1, 1, 1, headers.length).setValues([headers]).setBackground(C.p).setFontColor(C.t).setFontWeight("bold");
         if (rowData.length > 0) {
             sh.getRange(startRow + 2, 1, rowData.length, headers.length).setValues(rowData).setBackground(C.r1).setFontColor(C.t);
             for (var r = 0; r < rowData.length; r++) { if (r % 2 !== 0) sh.getRange(startRow + 2 + r, 1, 1, headers.length).setBackground(C.r2); }
+            // Bar chart built from the same live rows just written (real data, no fabricated values)
+            if (chartValueCol) {
+                try {
+                    var chart = sh.newChart().setChartType(Charts.ChartType.BAR)
+                        .addRange(sh.getRange(startRow + 2, 1, rowData.length, 1))
+                        .addRange(sh.getRange(startRow + 2, chartValueCol, rowData.length, 1))
+                        .setPosition(startRow, 5, 0, 0)
+                        .setOption("title", headers[chartValueCol - 1] + " by " + headers[0])
+                        .setOption("width", 380).setOption("height", 190)
+                        .setOption("legend", "none")
+                        .setOption("colors", [themeColor])
+                        .build();
+                    sh.insertChart(chart);
+                } catch (e) {}
+            }
         }
     };
 
     var r1 = 4, r2 = 20, r3 = 36;
-    drawTable(r1, C.pu, "🏆", "Q1: Top Solutions & Pages (excl. Home)", ["Page / Solution", "Visits", "Unique IPs"], topPages.slice(0, 5));
-    drawTable(r2, "#6366f1", "⏱", "Q2: Top Pages by Dwell Time", ["Page", "Avg Sec", "Max Sec"], timeArr.slice(0, 5));
-    drawTable(r3, C.c, "🔄", "Q3: Top Enterprise Repeat Visitors", ["IP Address", "Location", "Total Visits"], topIPs.slice(0, 5));
+    drawTable(r1, C.pu, "🏆", "Q1: Top Solutions & Pages (excl. Home)", ["Page / Solution", "Visits", "Unique IPs"], topPages.slice(0, 5), 2);
+    drawTable(r2, "#6366f1", "⏱", "Q2: Top Pages by Dwell Time", ["Page", "Avg Sec", "Max Sec"], timeArr.slice(0, 5), 2);
+    drawTable(r3, C.c, "🔄", "Q3: Top Enterprise Repeat Visitors", ["IP Address", "Location", "Total Visits"], topIPs.slice(0, 5), 3);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -381,9 +430,26 @@ function buildTrafficAndPagesPareto(tData) {
     }
     var pArr = Object.keys(pcs).map(function (k) { return [k, pcs[k]] }).sort(function (a, b) { return b[1] - a[1] });
     var pTot = pArr.reduce(function (a, b) { return a + b[1] }, 0), pCum = 0;
-    var rows = pArr.map(function(r) { pCum += r[1]; return [r[0], r[1], (r[1]/pTot*100).toFixed(1)+"%", (pCum/pTot*100).toFixed(1)+"%"]; });
+    // Share/Cumulative kept as real numbers (not fabricated) so they can drive the Pareto chart below
+    var rows = pArr.map(function(r) { pCum += r[1]; return [r[0], r[1], r[1]/pTot, pCum/pTot]; });
     sh.getRange(4, 1, 1, 4).setValues([["Top Pages", "Visits", "Share", "Cumulative"]]).setBackground(C.re).setFontColor(C.w);
-    if (rows.length > 0) sh.getRange(5, 1, rows.length, 4).setValues(rows);
+    if (rows.length > 0) {
+        sh.getRange(5, 1, rows.length, 4).setValues(rows);
+        sh.getRange(5, 3, rows.length, 2).setNumberFormat("0.0%");
+        var chartRows = Math.min(10, rows.length);
+        try {
+            var pareto = sh.newChart().setChartType(Charts.ChartType.COMBO)
+                .addRange(sh.getRange(4, 1, chartRows + 1, 2))
+                .addRange(sh.getRange(4, 4, chartRows + 1, 1))
+                .setPosition(4, 6, 0, 0)
+                .setOption("title", "Pareto Concentration — Top 10 Pages")
+                .setOption("width", 480).setOption("height", 260)
+                .setOption("series", { 0: { type: "bars", targetAxisIndex: 0, color: C.re }, 1: { type: "line", targetAxisIndex: 1, color: C.t, lineWidth: 3 } })
+                .setOption("vAxes", { 0: { title: "Visits" }, 1: { title: "Cumulative Share", format: "percent", viewWindow: { min: 0, max: 1 } } })
+                .build();
+            sh.insertChart(pareto);
+        } catch (e) {}
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -402,12 +468,23 @@ function buildHeatmapSheet(tData) {
         mx[dt.getDay()][dt.getHours()]++;
     }
     var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var peak = 0;
     for (var d = 0; d < 7; d++) {
         sh.getRange(5 + d, 1).setValue(days[d]).setBackground(C.p).setFontWeight("bold");
         for (var h = 0; h < 24; h++) {
             sh.getRange(5+d, h+2).setValue(mx[d][h] || "").setHorizontalAlignment("center");
+            if (mx[d][h] > peak) peak = mx[d][h];
         }
     }
+    // Color-scale heatmap over the real hourly counts (no synthetic midpoint — driven by actual peak)
+    var heatRange = sh.getRange(5, 2, 7, 24);
+    var heatRule = SpreadsheetApp.newConditionalFormatRule()
+        .setGradientMaxpoint(C.re)
+        .setGradientMidpointWithValue("#fef3c7", SpreadsheetApp.InterpolationType.NUMBER, String(Math.max(1, Math.round(peak / 2))))
+        .setGradientMinpoint("#ffffff")
+        .setRanges([heatRange])
+        .build();
+    sh.setConditionalFormatRules([heatRule]);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -472,8 +549,30 @@ function buildTechProfile(ubData) {
         if (vwC > -1 && ubData[i][vwC]) vw[ubData[i][vwC]] = (vw[ubData[i][vwC]] || 0) + 1;
     }
     var osArr = Object.keys(os).map(function(k) { return [k, os[k]] }).sort(function(a,b){return b[1]-a[1]});
+    var vwArr = Object.keys(vw).map(function(k) { return [k, vw[k]] }).sort(function(a,b){return b[1]-a[1]});
+
     sh.getRange(4, 1, 1, 2).setValues([["Operating System", "Hits"]]).setBackground(C.o).setFontColor(C.w);
-    if (osArr.length > 0) sh.getRange(5, 1, osArr.length, 2).setValues(osArr);
+    if (osArr.length > 0) {
+        sh.getRange(5, 1, osArr.length, 2).setValues(osArr);
+        try {
+            var osPie = sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(4, 1, osArr.length + 1, 2))
+                .setPosition(4, 4, 0, 0).setOption("title", "OS Distribution").setOption("pieHole", 0.4)
+                .setOption("width", 340).setOption("height", 240).build();
+            sh.insertChart(osPie);
+        } catch (e) {}
+    }
+
+    var vwStartRow = 6 + osArr.length;
+    sh.getRange(vwStartRow, 1, 1, 2).setValues([["Device Type", "Hits"]]).setBackground(C.o).setFontColor(C.w);
+    if (vwArr.length > 0) {
+        sh.getRange(vwStartRow + 1, 1, vwArr.length, 2).setValues(vwArr);
+        try {
+            var vwPie = sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(vwStartRow, 1, vwArr.length + 1, 2))
+                .setPosition(vwStartRow, 4, 0, 0).setOption("title", "Device Type Distribution").setOption("pieHole", 0.4)
+                .setOption("width", 340).setOption("height", 240).build();
+            sh.insertChart(vwPie);
+        } catch (e) {}
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -534,7 +633,16 @@ function buildSankeySheet(tData) {
     });
     var arr = Object.keys(flows).map(function(k){return [k, flows[k]]}).sort(function(a,b){return b[1]-a[1]}).slice(0, 15);
     sh.getRange(4, 1, 1, 2).setValues([["Navigation Transition Flow", "Flow Count"]]).setBackground(C.c).setFontColor(C.w);
-    if (arr.length > 0) sh.getRange(5, 1, arr.length, 2).setValues(arr).setBackground(C.r1);
+    if (arr.length > 0) {
+        sh.getRange(5, 1, arr.length, 2).setValues(arr).setBackground(C.r1);
+        // Apps Script charts have no native Sankey type — a ranked bar chart is the closest real-data visualization of flow volume
+        try {
+            var flowChart = sh.newChart().setChartType(Charts.ChartType.BAR).addRange(sh.getRange(4, 1, arr.length + 1, 2))
+                .setPosition(4, 4, 0, 0).setOption("title", "Top Navigation Transitions").setOption("legend", "none")
+                .setOption("colors", [C.c]).setOption("width", 480).setOption("height", 320).build();
+            sh.insertChart(flowChart);
+        } catch (e) {}
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -542,9 +650,13 @@ function buildSankeySheet(tData) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildBrokenLinkSheet() {
     var sh = getOrCreateTab("🤖 Broken Link QA");
-    styleTitle(sh, "🤖 Automated Endpoint Audit for TrustGrid.AI", 5, C.re);
-    var paths = ["/", "/about", "/solutions", "/book-ai-diagnostic", "/request-proposal", "/talk-to-ai-architect", "/careers", "/contact"];
+    styleTitle(sh, "🤖 Automated Endpoint Audit for Profit Machines", 5, C.re);
     sh.getRange(3, 1, 1, 3).setValues([["URL Endpoint", "Status", "Latency"]]).setBackground(C.re).setFontColor(C.w);
+    if (!SITE_BASE_URL || SITE_BASE_URL.trim() === "") {
+        sh.getRange(4, 1, 1, 3).setValues([["[Pending Deployment]", "Awaiting Production Website URL (Set in SITE_BASE_URL)", "-"]]).setBackground(C.r1).setFontColor(C.m);
+        return;
+    }
+    var paths = ["/", "/solutions", "/offerings", "/industries", "/outcomes", "/company", "/resources", "/contact", "/book-consultation"];
     paths.forEach(function(p, i) {
         var url = SITE_BASE_URL + p, st = "🔴 Failed", t = 0;
         try { 
@@ -588,13 +700,24 @@ function buildCoOccurrenceMatrix(tData, eData) {
     });
 
     sh.getRange(4, 2, 1, topPages.length).setValues([topPages]).setBackground(C.p).setFontWeight("bold");
+    var maxCount = 0;
     for (var r = 0; r < topPages.length; r++) {
         sh.getRange(5 + r, 1).setValue(topPages[r]).setBackground(C.p).setFontWeight("bold");
         for (var c = 0; c < topPages.length; c++) {
             var count = matrixCount[topPages[r]][topPages[c]];
             sh.getRange(5 + r, 2 + c).setValue(count || "-").setHorizontalAlignment("center");
+            if (count > maxCount) maxCount = count;
         }
     }
+    // Color intensity mirrors real interconnectivity counts so the matrix reads as a heatmap, not just numbers
+    var matrixRange = sh.getRange(5, 2, topPages.length, topPages.length);
+    var matrixRule = SpreadsheetApp.newConditionalFormatRule()
+        .setGradientMaxpoint(C.pu)
+        .setGradientMidpointWithValue("#ede9fe", SpreadsheetApp.InterpolationType.NUMBER, String(Math.max(1, Math.round(maxCount / 2))))
+        .setGradientMinpoint("#ffffff")
+        .setRanges([matrixRange])
+        .build();
+    sh.setConditionalFormatRules([matrixRule]);
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -657,6 +780,22 @@ function buildLeadScoringEngine(tData, eData) {
 
     sh.getRange(4, 1, 1, 6).setValues([["IP Target", "Lead Score", "Classification", "Hits", "Dwell Time", "Conversion Form Visited"]]).setBackground(C.t).setFontColor(C.w);
     if (printRows.length > 0) sh.getRange(5, 1, Math.min(50, printRows.length), 6).setValues(printRows.slice(0, 50)).setBackground(C.r1);
+
+    // Classification split computed from the same printRows badges (no fabricated buckets)
+    var badgeCounts = {};
+    printRows.forEach(function (r) { badgeCounts[r[2]] = (badgeCounts[r[2]] || 0) + 1; });
+    var badgeArr = Object.keys(badgeCounts).map(function (k) { return [k, badgeCounts[k]]; }).sort(function (a, b) { return b[1] - a[1]; });
+    if (badgeArr.length > 0) {
+        var badgeStartRow = 8 + Math.min(50, printRows.length);
+        sh.getRange(badgeStartRow, 1, 1, 2).setValues([["Classification", "Count"]]).setBackground(C.t).setFontColor(C.w);
+        sh.getRange(badgeStartRow + 1, 1, badgeArr.length, 2).setValues(badgeArr).setBackground(C.r1);
+        try {
+            var badgePie = sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(badgeStartRow, 1, badgeArr.length + 1, 2))
+                .setPosition(badgeStartRow, 4, 0, 0).setOption("title", "Lead Classification Split").setOption("pieHole", 0.4)
+                .setOption("colors", [C.re, C.o, C.m]).setOption("width", 360).setOption("height", 240).build();
+            sh.insertChart(badgePie);
+        } catch (e) {}
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -725,7 +864,14 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 
     sh.getRange(9, 8, 1, 2).merge().setValue("🚦 Leads by Status").setBackground(C.re).setFontColor(C.w).setFontWeight("bold");
     sh.getRange(10, 8, 1, 2).setValues([["Status", "Count"]]).setBackground(C.p).setFontWeight("bold");
-    if (statusRows.length > 0) sh.getRange(11, 8, statusRows.length, 2).setValues(statusRows).setBackground(C.r1);
+    if (statusRows.length > 0) {
+        sh.getRange(11, 8, statusRows.length, 2).setValues(statusRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(10, 8, statusRows.length + 1, 2))
+                .setPosition(9, 11, 0, 0).setOption("title", "Status Split").setOption("pieHole", 0.4)
+                .setOption("width", 320).setOption("height", 220).build());
+        } catch (e) {}
+    }
 
     // ── Lead Attribution by UTM Source ──
     var bySource = {};
@@ -738,7 +884,14 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 
     sh.getRange(24, 2, 1, 2).merge().setValue("🌐 Lead Attribution by Source").setBackground(C.c).setFontColor(C.w).setFontWeight("bold");
     sh.getRange(25, 2, 1, 2).setValues([["UTM Source", "Leads"]]).setBackground(C.p).setFontWeight("bold");
-    if (sourceRows.length > 0) sh.getRange(26, 2, sourceRows.length, 2).setValues(sourceRows).setBackground(C.r1);
+    if (sourceRows.length > 0) {
+        sh.getRange(26, 2, sourceRows.length, 2).setValues(sourceRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.BAR).addRange(sh.getRange(25, 2, sourceRows.length + 1, 2))
+                .setPosition(24, 5, 0, 0).setOption("title", "Leads by Source").setOption("legend", "none")
+                .setOption("colors", [C.c]).setOption("width", 340).setOption("height", 240).build());
+        } catch (e) {}
+    }
 
     // ── AI Diagnostic breakdowns: Industry & Company Size ──
     var diagOnly = allRows.filter(function (item) { return item.tab === "AI Diagnostic Leads"; });
@@ -753,11 +906,25 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 
     sh.getRange(24, 8, 1, 2).merge().setValue("🏭 Diagnostic Leads by Industry").setBackground(C.o).setFontColor(C.w).setFontWeight("bold");
     sh.getRange(25, 8, 1, 2).setValues([["Industry", "Count"]]).setBackground(C.p).setFontWeight("bold");
-    if (indRows.length > 0) sh.getRange(26, 8, indRows.length, 2).setValues(indRows).setBackground(C.r1);
+    if (indRows.length > 0) {
+        sh.getRange(26, 8, indRows.length, 2).setValues(indRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.BAR).addRange(sh.getRange(25, 8, indRows.length + 1, 2))
+                .setPosition(24, 14, 0, 0).setOption("title", "Diagnostic Leads by Industry").setOption("legend", "none")
+                .setOption("colors", [C.o]).setOption("width", 340).setOption("height", 240).build());
+        } catch (e) {}
+    }
 
     sh.getRange(24, 11, 1, 2).merge().setValue("🏢 Diagnostic Leads by Company Size").setBackground("#6366f1").setFontColor(C.w).setFontWeight("bold");
     sh.getRange(25, 11, 1, 2).setValues([["Company Size", "Count"]]).setBackground(C.p).setFontWeight("bold");
-    if (sizeRows.length > 0) sh.getRange(26, 11, sizeRows.length, 2).setValues(sizeRows).setBackground(C.r1);
+    if (sizeRows.length > 0) {
+        sh.getRange(26, 11, sizeRows.length, 2).setValues(sizeRows).setBackground(C.r1);
+        try {
+            sh.insertChart(sh.newChart().setChartType(Charts.ChartType.PIE).addRange(sh.getRange(25, 11, sizeRows.length + 1, 2))
+                .setPosition(24, 18, 0, 0).setOption("title", "Company Size Split").setOption("pieHole", 0.4)
+                .setOption("colors", ["#6366f1", C.pu, C.c, C.g, C.o]).setOption("width", 320).setOption("height", 220).build());
+        } catch (e) {}
+    }
 
     // ── Leads Captured Per Day (Trend, all forms combined) ──
     var daily = {};
@@ -795,7 +962,55 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 // ══════════════════════════════════════════════════════════════════════════════
 function onOpen() {
     SpreadsheetApp.getUi()
-        .createMenu('🚀 TRUSTGRID ANALYTICS')
+        .createMenu('🚀 PROFIT MACHINES ANALYTICS')
         .addItem('🔄 Refresh All 16 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
         .addToUi();
 }
+
+// ══════════════════════════════════════════════════════════════════════════════
+// SECURE GET API ENDPOINT FOR WEBSITE /analytics CONSUMPTION
+// ══════════════════════════════════════════════════════════════════════════════
+function doGet(e) {
+    try {
+        var ss = SpreadsheetApp.getActiveSpreadsheet();
+        var tabNames = [
+            "🛰️ Mission Control",
+            "🚦 Executive KPIs",
+            "🗺️ Geo Map",
+            "📏 Pareto (80-20)",
+            "🕒 Daily Heatmap",
+            "📈 Growth & Momentum",
+            "👥 Visitor Ratio",
+            "📱 Tech Profile",
+            "🔗 Identity Linker",
+            "📊 Std Deviation",
+            "🌊 Sankey Flow",
+            "🤖 Broken Link QA",
+            "🔀 Co-Occurrence",
+            "🔻 Funnel Drops",
+            "🎯 Lead Scoring",
+            "📋 Leads & Conversions"
+        ];
+
+        var exportData = {};
+        tabNames.forEach(function(tab) {
+            var sh = ss.getSheetByName(tab);
+            if (sh && sh.getLastRow() > 0) {
+                exportData[tab] = sh.getDataRange().getValues();
+            }
+        });
+
+        return ContentService.createTextOutput(JSON.stringify({
+            status: "success",
+            timestamp: new Date().toISOString(),
+            tabsFound: Object.keys(exportData).length,
+            data: exportData
+        })).setMimeType(ContentService.MimeType.JSON);
+    } catch (err) {
+        return ContentService.createTextOutput(JSON.stringify({
+            status: "error",
+            message: err.toString()
+        })).setMimeType(ContentService.MimeType.JSON);
+    }
+}
+

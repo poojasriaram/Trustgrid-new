@@ -6,6 +6,7 @@ import './sitemap-styles.css'
 import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
 import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
+import { FloatingLeadForm } from '@/components/ui/floating-lead-form'
 
 export const metadata: Metadata = {
   title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AnalyticsTracker />
         {children}
         <ScrollRevealObserver />
+        <FloatingLeadForm />
         <AIArchitectChatbot />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

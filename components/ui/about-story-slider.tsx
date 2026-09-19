@@ -23,7 +23,7 @@ export interface AboutStoryChapter {
   id: string
   tabLabel: string
   badge: string
-  title: string
+  title?: string
   headline: string
   narrative: string
   pillars: {

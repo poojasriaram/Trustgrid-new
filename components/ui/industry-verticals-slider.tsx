@@ -16,13 +16,13 @@ import {
   ShieldCheck,
   Cpu
 } from 'lucide-react'
-import { IndustryDetail } from '@/lib/industries-data'
+import { IndustryDetail, industriesData } from '@/lib/industries-data'
 
 interface IndustryVerticalsSliderProps {
-  industries: IndustryDetail[]
+  industries?: IndustryDetail[]
 }
 
-export function IndustryVerticalsSlider({ industries }: IndustryVerticalsSliderProps) {
+export function IndustryVerticalsSlider({ industries = industriesData }: IndustryVerticalsSliderProps) {
   const [activeIdx, setActiveIdx] = useState(0)
 
   if (!industries || industries.length === 0) return null

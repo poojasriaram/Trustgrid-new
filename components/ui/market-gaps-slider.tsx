@@ -139,6 +139,23 @@ export function MarketGapsSlider({ gaps }: MarketGapsSliderProps) {
                 <span className="text-cyan-400 font-semibold">{current.name.replace('The ', '')}</span>
               </div>
 
+              {/* Little Dots Down Indicator */}
+              <div className="flex items-center gap-1.5 px-2">
+                {gaps.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      idx === activeIndex
+                        ? 'w-6 bg-cyan-400 shadow-xs'
+                        : 'w-1.5 bg-slate-600 hover:bg-slate-400'
+                    }`}
+                    onClick={() => setActiveIndex(idx)}
+                    aria-label={`Jump to gap ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
               <div className="story-nav-buttons">
                 <button
                   type="button"

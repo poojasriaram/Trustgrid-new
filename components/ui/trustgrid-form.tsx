@@ -220,29 +220,30 @@ export function TrustGridForm({
     }
   }
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
+    const validationErrors: Record<string, string> = {}
 
     // EXACTLY 3 MANDATORY FIELDS ACROSS ALL FORMS:
     if (!name.trim()) {
-      errors.name = 'Please provide your full name.'
+      validationErrors.name = 'Please provide your full name.'
     }
 
     if (!email.trim() || !validateEmail(email)) {
-      errors.email = 'Please provide a valid work email address.'
+      validationErrors.email = 'Please provide a valid work email address.'
     }
 
     if (!phone.trim()) {
-      errors.phone = 'Please provide your phone / WhatsApp number for callback.'
+      validationErrors.phone = 'Please provide your phone / WhatsApp number for callback.'
     } else if (!validatePhone(phone)) {
-      errors.phone = 'Please provide a valid phone number (e.g. +1 555-0123 or +91 9876543210).'
+      validationErrors.phone = 'Please provide a valid phone number (e.g. +1 555-0123 or +91 9876543210).'
     }
 
-    if (Object.keys(errors).length > 0) {
-      const firstErr = Object.values(errors)[0]
+    if (Object.keys(validationErrors).length > 0) {
+      const firstErr = Object.values(validationErrors)[0]
       setErrorMessage(firstErr)
-      trackFormValidationError(resolvedFormId, resolvedFormName, Object.keys(errors)[0], firstErr)
+      trackFormValidationError(resolvedFormId, resolvedFormName, Object.keys(validationErrors)[0], firstErr)
       return
     }
 
@@ -658,7 +659,7 @@ export function TrustGridForm({
               </label>
             )}
 
-            <label className="input-group md:col-span-2">
+            <label className="input-group md:col-span-2" style={{ gridColumn: '1 / -1' }}>
               <span>Requirements / Workload Context (Optional)</span>
               <textarea
                 rows={compact ? 2 : 3}

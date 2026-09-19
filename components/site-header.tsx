@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import {
   ArrowUpRight,
+  ArrowRight,
   ChevronDown,
   ChevronRight,
   Menu,
@@ -23,7 +24,6 @@ import {
   Bot,
   Compass,
   BookOpen,
-  Activity,
   CheckCircle2,
   Trophy,
   Lock,
@@ -94,6 +94,75 @@ const methodologyCategories = [
       'Value Engineering',
       'Portfolio Optimization'
     ]
+  }
+]
+
+function ActivityIcon({ size = 16, className = '' }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+    </svg>
+  )
+}
+
+const aiInfraMenuItems = [
+  {
+    id: 'family-1',
+    label: 'AI Factory Architecture & Design',
+    desc: 'Audit, KV-cache tuning, PUE < 1.10 blueprints',
+    icon: Layers
+  },
+  {
+    id: 'family-2',
+    label: 'Greenfield DC Design & Build',
+    desc: '100MW–GW power, direct-to-chip liquid cooling',
+    icon: Building2
+  },
+  {
+    id: 'family-3',
+    label: 'GPU Cluster Engineering',
+    desc: 'Blackwell/HGX/MI300X, NVLink, InfiniBand fabric',
+    icon: Cpu
+  },
+  {
+    id: 'family-4',
+    label: 'Systems Integration & Stack',
+    desc: 'K8s, Slurm, vLLM, TensorRT-LLM, multi-tenant QoS',
+    icon: Network
+  },
+  {
+    id: 'family-5',
+    label: 'AI Factory Operations & GPU Ops',
+    desc: '24/7 telemetry, LLM Ops, predictive maintenance',
+    icon: ActivityIcon
+  },
+  {
+    id: 'family-6',
+    label: 'HPC Convergence & Computing',
+    desc: 'Unified MPI + NCCL fabrics, hybrid simulation & AI',
+    icon: Workflow
+  },
+  {
+    id: 'family-7',
+    label: 'Security, Sovereignty & Compliance',
+    desc: 'Air-gapped factory, post-quantum crypto, EU AI Act',
+    icon: ShieldCheck
+  },
+  {
+    id: 'lifecycle-metrics',
+    label: 'Lifecycle Metrics & OpEx Engine',
+    desc: 'Lean, TOC, OEE scoring & cost-per-token economics',
+    icon: BarChart3
   }
 ]
 
@@ -338,9 +407,76 @@ export function SiteHeader() {
         </Link>
 
         {/* 2. AI INFRA & DATA CENTER */}
-        <Link href="/solutions/ai-infra-engineering" className="nav-link" onClick={closeAll}>
-          AI Infra & Data Center
-        </Link>
+        <div className="nav-dropdown-wrapper">
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'ai-infra' ? 'active' : ''}`}
+            onClick={() => toggleMenu('ai-infra')}
+            aria-expanded={activeMenu === 'ai-infra'}
+          >
+            <span>AI Infra & Data Center</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'ai-infra' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'ai-infra' && (
+            <div className="mega-menu aiinfra-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
+              <div className="aiinfra-mega-header">
+                <div className="aiinfra-mega-header-content">
+                  <span className="aiinfra-mega-badge">
+                    <span className="pulse-dot" />
+                    STRATEGIC OFFERING BLUEPRINT V2.0
+                  </span>
+                  <p className="aiinfra-mega-subtitle">
+                    End-to-end AI Factory engineering from 100MW–GW greenfield to GPU Ops & token unit economics.
+                  </p>
+                </div>
+                <Link
+                  href="/solutions/ai-infra-engineering"
+                  className="aiinfra-mega-view-all"
+                  onClick={closeAll}
+                >
+                  <span>Explore Blueprint</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+
+              <div className="aiinfra-mega-grid">
+                {aiInfraMenuItems.map((item, idx) => {
+                  const Icon = item.icon
+                  return (
+                    <Link
+                      key={idx}
+                      href={`/solutions/ai-infra-engineering#${item.id}`}
+                      className="aiinfra-sub-item"
+                      onClick={closeAll}
+                    >
+                      <div className="aiinfra-sub-icon">
+                        <Icon size={16} />
+                      </div>
+                      <div className="aiinfra-sub-body">
+                        <div className="aiinfra-sub-heading">
+                          <span className="aiinfra-sub-title">{item.label}</span>
+                          <ArrowRight size={13} className="aiinfra-sub-arrow" />
+                        </div>
+                        <p className="aiinfra-sub-desc">{item.desc}</p>
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+
+              <div className="aiinfra-mega-footer">
+                <span className="aiinfra-footer-tag">
+                  <Sparkles size={13} className="text-blue-600" />
+                  Full-stack accountability from power delivery to token delivery
+                </span>
+                <Link href="/book-ai-diagnostic" className="aiinfra-footer-action" onClick={closeAll}>
+                  <span>Book AI Diagnostic</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 3. AGENTIC ENTERPRISE */}
         <Link href="/solutions/ai-agentic-factory" className="nav-link" onClick={closeAll}>
@@ -538,9 +674,33 @@ export function SiteHeader() {
               Home
             </Link>
 
-            <Link href="/solutions/ai-infra-engineering" className="mobile-nav-link" onClick={closeAll}>
-              AI Infra & Data Center
-            </Link>
+            {/* Mobile AI Infra & Data Center Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('ai-infra')}
+              >
+                <span>AI Infra & Data Center</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'ai-infra' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'ai-infra' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/solutions/ai-infra-engineering" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>AI Infra Blueprint Overview →</span>
+                  </Link>
+                  {aiInfraMenuItems.map((item, i) => (
+                    <Link
+                      key={i}
+                      href={`/solutions/ai-infra-engineering#${item.id}`}
+                      className="mobile-sublink"
+                      onClick={closeAll}
+                    >
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <Link href="/solutions/ai-agentic-factory" className="mobile-nav-link" onClick={closeAll}>
               Agentic Enterprise

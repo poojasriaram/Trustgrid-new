@@ -249,7 +249,13 @@ export default function AboutPage() {
           {teamMembers.map((member, idx) => (
             <div key={idx} className="member-card animated-card reveal-up">
               <div className="member-avatar-placeholder">
-                <Users size={24} />
+                {member.initials ? (
+                  <span className="member-initials" style={{ fontWeight: 800, fontSize: '13px', letterSpacing: '0.02em' }}>
+                    {member.initials}
+                  </span>
+                ) : (
+                  <Users size={22} />
+                )}
               </div>
               <div className="member-info">
                 <h4>{member.name}</h4>

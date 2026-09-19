@@ -310,6 +310,43 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
           })}
         </div>
       </div>
+
+      {/* 21st.dev inspired minimal bottom dots & arrows */}
+      <div className="flex items-center justify-between pt-5 px-1">
+        <div className="text-xs font-semibold text-slate-500">
+          Slide <strong>0{currentIndex + 1}</strong> / 0{total}
+        </div>
+        <div className="flex items-center gap-2">
+          {offerings.map((_, i) => (
+            <button
+              key={i}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === currentIndex
+                  ? 'w-8 bg-blue-600 shadow-xs'
+                  : 'w-2 bg-slate-300 hover:bg-slate-400'
+              }`}
+              onClick={() => setCurrentIndex(i)}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+        <div className="flex items-center gap-1">
+          <button
+            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all shadow-xs"
+            onClick={goToPrev}
+            aria-label="Previous offering"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <button
+            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all shadow-xs"
+            onClick={goToNext}
+            aria-label="Next offering"
+          >
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
     </div>
   )
 }

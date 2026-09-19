@@ -260,7 +260,7 @@ export function AIArchitectChatbot() {
     })
   }
 
-  const handleLeadSubmit = async (e: FormEvent) => {
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     if (!leadData.name || !leadData.name.trim()) {

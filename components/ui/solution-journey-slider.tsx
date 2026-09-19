@@ -36,11 +36,11 @@ export interface SolutionJourneySlide {
 }
 
 interface SolutionJourneySliderProps {
-  slides: SolutionJourneySlide[]
-  solutionName: string
+  slides?: SolutionJourneySlide[]
+  solutionName?: string
 }
 
-export function SolutionJourneySlider({ slides, solutionName }: SolutionJourneySliderProps) {
+export function SolutionJourneySlider({ slides = [], solutionName = 'Enterprise Solution' }: SolutionJourneySliderProps) {
   const [activeIdx, setActiveIdx] = useState(0)
 
   if (!slides || slides.length === 0) return null

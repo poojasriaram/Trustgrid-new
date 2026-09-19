@@ -1,6 +1,6 @@
 /**
- * TRUSTGRID.AI - Form Submission & Lead Dispatch Service
- * Connects frontend forms and chatbot lead capture directly to Google Apps Script Webhooks.
+ * TRUSTGRID.AI - Form Submission & Central Lead Dispatch Service
+ * Connects frontend forms, floating quick lead form, and chatbot to Central Lead API (/api/leads), Google Sheets & Jira.
  */
 
 import { getTrackingMetadata, TrackingMetadata } from './tracking'
@@ -12,6 +12,7 @@ export interface TrustGridFormData {
   formName: string
   form_type?: string
   formType?: string
+  sheetName?: string
   name: string
   email: string
   phone?: string
@@ -25,6 +26,7 @@ export interface TrustGridFormData {
   challenges?: string | string[]
   objective?: string
   preferredTimeline?: string
+  requirement?: string
   message?: string
   subject?: string
   partnershipType?: string
@@ -46,6 +48,9 @@ export interface SubmissionResponse {
   success: boolean
   message: string
   submissionId?: string
+  jiraStatus?: string
+  issueKey?: string
+  issueUrl?: string
   leadScore?: number
 }
 
@@ -60,6 +65,7 @@ export function deriveFormType(formId?: string, formName?: string, explicitType?
     return explicitType.trim().toUpperCase().replace(/\s+/g, '_')
   }
   const idOrName = ((formId || '') + ' ' + (formName || '')).toLowerCase()
+  if (idOrName.includes('floating') || idOrName.includes('quick')) return 'FLOATING_LEAD'
   if (idOrName.includes('diag')) return 'AI_DIAGNOSTIC'
   if (idOrName.includes('readiness')) return 'AI_READINESS'
   if (idOrName.includes('workshop')) return 'WORKSHOP'
@@ -94,7 +100,7 @@ export function validatePhone(phone?: string): boolean {
 }
 
 /**
- * Submits form data to Google Apps Script Web App #1 (Leads)
+ * Submits form data to Central Lead Ingestion API (/api/leads) with Google Apps Script fallback
  */
 export async function submitTrustGridForm(
   formData: TrustGridFormData
@@ -139,6 +145,8 @@ export async function submitTrustGridForm(
       form_id: formId,
       formName: formData.formName,
       form_name: formData.formName,
+      sheetName: formData.sheetName || (formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
+      sheet_name: formData.sheetName || (formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
       submissionId: clientSubmissionId,
       lead_id: clientSubmissionId,
       name: formData.name.trim(),
@@ -172,29 +180,45 @@ export async function submitTrustGridForm(
       metadata: tracking,
     }
 
-    const defaultWebhookUrl =
-      'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
+    let returnedLeadId = clientSubmissionId
+    let jiraStatus = 'Pending'
+    let issueKey: string | undefined
+    let issueUrl: string | undefined
 
-    const apiUrl =
-      process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
-      process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
-      defaultWebhookUrl
+    // 1. Primary: Send to Central Next.js Server API (/api/leads)
+    try {
+      const apiRes = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
 
-    if (apiUrl && apiUrl.startsWith('http')) {
-      try {
-        await fetch(apiUrl, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'text/plain;charset=utf-8',
-          },
-          body: JSON.stringify(payload),
-        })
-      } catch (postErr) {
-        console.warn('Primary fetch notice:', postErr)
+      if (apiRes.ok) {
+        const json = await apiRes.json()
+        if (json.leadId) returnedLeadId = json.leadId
+        if (json.jiraStatus) jiraStatus = json.jiraStatus
+        if (json.issueKey) issueKey = json.issueKey
+        if (json.issueUrl) issueUrl = json.issueUrl
+      }
+    } catch (apiErr) {
+      console.warn('[Form Submission] Central API notice, falling back to direct webhook:', apiErr)
+
+      // 2. Direct Webhook Fallback if server route unavailable
+      const defaultWebhookUrl =
+        'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
+
+      const apiUrl =
+        process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
+        process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
+        defaultWebhookUrl
+
+      if (apiUrl && apiUrl.startsWith('http')) {
         try {
           await fetch(apiUrl, {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
               'Content-Type': 'text/plain;charset=utf-8',
             },
@@ -205,13 +229,16 @@ export async function submitTrustGridForm(
     }
 
     // Trigger form submit and lead creation analytics telemetry
-    trackFormSubmit(formId, formData.formName, true, clientSubmissionId)
+    trackFormSubmit(formId, formData.formName, true, returnedLeadId)
 
     isSubmittingGlobal = false
     return {
       success: true,
       message: 'Form submitted successfully',
-      submissionId: clientSubmissionId,
+      submissionId: returnedLeadId,
+      jiraStatus,
+      issueKey,
+      issueUrl,
     }
   } catch (error: any) {
     isSubmittingGlobal = false

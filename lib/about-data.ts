@@ -3,6 +3,7 @@ export interface TeamMember {
   role: string
   category: 'leadership' | 'engineering' | 'advisory'
   badge?: string
+  initials?: string
 }
 
 export interface MetricItem {
@@ -131,22 +132,36 @@ export const culturePrinciples = [
 ]
 
 export const teamMembers: TeamMember[] = [
-  { name: "Hemalata", role: "AI Engineer & Tech Lead", category: "leadership", badge: "Engineering Lead" },
-  { name: "Prithivin L", role: "Project Lead - EscrowChain", category: "leadership", badge: "Systems Lead" },
-  { name: "Shiva Kumar", role: "Senior Product Architect", category: "leadership", badge: "Product Architecture" },
-  { name: "Natarajan", role: "Sr Blockchain Architect", category: "engineering" },
-  { name: "Ritin", role: "Senior AI Architect", category: "engineering", badge: "AI Architecture" },
-  { name: "Viswanath", role: "Sr DevOps Engineer", category: "engineering" },
-  { name: "Subashini Kaushik", role: "AI Engineer - LLM / RAG", category: "engineering" },
-  { name: "Sonu Priyadharshini", role: "Chief Financial Controller", category: "leadership" },
-  { name: "Neha Hebber", role: "FinTech Platform Engineer (IIT Bombay)", category: "engineering", badge: "IIT Bombay" },
-  { name: "Swathi Iyer", role: "Systems Engineer (IIT Madras - BTech)", category: "engineering", badge: "IIT Madras" },
-  { name: "Aishwarya L Bhatt", role: "AI Performance Marketing & Strategy", category: "advisory" },
-  { name: "Chintiya Liu", role: "Industry Consultant", category: "advisory" },
-  { name: "Kallol Pal", role: "Technology Advisor", category: "advisory", badge: "Advisor" },
-  { name: "Soumya S", role: "Company Secretary & Advisor", category: "advisory" },
-  { name: "Aswathi Nair", role: "Corporate Counsel", category: "advisory" },
-  { name: "Poojasri", role: "AI/ML Engineer", category: "engineering" }
+  // Leadership & Product
+  { name: "Shaji Namath", role: "Chief Product Officer", category: "leadership", badge: "Product Leadership", initials: "SN" },
+  { name: "Pranav PR", role: "Director", category: "leadership", badge: "Director", initials: "PR" },
+  { name: "Balaji Venkatraman", role: "Director Growth", category: "leadership", badge: "Growth Leadership", initials: "BV" },
+  { name: "Kumar V", role: "Engagement Manager - AI CyberSecurity", category: "leadership", badge: "AI Cybersecurity", initials: "KV" },
+  { name: "Lavanya Seshadri", role: "Engineering Head", category: "leadership", badge: "Engineering Leadership", initials: "LS" },
+  { name: "Vignesh KS", role: "Product Lead", category: "leadership", badge: "Product Lead", initials: "VK" },
+  { name: "Hemalata", role: "AI Engineer & Tech Lead", category: "leadership", badge: "Tech Lead", initials: "H" },
+  { name: "Prithivin L", role: "Project Lead - EscrowChain", category: "leadership", badge: "Systems Lead", initials: "PL" },
+  { name: "Shiva Kumar", role: "Senior Product Architect", category: "leadership", badge: "Product Architecture", initials: "SK" },
+  { name: "Sonu Priyadharshini", role: "Chief Financial Controller", category: "leadership", badge: "Finance", initials: "SP" },
+
+  // AI & Systems Engineering
+  { name: "Dinesh Kumar", role: "Lead AI Engineer", category: "engineering", badge: "Lead AI Engineer", initials: "DK" },
+  { name: "Ritin", role: "Senior AI Architect", category: "engineering", badge: "AI Architecture", initials: "R" },
+  { name: "Natarajan", role: "Sr Blockchain Architect", category: "engineering", badge: "Blockchain", initials: "N" },
+  { name: "Viswanath", role: "Sr DevOps Engineer", category: "engineering", badge: "DevOps & Cloud", initials: "V" },
+  { name: "Subashini Kaushik", role: "AI Engineer - LLM / RAG", category: "engineering", badge: "LLM / RAG", initials: "SK" },
+  { name: "Neha Hebber", role: "FinTech Platform Engineer (IIT Bombay)", category: "engineering", badge: "IIT Bombay", initials: "NH" },
+  { name: "Swathi Iyer", role: "Systems Engineer (IIT Madras - BTech)", category: "engineering", badge: "IIT Madras", initials: "SI" },
+  { name: "Poojasri", role: "AI/ML Engineer", category: "engineering", badge: "AI/ML Engineer", initials: "P" },
+  { name: "Annapoorani", role: "Automation Engineering (Intern)", category: "engineering", badge: "Automation", initials: "A" },
+
+  // Advisory, Strategy & Legal
+  { name: "Aiswhwarya L Bhatt", role: "AI Performance Marketing & Strategy", category: "advisory", badge: "Strategy", initials: "AL" },
+  { name: "Chintiya Liu", role: "Industry Consultant", category: "advisory", badge: "Consultant", initials: "CL" },
+  { name: "Kallol Pal", role: "Technology Advisor", category: "advisory", badge: "Advisor", initials: "KP" },
+  { name: "Soumya S", role: "Company Secretary & Advisor", category: "advisory", badge: "Corporate Governance", initials: "SS" },
+  { name: "Aswathi Nair", role: "Corporate Counsel", category: "advisory", badge: "Legal Counsel", initials: "AN" },
+  { name: "To Be Hired", role: "HR Manager", category: "advisory", badge: "Talent Acquisition", initials: "TBH" }
 ]
 
 export const openInnovationInitiatives = [
