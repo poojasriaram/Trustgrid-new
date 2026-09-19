@@ -197,23 +197,37 @@ var SHEET_NAME_ALIASES = {
   "telemetry": "Live_Traffic_Events",
   "livetrafficevents": "Live_Traffic_Events",
   "live_traffic_events": "Live_Traffic_Events",
-  "livecontent": "Live_Traffic_Events",
-  "live_content": "Live_Traffic_Events",
   "mastertelemetry": "Live_Traffic_Events",
-  "master_telemetry": "Live_Traffic_Events",
 
-  // 1. Inbound Leads / Quick Diagnostics
+  // Telemetry Routes
+  "pageview": "Page_Views",
+  "pageviews": "Page_Views",
+  "page_views": "Page_Views",
+  "page_view": "Page_Views",
+  "event": "CTA_Clicks",
+  "events": "CTA_Clicks",
+  "ctaclicks": "CTA_Clicks",
+  "cta_clicks": "CTA_Clicks",
+  "visitor": "Sessions",
+  "visitors": "Sessions",
+  "session": "Sessions",
+  "sessions": "Sessions",
+  "trafficanalytics": "Page_Views",
+
+  // 1. Inbound Leads / Quick Diagnostics (LeadCaptureSection.tsx)
+  "form": "Form_Inbound_Leads",
   "inboundleads": "Form_Inbound_Leads",
   "inbound_leads": "Form_Inbound_Leads",
   "inbound": "Form_Inbound_Leads",
   "leads": "Form_Inbound_Leads",
+  "lead": "Form_Inbound_Leads",
   "quickdiagnostic": "Form_Inbound_Leads",
   "quick_diagnostic": "Form_Inbound_Leads",
   "contact": "Form_Inbound_Leads",
   "contactleads": "Form_Inbound_Leads",
   "contact_leads": "Form_Inbound_Leads",
 
-  // 2. Consultation & Transformation Strategy Bookings
+  // 2. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
   "bookforconsultation": "Form_Consultation_Bookings",
   "book_for_consultation": "Form_Consultation_Bookings",
   "bookforconsulting": "Form_Consultation_Bookings",
@@ -225,14 +239,14 @@ var SHEET_NAME_ALIASES = {
   "bookdemo": "Form_Consultation_Bookings",
   "book_demo": "Form_Consultation_Bookings",
 
-  // 3. Talk to Growth Expert
+  // 3. Talk to Growth / AI Expert (TalkToExpert.tsx)
   "talktoexpert": "Form_Expert_Consulting",
   "talk_to_expert": "Form_Expert_Consulting",
   "expert": "Form_Expert_Consulting",
   "expertconsulting": "Form_Expert_Consulting",
   "expert_consulting": "Form_Expert_Consulting",
 
-  // 4. Profit Pool Discovery Diagnostic
+  // 4. Profit Pool Discovery Diagnostic (DiscoveryPage.tsx)
   "diagnosticforms": "Form_Diagnostic_Assessments",
   "diagnostic_forms": "Form_Diagnostic_Assessments",
   "diagnostic": "Form_Diagnostic_Assessments",
@@ -241,13 +255,13 @@ var SHEET_NAME_ALIASES = {
   "profit_pool_discovery": "Form_Diagnostic_Assessments",
   "assessment": "Form_Diagnostic_Assessments",
 
-  // 5. Partner Applications
+  // 5. Partner Applications (Partners.tsx)
   "partners": "Form_Partner_Applications",
   "partner": "Form_Partner_Applications",
   "partnerapplications": "Form_Partner_Applications",
   "partner_applications": "Form_Partner_Applications",
 
-  // 6. Career Applications
+  // 6. Career Applications (Career.tsx)
   "jobapplications": "Form_Career_Applications",
   "job_applications": "Form_Career_Applications",
   "careerapplications": "Form_Career_Applications",
@@ -256,7 +270,7 @@ var SHEET_NAME_ALIASES = {
   "career": "Form_Career_Applications",
   "jobs": "Form_Career_Applications",
 
-  // 7. Chatbot Inquiries
+  // 7. Chatbot Virtual Assistant (ChatBot.tsx)
   "chatbot": "Form_Chatbot_Conversations",
   "chatbotleads": "Form_Chatbot_Conversations",
   "chatbot_leads": "Form_Chatbot_Conversations",
@@ -265,16 +279,7 @@ var SHEET_NAME_ALIASES = {
   // 8. Consolidated Master Form Submissions
   "formsubmissions": "Form_Submissions",
   "form_submissions": "Form_Submissions",
-  "submissions": "Form_Submissions",
-
-  // Telemetry
-  "trafficanalytics": "Traffic_Analytics",
-  "traffic_analytics": "Traffic_Analytics",
-  "pageviews": "Page_Views",
-  "page_views": "Page_Views",
-  "sessions": "Sessions",
-  "ctaclicks": "CTA_Clicks",
-  "cta_clicks": "CTA_Clicks"
+  "submissions": "Form_Submissions"
 };
 
 /**
@@ -345,7 +350,10 @@ function doPost(e) {
     // lib/analytics.ts telemetry beacons (page views, clicks, CTA, visibility) only set
     // event_type: 'telemetry_95' — without this fallback every beacon was silently rejected
     // here and NEVER reached Live_Traffic_Events, starving Sessions/Visitors of real data.
-    var rawSheetName = data.sheetName || data.formType || data.type || data.event_type || "";
+    var rawSheetName = data.sheetName || data.formType || data.table || data.type || data.event_type || "";
+    if (data.fields && typeof data.fields === "object") {
+      Object.keys(data.fields).forEach(function(k) { if (data[k] === undefined) data[k] = data.fields[k]; });
+    }
     if (!rawSheetName) {
       return ContentService.createTextOutput("Error: Missing sheetName or formType parameter").setMimeType(ContentService.MimeType.TEXT);
     }
@@ -363,10 +371,10 @@ function doPost(e) {
     var isAdLead = (canonicalName === "Google_Ad_Leads" || norm.indexOf("adcampaign") !== -1 || norm.indexOf("googlead") !== -1);
     var isCareerApp = (canonicalName === "Career_Applications" || norm.indexOf("career") !== -1 || norm.indexOf("job") !== -1);
 
-    var LEAD_FORMS = [
-      "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads", "Workshop_Requests",
-      "RFP_Proposals", "Talk_To_Architect", "Chatbot_Leads", "Career_Applications",
-      "Partner_Applications", "Google_Ad_Leads", "Newsletter_Subscribers", "Quick_Enquiry_Leads"
+        var LEAD_FORMS = [
+      "Form_Inbound_Leads", "Form_Consultation_Bookings", "Form_Expert_Consulting",
+      "Form_Diagnostic_Assessments", "Form_Partner_Applications", "Form_Career_Applications",
+      "Form_Chatbot_Conversations", "Form_Submissions"
     ];
 
     var isLeadForm = (LEAD_FORMS.indexOf(canonicalName) !== -1) || isCareerApp || isAdLead;
@@ -2268,52 +2276,75 @@ function sendReportEmail(subject, htmlBody) {
 
 function resolveField(header, data) {
   var explicitMap = {
-    "Name":                   data.name         || data.fullName    || data["Full Name"]    || data["FullName"] || "",
-    "Full Name":              data.name         || data.fullName    || data["Full Name"]    || data["FullName"] || "",
-    "Email":                  data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
-    "Work Email":             data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
-    "Corporate Email":        data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
-    "Phone":                  data.phone        || data.phoneNumber || data["Phone Number"] || data["Contact Number"] || "",
-    "Phone Number":           data.phone        || data.phoneNumber || data["Phone Number"] || data["Contact Number"] || "",
-    "Company":                data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
-    "Company Name":           data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
-    "Company / Org":          data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
-    "Designation":            data.designation  || data.role        || data["Designation"]  || data["Role"] || "",
-    "Role":                   data.designation  || data.role        || data["Designation"]  || data["Role"] || "",
-    "Job Title / Role":       data.jobTitle     || data["Job Title / Role"] || data.role    || "",
-    "Job Title":              data.jobTitle     || data["Job Title"]|| data.role            || "",
-    "Service Interest":       data.serviceInterest || data.service || data.servicesType    || data["Service Interest"] || "",
-    "Subject":                data.subject      || data.subjectLine || data["Subject"]      || "",
-    "Requirement / Inquiry":  data.requirement  || data.message     || data.requirementInquiry || data.inquiry || data.scope || "",
-    "Requirement":            data.requirement  || data.message     || data.requirementInquiry || data.inquiry || data.scope || "",
-    "Message":                data.message      || data.yourMessage || data["Your Message"] || data["Message"] || "",
-    "Message / Details":      data.message      || data.details     || data["Message"]      || "",
-    "Status":                 data.status       || "New Lead",
-    "Variant":                data.variant      || "Standard",
-    "Submission ID":          data.submissionId || data.id          || ("TG_" + Date.now()),
-    "Location":               data.location     || data.ipLocation  || data["Location"]     || data["IP Location"]  || "",
-    "Source":                 data.source       || data.utmSource   || data["Source"]       || "Website Direct",
-    "IP Location":            data.location     || data.ipLocation  || data["IP Location"]  || "",
-    "IP Address":             data.ipAddress     || data.ip_address  || data["IP Address"]   || "",
-    "Organization":           data.organization  || data.company     || data["Organization"] || "",
-    "Session ID":             data.sessionId     || data["Session ID"]    || "",
-    "Visitor ID":             data.visitorId     || data["Visitor ID"]    || "",
-    "Page Path":              data.pagePath      || data["Page Path"]     || "",
-    "Page Title":             data.pageTitle     || data["Page Title"]    || "",
-    "Traffic Source":         data.trafficSource || data["Traffic Source"]|| "",
-    "Page URL":               data.pageUrl       || data["Page URL"]      || "",
-    "Duration (sec)":         data.duration      || data["Duration (sec)"]|| "",
-    "Scroll Depth (%)":       data.scrollDepth   || data["Scroll Depth (%)"] || "",
-    "Click Count":            data.clickCount    || data["Click Count"]   || "",
-    "CTA Clicked":            data.ctaClicked    || data["CTA Clicked"]   || "",
-    "Returning User":         data.returningUser || data["Returning User"]|| "",
-    "Is Hot Lead":            data.isHotLead     || data["Is Hot Lead"]   || "",
-    "UTM Source":             data.utmSource     || data.utm_source  || data["UTM Source"]   || "",
-    "UTM Medium":             data.utmMedium     || data.utm_medium  || data["UTM Medium"]   || "",
-    "UTM Campaign":           data.utmCampaign   || data.utm_campaign|| data["UTM Campaign"] || "",
-    "UTM Term":               data.utmTerm       || data.utm_term    || data["UTM Term"]     || "",
-    "UTM Content":            data.utmContent    || data.utm_content || data["UTM Content"]  || "",
-    "Timestamp":              normalizeTimestamp(data.timestamp || data.Timestamp)
+    "Name":                   data.name || data.fullName || data.full_name || data["Full Name"] || data["FullName"] || "",
+    "Full Name":              data.name || data.fullName || data.full_name || data["Full Name"] || data["FullName"] || "",
+    "Email":                  data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
+    "Work Email":             data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
+    "Corporate Email":        data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
+    "Phone":                  data.phone || data.phoneNumber || data.phone_number || data["Phone Number"] || data["Contact Number"] || "",
+    "Phone Number":           data.phone || data.phoneNumber || data.phone_number || data["Phone Number"] || data["Contact Number"] || "",
+    "Company":                data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
+    "Company Name":           data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
+    "Company / Org":          data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
+    "Designation":            data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
+    "Role":                   data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
+    "Designation / Role":     data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
+    "Role Applied":           data.role || data.roleApplied || data.jobTitle || data["Role Applied"] || "",
+    "Job Title / Role":       data.jobTitle || data.role || data["Job Title / Role"] || "",
+    "Job Title":              data.jobTitle || data.role || data["Job Title"] || "",
+    "Interest / Solution":    data.interest || data.transformationInterest || data.serviceInterest || data.service || data["Interest"] || "",
+    "Transformation Interest":data.transformationInterest || data.interest || data["Transformation Interest"] || "",
+    "Focus Area":             data.focusArea || data.focus_area || data.interest || data["Focus Area"] || "",
+    "Annual Revenue":         data.revenue || data.annualRevenue || data.annual_revenue || data.currentRevenue || data["Annual Revenue"] || "",
+    "Current Revenue":        data.currentRevenue || data.revenue || data.annual_revenue || data["Current Revenue"] || "",
+    "Timeline":               data.timeline || data.targetTimeline || data.target_timeline || data["Timeline"] || "",
+    "Target Timeline":        data.targetTimeline || data.timeline || data.target_timeline || data["Target Timeline"] || "",
+    "Urgency / Timeline":     data.urgency || data.timeline || data["Urgency"] || "",
+    "Primary Challenge":      data.challenge || data.primaryChallenge || data.primary_challenge || data["Primary Challenge"] || "",
+    "Primary Leakage Area":   data.primaryLeakageArea || data.leakageArea || data["Primary Leakage Area"] || "",
+    "Estimated Leakage":      data.estimatedLeakage || data.leakage || data["Estimated Leakage"] || "",
+    "Diagnostic Score":       data.diagnosticScore || data.score || data["Diagnostic Score"] || "",
+    "Answers Summary":        typeof data.answersSummary === "object" ? JSON.stringify(data.answersSummary) : (data.answersSummary || data.answers || ""),
+    "Partner Type":           data.partnerType || data.partner_type || data["Partner Type"] || "",
+    "Primary Region":         data.region || data.primaryRegion || data["Primary Region"] || "",
+    "Value Proposition / Proposal": data.proposal || data.valueProposition || data.message || data["Proposal"] || "",
+    "Experience Level":       data.experienceLevel || data.experience || data["Experience Level"] || "",
+    "Portfolio / LinkedIn":   data.portfolioUrl || data.portfolio || data.linkedin || data["Portfolio"] || "",
+    "Cover Note / Message":   data.coverNote || data.coverLetter || data.message || "",
+    "Topic / Intent":         data.intent || data.topic || data["Topic"] || "",
+    "Chat Summary":           data.chatSummary || (typeof data.messages === "object" ? JSON.stringify(data.messages) : data.message) || "",
+    "Subject":                data.subject || data.subjectLine || data["Subject"] || "",
+    "Requirement / Inquiry":  data.requirement || data.message || data.requirementInquiry || data.inquiry || data.scope || "",
+    "Requirement":            data.requirement || data.message || data.requirementInquiry || data.inquiry || data.scope || "",
+    "Message":                data.message || data.yourMessage || data["Your Message"] || data["Message"] || "",
+    "Message / Details":      data.message || data.details || data["Message"] || "",
+    "Message / Scope":        data.message || data.scope || data.details || data["Message"] || "",
+    "Status":                 data.status || "New Lead",
+    "Variant":                data.variant || "Standard",
+    "Submission ID":          data.submissionId || data.submission_id || data.id || ("PM_" + Date.now()),
+    "Location":               data.location || data.ipLocation || data.ip_location || data["Location"] || data["IP Location"] || "",
+    "Source":                 data.source || data.lead_source || data.utmSource || data.utm_source || "Website Inbound Form",
+    "IP Location":            data.location || data.ipLocation || data.ip_location || data["IP Location"] || "",
+    "IP Address":             data.ipAddress || data.ip_address || data["IP Address"] || "127.0.0.1",
+    "Organization":           data.organization || data.company || data.company_name || data["Organization"] || "",
+    "Session ID":             data.sessionId || data.session_id || data["Session ID"] || "",
+    "Visitor ID":             data.visitorId || data.visitor_id || data["Visitor ID"] || "",
+    "Page Path":              data.pagePath || data.page_url || data.page || data["Page Path"] || "",
+    "Page Title":             data.pageTitle || data.page_title || data["Page Title"] || "",
+    "Traffic Source":         data.trafficSource || data.traffic_source || data.utm_source || data.source || "Direct",
+    "Referrer":               data.referrer || data.referrer_url || documentReferrerFallback(data) || "",
+    "Device":                 data.device || data.device_type || "Desktop",
+    "Browser":                data.browser || "Chrome / Safari",
+    "OS":                     data.os || data.operating_system || "Windows / macOS",
+    "CTA Name":               data.ctaName || data.event_name || data.eventName || data["CTA Name"] || "",
+    "Destination URL":        data.destinationUrl || data.page_url || data.pageUrl || "",
+    "Section":                data.section || data.event_category || "General",
+    "UTM Source":             data.utmSource || data.utm_source || "",
+    "UTM Medium":             data.utmMedium || data.utm_medium || "",
+    "UTM Campaign":           data.utmCampaign || data.utm_campaign || "",
+    "UTM Term":               data.utmTerm || data.utm_term || "",
+    "UTM Content":            data.utmContent || data.utm_content || "",
+    "Timestamp":              normalizeTimestamp(data.timestamp || data.Timestamp || new Date().toISOString())
   };
   
   if (explicitMap.hasOwnProperty(header)) {
@@ -2333,9 +2364,14 @@ function resolveField(header, data) {
     
   var value = data[slug];
   if (value === undefined) value = data[header];
+  if (value === undefined) value = data[header.toLowerCase().replace(/\s+/g, '_')];
   if (value === undefined) value = "";
   
   return (value !== null && typeof value === 'object') ? JSON.stringify(value) : value;
+}
+
+function documentReferrerFallback(data) {
+  return data.referrer || data.referrer_url || "";
 }
 
 function normalizeTimestamp(ts) {

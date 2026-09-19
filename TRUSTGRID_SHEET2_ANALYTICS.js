@@ -14,6 +14,9 @@ var DATA_SHEET_ID = "1fdZl2it4O86OUB92DvBaeeEM75fXue1yqjcvLq51gVs";
 // 🔴 WEBSITE URL (For Automated QA Audits — Enter once deployed)
 var SITE_BASE_URL = "";
 
+// 🔴 DEVELOPMENT MODE: Set to true so localhost test traffic appears in dashboards
+var INCLUDE_LOCALHOST_IN_DEV = true;
+
 // ── SaaS Dark / Slate Enterprise Theme ──────────────────────────────────────────
 var C = {
     bg: "#f8fafc", // Main dashboard canvas background
@@ -134,9 +137,12 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
 
 function filterLocalhostData(data) {
     if (!data || data.length < 2) return data || [];
+    if (INCLUDE_LOCALHOST_IN_DEV) return data; // Keep localhost data during local testing
+
     var headers = data[0];
     var ipCol = headers.indexOf("IP Address");
     if (ipCol === -1) ipCol = headers.indexOf("ipAddress");
+    if (ipCol === -1) ipCol = headers.indexOf("ip_address");
     if (ipCol === -1) return data;
 
     var filtered = [headers];
