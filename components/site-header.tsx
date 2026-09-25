@@ -34,7 +34,12 @@ import {
   FolderOpen,
   Globe2,
   Phone,
-  MessageCircle
+  MessageCircle,
+  Zap,
+  Cable,
+  Satellite,
+  Leaf,
+  Boxes
 } from 'lucide-react'
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
@@ -97,70 +102,76 @@ const methodologyCategories = [
   }
 ]
 
-function ActivityIcon({ size = 16, className = '' }: { size?: number; className?: string }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-    </svg>
-  )
-}
-
 const aiInfraMenuItems = [
   {
-    id: 'family-1',
-    label: 'AI Factory Architecture & Design',
-    desc: 'Audit, KV-cache tuning, PUE < 1.10 blueprints',
+    id: 'lifecycle',
+    label: '7-Stage Lifecycle',
+    desc: 'Turnkey site selection, power, build, commissioning & ops',
     icon: Layers
   },
   {
-    id: 'family-2',
-    label: 'Greenfield DC Design & Build',
-    desc: '100MW–GW power, direct-to-chip liquid cooling',
+    id: 'core-offerings',
+    label: 'Core Infrastructure Pillars',
+    desc: 'Greenfield, high density, power/cooling & DCIM ops',
     icon: Building2
   },
   {
-    id: 'family-3',
-    label: 'GPU Cluster Engineering',
-    desc: 'Blackwell/HGX/MI300X, NVLink, InfiniBand fabric',
+    id: 'high-density-engineering',
+    label: 'GPU Cluster & High-Density',
+    desc: '30–100kW/rack, NVLink, InfiniBand & Blackwell scale',
     icon: Cpu
   },
   {
-    id: 'family-4',
-    label: 'Systems Integration & Stack',
-    desc: 'K8s, Slurm, vLLM, TensorRT-LLM, multi-tenant QoS',
+    id: 'power-cooling',
+    label: 'Power & Liquid Immersion',
+    desc: 'Substations, direct-to-chip, DLC & PUE < 1.10 target',
+    icon: Zap
+  },
+  {
+    id: 'ai-networking',
+    label: '400G / 800G AI Networking',
+    desc: 'Non-blocking RoCEv2, InfiniBand & ultra-low latency',
     icon: Network
   },
   {
-    id: 'family-5',
-    label: 'AI Factory Operations & GPU Ops',
-    desc: '24/7 telemetry, LLM Ops, predictive maintenance',
-    icon: ActivityIcon
-  },
-  {
-    id: 'family-6',
-    label: 'HPC Convergence & Computing',
-    desc: 'Unified MPI + NCCL fabrics, hybrid simulation & AI',
+    id: 'ai-dcim-ops',
+    label: 'AI-DCIM & GPU Fleet Ops',
+    desc: 'Autonomous telemetry, Slurm/K8s, and AIOps predictive DCIM',
     icon: Workflow
   },
   {
-    id: 'family-7',
-    label: 'Security, Sovereignty & Compliance',
-    desc: 'Air-gapped factory, post-quantum crypto, EU AI Act',
+    id: 'cybersecurity-compliance',
+    label: 'Quantum-Safe & Compliance',
+    desc: 'Tier III/IV, L1–L7 PQC, ISO 27001 & sovereign governance',
     icon: ShieldCheck
   },
   {
+    id: 'cable-landing',
+    label: 'Subsea Cable Landing (CLS)',
+    desc: 'Turnkey CLS, wet-plant, beach manholes & backhaul',
+    icon: Cable
+  },
+  {
+    id: 'satellite-landing',
+    label: 'Satellite Ground Stations',
+    desc: '9 Tbps landing capacity, LEO/MEO tracking & GSaaS',
+    icon: Satellite
+  },
+  {
+    id: 'energy-green-power',
+    label: 'Green Energy & PPAs',
+    desc: 'Renewable microgrids, BESS, solar/hydro & utility grid',
+    icon: Leaf
+  },
+  {
+    id: 'delivery-models',
+    label: 'Turnkey DBOT Suite',
+    desc: 'Design, Build, Operate, Transfer & EPC accountability',
+    icon: Boxes
+  },
+  {
     id: 'lifecycle-metrics',
-    label: 'Lifecycle Metrics & OpEx Engine',
+    label: 'Lifecycle Metrics & OpEx',
     desc: 'Lean, TOC, OEE scoring & cost-per-token economics',
     icon: BarChart3
   }
@@ -359,6 +370,7 @@ export function SiteHeader() {
   const [mobileSection, setMobileSection] = useState<string | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -375,15 +387,45 @@ export function SiteHeader() {
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
   }, [])
 
+  const handleMouseEnter = (menuName: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
+    setActiveMenu(menuName)
+  }
+
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(() => {
+      setActiveMenu(null)
+    }, 180)
+  }
+
   const closeAll = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
     setActiveMenu(null)
     setOpen(false)
   }
 
   const toggleMenu = (menuName: string) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = null
+    }
     setActiveMenu(activeMenu === menuName ? null : menuName)
   }
 
@@ -407,7 +449,11 @@ export function SiteHeader() {
         </Link>
 
         {/* 2. AI INFRA & DATA CENTER */}
-        <div className="nav-dropdown-wrapper">
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('ai-infra')}
+          onMouseLeave={handleMouseLeave}
+        >
           <button
             className={`nav-menu-trigger ${activeMenu === 'ai-infra' ? 'active' : ''}`}
             onClick={() => toggleMenu('ai-infra')}
@@ -418,7 +464,7 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'ai-infra' && (
-            <div className="mega-menu aiinfra-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
+            <div className="mega-menu aiinfra-mega-menu">
               <div className="aiinfra-mega-header">
                 <div className="aiinfra-mega-header-content">
                   <span className="aiinfra-mega-badge">
@@ -499,7 +545,11 @@ export function SiteHeader() {
         </Link>
 
         {/* 7. COMMON FOUNDATION */}
-        <div className="nav-dropdown-wrapper">
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('foundation')}
+          onMouseLeave={handleMouseLeave}
+        >
           <button
             className={`nav-menu-trigger ${activeMenu === 'foundation' ? 'active' : ''}`}
             onClick={() => toggleMenu('foundation')}
@@ -510,7 +560,7 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'foundation' && (
-            <div className="mega-menu common-foundation-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
+            <div className="mega-menu common-foundation-mega-menu">
               <div className="mega-menu-header">
                 <div>
                   <span className="mega-menu-badge">STRATEGIC ENABLERS</span>
@@ -559,7 +609,11 @@ export function SiteHeader() {
         </div>
 
         {/* 8. ABOUT US */}
-        <div className="nav-dropdown-wrapper">
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('about')}
+          onMouseLeave={handleMouseLeave}
+        >
           <button
             className={`nav-menu-trigger ${activeMenu === 'about' ? 'active' : ''}`}
             onClick={() => toggleMenu('about')}
@@ -570,7 +624,7 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'about' && (
-            <div className="mega-menu about-mega-menu" onMouseLeave={() => setActiveMenu(null)}>
+            <div className="mega-menu about-mega-menu">
               <div className="mega-menu-header">
                 <div>
                   <span className="mega-menu-badge">COMPANY & TALENT</span>

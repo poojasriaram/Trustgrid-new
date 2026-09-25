@@ -12,6 +12,8 @@ __v0_jsx-dev-runtime.ts
 # Common ignores
 node_modules
 .next/
+out/
+server_api/
 .DS_Store
 dist/
 *.tar
