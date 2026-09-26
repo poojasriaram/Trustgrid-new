@@ -71,83 +71,11 @@ import { BorderBeam } from '@/components/ui/border-beam'
 import { trackCTA, sendAnalyticsEvent } from '@/lib/analytics'
 
 export default function AIInfraEngineeringPage() {
-  const [activeSection, setActiveSection] = useState('lifecycle')
   const [activeLifecycleStage, setActiveLifecycleStage] = useState(0)
   const [activeOfferingsTab, setActiveOfferingsTab] = useState<'site' | 'design' | 'build' | 'ops'>('site')
   const [activeMetricsTab, setActiveMetricsTab] = useState<'infra' | 'compute' | 'economic' | 'operational' | 'security'>('infra')
   const [activeComplianceDimension, setActiveComplianceDimension] = useState<'design' | 'audit' | 'readiness' | 'certification' | 'monitoring'>('design')
   const [activePillarsTab, setActivePillarsTab] = useState<'catalog' | 'governance' | 'sales'>('catalog')
-
-  // Active section spy on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = [
-        'lifecycle',
-        'value-prop',
-        'core-offerings',
-        'high-density-engineering',
-        'power-cooling',
-        'ai-networking',
-        'ai-dcim-ops',
-        'cybersecurity-compliance',
-        'telecom-connectivity',
-        'cable-landing',
-        'satellite-landing',
-        'energy-green-power',
-        'environment-regulatory',
-        'investment-bankability',
-        'delivery-models',
-        'nine-pillars',
-        'global-sales-gtm',
-        'cable-satellite-ecosystem',
-        'differentiators',
-        'engagement-pathway',
-        'business-outcomes',
-        'lifecycle-metrics',
-        'leadership-contacts',
-        'contact-advisory'
-      ]
-      
-      const scrollPos = window.scrollY + 200
-      for (const id of sections) {
-        const el = document.getElementById(id)
-        if (el) {
-          const top = el.offsetTop
-          const height = el.offsetHeight
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(id)
-            break
-          }
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  const navSubmenus = [
-    { id: 'lifecycle', label: '7-Stage Lifecycle', icon: Workflow },
-    { id: 'core-offerings', label: 'Core Capabilities', icon: Building2 },
-    { id: 'high-density-engineering', label: 'GPU & Density', icon: Cpu },
-    { id: 'power-cooling', label: 'Power & Cooling', icon: Zap },
-    { id: 'ai-networking', label: 'AI Networking', icon: Network },
-    { id: 'ai-dcim-ops', label: 'AI-DCIM & AIOps', icon: Activity },
-    { id: 'cybersecurity-compliance', label: 'Cyber & Tier Compliance', icon: ShieldCheck },
-    { id: 'telecom-connectivity', label: 'Telecom & DCI', icon: Radio },
-    { id: 'cable-landing', label: 'Cable Landing (CLS)', icon: Cable },
-    { id: 'satellite-landing', label: '9 Tbps Satellite', icon: Satellite },
-    { id: 'energy-green-power', label: 'Green Energy & PPAs', icon: Leaf },
-    { id: 'environment-regulatory', label: 'Regulatory Liaison', icon: Scale },
-    { id: 'investment-bankability', label: 'Investment & Bankability', icon: LineChart },
-    { id: 'delivery-models', label: 'DBOT Delivery Suite', icon: Boxes },
-    { id: 'nine-pillars', label: 'Nine Pillars & PMO', icon: Layers },
-    { id: 'global-sales-gtm', label: 'Global Sales & GTM', icon: Globe2 },
-    { id: 'differentiators', label: 'Why TrustGrid', icon: Award },
-    { id: 'engagement-pathway', label: 'Engagement Pathway', icon: Compass },
-    { id: 'lifecycle-metrics', label: 'Metrics & OpEx', icon: BarChart3 },
-    { id: 'contact-advisory', label: 'Diagnostic CTA', icon: Sparkles }
-  ]
 
   // 7 Lifecycle Stages Data from Source Document
   const lifecycleStages = [
@@ -450,32 +378,6 @@ export default function AIInfraEngineeringPage() {
         </div>
       </section>
 
-      {/* STICKY SECONDARY SUB-NAVIGATION BAR */}
-      <div className="sticky top-16 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-1 overflow-x-auto py-2.5 scrollbar-none">
-            {navSubmenus.map((item) => {
-              const Icon = item.icon
-              const isActive = activeSection === item.id
-              return (
-                <a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={() => setActiveSection(item.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
-                    isActive
-                      ? 'bg-blue-600 text-white shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                  }`}
-                >
-                  <Icon size={14} />
-                  <span>{item.label}</span>
-                </a>
-              )
-            })}
-          </div>
-        </div>
-      </div>
 
       {/* MAIN CONTENT CONTAINER */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-28">

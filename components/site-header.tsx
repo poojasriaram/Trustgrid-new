@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   ArrowUpRight,
   ArrowRight,
@@ -39,69 +40,16 @@ import {
   Cable,
   Satellite,
   Leaf,
-  Boxes
+  Boxes,
+  ShieldAlert,
+  SlidersHorizontal,
+  Target
 } from 'lucide-react'
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
 import { trackWhatsAppClick } from '@/lib/analytics'
 
-const methodologyCategories = [
-  {
-    title: 'AI Engineering',
-    icon: Cpu,
-    desc: 'Eliminate compute waste, maximize GPU utilization, and engineer factory throughput.',
-    items: [
-      'Lean Thinking',
-      'TOC',
-      'DMAIC',
-      'OEE',
-      'TPM',
-      'SMED',
-      'Value Stream Mapping'
-    ]
-  },
-  {
-    title: 'Agentic AI',
-    icon: Bot,
-    desc: 'Orchestrate multi-agent DAGs, mistake-proof tool calls, and monitor agent fleet SLA.',
-    items: [
-      'AgentOps',
-      'Agile/Scrum',
-      'DevOps/CI/CD',
-      'FMEA',
-      'Poka-Yoke',
-      'Jidoka',
-      'OKR'
-    ]
-  },
-  {
-    title: 'Trusted AI',
-    icon: ShieldCheck,
-    desc: 'Deterministic guardrails, mathematical explainability, and regulatory governance.',
-    items: [
-      'Responsible AI',
-      'Explainability',
-      'FMEA',
-      'SPC',
-      'Governance',
-      'Continuous Assurance'
-    ]
-  },
-  {
-    title: 'AI Value Engineering',
-    icon: TrendingUp,
-    desc: 'Bridge technical compute metrics directly to CFO-approved P&L earnings.',
-    items: [
-      'Hoshin Kanri',
-      'Balanced Scorecard',
-      'OKR',
-      'Throughput Accounting',
-      'Value Engineering',
-      'Portfolio Optimization'
-    ]
-  }
-]
-
+// 1. AI Infra Menu Items (12 Items)
 const aiInfraMenuItems = [
   {
     id: 'lifecycle',
@@ -177,6 +125,312 @@ const aiInfraMenuItems = [
   }
 ]
 
+// 2. Agentic Enterprise Menu Items (12 Items)
+const agenticEnterpriseMenuItems = [
+  {
+    id: 'agent-architecture',
+    label: 'Autonomous Agent Architecture',
+    desc: 'Cognitive loops, ReAct, Tree-of-Thought & persistent memory',
+    icon: Bot
+  },
+  {
+    id: 'multi-agent-orchestration',
+    label: 'Multi-Agent Swarm Orchestration',
+    desc: 'LangGraph, AutoGen, CrewAI & deterministic consensus DAGs',
+    icon: Workflow
+  },
+  {
+    id: 'vertical-factories',
+    label: 'Vertical Enterprise Agent Factories',
+    desc: 'Pre-built autonomous agents for Finance, Supply Chain, SRE & HR',
+    icon: Layers
+  },
+  {
+    id: 'mcp-tool-integration',
+    label: 'Model Context Protocol & Tools',
+    desc: 'Standardized tool interfaces, ERP/CRM & database connectors',
+    icon: Cpu
+  },
+  {
+    id: 'agentops-governance',
+    label: 'Enterprise AgentOps & Telemetry',
+    desc: 'Distributed trace observability, token telemetry & failure triage',
+    icon: BarChart3
+  },
+  {
+    id: 'guardrails-safety',
+    label: 'Runtime Guardrails & Firewalls',
+    desc: 'Anti-injection shields, semantic boundary enforcement & safety',
+    icon: ShieldCheck
+  },
+  {
+    id: 'human-agent-teaming',
+    label: 'Human-in-the-Loop (HITL) Teaming',
+    desc: 'Dynamic confidence gates, approval workflows & workforce ops',
+    icon: Users
+  },
+  {
+    id: 'synthetic-eval-sprints',
+    label: 'Continuous Agent Evaluation',
+    desc: 'Synthetic benchmarking, automated red-teaming & regression suites',
+    icon: Target
+  },
+  {
+    id: 'edge-onprem-runtimes',
+    label: 'Sovereign & On-Prem Agent Runtimes',
+    desc: 'Air-gapped SLMs, local inference pods & zero-data-leakage',
+    icon: Building2
+  },
+  {
+    id: 'agentic-transformation',
+    label: '12–24 Wk Pilot to Factory Delivery',
+    desc: 'Organizational enablement, change management & DBOT delivery',
+    icon: Compass
+  },
+  {
+    id: 'fleet-metrics-roi',
+    label: 'Agent Fleet Yield & SLA Metrics',
+    desc: 'Task autonomy rate, cost-per-successful-task & cycle time reduction',
+    icon: TrendingUp
+  },
+  {
+    id: 'agentic-diagnostic',
+    label: 'Enterprise Agentic Diagnostic',
+    desc: 'Executive technical readiness audit, opportunity prioritization & roadmap',
+    icon: Sparkles
+  }
+]
+
+// 3. AI Networking Menu Items (12 Items)
+const aiNetworkingMenuItems = [
+  {
+    id: 'lossless-fabrics',
+    label: 'Lossless RoCEv2 & InfiniBand',
+    desc: 'Quantum-2 InfiniBand & Spectrum-X RoCEv2 for zero packet loss',
+    icon: Network
+  },
+  {
+    id: 'rail-topologies',
+    label: 'Rail-Optimized & Dragonfly+',
+    desc: 'Symmetrical Fat-Tree, non-blocking bisection & GPU-rail alignment',
+    icon: Layers
+  },
+  {
+    id: 'collective-tuning',
+    label: 'Collective Communications & NCCL',
+    desc: 'AllReduce, AlltoAll barrier tuning, SHARP in-network compute',
+    icon: Cpu
+  },
+  {
+    id: 'optics-transceivers',
+    label: '400G / 800G / 1.6T Co-Packaged Optics',
+    desc: 'OSFP, QSFP-DD, low-loss active optical cabling & single-mode fiber',
+    icon: Zap
+  },
+  {
+    id: 'autonomous-ai-noc',
+    label: 'Autonomous AI NOC & Telemetry',
+    desc: 'In-band Network Telemetry (INT), silent drop detection & self-healing',
+    icon: Workflow
+  },
+  {
+    id: 'congestion-control',
+    label: 'Hardware Congestion Control',
+    desc: 'PFC watchdog, ECN thresholds & dynamic packet routing algorithms',
+    icon: SlidersHorizontal
+  },
+  {
+    id: 'ntn-satellite',
+    label: 'Non-Terrestrial Networks (NTN)',
+    desc: '9 Tbps satellite ground stations, LEO/MEO tracking & space relay',
+    icon: Satellite
+  },
+  {
+    id: 'dci-interconnect',
+    label: 'Coherent Data Center Interconnect',
+    desc: 'Sub-millisecond DWDM metro interconnects & multi-campus sync',
+    icon: Cable
+  },
+  {
+    id: 'storage-fabrics',
+    label: 'NVMe-oF & GPUDirect Storage',
+    desc: 'Sub-microsecond storage transport, parallel file systems & zero-copy',
+    icon: Building2
+  },
+  {
+    id: 'hybrid-multicloud-mesh',
+    label: 'Hybrid Sovereign Cloud Fabric',
+    desc: 'Private AI clusters securely meshed with sovereign cloud enclaves',
+    icon: Globe2
+  },
+  {
+    id: 'network-yield-kpis',
+    label: 'Fabric Throughput & OEE Metrics',
+    desc: 'Effective bandwidth yield, tail latency elimination & jitter metrics',
+    icon: BarChart3
+  },
+  {
+    id: 'network-diagnostic',
+    label: 'AI Network Diagnostic & Audit',
+    desc: 'Live fabric packet loss analysis, latency profiling & topology audit',
+    icon: Sparkles
+  }
+]
+
+// 4. AI Cybersecurity Menu Items (12 Items)
+const aiCybersecurityMenuItems = [
+  {
+    id: 'pqc-cbom',
+    label: 'L1–L7 Post-Quantum Cryptography',
+    desc: 'NIST PQC standards (ML-KEM, ML-DSA) & automated CBOM discovery',
+    icon: Lock
+  },
+  {
+    id: 'prompt-firewalls',
+    label: 'Prompt Firewalls & Hijack Defense',
+    desc: 'In-line real-time prompt injection shields, jailbreak defense & safety',
+    icon: ShieldAlert
+  },
+  {
+    id: 'agent-identity-iam',
+    label: 'Zero-Trust Identity for Agents',
+    desc: 'Cryptographic SPIFFE/SPIRE workload identity & ephemeral IAM',
+    icon: ShieldCheck
+  },
+  {
+    id: 'training-security',
+    label: 'Model Provenance & Data Defense',
+    desc: 'Cryptographic weight signing, data pipeline verification & watermarks',
+    icon: CheckCircle2
+  },
+  {
+    id: 'managed-ai-soc',
+    label: '24/7 Managed AI SOC & Hunting',
+    desc: 'Autonomous threat detection, AI SIEM correlation & synthetic triage',
+    icon: Workflow
+  },
+  {
+    id: 'confidential-compute',
+    label: 'Confidential Compute & Enclaves',
+    desc: 'Hardware TEEs, encrypted GPU memory & multi-party computation',
+    icon: Cpu
+  },
+  {
+    id: 'air-gapped-sovereign',
+    label: 'Air-Gapped Sovereign AI Enclaves',
+    desc: 'Classified zero-outbound defense pods & defense-grade isolation',
+    icon: Building2
+  },
+  {
+    id: 'ai-red-teaming',
+    label: 'Automated Red-Teaming & Stress Tests',
+    desc: 'Continuous model fuzzing, evasion probes & hallucination testing',
+    icon: Target
+  },
+  {
+    id: 'regulatory-compliance',
+    label: 'EU AI Act & ISO 42001 Compliance',
+    desc: 'Automated conformity assessment, NIST AI RMF & audit-ready evidence',
+    icon: FileSpreadsheet
+  },
+  {
+    id: 'immutable-audit',
+    label: 'Cryptographic Decision Provenance',
+    desc: 'Tamper-proof audit ledgers, causal decision replay & legal defense logs',
+    icon: Layers
+  },
+  {
+    id: 'cyber-posture-kpis',
+    label: 'Quantum & Cyber Resilience Metrics',
+    desc: 'Harvest-Now risk index, CBOM migration progress & containment times',
+    icon: BarChart3
+  },
+  {
+    id: 'cyber-audit-cta',
+    label: 'Quantum & AI Security Diagnostic',
+    desc: 'Cryptographic inventory assessment, agent vulnerability audit & roadmap',
+    icon: Sparkles
+  }
+]
+
+// 5. AI Value Engineering Menu Items (12 Items)
+const aiValueMenuItems = [
+  {
+    id: 'value-discovery',
+    label: 'AI Value Discovery & Prioritization',
+    desc: 'Quantitative business case modeling, feasibility matrices & ROI ranking',
+    icon: TrendingUp
+  },
+  {
+    id: 'finops-economics',
+    label: 'AI FinOps & Unit Economics Engine',
+    desc: 'Cost-per-token analytics, GPU allocation chargebacks & OpEx modeling',
+    icon: BarChart3
+  },
+  {
+    id: 'throughput-toc',
+    label: 'Theory of Constraints Compute Yield',
+    desc: 'Goldratt bottleneck resolution applied to token throughput & cash flow',
+    icon: Workflow
+  },
+  {
+    id: 'lean-waste-elimination',
+    label: 'Lean AI Waste Elimination',
+    desc: 'Eliminating idle GPU cycles, over-provisioning & redundant passes',
+    icon: SlidersHorizontal
+  },
+  {
+    id: 'acceleration-sprints',
+    label: '90-Day Rapid Acceleration Sprints',
+    desc: 'Fast-track from diagnostic to verified production value & savings',
+    icon: Zap
+  },
+  {
+    id: 'enterprise-ai-os',
+    label: 'Enterprise AI Operating System',
+    desc: 'Cross-functional delivery hubs, capability compounding & operating models',
+    icon: Boxes
+  },
+  {
+    id: 'vro-office',
+    label: 'Value Realization Office Setup',
+    desc: 'Institutionalized ROI tracking, CFO dashboards & governance cadences',
+    icon: Building2
+  },
+  {
+    id: 'cloud-vs-onprem',
+    label: 'Cloud vs. On-Premises TCO Arbitrage',
+    desc: 'CapEx vs OpEx break-even models, hybrid repatriation & payback math',
+    icon: Cpu
+  },
+  {
+    id: 'hoshin-kanri-kpis',
+    label: 'Hoshin Kanri Strategic Cascading',
+    desc: 'Aligning corporate board goals directly to AI engineering execution',
+    icon: Layers
+  },
+  {
+    id: 'compounding-capital',
+    label: 'Capital Reinvestment & Scaling',
+    desc: 'Reinvesting verified AI efficiency savings into high-yield capability',
+    icon: ArrowUpRight
+  },
+  {
+    id: 'verified-roi-metrics',
+    label: 'Verified Value Metrics & P&L',
+    desc: 'Audited 3–10x ROI benchmarks, 6–18 month payback & balance sheet gains',
+    icon: CheckCircle2
+  },
+  {
+    id: 'value-diagnostic',
+    label: 'Enterprise Value Diagnostic',
+    desc: 'Executive economic evaluation, payback modeling & CFO consensus canvas',
+    icon: Sparkles
+  }
+]
+
+
+// 6. Common Foundation Menu Items (6 Items)
 const commonFoundationMenuItems = [
   {
     label: 'Industries',
@@ -188,13 +442,13 @@ const commonFoundationMenuItems = [
     label: 'Methodology Engine',
     href: '/methodology-engine',
     icon: Sparkles,
-    desc: 'Lean, TOC, DMAIC, OEE, TPM and operational AI engineering models'
+    desc: 'Lean, TOC, DMAIC, OEE, TPM and 80+ operational AI engineering models'
   },
   {
     label: 'Engagement Models',
     href: '/request-proposal',
     icon: Workflow,
-    desc: 'Diagnostic, sprint, co-engineering, and turnkey delivery frameworks'
+    desc: 'Diagnostic, sprint, co-engineering, and turnkey DBOT delivery frameworks'
   },
   {
     label: 'Case Studies & Metrics',
@@ -216,6 +470,7 @@ const commonFoundationMenuItems = [
   }
 ]
 
+// 7. About Us Menu Items (6 Items)
 const aboutMenuItems = [
   {
     label: 'About TrustGrid.AI',
@@ -252,6 +507,63 @@ const aboutMenuItems = [
     href: '/methodology-engine',
     icon: Sparkles,
     desc: 'Proprietary AI-driven methodology implementation framework'
+  }
+]
+
+const methodologyCategories = [
+  {
+    title: 'AI Engineering',
+    icon: Cpu,
+    desc: 'Eliminate compute waste, maximize GPU utilization, and engineer factory throughput.',
+    items: [
+      'Lean Thinking',
+      'TOC',
+      'DMAIC',
+      'OEE',
+      'TPM',
+      'SMED',
+      'Value Stream Mapping'
+    ]
+  },
+  {
+    title: 'Agentic AI',
+    icon: Bot,
+    desc: 'Orchestrate multi-agent DAGs, mistake-proof tool calls, and monitor agent fleet SLA.',
+    items: [
+      'AgentOps',
+      'Agile/Scrum',
+      'DevOps/CI/CD',
+      'FMEA',
+      'Poka-Yoke',
+      'Jidoka',
+      'OKR'
+    ]
+  },
+  {
+    title: 'Trusted AI',
+    icon: ShieldCheck,
+    desc: 'Deterministic guardrails, mathematical explainability, and regulatory governance.',
+    items: [
+      'Responsible AI',
+      'Explainability',
+      'FMEA',
+      'SPC',
+      'Governance',
+      'Continuous Assurance'
+    ]
+  },
+  {
+    title: 'AI Value Engineering',
+    icon: TrendingUp,
+    desc: 'Bridge technical compute metrics directly to CFO-approved P&L earnings.',
+    items: [
+      'Hoshin Kanri',
+      'Balanced Scorecard',
+      'OKR',
+      'Throughput Accounting',
+      'Value Engineering',
+      'Portfolio Optimization'
+    ]
   }
 ]
 
@@ -365,6 +677,7 @@ const solutionGroups = [
 ]
 
 export function SiteHeader() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [mobileSection, setMobileSection] = useState<string | null>(null)
@@ -421,6 +734,55 @@ export function SiteHeader() {
     setOpen(false)
   }
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    closeAll()
+    if (!href || !href.includes('#')) return
+
+    const [targetPath, hash] = href.split('#')
+    if (!hash) return
+
+    const currentPath = (typeof window !== 'undefined' ? window.location.pathname : '').replace(/\/$/, '') || '/'
+    const normTarget = (targetPath || '').replace(/\/$/, '') || '/'
+
+    // If already on the target page, intercept and scroll smoothly with header offset
+    if (currentPath === normTarget) {
+      e.preventDefault()
+      window.history.pushState(null, '', href)
+      const el = document.getElementById(hash)
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 90
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }
+  }
+
+  // Cross-page and initial load hash scroll handler
+  useEffect(() => {
+    const scrollToHash = () => {
+      if (typeof window === 'undefined') return
+      const hash = window.location.hash.replace('#', '')
+      if (!hash) return
+
+      let attempts = 0
+      const tryScroll = () => {
+        const el = document.getElementById(hash)
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 90
+          window.scrollTo({ top, behavior: 'smooth' })
+        } else if (attempts < 15) {
+          attempts++
+          setTimeout(tryScroll, 80)
+        }
+      }
+
+      setTimeout(tryScroll, 60)
+    }
+
+    scrollToHash()
+    window.addEventListener('hashchange', scrollToHash)
+    return () => window.removeEventListener('hashchange', scrollToHash)
+  }, [pathname])
+
   const toggleMenu = (menuName: string) => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
@@ -464,59 +826,76 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'ai-infra' && (
-            <div className="mega-menu aiinfra-mega-menu">
-              <div className="aiinfra-mega-header">
-                <div className="aiinfra-mega-header-content">
-                  <span className="aiinfra-mega-badge">
-                    <span className="pulse-dot" />
-                    STRATEGIC OFFERING BLUEPRINT V2.0
-                  </span>
-                  <p className="aiinfra-mega-subtitle">
-                    End-to-end AI Factory engineering from 100MW–GW greenfield to GPU Ops & token unit economics.
-                  </p>
-                </div>
-                <Link
-                  href="/solutions/ai-infra-engineering"
-                  className="aiinfra-mega-view-all"
-                  onClick={closeAll}
-                >
-                  <span>Explore Blueprint</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="aiinfra-mega-grid">
-                {aiInfraMenuItems.map((item, idx) => {
-                  const Icon = item.icon
-                  return (
+            <div className="isi-mega-panel isi-mega-infra">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      STRATEGIC BLUEPRINT V2.0
+                    </span>
+                    <h3 className="isi-sidebar-title">AI Infra & Data Center</h3>
+                    <p className="isi-sidebar-desc">
+                      End-to-end AI Factory engineering from 100MW–GW greenfield to GPU Ops & token unit economics.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>30–70% Higher GPU Yield</span>
+                    </div>
                     <Link
-                      key={idx}
-                      href={`/solutions/ai-infra-engineering#${item.id}`}
-                      className="aiinfra-sub-item"
+                      href="/solutions/ai-infra-engineering"
+                      className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <div className="aiinfra-sub-icon">
-                        <Icon size={16} />
-                      </div>
-                      <div className="aiinfra-sub-body">
-                        <div className="aiinfra-sub-heading">
-                          <span className="aiinfra-sub-title">{item.label}</span>
-                          <ArrowRight size={13} className="aiinfra-sub-arrow" />
-                        </div>
-                        <p className="aiinfra-sub-desc">{item.desc}</p>
-                      </div>
+                      <span>Explore Blueprint</span>
+                      <ArrowUpRight size={13} />
                     </Link>
-                  )
-                })}
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
+                  {aiInfraMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    const itemHref = `/solutions/ai-infra-engineering#${item.id}`
+                    return (
+                      <Link
+                        key={idx}
+                        href={itemHref}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
               </div>
 
-              <div className="aiinfra-mega-footer">
-                <span className="aiinfra-footer-tag">
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  Full-stack accountability from power delivery to token delivery
-                </span>
-                <Link href="/book-ai-diagnostic" className="aiinfra-footer-action" onClick={closeAll}>
-                  <span>Book AI Diagnostic</span>
+                  <span>Full-stack engineering accountability from power delivery to token delivery</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic?solution=ai-infra-engineering"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Book AI Diagnostic Assessment</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -525,24 +904,376 @@ export function SiteHeader() {
         </div>
 
         {/* 3. AGENTIC ENTERPRISE */}
-        <Link href="/solutions/ai-agentic-factory" className="nav-link" onClick={closeAll}>
-          Agentic Enterprise
-        </Link>
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('agentic')}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'agentic' ? 'active' : ''}`}
+            onClick={() => toggleMenu('agentic')}
+            aria-expanded={activeMenu === 'agentic'}
+          >
+            <span>Agentic Enterprise</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'agentic' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'agentic' && (
+            <div className="isi-mega-panel isi-mega-agentic">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      AUTONOMOUS AGENTIC FACTORY
+                    </span>
+                    <h3 className="isi-sidebar-title">Agentic Enterprise</h3>
+                    <p className="isi-sidebar-desc">
+                      Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs and persistent memory.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>&gt;95% Task Accuracy with SLA</span>
+                    </div>
+                    <Link
+                      href="/solutions/ai-agentic-factory"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore Blueprint</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
+                  {agenticEnterpriseMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    const itemHref = `/solutions/ai-agentic-factory#${item.id}`
+                    return (
+                      <Link
+                        key={idx}
+                        href={itemHref}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Governed AgentOps, continuous evaluation & multi-agent swarms</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic?solution=ai-agentic-factory"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Book AI Diagnostic Assessment</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 4. AI NETWORKING */}
-        <Link href="/solutions/ai-networking" className="nav-link" onClick={closeAll}>
-          AI Networking
-        </Link>
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('networking')}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'networking' ? 'active' : ''}`}
+            onClick={() => toggleMenu('networking')}
+            aria-expanded={activeMenu === 'networking'}
+          >
+            <span>AI Networking</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'networking' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'networking' && (
+            <div className="isi-mega-panel isi-mega-networking">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      LOSSLESS FABRIC & INTERCONNECT
+                    </span>
+                    <h3 className="isi-sidebar-title">AI Networking</h3>
+                    <p className="isi-sidebar-desc">
+                      Ultra-low latency, non-blocking InfiniBand and RoCEv2 fabrics engineered for zero packet loss.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>Zero Loss at 400G / 800G</span>
+                    </div>
+                    <Link
+                      href="/solutions/ai-networking"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore Blueprint</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
+                  {aiNetworkingMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    const itemHref = `/solutions/ai-networking#${item.id}`
+                    return (
+                      <Link
+                        key={idx}
+                        href={itemHref}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Rail-optimized Dragonfly+ topologies & autonomous NOC self-healing</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic?solution=ai-networking"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Book AI Diagnostic Assessment</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 5. AI CYBERSECURITY */}
-        <Link href="/solutions/ai-cybersecurity-quantum-safe" className="nav-link" onClick={closeAll}>
-          AI Cybersecurity
-        </Link>
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('cybersecurity')}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'cybersecurity' ? 'active' : ''}`}
+            onClick={() => toggleMenu('cybersecurity')}
+            aria-expanded={activeMenu === 'cybersecurity'}
+          >
+            <span>AI Cybersecurity</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'cybersecurity' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'cybersecurity' && (
+            <div className="isi-mega-panel isi-mega-cybersecurity">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      QUANTUM-SAFE DEFENSE & SOC
+                    </span>
+                    <h3 className="isi-sidebar-title">AI Cybersecurity</h3>
+                    <p className="isi-sidebar-desc">
+                      L1–L7 Post-Quantum Cryptography (PQC / CBOM) paired with non-deterministic agent guardrails.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>100% CBOM Visibility</span>
+                    </div>
+                    <Link
+                      href="/solutions/ai-cybersecurity-quantum-safe"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore Blueprint</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
+                  {aiCybersecurityMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    const itemHref = `/solutions/ai-cybersecurity-quantum-safe#${item.id}`
+                    return (
+                      <Link
+                        key={idx}
+                        href={itemHref}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Air-gapped defense, prompt firewalls & 24/7 Managed AI SOC</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Book AI Diagnostic Assessment</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 6. AI VALUE ENGINEERING */}
-        <Link href="/solutions/ai-value-engineering" className="nav-link" onClick={closeAll}>
-          AI Value Engineering
-        </Link>
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('value')}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'value' ? 'active' : ''}`}
+            onClick={() => toggleMenu('value')}
+            aria-expanded={activeMenu === 'value'}
+          >
+            <span>AI Value Engineering</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'value' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'value' && (
+            <div className="isi-mega-panel isi-mega-value">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      ECONOMIC GOVERNANCE & FINOPS
+                    </span>
+                    <h3 className="isi-sidebar-title">AI Value Engineering</h3>
+                    <p className="isi-sidebar-desc">
+                      Bridge technical compute metrics directly to CFO-approved P&L earnings and unit economics.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>3–10x Verifiable ROI</span>
+                    </div>
+                    <Link
+                      href="/solutions/ai-value-engineering"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore Blueprint</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
+                  {aiValueMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    const itemHref = `/solutions/ai-value-engineering#${item.id}`
+                    return (
+                      <Link
+                        key={idx}
+                        href={itemHref}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Throughput accounting, TOC & CFO consensus canvases</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic?solution=ai-value-engineering"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Book AI Diagnostic Assessment</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* 7. COMMON FOUNDATION */}
         <div
@@ -560,48 +1291,76 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'foundation' && (
-            <div className="mega-menu common-foundation-mega-menu">
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">STRATEGIC ENABLERS</span>
-                  <p>Enterprise Frameworks, Industry Blueprints & Engagement Models</p>
-                </div>
-                <Link href="/sitemap" className="mega-header-link" onClick={closeAll}>
-                  <span>Full Taxonomy</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid about-menu-grid">
-                {commonFoundationMenuItems.map((item, idx) => {
-                  const Icon = item.icon
-                  return (
+            <div className="isi-mega-panel isi-mega-foundation">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      STRATEGIC ENABLERS
+                    </span>
+                    <h3 className="isi-sidebar-title">Common Foundation</h3>
+                    <p className="isi-sidebar-desc">
+                      Enterprise frameworks, industry vertical blueprints, operational methodology engines, and partner ecosystems.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>80+ Operational Methodologies</span>
+                    </div>
                     <Link
-                      key={idx}
-                      href={item.href}
-                      className="about-item-card"
+                      href="/sitemap"
+                      className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <div className="about-item-icon">
-                        <Icon size={16} />
-                      </div>
-                      <div className="about-item-text">
-                        <div className="about-item-heading">
-                          <span>{item.label}</span>
-                          <ArrowUpRight size={12} className="ml-auto opacity-40 hover-show" />
-                        </div>
-                        <p>{item.desc}</p>
-                      </div>
+                      <span>Full Taxonomy</span>
+                      <ArrowUpRight size={13} />
                     </Link>
-                  )
-                })}
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (2 columns, 6 items) */}
+                <div className="isi-mega-content columns-2">
+                  {commonFoundationMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    return (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, item.href)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
               </div>
 
-              <div className="mega-menu-footer">
-                <Link href="/book-ai-diagnostic" className="mega-footer-link" onClick={closeAll}>
-                  <Sparkles size={14} />
-                  <span>Schedule your executive technical & economic AI diagnostic</span>
-                  <ArrowUpRight size={14} />
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Executive technical & financial evaluation of enterprise AI readiness</span>
+                </div>
+                <Link
+                  href="/book-ai-diagnostic"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Schedule AI Diagnostic</span>
+                  <ArrowUpRight size={13} />
                 </Link>
               </div>
             </div>
@@ -624,48 +1383,76 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'about' && (
-            <div className="mega-menu about-mega-menu">
-              <div className="mega-menu-header">
-                <div>
-                  <span className="mega-menu-badge">COMPANY & TALENT</span>
-                  <p>Full-Spectrum AI Engineering Company for the Global AI Economy</p>
-                </div>
-                <Link href="/about" className="mega-header-link" onClick={closeAll}>
-                  <span>Explore Full Profile</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-
-              <div className="mega-menu-grid about-menu-grid">
-                {aboutMenuItems.map((item, idx) => {
-                  const Icon = item.icon
-                  return (
+            <div className="isi-mega-panel isi-mega-about">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      COMPANY & TALENT
+                    </span>
+                    <h3 className="isi-sidebar-title">About TrustGrid.AI</h3>
+                    <p className="isi-sidebar-desc">
+                      Full-Spectrum AI Engineering Company for the Global AI Economy with executive offices in US, Singapore & India.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Building2 size={12} className="text-blue-600" />
+                      <span>Global R&D & Delivery Labs</span>
+                    </div>
                     <Link
-                      key={idx}
-                      href={item.href}
-                      className="about-item-card"
+                      href="/about"
+                      className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <div className="about-item-icon">
-                        <Icon size={16} />
-                      </div>
-                      <div className="about-item-text">
-                        <div className="about-item-heading">
-                          <span>{item.label}</span>
-                          <ArrowUpRight size={12} className="ml-auto opacity-40 hover-show" />
-                        </div>
-                        <p>{item.desc}</p>
-                      </div>
+                      <span>Explore Company Profile</span>
+                      <ArrowUpRight size={13} />
                     </Link>
-                  )
-                })}
+                  </div>
+                </div>
+
+                {/* Right Structured Grid (2 columns, 6 items) */}
+                <div className="isi-mega-content columns-2">
+                  {aboutMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    return (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, item.href)}
+                      >
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
               </div>
 
-              <div className="mega-menu-footer">
-                <Link href="/about" className="mega-footer-link" onClick={closeAll}>
-                  <Building2 size={14} />
-                  <span>Explore mission, vision, executive leadership, global offices, and research labs</span>
-                  <ArrowUpRight size={14} />
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Users size={13} className="text-blue-600" />
+                  <span>World-class AI architects, systems leads, and advisory board</span>
+                </div>
+                <Link
+                  href="/contact"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Contact Leadership</span>
+                  <ArrowUpRight size={13} />
                 </Link>
               </div>
             </div>
@@ -742,35 +1529,146 @@ export function SiteHeader() {
                   <Link href="/solutions/ai-infra-engineering" className="mobile-sublink font-semibold" onClick={closeAll}>
                     <span>AI Infra Blueprint Overview →</span>
                   </Link>
-                  {aiInfraMenuItems.map((item, i) => (
-                    <Link
-                      key={i}
-                      href={`/solutions/ai-infra-engineering#${item.id}`}
-                      className="mobile-sublink"
-                      onClick={closeAll}
-                    >
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
+                  {aiInfraMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-infra-engineering#${item.id}`
+                    return (
+                      <Link
+                        key={i}
+                        href={itemHref}
+                        className="mobile-sublink"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <span>{item.label}</span>
+                      </Link>
+                    )
+                  })}
                 </div>
               )}
             </div>
 
-            <Link href="/solutions/ai-agentic-factory" className="mobile-nav-link" onClick={closeAll}>
-              Agentic Enterprise
-            </Link>
+            {/* Mobile Agentic Enterprise Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('agentic')}
+              >
+                <span>Agentic Enterprise</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'agentic' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'agentic' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/solutions/ai-agentic-factory" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>Agentic Enterprise Blueprint Overview →</span>
+                  </Link>
+                  {agenticEnterpriseMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-agentic-factory#${item.id}`
+                    return (
+                      <Link
+                        key={i}
+                        href={itemHref}
+                        className="mobile-sublink"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <span>{item.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
 
-            <Link href="/solutions/ai-networking" className="mobile-nav-link" onClick={closeAll}>
-              AI Networking
-            </Link>
+            {/* Mobile AI Networking Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('networking')}
+              >
+                <span>AI Networking</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'networking' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'networking' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/solutions/ai-networking" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>AI Networking Blueprint Overview →</span>
+                  </Link>
+                  {aiNetworkingMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-networking#${item.id}`
+                    return (
+                      <Link
+                        key={i}
+                        href={itemHref}
+                        className="mobile-sublink"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <span>{item.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
 
-            <Link href="/solutions/ai-cybersecurity-quantum-safe" className="mobile-nav-link" onClick={closeAll}>
-              AI Cybersecurity
-            </Link>
+            {/* Mobile AI Cybersecurity Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('cybersecurity')}
+              >
+                <span>AI Cybersecurity</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'cybersecurity' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'cybersecurity' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/solutions/ai-cybersecurity-quantum-safe" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>AI Cybersecurity Blueprint Overview →</span>
+                  </Link>
+                  {aiCybersecurityMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-cybersecurity-quantum-safe#${item.id}`
+                    return (
+                      <Link
+                        key={i}
+                        href={itemHref}
+                        className="mobile-sublink"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <span>{item.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
 
-            <Link href="/solutions/ai-value-engineering" className="mobile-nav-link" onClick={closeAll}>
-              AI Value Engineering
-            </Link>
+            {/* Mobile AI Value Engineering Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('value')}
+              >
+                <span>AI Value Engineering</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'value' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'value' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/solutions/ai-value-engineering" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>AI Value Engineering Blueprint Overview →</span>
+                  </Link>
+                  {aiValueMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-value-engineering#${item.id}`
+                    return (
+                      <Link
+                        key={i}
+                        href={itemHref}
+                        className="mobile-sublink"
+                        onClick={(e) => handleNavClick(e, itemHref)}
+                      >
+                        <span>{item.label}</span>
+                      </Link>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
 
             {/* Mobile Common Foundation Accordion */}
             <div className="mobile-accordion">
@@ -783,12 +1681,15 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'foundation' && (
                 <div className="mobile-accordion-body">
+                  <Link href="/sitemap" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>Full Taxonomy Overview →</span>
+                  </Link>
                   {commonFoundationMenuItems.map((item, i) => (
                     <Link
                       key={i}
                       href={item.href}
                       className="mobile-sublink"
-                      onClick={closeAll}
+                      onClick={(e) => handleNavClick(e, item.href)}
                     >
                       <span>{item.label}</span>
                     </Link>
@@ -816,7 +1717,7 @@ export function SiteHeader() {
                       key={i}
                       href={item.href}
                       className="mobile-sublink"
-                      onClick={closeAll}
+                      onClick={(e) => handleNavClick(e, item.href)}
                     >
                       <span>{item.label}</span>
                     </Link>
@@ -873,5 +1774,3 @@ export function SiteHeader() {
     </header>
   )
 }
-
-

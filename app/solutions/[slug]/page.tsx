@@ -39,6 +39,10 @@ import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { KPIMetricCard, KPIMetric } from '@/components/ui/kpi-metric-card'
 import { SolutionJourneySlider } from '@/components/ui/solution-journey-slider'
 import { ICPSlider } from '@/components/ui/icp-slider'
+import { AgenticFactoryCapabilities } from '@/components/solutions/agentic-factory-capabilities'
+import { AINetworkingCapabilities } from '@/components/solutions/ai-networking-capabilities'
+import { AICybersecurityCapabilities } from '@/components/solutions/ai-cybersecurity-capabilities'
+import { AIValueCapabilities } from '@/components/solutions/ai-value-capabilities'
 
 const solutionIcons = {
   'ai-infra-engineering': Cpu,
@@ -325,6 +329,14 @@ export default async function SolutionDetailPage({
           ))}
         </div>
       </section>
+
+      {/* BESPOKE 12-CAPABILITY OFFERINGS MATCHING MEGA-MENU SUBMENUS */}
+      <div id="offerings">
+        {solution.slug === 'ai-agentic-factory' && <AgenticFactoryCapabilities />}
+        {solution.slug === 'ai-networking' && <AINetworkingCapabilities />}
+        {solution.slug === 'ai-cybersecurity-quantum-safe' && <AICybersecurityCapabilities />}
+        {solution.slug === 'ai-value-engineering' && <AIValueCapabilities />}
+      </div>
 
       {/* LAYER: TEMPORAL SPECTRUM / MATURITY ROADMAP */}
       <section className="section solution-temporal-section" id="maturity">
