@@ -32,6 +32,7 @@ import {
 
 export type FormVariant =
   | 'diagnostic'
+  | 'strategy_session'
   | 'contact'
   | 'proposal'
   | 'career'
@@ -122,6 +123,7 @@ export function TrustGridForm({
   const resolvedFormId = customFormId || `form_${variant}`
   const resolvedFormName = customFormName || (
     variant === 'diagnostic' ? 'AI Diagnostic Form' :
+    variant === 'strategy_session' ? 'Executive Strategy Session Booking' :
     variant === 'contact' ? 'Contact Form' :
     variant === 'proposal' ? 'Enterprise Proposal Form' :
     variant === 'career' ? 'Career Application Form' :
@@ -152,11 +154,41 @@ export function TrustGridForm({
   const [resume, setResume] = useState('')
   const [message, setMessage] = useState('')
 
+  // Validation & Touched state
+  const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+
   // UI state
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [refId, setRefId] = useState('')
+
+  const validateField = (fieldName: string, value: string): string => {
+    let err = ''
+    if (fieldName === 'name') {
+      if (!value.trim()) err = 'Full name is required.'
+    } else if (fieldName === 'email') {
+      if (!value.trim()) {
+        err = 'Work email is required.'
+      } else if (!validateEmail(value.trim())) {
+        err = 'Please provide a valid work email address (e.g. name@company.com).'
+      }
+    } else if (fieldName === 'phone') {
+      if (!value.trim()) {
+        err = 'Phone or WhatsApp number is required for callback.'
+      } else if (!validatePhone(value.trim())) {
+        err = 'Please provide a valid phone number (e.g. +1 555-0123 or +91 9876543210).'
+      }
+    }
+    setFieldErrors((prev) => ({ ...prev, [fieldName]: err }))
+    return err
+  }
+
+  const handleBlur = (fieldName: string, value: string) => {
+    setTouched((prev) => ({ ...prev, [fieldName]: true }))
+    validateField(fieldName, value)
+  }
 
   // Funnel tracking flags
   const hasStartedRef = useRef(false)
@@ -222,23 +254,21 @@ export function TrustGridForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (isSubmitting) return
+
     setErrorMessage('')
     const validationErrors: Record<string, string> = {}
 
     // EXACTLY 3 MANDATORY FIELDS ACROSS ALL FORMS:
-    if (!name.trim()) {
-      validationErrors.name = 'Please provide your full name.'
-    }
+    const nameErr = validateField('name', name)
+    const emailErr = validateField('email', email)
+    const phoneErr = validateField('phone', phone)
 
-    if (!email.trim() || !validateEmail(email)) {
-      validationErrors.email = 'Please provide a valid work email address.'
-    }
+    setTouched({ name: true, email: true, phone: true })
 
-    if (!phone.trim()) {
-      validationErrors.phone = 'Please provide your phone / WhatsApp number for callback.'
-    } else if (!validatePhone(phone)) {
-      validationErrors.phone = 'Please provide a valid phone number (e.g. +1 555-0123 or +91 9876543210).'
-    }
+    if (nameErr) validationErrors.name = nameErr
+    if (emailErr) validationErrors.email = emailErr
+    if (phoneErr) validationErrors.phone = phoneErr
 
     if (Object.keys(validationErrors).length > 0) {
       const firstErr = Object.values(validationErrors)[0]
@@ -251,6 +281,7 @@ export function TrustGridForm({
 
     const formType = 
       variant === 'diagnostic' ? 'AI_DIAGNOSTIC' :
+      variant === 'strategy_session' ? 'STRATEGY_SESSION' :
       variant === 'contact' ? 'CONTACT' :
       variant === 'proposal' ? 'PROPOSAL' :
       variant === 'career' ? 'CAREER' :
@@ -299,18 +330,65 @@ export function TrustGridForm({
 
   if (submitted) {
     return (
-      <div className="diagnostic-success-box tg-card-interactive" style={{ padding: 'clamp(24px, 4vw, 36px)' }}>
-        <div className="success-badge-row">
-          <span className="success-badge">CONFIRMED</span>
-          <span className="success-ref">REF: {refId}</span>
+      <div
+        className="diagnostic-success-box tg-card-interactive"
+        style={{
+          padding: 'clamp(24px, 4vw, 36px)',
+          borderRadius: '16px',
+          border: '1px solid #86efac',
+          background: 'linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%)',
+          boxShadow: '0 10px 30px rgba(22, 163, 74, 0.08)'
+        }}
+      >
+        <div className="success-badge-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
+          <span className="success-badge" style={{ background: '#dcfce7', color: '#15803d', fontWeight: 700, padding: '4px 10px', borderRadius: '6px', fontSize: '11.5px', letterSpacing: '0.04em' }}>
+            CONFIRMED &amp; DISPATCHED
+          </span>
+          <span className="success-ref" style={{ fontSize: '12px', fontWeight: 600, color: '#1d5cff' }}>
+            REF: {refId}
+          </span>
         </div>
 
-        <h3 className="success-title">Thank you. Your request has been received.</h3>
-        <p className="success-lead">
-          Reference ID: <strong>{refId}</strong>. Our senior TRUSTGRID.AI architecture and engineering team will review your specifications and get in touch within 24–48 hours.
-        </p>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px', marginBottom: '16px' }}>
+          <div
+            style={{
+              width: '42px',
+              height: '42px',
+              borderRadius: '50%',
+              background: '#dcfce7',
+              border: '1px solid #86efac',
+              color: '#16a34a',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}
+          >
+            <CheckCircle2 size={24} />
+          </div>
+          <div>
+            <h3 className="success-title" style={{ margin: '0 0 6px', fontSize: '18px', fontWeight: 700, color: '#0f172a' }}>
+              {variant === 'strategy_session'
+                ? 'Strategy Session Request Confirmed!'
+                : 'Thank you. Your request has been received.'}
+            </h3>
+            <p className="success-lead" style={{ margin: 0, color: '#475569', fontSize: '13.5px', lineHeight: 1.5 }}>
+              Reference ID: <strong style={{ color: '#1d5cff' }}>{refId}</strong>. Our senior TRUSTGRID.AI architecture leads will review your specifications and reach out within 24–48 hours to confirm schedule availability.
+            </p>
+          </div>
+        </div>
 
-        <div className="success-actions" style={{ marginTop: '20px' }}>
+        <div className="success-actions" style={{ marginTop: '24px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <a
+            href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20submission%20"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button button-ghost button-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#15803d', borderColor: '#86efac', textDecoration: 'none' }}
+          >
+            <span>Direct WhatsApp Advisory</span>
+            <ArrowUpRight size={14} />
+          </a>
           <button
             type="button"
             className="button button-ghost button-sm"
@@ -321,6 +399,8 @@ export function TrustGridForm({
               setPhone('')
               setCompany('')
               setMessage('')
+              setTouched({})
+              setFieldErrors({})
               hasStartedRef.current = false
             }}
           >
@@ -583,46 +663,117 @@ export function TrustGridForm({
 
           <div className="contact-inputs-grid">
             <label className="input-group">
-              <span>Full Name <strong style={{ color: '#ef4444' }}>*</strong></span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Full Name <strong style={{ color: '#ef4444' }}>*</strong>
+                </span>
+                <span style={{ fontSize: '10.5px', fontWeight: 600, color: '#ef4444', background: '#fef2f2', padding: '1px 6px', borderRadius: '4px' }}>
+                  Required
+                </span>
+              </div>
               <input
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                disabled={isSubmitting}
+                onChange={(e) => {
+                  setName(e.target.value)
+                  if (touched.name) validateField('name', e.target.value)
+                }}
+                onBlur={(e) => handleBlur('name', e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('name')}
                 required
                 placeholder="e.g. Dr. Alexander Scott"
+                style={{
+                  borderColor: touched.name && fieldErrors.name ? '#f87171' : undefined,
+                  background: touched.name && fieldErrors.name ? '#fef2f2' : undefined
+                }}
               />
+              {touched.name && fieldErrors.name && (
+                <span style={{ color: '#dc2626', fontSize: '11.5px', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AlertCircle size={12} /> {fieldErrors.name}
+                </span>
+              )}
             </label>
 
             <label className="input-group">
-              <span>Work Email <strong style={{ color: '#ef4444' }}>*</strong></span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Work Email <strong style={{ color: '#ef4444' }}>*</strong>
+                </span>
+                <span style={{ fontSize: '10.5px', fontWeight: 600, color: '#ef4444', background: '#fef2f2', padding: '1px 6px', borderRadius: '4px' }}>
+                  Required
+                </span>
+              </div>
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitting}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  if (touched.email) validateField('email', e.target.value)
+                }}
+                onBlur={(e) => handleBlur('email', e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('email')}
                 required
                 placeholder="e.g. a.scott@enterprise.com"
+                style={{
+                  borderColor: touched.email && fieldErrors.email ? '#f87171' : undefined,
+                  background: touched.email && fieldErrors.email ? '#fef2f2' : undefined
+                }}
               />
+              {touched.email && fieldErrors.email && (
+                <span style={{ color: '#dc2626', fontSize: '11.5px', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AlertCircle size={12} /> {fieldErrors.email}
+                </span>
+              )}
             </label>
 
             <label className="input-group">
-              <span>Phone / WhatsApp <strong style={{ color: '#ef4444' }}>*</strong></span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Phone / WhatsApp <strong style={{ color: '#ef4444' }}>*</strong>
+                </span>
+                <span style={{ fontSize: '10.5px', fontWeight: 600, color: '#ef4444', background: '#fef2f2', padding: '1px 6px', borderRadius: '4px' }}>
+                  Required
+                </span>
+              </div>
               <input
                 type="tel"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                disabled={isSubmitting}
+                onChange={(e) => {
+                  setPhone(e.target.value)
+                  if (touched.phone) validateField('phone', e.target.value)
+                }}
+                onBlur={(e) => handleBlur('phone', e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('phone')}
                 required
                 placeholder="e.g. +1 (555) 012-3456 or +91 98765 43210"
+                style={{
+                  borderColor: touched.phone && fieldErrors.phone ? '#f87171' : undefined,
+                  background: touched.phone && fieldErrors.phone ? '#fef2f2' : undefined
+                }}
               />
+              {touched.phone && fieldErrors.phone && (
+                <span style={{ color: '#dc2626', fontSize: '11.5px', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <AlertCircle size={12} /> {fieldErrors.phone}
+                </span>
+              )}
             </label>
 
             <label className="input-group">
-              <span>Company (Optional)</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Company
+                </span>
+                <span style={{ fontSize: '10.5px', color: '#64748b', background: '#f1f5f9', padding: '1px 6px', borderRadius: '4px' }}>
+                  Optional
+                </span>
+              </div>
               <input
                 type="text"
                 value={company}
+                disabled={isSubmitting}
                 onChange={(e) => setCompany(e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('company')}
                 placeholder="e.g. Global Financial Corp"
@@ -630,10 +781,18 @@ export function TrustGridForm({
             </label>
 
             <label className="input-group">
-              <span>Job Role / Designation (Optional)</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Job Role / Designation
+                </span>
+                <span style={{ fontSize: '10.5px', color: '#64748b', background: '#f1f5f9', padding: '1px 6px', borderRadius: '4px' }}>
+                  Optional
+                </span>
+              </div>
               <input
                 type="text"
                 value={designation}
+                disabled={isSubmitting}
                 onChange={(e) => setDesignation(e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('designation')}
                 placeholder="e.g. CTO / VP of AI Infrastructure"
@@ -642,10 +801,18 @@ export function TrustGridForm({
 
             {variant === 'contact' && (
               <label className="input-group">
-                <span>Industry Sector (Optional)</span>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                  <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                    Industry Sector
+                  </span>
+                  <span style={{ fontSize: '10.5px', color: '#64748b', background: '#f1f5f9', padding: '1px 6px', borderRadius: '4px' }}>
+                    Optional
+                  </span>
+                </div>
                 <select
                   className="industry-dropdown"
                   value={industry}
+                  disabled={isSubmitting}
                   onChange={(e) => {
                     setIndustry(e.target.value)
                     handleFieldFocusOrChange('industry')
@@ -660,10 +827,18 @@ export function TrustGridForm({
             )}
 
             <label className="input-group md:col-span-2" style={{ gridColumn: '1 / -1' }}>
-              <span>Requirements / Workload Context (Optional)</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <span style={{ fontWeight: 600, fontSize: '13px', color: '#1e293b' }}>
+                  Requirements / Workload Context
+                </span>
+                <span style={{ fontSize: '10.5px', color: '#64748b', background: '#f1f5f9', padding: '1px 6px', borderRadius: '4px' }}>
+                  Optional
+                </span>
+              </div>
               <textarea
                 rows={compact ? 2 : 3}
                 value={message}
+                disabled={isSubmitting}
                 onChange={(e) => setMessage(e.target.value)}
                 onFocus={() => handleFieldFocusOrChange('message')}
                 placeholder="Describe your current GPU infrastructure, multi-agent deployment, compliance needs, or key objective..."
@@ -694,6 +869,7 @@ export function TrustGridForm({
           <>
             <span>
               {variant === 'diagnostic' ? 'Submit AI Diagnostic Request' :
+               variant === 'strategy_session' ? 'Confirm Strategy Session Booking' :
                variant === 'career' ? 'Submit Application' :
                variant === 'partner' ? 'Submit Alliance Proposal' :
                variant === 'newsletter' ? 'Subscribe to Whitepapers' :

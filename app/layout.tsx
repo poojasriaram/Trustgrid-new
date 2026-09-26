@@ -7,6 +7,7 @@ import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
 import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
 import { FloatingLeadForm } from '@/components/ui/floating-lead-form'
+import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 
 export const metadata: Metadata = {
   title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <ScrollRevealObserver />
         <FloatingLeadForm />
+        <WhatsAppCTA />
         <AIArchitectChatbot />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

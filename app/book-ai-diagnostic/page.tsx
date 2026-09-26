@@ -27,6 +27,7 @@ import { PageBannerHero } from '@/components/ui/page-banner-hero'
 
 function DiagnosticContent() {
   const searchParams = useSearchParams()
+  const isStrategySession = searchParams.get('type') === 'strategy-session'
   const initialSolution = searchParams.get('solution') || ''
   const initialIndustry = searchParams.get('industry') || ''
 
@@ -34,15 +35,17 @@ function DiagnosticContent() {
     <>
       {/* STANDARD PAGE BANNER HERO */}
       <PageBannerHero
-        badge="EXECUTIVE DIAGNOSTIC"
-        badgeTag="SYSTEMS & TCO AUDIT"
-        title="Find the Fastest Path from AI Ambition to"
-        titleHighlight="Operational Production Value"
-        description="Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced execution roadmap."
+        badge={isStrategySession ? "STRATEGY SESSION" : "EXECUTIVE DIAGNOSTIC"}
+        badgeTag={isStrategySession ? "45-MIN EXECUTIVE SCOPING" : "SYSTEMS & TCO AUDIT"}
+        title={isStrategySession ? "Book Your Executive AI Strategy Session with" : "Find the Fastest Path from AI Ambition to"}
+        titleHighlight={isStrategySession ? "Principal Systems Architects" : "Operational Production Value"}
+        description={isStrategySession
+          ? "Schedule a dedicated 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap."
+          : "Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced execution roadmap."}
         thesisHighlight="Principal Systems Engineering • Quantifiable TCO Modeling • 90-Day Production Roadmap"
         image="/images/offering-agentic.jpg"
         primaryCta={{
-          label: "Start Diagnostic Form",
+          label: isStrategySession ? "Book Strategy Session" : "Start Diagnostic Form",
           href: "#diagnostic-form-section"
         }}
         secondaryCta={{
@@ -50,14 +53,14 @@ function DiagnosticContent() {
           href: "/methodology-engine"
         }}
         quickNavItems={[
-          { label: "1. Diagnostic Form", href: "#diagnostic-form-section" },
+          { label: isStrategySession ? "1. Strategy Session Form" : "1. Diagnostic Form", href: "#diagnostic-form-section" },
           { label: "2. Methodology", href: "/methodology-engine" },
           { label: "3. Enterprise Solutions", href: "/offerings" },
           { label: "4. Direct Contact", href: "/contact" }
         ]}
         metrics={{
-          statValue: "90-Day",
-          statLabel: "Production Roadmap",
+          statValue: isStrategySession ? "45-Min" : "90-Day",
+          statLabel: isStrategySession ? "Architect Briefing" : "Production Roadmap",
           icon: ShieldCheck,
           features: [
             "Deep Systems Engineering Audit",
@@ -78,13 +81,19 @@ function DiagnosticContent() {
           <div className="diagnostic-intro-col">
             <div className="diagnostic-badge-wrap">
               <span className="section-label" style={{ color: '#1d5cff' }}>
-                TRUSTGRID.AI / EXECUTIVE DIAGNOSTIC
+                TRUSTGRID.AI / {isStrategySession ? 'STRATEGY SESSION' : 'EXECUTIVE DIAGNOSTIC'}
               </span>
               <h2>
-                Find the fastest path from AI ambition to <span>operational value.</span>
+                {isStrategySession ? (
+                  <>Schedule an Executive <span>AI Strategy Session.</span></>
+                ) : (
+                  <>Find the fastest path from AI ambition to <span>operational value.</span></>
+                )}
               </h2>
               <p className="diagnostic-hero-lead">
-                Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, governance posture, and quantum security to build a sequenced execution roadmap.
+                {isStrategySession
+                  ? "Engage directly with senior infrastructure and multi-agent architects. In 45 minutes, we examine your deployment bottlenecks, GPU cluster topology, security boundaries, and deliver an actionable execution path."
+                  : "Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, governance posture, and quantum security to build a sequenced execution roadmap."}
               </p>
             </div>
 
@@ -129,15 +138,15 @@ function DiagnosticContent() {
             </div>
           </div>
 
-          {/* RIGHT: STANDARDIZED DIAGNOSTIC FORM */}
+          {/* RIGHT: STANDARDIZED DIAGNOSTIC / STRATEGY SESSION FORM */}
           <div className="diagnostic-form-col">
             <TrustGridForm
-              variant="diagnostic"
-              formId="form_ai_diagnostic"
-              formName="AI Diagnostic Form"
+              variant={isStrategySession ? 'strategy_session' : 'diagnostic'}
+              formId={isStrategySession ? 'form_strategy_session' : 'form_ai_diagnostic'}
+              formName={isStrategySession ? 'Strategy Session Booking Form' : 'AI Diagnostic Form'}
               defaultSolution={initialSolution}
               defaultIndustry={initialIndustry}
-              ctaSource="book_diagnostic_page"
+              ctaSource={isStrategySession ? 'strategy_session_page' : 'book_diagnostic_page'}
             />
           </div>
         </div>

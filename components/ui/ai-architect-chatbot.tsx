@@ -35,59 +35,95 @@ interface ChatMessage {
   timestamp: string
   quickActions?: { label: string; action: string }[]
   offeringTag?: string
+  pageLink?: { label: string; href: string }
+  followUpQuestion?: string
   isLeadPrompt?: boolean
 }
 
 const trustgridKnowledge = [
   {
-    keywords: ['infra', 'infrastructure', 'gpu', 'data center', 'datacenter', 'liquid cooling', 'blackwell', 'h100', 'cluster', 'pue', 'compute', 'utilization'],
+    keywords: ['strategy session', 'strategy', 'executive briefing', 'architect session', 'consultation', 'talk to architect', 'speak with architect', 'meeting', 'book session'],
+    offering: 'Executive Strategy Session',
+    response: 'An Executive Strategy Session is a focused 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.',
+    followUpQuestion: 'Would you like to schedule a dedicated 45-minute Strategy Session with our principal engineering team?',
+    pageLink: { label: 'Book Executive Strategy Session (45-Min)', href: '/book-ai-diagnostic?type=strategy-session' }
+  },
+  {
+    keywords: ['infra', 'infrastructure', 'gpu', 'data center', 'datacenter', 'liquid cooling', 'blackwell', 'h100', 'h200', 'cluster', 'pue', 'compute', 'utilization', 'substation', 'subsea'],
     offering: 'AI Infrastructure & AI Data Center Engineering',
-    response: 'TrustGrid engineers high-density AI Factories (30–100kW/rack) with direct-to-chip liquid cooling, kernel-level accelerator tuning, and low-latency inference serving. We eliminate the 30–50% compute waste common in GPU clusters and slash inference TCO by 30–60%.'
+    response: 'TRUSTGRID.AI engineers high-density AI Factories (30–100kW/rack) with direct-to-chip liquid cooling, kernel-level accelerator tuning, and low-latency inference serving. We eliminate the 30–50% compute waste common in GPU clusters and slash inference TCO by 30–60%.',
+    followUpQuestion: 'What cluster scale or rack density (kW/rack) are you planning or currently operating?',
+    pageLink: { label: 'Explore AI Infrastructure Architecture', href: '/solutions/ai-infra-engineering' }
   },
   {
-    keywords: ['agent', 'agentic', 'multi-agent', 'langgraph', 'crewai', 'autogen', 'mcp', 'autonomous', 'digital worker', 'workflow'],
+    keywords: ['agent', 'agentic', 'multi-agent', 'langgraph', 'crewai', 'autogen', 'mcp', 'autonomous', 'digital worker', 'workflow', 'swarm', 'agentops'],
     offering: 'Agentic Enterprise',
-    response: 'TrustGrid architects production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics (episodic/semantic), tool sandboxing via Model Context Protocol (MCP), and enterprise AgentOps telemetry with >95% SLA-enforced task accuracy.'
+    response: 'TRUSTGRID.AI architects production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics (episodic/semantic), tool sandboxing via Model Context Protocol (MCP), and enterprise AgentOps telemetry with >95% SLA-enforced task accuracy.',
+    followUpQuestion: 'Are you deploying autonomous agent swarms in internal operations or customer-facing workflows?',
+    pageLink: { label: 'Explore Agentic Enterprise Solutions', href: '/solutions/ai-agentic-factory' }
   },
   {
-    keywords: ['network', 'networking', 'infiniband', 'roce', 'rocev2', 'bandwidth', 'latency', 'dragonfly', 'packet drop', 'nccl', 'noc'],
-    offering: 'AI Networking',
-    response: 'TrustGrid designs ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, NCCL/RCCL collective tuning, and autonomous AI NOC telemetry.'
+    keywords: ['network', 'networking', 'infiniband', 'roce', 'rocev2', 'bandwidth', 'latency', 'dragonfly', 'packet drop', 'nccl', 'rccl', 'noc', 'spine-leaf'],
+    offering: 'AI-Native Networking',
+    response: 'TRUSTGRID.AI designs ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, NCCL/RCCL collective tuning, and autonomous AI NOC telemetry.',
+    followUpQuestion: 'Are you currently encountering packet drops or tail latency spikes in your GPU distributed training fabric?',
+    pageLink: { label: 'Explore AI-Native Networking', href: '/solutions/ai-networking' }
   },
   {
-    keywords: ['security', 'cybersecurity', 'quantum', 'pqc', 'cbom', 'guardrail', 'prompt injection', 'jailbreak', 'soc', 'zero-trust'],
+    keywords: ['security', 'cybersecurity', 'quantum', 'pqc', 'cbom', 'guardrail', 'prompt injection', 'jailbreak', 'soc', 'zero-trust', 'ml-kem', 'ml-dsa'],
     offering: 'AI Cybersecurity & Quantum-Safe Networking',
-    response: 'TrustGrid provides comprehensive security protecting autonomous agents with zero-trust permissions and real-time prompt firewalls, while migrating enterprise infrastructure to NIST Post-Quantum Cryptography standards (ML-KEM/ML-DSA) with automated Cryptographic Bill of Materials (CBOM).'
+    response: 'TRUSTGRID.AI provides comprehensive security protecting autonomous agents with zero-trust permissions and real-time prompt firewalls, while migrating enterprise infrastructure to NIST Post-Quantum Cryptography standards (ML-KEM/ML-DSA) with automated Cryptographic Bill of Materials (CBOM).',
+    followUpQuestion: 'Has your security team established a Cryptographic Bill of Materials (CBOM) for post-quantum readiness?',
+    pageLink: { label: 'Explore AI Cybersecurity Solutions', href: '/solutions/ai-cybersecurity' }
   },
   {
-    keywords: ['trust', 'trusted', 'explainability', 'shap', 'lime', 'eu ai act', 'nist', 'governance', 'compliance', 'audit', 'iso 42001', 'black box'],
+    keywords: ['trust', 'trusted', 'explainability', 'shap', 'lime', 'eu ai act', 'nist', 'governance', 'compliance', 'audit', 'iso 42001', 'black box', 'hallucination'],
     offering: 'Trusted AI Engineering',
-    response: 'TrustGrid turns non-deterministic AI into mathematically explainable, auditable enterprise systems using SHAP/LIME explainability, continuous Statistical Process Control (SPC), and immutable cryptographic audit logging compliant with the EU AI Act and NIST AI RMF.'
+    response: 'TRUSTGRID.AI turns non-deterministic AI into mathematically explainable, auditable enterprise systems using SHAP/LIME explainability, continuous Statistical Process Control (SPC), and immutable cryptographic audit logging compliant with the EU AI Act and NIST AI RMF.',
+    followUpQuestion: 'Which regulatory framework is your primary compliance target (e.g., EU AI Act, NIST AI RMF, ISO 42001)?',
+    pageLink: { label: 'Explore Trusted AI Framework', href: '/solutions/trusted-ai' }
   },
   {
     keywords: ['value', 'roi', 'finops', 'cost', 'economics', 'token', 'p&l', 'business case', 'lean', 'toc', 'theory of constraints', 'dmaic'],
     offering: 'AI Value Engineering & Acceleration',
-    response: 'TrustGrid combines industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) with granular AI FinOps unit economics to prioritize high-yield initiatives and deliver 3–10x verified ROI in 90-day sprints.'
+    response: 'TRUSTGRID.AI combines industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) with granular AI FinOps unit economics to prioritize high-yield initiatives and deliver 3–10x verified ROI in 90-day sprints.',
+    followUpQuestion: 'Are you looking to optimize token inference costs, reduce GPU idle time, or establish unit economics?',
+    pageLink: { label: 'Explore AI Value Engineering', href: '/solutions/ai-value-engineering' }
   },
   {
     keywords: ['diagnostic', 'assessment', 'audit', 'evaluate', 'benchmark', 'readiness'],
-    offering: 'AI Diagnostic',
-    response: 'The TrustGrid AI Diagnostic is a structured 2–4 week executive technical and financial evaluation conducted by senior AI architects. We assess compute utilization, agent readiness, trust posture, and value realization, delivering a prioritized 90-day execution roadmap.'
+    offering: 'Executive AI Diagnostic',
+    response: 'The TRUSTGRID.AI Executive Diagnostic is a structured 2–4 week technical and financial evaluation conducted by senior AI architects. We evaluate compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced 90-day production roadmap.',
+    followUpQuestion: 'Would you like to start the Executive Diagnostic scoping form for your organization?',
+    pageLink: { label: 'Start Executive Diagnostic Form', href: '/book-ai-diagnostic' }
   },
   {
-    keywords: ['methodology', 'oee', 'tpm', 'smed', 'fmea', 'spc', 'kaizen', 'six sigma'],
+    keywords: ['contact', 'email', 'phone', 'whatsapp', 'reach out', 'call', 'office', 'headquarters', 'inquiry', 'message'],
+    offering: 'Direct Contact & Advisory',
+    response: 'You can connect directly with TRUSTGRID.AI through our official Contact page, book an Executive Strategy Session, or chat immediately with our advisory team on WhatsApp.',
+    followUpQuestion: 'Would you prefer a direct callback from an architect or a WhatsApp conversation?',
+    pageLink: { label: 'Go to Contact Page', href: '/contact' }
+  },
+  {
+    keywords: ['methodology', 'oee', 'tpm', 'smed', 'fmea', 'spc', 'kaizen', 'six sigma', 'hoshin kanri', 'poka-yoke'],
     offering: 'Methodology Engine',
-    response: 'TrustGrid’s AI-Driven Methodology Engine applies proven industrial engineering frameworks (Lean, TOC, DMAIC, OEE, TPM, SMED, FMEA, SPC, Hoshin Kanri) to optimize GPU compute throughput, prevent agent mistakes (Poka-Yoke), and guarantee predictable P&L returns.'
+    response: 'TRUSTGRID.AI’s AI-Driven Methodology Engine applies proven industrial engineering frameworks (Lean, TOC, DMAIC, OEE, TPM, SMED, FMEA, SPC, Hoshin Kanri, Poka-Yoke) to optimize GPU compute throughput, prevent agent mistakes, and guarantee predictable P&L returns.',
+    followUpQuestion: 'Which operational methodology are you looking to adapt for your AI workflows?',
+    pageLink: { label: 'Explore Methodology Engine', href: '/methodology-engine' }
   },
   {
     keywords: ['industry', 'industries', 'banking', 'healthcare', 'defense', 'manufacturing', 'aerospace', 'energy', 'telecom'],
     offering: 'Regulated Industries',
-    response: 'TrustGrid delivers specialized pre-calibrated architectures across 20+ regulated global verticals including Banking & Sovereign Finance, Healthcare & Clinical AI, Aerospace & Defense, Industrial Manufacturing, Telecommunications, and Energy.'
+    response: 'TRUSTGRID.AI delivers specialized pre-calibrated architectures across 20+ regulated global verticals including Banking & Sovereign Finance, Healthcare & Clinical AI, Aerospace & Defense, Industrial Manufacturing, Telecommunications, and Energy.',
+    followUpQuestion: 'Which industry vertical is your organization operating in?',
+    pageLink: { label: 'View Industry Architectures', href: '/industries' }
   },
   {
-    keywords: ['pricing', 'cost', 'quote', 'proposal', 'hire', 'engagement', 'contact', 'consult'],
+    keywords: ['pricing', 'cost', 'quote', 'proposal', 'hire', 'engagement', 'consult'],
     offering: 'Engagement & Advisory',
-    response: 'TrustGrid engagements range from Fixed-Scope AI Diagnostics (2–4 weeks) and 90-Day Rapid Value Sprints (12 weeks) to Turnkey Design & Build (16–32 weeks) and Enterprise Operating Partnerships. Would you like to connect with a principal architect to discuss your scope?'
+    response: 'TRUSTGRID.AI engagements range from Fixed-Scope AI Diagnostics (2–4 weeks) and 90-Day Rapid Value Sprints (12 weeks) to Turnkey Design & Build (16–32 weeks) and Enterprise Operating Partnerships. Would you like to connect with a principal architect to discuss your scope?',
+    followUpQuestion: 'Would you like to schedule an Executive Strategy Session or submit an initial project scope?',
+    pageLink: { label: 'Book Strategy Session', href: '/book-ai-diagnostic?type=strategy-session' }
   }
 ]
 
@@ -98,14 +134,15 @@ export function AIArchitectChatbot() {
     {
       id: 'msg-init',
       sender: 'bot',
-      text: 'Hello, I am the TrustGrid AI Architect Assistant. How can I help you evaluate, architect, or scale your enterprise AI infrastructure and autonomous agent operations?',
+      text: 'Hello, I am the TRUSTGRID.AI Architect Assistant. How can I assist you with evaluating, architecting, or scaling your enterprise AI infrastructure, autonomous agent fleets, or quantum-safe networks?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickActions: [
+        { label: 'Book Strategy Session', action: 'book_strategy' },
         { label: 'Explore Solutions', action: 'solutions' },
         { label: 'AI Infrastructure', action: 'infra' },
         { label: 'Agentic Enterprise', action: 'agentic' },
         { label: 'AI Cybersecurity', action: 'cybersecurity' },
-        { label: 'Book AI Diagnostic', action: 'diagnostic' }
+        { label: 'Contact Us', action: 'contact' }
       ]
     }
   ])
@@ -175,14 +212,14 @@ export function AIArchitectChatbot() {
     setTimeout(() => {
       processBotResponse(text)
       setIsTyping(false)
-    }, 600)
+    }, 550)
   }
 
   const processBotResponse = (userInput: string) => {
     const lower = userInput.toLowerCase()
 
     // 1. High Intent Detection Check
-    const highIntentKeywords = ['pricing', 'cost', 'quote', 'hire', 'talk to architect', 'contact', 'book', 'diagnostic', 'assessment', 'demo', 'proposal', 'implement', 'schedule']
+    const highIntentKeywords = ['pricing', 'cost', 'quote', 'hire', 'talk to architect', 'contact', 'book', 'strategy', 'diagnostic', 'assessment', 'demo', 'proposal', 'implement', 'schedule']
     const isHighIntent = highIntentKeywords.some((k) => lower.includes(k))
 
     if (isHighIntent) {
@@ -200,12 +237,16 @@ export function AIArchitectChatbot() {
 
     let responseText = ''
     let offeringTag = bestMatch?.offering
+    let pageLink = bestMatch?.pageLink
+    let followUpQuestion = bestMatch?.followUpQuestion
 
     if (bestMatch) {
       responseText = bestMatch.response
     } else {
       responseText =
-        'TrustGrid is a specialized full-stack AI engineering operating company. We architect high-density GPU infrastructure, autonomous multi-agent fleets, lossless AI networking, quantum-safe cybersecurity, trusted explainability, and AI value engineering.'
+        'TRUSTGRID.AI is a specialized full-stack AI engineering operating company. We architect high-density GPU infrastructure, autonomous multi-agent fleets, lossless AI networking, quantum-safe cybersecurity, trusted explainability, and AI value engineering.'
+      followUpQuestion = 'Which layer of your AI stack is your current priority: compute infrastructure, multi-agent workflows, networking, or security?'
+      pageLink = { label: 'Explore All Enterprise Offerings', href: '/offerings' }
     }
 
     // 3. Propose Lead Connection for High-Intent or Offering Questions
@@ -223,10 +264,13 @@ export function AIArchitectChatbot() {
       text: responseText,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       offeringTag,
+      pageLink,
+      followUpQuestion,
       quickActions: [
-        { label: 'Book AI Diagnostic', action: 'diagnostic' },
+        { label: 'Book Strategy Session', action: 'book_strategy' },
         { label: 'Talk to an Architect', action: 'connect_architect' },
-        { label: 'Explore Solutions', action: 'solutions' }
+        { label: 'Book AI Diagnostic', action: 'diagnostic' },
+        { label: 'Contact Us', action: 'contact' }
       ]
     }
 
@@ -234,14 +278,18 @@ export function AIArchitectChatbot() {
   }
 
   const handleQuickAction = (action: string) => {
-    if (action === 'diagnostic') {
+    if (action === 'book_strategy') {
+      window.location.href = '/book-ai-diagnostic?type=strategy-session'
+    } else if (action === 'contact') {
+      window.location.href = '/contact'
+    } else if (action === 'diagnostic') {
       handleSendMessage('I would like to book an executive AI Diagnostic assessment.')
       startLeadFlow('AI Diagnostic')
     } else if (action === 'connect_architect') {
-      handleSendMessage('I would like to speak directly with a TrustGrid AI Architect.')
+      handleSendMessage('I would like to speak directly with a TRUSTGRID.AI Systems Architect.')
       startLeadFlow('Architect Consultation')
     } else if (action === 'solutions') {
-      handleSendMessage('Tell me about the 6 TrustGrid solution groups.')
+      handleSendMessage('Tell me about the 6 TRUSTGRID.AI solution groups.')
     } else if (action === 'infra') {
       handleSendMessage('Tell me about AI Infrastructure and GPU data center engineering.')
     } else if (action === 'agentic') {
@@ -477,7 +525,44 @@ export function AIArchitectChatbot() {
                           {msg.offeringTag}
                         </div>
                       )}
-                      {msg.text}
+                      <div>{msg.text}</div>
+
+                      {msg.followUpQuestion && (
+                        <div style={{
+                          marginTop: '8px',
+                          paddingTop: '8px',
+                          borderTop: '1px dashed #cbd5e1',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          color: msg.sender === 'user' ? '#e0e7ff' : '#1d5cff'
+                        }}>
+                          💡 {msg.followUpQuestion}
+                        </div>
+                      )}
+
+                      {msg.pageLink && (
+                        <div style={{ marginTop: '10px' }}>
+                          <Link
+                            href={msg.pageLink.href}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '5px',
+                              padding: '5px 10px',
+                              background: msg.sender === 'user' ? 'rgba(255,255,255,0.2)' : '#eff6ff',
+                              color: msg.sender === 'user' ? '#ffffff' : '#1d5cff',
+                              border: msg.sender === 'user' ? '1px solid rgba(255,255,255,0.3)' : '1px solid #bfdbfe',
+                              borderRadius: '6px',
+                              fontSize: '11.5px',
+                              fontWeight: 600,
+                              textDecoration: 'none'
+                            }}
+                          >
+                            <span>{msg.pageLink.label}</span>
+                            <ArrowUpRight size={13} />
+                          </Link>
+                        </div>
+                      )}
                     </div>
 
                     <span style={{ fontSize: '10px', color: '#94a3b8', marginTop: '3px', padding: '0 4px' }}>

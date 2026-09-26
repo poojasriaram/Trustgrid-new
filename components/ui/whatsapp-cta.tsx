@@ -49,7 +49,7 @@ export function WhatsAppCTA({
   customNumber,
   position = 'bottom-left',
   inline = false,
-  label = 'Chat on WhatsApp'
+  label = 'Chat with TRUSTGRID.AI'
 }: WhatsAppCTAProps) {
   const pathname = usePathname()
   const [showTooltip, setShowTooltip] = useState(false)
@@ -111,7 +111,7 @@ export function WhatsAppCTA({
         <div
           style={{
             position: 'absolute',
-            bottom: '60px',
+            bottom: '56px',
             left: '0',
             width: '260px',
             background: '#ffffff',
@@ -127,7 +127,7 @@ export function WhatsAppCTA({
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#15803d', marginBottom: '4px' }}>
             <MessageCircle size={14} />
-            <span>Direct WhatsApp Line</span>
+            <span>Direct WhatsApp Advisory</span>
           </div>
           <p style={{ margin: 0, color: '#64748b' }}>
             Connect instantly with our executive AI advisory team for rapid technical consultation.
@@ -141,29 +141,29 @@ export function WhatsAppCTA({
         target="_blank"
         rel="noopener noreferrer"
         onClick={() => handleClick('floating_widget')}
-        aria-label="Contact TRUSTGRID.AI on WhatsApp"
+        aria-label="Chat with TRUSTGRID.AI on WhatsApp"
         className="tg-btn-shine tg-card-interactive"
         style={{
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          padding: '12px 18px',
+          padding: '10px 16px',
           background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
           color: '#ffffff',
           borderRadius: '999px',
-          boxShadow: '0 8px 24px rgba(37, 211, 102, 0.4)',
+          boxShadow: '0 6px 20px rgba(37, 211, 102, 0.35)',
           textDecoration: 'none',
           fontWeight: 600,
-          fontSize: '13px',
-          border: '1px solid rgba(255,255,255,0.3)',
+          fontSize: '12.5px',
+          border: '1px solid rgba(255,255,255,0.35)',
         }}
       >
-        <span style={{ position: 'relative', display: 'flex', height: '9px', width: '9px' }}>
+        <span style={{ position: 'relative', display: 'flex', height: '8px', width: '8px' }}>
           <span style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '999px', background: '#ffffff', opacity: 0.75, animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite' }} />
-          <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '999px', height: '9px', width: '9px', background: '#ffffff' }} />
+          <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '999px', height: '8px', width: '8px', background: '#ffffff' }} />
         </span>
-        <MessageCircle size={18} />
-        <span>WhatsApp Advisory</span>
+        <MessageCircle size={17} />
+        <span>{label}</span>
       </a>
     </div>
   )

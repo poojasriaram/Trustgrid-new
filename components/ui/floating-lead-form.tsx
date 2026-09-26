@@ -91,7 +91,7 @@ export function FloatingLeadForm() {
         className="floating-lead-container"
         style={{
           position: 'fixed',
-          bottom: '24px',
+          bottom: '76px',
           left: '24px',
           zIndex: 9998
         }}

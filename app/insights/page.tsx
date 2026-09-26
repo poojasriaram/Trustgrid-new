@@ -190,6 +190,22 @@ export default function InsightsPage() {
                       <span>Launch Interactive App</span>
                       <ArrowUpRight size={14} />
                     </a>
+                  ) : article.internalLink ? (
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <Link
+                        href={article.internalLink}
+                        className="button button-primary button-sm"
+                      >
+                        <span>Explore Architecture</span>
+                        <ArrowUpRight size={14} />
+                      </Link>
+                      <Link
+                        href="/book-ai-diagnostic?type=strategy-session"
+                        className="button button-ghost button-sm"
+                      >
+                        <span>Book Strategy Session</span>
+                      </Link>
+                    </div>
                   ) : (
                     <Link
                       href="/book-ai-diagnostic"

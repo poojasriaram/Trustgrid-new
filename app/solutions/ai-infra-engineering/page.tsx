@@ -68,6 +68,7 @@ import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { HeroCanvas } from '@/components/ui/hero-canvas'
 import { BorderBeam } from '@/components/ui/border-beam'
+import { ICPSlider } from '@/components/ui/icp-slider'
 import { trackCTA, sendAnalyticsEvent } from '@/lib/analytics'
 
 export default function AIInfraEngineeringPage() {
@@ -1853,6 +1854,11 @@ export default function AIInfraEngineeringPage() {
             </div>
           </div>
         </section>
+
+        {/* SUPPORTING ICP / PROBLEM / CHALLENGES / METRICS (WO-157) */}
+        <div className="my-12">
+          <ICPSlider />
+        </div>
 
         {/* SECTION 22: PRIMARY CTA & EXECUTIVE CONSULTATION FORM */}
         <section id="contact-advisory" className="pt-6 pb-6">

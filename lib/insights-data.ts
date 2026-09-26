@@ -7,6 +7,7 @@ export interface InsightArticle {
   abstract: string
   highlights: string[]
   externalUrl?: string
+  internalLink?: string
   slug: string
 }
 
@@ -95,5 +96,51 @@ export const insightsArticles: InsightArticle[] = [
       '$18.2M annualized operational expense savings'
     ],
     slug: 'tier1-bank-autonomous-reconciliation'
+  },
+  {
+    id: 'ai-native-networking-architecture',
+    title: 'AI-Native Networking: Why Traditional Spine-Leaf Fabrics Collapse Under Multi-Tenant GPU Training',
+    category: 'Blog',
+    readTime: '11 min read',
+    date: 'March 2026',
+    abstract: 'An architectural deep dive into why enterprise Ethernet and legacy spine-leaf fabrics fail under distributed GPU collective communications (AllReduce/AlltoAll), and how non-blocking Spectrum-X and InfiniBand fabrics eliminate packet drops and microsecond jitter.',
+    highlights: [
+      '400G / 800G Spectrum-X RoCEv2 vs. Quantum-2 InfiniBand benchmarks',
+      'Preventing Incast buffer overflow with hardware-level PFC & ECN tuning',
+      'Autonomous AI NOC telemetry for automated link degradation self-healing'
+    ],
+    slug: 'ai-native-networking-architecture',
+    internalLink: '/solutions/ai-networking'
+  },
+  {
+    id: 'ai-infrastructure-networking-convergence',
+    title: 'AI Infrastructure + Networking: Co-Engineering Subsea CLS, 100MW Substations, and Non-Terrestrial Satellites',
+    category: 'Blog',
+    readTime: '14 min read',
+    date: 'March 2026',
+    abstract: 'How the physical convergence of dedicated multi-gigawatt power grids, turnkey cable landing stations (CLS), and 9 Tbps satellite ground stations creates a resilient backbone for next-generation sovereign AI data center campuses.',
+    highlights: [
+      'Co-locating AI Factories with subsea CLS backhauls for <5ms transcontinental latency',
+      '9 Tbps Non-Terrestrial Network (NTN) orbital sync for distributed training checkpoints',
+      'Full-stack DBOT delivery model from raw land acquisition to GPU cluster turn-up'
+    ],
+    slug: 'ai-infrastructure-networking-convergence',
+    internalLink: '/solutions/ai-infra-engineering'
+  },
+  {
+    id: 'ai-native-enterprise-networking',
+    title: 'AI-Native Enterprise Networking: Zero-Loss RoCEv2 Fabrics for Distributed Agentic Swarms',
+    category: 'Blog',
+    readTime: '9 min read',
+    date: 'March 2026',
+    abstract: 'Engineering blueprints for interconnecting thousands of autonomous enterprise agents across on-premise inference pods and sovereign cloud environments with zero packet drop and deterministic execution SLAs.',
+    highlights: [
+      'Eliminating tail latency in distributed LangGraph and CrewAI multi-agent DAGs',
+      'Post-Quantum Cryptographic (PQC) encapsulation over high-throughput enterprise RoCEv2',
+      'Hardware-enforced Model Context Protocol (MCP) data plane isolation'
+    ],
+    slug: 'ai-native-enterprise-networking',
+    internalLink: '/solutions/ai-networking'
   }
 ]
+
