@@ -86,13 +86,13 @@ export function FloatingLeadForm() {
 
   return (
     <>
-      {/* FLOATING LAUNCHER PILL (Bottom Left to complement chatbot on bottom right) */}
+      {/* FLOATING LAUNCHER PILL (Bottom Right Corner) */}
       <div
         className="floating-lead-container"
         style={{
           position: 'fixed',
-          bottom: '76px',
-          left: '24px',
+          bottom: '24px',
+          right: '24px',
           zIndex: 9998
         }}
       >
@@ -144,7 +144,7 @@ export function FloatingLeadForm() {
           style={{
             position: 'fixed',
             bottom: '24px',
-            left: '24px',
+            right: '24px',
             width: 'clamp(320px, 90vw, 380px)',
             background: '#ffffff',
             borderRadius: '16px',

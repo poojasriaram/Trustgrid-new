@@ -362,12 +362,12 @@ export function AIArchitectChatbot() {
 
   return (
     <>
-      {/* FLOATING LAUNCHER BUTTON */}
-      <div className="chatbot-launcher-container" style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 9999 }}>
+      {/* FLOATING LAUNCHER BUTTON (Right Side, Above Quick Inquiry) */}
+      <div className="chatbot-launcher-container" style={{ position: 'fixed', bottom: '76px', right: '24px', zIndex: 9997 }}>
         {!isOpen && (
           <button
             onClick={toggleChat}
-            className="chatbot-launcher-btn"
+            className="chatbot-launcher-btn tg-btn-shine"
             aria-label="Talk to an AI Architect"
             style={{
               display: 'flex',
