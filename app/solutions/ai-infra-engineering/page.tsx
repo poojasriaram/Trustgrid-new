@@ -60,7 +60,8 @@ import {
   Mail,
   Users,
   Shield,
-  Layers3
+  Layers3,
+  Target
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -71,12 +72,226 @@ import { BorderBeam } from '@/components/ui/border-beam'
 import { ICPSlider } from '@/components/ui/icp-slider'
 import { trackCTA, sendAnalyticsEvent } from '@/lib/analytics'
 
+// 10 Stage-Gated Lifecycle Data for Satellite Landing Station (SLS)
+const slsStageGates = [
+  {
+    step: '00',
+    title: 'Gateway & Constellation Strategy',
+    shortTitle: 'Strategy',
+    badge: 'ENGAGE',
+    tagline: 'Establish the investment case and strategic positioning before capital is committed.',
+    activities: [
+      'LEO / MEO / GEO constellation & operator demand mapping (Starlink, OneWeb/Eutelsat, Kuiper, O3b mPOWER, Viasat, Intelsat, Telesat Lightspeed)',
+      'Gateway / teleport corridor & coverage analysis: beam footprints, look angles, orbital diversity',
+      'Capacity & take-up modelling for high-speed connectivity up to 9 Tbps',
+      'Spectrum-band strategy across Ka / Ku / Q / V bands; ITU environment screening',
+      'Latency-corridor and route-diversity assessment',
+      'Geopolitical, regulatory, spectrum & space-weather hazard screening',
+      'Concept CAPEX/OPEX, revenue model and phasing',
+      'Candidate-region shortlist for downstream site identification'
+    ],
+    deliverables: 'Gateway strategy note; constellation & demand model; spectrum-band plan; coverage & risk map; indicative business case; region shortlist.',
+    commercialModel: 'Advisory / feasibility engagement (fixed-fee) or DBOT pre-development.',
+    kpis: 'Demand coverage %; addressable capacity (Tbps, target 9 Tbps); constellation diversity index.',
+    keyRisks: 'Constellation rollout delay; demand over-projection; spectrum/orbital congestion; policy shift.'
+  },
+  {
+    step: '01',
+    title: 'Land Identification & Site Selection',
+    shortTitle: 'Site/RF ID',
+    badge: 'SITE ID',
+    tagline: 'Identify and rank land parcels that can physically, legally, spectrally and commercially host an SLS.',
+    activities: [
+      'RF-quiet-zone screening: RFI environment, spectrum survey, coordination/exclusion zones',
+      'Sky-view & look-angle analysis: unobstructed arc to the GEO belt and LEO/MEO passes; horizon mask',
+      'Rain-fade & climatic screening (ITU rain zones, rainfall rate) for Ka/Ku/Q/V availability',
+      'Terrain, flood, seismic & wind-load screening for the antenna farm',
+      'Utility & connectivity proximity: grid/substation, fibre and backhaul, highway/port, existing IXs & data centers',
+      'Land due diligence: title, ownership, encumbrances, zoning & local planning',
+      'Environmental & social sensitivity screening; aviation & defence/strategic-area screening',
+      'Weighted multi-criteria site-selection matrix; land-acquisition strategy (purchase / lease / PPP)'
+    ],
+    deliverables: 'Site long-list & short-list; RF & sky-view report; site-selection matrix; land due-diligence report; acquisition strategy.',
+    commercialModel: 'Site-selection mandate; land-acquisition advisory.',
+    kpis: 'Sites shortlisted; RFI headroom (dB); sky-view clearance %; land-cost per m² benchmark.',
+    keyRisks: 'RF interference; title disputes; zoning restrictions; acquisition delay; local opposition.'
+  },
+  {
+    step: '02',
+    title: 'Site, RF & Sky-View Surveys',
+    shortTitle: 'Site, RF & Sky-View Survey',
+    badge: 'SURVEY',
+    tagline: 'De-risk the RF environment and the gateway-to-data-center path with hard engineering data.',
+    activities: [
+      'RF interference (RFI) survey & spectrum monitoring of uplink/downlink bands',
+      'Antenna-site survey: sky-view, look angles, horizon mask, space for the antenna farm',
+      'Rain-fade & propagation study (ITU-R P.618 attenuation, P.837 rain rate) and availability modelling',
+      'Geotechnical & foundation survey: antenna loads, wind uplift, radome and tower siting',
+      'Radio-network planning: G/T, EIRP, link budgets, spot-beam & gateway assignments',
+      'Terrestrial survey: fibre/backhaul route, ducting path, RoW constraints',
+      'Power-quality & grid-stability assessment for the antenna farm and data hall',
+      'Permit-baseline mapping (spectrum, aviation, environmental, defence)'
+    ],
+    deliverables: 'RFI & spectrum reports; sky-view / horizon-mask report; rain-fade & propagation study; geotechnical report; link budgets & coverage plans; route position list (RPL); backhaul survey.',
+    commercialModel: 'Survey scope as a cost item within DBOT / EPC.',
+    kpis: 'Sites RFI-cleared; link-budget margin (dB); rain-fade availability %; re-sites avoided.',
+    keyRisks: 'Poor RFI data → re-site; adverse weather windows; aviation/terrain obstructions.'
+  },
+  {
+    step: '03',
+    title: 'Permits, Spectrum & Regulatory',
+    shortTitle: 'Permits, Spectrum & Regulatory',
+    badge: 'PERMIT',
+    tagline: 'Secure every legal right, licence and spectrum allocation required to build and operate.',
+    activities: [
+      'Earth-station / gateway licensing under the national satcom framework (e.g., DoT + IN-SPACe in India; FCC 47 CFR Part 25; Ofcom in the UK)',
+      'Satellite-operator & landing / gateway-hosting agreements',
+      'ITU filing & frequency-coordination support for national/operator networks',
+      'Spectrum allocation & coordination across Ka / Ku / Q / V bands',
+      'Site clearances: SACFA / aviation / RF-clearance and interference coordination',
+      'TT&C and space-asset / telemetry authorisation where operated',
+      'Environmental clearance / EIA-EMP where triggered; Right-of-Way (RoW) coordination',
+      'Host-country earth-station licences handled with the operator; security & defence clearance'
+    ],
+    deliverables: 'Licence filings & approvals; operator & landing agreements; spectrum allocations; site clearances (SACFA/aviation); EIA/EMP; RoW permissions; compliance register.',
+    commercialModel: 'Regulatory, spectrum & permitting management (T&M or bundled into DBOT).',
+    kpis: 'Permit cycle time; approvals secured vs. required; spectrum secured vs. required; zero non-compliance findings.',
+    keyRisks: 'Approval delay; spectrum-coordination friction; aviation/defence objections; policy change.'
+  },
+  {
+    step: '04',
+    title: 'Design & Engineering',
+    shortTitle: 'Design & Engineering',
+    badge: 'DESIGN',
+    tagline: 'Translate survey and permit outputs into build-ready design.',
+    activities: [
+      'SLS architecture: antenna farm, RF equipment shelter, modem/baseband hall, gateway data hall, meet-me room, NOC',
+      'Antenna & radome design (GEO/LEO/MEO, Ka/Ku/Q/V band, multi-beam, tracking) and antenna-farm layout',
+      'RF chain design: HPA/BUC, LNB, up/down converters, modems; G/T and EIRP budget',
+      'Ground-segment & baseband design: gateway, orchestration, SDN/NFV, cloud-native control plane',
+      'Data-hall power (dual utility feeds, UPS, DG, busway) and cooling (liquid-ready) scaled to 9 Tbps',
+      'Fibre/DCI architecture: gateway ↔ data center (dark fibre, DWDM), diverse rings and cloud on-ramps',
+      'Civil/structural: foundations, wind loading, lightning protection; fire & life safety',
+      'Physical security, access control & monitoring; digital twin, CFD & RF propagation modelling'
+    ],
+    deliverables: 'Basic & detailed design; antenna & RF design; construction drawings; SLD; BoQ; link budgets; protection & security design; DCI/backhaul architecture.',
+    commercialModel: 'Design & engineering fee (% of CAPEX or fixed).',
+    kpis: 'Design-to-construction rework rate; design milestone adherence; G/T & EIRP targets met; Tier target met.',
+    keyRisks: 'Scope/design changes; interface clashes; antenna/power/cooling sizing; spectrum-dependent redesign.'
+  },
+  {
+    step: '05',
+    title: 'Construction & Build — “Setting Up”',
+    shortTitle: 'Construction / Setting Up',
+    badge: 'BUILD',
+    tagline: 'Build the antenna farm, RF shelter, data hall and gateway-to-DC fibre to spec, on time and on budget.',
+    activities: [
+      'Civil works: antenna foundations, radomes, RF shelter, data-hall shell, cable vault, duct banks',
+      'Mechanical & electrical: HV substation, UPS, DG, cooling plant, busway',
+      'Antenna & RF installation: mounts, drives/tracking, feeds, HPA/BUC, LNB, modems',
+      'Telecom installation: modem/baseband, ODF, DWDM/ROADM, routing & switching',
+      'Fibre & ducting to the data center and meet-me room build',
+      'EPC management, HSE, QA and constructability reviews'
+    ],
+    deliverables: 'Completed facility; as-built drawings; commissioning & test reports; HSE/QA records.',
+    commercialModel: 'EPC / DBOT construction package.',
+    kpis: 'Schedule adherence; cost variance; HSE (LTIFR); punch-list closure; test pass rate.',
+    keyRisks: 'Wind/weather windows for antenna lifts; crane & rigging risk; supply chain; land access.'
+  },
+  {
+    step: '06',
+    title: 'Systems Integration & Connecting',
+    shortTitle: 'Connecting / Integration',
+    badge: 'CONNECT',
+    tagline: 'Light up the gateway end-to-end from satellite beam to data-center port.',
+    activities: [
+      'Antenna ↔ modem ↔ ground-segment integration; gateway/baseband commissioning',
+      'Beam acquisition, pointing & tracking (LEO/MEO) and GEO look-angle locking',
+      'HPA/BUC and EIRP commissioning; G/T and link-margin validation',
+      'Operator NOC / network-management integration and capacity/beam management',
+      'Data-center interconnect: gateway ↔ DC over dark fibre / DWDM; IP/MPLS and routing',
+      'Meet-me room build and cross-connect provisioning',
+      'End-to-end circuit provisioning, acceptance and fault-domain validation (up to 9 Tbps)',
+      'Integration with constellation ecosystems and cloud on-ramps'
+    ],
+    deliverables: 'Integration test reports; antenna/modem/ground-segment commissioning; acceptance certificates; provisioned circuits; meet-me room handover.',
+    commercialModel: 'Integration package within DBOT; capacity-sales enablement.',
+    kpis: 'Beam acquisition/lock success; link margin (Eb/No, BER); circuit activation time; capacity ready for sale.',
+    keyRisks: 'Operator interface delays; RF interference; modem/ground-segment mismatch; rain-fade.'
+  },
+  {
+    step: '07',
+    title: 'Ground Segment NOC Setup & Integration',
+    shortTitle: 'Ground Segment NOC Setup',
+    badge: 'NOC',
+    tagline: 'Stand up the monitoring, management and fault-handling brain of the satellite landing station.',
+    activities: [
+      'NOC facility design & build: redundant power, cooling, displays, secure access',
+      'Ground-segment OSS/BSS, NMS, orchestration and telemetry stack',
+      'TT&C & beacon monitoring; satellite-link monitoring (Eb/No, ACM, rain-fade)',
+      'RF interference & carrier-monitoring system (spectrum / beacon analysis)',
+      'Fault management, ticketing and escalation design',
+      'Cross-connect & capacity-management systems; SLA/KPI dashboards',
+      'SOC integration with zero-trust and air-gapped BMS/DCIM',
+      'ITIL-aligned process design: incident, problem, change, capacity, availability'
+    ],
+    deliverables: 'Operational NOC; monitoring stack deployed; runbooks & escalation matrix; dashboards; SOC integration.',
+    commercialModel: 'NOC build + managed-services transition.',
+    kpis: 'Monitoring coverage; MTTD/MTTR; alarm-to-ticket accuracy; runbook coverage.',
+    keyRisks: 'Tooling integration gaps; false alarms; skills/hiring; RF & cyber exposure.'
+  },
+  {
+    step: '08',
+    title: 'Operations & Managed Services — “Running & Managed Ops”',
+    shortTitle: 'Running & Managed Ops',
+    badge: 'OPERATE',
+    tagline: 'Keep the gateway, antennas and links available, secure and profitable — 24×7.',
+    activities: [
+      '24×7 NOC & monitoring with proactive fault detection and restoration',
+      'Preventive & corrective maintenance (antennas, radomes, HPA/BUC, modems, ground segment)',
+      'Adaptive coding & modulation (ACM) and rain-fade management; power & pointing optimisation',
+      'Capacity management, upgrades and migrations (scaling toward 9 Tbps)',
+      'Cybersecurity monitoring and compliance (ISO 27001/22301, SOC 1/2, DPDP 2023)',
+      'Energy, sustainability and cost optimisation',
+      'Carrier-grade SLAs for managed network & connectivity services',
+      'Meet-me room & cross-connect operations; TT&C and space-asset coordination'
+    ],
+    deliverables: 'SLA reports; maintenance & repair records; upgrade plans; compliance/audit reports; managed-service catalogue.',
+    commercialModel: 'Managed-services retainer (SLAs) + incident/repair charge-back.',
+    kpis: 'Availability (99.9%+); MTTR; link availability; SLA attainment; PUE/energy.',
+    keyRisks: 'Rain-fade outages; antenna/modem failure; obsolescence; interference; SLA penalties.'
+  },
+  {
+    step: '09',
+    title: 'Monetisation, Growth & Exit',
+    shortTitle: 'Monetisation & Exit',
+    badge: 'MONETISE',
+    tagline: 'Convert the asset into recurring revenue and a bankable, transferable position.',
+    activities: [
+      'SLS-as-a-Service and carrier-neutral meet-me-room monetisation',
+      'Teleport / Ground-Segment-as-a-Service (GSaaS) offerings',
+      'Capacity & beam leasing and IRU / lease negotiation',
+      'Satellite-operator gateway hosting & landing agreements',
+      'Colocation of operator/carrier equipment & cross-connects',
+      'Bandwidth-partner programmes (wholesale to carriers, ISPs, MNOs, enterprises)',
+      'Cloud/DC on-ramp & DCI monetisation; REIT / InvIT structuring advisory',
+      'DBOT handover & transfer-readiness; expansion and upgrade roadmap'
+    ],
+    deliverables: 'Commercial model & tariff book; operator/partner agreements; monetisation / REIT-InvIT advisory; transfer dossier.',
+    commercialModel: 'Revenue-share, IRU/lease, managed-service margin, advisory.',
+    kpis: 'Revenue per antenna/beam/route; capacity utilisation; IRU/lease take-up; EBITDA margin.',
+    keyRisks: 'Pricing pressure; over-capacity; operator concentration; transfer conditions.'
+  }
+]
+
 export default function AIInfraEngineeringPage() {
   const [activeLifecycleStage, setActiveLifecycleStage] = useState(0)
   const [activeOfferingsTab, setActiveOfferingsTab] = useState<'site' | 'design' | 'build' | 'ops'>('site')
   const [activeMetricsTab, setActiveMetricsTab] = useState<'infra' | 'compute' | 'economic' | 'operational' | 'security'>('infra')
   const [activeComplianceDimension, setActiveComplianceDimension] = useState<'design' | 'audit' | 'readiness' | 'certification' | 'monitoring'>('design')
   const [activePillarsTab, setActivePillarsTab] = useState<'catalog' | 'governance' | 'sales'>('catalog')
+  const [activeSLSStage, setActiveSLSStage] = useState(0)
+  const [slsViewMode, setSlsViewMode] = useState<'stepper' | 'all'>('stepper')
 
   // 7 Lifecycle Stages Data from Source Document
   const lifecycleStages = [
@@ -1095,87 +1310,396 @@ export default function AIInfraEngineeringPage() {
           </div>
         </section>
 
-        {/* SECTION 11: SATELLITE LANDING STATIONS — 9 TBPS */}
+        {/* SECTION 11: SATELLITE LANDING STATIONS — FULL LIFECYCLE OFFERING */}
         <section id="satellite-landing" className="scroll-mt-32">
-          <div className="max-w-3xl mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200/60 inline-block mb-3">
-              13 / Satellite Landing
+          <div className="max-w-4xl mb-8">
+            <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200/60 inline-flex items-center gap-1.5 mb-3">
+              <Satellite size={12} className="text-indigo-600" />
+              Telecom &amp; Connectivity · Satellite &amp; Ground Segment
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Satellite Landing Stations — 9 Tbps Landing Capacity
+              Satellite Landing Station — Full Lifecycle Offering
             </h2>
-            <p className="text-base text-slate-600 mt-2">
-              Teleport and ground-segment infrastructure for GEO, MEO and LEO constellations across South Asia.
+            <p className="text-sm sm:text-base text-slate-600 mt-2.5 leading-relaxed">
+              India as a strategic satellite ground-segment gateway linking LEO, MEO and GEO constellations to hyperscale data centers — from gateway and constellation strategy, RF surveys and spectrum clearance, through antenna-farm construction, ground-segment integration and NOC stand-up, to 24×7 managed operations and monetisation, engineered for high-speed data connectivity up to 9 Tbps.
             </p>
           </div>
 
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-slate-950 text-white border border-indigo-800/60 relative overflow-hidden">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-indigo-800/50 mb-8">
+          {/* 4 HIGHLIGHT METRICS BAR */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs relative overflow-hidden group hover:border-indigo-400 transition-colors">
+              <div className="text-3xl sm:text-4xl font-black text-indigo-600 mb-1">10</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-900">Stage gates</div>
+              <p className="text-[11px] text-slate-500 mt-1">From four pillars to a stage-gated journey</p>
+              <div className="absolute top-0 right-0 w-16 h-16 bg-indigo-500/5 rounded-bl-full pointer-events-none group-hover:bg-indigo-500/10 transition-colors" />
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs relative overflow-hidden group hover:border-cyan-400 transition-colors">
+              <div className="text-2xl sm:text-3xl font-black text-cyan-600 mb-1">Up to 9 Tbps</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-900">Gateway throughput</div>
+              <p className="text-[11px] text-slate-500 mt-1">Aggregate Ku / Ka / Q / V bands</p>
+              <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/5 rounded-bl-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs relative overflow-hidden group hover:border-blue-400 transition-colors">
+              <div className="text-2xl sm:text-3xl font-black text-blue-600 mb-1">LEO · MEO · GEO</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-900">Constellations served</div>
+              <p className="text-[11px] text-slate-500 mt-1">Starlink, OneWeb, Kuiper, mPOWER &amp; GEO</p>
+              <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-bl-full pointer-events-none group-hover:bg-blue-500/10 transition-colors" />
+            </div>
+
+            <div className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs relative overflow-hidden group hover:border-emerald-400 transition-colors">
+              <div className="text-2xl sm:text-3xl font-black text-emerald-600 mb-1">Tier III+ / 24×7</div>
+              <div className="text-xs font-bold uppercase tracking-wider text-slate-900">Reliability target</div>
+              <p className="text-[11px] text-slate-500 mt-1">Ground segment NOC &amp; 99.9%+ SLA</p>
+              <div className="absolute top-0 right-0 w-16 h-16 bg-emerald-500/5 rounded-bl-full pointer-events-none group-hover:bg-emerald-500/10 transition-colors" />
+            </div>
+          </div>
+
+          {/* STAGE-GATED JOURNEY CARD */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 text-white border border-indigo-900/50 shadow-xl relative overflow-hidden mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-indigo-900/60 mb-6">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-900/60 border border-indigo-500 text-indigo-300 text-xs font-bold uppercase tracking-wider mb-2">
-                  <Satellite size={14} />
-                  <span>Space-Segment Infrastructure</span>
-                </div>
-                <h3 className="text-3xl sm:text-4xl font-extrabold text-white">9 Tbps Satellite Landing Capacity</h3>
-                <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-                  Aggregate satellite landing bandwidth across Ku / Ka / Q / V bands — delivered in modular increments (typically 1–2 Tbps per phase) and backed by carrier-grade SLAs.
-                </p>
+                <span className="text-xs font-bold uppercase tracking-widest text-indigo-400 inline-block mb-1">
+                  Lifecycle Architecture
+                </span>
+                <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                  <Satellite className="text-indigo-400" size={22} />
+                  Stage-Gated Lifecycle (00 → 09)
+                </h3>
               </div>
 
-              <div className="p-4 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-xs text-xs text-slate-200 max-w-xs">
-                <strong className="text-cyan-400 font-bold block mb-1">Why it matters:</strong>
-                Satellite gateways complement subsea fibre, adding route diversity and reaching regions fibre cannot economically serve.
+              {/* View mode toggle */}
+              <div className="inline-flex rounded-xl p-1 bg-slate-900 border border-slate-800 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setSlsViewMode('stepper')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    slsViewMode === 'stepper'
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Interactive Stepper
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSlsViewMode('all')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    slsViewMode === 'all'
+                      ? 'bg-indigo-600 text-white shadow-xs'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  View All 10 Gates
+                </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">BUILD</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">Site &amp; Ground Segment</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  RF line-of-sight analysis, rain-fade &amp; elevation planning, ITU coordination zones, civil teleport foundations, and mission-critical hardening.
-                </p>
+            {/* STAGE TABS BAR */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-4 pt-1 scrollbar-none mb-6 border-b border-slate-800/80">
+              {slsStageGates.map((gate, idx) => {
+                const isActive = activeSLSStage === idx
+                return (
+                  <button
+                    key={gate.step}
+                    type="button"
+                    onClick={() => {
+                      setActiveSLSStage(idx)
+                      if (slsViewMode === 'all') setSlsViewMode('stepper')
+                    }}
+                    className={`shrink-0 px-3.5 py-2 rounded-xl text-left transition-all border ${
+                      isActive && slsViewMode === 'stepper'
+                        ? 'bg-indigo-600/30 border-indigo-400 text-white shadow-lg shadow-indigo-950'
+                        : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                        isActive && slsViewMode === 'stepper'
+                          ? 'bg-indigo-500 text-white'
+                          : 'bg-slate-800 text-slate-400'
+                      }`}>
+                        {gate.step}
+                      </span>
+                      <span className="text-xs font-semibold whitespace-nowrap">{gate.shortTitle}</span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* VIEW MODE: INTERACTIVE STEPPER */}
+            {slsViewMode === 'stepper' && (
+              <div className="transition-all duration-300">
+                {/* Active Gate Header */}
+                <div className="p-6 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 mb-6">
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-lg sm:text-xl font-mono font-black text-indigo-400">
+                        {slsStageGates[activeSLSStage].step}
+                      </span>
+                      <h4 className="text-lg sm:text-2xl font-bold text-white">
+                        {slsStageGates[activeSLSStage].title}
+                      </h4>
+                    </div>
+                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/40 uppercase tracking-widest">
+                      {slsStageGates[activeSLSStage].badge}
+                    </span>
+                  </div>
+                  <p className="text-sm text-indigo-200/90 font-medium leading-relaxed">
+                    {slsStageGates[activeSLSStage].tagline}
+                  </p>
+                </div>
+
+                {/* Key Activities */}
+                <div className="mb-6 p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3 flex items-center gap-2">
+                    <Workflow size={15} />
+                    Key Activities
+                  </h5>
+                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+                    {slsStageGates[activeSLSStage].activities.map((activity, i) => (
+                      <li key={i} className="text-xs text-slate-300 flex items-start gap-2.5 leading-relaxed">
+                        <CheckCircle2 size={14} className="text-indigo-400 shrink-0 mt-0.5" />
+                        <span>{activity}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* 4 Details Grid: Deliverables, Commercial Model, KPIs, Key Risks */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {/* Deliverables */}
+                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                      <FileText size={14} className="text-indigo-400" />
+                      <span>Deliverables</span>
+                    </div>
+                    <p className="text-xs text-slate-200 leading-relaxed font-mono">
+                      {slsStageGates[activeSLSStage].deliverables}
+                    </p>
+                  </div>
+
+                  {/* Commercial Model */}
+                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                      <DollarSign size={14} className="text-emerald-400" />
+                      <span>Commercial Model</span>
+                    </div>
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      {slsStageGates[activeSLSStage].commercialModel}
+                    </p>
+                  </div>
+
+                  {/* KPIs */}
+                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                      <Target size={14} className="text-cyan-400" />
+                      <span>KPIs</span>
+                    </div>
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      {slsStageGates[activeSLSStage].kpis}
+                    </p>
+                  </div>
+
+                  {/* Key Risks */}
+                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                      <AlertCircle size={14} className="text-rose-400" />
+                      <span>Key Risks &amp; Mitigations</span>
+                    </div>
+                    <p className="text-xs text-slate-200 leading-relaxed">
+                      {slsStageGates[activeSLSStage].keyRisks}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Gate Stepper Navigation */}
+                <div className="flex items-center justify-between pt-4 border-t border-slate-800/80">
+                  <button
+                    type="button"
+                    onClick={() => setActiveSLSStage((prev) => Math.max(0, prev - 1))}
+                    disabled={activeSLSStage === 0}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                  >
+                    ← Previous Gate
+                  </button>
+
+                  <div className="text-xs text-slate-400 font-mono">
+                    Gate {activeSLSStage + 1} of {slsStageGates.length}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveSLSStage((prev) => Math.min(slsStageGates.length - 1, prev + 1))}
+                    disabled={activeSLSStage === slsStageGates.length - 1}
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                  >
+                    Next Gate →
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* VIEW MODE: ALL 10 STAGES EXPANDED */}
+            {slsViewMode === 'all' && (
+              <div className="space-y-6">
+                {slsStageGates.map((gate) => (
+                  <div key={gate.step} className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-3 border-b border-slate-800">
+                      <div className="flex items-center gap-3">
+                        <span className="text-base sm:text-lg font-mono font-black text-indigo-400">
+                          {gate.step}
+                        </span>
+                        <h4 className="text-base sm:text-xl font-bold text-white">
+                          {gate.title}
+                        </h4>
+                      </div>
+                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 uppercase tracking-widest">
+                        {gate.badge}
+                      </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-indigo-200/90 mb-4 font-medium">
+                      {gate.tagline}
+                    </p>
+
+                    <div className="mb-4">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-2">
+                        Key Activities
+                      </span>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {gate.activities.map((activity, i) => (
+                          <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
+                            <span className="text-indigo-400 mt-0.5">•</span>
+                            <span>{activity}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Deliverables</span>
+                        <p className="text-slate-300 text-[11px] font-mono leading-tight">{gate.deliverables}</p>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Commercial Model</span>
+                        <p className="text-slate-300 text-[11px] leading-tight">{gate.commercialModel}</p>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">KPIs</span>
+                        <p className="text-slate-300 text-[11px] leading-tight">{gate.kpis}</p>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Key Risks</span>
+                        <p className="text-slate-300 text-[11px] leading-tight">{gate.keyRisks}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* CROSS-CUTTING — GOVERNANCE, MODELS & STANDARDS */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/80 shadow-xs mb-6">
+            <div className="max-w-2xl mb-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200/60 inline-block mb-2">
+                Unified Foundation
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                Cross-Cutting — Governance, Models &amp; Standards
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                Institutional governance disciplines and delivery constructs running seamlessly across every stage gate.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Governance */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-700 mb-3">
+                    <ShieldCheck size={16} />
+                    <span>Governance</span>
+                  </div>
+                  <p className="text-xs text-slate-700 font-semibold mb-2">
+                    Nine Pillars offices run through every stage gate:
+                  </p>
+                  <ul className="text-xs text-slate-600 space-y-1.5">
+                    <li>• <strong className="text-slate-800">Technical PMO:</strong> engineering &amp; EPC</li>
+                    <li>• <strong className="text-slate-800">Enterprise PMO:</strong> owners, board &amp; investors</li>
+                    <li>• <strong className="text-slate-800">Corporate Business Office:</strong> sponsors &amp; funds</li>
+                    <li>• <strong className="text-slate-800">Consulting &amp; Advisory:</strong> leadership</li>
+                  </ul>
+                </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">LAND</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">9 Tbps Landing Infrastructure</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  GEO large-aperture &amp; LEO/MEO phased-array antenna farms, RF chains, multi-band aggregation (Ku/Ka/Q/V), and core gateway systems.
-                </p>
+              {/* Delivery Models */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-cyan-700 mb-3">
+                    <Boxes size={16} />
+                    <span>Delivery Models</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mb-3">
+                    {['DBOT', 'DBFO', 'DBO', 'BOT Concession', 'BOO Turnkey', 'GSaaS / Teleport'].map((m) => (
+                      <span key={m} className="text-[10px] font-bold px-2 py-0.5 bg-white border border-slate-200 rounded text-slate-800">
+                        {m}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Matched to owner type and risk appetite, with defined transfer conditions and concession agreements.
+                  </p>
+                </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">SERVE</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">Ground-Station-as-a-Service (GSaaS)</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Antenna-as-a-Service, TT&amp;C mission operations, multi-mission scheduling, virtualised ground segment, and pay-per-use hosting.
-                </p>
+              {/* Standards & Compliance */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-purple-700 mb-3">
+                    <Scale size={16} />
+                    <span>Standards &amp; Compliance</span>
+                  </div>
+                  <ul className="text-xs text-slate-600 space-y-1.5">
+                    <li>• Uptime Tier III design / Tier IV readiness</li>
+                    <li>• ISO 27001, 22301, 9001, 50001, 14001</li>
+                    <li>• SOC 1 / SOC 2 · DPDP Act 2023 · GDPR</li>
+                    <li>• PCI-DSS · HIPAA</li>
+                    <li>• ITU-R propagation recommendations</li>
+                    <li>• National earth-station &amp; spectrum regulation</li>
+                  </ul>
+                </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">COMPLY</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">Spectrum &amp; Licensing</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  ITU filing coordination, WPC / DoT licensing, landing rights, NOCC approvals, and government/defense spectrum protection.
-                </p>
+              {/* Programme KPIs */}
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-700 mb-3">
+                    <TrendingUp size={16} />
+                    <span>Programme KPIs</span>
+                  </div>
+                  <ul className="text-xs text-slate-600 space-y-1.5">
+                    <li>• On-time stage-gate completion</li>
+                    <li>• CAPEX / OPEX vs. budget</li>
+                    <li>• Availability (99.9%+ carrier SLA)</li>
+                    <li>• Capacity sell-through (up to 9 Tbps)</li>
+                    <li>• Zero-harm HSE performance</li>
+                  </ul>
+                </div>
               </div>
+            </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">CONNECT</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">Interconnection &amp; Backhaul</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Terrestrial fibre backhaul to CLS and data centers, cloud on-ramps, and hybrid subsea + satellite resilient connectivity design.
-                </p>
-              </div>
-
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
-                <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">SELL</span>
-                <h4 className="font-bold text-white text-sm mb-1.5">Capacity Monetisation</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Satellite capacity IRUs, hosted payload hosting, broadcast DTH/mobility, and wholesale bandwidth trading.
-                </p>
-              </div>
+            {/* Bottom tag note */}
+            <div className="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-slate-500 gap-2">
+              <span className="font-mono text-[11px]">
+                TRUSTGRID.AI · Satellite &amp; Ground-Segment Infrastructure
+              </span>
+              <span className="font-semibold text-indigo-600">
+                Refined SLS lifecycle offering — stage-gated
+              </span>
             </div>
           </div>
         </section>
