@@ -253,9 +253,9 @@ export function AIValueCapabilities() {
         </div>
 
         {/* 1.4 Value Engineering Ratio & Cheapest-Sufficient Intelligence */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-md">
+        <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-md space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* VE Ratio Formula */}
+            {/* VE Ratio & Master Equations */}
             <div className="lg:col-span-6 space-y-4">
               <span className="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950 px-2.5 py-1 rounded border border-emerald-800 inline-block">
                 Value Engineering Principle
@@ -267,13 +267,24 @@ export function AIValueCapabilities() {
                 AI is treated as an execution layer within a value equation. The objective is not maximum model intelligence; it is the cheapest-sufficient method that reliably performs the required function.
               </p>
 
-              {/* Handbook Ratio Equation */}
+              {/* Master Value Equation */}
               <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-center">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block mb-2">Value Engineering Ratio</span>
-                <div className="text-xs sm:text-sm font-bold text-cyan-400 pb-1 border-b border-slate-700 inline-block px-3">
+                <span className="text-[10px] text-emerald-400 uppercase tracking-widest block mb-1.5 font-bold">1. Master Manufacturing AI Value Equation</span>
+                <div className="text-[11px] sm:text-xs font-bold text-emerald-300 pb-1.5 border-b border-slate-800 inline-block px-2">
+                  (ΔOEE + ΔYield + ΔThroughput + ΔAvoided Cost) × Reliability × Constraint Relevance
+                </div>
+                <div className="text-[10px] sm:text-[11px] text-slate-400 pt-1.5">
+                  Agent Cost + Cost of Quality + Opportunity Cost of Constraint + Residual Risk
+                </div>
+              </div>
+
+              {/* Practitioner Shorthand Ratio */}
+              <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-center">
+                <span className="text-[10px] text-cyan-400 uppercase tracking-widest block mb-1.5 font-bold">2. Practitioner Shorthand: Value Engineering Ratio</span>
+                <div className="text-xs sm:text-sm font-bold text-cyan-300 pb-1 border-b border-slate-800 inline-block px-3">
                   DECISIONS VALUE × ACCURACY × SPEED
                 </div>
-                <div className="text-[11px] sm:text-xs text-slate-300 pt-1.5">
+                <div className="text-[11px] sm:text-xs text-slate-400 pt-1.5">
                   COMPUTE COST + HUMAN REVIEW COST + FAILURE COST + QUEUE COST
                 </div>
               </div>
@@ -291,22 +302,77 @@ export function AIValueCapabilities() {
               </div>
 
               <blockquote className="text-xs text-indigo-200 italic mb-4 border-l-2 border-indigo-500 pl-3">
-                &ldquo;Do not use an LLM if a rule will do. Do not use a large model where a small model passes MSA.&rdquo;
+                &ldquo;Do not use an LLM if a rule will do. Do not use an LLM on the cloud for edge inference. Do not use a large model where a small model passes MSA.&rdquo;
               </blockquote>
 
               <p className="text-[11px] text-slate-400 mb-4 leading-relaxed">
-                Every operational event terminates at the cheapest sufficient intelligence tier, while ambiguous, high-variance, or higher-risk cases escalate upward.
+                Design target: <strong className="text-white">≤ ~15%</strong> of inference dollars reach frontier-LLMs. Every event terminates at the cheapest sufficient tier.
               </p>
 
-              {/* Cascade visual flow */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono text-center">
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">1. RULES</div>
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">2. ARITHMETIC / SPC</div>
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-slate-300">3. CLASSICAL ML</div>
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-blue-300">4. SLM (8B)</div>
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-indigo-300">5. LLM / REASON</div>
-                <div className="p-2 rounded bg-slate-900 border border-slate-800 text-purple-300">6. VALIDATOR</div>
-                <div className="p-2 rounded bg-rose-950/60 border border-rose-800 text-rose-300 col-span-2">7. HUMAN EXCEPTION</div>
+              {/* Cascade visual flow with handbook resolution rates */}
+              <div className="space-y-1.5 text-[11px] font-mono">
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-slate-300">T0 Rules &amp; Hard Limits</span>
+                  <span className="text-emerald-400 font-bold">~45–65% resolved (cost ~0)</span>
+                </div>
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-slate-300">T1 Arithmetic &amp; SPC</span>
+                  <span className="text-emerald-400 font-bold">~15% resolved</span>
+                </div>
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-slate-300">T2 Classical ML &amp; Vision</span>
+                  <span className="text-cyan-400 font-bold">~20% resolved (conf ≥ 0.9)</span>
+                </div>
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-blue-300">T3 SLM Extraction (7–8B)</span>
+                  <span className="text-blue-400 font-bold">~5% resolved</span>
+                </div>
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-indigo-300">T4 RAG + Frontier LLM</span>
+                  <span className="text-amber-400 font-bold">~3–5% (never auto in Band ≥4)</span>
+                </div>
+                <div className="p-2 rounded bg-slate-900 border border-slate-800 flex items-center justify-between">
+                  <span className="text-purple-300">T4.5 Validator &amp; Critic</span>
+                  <span className="text-purple-400 font-bold">Must pass or fallback</span>
+                </div>
+                <div className="p-2 rounded bg-rose-950/60 border border-rose-800 flex items-center justify-between">
+                  <span className="text-rose-300 font-bold">T5 Human Exception / Andon</span>
+                  <span className="text-rose-400 font-bold">Accountability Gate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Handbook: The Five Non-Negotiables */}
+          <div className="pt-6 border-t border-slate-800">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400 block mb-3">
+              The Five Non-Negotiables (Chapter 1.5)
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                <span className="text-[10px] font-mono text-blue-400 font-bold block mb-1">01 / CONSTRAINT-FIRST</span>
+                <strong className="text-white block mb-0.5">Bottleneck Priority</strong>
+                <p className="text-[11px] text-slate-400">Has the true constraint been touched? Optimising non-constraints adds cost, not value.</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                <span className="text-[10px] font-mono text-cyan-400 font-bold block mb-1">02 / STATISTICAL PROOF</span>
+                <strong className="text-white block mb-0.5">Empirical Evidence</strong>
+                <p className="text-[11px] text-slate-400">Is every change validated by before/after SPC and MSA? Anecdotes are not evidence.</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                <span className="text-[10px] font-mono text-indigo-400 font-bold block mb-1">03 / QUALITY AT SOURCE</span>
+                <strong className="text-white block mb-0.5">Jidoka Containment</strong>
+                <p className="text-[11px] text-slate-400">Do we stop or contain before the defect moves downstream to subsequent operations?</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                <span className="text-[10px] font-mono text-rose-400 font-bold block mb-1">04 / HUMAN ACCOUNTABILITY</span>
+                <strong className="text-white block mb-0.5">Zero Irreversible Auto</strong>
+                <p className="text-[11px] text-slate-400">Does any irreversible or safety-critical action run without human approval? It will not.</p>
+              </div>
+              <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                <span className="text-[10px] font-mono text-emerald-400 font-bold block mb-1">05 / FUNCTION-TO-COST</span>
+                <strong className="text-white block mb-0.5">Value Discipline</strong>
+                <p className="text-[11px] text-slate-400">Does the function earn its cost? If not, prune the model or eliminate the step.</p>
               </div>
             </div>
           </div>
