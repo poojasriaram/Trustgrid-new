@@ -473,7 +473,7 @@ const commonFoundationMenuItems = [
 // 7. About Us Menu Items (6 Items)
 const aboutMenuItems = [
   {
-    label: 'About TrustGrid.AI',
+    label: 'About TRUSTGRID.AI',
     href: '/about',
     icon: Building2,
     desc: 'Our mission, vision, and full-spectrum engineering verticals'
@@ -1392,7 +1392,7 @@ export function SiteHeader() {
                       <span className="pulse-dot" />
                       COMPANY & TALENT
                     </span>
-                    <h3 className="isi-sidebar-title">About TrustGrid.AI</h3>
+                    <h3 className="isi-sidebar-title">About TRUSTGRID.AI</h3>
                     <p className="isi-sidebar-desc">
                       Full-Spectrum AI Engineering Company for the Global AI Economy with executive offices in US, Singapore & India.
                     </p>
@@ -1486,6 +1486,17 @@ export function SiteHeader() {
           </svg>
         </a>
 
+        {/* INTELLIGENCE SUITE / ANALYTICS */}
+        <Link
+          href="/analytics"
+          className="nav-analytics-link hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 border border-cyan-500/20 transition-all shadow-sm"
+          title="TrustGrid Unified Intelligence & Analytics Suite"
+          onClick={closeAll}
+        >
+          <ShieldAlert size={14} className="text-cyan-400" />
+          <span>Intelligence Suite</span>
+        </Link>
+
         {/* 9. CONTACT US — Primary CTA */}
         <Link
           href="/contact"
@@ -1513,6 +1524,10 @@ export function SiteHeader() {
           <div className="mobile-drawer-content">
             <Link href="/" className="mobile-nav-link" onClick={closeAll}>
               Home
+            </Link>
+            <Link href="/analytics" className="mobile-nav-link text-cyan-400 font-semibold flex items-center justify-between" onClick={closeAll}>
+              <span>Intelligence Suite</span>
+              <ShieldAlert size={15} />
             </Link>
 
             {/* Mobile AI Infra & Data Center Accordion */}
@@ -1710,7 +1725,7 @@ export function SiteHeader() {
               {mobileSection === 'about' && (
                 <div className="mobile-accordion-body">
                   <Link href="/about" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>About TrustGrid.AI Overview →</span>
+                    <span>About TRUSTGRID.AI Overview →</span>
                   </Link>
                   {aboutMenuItems.map((item, i) => (
                     <Link

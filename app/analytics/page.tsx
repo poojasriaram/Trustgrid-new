@@ -23,6 +23,8 @@ import { CoOccurrenceTab } from '@/components/analytics/tabs/co-occurrence-tab'
 import { FunnelDropOffTab } from '@/components/analytics/tabs/funnel-drop-off-tab'
 import { LeadScoringTab } from '@/components/analytics/tabs/lead-scoring-tab'
 import { BrokenLinkQaTab } from '@/components/analytics/tabs/broken-link-qa-tab'
+import { NetworkIntelTab } from '@/components/analytics/tabs/network-intel-tab'
+import { ReportsExportTab } from '@/components/analytics/tabs/reports-export-tab'
 
 import {
   Lock,
@@ -39,9 +41,11 @@ export default function AnalyticsPage() {
   const [authError, setAuthError] = useState(false)
 
   const [activeTab, setActiveTab] = useState<TabKey>('mission-control')
+  const [timezone, setTimezone] = useState('UTC')
   const [filters, setFilters] = useState<FilterOptions>({
     dateRange: 'all',
-    visitorType: 'all'
+    visitorType: 'all',
+    timezone: 'UTC'
   })
   const [dataset, setDataset] = useState<DashboardDataset | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -79,7 +83,7 @@ export default function AnalyticsPage() {
 
   // Fetch Dashboard Data from /api/analytics/dashboard
   const fetchDashboardData = useCallback(
-    async (currentFilters: FilterOptions, isRefreshAction = false) => {
+    async (currentFilters: FilterOptions, isRefreshAction = false, targetTz?: string) => {
       if (isRefreshAction) setIsRefreshing(true)
       else setIsLoading(true)
       setLoadError(null)
@@ -91,6 +95,7 @@ export default function AnalyticsPage() {
         if (currentFilters.device) query.set('device', currentFilters.device)
         if (currentFilters.visitorType) query.set('visitorType', currentFilters.visitorType)
         if (currentFilters.utmCampaign) query.set('utmCampaign', currentFilters.utmCampaign)
+        query.set('timezone', targetTz || currentFilters.timezone || timezone || 'UTC')
         if (isRefreshAction) query.set('refresh', 'true')
 
         const res = await fetch(`/api/analytics/dashboard?${query.toString()}`, {
@@ -115,7 +120,7 @@ export default function AnalyticsPage() {
         setIsRefreshing(false)
       }
     },
-    []
+    [timezone]
   )
 
   useEffect(() => {
@@ -138,7 +143,7 @@ export default function AnalyticsPage() {
               <Lock className="h-6 w-6" />
             </div>
             <h1 className="text-xl font-bold text-white tracking-tight">
-              TrustGrid.AI Executive Suite
+              TRUSTGRID.AI Executive Suite
             </h1>
             <p className="text-xs text-slate-400">
               Internal Sheet 1 + Sheet 2 Analytics Engine. Enter authorization key to access live dashboard telemetry.
@@ -227,6 +232,11 @@ export default function AnalyticsPage() {
       dataset={dataset}
       isRefreshing={isRefreshing}
       onRefresh={handleRefresh}
+      selectedTimezone={timezone}
+      onTimezoneChange={(tz) => {
+        setTimezone(tz)
+        setFilters(prev => ({ ...prev, timezone: tz }))
+      }}
     >
       {/* Top Global Filter System */}
       <GlobalFilters
@@ -324,6 +334,18 @@ export default function AnalyticsPage() {
         {activeTab === 'lead-scoring' && (
           <ModuleErrorBoundary moduleTitle="Lead Scoring Engine" onRetry={handleRefresh}>
             <LeadScoringTab data={dataset.leadScoring} />
+          </ModuleErrorBoundary>
+        )}
+
+        {activeTab === 'network-intel' && (
+          <ModuleErrorBoundary moduleTitle="IP & Network Intelligence" onRetry={handleRefresh}>
+            <NetworkIntelTab data={dataset.networkIntel} />
+          </ModuleErrorBoundary>
+        )}
+
+        {activeTab === 'reports-export' && (
+          <ModuleErrorBoundary moduleTitle="Reports & CSV Export" onRetry={handleRefresh}>
+            <ReportsExportTab dataset={dataset} />
           </ModuleErrorBoundary>
         )}
 

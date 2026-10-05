@@ -1,19 +1,20 @@
 /**
  * =========================================================================================
- * PROFIT MACHINES - APPS SCRIPT WEBHOOK & EXECUTIVE AUTOMATION ENGINE (V7 - ULTRA PRO)
+ * TRUSTGRID.AI - APPS SCRIPT WEBHOOK & ADVANCED INTELLIGENCE ENGINE (V8 - ENTERPRISE)
  * =========================================================================================
- * Production Webhook Receiver & Executive Automation Engine for PROFIT MACHINES
+ * Production Webhook Receiver & Executive Automation Engine for TRUSTGRID.AI
  * 
- * Sender Identity: Profit Machines Executive Analytics <poojasri.aram@gmail.com>
- * Organization: PROFIT MACHINES
+ * Sender Identity: TrustGrid Executive Analytics <poojasri.aram@gmail.com>
+ * Organization: TRUSTGRID.AI
  * 
  * Features:
  * 1. Dedicated Ad Campaign & Inbound Routing: Isolates and routes Ad/Campaign leads seamlessly.
- * 2. High-End Executive Cyber-Theme Email UI: Profit Machines glassmorphism badges, UTM pills & quick actions.
+ * 2. High-End Executive Cyber-Theme Email UI: TrustGrid glassmorphism badges, UTM pills & quick actions.
  * 3. Drive Resume Archiving: Automatically stores career applicant resumes into Google Drive.
  * 4. Monthly Career Digest: Monthly scheduled forwarder of candidate applications & resumes.
  * 5. Advanced Analytics & Reporting: Daily & weekly automated digests with KPI cards and metrics.
  * 6. Strict Recipient Routing: Exclusively delivers to poojasri.aram@gmail.com & bv@trustflow.in.
+ * 7. Session, Traffic Attribution, Geo & Network Security Intelligence Ingestion.
  * =========================================================================================
  */
 
@@ -22,20 +23,20 @@
 // =========================================================================================
 
 const CONFIG = {
-  // Main Profit Machines Data Collection & Multi-Form Tracking Spreadsheet ID (Sheet 1)
-  MAIN_SPREADSHEET_ID: "1fdZl2it4O86OUB92DvBaeeEM75fXue1yqjcvLq51gVs",
+  // Main TrustGrid Data Collection & Multi-Form Tracking Spreadsheet ID (Sheet 1)
+  MAIN_SPREADSHEET_ID: "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0",
 
   // Dedicated Analytics & Intelligence Spreadsheet ID (Sheet 2)
-  ANALYTICS_SPREADSHEET_ID: "1NSnGji4KqVuWaM1jGEjX87mkjFsoVN9u5SG6TJ0qZoU",
+  ANALYTICS_SPREADSHEET_ID: "1jC53QN1qiuiRFLzdneA46TECBztER5btTo7qGphb5TM",
 
   // Google Drive folder used to archive candidate resumes
-  CAREER_RESUMES_FOLDER_NAME: "ProfitMachines_Career_Resumes"
+  CAREER_RESUMES_FOLDER_NAME: "TrustGrid_Career_Resumes"
 };
 
 const EMAIL_CONFIG = {
-  name: "PROFIT MACHINES Business Intelligence",
-  companyName: "PROFIT MACHINES",
-  website: "", // Set production website URL once deployed
+  name: "TrustGrid Business Intelligence",
+  companyName: "TrustGrid.AI",
+  website: "https://trustgridnew.vercel.app", // Production website URL
   replyTo: "poojasri.aram@gmail.com",
   adminEmail: "poojasri.aram@gmail.com",
   
@@ -187,11 +188,55 @@ var TAB_CONFIGS = {
   // 11. CTA & Interaction Clicks
   "CTA_Clicks": [
     "Session ID", "Visitor ID", "CTA Name", "Destination URL", "Section", "Page Path", "Device", "Timestamp"
+  ],
+
+  // 12. Sessions Intelligence (Advanced Lifecycle, Bounces, Geo, Duration)
+  "Sessions_Intelligence": [
+    "Session ID", "User ID", "Start Time (UTC)", "Last Activity (UTC)", "Duration (Sec)",
+    "Pages Visited", "Entry Page", "Exit Page", "Traffic Channel", "Campaign",
+    "Country", "City", "Timezone", "Masked IP", "Bounce", "Converted", "User Type", "Timestamp"
+  ],
+
+  // 13. Traffic Attribution (Multi-touch, Channels, UTMs, Referrers)
+  "Traffic_Attribution": [
+    "Timestamp (UTC)", "Session ID", "User ID", "Channel", "Source", "Medium",
+    "Campaign", "Term", "Content", "Referrer Domain", "Landing Page", "Converted"
+  ],
+
+  // 14. Geo Intelligence (Enriched Geographic & Network Mapping)
+  "Geo_Intelligence": [
+    "Timestamp (UTC)", "Masked IP", "Country", "Country Code", "Region", "City",
+    "Latitude", "Longitude", "Timezone", "ISP", "Organization", "ASN"
+  ],
+
+  // 15. Network Security Intelligence (Forensics, Severity, Threat Scans)
+  "Network_Security_Log": [
+    "Timestamp (UTC)", "Masked IP", "Threat Category", "Severity", "Description",
+    "Target Path", "Blocked", "Action Taken"
   ]
 };
 
 // Aliases mapping incoming form sheetNames to canonical tab names
 var SHEET_NAME_ALIASES = {
+  // TrustGrid Intelligence Dimensions
+  "sessions_intelligence": "Sessions_Intelligence",
+  "sessionsintelligence": "Sessions_Intelligence",
+  "session_intelligence": "Sessions_Intelligence",
+  "sessionsintel": "Sessions_Intelligence",
+  "traffic_attribution": "Traffic_Attribution",
+  "trafficattribution": "Traffic_Attribution",
+  "attribution": "Traffic_Attribution",
+  "geo_intelligence": "Geo_Intelligence",
+  "geointelligence": "Geo_Intelligence",
+  "geointel": "Geo_Intelligence",
+  "geo": "Geo_Intelligence",
+  "network_security_log": "Network_Security_Log",
+  "networksecuritylog": "Network_Security_Log",
+  "security_log": "Network_Security_Log",
+  "securitylog": "Network_Security_Log",
+  "security_events": "Network_Security_Log",
+  "securityevents": "Network_Security_Log",
+
   // Master 95-Column Live Behavioral Telemetry
   "telemetry_95": "Live_Traffic_Events",
   "telemetry": "Live_Traffic_Events",
@@ -346,6 +391,11 @@ function doPost(e) {
     } catch (parseErr) {
       return ContentService.createTextOutput("Error: Invalid JSON payload.").setMimeType(ContentService.MimeType.TEXT);
     }
+
+    // TrustGrid High-Speed Intelligence Batch Synchronization Handler
+    if (data && (data.action === "sync_intelligence" || data.sync === true)) {
+      return handleIntelligenceSync(data);
+    }
     
     // lib/analytics.ts telemetry beacons (page views, clicks, CTA, visibility) only set
     // event_type: 'telemetry_95' — without this fallback every beacon was silently rejected
@@ -499,6 +549,42 @@ function doPost(e) {
         targetSheet.appendRow(newRow);
         rowSaved = true;
       }
+
+      // Auto-replicate to Sessions_Intelligence if companion record attached
+      if (data.session_record && typeof data.session_record === 'object') {
+        try {
+          var sTab = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
+          var sHead = sTab.getRange(1, 1, 1, Math.max(sTab.getLastColumn(), 1)).getValues()[0];
+          var sRow = sHead.map(function(h) { return resolveField(h, data.session_record); });
+          sTab.appendRow(sRow);
+        } catch (sErr) {
+          console.warn("Sessions_Intelligence append warning:", sErr.toString());
+        }
+      }
+
+      // Auto-replicate to Traffic_Attribution if companion record attached
+      if (data.attribution_record && typeof data.attribution_record === 'object') {
+        try {
+          var aTab = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
+          var aHead = aTab.getRange(1, 1, 1, Math.max(aTab.getLastColumn(), 1)).getValues()[0];
+          var aRow = aHead.map(function(h) { return resolveField(h, data.attribution_record); });
+          aTab.appendRow(aRow);
+        } catch (aErr) {
+          console.warn("Traffic_Attribution append warning:", aErr.toString());
+        }
+      }
+
+      // Auto-replicate to Network_Security_Log if security flag or threat attached
+      if (data.security_record && typeof data.security_record === 'object') {
+        try {
+          var secTab = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
+          var secHead = secTab.getRange(1, 1, 1, Math.max(secTab.getLastColumn(), 1)).getValues()[0];
+          var secRow = secHead.map(function(h) { return resolveField(h, data.security_record); });
+          secTab.appendRow(secRow);
+        } catch (secErr) {
+          console.warn("Network_Security_Log append warning:", secErr.toString());
+        }
+      }
     } catch (sheetErr) {
       console.warn("⚠️ Google Sheets service error: " + sheetErr.toString());
     }
@@ -512,6 +598,111 @@ function doPost(e) {
     console.error("doPost critical error:", err.toString());
     return ContentService.createTextOutput("Error: " + err.toString()).setMimeType(ContentService.MimeType.TEXT);
   }
+}
+
+/**
+ * High-Speed Batch Synchronization of Intelligence Tables from Next.js SQLite
+ */
+function handleIntelligenceSync(data) {
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var counts = { sessions: 0, traffic: 0, geo: 0, security: 0, events: 0 };
+
+    // 1. Sessions Intelligence
+    if (Array.isArray(data.sessions) && data.sessions.length > 0) {
+      var sSheet = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
+      var sHeaders = sSheet.getRange(1, 1, 1, Math.max(sSheet.getLastColumn(), 1)).getValues()[0];
+      var sRows = data.sessions.map(function(s) {
+        return sHeaders.map(function(h) { return resolveField(h, s); });
+      });
+      if (sRows.length > 0) {
+        sSheet.getRange(sSheet.getLastRow() + 1, 1, sRows.length, sHeaders.length).setValues(sRows);
+        counts.sessions = sRows.length;
+      }
+    }
+
+    // 2. Traffic Attribution
+    if (Array.isArray(data.traffic) && data.traffic.length > 0) {
+      var tSheet = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
+      var tHeaders = tSheet.getRange(1, 1, 1, Math.max(tSheet.getLastColumn(), 1)).getValues()[0];
+      var tRows = data.traffic.map(function(t) {
+        return tHeaders.map(function(h) { return resolveField(h, t); });
+      });
+      if (tRows.length > 0) {
+        tSheet.getRange(tSheet.getLastRow() + 1, 1, tRows.length, tHeaders.length).setValues(tRows);
+        counts.traffic = tRows.length;
+      }
+    }
+
+    // 3. Geo Intelligence
+    if (Array.isArray(data.geo) && data.geo.length > 0) {
+      var gSheet = getOrCreateConfiguredSheet(ss, "Geo_Intelligence");
+      var gHeaders = gSheet.getRange(1, 1, 1, Math.max(gSheet.getLastColumn(), 1)).getValues()[0];
+      var gRows = data.geo.map(function(g) {
+        return gHeaders.map(function(h) { return resolveField(h, g); });
+      });
+      if (gRows.length > 0) {
+        gSheet.getRange(gSheet.getLastRow() + 1, 1, gRows.length, gHeaders.length).setValues(gRows);
+        counts.geo = gRows.length;
+      }
+    }
+
+    // 4. Network Security Log
+    if (Array.isArray(data.security) && data.security.length > 0) {
+      var secSheet = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
+      var secHeaders = secSheet.getRange(1, 1, 1, Math.max(secSheet.getLastColumn(), 1)).getValues()[0];
+      var secRows = data.security.map(function(sec) {
+        return secHeaders.map(function(h) { return resolveField(h, sec); });
+      });
+      if (secRows.length > 0) {
+        secSheet.getRange(secSheet.getLastRow() + 1, 1, secRows.length, secHeaders.length).setValues(secRows);
+        counts.security = secRows.length;
+      }
+    }
+
+    // 5. Raw Events / Telemetry
+    if (Array.isArray(data.events) && data.events.length > 0) {
+      var evSheet = getOrCreateConfiguredSheet(ss, "Live_Traffic_Events");
+      var evHeaders = evSheet.getRange(1, 1, 1, Math.max(evSheet.getLastColumn(), 1)).getValues()[0];
+      var evRows = data.events.map(function(ev) {
+        return evHeaders.map(function(h) { return resolveField(h, ev); });
+      });
+      if (evRows.length > 0) {
+        evSheet.getRange(evSheet.getLastRow() + 1, 1, evRows.length, evHeaders.length).setValues(evRows);
+        counts.events = evRows.length;
+      }
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      message: "TrustGrid Intelligence synchronized successfully",
+      synced: counts
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (syncErr) {
+    console.error("handleIntelligenceSync error:", syncErr.toString());
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      message: syncErr.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Helper to ensure a tab exists with frozen dark headers
+ */
+function getOrCreateConfiguredSheet(ss, tabName) {
+  var sheet = findSheetFlexible(ss, tabName);
+  if (!sheet) {
+    var createName = tabName.replace(/_/g, ' ');
+    sheet = ss.insertSheet(createName);
+    var headers = TAB_CONFIGS[tabName] || SCHEMA_95_HEADERS;
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers])
+      .setFontWeight("bold")
+      .setBackground("#0f172a")
+      .setFontColor("#ffffff");
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
 }
 
 // =========================================================================================
@@ -2328,22 +2519,58 @@ function resolveField(header, data) {
     "IP Address":             data.ipAddress || data.ip_address || data["IP Address"] || "127.0.0.1",
     "Organization":           data.organization || data.company || data.company_name || data["Organization"] || "",
     "Session ID":             data.sessionId || data.session_id || data["Session ID"] || "",
-    "Visitor ID":             data.visitorId || data.visitor_id || data["Visitor ID"] || "",
+    "Visitor ID":             data.visitorId || data.visitor_id || data.user_id || data.userId || data["Visitor ID"] || "",
+    "User ID":                data.user_id || data.userId || data.visitorId || data.visitor_id || data["User ID"] || "",
     "Page Path":              data.pagePath || data.page_url || data.page || data["Page Path"] || "",
     "Page Title":             data.pageTitle || data.page_title || data["Page Title"] || "",
-    "Traffic Source":         data.trafficSource || data.traffic_source || data.utm_source || data.source || "Direct",
+    "Traffic Source":         data.trafficSource || data.traffic_source || data.channel || data.utm_source || data.source || "Direct",
+    "Traffic Channel":        data.traffic_source || data.channel || data.trafficSource || "Direct",
+    "Channel":                data.channel || data.traffic_source || data.trafficSource || "Direct",
     "Referrer":               data.referrer || data.referrer_url || documentReferrerFallback(data) || "",
+    "Referrer Domain":        data.referrer_domain || data.referrerDomain || "",
+    "Landing Page":           data.landing_page || data.landingPage || data.entry_page || "",
+    "Entry Page":             data.entry_page || data.landing_page || data.landingPage || "",
+    "Exit Page":              data.exit_page || data.page || data.pagePath || "",
     "Device":                 data.device || data.device_type || "Desktop",
     "Browser":                data.browser || "Chrome / Safari",
     "OS":                     data.os || data.operating_system || "Windows / macOS",
     "CTA Name":               data.ctaName || data.event_name || data.eventName || data["CTA Name"] || "",
     "Destination URL":        data.destinationUrl || data.page_url || data.pageUrl || "",
     "Section":                data.section || data.event_category || "General",
-    "UTM Source":             data.utmSource || data.utm_source || "",
-    "UTM Medium":             data.utmMedium || data.utm_medium || "",
-    "UTM Campaign":           data.utmCampaign || data.utm_campaign || "",
-    "UTM Term":               data.utmTerm || data.utm_term || "",
-    "UTM Content":            data.utmContent || data.utm_content || "",
+    "UTM Source":             data.utmSource || data.utm_source || data.source || "",
+    "Source":                 data.source || data.utm_source || data.utmSource || "direct",
+    "UTM Medium":             data.utmMedium || data.utm_medium || data.medium || "",
+    "Medium":                 data.medium || data.utm_medium || data.utmMedium || "none",
+    "UTM Campaign":           data.utmCampaign || data.utm_campaign || data.campaign || "",
+    "Campaign":               data.campaign || data.utm_campaign || data.utmCampaign || "",
+    "UTM Term":               data.utmTerm || data.utm_term || data.term || "",
+    "Term":                   data.term || data.utm_term || data.utmTerm || "",
+    "UTM Content":            data.utmContent || data.utm_content || data.content || "",
+    "Content":                data.content || data.utm_content || data.utmContent || "",
+    "Start Time (UTC)":       data.start_time_utc || data.startTime || data.timestamp || "",
+    "Last Activity (UTC)":    data.last_activity_utc || data.lastActivity || data.timestamp || "",
+    "Duration (Sec)":         data.duration_sec != null ? data.duration_sec : (data.duration != null ? data.duration : 0),
+    "Pages Visited":          data.pages_count != null ? data.pages_count : (data.pages != null ? data.pages : 1),
+    "Country":                data.country || data.geo_country || "",
+    "Country Code":           data.countryCode || data.country_code || "",
+    "Region":                 data.region || data.geo_state || "",
+    "City":                   data.city || data.geo_city || "",
+    "Latitude":               data.latitude != null ? data.latitude : (data.geo_latitude != null ? data.geo_latitude : ""),
+    "Longitude":              data.longitude != null ? data.longitude : (data.geo_longitude != null ? data.geo_longitude : ""),
+    "Timezone":               data.timezone || data.timezone_browser || "",
+    "Masked IP":              data.masked_ip || data.ip_masked || data.ip_address || data.ipAddress || "",
+    "Bounce":                 data.is_bounce != null ? data.is_bounce : (data.bounce != null ? data.bounce : 0),
+    "Converted":              data.converted != null ? data.converted : (data.goal_completed != null ? data.goal_completed : 0),
+    "User Type":              data.user_type || (data.returning_user ? "returning" : "new"),
+    "ISP":                    data.isp || "",
+    "ASN":                    data.asn || "",
+    "Threat Category":        data.threat_category || data.threatCategory || "",
+    "Severity":               data.severity || "",
+    "Description":            data.description || "",
+    "Target Path":            data.target_path || data.path || data.page_path || "",
+    "Blocked":                data.blocked != null ? data.blocked : 0,
+    "Action Taken":           data.action_taken || data.action || "",
+    "Timestamp (UTC)":        normalizeTimestamp(data.timestamp_utc || data.timestamp || new Date().toISOString()),
     "Timestamp":              normalizeTimestamp(data.timestamp || data.Timestamp || new Date().toISOString())
   };
   

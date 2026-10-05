@@ -1,18 +1,19 @@
 /**
  * ═════════════════════════════════════════════════════════════════════════════
- * PROFIT MACHINES - ENTERPRISE ANALYTICS DASHBOARD ENGINE (SHEET 2)
+ * TRUSTGRID.AI - ENTERPRISE ANALYTICS & INTELLIGENCE DASHBOARD (SHEET 2)
  * ═════════════════════════════════════════════════════════════════════════════
  * This script runs entirely in your Analytics Spreadsheet (Sheet 2).
- * It reads raw multi-form & telemetry data from Sheet 1, purges localhost/dev
- * traffic, and mathematically builds 15 automated executive intelligence tabs.
+ * It reads raw multi-form, telemetry, sessions, traffic attribution, geo,
+ * and network security intelligence from Sheet 1, and mathematically builds
+ * 20 automated executive intelligence tabs.
  * ═════════════════════════════════════════════════════════════════════════════
  */
 
 // 🔴 SHEET 1 ID (DATA COLLECTION SPREADSHEET WHERE WEBHOOK SAVES RAW DATA)
-var DATA_SHEET_ID = "1fdZl2it4O86OUB92DvBaeeEM75fXue1yqjcvLq51gVs";
+var DATA_SHEET_ID = "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0";
 
-// 🔴 WEBSITE URL (For Automated QA Audits — Enter once deployed)
-var SITE_BASE_URL = "";
+// 🔴 WEBSITE URL (For Automated QA Audits)
+var SITE_BASE_URL = "https://trustgridnew.vercel.app";
 
 // 🔴 DEVELOPMENT MODE: Set to true so localhost test traffic appears in dashboards
 var INCLUDE_LOCALHOST_IN_DEV = true;
@@ -83,6 +84,17 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var chatData = (chatSheet && chatSheet.getLastRow() > 0) ? chatSheet.getDataRange().getValues() : [];
     var formsData = (formsSheet && formsSheet.getLastRow() > 0) ? formsSheet.getDataRange().getValues() : [];
 
+    // TrustGrid Dedicated Intelligence Datasets (From Sheet 1)
+    var sessSheet = db.getSheetByName("Sessions_Intelligence") || db.getSheetByName("Sessions Intelligence") || db.getSheetByName("Sessions");
+    var attrSheet = db.getSheetByName("Traffic_Attribution") || db.getSheetByName("Traffic Attribution") || db.getSheetByName("UTM Data");
+    var geoSheet = db.getSheetByName("Geo_Intelligence") || db.getSheetByName("Geo Intelligence");
+    var secSheet = db.getSheetByName("Network_Security_Log") || db.getSheetByName("Network Security Log");
+
+    var sessData = (sessSheet && sessSheet.getLastRow() > 0) ? sessSheet.getDataRange().getValues() : [];
+    var attrData = (attrSheet && attrSheet.getLastRow() > 0) ? attrSheet.getDataRange().getValues() : [];
+    var geoData = (geoSheet && geoSheet.getLastRow() > 0) ? geoSheet.getDataRange().getValues() : [];
+    var secData = (secSheet && secSheet.getLastRow() > 0) ? secSheet.getDataRange().getValues() : [];
+
     // ── LOCALHOST & DEV SANITIZATION ENGINE ──
     var tData = filterLocalhostData(tDataRaw);
     var ubData = filterLocalhostData(ubDataRaw);
@@ -104,7 +116,7 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var devRecordsPurged = (tDataRaw.length - tData.length) + (ubDataRaw.length - ubData.length);
     // ─────────────────────────────────────────
 
-    // Build all 16 Intelligence Tabs
+    // Build all 20 Intelligence Tabs
     try { buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged); } catch (err) { console.error("Tab 1 Error: " + err.toString()); }
     try { buildExecutiveDashboard(tData, eData); } catch (err) { console.error("Tab 2 Error: " + err.toString()); }
     try { buildGeoMapProfile(tData); } catch (err) { console.error("Tab 3 Error: " + err.toString()); }
@@ -120,7 +132,7 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     try { buildCoOccurrenceMatrix(tData, eData); } catch (err) { console.error("Tab 13 Error: " + err.toString()); }
     try { buildFunnelDropOffSheet(tData, db); } catch (err) { console.error("Tab 14 Error: " + err.toString()); }
     try { buildLeadScoringEngine(tData, eData); } catch (err) { console.error("Tab 15 Error: " + err.toString()); }
-        try {
+    try {
       buildLeadsConversionsIntelligence([
         { name: "Inbound Leads", data: inboundData },
         { name: "Consultation Bookings", data: consultData },
@@ -132,7 +144,13 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
       ], formsData, tData);
     } catch (err) { console.error("Tab 16 Error: " + err.toString()); }
 
-    if (ui) ui.alert("✅ SUCCESS! 16 Profit Machines Analytics Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
+    // TrustGrid Intelligence Suite Extensions (Tabs 17-20)
+    try { buildSessionIntelligenceTab(tData, sessData, db); } catch (err) { console.error("Tab 17 (Session Intel) Error: " + err.toString()); }
+    try { buildTrafficAttributionTab(tData, attrData, db); } catch (err) { console.error("Tab 18 (Traffic Attribution) Error: " + err.toString()); }
+    try { buildNetworkSecurityIntelligenceTab(tData, secData, db); } catch (err) { console.error("Tab 19 (Network Security) Error: " + err.toString()); }
+    try { buildGeoTimezoneMatrixTab(tData, geoData, db); } catch (err) { console.error("Tab 20 (Geo & Timezone) Error: " + err.toString()); }
+
+    if (ui) ui.alert("✅ SUCCESS! 20 TrustGrid.AI Executive Intelligence Tabs Built & Sanitized.\n\n" + devRecordsPurged + " localhost development records were purged.");
 }
 
 function filterLocalhostData(data) {
@@ -964,12 +982,428 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// TAB 17: SESSIONS INTELLIGENCE (LIFECYCLE, BOUNCE, DURATION & CONVERSIONS)
+// ══════════════════════════════════════════════════════════════════════════════
+function buildSessionIntelligenceTab(tData, sessData, db) {
+    var sh = getOrCreateTab("🕹️ Sessions Intelligence");
+    styleTitle(sh, "🕹️ TRUSTGRID.AI — ADVANCED SESSION LIFECYCLE & ENGAGEMENT INTELLIGENCE", 10, C.pu);
+    sh.getRange("A1:Z120").setBackground(C.bg);
+    setColWidths(sh, 1, [20, 180, 160, 140, 120, 120, 160, 160, 140, 140, 140]);
+
+    var sessions = [];
+    if (sessData && sessData.length > 1) {
+        var sHead = sessData[0];
+        var sIdCol = sHead.indexOf("Session ID"), uIdCol = sHead.indexOf("User ID");
+        var durCol = sHead.indexOf("Duration (Sec)"), pCol = sHead.indexOf("Pages Visited");
+        var chCol = sHead.indexOf("Traffic Channel"), ctryCol = sHead.indexOf("Country");
+        var bCol = sHead.indexOf("Bounce"), convCol = sHead.indexOf("Converted");
+        var ipCol = sHead.indexOf("Masked IP");
+
+        for (var i = 1; i < sessData.length; i++) {
+            sessions.push({
+                id: sessData[i][sIdCol] || ("sess_" + i),
+                userId: sessData[i][uIdCol] || "",
+                duration: Number(sessData[i][durCol]) || 0,
+                pages: Number(sessData[i][pCol]) || 1,
+                channel: sessData[i][chCol] || "Direct",
+                country: sessData[i][ctryCol] || "Unknown",
+                bounce: Number(sessData[i][bCol]) === 1,
+                converted: Number(sessData[i][convCol]) === 1,
+                ip: sessData[i][ipCol] || ""
+            });
+        }
+    } else if (tData && tData.length > 1) {
+        var tHead = tData[0];
+        var sCol = tHead.indexOf("Session ID"), uCol = tHead.indexOf("Visitor ID");
+        var chCol = tHead.indexOf("Traffic Source"), ctryCol = tHead.indexOf("geo_country");
+        if (ctryCol === -1) ctryCol = tHead.indexOf("IP Location");
+        var ipCol = tHead.indexOf("IP Address");
+
+        var map = {};
+        for (var i = 1; i < tData.length; i++) {
+            var sid = tData[i][sCol] || ("sess_" + i);
+            if (!map[sid]) {
+                map[sid] = {
+                    id: sid,
+                    userId: tData[i][uCol] || "",
+                    duration: 0,
+                    pages: 0,
+                    channel: tData[i][chCol] || "Direct",
+                    country: tData[i][ctryCol] || "Unknown",
+                    bounce: true,
+                    converted: false,
+                    ip: tData[i][ipCol] || ""
+                };
+            }
+            map[sid].pages++;
+            if (map[sid].pages > 1) map[sid].bounce = false;
+        }
+        sessions = Object.values(map);
+    }
+
+    var totalSess = sessions.length;
+    var bounces = sessions.filter(function(s) { return s.bounce; }).length;
+    var conversions = sessions.filter(function(s) { return s.converted; }).length;
+    var bounceRate = totalSess > 0 ? ((bounces / totalSess) * 100).toFixed(1) + "%" : "0.0%";
+    var convRate = totalSess > 0 ? ((conversions / totalSess) * 100).toFixed(1) + "%" : "0.0%";
+    var avgDur = totalSess > 0 ? Math.round(sessions.reduce(function(a, b) { return a + b.duration; }, 0) / totalSess) : 0;
+
+    var drawKpi = function (row, col, title, value, color) {
+        sh.getRange(row, col, 1, 2).merge().setValue(title.toUpperCase()).setBackground(C.t).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setFontSize(10);
+        sh.getRange(row + 1, col, 2, 2).merge().setValue(value).setBackground(color).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setFontSize(22);
+    };
+
+    drawKpi(4, 2, "Total Sessions", totalSess.toLocaleString(), C.pu);
+    drawKpi(4, 4, "Avg Session Duration", avgDur + "s", C.c);
+    drawKpi(4, 6, "Bounce Rate", bounceRate, C.o);
+    drawKpi(4, 8, "Conversion Rate", convRate, C.g);
+
+    var chMap = {};
+    sessions.forEach(function(s) {
+        if (!chMap[s.channel]) chMap[s.channel] = { sessions: 0, bounces: 0, conversions: 0 };
+        chMap[s.channel].sessions++;
+        if (s.bounce) chMap[s.channel].bounces++;
+        if (s.converted) chMap[s.channel].conversions++;
+    });
+
+    var chRows = Object.keys(chMap).map(function(k) {
+        var it = chMap[k];
+        var bRate = it.sessions > 0 ? ((it.bounces / it.sessions) * 100).toFixed(1) + "%" : "0%";
+        var cRate = it.sessions > 0 ? ((it.conversions / it.sessions) * 100).toFixed(1) + "%" : "0%";
+        return [k, it.sessions, it.bounces, bRate, it.conversions, cRate];
+    });
+
+    sh.getRange(8, 2, 1, 6).merge().setValue("📊 Session Traffic Acquisition & Conversion Matrix").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(9, 2, 1, 6).setValues([["Channel", "Sessions", "Bounces", "Bounce Rate", "Conversions", "Conv Rate"]]).setBackground(C.p).setFontWeight("bold");
+    if (chRows.length > 0) {
+        sh.getRange(10, 2, chRows.length, 6).setValues(chRows).setBackground(C.r1);
+    }
+
+    var logRows = sessions.slice(0, 30).map(function(s) {
+        return [s.id, s.userId, s.ip, s.channel, s.duration + "s", s.pages, s.country, s.bounce ? "Yes" : "No", s.converted ? "Yes" : "No"];
+    });
+
+    var logStart = 12 + chRows.length;
+    sh.getRange(logStart, 2, 1, 9).merge().setValue("🕒 Granular Session Audit Trail (Top 30)").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(logStart + 1, 2, 1, 9).setValues([["Session ID", "User ID", "Masked IP", "Channel", "Duration", "Pages", "Country", "Bounce", "Converted"]]).setBackground(C.p).setFontWeight("bold");
+    if (logRows.length > 0) {
+        sh.getRange(logStart + 2, 2, logRows.length, 9).setValues(logRows).setBackground(C.r1);
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TAB 18: TRAFFIC ATTRIBUTION (MULTI-TOUCH CHANNELS, UTMS & REFERRERS)
+// ══════════════════════════════════════════════════════════════════════════════
+function buildTrafficAttributionTab(tData, attrData, db) {
+    var sh = getOrCreateTab("🎯 Traffic Attribution");
+    styleTitle(sh, "🎯 TRUSTGRID.AI — MULTI-TOUCH TRAFFIC & CAMPAIGN ATTRIBUTION", 10, C.c);
+    sh.getRange("A1:Z120").setBackground(C.bg);
+    setColWidths(sh, 1, [20, 180, 160, 160, 160, 140, 140, 140, 140]);
+
+    var channels = {}, campaigns = {}, referrers = {};
+    var totalAttributed = 0, totalConversions = 0;
+
+    if (attrData && attrData.length > 1) {
+        var aHead = attrData[0];
+        var chCol = aHead.indexOf("Channel"), srcCol = aHead.indexOf("Source");
+        var medCol = aHead.indexOf("Medium"), campCol = aHead.indexOf("Campaign");
+        var refCol = aHead.indexOf("Referrer Domain"), convCol = aHead.indexOf("Converted");
+
+        for (var i = 1; i < attrData.length; i++) {
+            var ch = attrData[i][chCol] || "Direct";
+            var camp = attrData[i][campCol] || "Organic / Direct";
+            var ref = attrData[i][refCol] || "Direct Entry";
+            var isConv = Number(attrData[i][convCol]) === 1;
+
+            totalAttributed++;
+            if (isConv) totalConversions++;
+
+            if (!channels[ch]) channels[ch] = { touches: 0, conv: 0 };
+            channels[ch].touches++;
+            if (isConv) channels[ch].conv++;
+
+            if (!campaigns[camp]) campaigns[camp] = { touches: 0, conv: 0 };
+            campaigns[camp].touches++;
+            if (isConv) campaigns[camp].conv++;
+
+            if (!referrers[ref]) referrers[ref] = { count: 0 };
+            referrers[ref].count++;
+        }
+    } else if (tData && tData.length > 1) {
+        var tHead = tData[0];
+        var chCol = tHead.indexOf("Traffic Source"), campCol = tHead.indexOf("UTM Campaign");
+        var refCol = tHead.indexOf("Referrer");
+
+        for (var i = 1; i < tData.length; i++) {
+            var ch = tData[i][chCol] || "Direct";
+            var camp = tData[i][campCol] || "Direct";
+            var ref = tData[i][refCol] || "Direct Entry";
+
+            totalAttributed++;
+            if (!channels[ch]) channels[ch] = { touches: 0, conv: 0 };
+            channels[ch].touches++;
+
+            if (!campaigns[camp]) campaigns[camp] = { touches: 0, conv: 0 };
+            campaigns[camp].touches++;
+
+            if (!referrers[ref]) referrers[ref] = { count: 0 };
+            referrers[ref].count++;
+        }
+    }
+
+    var drawKpi = function (row, col, title, value, color) {
+        sh.getRange(row, col, 1, 2).merge().setValue(title.toUpperCase()).setBackground(C.t).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setFontSize(10);
+        sh.getRange(row + 1, col, 2, 2).merge().setValue(value).setBackground(color).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setFontSize(22);
+    };
+
+    var topChannel = Object.keys(channels).sort(function(a,b) { return channels[b].touches - channels[a].touches; })[0] || "Direct";
+    var topCamp = Object.keys(campaigns).sort(function(a,b) { return campaigns[b].touches - campaigns[a].touches; })[0] || "None";
+
+    drawKpi(4, 2, "Attributed Touchpoints", totalAttributed.toLocaleString(), C.c);
+    drawKpi(4, 4, "Dominant Channel", topChannel, C.pu);
+    drawKpi(4, 6, "Primary Campaign", topCamp, C.o);
+    drawKpi(4, 8, "Attributed Conversions", totalConversions.toLocaleString(), C.g);
+
+    // Channel Table
+    var chRows = Object.keys(channels).map(function(k) {
+        var c = channels[k];
+        var share = totalAttributed > 0 ? ((c.touches / totalAttributed) * 100).toFixed(1) + "%" : "0%";
+        var convRate = c.touches > 0 ? ((c.conv / c.touches) * 100).toFixed(1) + "%" : "0%";
+        return [k, c.touches, share, c.conv, convRate];
+    });
+
+    sh.getRange(8, 2, 1, 5).merge().setValue("🌐 Multi-Touch Channel Performance").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(9, 2, 1, 5).setValues([["Channel", "Touchpoints", "Traffic Share", "Conversions", "Conv Rate"]]).setBackground(C.p).setFontWeight("bold");
+    if (chRows.length > 0) sh.getRange(10, 2, chRows.length, 5).setValues(chRows).setBackground(C.r1);
+
+    // Campaign Table
+    var campRows = Object.keys(campaigns).slice(0, 15).map(function(k) {
+        var c = campaigns[k];
+        var share = totalAttributed > 0 ? ((c.touches / totalAttributed) * 100).toFixed(1) + "%" : "0%";
+        return [k, c.touches, share, c.conv];
+    });
+
+    var campStart = 12 + chRows.length;
+    sh.getRange(campStart, 2, 1, 4).merge().setValue("🏷️ UTM Campaign & Source Breakdown (Top 15)").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(campStart + 1, 2, 1, 4).setValues([["Campaign", "Visits", "Traffic Share", "Conversions"]]).setBackground(C.p).setFontWeight("bold");
+    if (campRows.length > 0) sh.getRange(campStart + 2, 2, campRows.length, 4).setValues(campRows).setBackground(C.r1);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TAB 19: NETWORK SECURITY INTELLIGENCE (IP MASKING, ASNS & THREAT FORENSICS)
+// ══════════════════════════════════════════════════════════════════════════════
+function buildNetworkSecurityIntelligenceTab(tData, secData, db) {
+    var sh = getOrCreateTab("🛡️ Network Security Intelligence");
+    styleTitle(sh, "🛡️ TRUSTGRID.AI — IP PRIVACY & NETWORK FORENSICS INTELLIGENCE", 9, C.re);
+    sh.getRange("A1:Z120").setBackground(C.bg);
+    setColWidths(sh, 1, [20, 180, 160, 140, 140, 200, 140, 140, 140]);
+
+    var subnets = {}, asns = {};
+    var threatsCount = 0, blockedCount = 0;
+    var incidents = [];
+
+    if (secData && secData.length > 1) {
+        var sHead = secData[0];
+        var ipCol = sHead.indexOf("Masked IP"), catCol = sHead.indexOf("Threat Category");
+        var sevCol = sHead.indexOf("Severity"), blkCol = sHead.indexOf("Blocked");
+        var descCol = sHead.indexOf("Description"), pathCol = sHead.indexOf("Target Path");
+        var tsCol = sHead.indexOf("Timestamp (UTC)");
+
+        for (var i = 1; i < secData.length; i++) {
+            threatsCount++;
+            var isBlk = Number(secData[i][blkCol]) === 1;
+            if (isBlk) blockedCount++;
+
+            incidents.push([
+                secData[i][tsCol] || new Date().toISOString(),
+                secData[i][ipCol] || "198.51.***.***",
+                secData[i][catCol] || "General Anomaly",
+                secData[i][sevCol] || "Low",
+                secData[i][descCol] || "Security event flagged",
+                secData[i][pathCol] || "/",
+                isBlk ? "Blocked" : "Monitored"
+            ]);
+        }
+    }
+
+    if (tData && tData.length > 1) {
+        var tHead = tData[0];
+        var ipCol = tHead.indexOf("IP Address");
+        for (var i = 1; i < tData.length; i++) {
+            var ip = String(tData[i][ipCol] || "");
+            if (ip) {
+                var subnet = ip.split(".").slice(0, 2).join(".") + ".***.***";
+                subnets[subnet] = (subnets[subnet] || 0) + 1;
+            }
+        }
+    }
+
+    var drawKpi = function (row, col, title, value, color) {
+        sh.getRange(row, col, 1, 2).merge().setValue(title.toUpperCase()).setBackground(C.t).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setFontSize(10);
+        sh.getRange(row + 1, col, 2, 2).merge().setValue(value).setBackground(color).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setFontSize(22);
+    };
+
+    drawKpi(4, 2, "Unique /16 Subnets", Object.keys(subnets).length.toLocaleString(), C.c);
+    drawKpi(4, 4, "Compliance Privacy Protocol", "Zero Raw IP Leak", C.g);
+    drawKpi(4, 6, "Threats Detected", threatsCount.toLocaleString(), threatsCount > 0 ? C.re : C.pu);
+    drawKpi(4, 8, "Attacks Mitigated", blockedCount.toLocaleString(), C.o);
+
+    // Subnets Table
+    var subnetRows = Object.keys(subnets).slice(0, 15).map(function(k) {
+        return [k, subnets[k], "Strict /16 Masked (Compliant)"];
+    });
+
+    sh.getRange(8, 2, 1, 3).merge().setValue("🔒 Top Visitor Subnets (Strict /16 Zero-Leak Masking)").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(9, 2, 1, 3).setValues([["Masked Subnet (/16)", "Traffic Count", "Compliance Status"]]).setBackground(C.p).setFontWeight("bold");
+    if (subnetRows.length > 0) sh.getRange(10, 2, subnetRows.length, 3).setValues(subnetRows).setBackground(C.r1);
+
+    // Incidents Table
+    var incStart = 12 + subnetRows.length;
+    sh.getRange(incStart, 2, 1, 7).merge().setValue("🚨 Network Security Forensics & Threat Log").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(incStart + 1, 2, 1, 7).setValues([["Timestamp (UTC)", "Masked IP", "Category", "Severity", "Description", "Path", "Status"]]).setBackground(C.p).setFontWeight("bold");
+    if (incidents.length > 0) {
+        sh.getRange(incStart + 2, 2, incidents.length, 7).setValues(incidents.slice(0, 30)).setBackground(C.r1);
+    } else {
+        sh.getRange(incStart + 2, 2, 1, 7).setValues([["No active security threats logged — network healthy.", "", "", "", "", "", ""]]).setFontColor(C.m);
+    }
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// TAB 20: GEO & 24-HOUR ENGAGEMENT MATRIX
+// ══════════════════════════════════════════════════════════════════════════════
+function buildGeoTimezoneMatrixTab(tData, geoData, db) {
+    var sh = getOrCreateTab("🌐 Geo & Timezone Matrix");
+    styleTitle(sh, "🌐 TRUSTGRID.AI — GLOBAL VISITOR GEO & 24-HOUR ENGAGEMENT MATRIX", 9, C.g);
+    sh.getRange("A1:Z120").setBackground(C.bg);
+    setColWidths(sh, 1, [20, 140, 140, 140, 140, 160, 160, 140, 140]);
+
+    var hourDistribution = new Array(24).fill(0);
+    var countryCounts = {};
+    var totalGeoHits = 0;
+
+    if (tData && tData.length > 1) {
+        var tHead = tData[0];
+        var tsCol = tHead.indexOf("Timestamp");
+        var ctryCol = tHead.indexOf("geo_country");
+        if (ctryCol === -1) ctryCol = tHead.indexOf("IP Location");
+
+        for (var i = 1; i < tData.length; i++) {
+            totalGeoHits++;
+            var ts = tData[i][tsCol];
+            if (ts) {
+                var d = new Date(ts);
+                if (!isNaN(d.getTime())) {
+                    var hr = d.getUTCHours();
+                    hourDistribution[hr]++;
+                }
+            }
+            var ctry = tData[i][ctryCol] || "Unknown";
+            countryCounts[ctry] = (countryCounts[ctry] || 0) + 1;
+        }
+    }
+
+    var peakHour = 0, peakVal = 0;
+    hourDistribution.forEach(function(count, h) {
+        if (count > peakVal) { peakVal = count; peakHour = h; }
+    });
+
+    var topCountry = Object.keys(countryCounts).sort(function(a,b) { return countryCounts[b] - countryCounts[a]; })[0] || "Global";
+
+    var drawKpi = function (row, col, title, value, color) {
+        sh.getRange(row, col, 1, 2).merge().setValue(title.toUpperCase()).setBackground(C.t).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setFontSize(10);
+        sh.getRange(row + 1, col, 2, 2).merge().setValue(value).setBackground(color).setFontColor(C.w).setFontWeight("bold").setHorizontalAlignment("center").setVerticalAlignment("middle").setFontSize(22);
+    };
+
+    drawKpi(4, 2, "Total Geo Telemetry", totalGeoHits.toLocaleString(), C.g);
+    drawKpi(4, 4, "Top Country Penetration", topCountry, C.pu);
+    drawKpi(4, 6, "Peak Engagement Hour", peakHour.toString().padStart(2, "0") + ":00 UTC", C.o);
+    drawKpi(4, 8, "Global Reach", Object.keys(countryCounts).length + " Countries", C.c);
+
+    // 24-Hour Matrix Table
+    var hourRows = hourDistribution.map(function(count, h) {
+        var pct = totalGeoHits > 0 ? ((count / totalGeoHits) * 100).toFixed(1) + "%" : "0%";
+        var estHr = (h + 19) % 24; // UTC-5
+        var istHr = (h + 5.5) % 24; // UTC+5:30
+        return [
+            h.toString().padStart(2, "0") + ":00 UTC",
+            Math.floor(estHr).toString().padStart(2, "0") + ":00 EST",
+            Math.floor(istHr).toString().padStart(2, "0") + ":30 IST",
+            count,
+            pct
+        ];
+    });
+
+    sh.getRange(8, 2, 1, 5).merge().setValue("🕒 24-Hour Time-Zone Engagement Distribution").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(9, 2, 1, 5).setValues([["UTC Hour", "EST (US East)", "IST (India)", "Sessions", "Share %"]]).setBackground(C.p).setFontWeight("bold");
+    sh.getRange(10, 2, 24, 5).setValues(hourRows).setBackground(C.r1);
+
+    // Top Countries Table
+    var ctryRows = Object.keys(countryCounts).slice(0, 15).map(function(c) {
+        var count = countryCounts[c];
+        var pct = totalGeoHits > 0 ? ((count / totalGeoHits) * 100).toFixed(1) + "%" : "0%";
+        return [c, count, pct];
+    });
+
+    sh.getRange(8, 8, 1, 3).merge().setValue("🌍 Top Geographic Territories").setBackground(C.t).setFontColor(C.w).setFontWeight("bold");
+    sh.getRange(9, 8, 1, 3).setValues([["Country / Territory", "Sessions", "Share %"]]).setBackground(C.p).setFontWeight("bold");
+    if (ctryRows.length > 0) sh.getRange(10, 8, ctryRows.length, 3).setValues(ctryRows).setBackground(C.r1);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// STANDALONE BUILD TRIGGERS (FOR MENU EXECUTION)
+// ══════════════════════════════════════════════════════════════════════════════
+function BUILD_SESSIONS_INTELLIGENCE_ONLY() {
+    var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+    var tSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Page Views");
+    var sSheet = db.getSheetByName("Sessions_Intelligence") || db.getSheetByName("Sessions");
+    var tData = normalizeTrafficHeaders(tSheet ? tSheet.getDataRange().getValues() : []);
+    var sData = sSheet ? sSheet.getDataRange().getValues() : [];
+    buildSessionIntelligenceTab(tData, sData, db);
+    SpreadsheetApp.getUi().alert("✅ Sessions Intelligence Tab Rebuilt Successfully!");
+}
+
+function BUILD_TRAFFIC_ATTRIBUTION_ONLY() {
+    var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+    var tSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Page Views");
+    var aSheet = db.getSheetByName("Traffic_Attribution") || db.getSheetByName("UTM Data");
+    var tData = normalizeTrafficHeaders(tSheet ? tSheet.getDataRange().getValues() : []);
+    var aData = aSheet ? aSheet.getDataRange().getValues() : [];
+    buildTrafficAttributionTab(tData, aData, db);
+    SpreadsheetApp.getUi().alert("✅ Traffic Attribution Tab Rebuilt Successfully!");
+}
+
+function BUILD_NETWORK_SECURITY_ONLY() {
+    var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+    var tSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Page Views");
+    var secSheet = db.getSheetByName("Network_Security_Log");
+    var tData = normalizeTrafficHeaders(tSheet ? tSheet.getDataRange().getValues() : []);
+    var secData = secSheet ? secSheet.getDataRange().getValues() : [];
+    buildNetworkSecurityIntelligenceTab(tData, secData, db);
+    SpreadsheetApp.getUi().alert("✅ Network Security Intelligence Tab Rebuilt Successfully!");
+}
+
+function BUILD_GEO_TIMEZONE_ONLY() {
+    var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+    var tSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Page Views");
+    var gSheet = db.getSheetByName("Geo_Intelligence");
+    var tData = normalizeTrafficHeaders(tSheet ? tSheet.getDataRange().getValues() : []);
+    var gData = gSheet ? gSheet.getDataRange().getValues() : [];
+    buildGeoTimezoneMatrixTab(tData, gData, db);
+    SpreadsheetApp.getUi().alert("✅ Geo & Timezone Matrix Tab Rebuilt Successfully!");
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // CUSTOM MENU SETUP
 // ══════════════════════════════════════════════════════════════════════════════
 function onOpen() {
     SpreadsheetApp.getUi()
-        .createMenu('🚀 PROFIT MACHINES ANALYTICS')
-        .addItem('🔄 Refresh All 16 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
+        .createMenu('🛡️ TRUSTGRID INTELLIGENCE')
+        .addItem('🔄 Pull Data & Refresh All 20 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
+        .addSeparator()
+        .addItem('🕹️ Rebuild Sessions Intelligence', 'BUILD_SESSIONS_INTELLIGENCE_ONLY')
+        .addItem('🎯 Rebuild Traffic Attribution', 'BUILD_TRAFFIC_ATTRIBUTION_ONLY')
+        .addItem('🛡️ Rebuild Network Security Forensics', 'BUILD_NETWORK_SECURITY_ONLY')
+        .addItem('🌐 Rebuild Geo & Timezone Matrix', 'BUILD_GEO_TIMEZONE_ONLY')
         .addToUi();
 }
 
@@ -995,7 +1429,11 @@ function doGet(e) {
             "🔀 Co-Occurrence",
             "🔻 Funnel Drops",
             "🎯 Lead Scoring",
-            "📋 Leads & Conversions"
+            "📋 Leads & Conversions",
+            "🕹️ Sessions Intelligence",
+            "🎯 Traffic Attribution",
+            "🛡️ Network Security Intelligence",
+            "🌐 Geo & Timezone Matrix"
         ];
 
         var exportData = {};

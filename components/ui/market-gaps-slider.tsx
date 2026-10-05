@@ -107,7 +107,7 @@ export function MarketGapsSlider({ gaps }: MarketGapsSliderProps) {
             <div className="gap-resolution-card">
               <div className="resolution-flag">
                 <CheckCircle2 size={16} className="text-blue-500" />
-                <span>TrustGrid.AI Engineered Resolution</span>
+                <span>TRUSTGRID.AI Engineered Resolution</span>
               </div>
               <p className="resolution-text">{current.resolution}</p>
               

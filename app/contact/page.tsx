@@ -31,7 +31,7 @@ export default function ContactPage() {
         <PageBannerHero
           badge="GLOBAL ENGAGEMENT"
           badgeTag="DIRECT ARCHITECT ACCESS"
-          title="Connect with TrustGrid.AI Global Systems &"
+          title="Connect with TRUSTGRID.AI Global Systems &"
           titleHighlight="Architecture Engineering Leads"
           description="Reach out to our principal architecture leads, GPU compute engineers, and strategic enterprise advisors across the United States, Singapore, and India R&D labs."
           thesisHighlight="US, Singapore & India R&D Centers • 24-Hour Turnaround • Direct Architect Scoping"

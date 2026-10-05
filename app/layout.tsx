@@ -9,6 +9,8 @@ import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
 import { FloatingLeadForm } from '@/components/ui/floating-lead-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 
+import { PrivacyConsentBanner } from '@/components/ui/privacy-consent-banner'
+
 export const metadata: Metadata = {
   title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
   description: 'TRUSTGRID.AI architects, deploys, optimizes, and secures full-stack enterprise AI infrastructure, GPU factories, autonomous agent fleets, and quantum-safe networks.',
@@ -42,6 +44,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <FloatingLeadForm />
         <WhatsAppCTA />
         <AIArchitectChatbot />
+        <PrivacyConsentBanner />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

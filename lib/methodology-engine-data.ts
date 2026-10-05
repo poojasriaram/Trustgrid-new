@@ -979,5 +979,5 @@ export const trustgridPromise = {
       desc: "The enterprise operates at a level of efficiency, quality, agility, and intelligence that competitors cannot match — running a self-improving AI engine that has compounded for years."
     }
   ],
-  footerNote: "© TrustGrid.AI — The AI-Driven Methodology Engine. From Diagnostics to Compounding Value. Permanently."
+  footerNote: "© TRUSTGRID.AI — The AI-Driven Methodology Engine. From Diagnostics to Compounding Value. Permanently."
 }

@@ -93,6 +93,35 @@ const SCHEMAS = {
       'timestamp', 'event_name', 'page_url', 'cta_source', 'session_id',
       'utm_source', 'utm_medium', 'utm_campaign'
     ]
+  },
+  SESSIONS_INTELLIGENCE: {
+    name: 'Sessions_Intelligence',
+    headers: [
+      'session_id', 'user_id', 'start_time_utc', 'last_activity_utc', 'duration_sec',
+      'pages_count', 'entry_page', 'exit_page', 'channel', 'campaign',
+      'country', 'city', 'timezone', 'ip_masked', 'bounce', 'converted', 'user_type', 'timestamp'
+    ]
+  },
+  TRAFFIC_ATTRIBUTION: {
+    name: 'Traffic_Attribution',
+    headers: [
+      'timestamp_utc', 'session_id', 'user_id', 'channel', 'source', 'medium',
+      'campaign', 'term', 'content', 'referrer_domain', 'landing_page', 'converted'
+    ]
+  },
+  GEO_INTELLIGENCE: {
+    name: 'Geo_Intelligence',
+    headers: [
+      'timestamp_utc', 'ip_masked', 'country', 'country_code', 'region', 'city',
+      'latitude', 'longitude', 'timezone', 'isp', 'organization', 'asn'
+    ]
+  },
+  NETWORK_SECURITY_LOG: {
+    name: 'Network_Security_Log',
+    headers: [
+      'timestamp_utc', 'ip_masked', 'threat_category', 'severity', 'description',
+      'target_path', 'blocked', 'action_taken'
+    ]
   }
 };
 

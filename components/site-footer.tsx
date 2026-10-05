@@ -86,13 +86,14 @@ export function SiteFooter() {
         <div className="footer-links-col">
           <h4>Company</h4>
           <ul>
-            <li><Link href="/about">About TrustGrid.AI</Link></li>
+            <li><Link href="/about">About TRUSTGRID.AI</Link></li>
             <li><Link href="/leadership">Leadership & Teams</Link></li>
             <li><Link href="/careers">Careers & Fellowships</Link></li>
             <li><Link href="/partners">Ecosystem Partners</Link></li>
             <li><Link href="/about#presence">Global Offices & Labs</Link></li>
             <li><Link href="/contact">Contact & Inquiries</Link></li>
             <li><Link href="/book-ai-diagnostic">AI Diagnostic Assessment</Link></li>
+            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>
       </div>
@@ -108,6 +109,7 @@ export function SiteFooter() {
           <Link href="/about">About Us</Link>
           <Link href="/insights">Insights</Link>
           <Link href="/analytics" style={{ color: '#0ea5e9' }}>Analytics Suite</Link>
+          <Link href="/privacy-policy">Privacy Policy</Link>
           <a href="#top">Back to top ↑</a>
         </div>
       </div>

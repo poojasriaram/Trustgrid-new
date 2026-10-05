@@ -27,7 +27,10 @@ import {
   Cpu,
   Monitor,
   Megaphone,
-  ArrowLeft
+  ArrowLeft,
+  FileSpreadsheet,
+  ShieldAlert,
+  Server
 } from 'lucide-react'
 import { DashboardDataset } from '@/lib/analytics-service'
 
@@ -47,6 +50,8 @@ export type TabKey =
   | 'lead-scoring'
   | 'pareto'
   | 'std-deviation'
+  | 'network-intel'
+  | 'reports-export'
   | 'broken-link-qa'
 
 interface NavGroup {
@@ -73,7 +78,7 @@ const NAVIGATION_GROUPS: NavGroup[] = [
     ]
   },
   {
-    name: 'Audience',
+    name: 'Audience & Geographics',
     items: [
       { key: 'geo-map', label: 'Geo Map', icon: Globe },
       { key: 'visitor-ratio', label: 'Visitor Ratio', icon: PieChart },
@@ -81,7 +86,7 @@ const NAVIGATION_GROUPS: NavGroup[] = [
     ]
   },
   {
-    name: 'Behaviour',
+    name: 'Behaviour & Flow',
     items: [
       { key: 'daily-heatmap', label: 'Daily Heatmap', icon: Clock },
       { key: 'growth-momentum', label: 'Growth Momentum', icon: TrendingUp },
@@ -91,22 +96,24 @@ const NAVIGATION_GROUPS: NavGroup[] = [
     ]
   },
   {
-    name: 'Conversion',
+    name: 'Conversion & Funnel',
     items: [
       { key: 'funnel-drop-off', label: 'Funnel Drop-Off', icon: Layers },
       { key: 'lead-scoring', label: 'Lead Scoring Engine', icon: Flame, badge: 'AI' }
     ]
   },
   {
-    name: 'Performance',
+    name: 'Network & Security',
     items: [
-      { key: 'pareto', label: 'Pareto 80/20', icon: BarChart3 },
-      { key: 'std-deviation', label: 'Standard Deviation', icon: Sparkles }
+      { key: 'network-intel', label: 'IP & Network Intel', icon: ShieldAlert, badge: 'Shield' }
     ]
   },
   {
-    name: 'Technical QA',
+    name: 'Reports & Performance',
     items: [
+      { key: 'reports-export', label: 'Reports & CSV Export', icon: FileSpreadsheet, badge: 'CSV' },
+      { key: 'pareto', label: 'Pareto 80/20', icon: BarChart3 },
+      { key: 'std-deviation', label: 'Standard Deviation', icon: Sparkles },
       { key: 'broken-link-qa', label: 'Broken Link QA', icon: ShieldCheck }
     ]
   }
@@ -118,6 +125,8 @@ interface AnalyticsShellProps {
   dataset: DashboardDataset
   isRefreshing: boolean
   onRefresh: () => void
+  selectedTimezone?: string
+  onTimezoneChange?: (tz: string) => void
   children: React.ReactNode
 }
 
@@ -127,6 +136,8 @@ export function AnalyticsShell({
   dataset,
   isRefreshing,
   onRefresh,
+  selectedTimezone = 'UTC',
+  onTimezoneChange,
   children
 }: AnalyticsShellProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -160,39 +171,80 @@ export function AnalyticsShell({
                 TRUSTGRID.AI
               </span>
               <span className="block text-[10px] uppercase font-mono tracking-wider text-slate-500">
-                ISI Enterprise Intelligence Suite
+                Unified Intelligence Suite
               </span>
             </div>
           </Link>
 
           <span className="hidden md:block h-5 w-px bg-slate-800 mx-1" />
 
-          <div className="hidden md:flex items-center gap-2 text-xs font-mono text-slate-400">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Sheet 2 Engine Online</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-slate-500">
-              {dataset.missionControl.devRecordsPurged} Localhost Purged
-            </span>
-          </div>
+          {/* Data Source Indicator */}
+          {dataset.dataSource === 'LIVE_DATABASE' ? (
+            <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-2.5 py-1 rounded-md">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Live Database Active</span>
+              <span className="text-emerald-700">•</span>
+              <span className="text-slate-300">
+                {dataset.realDataSummary?.realEventsStored || 0} Events Stored
+              </span>
+            </div>
+          ) : (
+            <div className="hidden lg:flex items-center gap-2 text-xs font-mono text-cyan-400 bg-cyan-950/40 border border-cyan-500/30 px-2.5 py-1 rounded-md">
+              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span>Hybrid Analytics Engine</span>
+              <span className="text-cyan-700">•</span>
+              <span className="text-slate-300">
+                Sheet 2 / WAL Mode
+              </span>
+            </div>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
-          {/* Last Updated Timestamp */}
-          <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-slate-400 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
-            <Clock className="h-3.5 w-3.5 text-cyan-400" />
-            <span>Last Updated: {dataset.timestamp}</span>
+        <div className="flex items-center gap-2.5">
+          {/* Admin Timezone Selector */}
+          <div className="hidden md:flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-300">
+            <Globe className="h-3.5 w-3.5 text-cyan-400" />
+            <select
+              value={selectedTimezone}
+              onChange={e => onTimezoneChange?.(e.target.value)}
+              className="bg-transparent text-slate-200 text-xs focus:outline-none cursor-pointer pr-1"
+              title="Select Administrator Reporting Timezone"
+            >
+              <option value="UTC" className="bg-slate-900 text-white">UTC (Canonical)</option>
+              <option value="America/New_York" className="bg-slate-900 text-white">New York (EST/EDT)</option>
+              <option value="America/Los_Angeles" className="bg-slate-900 text-white">Los Angeles (PST/PDT)</option>
+              <option value="Europe/London" className="bg-slate-900 text-white">London (GMT/BST)</option>
+              <option value="Europe/Berlin" className="bg-slate-900 text-white">Berlin (CET)</option>
+              <option value="Asia/Kolkata" className="bg-slate-900 text-white">Kolkata (IST)</option>
+              <option value="Asia/Singapore" className="bg-slate-900 text-white">Singapore (SGT)</option>
+              <option value="Asia/Tokyo" className="bg-slate-900 text-white">Tokyo (JST)</option>
+            </select>
           </div>
+
+          {/* Last Updated Timestamp */}
+          <div className="hidden xl:flex items-center gap-1.5 text-xs font-mono text-slate-400 bg-slate-900/80 px-2.5 py-1.5 rounded-lg border border-slate-800">
+            <Clock className="h-3.5 w-3.5 text-cyan-400" />
+            <span>{dataset.timestamp}</span>
+          </div>
+
+          {/* Quick Sheets Sync Button */}
+          <button
+            onClick={() => onSelectTab('reports-export')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold tracking-wide transition-all shadow-sm hover:shadow-emerald-500/20 cursor-pointer"
+            title="Google Sheets Live Integration"
+          >
+            <FileSpreadsheet className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Sheets Sync</span>
+          </button>
 
           {/* Refresh Analytics Button */}
           <button
             onClick={onRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold tracking-wide transition-all shadow-sm hover:shadow-cyan-500/20 disabled:opacity-50 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold tracking-wide transition-all shadow-sm hover:shadow-cyan-500/20 disabled:opacity-50 cursor-pointer"
           >
             <RotateCw className={`h-3.5 w-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
-            <span className="hidden sm:inline">Refresh Analytics</span>
-            <span className="sm:hidden">Sync</span>
+            <span className="hidden sm:inline">Refresh</span>
           </button>
 
           <Link
@@ -201,7 +253,7 @@ export function AnalyticsShell({
             title="Return to Public Site"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            <span className="hidden lg:inline">Exit to Website</span>
+            <span className="hidden lg:inline">Exit</span>
           </Link>
         </div>
       </header>

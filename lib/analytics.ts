@@ -706,6 +706,15 @@ export async function build95TelemetryPayload(
 export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<void> {
   if (typeof window === 'undefined') return
 
+  // Check consent preference
+  let consentStatus: 'granted' | 'denied' = 'granted'
+  try {
+    const consent = localStorage.getItem('trustgrid_cookie_consent')
+    if (consent === 'denied') {
+      consentStatus = 'denied'
+    }
+  } catch (e) {}
+
   // 1. GTM / GA4 dataLayer push
   try {
     const w = window as any
@@ -717,38 +726,82 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
     }
   } catch (e) {}
 
-  // 2. Apps Script Endpoint
-  const endpoint =
-    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
-    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
-    DEFAULT_ENDPOINT
-
-  const bodyString = JSON.stringify({
-    event_type: 'telemetry_95',
-    ...payload
-  })
-
-  // Attempt sendBeacon
+  // 2. Dispatch to TrustGrid Internal Relational Analytics Server Engine (/api/analytics/events)
   try {
+    const internalPayload = {
+      event_name: payload.event_name,
+      event_id: payload.event_id,
+      event_category: payload.event_category,
+      event_action: payload.event_action,
+      session_id: payload.session_id,
+      user_id: payload.user_id,
+      page_path: payload.page || window.location.pathname,
+      page_title: payload.page_title || document.title,
+      referrer: payload.referrer_url || document.referrer,
+      utm_source: payload.utm_source,
+      utm_medium: payload.utm_medium,
+      utm_campaign: payload.utm_campaign,
+      utm_term: payload.utm_term,
+      utm_content: payload.utm_content,
+      device_type: payload.device_type,
+      operating_system: payload.operating_system,
+      browser: payload.browser,
+      screen_res: `${payload.screen_width || window.innerWidth}x${payload.screen_height || window.innerHeight}`,
+      timezone: payload.timezone,
+      is_conversion: Boolean(payload.goal_completed),
+      conversion_goal: payload.goal_name,
+      dwell_time_sec: Math.round((payload.time_on_page || 0) / 1000),
+      scroll_depth: payload.scroll_percentage || 0,
+      consent_status: consentStatus,
+      metadata: {
+        element_text: payload.element_text,
+        element_id: payload.element_id,
+        section: payload.section,
+        rage_click: payload.rage_click_detected
+      }
+    }
+
+    const jsonString = JSON.stringify(internalPayload)
+
+    let sent = false
     if (navigator.sendBeacon && typeof Blob !== 'undefined') {
-      const blob = new Blob([bodyString], { type: 'text/plain;charset=utf-8' })
-      const sent = navigator.sendBeacon(endpoint, blob)
-      if (sent) return
+      const blob = new Blob([jsonString], { type: 'application/json' })
+      sent = navigator.sendBeacon('/api/analytics/events', blob)
+    }
+
+    if (!sent) {
+      fetch('/api/analytics/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: jsonString,
+        keepalive: true
+      }).catch(() => {})
     }
   } catch (e) {}
 
-  // Fetch fallback
-  try {
-    fetch(endpoint, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: bodyString,
-      keepalive: true
-    }).catch(() => {})
-  } catch (e) {}
+  // 3. Apps Script Endpoint (if configured)
+  const endpoint =
+    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
+    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL
+
+  if (endpoint && endpoint.startsWith('http') && !endpoint.includes('YOUR_SCRIPT')) {
+    const bodyString = JSON.stringify({
+      event_type: 'telemetry_95',
+      ...payload
+    })
+
+    try {
+      fetch(endpoint, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: bodyString,
+        keepalive: true
+      }).catch(() => {})
+    } catch (e) {}
+  }
 }
 
 /**

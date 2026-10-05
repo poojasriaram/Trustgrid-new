@@ -18,3 +18,7 @@ server_api/
 dist/
 *.tar
 *.tsbuildinfo
+data/
+*.db
+*.db-wal
+*.db-shm

@@ -34,7 +34,7 @@ export interface CaseStudy {
 export const aboutHero = {
   eyebrow: "A Full-Spectrum AI Engineering Company",
   title: "Engineering the Resilient, Hyper-Optimized Backbone of the AI Economy",
-  description: "TrustGrid.AI engineers production AI systems for the world's most demanding enterprises — from GPU clusters to autonomous agent fleets, across 20+ regulated industries."
+  description: "TRUSTGRID.AI engineers production AI systems for the world's most demanding enterprises — from GPU clusters to autonomous agent fleets, across 20+ regulated industries."
 }
 
 export const missionVision = {
@@ -89,7 +89,7 @@ export const societalValueAddition = [
   {
     title: "The Acceleration Multiplier",
     category: "Value to AI Progress",
-    description: "The bottleneck to humanity's next great leap forward is physical, not algorithmic. TrustGrid.AI serves as the critical catalyst between theoretical research and scalable, real-world deployment."
+    description: "The bottleneck to humanity's next great leap forward is physical, not algorithmic. TRUSTGRID.AI serves as the critical catalyst between theoretical research and scalable, real-world deployment."
   },
   {
     title: "The Sustainability Shield",
@@ -276,7 +276,7 @@ export const officeLocations: OfficeLocation[] = [
 ]
 
 export const aboutNavMenu = [
-  { label: "About TrustGrid.AI", href: "/about" },
+  { label: "About TRUSTGRID.AI", href: "/about" },
   { label: "Leadership & Teams", href: "/about#teams" },
   { label: "Careers & Hackathons", href: "/about#careers-hackathons" },
   { label: "Global Presence", href: "/about#presence" },

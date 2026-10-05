@@ -18,13 +18,60 @@ import {
 function AnalyticsInner() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const lastTrackedUrlRef = useRef<string>('')
+  const lastActivityTimeRef = useRef<number>(Date.now())
 
-  // Track Page Views on navigation change
+  // Check and enforce 30-minute session inactivity timeout
+  const checkSessionTimeout = () => {
+    if (typeof window === 'undefined') return
+    const now = Date.now()
+    const lastActive = parseInt(sessionStorage.getItem('tg_last_active_time') || '0', 10)
+    if (lastActive && now - lastActive > 30 * 60 * 1000) {
+      // 30 min timeout exceeded: start new session
+      sessionStorage.removeItem('tg_session_id')
+      sessionStorage.removeItem('tg_session_start')
+    }
+    sessionStorage.setItem('tg_last_active_time', String(now))
+    lastActivityTimeRef.current = now
+  }
+
+  // Track Page Views on navigation change with deduplication
   useEffect(() => {
+    checkSessionTimeout()
     getOrCreateUserId()
     getOrCreateSessionId()
-    trackPageView(pathname, typeof document !== 'undefined' ? document.title : '')
+
+    const currentUrl = `${pathname}${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`
+    if (lastTrackedUrlRef.current !== currentUrl) {
+      lastTrackedUrlRef.current = currentUrl
+      trackPageView(pathname, typeof document !== 'undefined' ? document.title : '')
+    }
   }, [pathname, searchParams])
+
+  // Track Exit Page and Session End on window unload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      try {
+        const sid = sessionStorage.getItem('tg_session_id')
+        const uid = localStorage.getItem('tg_user_id')
+        if (sid && uid && navigator.sendBeacon) {
+          const payload = JSON.stringify({
+            event_name: 'session_end',
+            session_id: sid,
+            user_id: uid,
+            page_path: pathname,
+            page_title: document.title,
+            dwell_time_sec: Math.round((Date.now() - lastActivityTimeRef.current) / 1000)
+          })
+          const blob = new Blob([payload], { type: 'application/json' })
+          navigator.sendBeacon('/api/analytics/events', blob)
+        }
+      } catch (e) {}
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [pathname])
 
   // Track Scroll Depth milestones
   useEffect(() => {

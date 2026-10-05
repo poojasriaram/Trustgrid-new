@@ -15,6 +15,8 @@ export interface FilterOptions {
   utmMedium?: string
   device?: string
   visitorType?: 'all' | 'new' | 'returning'
+  timezone?: string // 'UTC' | 'America/New_York' | 'Europe/London' | 'Asia/Kolkata' etc.
+  dataSourceMode?: 'all' | 'real_only' | 'baseline'
   refresh?: boolean
 }
 
@@ -228,6 +230,41 @@ export interface BrokenLinkQaData {
   avgLatencyMs: number
 }
 
+export interface NetworkIntelData {
+  totalRequests: number
+  uniqueAsns: number
+  datacenterRequests: number
+  suspiciousRequests: number
+  networks: {
+    asn: string
+    organization: string
+    isp: string
+    connectionType: string
+    isProxyOrDatacenter: boolean
+    threatLevel: string
+    totalRequests: number
+  }[]
+  securityIncidents: {
+    id: number
+    timestamp: string
+    ipMasked: string
+    eventType: string
+    severity: string
+    description: string
+    path: string
+    blocked: boolean
+  }[]
+  connectionTypes: { type: string; count: number; percentage: number }[]
+}
+
+export interface RealDataSummary {
+  realEventsStored: number
+  realSessionsStored: number
+  activeLiveSessions: number
+  lastEventTime: string | null
+  databaseEngine: string
+}
+
 export interface DashboardDataset {
   timestamp: string
   filtersApplied: FilterOptions
@@ -247,6 +284,9 @@ export interface DashboardDataset {
   funnelDropOff: FunnelDropOffData
   leadScoring: LeadScoringData
   brokenLinkQa: BrokenLinkQaData
+  networkIntel?: NetworkIntelData
+  realDataSummary?: RealDataSummary
+  dataSource?: 'LIVE_DATABASE' | 'HYBRID_INTELLIGENCE' | 'SHEET2_SYNC'
 }
 
 // ── In-Memory Cache Store ──
@@ -798,6 +838,16 @@ export async function getAnalyticsDashboard(options: FilterOptions = {}): Promis
 
   // 2. High-performance fallback: Exact Sheet 2 calculation engine
   const processed = buildProcessedAnalyticsFromState(options)
-  memoryCache = { data: processed, cachedAt: Date.now() }
-  return processed
+
+  // 3. Enrich with real database telemetry, live sessions & network intelligence
+  let finalDataset = processed
+  try {
+    const { aggregateDashboardFromDb } = await import('@/lib/analytics-db-service')
+    finalDataset = aggregateDashboardFromDb(options, processed)
+  } catch (err) {
+    console.warn('[DB Aggregation Module Warning]', err)
+  }
+
+  memoryCache = { data: finalDataset, cachedAt: Date.now() }
+  return finalDataset
 }

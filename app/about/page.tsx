@@ -44,8 +44,8 @@ import {
 } from '@/lib/about-data'
 
 export const metadata: Metadata = {
-  title: 'About Us | TrustGrid.AI — Full-Spectrum AI Engineering',
-  description: "TrustGrid.AI designs, builds, optimizes, and secures enterprise AI infrastructure, GPU clusters, Agentic AI systems, and autonomous business operations.",
+  title: 'About Us | TRUSTGRID.AI — Full-Spectrum AI Engineering',
+  description: "TRUSTGRID.AI designs, builds, optimizes, and secures enterprise AI infrastructure, GPU clusters, Agentic AI systems, and autonomous business operations.",
 }
 
 export default function AboutPage() {
@@ -126,7 +126,7 @@ export default function AboutPage() {
             We do not build AI models; <span>we build the engines that make AI work at scale.</span>
           </h2>
           <p>
-            TrustGrid.AI specializes in deep-tech professional services across interconnected architectural verticals.
+            TRUSTGRID.AI specializes in deep-tech professional services across interconnected architectural verticals.
           </p>
         </div>
 
@@ -183,9 +183,9 @@ export default function AboutPage() {
         </div>
 
         <div className="societal-intro-banner">
-          <h2>The TrustGrid.AI Value Addition</h2>
+          <h2>The TRUSTGRID.AI Value Addition</h2>
           <p>
-            The bottleneck to humanity's next great leap forward is physical, not algorithmic. TrustGrid.AI serves as the critical catalyst between theoretical breakthroughs and real-world societal impact.
+            The bottleneck to humanity's next great leap forward is physical, not algorithmic. TRUSTGRID.AI serves as the critical catalyst between theoretical breakthroughs and real-world societal impact.
           </p>
         </div>
 
@@ -422,7 +422,7 @@ export default function AboutPage() {
         <div className="cta-panel animated-card">
           <div className="cta-content">
             <span className="section-label" style={{ color: '#91b3ff' }}>SCHEDULE AN ENTERPRISE CONSULTATION</span>
-            <h2>Speak with a TrustGrid.AI Principal Engineer</h2>
+            <h2>Speak with a TRUSTGRID.AI Principal Engineer</h2>
             <p className="cta-lead">
               Engagements are led by principal engineers with experience deploying production AI at Fortune 500 scale. Most engagements begin with a tailored 48-hour capability assessment.
             </p>

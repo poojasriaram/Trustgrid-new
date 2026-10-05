@@ -223,7 +223,7 @@ export function IndustryShowcaseSlider() {
 
               {/* Solutions */}
               <div className="industry-detail-block">
-                <span className="detail-block-title">TrustGrid.AI Stacks:</span>
+                <span className="detail-block-title">TRUSTGRID.AI Stacks:</span>
                 <ul className="detail-bullet-list">
                   {current.solutions.map((sol, si) => (
                     <li key={si}>

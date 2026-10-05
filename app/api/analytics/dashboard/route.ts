@@ -16,6 +16,8 @@ export async function GET(request: NextRequest) {
     const utmMedium = searchParams.get('utmMedium') || undefined
     const device = searchParams.get('device') || undefined
     const visitorType = (searchParams.get('visitorType') as 'all' | 'new' | 'returning') || 'all'
+    const timezone = searchParams.get('timezone') || 'UTC'
+    const dataSourceMode = (searchParams.get('dataSourceMode') as 'all' | 'real_only' | 'baseline') || 'all'
     const refresh = searchParams.get('refresh') === 'true' || searchParams.get('refresh') === '1'
 
     const options: FilterOptions = {
@@ -25,6 +27,8 @@ export async function GET(request: NextRequest) {
       utmMedium,
       device,
       visitorType,
+      timezone,
+      dataSourceMode,
       refresh
     }
 

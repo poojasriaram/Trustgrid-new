@@ -52,7 +52,7 @@ export function AIValueCapabilities() {
               Find Where AI Value Is Actually Trapped
             </h3>
             <p className="text-base text-slate-600 mt-3 leading-relaxed">
-              TrustGrid.AI begins with the operating constraint—not the AI model.
+              TRUSTGRID.AI begins with the operating constraint—not the AI model.
             </p>
             <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
               Our Lean AI Value Engineering methodology combines Theory of Constraints, Critical Chain, Lean Six Sigma, the Toyota Production System and Value Engineering to identify where waste, variation, capacity loss and decision friction are limiting enterprise performance.
