@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import {
   TrendingUp,
@@ -31,6 +31,7 @@ import {
   Layers3,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Calendar,
   DollarSign,
   Award,
@@ -43,18 +44,245 @@ import {
   HelpCircle,
   Search,
   Filter,
-  Users
+  Users,
+  Send,
+  Loader2,
+  Bot
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { HeroCanvas } from '@/components/ui/hero-canvas'
 import { BorderBeam } from '@/components/ui/border-beam'
 import { trackCTA } from '@/lib/analytics'
+import { submitTrustGridForm, validateEmail, validatePhone } from '@/lib/form-submission'
 
 // ==========================================
-// 1. DATA: 8 STAGES OF THE AI-VE JOB PLAN
+// 1. DATA: 8 AI VALUE ENGINEERING MODELS (4 x 2 GRID)
+// ==========================================
+interface ModelCardItem {
+  number: string
+  name: string
+  tag: string
+  icon: React.ElementType
+  description: string
+  linkHref: string
+  actionLabel: string
+}
+
+const aiValueModelsData: ModelCardItem[] = [
+  {
+    number: '01',
+    name: 'AI VALUE DISCOVERY',
+    tag: 'OPPORTUNITY MAPPING',
+    icon: Sparkles,
+    description: 'Identify where enterprise value is trapped, analyze binding operational constraints, and quantify addressable cost opportunities before software commitments.',
+    linkHref: '#spin-model',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '02',
+    name: 'AI PROCESS INTELLIGENCE',
+    tag: 'TELEMETRY MINING',
+    icon: Activity,
+    description: 'Use AI-driven process discovery and telemetry analytics across ERP, MES, and cloud logs to understand how work, inventory, and decisions actually flow.',
+    linkHref: '#industrial-use-cases',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '03',
+    name: 'FUNCTION-COST ENGINEERING',
+    tag: 'UNIT ECONOMICS',
+    icon: FileSpreadsheet,
+    description: 'Decompose enterprise activity into discrete verb–noun functions and connect each function to its empirical baseline cost versus target Should-Cost.',
+    linkHref: '#ledger-economics',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '04',
+    name: 'AI METHODOLOGY EXECUTION',
+    tag: 'PROVEN SCIENCES',
+    icon: Workflow,
+    description: 'Industrialize proven operational excellence methodologies (Lean, Six Sigma, TOC, TPS, TPM) by executing them through autonomous AI agent fleets 4–10x faster.',
+    linkHref: '#methodology-engine',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '05',
+    name: 'AI AGENT FLEETS',
+    tag: 'DIGITAL WORKFORCE',
+    icon: Bot,
+    description: 'Deploy specialized multi-agent fleets operating 24/7 across physical and digital operations, gated by deterministic human approval risk bands.',
+    linkHref: '#tier-architecture',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '06',
+    name: 'VALUE REALIZATION',
+    tag: 'P&L ACCRETION',
+    icon: CheckCircle2,
+    description: 'Track and verify whether engineered improvements actually become measurable enterprise P&L value, verified by Finance and reconciled against the general ledger.',
+    linkHref: '#value-currencies',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '07',
+    name: 'VALUE GUARDIANSHIP',
+    tag: 'PERMANENCE DEFENSE',
+    icon: ShieldCheck,
+    description: 'Autonomous Value Guardian agents continuously monitor baseline metrics and Shewhart SPC bounds to defend banked gains from performance decay.',
+    linkHref: '#governance-proof',
+    actionLabel: 'Explore Model'
+  },
+  {
+    number: '08',
+    name: 'COMPOUNDING VALUE',
+    tag: 'COMPOUNDING FACTOR',
+    icon: TrendingUp,
+    description: 'Continuously identify shifting constraints and reinvest realized operational savings into the next high-yield capability waterfall (target ≥1.3x/year).',
+    linkHref: '#five-layer-architecture',
+    actionLabel: 'Explore Model'
+  }
+]
+
+// ==========================================
+// 2. DATA: VALUE ENGINE 7-STAGE PROGRESSION SLIDER
+// ==========================================
+interface ValueEngineStage {
+  step: string
+  name: string
+  headline: string
+  summary: string
+  agentRole: string
+  keyDeliverable: string
+  balanceSheetMetric: string
+}
+
+const valueEngineStages: ValueEngineStage[] = [
+  {
+    step: '01',
+    name: 'Discover',
+    headline: 'Empirical Operational Baseline & Opportunity Mapping',
+    summary: 'Ingest enterprise transaction logs, SCADA streams, and ERP event history to map operational reality without human bias.',
+    agentRole: 'Unsupervised process discovery agents & telemetry parsers mapping end-to-end execution paths.',
+    keyDeliverable: 'Certified Process Inventory & Value-at-Stake Map',
+    balanceSheetMetric: '100% baseline spend locked with Corporate Finance'
+  },
+  {
+    step: '02',
+    name: 'Analyze',
+    headline: 'Function-Cost Decomposition & Bottleneck Isolation',
+    summary: 'Decompose every workflow into discrete verb–noun functions and price them with activity-based should-cost rigor.',
+    agentRole: 'Semantic FAST analysis LLMs and Theory of Constraints (TOC) throughput balance evaluators.',
+    keyDeliverable: 'Enterprise Function-Cost Ledger (Baseline vs. Should-Cost)',
+    balanceSheetMetric: 'Cost-per-function baseline indexed to general ledger'
+  },
+  {
+    step: '03',
+    name: 'Engineer',
+    headline: 'Generative Alternatives, Should-Cost & Fleet Blueprint',
+    summary: 'Systematically generate non-obvious engineering solutions to execute essential functions at radically reduced unit cost.',
+    agentRole: 'Generative design agents, patent TRIZ contradiction solvers, and synthetic sandbox simulators.',
+    keyDeliverable: 'Multi-Agent Fleet Architecture & Risk-Adjusted Decision Matrix',
+    balanceSheetMetric: 'Risk-bounded DCF / NPV and <6-month payback verification'
+  },
+  {
+    step: '04',
+    name: 'Execute',
+    headline: 'Industrialized Multi-Agent Methodology Deployment',
+    summary: 'Deploy specialized digital worker fleets running Lean, Six Sigma, and TOC workflows 24/7 at 4–10x classical execution speed.',
+    agentRole: 'Autonomous agent swarms executing continuous root-cause analysis, dispatch, and automated work orders.',
+    keyDeliverable: 'Live Production Fleet Telemetry & Daily Tier Kata Dashboard',
+    balanceSheetMetric: '30–60% cycle time compression & direct OPEX reduction'
+  },
+  {
+    step: '05',
+    name: 'Certify',
+    headline: 'Finance Co-Signatures & Difference-in-Differences Attribution',
+    summary: 'Subject every dollar of claimed yield to econometric validation and formal controller co-signatures per wave.',
+    agentRole: 'Statistical difference-in-differences causal attribution engine isolating macro market noise.',
+    keyDeliverable: 'Signed Finance Co-Signature Dossier & P&L Attribution Report',
+    balanceSheetMetric: '100% verified accounting reconciliation'
+  },
+  {
+    step: '06',
+    name: 'Defend',
+    headline: 'Autonomous Guardianship & 6-Month Permanence Audit',
+    summary: 'Permanently defend realized gains against human regression through continuous automated Shewhart drift detection.',
+    agentRole: '24/7 autonomous Value Guardian agents triggering automated circuit breakers upon variance drift.',
+    keyDeliverable: '6-Month Permanence Audit Certificate (≥90% Value Retention)',
+    balanceSheetMetric: 'Zero performance decay & audited permanent margin lift'
+  },
+  {
+    step: '07',
+    name: 'Compound',
+    headline: 'Dynamic Constraint Re-mapping & Self-Funding Waterfall',
+    summary: 'As operational bottlenecks elevate, automatically re-map the next binding constraint and self-fund continuous expansion.',
+    agentRole: 'Cross-plant knowledge graph allocators and autonomous opportunity prioritization agents.',
+    keyDeliverable: 'Board of Directors Value Scorecard & Annual Compounding Audit',
+    balanceSheetMetric: '≥1.3x measured annual compounding factor'
+  }
+]
+
+// ==========================================
+// 3. DATA: SPIN MODEL
+// ==========================================
+interface SpinItem {
+  letter: string
+  name: string
+  subtitle: string
+  focus: string
+  operationalReality: string
+  economicConsequence: string
+  engineeredOutcome: string
+  badge: string
+}
+
+const spinData: SpinItem[] = [
+  {
+    letter: 'S',
+    name: 'SITUATION',
+    subtitle: 'Current Operating Environment',
+    focus: 'Understand how work, data, and compute actually flow.',
+    operationalReality: 'Enterprises operate complex, heterogeneous systems with sprawling ERPs, hybrid clouds, high-cost GPU infrastructure, and manual handoffs.',
+    economicConsequence: 'Operational reality is obscured by static departmental reporting and unmonitored baseline variances.',
+    engineeredOutcome: 'Automated telemetry ingestion and process mining construct an indisputable empirical operating baseline in days.',
+    badge: 'STAGE 1: DIAGNOSTIC'
+  },
+  {
+    letter: 'P',
+    name: 'PROBLEM',
+    subtitle: 'Constraints, Waste & Performance Gaps',
+    focus: 'Identify the binding bottlenecks that cap performance.',
+    operationalReality: '30–50% GPU underutilization, pervasive DOWNTIME waste, human analytical bottlenecks, and fragmented agent pilots trapped in silos.',
+    economicConsequence: 'Over 70% of enterprise AI budgets produce no verifiable P&L yield while operational costs climb unchecked.',
+    engineeredOutcome: 'Theory of Constraints (TOC) and verb–noun function analysis isolate the exact binding bottleneck capping overall cash flow.',
+    badge: 'STAGE 2: ANALYSIS'
+  },
+  {
+    letter: 'I',
+    name: 'IMPLICATION',
+    subtitle: 'Quantify Economic & Risk Consequences',
+    focus: 'Model the true cost of inaction and operational variance.',
+    operationalReality: 'Unchecked defect escapes, unplanned machine downtime, bloated working capital, and token cost runaway without attribution.',
+    economicConsequence: 'Multi-million-dollar balance-sheet leaks: excessive scrap, customer churn, warranty claims, and wasted capital allocations.',
+    engineeredOutcome: 'Activity-based costing binds every operational variance to direct general ledger line items with difference-in-differences rigor.',
+    badge: 'STAGE 3: FINANCIAL TRUTH'
+  },
+  {
+    letter: 'N',
+    name: 'NEED / NEED-PAYOFF',
+    subtitle: 'Required Improvement & Enterprise Yield',
+    focus: 'Define the engineered execution plan and certified return.',
+    operationalReality: 'The enterprise requires an industrialized operational system combining validated methodologies with autonomous digital workers.',
+    economicConsequence: 'Guaranteed 3–10x ROI on engineered initiatives, 4–10x execution speed, and finance-certified P&L margin expansion.',
+    engineeredOutcome: 'Autonomous agent fleets execute the 8-stage Job Plan 24/7, guarded by Finance and compounding annually at ≥1.3x.',
+    badge: 'STAGE 4: PRODUCTION VALUE'
+  }
+]
+
+// ==========================================
+// 4. DATA: 8 STAGES OF THE AI-VE JOB PLAN
 // ==========================================
 interface JobPlanStage {
   id: string
@@ -160,7 +388,7 @@ const jobPlanStages: JobPlanStage[] = [
 ]
 
 // ==========================================
-// 2. DATA: FUNCTION-COST LEDGER (ILLUSTRATIVE)
+// 5. DATA: FUNCTION-COST LEDGER
 // ==========================================
 interface LedgerItem {
   id: string
@@ -251,7 +479,7 @@ const ledgerData: LedgerItem[] = [
 ]
 
 // ==========================================
-// 3. DATA: 7 VALUE LEVERS (PROVEN PORTFOLIO)
+// 6. DATA: 7 VALUE LEVERS
 // ==========================================
 interface ValueLever {
   id: string
@@ -330,7 +558,7 @@ const valueLevers: ValueLever[] = [
 ]
 
 // ==========================================
-// 4. DATA: 5 VALUE CURRENCIES
+// 7. DATA: 5 VALUE CURRENCIES
 // ==========================================
 interface Currency {
   id: string
@@ -391,7 +619,7 @@ const valueCurrencies: Currency[] = [
 ]
 
 // ==========================================
-// 5. DATA: 5-LAYER ENGINEERING MODEL
+// 8. DATA: FIVE-LAYER ENGINEERING MODEL
 // ==========================================
 interface LayerModel {
   layer: string
@@ -440,7 +668,79 @@ const fiveLayerModel: LayerModel[] = [
 ]
 
 // ==========================================
-// 6. DATA: ENGAGEMENT MODELS & DIFFERENTIATION
+// 9. DATA: MATURITY ARC SLIDER (NOW -> NEXT -> SCALE -> FUTURE)
+// ==========================================
+interface MaturityStage {
+  step: string
+  title: string
+  horizon: string
+  duration: string
+  summary: string
+  deliverables: string[]
+  financialImpact: string
+}
+
+const maturityStages: MaturityStage[] = [
+  {
+    step: '01',
+    title: 'Assess & Function-Analyze',
+    horizon: 'NOW',
+    duration: '1–2 Weeks',
+    summary: 'Construct the empirical Function-Cost Ledger of one primary value stream. Quantify addressable waste and achieve Finance co-signature on the baseline value-at-stake map.',
+    deliverables: [
+      'Empirical Function-Cost Ledger',
+      'Value-at-stake baseline map',
+      'Binding constraint identification',
+      'CFO consensus business case'
+    ],
+    financialImpact: 'Baseline spend certified and locked with Finance'
+  },
+  {
+    step: '02',
+    title: 'Execute & Bank',
+    horizon: 'NEXT',
+    duration: '8–12 Weeks',
+    summary: 'Deploy first AI-run methodologies against primary operational bottlenecks. Bank Finance-certified P&L value in weeks to create a self-funding transformation waterfall.',
+    deliverables: [
+      'First AI agent fleet deployed in production',
+      'Closed-loop process telemetry streaming',
+      'Initial wave P&L savings certified',
+      'Operator daily Kata feedback loop'
+    ],
+    financialImpact: '3–10x ROI realized and banked in current fiscal quarter'
+  },
+  {
+    step: '03',
+    title: 'Industrialize Across Units',
+    horizon: 'SCALE',
+    duration: '16–32 Weeks',
+    summary: 'Agent fleets operate 40+ methodologies 24/7 across multiple core value streams. Value Realization Office (VRO) institutionalizes continuous guardianship.',
+    deliverables: [
+      'Multi-value-stream fleet orchestration',
+      'Autonomous Value Guardian agents active',
+      '6-month permanence audit passed',
+      'Cross-plant capability knowledge graph'
+    ],
+    financialImpact: 'Permanent 15–30% addressable OPEX reduction'
+  },
+  {
+    step: '04',
+    title: 'Self-Transforming Enterprise',
+    horizon: 'FUTURE',
+    duration: 'Perpetual State',
+    summary: 'The AI Value Operating System autonomously discovers new constraints, funds subsequent evolutions, and executes enterprise improvement at compounding scale.',
+    deliverables: [
+      'Self-funding capital reinvestment engine',
+      'Autonomous continuous constraint re-mapping',
+      'Board of Directors Value Scorecard',
+      'Measured compounding audit (≥1.3x/yr)'
+    ],
+    financialImpact: 'Compounding enterprise margin and equity multiple expansion'
+  }
+]
+
+// ==========================================
+// 10. DATA: 5 ENGAGEMENT MODELS
 // ==========================================
 interface EngagementModel {
   number: string
@@ -489,7 +789,7 @@ const engagementModels: EngagementModel[] = [
 ]
 
 // ==========================================
-// 7. DATA: 10 INDUSTRIAL VERTICALS (COMPENDIUM)
+// 11. DATA: 10 INDUSTRIAL VERTICALS COMPENDIUM
 // ==========================================
 interface IndustrialCompendiumItem {
   id: string
@@ -584,7 +884,7 @@ const industrialCompendium: IndustrialCompendiumItem[] = [
 ]
 
 // ==========================================
-// 8. DATA: TECHNOLOGY ENABLERS MATRIX
+// 12. DATA: TECHNOLOGY ENABLERS MATRIX
 // ==========================================
 interface TechEnablerItem {
   tech: string
@@ -645,7 +945,7 @@ const technologyStackEnablers: TechEnablerItem[] = [
 ]
 
 // ==========================================
-// 9. DATA: ONE-PAGE OPERATING SYSTEM: 7-STEP METHOD
+// 13. DATA: 7-STEP OPERATING SYSTEM METHOD
 // ==========================================
 interface HandbookStep {
   step: string
@@ -708,7 +1008,7 @@ const handbookSteps: HandbookStep[] = [
 ]
 
 // ==========================================
-// 10. DATA: TIER 0 TO TIER 6 ARCHITECTURE
+// 14. DATA: TIER 0 TO TIER 6 ARCHITECTURE
 // ==========================================
 interface TierArchitectureItem {
   tier: string
@@ -779,23 +1079,101 @@ const tierArchitecture: TierArchitectureItem[] = [
 ]
 
 export default function AIValueEngineeringPage() {
+  // Interactive UI States
+  const [activeEngineStep, setActiveEngineStep] = useState<number>(0)
+  const [selectedSpin, setSelectedSpin] = useState<string>('S')
   const [selectedStage, setSelectedStage] = useState<string>('function')
   const [activeLedgerIndustry, setActiveLedgerIndustry] = useState<string>('Mining & Heavy Operations')
   const [activeLever, setActiveLever] = useState<string>('cost')
   const [activeCompendiumIndustry, setActiveCompendiumIndustry] = useState<string>('auto')
   const [activeTier, setActiveTier] = useState<string>('Tier 0')
+  const [activeMaturityIndex, setActiveMaturityIndex] = useState<number>(0)
 
+  // Dedicated Strategy Session Form States (ISI Security clean corporate model)
+  const [formFullName, setFormFullName] = useState('')
+  const [formEmail, setFormEmail] = useState('')
+  const [formMobile, setFormMobile] = useState('')
+  const [formCompany, setFormCompany] = useState('')
+  const [formJobTitle, setFormJobTitle] = useState('')
+  const [formIndustry, setFormIndustry] = useState('Manufacturing & Industrial')
+  const [formAreaOfInterest, setFormAreaOfInterest] = useState('AI Value Discovery & Constraint Analysis')
+  const [formDiscussion, setFormDiscussion] = useState('')
+  const [formSessionFormat, setFormSessionFormat] = useState('45-Minute Virtual Architectural Briefing')
+  const [formDateTime, setFormDateTime] = useState('')
+
+  const [formSubmitting, setFormSubmitting] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formError, setFormError] = useState('')
+
+  // Derived current items
+  const currentEngineData = valueEngineStages[activeEngineStep]
+  const currentSpinData = spinData.find((s) => s.letter === selectedSpin) || spinData[0]
   const currentStageData = jobPlanStages.find((s) => s.id === selectedStage) || jobPlanStages[1]
   const filteredLedger = ledgerData.filter((item) => item.industry === activeLedgerIndustry)
+  const currentLever = valueLevers.find((l) => l.id === activeLever) || valueLevers[3]
   const currentCompendium = industrialCompendium.find((item) => item.id === activeCompendiumIndustry) || industrialCompendium[0]
   const currentTier = tierArchitecture.find((t) => t.tier === activeTier) || tierArchitecture[0]
+  const currentMaturity = maturityStages[activeMaturityIndex]
+
+  // Strategy session submit handler
+  const handleStrategySessionSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setFormError('')
+
+    if (!formFullName.trim()) {
+      setFormError('Please enter your full name.')
+      return
+    }
+    if (!formEmail.trim() || !validateEmail(formEmail)) {
+      setFormError('Please enter a valid work email address.')
+      return
+    }
+    if (formMobile.trim() && !validatePhone(formMobile)) {
+      setFormError('Please enter a valid phone number.')
+      return
+    }
+    if (!formCompany.trim()) {
+      setFormError('Please enter your organization name.')
+      return
+    }
+
+    setFormSubmitting(true)
+    try {
+      const res = await submitTrustGridForm({
+        formId: 'form_ai_value_strategy_session',
+        formName: 'AI Value Engineering Strategy Session Booking',
+        formType: 'STRATEGY_SESSION',
+        name: formFullName.trim(),
+        email: formEmail.trim(),
+        phone: formMobile.trim() || undefined,
+        company: formCompany.trim(),
+        designation: formJobTitle.trim() || undefined,
+        industry: formIndustry,
+        objective: formAreaOfInterest,
+        message: formDiscussion.trim() || undefined,
+        engagementModel: formSessionFormat,
+        preferredTimeline: formDateTime.trim() || undefined,
+        ctaSource: 'ai_value_engineering_strategy_session_section'
+      })
+
+      if (res.success) {
+        setFormSubmitted(true)
+      } else {
+        setFormError(res.message || 'Unable to schedule strategy session. Please try again or use direct calendar.')
+      }
+    } catch (err: any) {
+      setFormError(err.message || 'An error occurred while booking. Please try again.')
+    } finally {
+      setFormSubmitting(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-500 selection:text-white">
       <SiteHeader />
 
       {/* ========================================================= */}
-      {/* HERO SECTION */}
+      {/* 1. HERO SECTION */}
       {/* ========================================================= */}
       <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-slate-950 border-b border-slate-800">
         <HeroCanvas />
@@ -838,23 +1216,23 @@ export default function AIValueEngineeringPage() {
             {/* CTAs */}
             <div className="flex flex-wrap items-center gap-4 mb-14">
               <a
-                href="#intake-form"
-                onClick={() => trackCTA('Book AI Value Engineering Diagnostic', 'hero', '#intake-form')}
+                href="#strategy-session-section"
+                onClick={() => trackCTA('Book Strategy Session', 'hero', '#strategy-session-section')}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)] hover:-translate-y-0.5 transition-all"
               >
                 <Sparkles size={16} />
-                <span>Book AI Value Engineering Diagnostic</span>
+                <span>Book Strategy Session</span>
               </a>
               <a
-                href="#job-plan"
-                onClick={() => trackCTA('View the AI-VE Job Plan', 'hero', '#job-plan')}
+                href="#models-section"
+                onClick={() => trackCTA('Explore AI-VE Models', 'hero', '#models-section')}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:border-blue-500/50 backdrop-blur-md shadow-xs hover:-translate-y-0.5 transition-all"
               >
-                <span>View the AI-VE Job Plan</span>
+                <span>Explore AI-VE Models</span>
                 <ChevronDown size={16} />
               </a>
               <a
-                href="#function-cost-ledger"
+                href="#ledger-economics"
                 className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-400 hover:text-cyan-300 font-semibold text-sm transition-colors"
               >
                 <span>Function-Cost Ledger</span>
@@ -863,7 +1241,9 @@ export default function AIValueEngineeringPage() {
             </div>
           </div>
 
-          {/* Stat Strip */}
+          {/* ========================================================= */}
+          {/* 2. STATS SECTION */}
+          {/* ========================================================= */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80">
             <div className="relative p-5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-blue-500/40 transition-all overflow-hidden group">
               <BorderBeam size={100} duration={8} colorFrom="#38bdf8" colorTo="#3b82f6" />
@@ -894,7 +1274,70 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 1: WHAT AI VALUE ENGINEERING IS — AND IS NOT */}
+      {/* 3. AI VALUE ENGINEERING MODELS (4 x 2 GRID) */}
+      {/* ========================================================= */}
+      <section id="models-section" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900/90 text-white border-b border-slate-800 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-800/80 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
+              <Boxes size={12} className="text-cyan-400" />
+              Core Architecture Portfolio
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              AI VALUE ENGINEERING MODELS
+            </h2>
+            <p className="text-base sm:text-lg text-slate-300 mt-3 leading-relaxed">
+              A structured portfolio of proven methodologies, AI execution capabilities and value-realization models designed to create measurable enterprise improvement.
+            </p>
+          </div>
+
+          {/* 4 x 2 Responsive Model Card Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {aiValueModelsData.map((model) => {
+              const Icon = model.icon
+              return (
+                <div
+                  key={model.number}
+                  className="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-950 transition-all flex flex-col justify-between group shadow-sm hover:shadow-[0_10px_30px_rgba(30,58,138,0.25)]"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-xl font-black font-mono text-cyan-400 group-hover:text-blue-400 transition-colors">
+                        {model.number}
+                      </span>
+                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                        {model.tag}
+                      </span>
+                    </div>
+
+                    <div className="w-10 h-10 rounded-xl bg-blue-950/80 border border-blue-500/30 text-cyan-400 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                      <Icon size={18} />
+                    </div>
+
+                    <h3 className="text-base font-extrabold text-white tracking-tight mb-2.5 group-hover:text-cyan-300 transition-colors">
+                      {model.name}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                      {model.description}
+                    </p>
+                  </div>
+
+                  <a
+                    href={model.linkHref}
+                    className="pt-4 border-t border-slate-800/80 inline-flex items-center justify-between text-xs font-semibold text-blue-400 hover:text-cyan-300 transition-colors group-hover:translate-x-0.5"
+                  >
+                    <span>{model.actionLabel}</span>
+                    <ArrowRight size={14} className="ml-1" />
+                  </a>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 4. PROBLEM / OPPORTUNITY (DEFINITION & CHALLENGE) */}
       {/* ========================================================= */}
       <section className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -975,14 +1418,14 @@ export default function AIValueEngineeringPage() {
             </div>
           </div>
 
-          {/* Definition Callout Box */}
+          {/* Canonical Definition */}
           <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-md">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-4">
               <span className="text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase">
                 FORMAL CANONICAL DEFINITION
               </span>
               <span className="text-xs text-slate-400 font-mono">
-                Source: TrustGrid AI-VE Standard v4.2
+                Standard Standard v4.2
               </span>
             </div>
             <p className="text-base sm:text-xl font-medium text-slate-200 leading-relaxed">
@@ -994,86 +1437,113 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 2: THE EXECUTION ECONOMICS PROBLEM */}
+      {/* 5. THE VALUE ENGINE (7-STAGE SLIDER) */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
+      <section id="value-engine" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
-              <AlertCircle size={12} className="text-blue-600" />
-              02 / The Enterprise Challenge
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              The Execution Economics Problem
-            </h2>
-            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
-              Enterprises will spend over <strong className="text-slate-900 font-semibold">$500B on AI this cycle</strong> — yet most cannot connect it to bottom-line P&amp;L results. Meanwhile, <strong className="text-slate-900 font-semibold">70% of operational excellence initiatives fail to sustain beyond 18 months</strong>.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between">
-              <div>
-                <span className="text-2xl font-black text-blue-600 font-mono block mb-2">01</span>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">KNOWLEDGE DECAYS</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Methodology knowledge leaves with expensive external consultants. Process improvements and standardized work decay the moment human measurement stops, causing operations to regress to historical chaos.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Root Cause: Ephemeral Human Memory
-              </div>
-            </div>
-
-            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between">
-              <div>
-                <span className="text-2xl font-black text-cyan-600 font-mono block mb-2">02</span>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">HUMAN EXECUTION BOTTLENECK</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  A certified Master Black Belt or Industrial Engineer completes 2–4 projects per year. Your operation generates thousands of improvement opportunities every month. Human capacity cannot keep pace with operational scale.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Root Cause: Manual Bandwidth Caps
-              </div>
-            </div>
-
-            <div className="p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between">
-              <div>
-                <span className="text-2xl font-black text-indigo-600 font-mono block mb-2">03</span>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">VALUE CLAIMED, NOT CERTIFIED</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Project savings are celebrated in executive slide decks, but rarely reconciled in the general ledger. Without Finance co-signatures and continuous defense, claimed ROI evaporates before audits take place.
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-                Root Cause: Unverified Attribution
-              </div>
-            </div>
-          </div>
-
-          {/* TrustGrid Resolution Card */}
-          <div className="p-8 rounded-2xl bg-gradient-to-r from-blue-900 via-slate-900 to-indigo-950 text-white border border-blue-800/60 shadow-lg">
-            <div className="max-w-4xl">
-              <span className="text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase block mb-2">
-                TRUSTGRID&apos;S RESOLUTION
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+            <div className="max-w-3xl">
+              <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
+                <Workflow size={12} className="text-cyan-400" />
+                Continuous Compounding Journey
               </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white mb-4">
-                AI does not replace the methodology. AI industrializes its execution.
-              </h3>
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
-                We combine the 70-year discipline of classical Value Engineering and operational excellence with autonomous AI agent fleets operating at a speed, scale, and continuity no human team can match — under a strict governance standard where <strong className="text-white">nothing is claimed that Finance has not certified, and nothing certified is left unguarded.</strong>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                THE VALUE ENGINE
+              </h2>
+              <p className="text-base sm:text-lg text-slate-300 mt-2">
+                Discover → Analyze → Engineer → Execute → Certify → Defend → Compound
               </p>
-              <div className="flex flex-wrap gap-4 text-xs font-semibold text-cyan-300">
-                <span className="inline-flex items-center gap-1.5 bg-blue-950/80 px-3 py-1.5 rounded-lg border border-blue-700/50">
-                  <Check size={14} /> 24/7 Continuous Telemetry
-                </span>
-                <span className="inline-flex items-center gap-1.5 bg-blue-950/80 px-3 py-1.5 rounded-lg border border-blue-700/50">
-                  <Check size={14} /> Difference-in-Differences Attribution
-                </span>
-                <span className="inline-flex items-center gap-1.5 bg-blue-950/80 px-3 py-1.5 rounded-lg border border-blue-700/50">
-                  <Check size={14} /> Autonomous Value Guardians
-                </span>
+            </div>
+
+            {/* Slider Controls */}
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={() => setActiveEngineStep((prev) => (prev - 1 + valueEngineStages.length) % valueEngineStages.length)}
+                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500 text-white flex items-center justify-center transition-all"
+                aria-label="Previous Value Engine Stage"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <span className="text-xs font-mono font-bold text-cyan-400 px-2">
+                {activeEngineStep + 1} / {valueEngineStages.length}
+              </span>
+              <button
+                onClick={() => setActiveEngineStep((prev) => (prev + 1) % valueEngineStages.length)}
+                className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500 text-white flex items-center justify-center transition-all"
+                aria-label="Next Value Engine Stage"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* Stepper Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-8">
+            {valueEngineStages.map((stg, i) => (
+              <button
+                key={stg.step}
+                onClick={() => setActiveEngineStep(i)}
+                className={`p-3 rounded-xl border text-left transition-all ${
+                  activeEngineStep === i
+                    ? 'bg-blue-600/30 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
+                    : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                }`}
+              >
+                <span className="text-xs font-mono font-bold block mb-1 text-cyan-400">{stg.step}</span>
+                <span className="text-xs font-extrabold tracking-tight block truncate">{stg.name}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Engine Card */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+            <BorderBeam size={180} duration={9} colorFrom="#38bdf8" colorTo="#3b82f6" />
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
+              <div className="max-w-2xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl font-black font-mono text-cyan-400">
+                    STAGE {currentEngineData.step}
+                  </span>
+                  <span className="text-slate-600">|</span>
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                    {currentEngineData.name} Phase
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+                  {currentEngineData.headline}
+                </h3>
+                <p className="text-base text-slate-300 leading-relaxed">
+                  {currentEngineData.summary}
+                </p>
+
+                <div className="pt-4 border-t border-slate-800">
+                  <span className="text-xs font-bold uppercase text-cyan-400 block mb-1.5 font-mono">
+                    Autonomous AI Agent Fleet Role
+                  </span>
+                  <p className="text-sm font-medium text-slate-200 bg-slate-950/60 p-3.5 rounded-xl border border-slate-800">
+                    {currentEngineData.agentRole}
+                  </p>
+                </div>
+              </div>
+
+              {/* Deliverable & Metric Impact */}
+              <div className="lg:w-80 shrink-0 p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-5">
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-1">
+                    Signature Deliverable
+                  </span>
+                  <p className="text-sm font-semibold text-white">
+                    {currentEngineData.keyDeliverable}
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-800">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                    Balance Sheet &amp; Finance Impact
+                  </span>
+                  <p className="text-xs text-slate-300 leading-relaxed font-mono">
+                    {currentEngineData.balanceSheetMetric}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -1081,7 +1551,7 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 3: THE VALUE TRINITY */}
+      {/* 6. AI VALUE ENGINEERING MODEL (THE VALUE TRINITY) */}
       {/* ========================================================= */}
       <section className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1152,52 +1622,110 @@ export default function AIValueEngineeringPage() {
               ENTERPRISE VALUE: Created · Certified · Defended · Compounding
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Comparative Yield Table */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-slate-100 border-b border-slate-200 text-slate-900 font-bold text-xs uppercase tracking-wider">
-                <tr>
-                  <th className="py-4 px-6">Approach</th>
-                  <th className="py-4 px-6">Methodology</th>
-                  <th className="py-4 px-6">AI Execution</th>
-                  <th className="py-4 px-6">Structured Adoption</th>
-                  <th className="py-4 px-6 text-right">Value Yield</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900">Traditional Consulting</td>
-                  <td className="py-4 px-6 text-slate-700">Strong (70 yrs science)</td>
-                  <td className="py-4 px-6 text-rose-600 font-medium">Manual, periodic, slow</td>
-                  <td className="py-4 px-6 text-rose-600 font-medium">Decays on consultant exit</td>
-                  <td className="py-4 px-6 text-right font-mono font-bold text-slate-600">~10% of potential</td>
-                </tr>
-                <tr className="hover:bg-slate-50/80 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900">Pure AI / Tech Vendors</td>
-                  <td className="py-4 px-6 text-rose-600 font-medium">Weak (tools, no method)</td>
-                  <td className="py-4 px-6 text-slate-700">Strong software capabilities</td>
-                  <td className="py-4 px-6 text-rose-600 font-medium">Weak (left to customer)</td>
-                  <td className="py-4 px-6 text-right font-mono font-bold text-slate-600">~5% of potential</td>
-                </tr>
-                <tr className="bg-blue-50/50 hover:bg-blue-50 transition-colors">
-                  <td className="py-4 px-6 font-extrabold text-blue-900 flex items-center gap-2">
-                    <Sparkles size={16} className="text-blue-600" />
-                    TrustGrid AVE
-                  </td>
-                  <td className="py-4 px-6 font-semibold text-blue-900">Proven portfolio, correctly applied</td>
-                  <td className="py-4 px-6 font-semibold text-blue-900">Industrialized agent fleets (4–10x)</td>
-                  <td className="py-4 px-6 font-semibold text-blue-900">Engineered rhythm + Value Guardians</td>
-                  <td className="py-4 px-6 text-right font-mono font-extrabold text-blue-700">Compounding (≥1.3x/yr)</td>
-                </tr>
-              </tbody>
-            </table>
+      {/* ========================================================= */}
+      {/* 7. SPIN MODEL (4 CONNECTED MODEL CARDS) */}
+      {/* ========================================================= */}
+      <section id="spin-model" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900 text-white border-b border-slate-800 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-800 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
+              <SlidersHorizontal size={12} className="text-cyan-400" />
+              Diagnostic Inquiry Architecture
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              THE SPIN VALUE ENGINEERING MODEL
+            </h2>
+            <p className="text-base sm:text-lg text-slate-300 mt-3 leading-relaxed">
+              Four connected model cards structuring the journey from current operational state to finance-certified enterprise yield.
+            </p>
+          </div>
+
+          {/* 4 Connected Model Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {spinData.map((item) => {
+              const isSelected = selectedSpin === item.letter
+              return (
+                <div
+                  key={item.letter}
+                  onClick={() => setSelectedSpin(item.letter)}
+                  className={`p-6 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between ${
+                    isSelected
+                      ? 'bg-slate-950 border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.25)]'
+                      : 'bg-slate-950/60 border-slate-800 hover:border-slate-700'
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-3xl font-black font-mono text-cyan-400">
+                        {item.letter}
+                      </span>
+                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                        {item.badge}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-extrabold text-white mb-1">
+                      {item.name}
+                    </h3>
+                    <p className="text-xs text-cyan-300 font-semibold mb-3">
+                      {item.subtitle}
+                    </p>
+                    <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                      {item.focus}
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-300">
+                    <strong className="text-slate-400 block font-mono text-[10px] uppercase">Engineered Focus:</strong>
+                    <span className="line-clamp-2">{item.engineeredOutcome}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Selected SPIN Detail Deep-Dive */}
+          <div className="p-8 rounded-2xl bg-slate-950 border border-slate-800 shadow-xl">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xl font-bold font-mono text-cyan-400">
+                PHASE {currentSpinData.letter}
+              </span>
+              <span className="text-slate-600">|</span>
+              <h4 className="text-xl font-extrabold text-white">
+                {currentSpinData.name} — {currentSpinData.subtitle}
+              </h4>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-800/80 text-xs sm:text-sm">
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                  Operational Reality Observed
+                </span>
+                <p className="text-slate-300 leading-relaxed">{currentSpinData.operationalReality}</p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span className="text-[11px] font-bold text-rose-400 uppercase tracking-wider block mb-1">
+                  Economic &amp; Cost Consequence
+                </span>
+                <p className="text-slate-300 leading-relaxed">{currentSpinData.economicConsequence}</p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                <span className="text-[11px] font-bold text-emerald-400 uppercase tracking-wider block mb-1">
+                  Engineered Payoff &amp; Value Delivery
+                </span>
+                <p className="text-slate-300 leading-relaxed">{currentSpinData.engineeredOutcome}</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 4: THE AI-VE JOB PLAN */}
+      {/* 8. THE AI-VE JOB PLAN (8 STAGES) */}
       {/* ========================================================= */}
       <section id="job-plan-stages" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
         <span id="job-plan" className="scroll-mt-28 -top-28 absolute block" />
@@ -1206,7 +1734,7 @@ export default function AIValueEngineeringPage() {
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
               <Workflow size={12} className="text-cyan-400" />
-              04 / Signature Framework
+              04 / Signature Process
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               The AI-VE Job Plan
@@ -1297,7 +1825,7 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 5: FUNCTION-COST LEDGER (SIGNATURE FEATURE) */}
+      {/* 9. FUNCTION-COST LEDGER */}
       {/* ========================================================= */}
       <section id="ledger-economics" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
         <span id="function-cost-ledger" className="scroll-mt-28 -top-28 absolute block" />
@@ -1396,7 +1924,7 @@ export default function AIValueEngineeringPage() {
               <strong className="text-slate-900 font-semibold">Want to see your company&apos;s Function-Cost Ledger?</strong> The first deliverable of every engagement is a certified analysis of your primary value stream.
             </div>
             <a
-              href="#intake-form"
+              href="#strategy-session-section"
               className="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shrink-0"
             >
               Request Value Stream Diagnostic
@@ -1406,7 +1934,7 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 6: THE PROVEN PORTFOLIO (SEVEN VALUE LEVERS) */}
+      {/* 10. SEVEN VALUE LEVERS */}
       {/* ========================================================= */}
       <section id="methodology-engine" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200 relative">
         <span id="part2-methodology-engine" className="scroll-mt-28 -top-28 absolute block" />
@@ -1443,129 +1971,53 @@ export default function AIValueEngineeringPage() {
           </div>
 
           {/* Selected Lever Card */}
-          {(() => {
-            const current = valueLevers.find((l) => l.id === activeLever) || valueLevers[3]
-            return (
-              <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
-                <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 mb-6">
-                  <div>
-                    <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-1">
-                      {current.tag}
-                    </span>
-                    <h3 className="text-2xl font-extrabold text-slate-900">
-                      {current.name}
-                    </h3>
-                    <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
-                      {current.description}
-                    </p>
-                  </div>
-                  <div className="px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-200/80 shrink-0">
-                    <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">
-                      Value Signature
-                    </span>
-                    <span className="text-sm font-extrabold text-emerald-700 font-mono">
-                      {current.valueSignature}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                      Proven Methodologies (The Trust Layer)
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {current.methodologies.map((m) => (
-                        <span
-                          key={m}
-                          className="px-3 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-200"
-                        >
-                          {m}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
-                      AI-Driven Execution (The Speed Layer)
-                    </h4>
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-blue-50/50 p-3 rounded-xl border border-blue-100">
-                      {current.aiExecution}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )
-          })()}
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* SECTION 7: FIVE VALUE CURRENCIES */}
-      {/* ========================================================= */}
-      <section id="value-currencies" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
-        <span id="part2-value-currencies" className="scroll-mt-28 -top-28 absolute block" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
-              <Coins size={12} className="text-blue-600" />
-              06 / Balance Sheet Proof
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              How Companies Actually Receive Value
-            </h2>
-            <h3 className="text-lg sm:text-xl font-bold text-slate-700 mt-2">
-              Where does the value actually appear? Five discrete, balance-sheet-verifiable currencies.
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {valueCurrencies.map((c) => (
-              <div
-                key={c.id}
-                className="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest">
-                      CURRENCY {c.code}
-                    </span>
-                    <span className="text-xs font-bold text-slate-400 font-mono">P&amp;L Accretive</span>
-                  </div>
-                  <h4 className="text-xl font-extrabold text-slate-900 mb-2">{c.name}</h4>
-                  <p className="text-xs font-semibold text-blue-700 mb-3 italic">&ldquo;{c.executiveQuestion}&rdquo;</p>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
-                    {c.whatYouReceive}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-200 space-y-2">
-                  <div>
-                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Verification Discipline</span>
-                    <p className="text-xs font-medium text-slate-700">{c.verificationDiscipline}</p>
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold uppercase text-emerald-600 block">Financial Impact</span>
-                    <p className="text-xs font-semibold text-emerald-800">{c.balanceSheetImpact}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            {/* Compounding Callout Card */}
-            <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-md flex flex-col justify-between">
+          <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8 mb-6">
               <div>
-                <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
-                  ANNUAL AUDIT REQUIREMENT
+                <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-1">
+                  {currentLever.tag}
                 </span>
-                <h4 className="text-xl font-extrabold text-white mb-3">The Measured Compounding Factor</h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Every year, TrustGrid calculates your enterprise Compounding Factor (target ≥1.3x). This audits whether the capability gained in wave 1 accelerated the velocity and reduced the cost of wave 2.
+                <h3 className="text-2xl font-extrabold text-slate-900">
+                  {currentLever.name}
+                </h3>
+                <p className="text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">
+                  {currentLever.description}
                 </p>
               </div>
-              <div className="pt-6 border-t border-slate-800 text-xs text-cyan-300 font-mono font-semibold">
-                Reported annually directly to the Board of Directors &amp; Audit Committee.
+              <div className="px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-200/80 shrink-0">
+                <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">
+                  Value Signature
+                </span>
+                <span className="text-sm font-extrabold text-emerald-700 font-mono">
+                  {currentLever.valueSignature}
+                </span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100">
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                  Proven Methodologies (The Trust Layer)
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {currentLever.methodologies.map((m) => (
+                    <span
+                      key={m}
+                      className="px-3 py-1 rounded-lg bg-slate-100 text-slate-800 text-xs font-semibold border border-slate-200"
+                    >
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+                  AI-Driven Execution (The Speed Layer)
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed bg-blue-50/50 p-3 rounded-xl border border-blue-100">
+                  {currentLever.aiExecution}
+                </p>
               </div>
             </div>
           </div>
@@ -1573,99 +2025,169 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 8: FIVE-LAYER ENGINEERING MODEL */}
+      {/* 11. INDUSTRIAL VERTICALS & TECHNOLOGY STACK */}
       {/* ========================================================= */}
-      <section id="five-layer-architecture" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
-        <span id="five-layer-model" className="scroll-mt-28 -top-28 absolute block" />
-        <span id="part2-five-layer-architecture" className="scroll-mt-28 -top-28 absolute block" />
+      <section id="industrial-use-cases" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="part1-use-cases" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
-              <Layers3 size={12} className="text-cyan-400" />
-              07 / System Architecture
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
+              <Building2 size={12} className="text-blue-600" />
+              Industrial Use Case Compendium
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-              The Five-Layer Engineering Model
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              10 Industrial Verticals Compendium
             </h2>
-            <p className="text-base sm:text-lg text-slate-300 mt-3 leading-relaxed">
-              Every layer purpose-engineered. Two trust and adoption planes cross-cut all layers.
+            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
+              Industrialized operational excellence across manufacturing, life sciences, process, and aerospace supply chains.
             </p>
           </div>
 
-          <div className="space-y-4 mb-12">
-            {fiveLayerModel.map((item) => (
-              <div
-                key={item.layer}
-                className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+          {/* Industry Vertical Selector Tabs */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {industrialCompendium.map((ind) => (
+              <button
+                key={ind.id}
+                onClick={() => setActiveCompendiumIndustry(ind.id)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeCompendiumIndustry === ind.id
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
               >
-                <div className="flex items-start gap-4 max-w-xl">
-                  <span className="text-xl sm:text-2xl font-black font-mono text-cyan-400 shrink-0">
-                    {item.layer}
-                  </span>
-                  <div>
-                    <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
-                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">{item.focus}</p>
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {item.subcomponents.map((c) => (
-                        <span
-                          key={c}
-                          className="px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] border border-slate-700"
-                        >
-                          {c}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="md:w-80 shrink-0 p-4 rounded-xl bg-slate-950 border border-slate-800/80">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">
-                    Engineered Outcome
-                  </span>
-                  <p className="text-xs text-slate-200 leading-relaxed">
-                    {item.engineeredOutcome}
-                  </p>
-                </div>
-              </div>
+                <span>{ind.name}</span>
+              </button>
             ))}
           </div>
 
-          {/* Cross-Cutting Trust & Adoption Planes */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
-            <div className="border-b md:border-b-0 md:border-r border-slate-800 pb-6 md:pb-0 md:pr-6">
+          {/* Active Industry Deep-Dive Card */}
+          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm mb-16">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-6">
+              <div>
+                <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-1">
+                  INDUSTRY VERTICAL · {currentCompendium.name}
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900">
+                  {currentCompendium.name}
+                </h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  <strong>Operational Scope:</strong> {currentCompendium.scope}
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs shrink-0 font-mono font-bold">
+                <span className="text-[10px] text-emerald-600 uppercase block font-sans">Proven Operational Impact</span>
+                <span>{currentCompendium.provenYield}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-200">
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Autonomous Industrial Use Case
+                </h4>
+                <p className="text-sm text-slate-700 leading-relaxed bg-white p-4 rounded-xl border border-slate-200">
+                  {currentCompendium.useCase}
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Activated Technology Enablers
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {currentCompendium.technologies.map((t) => (
+                    <span
+                      key={t}
+                      className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 text-xs font-semibold border border-blue-100 flex items-center gap-1.5"
+                    >
+                      <Cpu size={12} className="text-blue-600" />
+                      <span>{t}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Technology Enablers Matrix */}
+          <div id="technology-enablers" className="scroll-mt-28 mb-16 relative">
+            <span id="part1-tech-stack" className="scroll-mt-28 -top-28 absolute block" />
+            <div className="max-w-3xl mb-8">
+              <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-2">
+                PHYSICAL TO DIGITAL ENABLERS
+              </span>
+              <h3 className="text-xl sm:text-3xl font-extrabold text-slate-900">
+                Technology Enablers Activated Across All Use Cases
+              </h3>
+              <p className="text-sm text-slate-600 mt-2">
+                Mapped to the Tier Architecture (Tier 0–6) and DOWNTIME waste elimination taxonomy.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-slate-100 border-b border-slate-200 text-slate-900 font-bold uppercase tracking-wider text-[11px]">
+                  <tr>
+                    <th className="py-4 px-6" style={{ width: '22%' }}>Technology</th>
+                    <th className="py-4 px-6" style={{ width: '32%' }}>Primary Operational Function</th>
+                    <th className="py-4 px-6" style={{ width: '20%' }}>Typical Tier Placement</th>
+                    <th className="py-4 px-6" style={{ width: '26%' }}>Enterprise Value Benefit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {technologyStackEnablers.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
+                        <Cpu size={14} className="text-blue-600 shrink-0" />
+                        <span>{item.tech}</span>
+                      </td>
+                      <td className="py-4 px-6 text-slate-700">{item.role}</td>
+                      <td className="py-4 px-6 font-mono font-semibold text-blue-700 text-xs">{item.tier}</td>
+                      <td className="py-4 px-6 text-slate-600 text-xs">{item.benefit}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Edge Gateways & Determinism */}
+          <div id="edge-orchestration" className="scroll-mt-28 p-8 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 text-white border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative">
+            <span id="part1-edge-orchestration" className="scroll-mt-28 -top-28 absolute block" />
+            <div className="max-w-2xl">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
-                CROSS-CUTTING PLANE A
+                SHOP-FLOOR LOW-LATENCY DETERMINISM
               </span>
-              <h4 className="text-lg font-bold text-white mb-2">Trusted AI Engineering</h4>
+              <h4 className="text-xl sm:text-2xl font-extrabold text-white mb-2">
+                Edge Gateways &amp; Autonomous Industrial Fleets
+              </h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Deterministic explainability, cryptographically hashed audit trails, and strict alignment with the EU AI Act, NIST AI RMF, and ISO 42001. Trust is an architectural system property of every layer, not an afterthought.
+                TrustGrid edge nodes operate on-premise within factory air-gaps, executing sub-5ms sensor-to-action control loops via TSN, OPC-UA, and ROS 2 without dependence on public cloud availability.
               </p>
             </div>
-            <div className="md:pl-6">
-              <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest block mb-2">
-                CROSS-CUTTING PLANE B
-              </span>
-              <h4 className="text-lg font-bold text-white mb-2">Structured Adoption</h4>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                Daily Tier 1–3 operational rhythm, automated Kata coaching, and enterprise capability graphs. Digital workers do not create value if frontline operators do not embrace and trust their execution.
-              </p>
-            </div>
+            <a
+              href="#strategy-session-section"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shrink-0 shadow-md"
+            >
+              <span>Request Edge Diagnostic</span>
+              <ArrowRight size={14} />
+            </a>
           </div>
         </div>
       </section>
 
       {/* ========================================================= */}
-      {/* THE LEAN AI VALUE ENGINEERING HANDBOOK */}
+      {/* 12. THE ONE-PAGE OPERATING SYSTEM & TIER 0-6 STACK */}
+      {/* (BV RAMAN SECTION COMPLETELY REMOVED - REPLACED WITH STANDARD) */}
       {/* ========================================================= */}
       <section id="operating-system" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900 text-white border-b border-slate-800 relative">
         <span id="part3-operating-system" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header & Author Citation */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
             <div className="max-w-3xl">
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-800 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
                 <SlidersHorizontal size={12} className="text-cyan-400" />
-                The Lean AI Value Engineering Handbook
+                The Lean AI Value Engineering Operating Standard
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                 The One-Page Operating System: The 7-Step Method
@@ -1674,19 +2196,17 @@ export default function AIValueEngineeringPage() {
                 Agentic AI, Multi-Model Intelligence, Lean Six Sigma, Theory of Constraints and the Toyota Production System for Industrial Operations.
               </p>
             </div>
-            {/* Book / Authors Badge */}
+            {/* Standard Practice Benchmark Badge (No personal names) */}
             <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1 shrink-0 lg:max-w-xs">
               <div className="text-cyan-400 font-bold uppercase tracking-wider text-[11px]">
-                Authored Practice Standard
+                TRUSTGRID PRACTICE STANDARD
               </div>
-              <p className="font-semibold text-white">Dr. Balaji Venkatraman</p>
-              <p className="text-slate-400 text-[11px]">Director, AI Value Engineering, TRUSTGRID.AI</p>
-              <p className="font-semibold text-white pt-1">Dr. Seshadri Srinivasan</p>
-              <p className="text-slate-400 text-[11px]">Chief Technology Officer, TVS Sensing Solutions</p>
+              <p className="font-semibold text-white">Industrial Engineering Standard</p>
+              <p className="text-slate-400 text-[11px]">Autonomous Operations &amp; Value Realization Standard</p>
             </div>
           </div>
 
-          {/* 7-Step Method Process Cards */}
+          {/* 7-Step Method Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-3 mb-16">
             {handbookSteps.map((step) => (
               <div
@@ -1788,7 +2308,6 @@ export default function AIValueEngineeringPage() {
           {/* DOWNTIME Waste Taxonomy & Risk Bands */}
           <div id="waste-governance" className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-800 relative">
             <span id="part3-waste-governance" className="scroll-mt-28 -top-28 absolute block" />
-            {/* DOWNTIME Waste */}
             <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 LEAN TAXONOMY
@@ -1811,7 +2330,6 @@ export default function AIValueEngineeringPage() {
               </div>
             </div>
 
-            {/* Risk Bands */}
             <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest block mb-2">
                 GOVERNANCE SAFETY GATES
@@ -1851,231 +2369,286 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* INDUSTRIAL USE CASE COMPENDIUM & TECH STACK */}
+      {/* 13. FIVE VALUE CURRENCIES */}
       {/* ========================================================= */}
-      <section id="industrial-use-cases" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
-        <span id="part1-use-cases" className="scroll-mt-28 -top-28 absolute block" />
+      <section id="value-currencies" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="part2-value-currencies" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
-              <Building2 size={12} className="text-blue-600" />
-              Industrial Use Case Compendium
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
+              <Coins size={12} className="text-blue-600" />
+              06 / Balance Sheet Proof
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              10 Industrial Verticals Compendium
+              Five Enterprise Value Currencies
             </h2>
-            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
-              Industrialized operational excellence across manufacturing, life sciences, process, and aerospace supply chains.
+            <h3 className="text-lg sm:text-xl font-bold text-slate-700 mt-2">
+              Where does the value actually appear? Five discrete, balance-sheet-verifiable currencies.
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {valueCurrencies.map((c) => (
+              <div
+                key={c.id}
+                className="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest">
+                      CURRENCY {c.code}
+                    </span>
+                    <span className="text-xs font-bold text-slate-400 font-mono">P&amp;L Accretive</span>
+                  </div>
+                  <h4 className="text-xl font-extrabold text-slate-900 mb-2">{c.name}</h4>
+                  <p className="text-xs font-semibold text-blue-700 mb-3 italic">&ldquo;{c.executiveQuestion}&rdquo;</p>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mb-4">
+                    {c.whatYouReceive}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-200 space-y-2">
+                  <div>
+                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Verification Discipline</span>
+                    <p className="text-xs font-medium text-slate-700">{c.verificationDiscipline}</p>
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-bold uppercase text-emerald-600 block">Financial Impact</span>
+                    <p className="text-xs font-semibold text-emerald-800">{c.balanceSheetImpact}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* Compounding Callout Card */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-md flex flex-col justify-between">
+              <div>
+                <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
+                  ANNUAL AUDIT REQUIREMENT
+                </span>
+                <h4 className="text-xl font-extrabold text-white mb-3">The Measured Compounding Factor</h4>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                  Every year, TrustGrid calculates your enterprise Compounding Factor (target ≥1.3x). This audits whether the capability gained in wave 1 accelerated the velocity and reduced the cost of wave 2.
+                </p>
+              </div>
+              <div className="pt-6 border-t border-slate-800 text-xs text-cyan-300 font-mono font-semibold">
+                Reported annually directly to the Board of Directors &amp; Audit Committee.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 14. FIVE-LAYER ENGINEERING MODEL */}
+      {/* ========================================================= */}
+      <section id="five-layer-architecture" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
+        <span id="five-layer-model" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="part2-five-layer-architecture" className="scroll-mt-28 -top-28 absolute block" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
+              <Layers3 size={12} className="text-cyan-400" />
+              07 / System Architecture
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+              The Five-Layer Engineering Model
+            </h2>
+            <p className="text-base sm:text-lg text-slate-300 mt-3 leading-relaxed">
+              Every layer purpose-engineered. Two trust and adoption planes cross-cut all layers.
             </p>
           </div>
 
-          {/* Industry Vertical Selector Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {industrialCompendium.map((ind) => (
+          <div className="space-y-4 mb-12">
+            {fiveLayerModel.map((item) => (
+              <div
+                key={item.layer}
+                className="p-6 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-blue-500/40 transition-all flex flex-col md:flex-row md:items-center justify-between gap-6"
+              >
+                <div className="flex items-start gap-4 max-w-xl">
+                  <span className="text-xl sm:text-2xl font-black font-mono text-cyan-400 shrink-0">
+                    {item.layer}
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">{item.focus}</p>
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {item.subcomponents.map((c) => (
+                        <span
+                          key={c}
+                          className="px-2.5 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] border border-slate-700"
+                        >
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:w-80 shrink-0 p-4 rounded-xl bg-slate-950 border border-slate-800/80">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 block mb-1">
+                    Engineered Outcome
+                  </span>
+                  <p className="text-xs text-slate-200 leading-relaxed">
+                    {item.engineeredOutcome}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Cross-Cutting Trust & Adoption Planes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-lg">
+            <div className="border-b md:border-b-0 md:border-r border-slate-800 pb-6 md:pb-0 md:pr-6">
+              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
+                CROSS-CUTTING PLANE A
+              </span>
+              <h4 className="text-lg font-bold text-white mb-2">Trusted AI Engineering</h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Deterministic explainability, cryptographically hashed audit trails, and strict alignment with the EU AI Act, NIST AI RMF, and ISO 42001. Trust is an architectural system property of every layer, not an afterthought.
+              </p>
+            </div>
+            <div className="md:pl-6">
+              <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest block mb-2">
+                CROSS-CUTTING PLANE B
+              </span>
+              <h4 className="text-lg font-bold text-white mb-2">Structured Adoption</h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                Daily Tier 1–3 operational rhythm, automated Kata coaching, and enterprise capability graphs. Digital workers do not create value if frontline operators do not embrace and trust their execution.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 15. MATURITY MODEL (NOW -> NEXT -> SCALE -> FUTURE SLIDER) */}
+      {/* ========================================================= */}
+      <section id="maturity-arc" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+            <div className="max-w-3xl">
+              <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
+                <Activity size={12} className="text-blue-600" />
+                08 / Transformation Journey
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                Enterprise AI-VE Maturity Arc
+              </h2>
+              <p className="text-base sm:text-lg text-slate-600 mt-2">
+                NOW → NEXT → SCALE → FUTURE: A disciplined four-horizon progression.
+              </p>
+            </div>
+
+            {/* Slider Controls */}
+            <div className="flex items-center gap-3 shrink-0">
               <button
-                key={ind.id}
-                onClick={() => setActiveCompendiumIndustry(ind.id)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
-                  activeCompendiumIndustry === ind.id
-                    ? 'bg-blue-600 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                onClick={() => setActiveMaturityIndex((prev) => (prev - 1 + maturityStages.length) % maturityStages.length)}
+                className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 hover:border-blue-500 text-slate-800 flex items-center justify-center transition-all"
+                aria-label="Previous Maturity Horizon"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <span className="text-xs font-mono font-bold text-blue-600 px-2">
+                {activeMaturityIndex + 1} / {maturityStages.length}
+              </span>
+              <button
+                onClick={() => setActiveMaturityIndex((prev) => (prev + 1) % maturityStages.length)}
+                className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 hover:border-blue-500 text-slate-800 flex items-center justify-center transition-all"
+                aria-label="Next Maturity Horizon"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          </div>
+
+          {/* Stepper Tabs */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            {maturityStages.map((m, i) => (
+              <button
+                key={m.step}
+                onClick={() => setActiveMaturityIndex(i)}
+                className={`p-4 rounded-xl border text-left transition-all ${
+                  activeMaturityIndex === i
+                    ? 'bg-blue-600 text-white shadow-md border-blue-600'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                 }`}
               >
-                <span>{ind.name}</span>
+                <div className="flex items-center justify-between mb-1">
+                  <span className={`text-xs font-mono font-bold ${activeMaturityIndex === i ? 'text-blue-200' : 'text-blue-600'}`}>
+                    HORIZON {m.step}
+                  </span>
+                  <span className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded ${activeMaturityIndex === i ? 'bg-blue-700 text-white' : 'bg-slate-200 text-slate-600'}`}>
+                    {m.horizon}
+                  </span>
+                </div>
+                <span className="text-sm font-extrabold block truncate">{m.title}</span>
               </button>
             ))}
           </div>
 
-          {/* Active Industry Deep-Dive Card */}
-          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm mb-16">
-            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-6">
-              <div>
-                <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-1">
-                  INDUSTRY VERTICAL · {currentCompendium.name}
-                </span>
-                <h3 className="text-2xl font-extrabold text-slate-900">
-                  {currentCompendium.name}
+          {/* Active Maturity Card */}
+          <div className="p-8 sm:p-10 rounded-3xl bg-slate-50 border border-slate-200 shadow-sm relative overflow-hidden">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-8">
+              <div className="max-w-2xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xl font-bold font-mono text-blue-600">
+                    HORIZON {currentMaturity.step} · {currentMaturity.horizon}
+                  </span>
+                  <span className="text-slate-400">|</span>
+                  <span className="text-xs font-semibold text-slate-500">
+                    Typical Duration: {currentMaturity.duration}
+                  </span>
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                  {currentMaturity.title}
                 </h3>
-                <p className="text-sm text-slate-600 mt-1">
-                  <strong>Operational Scope:</strong> {currentCompendium.scope}
+                <p className="text-base text-slate-600 leading-relaxed">
+                  {currentMaturity.summary}
                 </p>
-              </div>
-              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs shrink-0 font-mono font-bold">
-                <span className="text-[10px] text-emerald-600 uppercase block font-sans">Proven Operational Impact</span>
-                <span>{currentCompendium.provenYield}</span>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-200">
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Autonomous Industrial Use Case
-                </h4>
-                <p className="text-sm text-slate-700 leading-relaxed bg-white p-4 rounded-xl border border-slate-200">
-                  {currentCompendium.useCase}
+                <div className="pt-4 border-t border-slate-200">
+                  <span className="text-xs font-bold uppercase text-slate-700 block mb-2">
+                    Key Engineered Deliverables
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {currentMaturity.deliverables.map((deliv, dIdx) => (
+                      <div key={dIdx} className="flex items-center gap-2 text-xs font-medium text-slate-700 bg-white p-2.5 rounded-lg border border-slate-200">
+                        <Check size={14} className="text-emerald-600 shrink-0" />
+                        <span>{deliv}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Financial Impact Box */}
+              <div className="lg:w-80 shrink-0 p-6 rounded-2xl bg-white border border-slate-200 shadow-xs space-y-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 block font-mono">
+                  Finance Hurdle &amp; P&amp;L Yield
+                </span>
+                <p className="text-sm font-semibold text-slate-900 leading-snug">
+                  {currentMaturity.financialImpact}
                 </p>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Activated Technology Enablers
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {currentCompendium.technologies.map((t) => (
-                    <span
-                      key={t}
-                      className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 text-xs font-semibold border border-blue-100 flex items-center gap-1.5"
-                    >
-                      <Cpu size={12} className="text-blue-600" />
-                      <span>{t}</span>
-                    </span>
-                  ))}
+                <div className="pt-4 border-t border-slate-100">
+                  <a
+                    href="#strategy-session-section"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-blue-600 hover:text-blue-700"
+                  >
+                    <span>Assess Your Horizon</span>
+                    <ArrowRight size={13} />
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Technology Enablers Matrix */}
-          <div id="technology-enablers" className="scroll-mt-28 mb-16 relative">
-            <span id="part1-tech-stack" className="scroll-mt-28 -top-28 absolute block" />
-            <div className="max-w-3xl mb-8">
-              <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-2">
-                PHYSICAL TO DIGITAL ENABLERS
-              </span>
-              <h3 className="text-xl sm:text-3xl font-extrabold text-slate-900">
-                Technology Enablers Activated Across All Use Cases
-              </h3>
-              <p className="text-sm text-slate-600 mt-2">
-                Mapped to the handbook&apos;s Tier Architecture (Tier 0–6) and DOWNTIME waste taxonomy.
-              </p>
-            </div>
-
-            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
-              <table className="w-full text-left text-xs sm:text-sm">
-                <thead className="bg-slate-100 border-b border-slate-200 text-slate-900 font-bold uppercase tracking-wider text-[11px]">
-                  <tr>
-                    <th className="py-4 px-6" style={{ width: '22%' }}>Technology</th>
-                    <th className="py-4 px-6" style={{ width: '32%' }}>Primary Operational Function</th>
-                    <th className="py-4 px-6" style={{ width: '20%' }}>Typical Tier Placement</th>
-                    <th className="py-4 px-6" style={{ width: '26%' }}>Enterprise Value Benefit</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-200">
-                  {technologyStackEnablers.map((item, idx) => (
-                    <tr key={idx} className="hover:bg-slate-50 transition-colors">
-                      <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
-                        <Cpu size={14} className="text-blue-600 shrink-0" />
-                        <span>{item.tech}</span>
-                      </td>
-                      <td className="py-4 px-6 text-slate-700">{item.role}</td>
-                      <td className="py-4 px-6 font-mono font-semibold text-blue-700 text-xs">{item.tier}</td>
-                      <td className="py-4 px-6 text-slate-600 text-xs">{item.benefit}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* Edge Orchestration & Gateways Strip */}
-          <div id="edge-orchestration" className="scroll-mt-28 p-8 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 text-white border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative">
-            <span id="part1-edge-orchestration" className="scroll-mt-28 -top-28 absolute block" />
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
-                SHOP-FLOOR LOW-LATENCY DETERMINISM
-              </span>
-              <h4 className="text-xl sm:text-2xl font-extrabold text-white mb-2">
-                Edge Gateways &amp; Autonomous Industrial Fleets
-              </h4>
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                TrustGrid edge nodes operate on-premise within factory air-gaps, executing sub-5ms sensor-to-action control loops via TSN, OPC-UA, and ROS 2 without dependence on public cloud availability.
-              </p>
-            </div>
-            <a
-              href="#intake-form"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shrink-0 shadow-md"
-            >
-              <span>Request Edge Diagnostic</span>
-              <ArrowRight size={14} />
-            </a>
-          </div>
         </div>
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 9: MATURITY ARC */}
+      {/* 16. GOVERNANCE & PROOF DISCIPLINE */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mb-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
-              <Activity size={12} className="text-blue-600" />
-              08 / Transformation Journey
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              From First Diagnosis to Self-Transforming Enterprise
-            </h2>
-            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
-              A disciplined four-horizon progression that shifts your organization from reactive cost tracking to autonomous, self-funded compounding.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 relative">
-              <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-black text-xs flex items-center justify-center mb-4 font-mono">
-                01
-              </div>
-              <span className="text-xs font-mono font-bold text-blue-600 uppercase block mb-1">HORIZON 1</span>
-              <h3 className="text-lg font-extrabold text-slate-900 mb-2">NOW: Assess &amp; Function-Analyze</h3>
-              <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Construct the empirical Function-Cost Ledger. Quantify addressable waste and achieve Finance co-signature on the baseline value-at-stake map.
-              </p>
-              <span className="text-[11px] font-bold text-slate-500 uppercase">Duration: 1–2 Weeks</span>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 relative">
-              <div className="w-8 h-8 rounded-full bg-cyan-100 text-cyan-700 font-black text-xs flex items-center justify-center mb-4 font-mono">
-                02
-              </div>
-              <span className="text-xs font-mono font-bold text-cyan-600 uppercase block mb-1">HORIZON 2</span>
-              <h3 className="text-lg font-extrabold text-slate-900 mb-2">NEXT: Execute &amp; Bank</h3>
-              <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Deploy first AI-run methodologies against primary operational bottlenecks. Bank Finance-certified P&amp;L value in weeks to self-fund expansion.
-              </p>
-              <span className="text-[11px] font-bold text-slate-500 uppercase">Duration: 8–12 Weeks</span>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 relative">
-              <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-black text-xs flex items-center justify-center mb-4 font-mono">
-                03
-              </div>
-              <span className="text-xs font-mono font-bold text-indigo-600 uppercase block mb-1">HORIZON 3</span>
-              <h3 className="text-lg font-extrabold text-slate-900 mb-2">SCALE: Industrialize</h3>
-              <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                Agent fleets operate 40+ methodologies 24/7 across multiple value streams. Value Realization Office institutionalizes continuous guardianship.
-              </p>
-              <span className="text-[11px] font-bold text-slate-500 uppercase">Duration: 16–32 Weeks</span>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-900 text-white border border-slate-800 relative">
-              <div className="w-8 h-8 rounded-full bg-cyan-400 text-slate-950 font-black text-xs flex items-center justify-center mb-4 font-mono">
-                04
-              </div>
-              <span className="text-xs font-mono font-bold text-cyan-400 uppercase block mb-1">HORIZON 4</span>
-              <h3 className="text-lg font-extrabold text-white mb-2">FUTURE: Self-Transforming</h3>
-              <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                The AI Value Operating System autonomously discovers new constraints, funds improvements, and executes enterprise evolution at compounding scale.
-              </p>
-              <span className="text-[11px] font-bold text-cyan-300 uppercase">Perpetual Operating State</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================= */}
-      {/* SECTION 10: GOVERNANCE & PROOF DISCIPLINE */}
-      {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
+      <section id="governance-proof" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
@@ -2145,7 +2718,7 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 11: ENGAGEMENT JOURNEY & DIFFERENTIATION */}
+      {/* 17. ENGAGEMENT MODELS & DIFFERENTIATION */}
       {/* ========================================================= */}
       <section id="sprints-diagnostic" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
         <span id="acceleration-sprints" className="scroll-mt-28 -top-28 absolute block" />
@@ -2200,7 +2773,7 @@ export default function AIValueEngineeringPage() {
                 </p>
               </div>
               <a
-                href="#intake-form"
+                href="#strategy-session-section"
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white text-blue-900 font-bold text-xs hover:bg-blue-50 transition-colors"
               >
                 <span>Book Diagnostic</span>
@@ -2252,38 +2825,39 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* SECTION 12: CONVERSION & DIAGNOSTIC INTAKE */}
+      {/* 18. STRATEGY SESSION FORM (CLEAN CORPORATE EXPERIENCE) */}
       {/* ========================================================= */}
-      <section id="intake-form" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800">
+      <section id="strategy-session-section" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
+        {/* Aliases for smooth anchor landing from existing CTA links */}
+        <span id="intake-form" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="diagnostic-form-section" className="scroll-mt-28 -top-28 absolute block" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-4">
               <Target size={12} className="text-cyan-400" />
-              Direct Executive Intake
+              Executive Intake
             </span>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-              Start With the Value You Can Prove.
+              BOOK A STRATEGY SESSION
             </h2>
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
-              Identify where value is trapped. Engineer the opportunity. Certify the economics. Deploy the AI execution layer. Compound the result.
-            </p>
-            <p className="text-sm text-cyan-300 font-medium mt-2">
-              The first deliverable of every engagement is your Function-Cost Ledger — a Finance-certified view of what each function costs, and what it could.
+              Let&apos;s identify where AI can create measurable enterprise value in your operation.
             </p>
           </div>
 
-          <div className="max-w-3xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-            <BorderBeam size={180} duration={10} colorFrom="#38bdf8" colorTo="#6366f1" />
+          <div className="max-w-4xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+            <BorderBeam size={200} duration={10} colorFrom="#38bdf8" colorTo="#6366f1" />
 
-            {/* LIVE GOOGLE CALENDAR STRATEGY SESSION INTEGRATION */}
-            <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/80 via-indigo-950/60 to-slate-950 border border-blue-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            {/* LIVE GOOGLE CALENDAR DIRECT BOOKING BANNER */}
+            <div className="mb-10 p-5 rounded-2xl bg-gradient-to-r from-blue-950/80 via-indigo-950/60 to-slate-950 border border-blue-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 text-cyan-400 flex items-center justify-center shrink-0">
-                  <Calendar size={20} />
+                <div className="w-11 h-11 rounded-xl bg-blue-600/20 border border-blue-500/40 text-cyan-400 flex items-center justify-center shrink-0">
+                  <Calendar size={22} />
                 </div>
                 <div>
                   <span className="text-[11px] font-mono font-bold tracking-wider text-cyan-400 uppercase block">
-                    LIVE STRATEGY SESSION BOOKING
+                    INSTANT GOOGLE CALENDAR CONFIRMATION
                   </span>
                   <p className="text-sm font-semibold text-white">
                     Need an immediate 45-minute architectural Strategy Session?
@@ -2297,22 +2871,232 @@ export default function AIValueEngineeringPage() {
                 href="https://calendar.app.google/voXXRkbgVuuft3fz6"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
               >
-                <Calendar size={14} />
+                <Calendar size={15} />
                 <span>Schedule on Google Calendar</span>
-                <ArrowUpRight size={13} />
+                <ArrowUpRight size={14} />
               </a>
             </div>
 
-            <TrustGridForm
-              variant="diagnostic"
-              formId="form_ai_value_engineering"
-              formName="AI Value Engineering Diagnostic"
-              defaultSolution="ai-value-engineering"
-              ctaSource="solution_page_ai_value_engineering"
-            />
-            <div className="mt-6 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
+            {/* Corporate Strategy Session Form */}
+            {formSubmitted ? (
+              <div className="p-8 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 text-center space-y-4">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto">
+                  <CheckCircle2 size={28} />
+                </div>
+                <h3 className="text-2xl font-bold text-white">Strategy Session Request Confirmed</h3>
+                <p className="text-sm text-slate-300 max-w-lg mx-auto">
+                  Thank you, <strong>{formFullName}</strong>. Your session request has been received. Our senior systems engineering practice lead will review your submission and contact you within one business day with a confirmed briefing invitation.
+                </p>
+                <div className="pt-4">
+                  <a
+                    href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:underline"
+                  >
+                    <span>Need instant confirmation? Open Google Calendar</span>
+                    <ArrowUpRight size={13} />
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleStrategySessionSubmit} className="space-y-6">
+                {formError && (
+                  <div className="p-4 rounded-xl bg-rose-950/60 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle size={16} className="shrink-0 text-rose-400" />
+                    <span>{formError}</span>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {/* Full Name */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Full Name <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formFullName}
+                      onChange={(e) => setFormFullName(e.target.value)}
+                      placeholder="e.g. Elena Rostova"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Work Email */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Work Email <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formEmail}
+                      onChange={(e) => setFormEmail(e.target.value)}
+                      placeholder="name@enterprise.com"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Mobile Number */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Mobile Number <span className="text-slate-500">(with country code)</span>
+                    </label>
+                    <input
+                      type="tel"
+                      value={formMobile}
+                      onChange={(e) => setFormMobile(e.target.value)}
+                      placeholder="+1 (555) 000-0000"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Company */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Company Name <span className="text-rose-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formCompany}
+                      onChange={(e) => setFormCompany(e.target.value)}
+                      placeholder="e.g. Global Industrial Corp"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Job Title */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Job Title
+                    </label>
+                    <input
+                      type="text"
+                      value={formJobTitle}
+                      onChange={(e) => setFormJobTitle(e.target.value)}
+                      placeholder="e.g. Chief Operating Officer / VP Engineering"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Industry */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Industry
+                    </label>
+                    <select
+                      value={formIndustry}
+                      onChange={(e) => setFormIndustry(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white outline-hidden transition-all"
+                    >
+                      <option value="Manufacturing & Industrial">Manufacturing &amp; Industrial</option>
+                      <option value="Automotive & Mobility">Automotive &amp; Mobility</option>
+                      <option value="Financial Services & Banking">Financial Services &amp; Banking</option>
+                      <option value="Pharmaceuticals & Healthcare">Pharmaceuticals &amp; Healthcare</option>
+                      <option value="Energy & Utilities">Energy &amp; Utilities</option>
+                      <option value="Telecommunications & Cloud">Telecommunications &amp; Cloud</option>
+                      <option value="Mining & Heavy Operations">Mining &amp; Heavy Operations</option>
+                      <option value="Aerospace & Defense">Aerospace &amp; Defense</option>
+                      <option value="Logistics & Supply Chain">Logistics &amp; Supply Chain</option>
+                      <option value="Other Regulated Enterprise">Other Regulated Enterprise</option>
+                    </select>
+                  </div>
+
+                  {/* Area of Interest */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Area of Interest
+                    </label>
+                    <select
+                      value={formAreaOfInterest}
+                      onChange={(e) => setFormAreaOfInterest(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white outline-hidden transition-all"
+                    >
+                      <option value="AI Value Discovery & Constraint Analysis">01 AI Value Discovery &amp; Constraint Analysis</option>
+                      <option value="Process Intelligence & Telemetry Mining">02 Process Intelligence &amp; Telemetry Mining</option>
+                      <option value="Function-Cost Engineering & Unit Economics">03 Function-Cost Engineering &amp; Unit Economics</option>
+                      <option value="AI Methodology Execution (Lean / Six Sigma / TOC)">04 AI Methodology Execution (Lean / Six Sigma / TOC)</option>
+                      <option value="AI Agent Fleets Deployment">05 AI Agent Fleets Deployment</option>
+                      <option value="Value Realization Office (VRO) Governance">06 Value Realization Office (VRO) Governance</option>
+                      <option value="Value Guardianship & Permanence Audit">07 Value Guardianship &amp; Permanence Audit</option>
+                      <option value="Compounding Value Operating System">08 Compounding Value Operating System</option>
+                    </select>
+                  </div>
+
+                  {/* What would you like to discuss? */}
+                  <div className="sm:col-span-2">
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      What would you like to discuss?
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={formDiscussion}
+                      onChange={(e) => setFormDiscussion(e.target.value)}
+                      placeholder="Describe your primary operational bottlenecks, compute cost concerns, or transformation targets..."
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+
+                  {/* Preferred Strategy Session Format */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Preferred Strategy Session Format
+                    </label>
+                    <select
+                      value={formSessionFormat}
+                      onChange={(e) => setFormSessionFormat(e.target.value)}
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white outline-hidden transition-all"
+                    >
+                      <option value="45-Minute Virtual Architectural Briefing">45-Minute Virtual Architectural Briefing</option>
+                      <option value="On-Site Executive Scoping Workshop">On-Site Executive Scoping Workshop</option>
+                      <option value="C-Suite P&L Alignment Session">C-Suite P&amp;L Alignment Session</option>
+                      <option value="Value Stream Diagnostic Discovery">Value Stream Diagnostic Discovery</option>
+                    </select>
+                  </div>
+
+                  {/* Preferred Date / Time */}
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                      Preferred Date / Time
+                    </label>
+                    <input
+                      type="text"
+                      value={formDateTime}
+                      onChange={(e) => setFormDateTime(e.target.value)}
+                      placeholder="e.g. Next Tuesday at 2:00 PM EST"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 text-sm text-white placeholder-slate-500 outline-hidden transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={formSubmitting}
+                    className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-sm shadow-[0_0_25px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(59,130,246,0.6)] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    {formSubmitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        <span>Submitting Session Request...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} />
+                        <span>Book Strategy Session</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
+
+            <div className="mt-8 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
               <Lock size={13} className="text-cyan-400" />
               <span>Enterprise confidentiality guaranteed. Disclosures handled under mutual NDA standards.</span>
             </div>
@@ -2321,7 +3105,7 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* NEXT SOLUTION & CROSS-NAVIGATION */}
+      {/* 19. NEXT IN THE OPERATING STACK */}
       {/* ========================================================= */}
       <section className="py-16 bg-slate-900 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
