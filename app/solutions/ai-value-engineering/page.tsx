@@ -489,7 +489,7 @@ const engagementModels: EngagementModel[] = [
 ]
 
 // ==========================================
-// 7. DATA: PART 1 — 10 INDUSTRIAL VERTICALS (tab1_part1.txt)
+// 7. DATA: 10 INDUSTRIAL VERTICALS (COMPENDIUM)
 // ==========================================
 interface IndustrialCompendiumItem {
   id: string
@@ -584,7 +584,7 @@ const industrialCompendium: IndustrialCompendiumItem[] = [
 ]
 
 // ==========================================
-// 8. DATA: PART 1 — TECHNOLOGY ENABLERS MATRIX (tab1_part1.txt)
+// 8. DATA: TECHNOLOGY ENABLERS MATRIX
 // ==========================================
 interface TechEnablerItem {
   tech: string
@@ -645,7 +645,7 @@ const technologyStackEnablers: TechEnablerItem[] = [
 ]
 
 // ==========================================
-// 9. DATA: PART 3 — ONE-PAGE OPERATING SYSTEM: 7-STEP METHOD (tab3_part3.txt)
+// 9. DATA: ONE-PAGE OPERATING SYSTEM: 7-STEP METHOD
 // ==========================================
 interface HandbookStep {
   step: string
@@ -708,7 +708,7 @@ const handbookSteps: HandbookStep[] = [
 ]
 
 // ==========================================
-// 10. DATA: PART 3 — TIER 0 TO TIER 6 ARCHITECTURE (tab3_part3.txt)
+// 10. DATA: TIER 0 TO TIER 6 ARCHITECTURE
 // ==========================================
 interface TierArchitectureItem {
   tier: string
@@ -1199,13 +1199,14 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 4: THE AI-VE JOB PLAN */}
       {/* ========================================================= */}
-      <section id="part4-job-plan" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
+      <section id="job-plan-stages" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
         <span id="job-plan" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="part4-job-plan" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
               <Workflow size={12} className="text-cyan-400" />
-              04 / Signature Framework · Part 4
+              04 / Signature Framework
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               The AI-VE Job Plan
@@ -1298,8 +1299,9 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 5: FUNCTION-COST LEDGER (SIGNATURE FEATURE) */}
       {/* ========================================================= */}
-      <section id="part4-function-cost-ledger" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+      <section id="ledger-economics" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
         <span id="function-cost-ledger" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="part4-function-cost-ledger" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
@@ -1406,12 +1408,13 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 6: THE PROVEN PORTFOLIO (SEVEN VALUE LEVERS) */}
       {/* ========================================================= */}
-      <section id="part2-methodology-engine" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
+      <section id="methodology-engine" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200 relative">
+        <span id="part2-methodology-engine" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Boxes size={12} className="text-blue-600" />
-              05 / Operational Breadth · Part 2
+              05 / Operational Breadth
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Seven Value Levers. 40+ Proven Methodologies. One AI Execution Engine.
@@ -1501,12 +1504,13 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 7: FIVE VALUE CURRENCIES */}
       {/* ========================================================= */}
-      <section id="part2-value-currencies" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+      <section id="value-currencies" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="part2-value-currencies" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Coins size={12} className="text-blue-600" />
-              06 / Balance Sheet Proof · Part 2
+              06 / Balance Sheet Proof
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               How Companies Actually Receive Value
@@ -1571,12 +1575,14 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 8: FIVE-LAYER ENGINEERING MODEL */}
       {/* ========================================================= */}
-      <section id="part2-five-layer-architecture" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800">
+      <section id="five-layer-architecture" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
+        <span id="five-layer-model" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="part2-five-layer-architecture" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
               <Layers3 size={12} className="text-cyan-400" />
-              07 / Architecture · Part 2
+              07 / System Architecture
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               The Five-Layer Engineering Model
@@ -1649,16 +1655,17 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* PART 3: THE LEAN AI VALUE ENGINEERING HANDBOOK (tab3_part3.txt) */}
+      {/* THE LEAN AI VALUE ENGINEERING HANDBOOK */}
       {/* ========================================================= */}
-      <section id="part3-operating-system" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900 text-white border-b border-slate-800 relative">
+      <section id="operating-system" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900 text-white border-b border-slate-800 relative">
+        <span id="part3-operating-system" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header & Author Citation */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
             <div className="max-w-3xl">
               <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-800 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
                 <SlidersHorizontal size={12} className="text-cyan-400" />
-                The Lean AI Value Engineering Handbook · Part 3
+                The Lean AI Value Engineering Handbook
               </span>
               <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
                 The One-Page Operating System: The 7-Step Method
@@ -1709,7 +1716,8 @@ export default function AIValueEngineeringPage() {
           </div>
 
           {/* Tier 0 to Tier 6 Architecture Section */}
-          <div id="part3-tier-architecture" className="scroll-mt-28 mb-16">
+          <div id="tier-architecture" className="scroll-mt-28 mb-16 relative">
+            <span id="part3-tier-architecture" className="scroll-mt-28 -top-28 absolute block" />
             <div className="max-w-3xl mb-8">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 MULTI-TIER INTELLIGENCE STACK
@@ -1778,7 +1786,8 @@ export default function AIValueEngineeringPage() {
           </div>
 
           {/* DOWNTIME Waste Taxonomy & Risk Bands */}
-          <div id="part3-waste-governance" className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-800">
+          <div id="waste-governance" className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-800 relative">
+            <span id="part3-waste-governance" className="scroll-mt-28 -top-28 absolute block" />
             {/* DOWNTIME Waste */}
             <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
@@ -1842,14 +1851,15 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* PART 1: USE CASE COMPENDIUM & TECH STACK (tab1_part1.txt) */}
+      {/* INDUSTRIAL USE CASE COMPENDIUM & TECH STACK */}
       {/* ========================================================= */}
-      <section id="part1-use-cases" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+      <section id="industrial-use-cases" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="part1-use-cases" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Building2 size={12} className="text-blue-600" />
-              Use Case Compendium · Part 1
+              Industrial Use Case Compendium
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               10 Industrial Verticals Compendium
@@ -1926,7 +1936,8 @@ export default function AIValueEngineeringPage() {
           </div>
 
           {/* Technology Enablers Matrix */}
-          <div id="part1-tech-stack" className="scroll-mt-28 mb-16">
+          <div id="technology-enablers" className="scroll-mt-28 mb-16 relative">
+            <span id="part1-tech-stack" className="scroll-mt-28 -top-28 absolute block" />
             <div className="max-w-3xl mb-8">
               <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-2">
                 PHYSICAL TO DIGITAL ENABLERS
@@ -1967,7 +1978,8 @@ export default function AIValueEngineeringPage() {
           </div>
 
           {/* Edge Orchestration & Gateways Strip */}
-          <div id="part1-edge-orchestration" className="scroll-mt-28 p-8 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 text-white border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div id="edge-orchestration" className="scroll-mt-28 p-8 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 text-white border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6 relative">
+            <span id="part1-edge-orchestration" className="scroll-mt-28 -top-28 absolute block" />
             <div className="max-w-2xl">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
                 SHOP-FLOOR LOW-LATENCY DETERMINISM
@@ -2135,13 +2147,14 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 11: ENGAGEMENT JOURNEY & DIFFERENTIATION */}
       {/* ========================================================= */}
-      <section id="part4-sprints-diagnostic" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+      <section id="sprints-diagnostic" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
         <span id="acceleration-sprints" className="scroll-mt-28 -top-28 absolute block" />
+        <span id="part4-sprints-diagnostic" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Calendar size={12} className="text-blue-600" />
-              10 / Delivery Architecture · Part 4
+              10 / Delivery Architecture
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Enterprise Engagement Models

@@ -353,95 +353,95 @@ const aiCybersecurityMenuItems = [
   }
 ]
 
-// 5. AI Value Engineering Menu Items (Structured across 4-Part Architecture from Handbooks & Compendiums)
+// 5. AI Value Engineering Menu Items (Structured across Core Architecture & Frameworks)
 const aiValueMenuItems = [
-  // --- PART 1: USE CASE COMPENDIUM & TECH STACK (tab1_part1.txt) ---
+  // --- USE CASE COMPENDIUM & TECH STACK ---
   {
-    part: 'Part 1 · Use Cases',
-    id: 'part1-use-cases',
+    category: 'Industrial Verticals',
+    id: 'industrial-use-cases',
     label: '10 Industrial Verticals Compendium',
     desc: 'Automotive, Heavy Machinery, Pharma, Semiconductors, Aerospace & Mining',
     icon: Building2
   },
   {
-    part: 'Part 1 · Enablers',
-    id: 'part1-tech-stack',
+    category: 'Technology Enablers',
+    id: 'technology-enablers',
     label: 'Physical & Digital Technology Stack',
     desc: 'RFID, IIoT condition sensors, TSN, Video Analytics, Blockchain & Digital Twins',
     icon: Cpu
   },
   {
-    part: 'Part 1 · Edge Fleets',
-    id: 'part1-edge-orchestration',
+    category: 'Edge Fleets',
+    id: 'edge-orchestration',
     label: 'Edge Gateways & Autonomous Fleets',
     desc: 'Shop-floor low latency sensing, device orchestration & Tier 2–5 agent routing',
     icon: Workflow
   },
 
-  // --- PART 2: METHODOLOGY ENGINE & ARCHITECTURE (tab2_part2.txt) ---
+  // --- METHODOLOGY ENGINE & ARCHITECTURE ---
   {
-    part: 'Part 2 · Engine',
-    id: 'part2-methodology-engine',
+    category: 'Methodology Engine',
+    id: 'methodology-engine',
     label: '40+ Proven Operational Methodologies',
     desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, TRIZ industrialized by AI agents',
     icon: Boxes
   },
   {
-    part: 'Part 2 · Architecture',
-    id: 'part2-five-layer-architecture',
+    category: 'System Architecture',
+    id: 'five-layer-architecture',
     label: '5-Layer Agent Fleet Architecture',
     desc: 'Discovery, Cost Truth, Methodology Execution, VRO & Compounding OS',
     icon: Layers
   },
   {
-    part: 'Part 2 · Balance Sheet',
-    id: 'part2-value-currencies',
+    category: 'Balance Sheet Proof',
+    id: 'value-currencies',
     label: 'Five Enterprise Value Currencies',
     desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & Growth Option P&L proof',
     icon: TrendingUp
   },
 
-  // --- PART 3: LEAN AI VALUE ENGINEERING HANDBOOK (tab3_part3.txt) ---
+  // --- LEAN AI VALUE ENGINEERING HANDBOOK ---
   {
-    part: 'Part 3 · Operating System',
-    id: 'part3-operating-system',
+    category: 'Operating System',
+    id: 'operating-system',
     label: 'The One-Page Operating System',
     desc: 'The 7-Step Method: Constraint, Waste, Proof, Flow, Function, Execution & Compound',
     icon: SlidersHorizontal
   },
   {
-    part: 'Part 3 · Multi-Model',
-    id: 'part3-tier-architecture',
+    category: 'Multi-Model Stack',
+    id: 'tier-architecture',
     label: 'Tier 0–6 Multi-Model System',
     desc: 'Deterministic sensor reads to multi-agent reasoning & board governance',
     icon: BarChart3
   },
   {
-    part: 'Part 3 · Governance',
-    id: 'part3-waste-governance',
+    category: 'Governance & Risk',
+    id: 'waste-governance',
     label: 'DOWNTIME Waste & Risk Governance',
     desc: 'Shop-floor waste elimination coupled with deterministic human risk bands',
     icon: ShieldCheck
   },
 
-  // --- PART 4: EXECUTIVE DELIVERABLES & FUNCTION-COST LEDGER (tab4_part4.txt) ---
+  // --- EXECUTIVE DELIVERABLES & FUNCTION-COST LEDGER ---
   {
-    part: 'Part 4 · Job Plan',
-    id: 'part4-job-plan',
+    category: 'Job Plan',
+    id: 'job-plan-stages',
     label: '70-Year AI-VE Job Plan (8 Stages)',
     desc: 'SAVE International standard re-engineered with AI: Info to Audit',
     icon: Zap
   },
   {
-    part: 'Part 4 · Economics',
-    id: 'part4-function-cost-ledger',
+    category: 'Cost Truth',
+    id: 'ledger-economics',
     label: 'Enterprise Function-Cost Ledger',
     desc: 'Granular verb–noun decomposition & Should-Cost modeling across operations',
     icon: CheckCircle2
   },
   {
-    part: 'Part 4 · Delivery',
-    id: 'part4-sprints-diagnostic',
+    category: 'Diagnostic Sprints',
+    id: 'sprints-diagnostic',
     label: '90-Day Sprints & Diagnostic Intake',
     desc: 'Rapid cash-out acceleration sprints, VRO setup & CFO consensus canvas',
     icon: Sparkles
@@ -1264,7 +1264,7 @@ export function SiteHeader() {
                         </div>
                         <div className="isi-card-body">
                           <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
-                            {item.part}
+                            {item.category}
                           </span>
                           <div className="isi-card-heading">
                             <span className="isi-card-title">{item.label}</span>
@@ -1699,7 +1699,7 @@ export function SiteHeader() {
                         className="mobile-sublink"
                         onClick={(e) => handleNavClick(e, itemHref)}
                       >
-                        <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.part}</span>
+                        <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
                         <span>{item.label}</span>
                       </Link>
                     )
