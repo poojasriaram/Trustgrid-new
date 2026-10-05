@@ -26,26 +26,30 @@ export function FloatingLeadForm() {
   // Form Fields
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
+  const [mobile, setMobile] = useState('')
   const [company, setCompany] = useState('')
-  const [message, setMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
 
     if (!name.trim()) {
-      setErrorMessage('Please provide your full name.')
+      setErrorMessage('Please enter your name')
       return
     }
 
     if (!email.trim() || !validateEmail(email)) {
-      setErrorMessage('Please provide a valid work email address.')
+      setErrorMessage('Please enter a valid email address')
       return
     }
 
-    if (!phone.trim() || !validatePhone(phone)) {
-      setErrorMessage('Please provide a valid phone/WhatsApp number.')
+    if (!mobile.trim() || !validatePhone(mobile)) {
+      setErrorMessage('Please enter your mobile number')
+      return
+    }
+
+    if (!company.trim()) {
+      setErrorMessage('Please enter your company name')
       return
     }
 
@@ -57,9 +61,9 @@ export function FloatingLeadForm() {
       form_type: 'FLOATING_LEAD',
       name: name.trim(),
       email: email.trim(),
-      phone: phone.trim(),
-      company: company.trim() || 'Enterprise Organization',
-      message: message.trim() || 'Quick inquiry submitted via floating modal',
+      mobile: mobile.trim(),
+      phone: mobile.trim(),
+      company: company.trim(),
       ctaSource: 'floating_quick_cta'
     })
 
@@ -69,7 +73,7 @@ export function FloatingLeadForm() {
       setRefId(result.submissionId || 'TG-LEAD')
       setSubmitted(true)
     } else {
-      setErrorMessage(result.message || 'Unable to process request. Please try again.')
+      setErrorMessage(result.message || 'Unable to submit request. Please try again.')
     }
   }
 
@@ -77,9 +81,8 @@ export function FloatingLeadForm() {
     setSubmitted(false)
     setName('')
     setEmail('')
-    setPhone('')
+    setMobile('')
     setCompany('')
-    setMessage('')
     setErrorMessage('')
     setIsOpen(false)
   }
@@ -228,14 +231,14 @@ export function FloatingLeadForm() {
                 >
                   <CheckCircle2 size={24} />
                 </div>
-                <h4 style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a', margin: '0 0 4px' }}>
-                  Inquiry Received!
+                <h4 style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a', margin: '0 0 4px' }}>
+                  Thank You
                 </h4>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 12px' }}>
-                  Reference ID: <strong style={{ color: '#1d5cff' }}>{refId}</strong>
+                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px' }}>
+                  REF: <strong style={{ color: '#1d5cff' }}>{refId}</strong>
                 </p>
-                <p style={{ fontSize: '12px', color: '#475569', lineHeight: 1.4, margin: '0 0 16px' }}>
-                  Our senior engineering lead will review your workload request and connect within 24 hours.
+                <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.4, margin: '0 0 16px' }}>
+                  Your request has been submitted successfully. Our team will get back to you soon.
                 </p>
                 <button
                   type="button"
@@ -256,7 +259,8 @@ export function FloatingLeadForm() {
                       borderRadius: '6px',
                       padding: '6px 10px',
                       color: '#991b1b',
-                      fontSize: '11.5px'
+                      fontSize: '11.5px',
+                      fontWeight: 500
                     }}
                   >
                     {errorMessage}
@@ -264,13 +268,13 @@ export function FloatingLeadForm() {
                 )}
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Full Name <span style={{ color: '#ef4444' }}>*</span>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
+                    Name <span style={{ color: '#ef4444' }}>*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Dr. Alexander Scott"
+                    placeholder="Enter your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={{
@@ -285,59 +289,58 @@ export function FloatingLeadForm() {
                   />
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                  <div>
-                    <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                      Work Email <span style={{ color: '#ef4444' }}>*</span>
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="name@company.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '8px 10px',
-                        fontSize: '12.5px',
-                        border: '1px solid #cbd5e1',
-                        borderRadius: '6px',
-                        outline: 'none',
-                        color: '#0f172a'
-                      }}
-                    />
-                  </div>
-
-                  <div>
-                    <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                      Phone / WhatsApp <span style={{ color: '#ef4444' }}>*</span>
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      placeholder="+1 (555) 012-3456"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      style={{
-                        width: '100%',
-                        padding: '8px 10px',
-                        fontSize: '12.5px',
-                        border: '1px solid #cbd5e1',
-                        borderRadius: '6px',
-                        outline: 'none',
-                        color: '#0f172a'
-                      }}
-                    />
-                  </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
+                    Email <span style={{ color: '#ef4444' }}>*</span>
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      fontSize: '12.5px',
+                      border: '1px solid #cbd5e1',
+                      borderRadius: '6px',
+                      outline: 'none',
+                      color: '#0f172a'
+                    }}
+                  />
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Company / Organization (Optional)
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
+                    Mobile Number <span style={{ color: '#ef4444' }}>*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="Enter your mobile number"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      fontSize: '12.5px',
+                      border: '1px solid #cbd5e1',
+                      borderRadius: '6px',
+                      outline: 'none',
+                      color: '#0f172a'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
+                    Company <span style={{ color: '#ef4444' }}>*</span>
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Acme Enterprise"
+                    required
+                    placeholder="Enter your company name"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     style={{
@@ -352,52 +355,31 @@ export function FloatingLeadForm() {
                   />
                 </div>
 
-                <div>
-                  <label style={{ display: 'block', fontSize: '11.5px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Inquiry / Workload Scope (Optional)
-                  </label>
-                  <textarea
-                    rows={2}
-                    placeholder="Briefly describe your GPU infra, agent, or security requirement..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      fontSize: '12px',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '6px',
-                      outline: 'none',
-                      color: '#0f172a',
-                      resize: 'none'
-                    }}
-                  />
-                </div>
-
                 <button
                   type="submit"
                   disabled={isSubmitting}
                   className="button button-primary"
                   style={{
                     width: '100%',
-                    padding: '9px',
-                    fontSize: '12.5px',
+                    padding: '10px',
+                    fontSize: '13px',
                     fontWeight: 600,
                     marginTop: '4px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '6px'
+                    gap: '6px',
+                    borderRadius: '8px'
                   }}
                 >
                   {isSubmitting ? (
                     <>
                       <Loader2 size={14} className="animate-spin" />
-                      <span>Transmitting Lead...</span>
+                      <span>Submitting...</span>
                     </>
                   ) : (
                     <>
-                      <span>Submit Quick Inquiry</span>
+                      <span>Submit Request</span>
                       <Send size={13} />
                     </>
                   )}

@@ -312,17 +312,22 @@ export function AIArchitectChatbot() {
     e.preventDefault()
 
     if (!leadData.name || !leadData.name.trim()) {
-      alert('Please enter your full name.')
+      alert('Please enter your name')
       return
     }
 
     if (!leadData.email || !validateEmail(leadData.email)) {
-      alert('Please enter a valid work email address.')
+      alert('Please enter a valid email address')
       return
     }
 
     if (!leadData.phone || !leadData.phone.trim()) {
-      alert('Please provide your phone number for callback.')
+      alert('Please enter your mobile number')
+      return
+    }
+
+    if (!leadData.company || !leadData.company.trim()) {
+      alert('Please enter your company name')
       return
     }
 
@@ -332,9 +337,10 @@ export function AIArchitectChatbot() {
       formId: 'form_chat_lead',
       formName: 'Chatbot Lead Capture',
       form_type: 'CHATBOT',
-      name: leadData.name.trim() || 'Chatbot Visitor',
+      name: leadData.name.trim(),
       email: leadData.email.trim(),
-      company: leadData.company.trim() || 'Enterprise Organization',
+      company: leadData.company.trim(),
+      mobile: leadData.phone.trim(),
       phone: leadData.phone.trim(),
       message: `Chatbot Inquiry: ${leadData.requirement || 'Requested consultation via AI Architect Chatbot'}`,
       selectedSolutions: [leadData.offering || 'Enterprise AI Architecture'],
@@ -629,7 +635,7 @@ export function AIArchitectChatbot() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <input
                         type="text"
-                        placeholder="Your Name *"
+                        placeholder="Enter your name"
                         value={leadData.name}
                         onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
                         required
@@ -637,7 +643,7 @@ export function AIArchitectChatbot() {
                       />
                       <input
                         type="email"
-                        placeholder="Work Email *"
+                        placeholder="Enter your email"
                         value={leadData.email}
                         onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
                         required
@@ -647,7 +653,7 @@ export function AIArchitectChatbot() {
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <input
                         type="tel"
-                        placeholder="Phone / WhatsApp *"
+                        placeholder="Enter your mobile number"
                         value={leadData.phone}
                         onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
                         required
@@ -655,9 +661,10 @@ export function AIArchitectChatbot() {
                       />
                       <input
                         type="text"
-                        placeholder="Company (Optional)"
+                        placeholder="Enter your company name"
                         value={leadData.company}
                         onChange={(e) => setLeadData({ ...leadData, company: e.target.value })}
+                        required
                         style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
                       />
                     </div>
@@ -686,8 +693,8 @@ export function AIArchitectChatbot() {
                         </>
                       ) : (
                         <>
-                          <span>Request Architect Consultation</span>
-                          <Send size={12} />
+                          <span>Submit Request</span>
+                          <Send size={13} />
                         </>
                       )}
                     </button>

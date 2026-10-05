@@ -16,7 +16,9 @@ export interface TrustGridFormData {
   name: string
   email: string
   phone?: string
+  mobile?: string
   company?: string
+  currentPreviousCompany?: string
   designation?: string
   industry?: string
   companySize?: string
@@ -112,17 +114,30 @@ export async function submitTrustGridForm(
     }
   }
 
-  // Basic frontend validation
+  // Standardized user-friendly validation
   if (!formData.name || formData.name.trim() === '') {
-    return { success: false, message: 'Please provide your full name.' }
+    return { success: false, message: 'Please enter your name' }
   }
 
   if (!formData.email || !validateEmail(formData.email)) {
-    return { success: false, message: 'Please provide a valid work email address.' }
+    return { success: false, message: 'Please enter a valid email address' }
   }
 
-  if (formData.phone && !validatePhone(formData.phone)) {
-    return { success: false, message: 'Please provide a valid phone number with country code.' }
+  const phoneVal = (formData.mobile || formData.phone || '').trim()
+  if (!phoneVal || !validatePhone(phoneVal)) {
+    return { success: false, message: 'Please enter your mobile number' }
+  }
+
+  const companyVal = (formData.currentPreviousCompany || formData.company || '').trim()
+  if (!companyVal) {
+    return { success: false, message: 'Please enter your company name' }
+  }
+
+  const formType = deriveFormType(formData.formId, formData.formName, formData.form_type || formData.formType)
+  if (formType === 'CAREER') {
+    if (!formData.resume || formData.resume.trim() === '') {
+      return { success: false, message: 'Please upload your resume' }
+    }
   }
 
   isSubmittingGlobal = true
@@ -132,7 +147,6 @@ export async function submitTrustGridForm(
     const randomSuffix = Math.floor(1000 + Math.random() * 9000)
     const clientSubmissionId = formData.submissionId || `TG-${dateStr}-${randomSuffix}`
     const formId = formData.formId || formData.formName.toLowerCase().replace(/\s+/g, '_')
-    const formType = deriveFormType(formId, formData.formName, formData.form_type || formData.formType)
 
     // Attach tracking metadata
     const tracking = getTrackingMetadata(formData.formName, formId, formData.ctaSource)
@@ -145,16 +159,19 @@ export async function submitTrustGridForm(
       form_id: formId,
       formName: formData.formName,
       form_name: formData.formName,
-      sheetName: formData.sheetName || (formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
-      sheet_name: formData.sheetName || (formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
+      sheetName: formData.sheetName || (formType === 'CAREER' ? 'Career_Applications' : formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
+      sheet_name: formData.sheetName || (formType === 'CAREER' ? 'Career_Applications' : formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' : 'Contact_Leads'),
       submissionId: clientSubmissionId,
       lead_id: clientSubmissionId,
       name: formData.name.trim(),
       fullName: formData.name.trim(),
       email: formData.email.trim(),
       work_email: formData.email.trim(),
-      phone: (formData.phone || '').trim(),
-      company: (formData.company || '').trim(),
+      phone: phoneVal,
+      mobile: phoneVal,
+      company: companyVal,
+      currentPreviousCompany: companyVal,
+      resume: formData.resume || '',
       role: (formData.role || formData.designation || '').trim(),
       designation: (formData.designation || formData.role || '').trim(),
       industry: formData.industry || '',

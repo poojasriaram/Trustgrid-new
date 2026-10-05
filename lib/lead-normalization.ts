@@ -38,7 +38,9 @@ export interface RawLeadInput {
   name: string
   email: string
   phone?: string
+  mobile?: string
   company?: string
+  currentPreviousCompany?: string
   designation?: string
   role?: string
   industry?: string
@@ -308,8 +310,8 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
 
   const name = (input.name || 'Enterprise Inquiry').trim()
   const email = (input.email || '').trim()
-  const phone = (input.phone || '').trim()
-  const company = (input.company || 'Enterprise Organization').trim()
+  const phone = (input.mobile || input.phone || '').trim()
+  const company = (input.currentPreviousCompany || input.company || 'Enterprise Organization').trim()
   const jobTitle = (input.designation || input.role || (leadType === 'CAREER' ? 'Applicant' : 'Executive / Lead')).trim()
   const industry = (input.industry || 'Cross-Industry').trim()
   const requirement = (input.requirement || input.message || `Inquiry submitted via ${input.formName || 'Website'}`).trim()
