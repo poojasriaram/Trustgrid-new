@@ -1077,76 +1077,101 @@ const tierArchitecture: TierArchitectureItem[] = [
     governance: 'Audited annually by corporate controllers; Board of Directors reporting.'
   }
 ]
-
 // ==========================================
 // HERO SLIDER DATA
 // ==========================================
 interface HeroSlide {
+  tag: string
   eyebrow: string
   headline: string
   headlineAccent: string
   subheadline: string
   description: string
+  points: string[]
   primaryCTA: { label: string; href: string }
   secondaryCTA: { label: string; href: string }
   accentColor: string
-  gradientFrom: string
-  gradientTo: string
-  metric: { value: string; label: string }
+  accentSolid: string
+  bgGradient: string
+  rightMetrics: { value: string; label: string; color: string }[]
 }
 
 const heroSlides: HeroSlide[] = [
   {
-    eyebrow: 'AI VALUE ENGINEERING  ·  ENTERPRISE VALUE OPERATING SYSTEM',
+    tag: '01 / VALUE ENGINEERING',
+    eyebrow: 'Enterprise Value Operating System',
     headline: 'Proven Methodologies.',
-    headlineAccent: 'Industrialized by AI.',
-    subheadline: 'Value That Compounds.',
-    description: 'TrustGrid runs the world\'s proven operational performance methodologies — Lean, Six Sigma, TOC, TPM — 4–10x faster through autonomous AI agent fleets, structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor year after year.',
+    headlineAccent: 'Industrialized\nby AI.',
+    subheadline: 'Value That Compounds — Year After Year.',
+    description: 'TrustGrid runs Lean, Six Sigma, TOC and TPM 4–10x faster through autonomous AI agent fleets — structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor annually.',
+    points: ['Finance-certified value claims only', 'Autonomous 24/7 agent execution', '≥1.3x annual compounding factor'],
     primaryCTA: { label: 'Book Strategy Session', href: '#strategy-session-section' },
     secondaryCTA: { label: 'Explore AI-VE Models', href: '#models-section' },
-    accentColor: 'from-blue-400 via-cyan-300 to-indigo-300',
-    gradientFrom: '#0f172a',
-    gradientTo: '#1e3a5f',
-    metric: { value: '3–10x', label: 'Engineered ROI' }
+    accentColor: 'from-blue-400 via-cyan-400 to-indigo-400',
+    accentSolid: '#38bdf8',
+    bgGradient: 'linear-gradient(135deg, #050d1a 0%, #0a1628 40%, #0d2149 100%)',
+    rightMetrics: [
+      { value: '3–10x', label: 'Engineered ROI', color: '#38bdf8' },
+      { value: '4–10x', label: 'Execution Speed', color: '#818cf8' },
+      { value: '100%', label: 'Finance-Certified', color: '#34d399' }
+    ]
   },
   {
-    eyebrow: 'AI VALUE ENGINEERING  ·  FUNCTION-COST INTELLIGENCE',
+    tag: '02 / FUNCTION-COST',
+    eyebrow: 'Function-Cost Intelligence',
     headline: 'Every Function.',
-    headlineAccent: 'Every Dollar Mapped.',
-    subheadline: 'Finance-Certified. Permanently.',
-    description: 'Our Function-Cost Ledger decomposes every enterprise activity into discrete verb–noun functions — connecting each one to its empirical baseline cost versus Should-Cost. 100% of value claims co-signed by your Finance team before a dollar is banked.',
+    headlineAccent: 'Every Dollar\nMapped.',
+    subheadline: 'Finance-Certified. Permanently Defended.',
+    description: 'Our Function-Cost Ledger decomposes every enterprise activity into discrete verb–noun functions — connecting each one to its empirical baseline cost versus Should-Cost target. 100% of value co-signed by Finance before banking.',
+    points: ['Verb–noun function decomposition', 'Activity-based Should-Cost analysis', 'General ledger reconciliation per wave'],
     primaryCTA: { label: 'View Function-Cost Ledger', href: '#ledger-economics' },
     secondaryCTA: { label: 'See the Job Plan', href: '#job-plan-stages' },
-    accentColor: 'from-cyan-400 via-teal-300 to-emerald-300',
-    gradientFrom: '#0f1f2a',
-    gradientTo: '#0f3330',
-    metric: { value: '100%', label: 'Finance-Certified Claims' }
+    accentColor: 'from-cyan-400 via-teal-400 to-emerald-400',
+    accentSolid: '#2dd4bf',
+    bgGradient: 'linear-gradient(135deg, #011a14 0%, #042924 40%, #063d2e 100%)',
+    rightMetrics: [
+      { value: '100%', label: 'Finance Co-Signed', color: '#34d399' },
+      { value: '8-Stage', label: 'Job Plan Rigor', color: '#2dd4bf' },
+      { value: 'P&L', label: 'Balance Sheet Tied', color: '#a3e635' }
+    ]
   },
   {
-    eyebrow: 'AI VALUE ENGINEERING  ·  AUTONOMOUS AGENT FLEETS',
-    headline: 'AI Agent Fleets.',
-    headlineAccent: 'Working 24/7.',
-    subheadline: 'Not Pilots. Production.',
-    description: 'Specialized multi-agent fleets execute continuous Lean, Six Sigma, and Theory of Constraints workflows across your operations — gated by deterministic human approval risk bands, monitored by Value Guardian agents, and governed by corporate-grade audit trails.',
+    tag: '03 / AGENT FLEETS',
+    eyebrow: 'Autonomous AI Agent Fleets',
+    headline: 'AI Agents.',
+    headlineAccent: 'Not Pilots.\nProduction.',
+    subheadline: 'Multi-Agent Fleets Operating 24/7 at Scale.',
+    description: 'Specialized multi-agent fleets execute continuous Lean, Six Sigma, and Theory of Constraints workflows across your operations — gated by deterministic human approval risk bands, monitored by Value Guardian agents, with full corporate audit trails.',
+    points: ['3-tier human approval risk bands', 'SOX-compliant audit ledger', 'Cross-plant knowledge graph'],
     primaryCTA: { label: 'Explore Agent Architecture', href: '#tier-architecture' },
     secondaryCTA: { label: 'See Methodology Engine', href: '#methodology-engine' },
-    accentColor: 'from-violet-400 via-purple-300 to-indigo-300',
-    gradientFrom: '#0f0f2a',
-    gradientTo: '#1e1a4f',
-    metric: { value: '4–10x', label: 'Execution Speed' }
+    accentColor: 'from-violet-400 via-purple-400 to-indigo-400',
+    accentSolid: '#a78bfa',
+    bgGradient: 'linear-gradient(135deg, #08051a 0%, #100d2e 40%, #1a1048 100%)',
+    rightMetrics: [
+      { value: '4–10x', label: 'Faster Execution', color: '#a78bfa' },
+      { value: '24/7', label: 'Continuous Operation', color: '#818cf8' },
+      { value: 'Tier 1–3', label: 'Risk Band Control', color: '#c084fc' }
+    ]
   },
   {
-    eyebrow: 'AI VALUE ENGINEERING  ·  COMPOUNDING ENTERPRISE ADVANTAGE',
+    tag: '04 / VALUE COMPOUNDING',
+    eyebrow: 'Compounding Enterprise Advantage',
     headline: 'Value Realized.',
-    headlineAccent: 'Value Defended.',
-    subheadline: 'Value Compounded — ≥1.3x/Year.',
-    description: 'TrustGrid\'s Value Realization Office tracks, certifies, and guards every improvement wave. As operational bottlenecks elevate, autonomous agents re-map the next constraint and self-fund continuous expansion — building an enterprise-wide compounding advantage.',
+    headlineAccent: 'Value Defended.\nValue Compounded.',
+    subheadline: '≥1.3x Annual Compounding Factor — Audited.',
+    description: 'TrustGrid\'s Value Realization Office tracks, certifies, and guards every improvement wave. As bottlenecks elevate, autonomous agents re-map the next constraint and self-fund continuous expansion — building a permanent enterprise advantage.',
+    points: ['6-month permanence audit certificate', 'Shewhart SPC drift detection', 'Board-level compounding scorecard'],
     primaryCTA: { label: 'Explore Value Realization', href: '#governance-proof' },
     secondaryCTA: { label: 'See Maturity Model', href: '#maturity-arc' },
-    accentColor: 'from-amber-400 via-orange-300 to-yellow-200',
-    gradientFrom: '#1a100a',
-    gradientTo: '#2a1800',
-    metric: { value: '≥1.3x', label: 'Annual Compounding Factor' }
+    accentColor: 'from-amber-400 via-orange-400 to-yellow-400',
+    accentSolid: '#fb923c',
+    bgGradient: 'linear-gradient(135deg, #180b02 0%, #251205 40%, #3d1e08 100%)',
+    rightMetrics: [
+      { value: '≥1.3x', label: 'Annual Compounding', color: '#fb923c' },
+      { value: '≥90%', label: 'Value Retention Rate', color: '#fbbf24' },
+      { value: '∞', label: 'Self-Funding Cycle', color: '#f59e0b' }
+    ]
   }
 ]
 
@@ -1164,14 +1189,17 @@ export default function AIValueEngineeringPage() {
   // Hero Slider State
   const [heroIndex, setHeroIndex] = useState<number>(0)
   const [heroAnimating, setHeroAnimating] = useState<boolean>(false)
+  const [heroProgress, setHeroProgress] = useState<number>(0)
+  const SLIDE_DURATION = 7000
 
   const goToHeroSlide = useCallback((index: number) => {
     if (heroAnimating) return
     setHeroAnimating(true)
+    setHeroProgress(0)
     setTimeout(() => {
       setHeroIndex(index)
       setHeroAnimating(false)
-    }, 300)
+    }, 400)
   }, [heroAnimating])
 
   const heroNext = useCallback(() => {
@@ -1182,13 +1210,25 @@ export default function AIValueEngineeringPage() {
     goToHeroSlide((heroIndex - 1 + heroSlides.length) % heroSlides.length)
   }, [heroIndex, goToHeroSlide])
 
-  // Auto-advance hero slider every 6 seconds
+  // Auto-advance with progress tracking
   useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % heroSlides.length)
-    }, 6000)
-    return () => clearInterval(timer)
-  }, [])
+    setHeroProgress(0)
+    const startTime = Date.now()
+    const rafId = { current: 0 }
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const pct = Math.min((elapsed / SLIDE_DURATION) * 100, 100)
+      setHeroProgress(pct)
+      if (pct < 100) {
+        rafId.current = requestAnimationFrame(animate)
+      } else {
+        setHeroIndex((prev) => (prev + 1) % heroSlides.length)
+        setHeroProgress(0)
+      }
+    }
+    rafId.current = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(rafId.current)
+  }, [heroIndex])
 
   // Keyboard navigation for hero
   useEffect(() => {
@@ -1286,124 +1326,236 @@ export default function AIValueEngineeringPage() {
       <SiteHeader />
 
       {/* ========================================================= */}
-      {/* 1. HERO SLIDER — ISI SECURITY STYLE FULL-SCREEN */}
+      {/* 1. HERO SLIDER — PREMIUM ISI SECURITY SPLIT LAYOUT */}
       {/* ========================================================= */}
       <section
-        className="relative min-h-screen flex flex-col overflow-hidden"
-        style={{ background: `linear-gradient(135deg, ${currentHero.gradientFrom} 0%, ${currentHero.gradientTo} 100%)` }}
+        className="relative flex flex-col overflow-hidden"
+        style={{ minHeight: '100vh', background: currentHero.bgGradient, transition: 'background 0.8s ease' }}
+        aria-label="AI Value Engineering Hero"
       >
-        {/* Animated mesh background */}
-        <div className="absolute inset-0 z-0">
+        {/* === LAYERED BACKGROUND === */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <HeroCanvas />
-          {/* Diagonal stripe overlay — ISI Security pattern */}
+          {/* Fine grid overlay */}
+          <div className="absolute inset-0" style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }} />
+          {/* Radial glow from slide accent color */}
           <div
-            className="absolute inset-0"
-            style={{
-              background: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px)'
-            }}
+            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-20 pointer-events-none"
+            style={{ background: currentHero.accentSolid, transition: 'background 0.8s ease' }}
           />
-          {/* Bottom gradient for stat card readability */}
-          <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-slate-950/80 to-transparent" />
+          {/* Bottom fade to next section */}
+          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-slate-950 to-transparent" />
         </div>
 
-        {/* SLIDE CONTENT — centered vertically with top padding for nav */}
-        <div className="relative z-10 flex-1 flex flex-col justify-center pt-32 pb-24">
+        {/* === ANIMATED PROGRESS BAR at very top === */}
+        <div className="absolute top-0 inset-x-0 z-30 h-[3px] bg-white/10">
+          <div
+            className="h-full transition-none"
+            style={{
+              width: `${heroProgress}%`,
+              background: `linear-gradient(90deg, ${currentHero.accentSolid}, white)`,
+              transition: heroProgress === 0 ? 'none' : undefined
+            }}
+          />
+        </div>
+
+        {/* === MAIN SLIDE CONTENT === */}
+        <div className="relative z-10 flex-1 flex items-center pt-24 pb-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div
-              className="transition-all duration-500"
-              style={{ opacity: heroAnimating ? 0 : 1, transform: heroAnimating ? 'translateY(12px)' : 'translateY(0)' }}
-            >
-              {/* Eyebrow tag */}
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/20 bg-white/8 backdrop-blur-sm text-white/70 text-xs font-semibold tracking-widest uppercase mb-8">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-60"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
-                </span>
-                {currentHero.eyebrow}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-12 lg:gap-16 items-center">
+
+              {/* LEFT — Content */}
+              <div
+                style={{
+                  opacity: heroAnimating ? 0 : 1,
+                  transform: heroAnimating ? 'translateX(-20px)' : 'translateX(0)',
+                  transition: 'opacity 0.4s ease, transform 0.4s ease'
+                }}
+              >
+                {/* Slide tag */}
+                <div className="flex items-center gap-3 mb-6">
+                  <span
+                    className="text-[10px] font-black tracking-[0.25em] uppercase px-3 py-1 rounded border"
+                    style={{ color: currentHero.accentSolid, borderColor: `${currentHero.accentSolid}40`, background: `${currentHero.accentSolid}12` }}
+                  >
+                    {currentHero.tag}
+                  </span>
+                  <span className="text-white/40 text-xs font-medium tracking-wider">{currentHero.eyebrow}</span>
+                </div>
+
+                {/* Headline — ISI-style large split */}
+                <h1 className="font-black text-white leading-[1.04] tracking-tight mb-5"
+                  style={{ fontSize: 'clamp(2.4rem, 5.5vw, 5rem)' }}
+                >
+                  {currentHero.headline}<br />
+                  <span
+                    className={`bg-gradient-to-r ${currentHero.accentColor} bg-clip-text text-transparent`}
+                    style={{ whiteSpace: 'pre-line' }}
+                  >
+                    {currentHero.headlineAccent}
+                  </span>
+                </h1>
+
+                {/* Subheadline */}
+                <p className="text-lg sm:text-xl font-semibold mb-4 tracking-wide" style={{ color: `${currentHero.accentSolid}cc` }}>
+                  {currentHero.subheadline}
+                </p>
+
+                {/* Description */}
+                <p className="text-white/55 text-base sm:text-[17px] leading-relaxed mb-8 max-w-xl">
+                  {currentHero.description}
+                </p>
+
+                {/* Bullet points */}
+                <ul className="space-y-2.5 mb-10">
+                  {currentHero.points.map((pt) => (
+                    <li key={pt} className="flex items-start gap-2.5">
+                      <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center"
+                        style={{ background: `${currentHero.accentSolid}25`, border: `1px solid ${currentHero.accentSolid}60` }}
+                      >
+                        <Check size={9} style={{ color: currentHero.accentSolid }} />
+                      </span>
+                      <span className="text-sm text-white/70 font-medium">{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-wrap items-center gap-4">
+                  <a
+                    href={currentHero.primaryCTA.href}
+                    onClick={() => trackCTA(currentHero.primaryCTA.label, 'hero_slider', currentHero.primaryCTA.href)}
+                    className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-bold text-sm text-slate-950 shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all"
+                    style={{ background: `linear-gradient(135deg, ${currentHero.accentSolid}, white 200%)` }}
+                  >
+                    <Sparkles size={16} />
+                    {currentHero.primaryCTA.label}
+                  </a>
+                  <a
+                    href={currentHero.secondaryCTA.href}
+                    onClick={() => trackCTA(currentHero.secondaryCTA.label, 'hero_slider', currentHero.secondaryCTA.href)}
+                    className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-sm text-white border hover:bg-white/10 backdrop-blur-sm transition-all"
+                    style={{ borderColor: `${currentHero.accentSolid}50` }}
+                  >
+                    {currentHero.secondaryCTA.label}
+                    <ArrowRight size={15} />
+                  </a>
+                </div>
               </div>
 
-              {/* Main headline — large, bold, ISI-style split */}
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] mb-5 max-w-5xl">
-                {currentHero.headline}{' '}
-                <span className={`bg-gradient-to-r ${currentHero.accentColor} bg-clip-text text-transparent`}>
-                  {currentHero.headlineAccent}
-                </span>
-              </h1>
-
-              {/* Sub-headline */}
-              <p className="text-xl sm:text-2xl font-medium text-white/60 mb-6 tracking-wide">
-                {currentHero.subheadline}
-              </p>
-
-              {/* Description */}
-              <p className="text-base sm:text-lg text-white/55 leading-relaxed max-w-3xl mb-10 font-normal">
-                {currentHero.description}
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href={currentHero.primaryCTA.href}
-                  onClick={() => trackCTA(currentHero.primaryCTA.label, 'hero_slider', currentHero.primaryCTA.href)}
-                  className={`inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r ${currentHero.accentColor} text-slate-900 font-bold text-sm shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-all`}
+              {/* RIGHT — Floating Metric Cards */}
+              <div
+                className="hidden lg:flex flex-col gap-4"
+                style={{
+                  opacity: heroAnimating ? 0 : 1,
+                  transform: heroAnimating ? 'translateX(20px)' : 'translateX(0)',
+                  transition: 'opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s'
+                }}
+              >
+                {/* TrustGrid label card */}
+                <div
+                  className="rounded-2xl p-5 border backdrop-blur-md"
+                  style={{ background: 'rgba(255,255,255,0.04)', borderColor: `${currentHero.accentSolid}30` }}
                 >
-                  <Sparkles size={16} />
-                  {currentHero.primaryCTA.label}
-                </a>
-                <a
-                  href={currentHero.secondaryCTA.href}
-                  onClick={() => trackCTA(currentHero.secondaryCTA.label, 'hero_slider', currentHero.secondaryCTA.href)}
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/20 hover:border-white/40 backdrop-blur-sm transition-all"
-                >
-                  {currentHero.secondaryCTA.label}
-                  <ArrowRight size={15} />
-                </a>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: currentHero.accentSolid }} />
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">TrustGrid AI-VE</span>
+                  </div>
+                  <p className="text-xs text-white/50 leading-relaxed">
+                    The only AI platform that industrializes proven operational methodologies with Finance-certified, compounding enterprise value.
+                  </p>
+                </div>
+
+                {/* Metric cards from slide data */}
+                {currentHero.rightMetrics.map((m, i) => (
+                  <div
+                    key={i}
+                    className="rounded-2xl p-5 border backdrop-blur-md flex items-center gap-4"
+                    style={{
+                      background: 'rgba(255,255,255,0.035)',
+                      borderColor: `${m.color}30`,
+                      transitionDelay: `${i * 60}ms`
+                    }}
+                  >
+                    <span className="text-3xl font-black tracking-tight flex-shrink-0" style={{ color: m.color }}>
+                      {m.value}
+                    </span>
+                    <span className="text-sm font-semibold text-white/70">{m.label}</span>
+                  </div>
+                ))}
+
+                {/* Decorative bottom tag */}
+                <div className="rounded-xl p-3 flex items-center gap-2 border border-white/10 bg-white/[0.025]">
+                  <Lock size={12} className="text-white/30" />
+                  <span className="text-[10px] text-white/35 font-medium tracking-wide">Nothing claimed that Finance hasn't certified</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* SLIDE NAVIGATION — bottom bar (ISI style) */}
-        <div className="relative z-10 border-t border-white/10 bg-black/25 backdrop-blur-sm">
+        {/* === BOTTOM NAVIGATION BAR (ISI-style) === */}
+        <div className="relative z-10 border-t backdrop-blur-md" style={{ borderColor: 'rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.35)' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-stretch min-h-[64px]">
 
-              {/* Dot indicators */}
-              <div className="flex items-center gap-3">
-                {heroSlides.map((_, idx) => (
+              {/* Slide tabs — ISI signature style */}
+              <div className="flex-1 flex items-center gap-0 overflow-x-auto scrollbar-none">
+                {heroSlides.map((slide, idx) => (
                   <button
                     key={idx}
                     onClick={() => goToHeroSlide(idx)}
+                    className="relative flex-shrink-0 flex items-center gap-2.5 px-4 py-5 text-left transition-all group"
                     aria-label={`Go to slide ${idx + 1}`}
-                    className={`transition-all duration-300 rounded-full ${
-                      idx === heroIndex
-                        ? 'w-8 h-2.5 bg-white'
-                        : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/60'
-                    }`}
-                  />
+                  >
+                    {/* Active indicator line at top */}
+                    <span
+                      className="absolute top-0 inset-x-0 h-[3px] transition-all duration-300"
+                      style={{
+                        background: idx === heroIndex ? currentHero.accentSolid : 'transparent',
+                        opacity: idx === heroIndex ? 1 : 0
+                      }}
+                    />
+                    <span
+                      className="text-[10px] font-black tracking-widest transition-colors"
+                      style={{ color: idx === heroIndex ? currentHero.accentSolid : 'rgba(255,255,255,0.25)' }}
+                    >
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span
+                      className="text-xs font-semibold tracking-wide whitespace-nowrap transition-colors hidden sm:block"
+                      style={{ color: idx === heroIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)' }}
+                    >
+                      {slide.tag.split(' / ')[1]}
+                    </span>
+                  </button>
                 ))}
               </div>
 
-              {/* Slide counter */}
-              <span className="text-xs font-mono text-white/40 hidden sm:block">
-                {String(heroIndex + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
-              </span>
+              {/* Divider */}
+              <div className="w-px bg-white/10 my-3" />
 
-              {/* Prev / Next arrows */}
-              <div className="flex items-center gap-2">
+              {/* Prev / Next + Counter */}
+              <div className="flex items-center gap-1 pl-4">
+                <span className="text-xs font-mono text-white/30 mr-3 hidden sm:block">
+                  {String(heroIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
+                </span>
                 <button
                   onClick={heroPrev}
                   aria-label="Previous slide"
-                  className="w-10 h-10 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all hover:scale-105"
+                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white/70 hover:text-white flex items-center justify-center transition-all"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft size={16} />
                 </button>
                 <button
                   onClick={heroNext}
                   aria-label="Next slide"
-                  className="w-10 h-10 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all hover:scale-105"
+                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white/70 hover:text-white flex items-center justify-center transition-all"
                 >
-                  <ChevronRight size={18} />
+                  <ChevronRight size={16} />
                 </button>
               </div>
             </div>
@@ -1412,26 +1564,30 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
-      {/* 2. STATS BAR — Immediately below hero */}
+      {/* 2. STATS BAR */}
       {/* ========================================================= */}
-      <section className="bg-slate-950 border-b border-slate-800">
+      <section className="bg-slate-950 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-0 divide-x divide-slate-800/60">
+          <div className="grid grid-cols-2 sm:grid-cols-4">
             {[
-              { value: '3–10x', label: 'ROI on Initiatives', sub: 'P&L-engineered return', color: 'text-blue-400' },
-              { value: '4–10x', label: 'Execution Speed', sub: 'Accelerated methodology cycle', color: 'text-cyan-400' },
-              { value: '100%', label: 'Finance-Certified', sub: 'Co-signed value claims', color: 'text-emerald-400' },
-              { value: '≥1.3x', label: 'Compounding Factor', sub: 'Measured annual advantage', color: 'text-purple-400' },
+              { value: '3–10x', label: 'ROI on Initiatives', sub: 'P&L-engineered return', color: '#38bdf8', border: 'border-r border-slate-800/60' },
+              { value: '4–10x', label: 'Execution Speed', sub: 'Accelerated methodology cycle', color: '#818cf8', border: 'border-r border-slate-800/60' },
+              { value: '100%', label: 'Finance-Certified', sub: 'Co-signed value claims', color: '#34d399', border: 'border-r border-slate-800/60' },
+              { value: '≥1.3x', label: 'Compounding Factor', sub: 'Measured annual advantage', color: '#fb923c', border: '' },
             ].map((stat) => (
-              <div key={stat.label} className="p-6 sm:p-8 flex flex-col justify-center hover:bg-slate-900/50 transition-colors">
-                <span className={`text-3xl sm:text-4xl font-black tracking-tight ${stat.color} mb-0.5`}>{stat.value}</span>
-                <span className="text-xs font-bold text-white uppercase tracking-widest mb-0.5">{stat.label}</span>
+              <div
+                key={stat.label}
+                className={`p-6 sm:p-10 flex flex-col justify-center hover:bg-slate-900/40 transition-colors ${stat.border} border-b sm:border-b-0 border-slate-800/60`}
+              >
+                <span className="text-3xl sm:text-[2.6rem] font-black tracking-tight mb-1" style={{ color: stat.color }}>{stat.value}</span>
+                <span className="text-xs font-black text-white uppercase tracking-[0.12em] mb-0.5">{stat.label}</span>
                 <span className="text-[11px] text-slate-500">{stat.sub}</span>
               </div>
             ))}
           </div>
         </div>
       </section>
+
 
       {/* ========================================================= */}
       {/* 3. AI VALUE ENGINEERING MODELS (4 x 2 GRID) */}
