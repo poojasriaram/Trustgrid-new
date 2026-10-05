@@ -10,6 +10,7 @@ import {
   ArrowUpRight,
   Upload,
   FileText,
+  Calendar,
   X
 } from 'lucide-react'
 import { submitTrustGridForm, validateEmail, validatePhone } from '@/lib/form-submission'
@@ -355,6 +356,19 @@ export function TrustGridForm({
         </div>
 
         <div style={{ marginTop: '24px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          {variant === 'strategy_session' && (
+            <a
+              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button button-primary button-sm"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none', fontSize: '12.5px', padding: '8px 16px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600 }}
+            >
+              <Calendar size={14} />
+              <span>Lock Slot on Google Calendar</span>
+              <ArrowUpRight size={14} />
+            </a>
+          )}
           <button
             type="button"
             className="button button-ghost button-sm"
@@ -427,6 +441,54 @@ export function TrustGridForm({
         >
           <AlertCircle size={16} className="shrink-0 text-red-600" />
           <span>{errorMessage}</span>
+        </div>
+      )}
+
+      {/* STRATEGY SESSION: GOOGLE CALENDAR DIRECT BOOKING NOTICE */}
+      {variant === 'strategy_session' && (
+        <div
+          style={{
+            background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
+            border: '1px solid #bfdbfe',
+            borderRadius: '12px',
+            padding: '14px 16px',
+            marginBottom: '18px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '8px'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Calendar size={18} style={{ color: '#1d5cff' }} />
+              <span style={{ fontSize: '13px', fontWeight: 700, color: '#1e3a8a' }}>
+                Direct Calendar Booking Available
+              </span>
+            </div>
+            <a
+              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                background: '#1d5cff',
+                color: '#ffffff',
+                padding: '6px 12px',
+                borderRadius: '6px',
+                fontSize: '12px',
+                fontWeight: 600,
+                textDecoration: 'none'
+              }}
+            >
+              <span>Schedule on Google Calendar</span>
+              <ArrowUpRight size={13} />
+            </a>
+          </div>
+          <p style={{ margin: 0, fontSize: '12px', color: '#475569', lineHeight: 1.4 }}>
+            Prefer to pick a live 45-minute slot immediately? Open our Google Calendar schedule above, or complete this brief intake form to receive a tailored briefing agenda.
+          </p>
         </div>
       )}
 

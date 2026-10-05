@@ -2261,6 +2261,37 @@ export default function AIValueEngineeringPage() {
 
           <div className="max-w-3xl mx-auto bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xl">
             <BorderBeam size={180} duration={10} colorFrom="#38bdf8" colorTo="#6366f1" />
+
+            {/* LIVE GOOGLE CALENDAR STRATEGY SESSION INTEGRATION */}
+            <div className="mb-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/80 via-indigo-950/60 to-slate-950 border border-blue-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 text-cyan-400 flex items-center justify-center shrink-0">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono font-bold tracking-wider text-cyan-400 uppercase block">
+                    LIVE STRATEGY SESSION BOOKING
+                  </span>
+                  <p className="text-sm font-semibold text-white">
+                    Need an immediate 45-minute architectural Strategy Session?
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    Lock a direct slot on our live Google Calendar with principal systems architects.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
+              >
+                <Calendar size={14} />
+                <span>Schedule on Google Calendar</span>
+                <ArrowUpRight size={13} />
+              </a>
+            </div>
+
             <TrustGridForm
               variant="diagnostic"
               formId="form_ai_value_engineering"

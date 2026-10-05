@@ -76,6 +76,64 @@ function DiagnosticContent() {
           <DiagnosticJourneySlider />
         </div>
 
+        {/* DIRECT GOOGLE CALENDAR BOOKING BANNER FOR STRATEGY SESSION */}
+        {isStrategySession && (
+          <div
+            style={{
+              marginBottom: '32px',
+              padding: '24px 28px',
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+              color: '#ffffff',
+              border: '1px solid rgba(59, 130, 246, 0.4)',
+              boxShadow: '0 10px 25px rgba(29, 92, 255, 0.15)',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: '20px'
+            }}
+          >
+            <div style={{ maxWidth: '650px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(59, 130, 246, 0.2)', border: '1px solid rgba(59, 130, 246, 0.4)', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: 700, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>
+                <Calendar size={13} />
+                <span>Live Google Calendar Scheduling</span>
+              </div>
+              <h3 style={{ margin: '0 0 6px', fontSize: '20px', fontWeight: 800, color: '#ffffff' }}>
+                Instant Executive Strategy Session Booking
+              </h3>
+              <p style={{ margin: 0, fontSize: '14px', color: '#cbd5e1', lineHeight: 1.5 }}>
+                Reserve a confirmed 45-minute architectural slot directly on our live calendar with TRUSTGRID.AI principal systems engineers, or submit the form below to receive a custom briefing invitation.
+              </p>
+            </div>
+            <a
+              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button button-primary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: '#1d5cff',
+                color: '#ffffff',
+                padding: '12px 24px',
+                borderRadius: '10px',
+                fontWeight: 700,
+                fontSize: '14px',
+                textDecoration: 'none',
+                boxShadow: '0 4px 14px rgba(29, 92, 255, 0.4)',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <Calendar size={18} />
+              <span>Schedule on Google Calendar</span>
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        )}
+
         <div className="diagnostic-grid-layout">
           {/* LEFT: INTRO & VALUE POINTS */}
           <div className="diagnostic-intro-col">
@@ -129,12 +187,25 @@ function DiagnosticContent() {
 
             <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)' }}>
               <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em' }}>
-                DIRECT CHANNELS
+                DIRECT CALENDAR &amp; CHANNELS
               </span>
               <p style={{ fontSize: '13px', color: '#64748b', margin: '6px 0 14px' }}>
-                Need immediate technical scoping? Connect directly via WhatsApp:
+                Need immediate calendar confirmation or technical scoping?
               </p>
-              <WhatsAppCTA inline label="Instant WhatsApp Consultation" />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <a
+                  href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button button-primary button-sm"
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '10px 14px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600, fontSize: '13px' }}
+                >
+                  <Calendar size={15} />
+                  <span>Open Google Calendar Schedule</span>
+                  <ArrowUpRight size={14} />
+                </a>
+                <WhatsAppCTA inline label="Instant WhatsApp Consultation" />
+              </div>
             </div>
           </div>
 

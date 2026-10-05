@@ -42,9 +42,9 @@ interface ChatMessage {
 
 const trustgridKnowledge = [
   {
-    keywords: ['strategy session', 'strategy', 'executive briefing', 'architect session', 'consultation', 'talk to architect', 'speak with architect', 'meeting', 'book session'],
+    keywords: ['strategy session', 'strategy', 'executive briefing', 'architect session', 'consultation', 'talk to architect', 'speak with architect', 'meeting', 'book session', 'calendar'],
     offering: 'Executive Strategy Session',
-    response: 'An Executive Strategy Session is a focused 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.',
+    response: 'An Executive Strategy Session is a focused 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap. You can schedule immediately on our live Google Calendar or request an executive agenda.',
     followUpQuestion: 'Would you like to schedule a dedicated 45-minute Strategy Session with our principal engineering team?',
     pageLink: { label: 'Book Executive Strategy Session (45-Min)', href: '/book-ai-diagnostic?type=strategy-session' }
   },
@@ -280,6 +280,8 @@ export function AIArchitectChatbot() {
   const handleQuickAction = (action: string) => {
     if (action === 'book_strategy') {
       window.location.href = '/book-ai-diagnostic?type=strategy-session'
+    } else if (action === 'schedule_calendar') {
+      window.open('https://calendar.app.google/voXXRkbgVuuft3fz6', '_blank')
     } else if (action === 'contact') {
       window.location.href = '/contact'
     } else if (action === 'diagnostic') {
