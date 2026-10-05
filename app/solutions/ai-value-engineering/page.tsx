@@ -488,13 +488,307 @@ const engagementModels: EngagementModel[] = [
   }
 ]
 
+// ==========================================
+// 7. DATA: PART 1 — 10 INDUSTRIAL VERTICALS (tab1_part1.txt)
+// ==========================================
+interface IndustrialCompendiumItem {
+  id: string
+  name: string
+  scope: string
+  technologies: string[]
+  useCase: string
+  provenYield: string
+}
+
+const industrialCompendium: IndustrialCompendiumItem[] = [
+  {
+    id: 'auto',
+    name: 'Automotive & Tier-1 Suppliers',
+    scope: 'Press shop, robotic welding, paint finish, powertrain assembly & warranty tracking',
+    technologies: ['High-speed VLM optical inspection', 'Acoustic resonance testing', 'Blockchain warranty passports'],
+    useCase: 'Predictive weld spatter and seam defect classification on body-in-white (BIW) lines. Autonomous closed loop adjusts weld gun amperage and clamping pressure in <8ms.',
+    provenYield: '68% defect reduction · $4.2M scrap savings · 100% weld traceability'
+  },
+  {
+    id: 'heavy',
+    name: 'Heavy Machinery & Industrial Equipment',
+    scope: 'Castings defect tomography, hydraulic pressure loss diagnostics, CNC spindle vibration',
+    technologies: ['IIoT multi-axis vibration sensors', 'Edge thermal imaging', 'Physics-informed digital twins'],
+    useCase: 'Continuous spindle vibration FFT spectral decomposition on 5-axis gantry mills. AI agents detect sub-micron bearing races and schedule autonomous tool-offset recalibration.',
+    provenYield: '84% unplanned downtime eliminated · 32% tool life extension'
+  },
+  {
+    id: 'pharma',
+    name: 'Pharmaceuticals & Life Sciences',
+    scope: 'Cleanroom environmental monitoring, bioreactor batch yield, sterile vial fill-finish',
+    technologies: ['21 CFR Part 11 compliant audit agents', 'Spectroscopic PAT sensors', 'Autonomous environmental loops'],
+    useCase: 'Real-time multivariate bioreactor dissolved oxygen and pH trajectory control using multi-model agentic reasoning to avoid batch contamination and premature cell lysis.',
+    provenYield: '99.4% batch right-first-time · 4.8x faster deviation closure'
+  },
+  {
+    id: 'semi',
+    name: 'Semiconductor & Electronics',
+    scope: 'Wafer fab defect classification, wire-bonding shear testing, SMT pick-and-place accuracy',
+    technologies: ['Sub-nanometer scanning electron microscopy AI', 'High-frequency acoustic sensors', 'Yield prediction DAGs'],
+    useCase: 'Automated die defect spatial pattern recognition on 300mm silicon wafers. Triangulates particle excursion root causes to specific gas valves in photolithography tracks.',
+    provenYield: '1.4% absolute yield lift · $14M annual gross margin expansion'
+  },
+  {
+    id: 'aero',
+    name: 'Aerospace & Defense',
+    scope: 'AS9100 composite layup inspection, titanium milling chatter, turbine blade thermal barrier',
+    technologies: ['Laser profilometry', 'Cryptographic CBOM lineage', 'Autonomous MRO inspection copilots'],
+    useCase: 'Automated ultrasonic C-scan composite delamination detection on carbon-fiber wing spars. Validates structural margins against FAA / EASA airworthiness models.',
+    provenYield: '92% reduction in non-conformance quarantine time · 100% digital thread'
+  },
+  {
+    id: 'cpg',
+    name: 'Consumer Packaged Goods (CPG)',
+    scope: 'High-speed bottling, packaging seal thermography, SMED automated changeovers',
+    technologies: ['High-speed Line-scan cameras', 'Edge vision inference', 'Automated SMED sequence assistants'],
+    useCase: '1,200 bottles/minute closure torque and foil-seal hermeticity inspection. Detects micro-pinholes using thermal decay profiling, rejecting defective packs without line halts.',
+    provenYield: '0.002% false-reject rate · 28-minute reduction in changeover times'
+  },
+  {
+    id: 'mining',
+    name: 'Mining, Metals & Materials',
+    scope: 'Autonomous haulage dispatch, primary crusher throughput, flotation froth visual analytics',
+    technologies: ['Millimeter-wave radar', 'Froth bubble segmentation VLM', 'Belt conveyor ultrasonic scans'],
+    useCase: 'Primary gyratory crusher mantle wear and ore fragmentation monitoring. AI dynamically balances feeder rates based on rock hardness telemetry to maintain optimal cavity fill.',
+    provenYield: '14% crusher throughput increase · $8.6M annualized recovery yield'
+  },
+  {
+    id: 'energy',
+    name: 'Energy, Utilities & Power',
+    scope: 'Substation thermal runaway warning, wind turbine blade vibration, grid transmission loss',
+    technologies: ['Long-wave infrared (LWIR) thermography', 'Acoustic edge sensors', 'Predictive heat-rate models'],
+    useCase: 'Acoustic emission and vibration harmonics on combined-cycle gas turbine rotor blades. Forecasts micro-fissure propagation 400 operating hours prior to critical failure.',
+    provenYield: '$6.5M avoided catastrophic turbine trip · 2.1% heat-rate efficiency gain'
+  },
+  {
+    id: 'logistics',
+    name: 'Logistics, Warehousing & Fleet',
+    scope: 'Autonomous cross-dock routing, cold-chain temperature excursion alerts, pallet density',
+    technologies: ['BLE beacon mesh', 'Pallet optical volumetric scanners', 'Multi-agent dispatch DAGs'],
+    useCase: 'Autonomous cross-dock dispatch coordinating inbound reefers with cold-storage berths. Re-routes perishable shipments dynamically based on real-time transit telemetry.',
+    provenYield: '41% dwell time compression · 0% spoilage on temperature-sensitive cargo'
+  },
+  {
+    id: 'tooling',
+    name: 'Precision Tooling & Fabrication',
+    scope: 'Progressive stamping die wear tracking, EDM micro-crack detection, coolant lifecycle',
+    technologies: ['Tonnage monitor strain gauges', 'Die acoustic sensors', 'Optical tool-wear microscopes'],
+    useCase: 'Progressive die tonnage signature curve monitoring. Microsecond anomaly detection triggers press ram micro-reversals to prevent catastrophic tool smash and burr formation.',
+    provenYield: '99.8% die smash prevention · 4.5x die service life before re-grind'
+  }
+]
+
+// ==========================================
+// 8. DATA: PART 1 — TECHNOLOGY ENABLERS MATRIX (tab1_part1.txt)
+// ==========================================
+interface TechEnablerItem {
+  tech: string
+  role: string
+  tier: string
+  benefit: string
+}
+
+const technologyStackEnablers: TechEnablerItem[] = [
+  {
+    tech: 'RFID (Passive / Active / BLE)',
+    role: 'Item-level identification, automated WIP tracking, gate-reader dispatch',
+    tier: 'Tier 0–1 (Deterministic read & rule trigger)',
+    benefit: 'Eliminates manual barcode scanning and enables continuous physical-to-digital inventory state synchronization.'
+  },
+  {
+    tech: 'Industrial IoT (IIoT) Sensors',
+    role: 'High-frequency condition monitoring (vibration, temp, pressure, current, acoustics)',
+    tier: 'Tier 1–2 (SPC & classical ML anomaly detection)',
+    benefit: 'Streams sub-second physical machine telemetry directly into agent feature stores without human polling.'
+  },
+  {
+    tech: 'WiFi 6 / 6E Industrial Routers & Edge Gateways',
+    role: 'Low-latency shop-floor connectivity, device orchestration, on-prem edge relay',
+    tier: 'Infrastructure Layer (Enables all Tiers)',
+    benefit: 'Guarantees sub-5ms deterministic wireless latency across dense metal-shielded industrial environments.'
+  },
+  {
+    tech: 'Industrial Networking (OPC-UA / MQTT / TSN)',
+    role: 'Time-Sensitive Networking, machine-to-machine and machine-to-agent telemetry buses',
+    tier: 'Infrastructure Layer (Zero packet loss)',
+    benefit: 'Standardizes multi-vendor PLC / SCADA / DCS protocols into open semantic event streams.'
+  },
+  {
+    tech: 'Video Analytics & Vision-Language Models (VLM)',
+    role: 'Visual defect detection, operator safety compliance, multi-camera spatial fusion',
+    tier: 'Tier 2–3 (Vision models) & Tier 4 (VLM reasoning)',
+    benefit: 'Replaces human visual fatigue with 100% automated optical inspection running at line speed.'
+  },
+  {
+    tech: 'Blockchain & Distributed Ledger',
+    role: 'Immutable audit trails, supplier provenance, digital product passports, smart contracts',
+    tier: 'Tier 4 (Validator & critic) & Governance Layer',
+    benefit: 'Provides tamper-proof legal and regulatory verification for mission-critical parts and warranty claims.'
+  },
+  {
+    tech: 'Physics + Data Hybrid Digital Twins',
+    role: 'What-if constraint simulation, predictive maintenance rehearsal, stress testing',
+    tier: 'Tier 3–4 (Simulation before action)',
+    benefit: 'Validates operational changes virtually in milliseconds before granting physical agent execution rights.'
+  },
+  {
+    tech: 'Agentic AI (Multi-Agent Fleets)',
+    role: 'Autonomous sensing, decision routing, tool execution, knowledge compounding',
+    tier: 'Tier 2–5 (Multi-agent orchestration)',
+    benefit: 'Performs continuous root-cause analysis, coordinates ERP/MES interventions, and permanently guards savings.'
+  }
+]
+
+// ==========================================
+// 9. DATA: PART 3 — ONE-PAGE OPERATING SYSTEM: 7-STEP METHOD (tab3_part3.txt)
+// ==========================================
+interface HandbookStep {
+  step: string
+  name: string
+  discipline: string
+  action: string
+  deliverable: string
+}
+
+const handbookSteps: HandbookStep[] = [
+  {
+    step: '01',
+    name: 'CHOOSE THE CONSTRAINT',
+    discipline: 'Theory of Constraints + Critical Chain (TOC/CCPM)',
+    action: 'Locate the single machine, process, or decision bottleneck that caps overall enterprise cash flow.',
+    deliverable: 'Certified Constraint Map & Throughput Buffer Diagnostic'
+  },
+  {
+    step: '02',
+    name: 'QUANTIFY THE WASTE',
+    discipline: 'Lean Science (DOWNTIME Waste Taxonomy)',
+    action: 'Measure the eight forms of industrial waste (Defects, Overproduction, Waiting, Non-utilized talent, Transportation, Inventory, Motion, Extra-processing).',
+    deliverable: 'Empirical DOWNTIME Waste Ledger & Dollarized Value Loss Map'
+  },
+  {
+    step: '03',
+    name: 'PROVE THE FIX',
+    discipline: 'Six Sigma (SPC, MSA, Process Capability, DMAIC)',
+    action: 'Eliminate anecdotal debates using statistical hypothesis testing, capability indices (Cp/Cpk), and difference-in-differences causal attribution.',
+    deliverable: 'Statistical Proof Dossier & Measurement System Analysis (MSA)'
+  },
+  {
+    step: '04',
+    name: 'STABILISE THE FLOW',
+    discipline: 'Toyota Production System (Standard Work, Jidoka, Pull, Andon, Poka-Yoke)',
+    action: 'Level production with Heijunka, mistake-proof tool calls with digital Poka-Yoke, and autonomate line halts via AI Andon signals.',
+    deliverable: 'Living Standard Work Model & Autonomous Jidoka Control Rules'
+  },
+  {
+    step: '05',
+    name: 'EARN EVERY FUNCTION',
+    discipline: 'Classical Value Engineering (FAST, Cheapest Sufficient Method)',
+    action: 'Price each discrete verb–noun function against its Should-Cost baseline. Eliminate any cost that does not contribute to essential function.',
+    deliverable: 'Enterprise Function-Cost Ledger & Certified Should-Cost Basis'
+  },
+  {
+    step: '06',
+    name: 'EXECUTE WITH AI',
+    discipline: 'Multi-Model & Agentic AI Cascade + Risk-Band Governance',
+    action: 'Deploy specialized agent fleets running 24/7 across physical and financial systems, gated by deterministic human approval bands.',
+    deliverable: 'Autonomous Agent Fleet Deployment & Risk Boundary Enforcement'
+  },
+  {
+    step: '07',
+    name: 'COMPOUND THE VALUE',
+    discipline: 'Continuous Assessment, Re-mapping & Governance',
+    action: 'Re-map constraints dynamically as bottlenecks shift. Reinvest verified operational savings into the next high-yield capability waterfall.',
+    deliverable: 'Annual Compounding Factor Audit (≥1.3x) & Board Value Ledger'
+  }
+]
+
+// ==========================================
+// 10. DATA: PART 3 — TIER 0 TO TIER 6 ARCHITECTURE (tab3_part3.txt)
+// ==========================================
+interface TierArchitectureItem {
+  tier: string
+  name: string
+  latency: string
+  technology: string
+  operationalRole: string
+  governance: string
+}
+
+const tierArchitecture: TierArchitectureItem[] = [
+  {
+    tier: 'Tier 0',
+    name: 'Deterministic Sensor & Signal Ingestion',
+    latency: '<1 millisecond',
+    technology: 'OPC-UA, RFID Readers, BLE Beacons, TSN, MQTT Brokers',
+    operationalRole: 'High-speed physical data acquisition from PLCs, machine encoders, smart tools, and environmental sensors without buffering loss.',
+    governance: 'Hardware-verified checksums & cryptographic time-stamping.'
+  },
+  {
+    tier: 'Tier 1',
+    name: 'Real-Time Statistical Process Control (SPC)',
+    latency: '1–10 milliseconds',
+    technology: 'Streaming SPC Engines, Nelson Rules, Western Electric Limits',
+    operationalRole: 'Automated out-of-control point detection, rule-based alarm dispatch, and microsecond machine interlock triggers.',
+    governance: 'Deterministic mathematical bounds; zero generative hallucination risk.'
+  },
+  {
+    tier: 'Tier 2',
+    name: 'Classical Machine Learning & Anomaly Forecasting',
+    latency: '50–200 milliseconds',
+    technology: 'Isolation Forests, Spectral FFT Decomposition, RUL Regressors',
+    operationalRole: 'Bearing vibration degradation forecasting, motor current signature analysis, and thermal drift trend projection.',
+    governance: 'Trained and validated against ISO 10816 machinery vibration standards.'
+  },
+  {
+    tier: 'Tier 3',
+    name: 'Vision-Language Models & Physics Digital Twins',
+    latency: '200ms – 1 second',
+    technology: 'Fine-tuned Visual Inspection Models (VLM), Physics Solvers',
+    operationalRole: 'Complex geometric defect recognition, optical character verification on parts, and dynamic fluid/thermal constraint simulation.',
+    governance: 'Dual-model cross-validation with synthetic edge case calibration.'
+  },
+  {
+    tier: 'Tier 4',
+    name: 'Multi-Agent Orchestration & Problem-Solving DAGs',
+    latency: '1–5 seconds',
+    technology: 'Autonomous Agent Fleets, Tool Calling, Domain Reasoning Connectors',
+    operationalRole: 'Decomposes operational anomalies into root-cause trees, queries ERP inventory and MES schedules, and proposes optimal corrective work orders.',
+    governance: 'Cryptographic execution ledger; tool sandboxing & RBAC constraints.'
+  },
+  {
+    tier: 'Tier 5',
+    name: 'Human-in-the-Loop Risk-Band Execution',
+    latency: 'Real-time to Scheduled',
+    technology: 'Deterministic Policy Enforcement, Mobile Andon App, Operator UI',
+    operationalRole: 'Routes proposed actions through three strict risk bands: Band 1 (Autonomous), Band 2 (Supervised with undo), Band 3 (Mandatory human co-signature).',
+    governance: 'SOX 404 & OSHA compliant audit trails signed with biometric/SSO keys.'
+  },
+  {
+    tier: 'Tier 6',
+    name: 'Compounding Enterprise Intelligence',
+    latency: 'Continuous / Periodic',
+    technology: 'Cross-Plant Knowledge Graph, Capital Reinvestment Allocators',
+    operationalRole: 'Aggregates lessons learned across multiple factories and global supply chains. Automatically tunes hyperparameters for subsequent waves.',
+    governance: 'Audited annually by corporate controllers; Board of Directors reporting.'
+  }
+]
+
 export default function AIValueEngineeringPage() {
   const [selectedStage, setSelectedStage] = useState<string>('function')
   const [activeLedgerIndustry, setActiveLedgerIndustry] = useState<string>('Mining & Heavy Operations')
   const [activeLever, setActiveLever] = useState<string>('cost')
+  const [activeCompendiumIndustry, setActiveCompendiumIndustry] = useState<string>('auto')
+  const [activeTier, setActiveTier] = useState<string>('Tier 0')
 
   const currentStageData = jobPlanStages.find((s) => s.id === selectedStage) || jobPlanStages[1]
   const filteredLedger = ledgerData.filter((item) => item.industry === activeLedgerIndustry)
+  const currentCompendium = industrialCompendium.find((item) => item.id === activeCompendiumIndustry) || industrialCompendium[0]
+  const currentTier = tierArchitecture.find((t) => t.tier === activeTier) || tierArchitecture[0]
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-blue-500 selection:text-white">
@@ -905,12 +1199,13 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 4: THE AI-VE JOB PLAN */}
       {/* ========================================================= */}
-      <section id="job-plan" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800">
+      <section id="part4-job-plan" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800 relative">
+        <span id="job-plan" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
               <Workflow size={12} className="text-cyan-400" />
-              04 / Signature Framework
+              04 / Signature Framework · Part 4
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               The AI-VE Job Plan
@@ -1003,7 +1298,8 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 5: FUNCTION-COST LEDGER (SIGNATURE FEATURE) */}
       {/* ========================================================= */}
-      <section id="function-cost-ledger" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+      <section id="part4-function-cost-ledger" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="function-cost-ledger" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200/80 text-blue-700 text-xs font-bold uppercase tracking-wider mb-3">
@@ -1110,12 +1406,12 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 6: THE PROVEN PORTFOLIO (SEVEN VALUE LEVERS) */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
+      <section id="part2-methodology-engine" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Boxes size={12} className="text-blue-600" />
-              05 / Operational Breadth
+              05 / Operational Breadth · Part 2
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Seven Value Levers. 40+ Proven Methodologies. One AI Execution Engine.
@@ -1205,12 +1501,12 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 7: FIVE VALUE CURRENCIES */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+      <section id="part2-value-currencies" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Coins size={12} className="text-blue-600" />
-              06 / Balance Sheet Proof
+              06 / Balance Sheet Proof · Part 2
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               How Companies Actually Receive Value
@@ -1275,12 +1571,12 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 8: FIVE-LAYER ENGINEERING MODEL */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800">
+      <section id="part2-five-layer-architecture" className="scroll-mt-28 py-16 sm:py-24 bg-slate-950 text-white border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-900 px-2.5 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
               <Layers3 size={12} className="text-cyan-400" />
-              07 / Architecture
+              07 / Architecture · Part 2
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               The Five-Layer Engineering Model
@@ -1348,6 +1644,348 @@ export default function AIValueEngineeringPage() {
                 Daily Tier 1–3 operational rhythm, automated Kata coaching, and enterprise capability graphs. Digital workers do not create value if frontline operators do not embrace and trust their execution.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* PART 3: THE LEAN AI VALUE ENGINEERING HANDBOOK (tab3_part3.txt) */}
+      {/* ========================================================= */}
+      <section id="part3-operating-system" className="scroll-mt-28 py-16 sm:py-24 bg-slate-900 text-white border-b border-slate-800 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header & Author Citation */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+            <div className="max-w-3xl">
+              <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-slate-800 px-3 py-1 rounded-md border border-cyan-500/40 inline-flex items-center gap-1.5 mb-3">
+                <SlidersHorizontal size={12} className="text-cyan-400" />
+                The Lean AI Value Engineering Handbook · Part 3
+              </span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                The One-Page Operating System: The 7-Step Method
+              </h2>
+              <p className="text-base sm:text-lg text-slate-300 mt-3 leading-relaxed">
+                Agentic AI, Multi-Model Intelligence, Lean Six Sigma, Theory of Constraints and the Toyota Production System for Industrial Operations.
+              </p>
+            </div>
+            {/* Book / Authors Badge */}
+            <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1 shrink-0 lg:max-w-xs">
+              <div className="text-cyan-400 font-bold uppercase tracking-wider text-[11px]">
+                Authored Practice Standard
+              </div>
+              <p className="font-semibold text-white">Dr. Balaji Venkatraman</p>
+              <p className="text-slate-400 text-[11px]">Director, AI Value Engineering, TRUSTGRID.AI</p>
+              <p className="font-semibold text-white pt-1">Dr. Seshadri Srinivasan</p>
+              <p className="text-slate-400 text-[11px]">Chief Technology Officer, TVS Sensing Solutions</p>
+            </div>
+          </div>
+
+          {/* 7-Step Method Process Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-3 mb-16">
+            {handbookSteps.map((step) => (
+              <div
+                key={step.step}
+                className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-cyan-500/50 transition-all flex flex-col justify-between group"
+              >
+                <div>
+                  <span className="text-xl font-black font-mono text-cyan-400 block mb-1">
+                    {step.step}
+                  </span>
+                  <h3 className="text-xs font-extrabold text-white uppercase tracking-tight mb-2">
+                    {step.name}
+                  </h3>
+                  <p className="text-[11px] text-cyan-300 font-semibold mb-2">
+                    {step.discipline}
+                  </p>
+                  <p className="text-[11px] text-slate-400 leading-relaxed mb-3">
+                    {step.action}
+                  </p>
+                </div>
+                <div className="pt-2 border-t border-slate-800/80 text-[10px] text-slate-400">
+                  <strong className="text-slate-300 block">Deliverable:</strong>
+                  <span>{step.deliverable}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Tier 0 to Tier 6 Architecture Section */}
+          <div id="part3-tier-architecture" className="scroll-mt-28 mb-16">
+            <div className="max-w-3xl mb-8">
+              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
+                MULTI-TIER INTELLIGENCE STACK
+              </span>
+              <h3 className="text-xl sm:text-3xl font-extrabold text-white">
+                Tier 0 to Tier 6 Operational Intelligence Architecture
+              </h3>
+              <p className="text-sm text-slate-300 mt-2">
+                From microsecond deterministic sensor reads on the factory floor to autonomous multi-agent reasoning and Board-level value realization.
+              </p>
+            </div>
+
+            {/* Interactive Tier Buttons */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-6">
+              {tierArchitecture.map((t) => (
+                <button
+                  key={t.tier}
+                  onClick={() => setActiveTier(t.tier)}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    activeTier === t.tier
+                      ? 'bg-cyan-950/80 border-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.25)]'
+                      : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                  }`}
+                >
+                  <span className="text-xs font-mono font-bold text-cyan-400 block mb-0.5">{t.tier}</span>
+                  <span className="text-xs font-extrabold truncate block">{t.name}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Selected Tier Details Panel */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/90 border border-slate-800 shadow-xl">
+              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
+                <div>
+                  <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block mb-1">
+                    {currentTier.tier} · Deep Dive
+                  </span>
+                  <h4 className="text-xl sm:text-2xl font-extrabold text-white">
+                    {currentTier.name}
+                  </h4>
+                  <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+                    {currentTier.operationalRole}
+                  </p>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs shrink-0">
+                  <span className="text-slate-400 uppercase tracking-wider block text-[10px] font-bold">Execution Latency</span>
+                  <span className="text-cyan-400 font-mono font-extrabold text-sm block">{currentTier.latency}</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-800/80 text-xs">
+                <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block mb-1">
+                    Activated Technology &amp; Protocols
+                  </span>
+                  <p className="text-slate-200 font-mono">{currentTier.technology}</p>
+                </div>
+                <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <span className="text-emerald-400 font-bold uppercase tracking-wider text-[10px] block mb-1">
+                    Governance &amp; Deterministic Boundary
+                  </span>
+                  <p className="text-slate-200">{currentTier.governance}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* DOWNTIME Waste Taxonomy & Risk Bands */}
+          <div id="part3-waste-governance" className="scroll-mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-800">
+            {/* DOWNTIME Waste */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
+              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
+                LEAN TAXONOMY
+              </span>
+              <h4 className="text-lg font-bold text-white mb-2">
+                DOWNTIME Waste Elimination Engine
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+                TrustGrid automates the identification and measurement of all eight classical Lean wastes across human and machine workflows:
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">D</span>Defects</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">O</span>Overproduction</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">W</span>Waiting</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">N</span>Non-utilized</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">T</span>Transport</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">I</span>Inventory</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">M</span>Motion</div>
+                <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">E</span>Extra-processing</div>
+              </div>
+            </div>
+
+            {/* Risk Bands */}
+            <div className="p-6 sm:p-8 rounded-2xl bg-slate-950/80 border border-slate-800">
+              <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-widest block mb-2">
+                GOVERNANCE SAFETY GATES
+              </span>
+              <h4 className="text-lg font-bold text-white mb-2">
+                Three-Band Human Risk-Gated Execution
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
+                No autonomous action exceeds its verified operating envelope without explicit deterministic approval gates:
+              </p>
+              <div className="space-y-2.5 text-xs">
+                <div className="p-3 rounded-lg bg-slate-900 border border-emerald-500/30 flex items-start gap-3">
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-400 font-mono font-bold text-[10px]">BAND 1</span>
+                  <div>
+                    <strong className="text-white block font-semibold">Autonomous Read &amp; Recommend</strong>
+                    <span className="text-slate-400">Low-risk telemetry gathering, anomaly flagging, and parameter suggestions.</span>
+                  </div>
+                </div>
+                <div className="p-3 rounded-lg bg-slate-900 border border-amber-500/30 flex items-start gap-3">
+                  <span className="px-2 py-0.5 rounded-md bg-amber-950 text-amber-400 font-mono font-bold text-[10px]">BAND 2</span>
+                  <div>
+                    <strong className="text-white block font-semibold">Supervised Execution with Undo Window</strong>
+                    <span className="text-slate-400">Automated machine offsets, inventory routing with a 5-minute operator rollback latch.</span>
+                  </div>
+                </div>
+                <div className="p-3 rounded-lg bg-slate-900 border border-rose-500/30 flex items-start gap-3">
+                  <span className="px-2 py-0.5 rounded-md bg-rose-950 text-rose-400 font-mono font-bold text-[10px]">BAND 3</span>
+                  <div>
+                    <strong className="text-white block font-semibold">Mandatory Dual-Human Sign-Off</strong>
+                    <span className="text-slate-400">High-consequence actions: line halts, safety resets, general ledger writes.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* PART 1: USE CASE COMPENDIUM & TECH STACK (tab1_part1.txt) */}
+      {/* ========================================================= */}
+      <section id="part1-use-cases" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
+              <Building2 size={12} className="text-blue-600" />
+              Use Case Compendium · Part 1
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              10 Industrial Verticals Compendium
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
+              Industrialized operational excellence across manufacturing, life sciences, process, and aerospace supply chains.
+            </p>
+          </div>
+
+          {/* Industry Vertical Selector Tabs */}
+          <div className="flex flex-wrap gap-2 mb-8">
+            {industrialCompendium.map((ind) => (
+              <button
+                key={ind.id}
+                onClick={() => setActiveCompendiumIndustry(ind.id)}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeCompendiumIndustry === ind.id
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
+              >
+                <span>{ind.name}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Industry Deep-Dive Card */}
+          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 shadow-sm mb-16">
+            <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-6">
+              <div>
+                <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-1">
+                  INDUSTRY VERTICAL · {currentCompendium.name}
+                </span>
+                <h3 className="text-2xl font-extrabold text-slate-900">
+                  {currentCompendium.name}
+                </h3>
+                <p className="text-sm text-slate-600 mt-1">
+                  <strong>Operational Scope:</strong> {currentCompendium.scope}
+                </p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs shrink-0 font-mono font-bold">
+                <span className="text-[10px] text-emerald-600 uppercase block font-sans">Proven Operational Impact</span>
+                <span>{currentCompendium.provenYield}</span>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-200">
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Autonomous Industrial Use Case
+                </h4>
+                <p className="text-sm text-slate-700 leading-relaxed bg-white p-4 rounded-xl border border-slate-200">
+                  {currentCompendium.useCase}
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Activated Technology Enablers
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {currentCompendium.technologies.map((t) => (
+                    <span
+                      key={t}
+                      className="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-800 text-xs font-semibold border border-blue-100 flex items-center gap-1.5"
+                    >
+                      <Cpu size={12} className="text-blue-600" />
+                      <span>{t}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Technology Enablers Matrix */}
+          <div id="part1-tech-stack" className="scroll-mt-28 mb-16">
+            <div className="max-w-3xl mb-8">
+              <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest block mb-2">
+                PHYSICAL TO DIGITAL ENABLERS
+              </span>
+              <h3 className="text-xl sm:text-3xl font-extrabold text-slate-900">
+                Technology Enablers Activated Across All Use Cases
+              </h3>
+              <p className="text-sm text-slate-600 mt-2">
+                Mapped to the handbook&apos;s Tier Architecture (Tier 0–6) and DOWNTIME waste taxonomy.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead className="bg-slate-100 border-b border-slate-200 text-slate-900 font-bold uppercase tracking-wider text-[11px]">
+                  <tr>
+                    <th className="py-4 px-6" style={{ width: '22%' }}>Technology</th>
+                    <th className="py-4 px-6" style={{ width: '32%' }}>Primary Operational Function</th>
+                    <th className="py-4 px-6" style={{ width: '20%' }}>Typical Tier Placement</th>
+                    <th className="py-4 px-6" style={{ width: '26%' }}>Enterprise Value Benefit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {technologyStackEnablers.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                      <td className="py-4 px-6 font-bold text-slate-900 flex items-center gap-2">
+                        <Cpu size={14} className="text-blue-600 shrink-0" />
+                        <span>{item.tech}</span>
+                      </td>
+                      <td className="py-4 px-6 text-slate-700">{item.role}</td>
+                      <td className="py-4 px-6 font-mono font-semibold text-blue-700 text-xs">{item.tier}</td>
+                      <td className="py-4 px-6 text-slate-600 text-xs">{item.benefit}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Edge Orchestration & Gateways Strip */}
+          <div id="part1-edge-orchestration" className="scroll-mt-28 p-8 rounded-2xl bg-gradient-to-r from-slate-900 to-slate-950 text-white border border-slate-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="max-w-2xl">
+              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">
+                SHOP-FLOOR LOW-LATENCY DETERMINISM
+              </span>
+              <h4 className="text-xl sm:text-2xl font-extrabold text-white mb-2">
+                Edge Gateways &amp; Autonomous Industrial Fleets
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                TrustGrid edge nodes operate on-premise within factory air-gaps, executing sub-5ms sensor-to-action control loops via TSN, OPC-UA, and ROS 2 without dependence on public cloud availability.
+              </p>
+            </div>
+            <a
+              href="#intake-form"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shrink-0 shadow-md"
+            >
+              <span>Request Edge Diagnostic</span>
+              <ArrowRight size={14} />
+            </a>
           </div>
         </div>
       </section>
@@ -1497,12 +2135,13 @@ export default function AIValueEngineeringPage() {
       {/* ========================================================= */}
       {/* SECTION 11: ENGAGEMENT JOURNEY & DIFFERENTIATION */}
       {/* ========================================================= */}
-      <section className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200">
+      <section id="part4-sprints-diagnostic" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">
+        <span id="acceleration-sprints" className="scroll-mt-28 -top-28 absolute block" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
               <Calendar size={12} className="text-blue-600" />
-              10 / Delivery Architecture
+              10 / Delivery Architecture · Part 4
             </span>
             <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               Enterprise Engagement Models

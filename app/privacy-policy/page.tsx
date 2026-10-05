@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { ShieldCheck, Mail, MapPin, Building2, Calendar, FileText, CheckCircle2, AlertTriangle, ArrowLeft } from 'lucide-react'
+import { ShieldCheck, Mail, MapPin, Building2, Calendar, CheckCircle2, AlertTriangle, ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Privacy Notice | TRUSTGRID.AI',
@@ -59,109 +59,9 @@ export default function PrivacyPolicyPage() {
 
         {/* CONTENT SECTION */}
         <section className="py-12 md:py-16 bg-slate-950 text-slate-300">
-          <div className="container mx-auto max-w-5xl px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-              
-              {/* SIDEBAR NAVIGATION (STICKY TABLE OF CONTENTS) */}
-              <aside className="lg:col-span-4 order-2 lg:order-1">
-                <div className="sticky top-28 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 backdrop-blur-xl">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-cyan-400" />
-                    Table of Contents
-                  </h3>
-                  <nav aria-label="Table of contents" className="space-y-1 text-xs">
-                    <a href="#company-entity" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      Corporate Information
-                    </a>
-                    <a href="#section-1" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      1. Data Controller and Contact
-                    </a>
-                    <a href="#section-2" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      2. Categories of Personal Data Processed
-                    </a>
-                    <a href="#section-3" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      3. Purposes of Processing and Lawful Bases
-                    </a>
-                    <a href="#section-4" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      4. Disclosure of Personal Data
-                    </a>
-                    <a href="#section-5" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      5. International Transfers
-                    </a>
-                    <a href="#section-6" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      6. Data Security
-                    </a>
-                    <a href="#section-7" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      7. Retention
-                    </a>
-                    <a href="#section-8" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      8. Data Principal Rights
-                    </a>
-                    <a href="#section-9" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      9. Cookies and Similar Technologies
-                    </a>
-                    <a href="#section-10" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      10. Children's Data
-                    </a>
-                    <a href="#section-11" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      11. Personal Data Breach
-                    </a>
-                    <a href="#section-12" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      12. AI-Specific Disclaimers and Safe Harbours
-                    </a>
-                    <a href="#section-13" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      13. Third-Party Services, Links and Content
-                    </a>
-                    <a href="#section-14" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      14. Limitation of Liability and General Disclaimers
-                    </a>
-                    <a href="#section-15" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      15. Changes to this Notice
-                    </a>
-                    <a href="#section-16" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      16. Governing Law and Jurisdiction
-                    </a>
-                    <a href="#section-17" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      17. Severability and Related Documents
-                    </a>
-                    <a href="#contact" className="block py-1 text-slate-300 hover:text-cyan-400 transition-colors">
-                      Contact Information
-                    </a>
-                  </nav>
-
-                  <div className="mt-6 pt-5 border-t border-slate-800 space-y-3 text-xs">
-                    <div className="text-slate-400">
-                      <span className="font-semibold text-slate-200">Corporate Identity</span>
-                      <p className="mt-0.5 text-[11px] text-slate-400">
-                        TRUSTGRID AI INNOVATIONS PRIVATE LIMITED
-                      </p>
-                      <p className="text-[11px] font-mono text-cyan-400">
-                        CIN: U72900KA2021PTC144782
-                      </p>
-                    </div>
-
-                    <div className="text-slate-400">
-                      <span className="font-semibold text-slate-200">Registered Office</span>
-                      <p className="mt-0.5 text-[11px] text-slate-400 leading-relaxed">
-                        235, 2nd &amp; 3rd Floor, 13th Cross Rd, Indiranagar, Bengaluru, Karnataka 560038, India
-                      </p>
-                    </div>
-
-                    <div className="pt-2">
-                      <a
-                        href="mailto:compliance@trustgrid.ai"
-                        className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-medium"
-                      >
-                        <Mail className="w-3.5 h-3.5" />
-                        compliance@trustgrid.ai
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </aside>
-
-              {/* MAIN BODY OF PRIVACY NOTICE */}
-              <article className="lg:col-span-8 order-1 lg:order-2 space-y-10 leading-relaxed text-slate-300">
+          <div className="container mx-auto max-w-4xl px-4 sm:px-6">
+            {/* MAIN BODY OF PRIVACY NOTICE */}
+            <article className="space-y-10 leading-relaxed text-slate-300">
                 
                 {/* PREAMBLE */}
                 <div id="company-entity" className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/40 p-6 md:p-8">
@@ -638,7 +538,6 @@ export default function PrivacyPolicyPage() {
                 </div>
 
               </article>
-            </div>
           </div>
         </section>
       </main>
