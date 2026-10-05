@@ -1078,6 +1078,78 @@ const tierArchitecture: TierArchitectureItem[] = [
   }
 ]
 
+// ==========================================
+// HERO SLIDER DATA
+// ==========================================
+interface HeroSlide {
+  eyebrow: string
+  headline: string
+  headlineAccent: string
+  subheadline: string
+  description: string
+  primaryCTA: { label: string; href: string }
+  secondaryCTA: { label: string; href: string }
+  accentColor: string
+  gradientFrom: string
+  gradientTo: string
+  metric: { value: string; label: string }
+}
+
+const heroSlides: HeroSlide[] = [
+  {
+    eyebrow: 'AI VALUE ENGINEERING  ·  ENTERPRISE VALUE OPERATING SYSTEM',
+    headline: 'Proven Methodologies.',
+    headlineAccent: 'Industrialized by AI.',
+    subheadline: 'Value That Compounds.',
+    description: 'TrustGrid runs the world\'s proven operational performance methodologies — Lean, Six Sigma, TOC, TPM — 4–10x faster through autonomous AI agent fleets, structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor year after year.',
+    primaryCTA: { label: 'Book Strategy Session', href: '#strategy-session-section' },
+    secondaryCTA: { label: 'Explore AI-VE Models', href: '#models-section' },
+    accentColor: 'from-blue-400 via-cyan-300 to-indigo-300',
+    gradientFrom: '#0f172a',
+    gradientTo: '#1e3a5f',
+    metric: { value: '3–10x', label: 'Engineered ROI' }
+  },
+  {
+    eyebrow: 'AI VALUE ENGINEERING  ·  FUNCTION-COST INTELLIGENCE',
+    headline: 'Every Function.',
+    headlineAccent: 'Every Dollar Mapped.',
+    subheadline: 'Finance-Certified. Permanently.',
+    description: 'Our Function-Cost Ledger decomposes every enterprise activity into discrete verb–noun functions — connecting each one to its empirical baseline cost versus Should-Cost. 100% of value claims co-signed by your Finance team before a dollar is banked.',
+    primaryCTA: { label: 'View Function-Cost Ledger', href: '#ledger-economics' },
+    secondaryCTA: { label: 'See the Job Plan', href: '#job-plan-stages' },
+    accentColor: 'from-cyan-400 via-teal-300 to-emerald-300',
+    gradientFrom: '#0f1f2a',
+    gradientTo: '#0f3330',
+    metric: { value: '100%', label: 'Finance-Certified Claims' }
+  },
+  {
+    eyebrow: 'AI VALUE ENGINEERING  ·  AUTONOMOUS AGENT FLEETS',
+    headline: 'AI Agent Fleets.',
+    headlineAccent: 'Working 24/7.',
+    subheadline: 'Not Pilots. Production.',
+    description: 'Specialized multi-agent fleets execute continuous Lean, Six Sigma, and Theory of Constraints workflows across your operations — gated by deterministic human approval risk bands, monitored by Value Guardian agents, and governed by corporate-grade audit trails.',
+    primaryCTA: { label: 'Explore Agent Architecture', href: '#tier-architecture' },
+    secondaryCTA: { label: 'See Methodology Engine', href: '#methodology-engine' },
+    accentColor: 'from-violet-400 via-purple-300 to-indigo-300',
+    gradientFrom: '#0f0f2a',
+    gradientTo: '#1e1a4f',
+    metric: { value: '4–10x', label: 'Execution Speed' }
+  },
+  {
+    eyebrow: 'AI VALUE ENGINEERING  ·  COMPOUNDING ENTERPRISE ADVANTAGE',
+    headline: 'Value Realized.',
+    headlineAccent: 'Value Defended.',
+    subheadline: 'Value Compounded — ≥1.3x/Year.',
+    description: 'TrustGrid\'s Value Realization Office tracks, certifies, and guards every improvement wave. As operational bottlenecks elevate, autonomous agents re-map the next constraint and self-fund continuous expansion — building an enterprise-wide compounding advantage.',
+    primaryCTA: { label: 'Explore Value Realization', href: '#governance-proof' },
+    secondaryCTA: { label: 'See Maturity Model', href: '#maturity-arc' },
+    accentColor: 'from-amber-400 via-orange-300 to-yellow-200',
+    gradientFrom: '#1a100a',
+    gradientTo: '#2a1800',
+    metric: { value: '≥1.3x', label: 'Annual Compounding Factor' }
+  }
+]
+
 export default function AIValueEngineeringPage() {
   // Interactive UI States
   const [activeEngineStep, setActiveEngineStep] = useState<number>(0)
@@ -1088,6 +1160,47 @@ export default function AIValueEngineeringPage() {
   const [activeCompendiumIndustry, setActiveCompendiumIndustry] = useState<string>('auto')
   const [activeTier, setActiveTier] = useState<string>('Tier 0')
   const [activeMaturityIndex, setActiveMaturityIndex] = useState<number>(0)
+
+  // Hero Slider State
+  const [heroIndex, setHeroIndex] = useState<number>(0)
+  const [heroAnimating, setHeroAnimating] = useState<boolean>(false)
+
+  const goToHeroSlide = useCallback((index: number) => {
+    if (heroAnimating) return
+    setHeroAnimating(true)
+    setTimeout(() => {
+      setHeroIndex(index)
+      setHeroAnimating(false)
+    }, 300)
+  }, [heroAnimating])
+
+  const heroNext = useCallback(() => {
+    goToHeroSlide((heroIndex + 1) % heroSlides.length)
+  }, [heroIndex, goToHeroSlide])
+
+  const heroPrev = useCallback(() => {
+    goToHeroSlide((heroIndex - 1 + heroSlides.length) % heroSlides.length)
+  }, [heroIndex, goToHeroSlide])
+
+  // Auto-advance hero slider every 6 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroSlides.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [])
+
+  // Keyboard navigation for hero
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') heroPrev()
+      if (e.key === 'ArrowRight') heroNext()
+    }
+    window.addEventListener('keydown', handler)
+    return () => window.removeEventListener('keydown', handler)
+  }, [heroPrev, heroNext])
+
+  const currentHero = heroSlides[heroIndex]
 
   // Dedicated Strategy Session Form States (ISI Security clean corporate model)
   const [formFullName, setFormFullName] = useState('')
@@ -1173,102 +1286,149 @@ export default function AIValueEngineeringPage() {
       <SiteHeader />
 
       {/* ========================================================= */}
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SLIDER — ISI SECURITY STYLE FULL-SCREEN */}
       {/* ========================================================= */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-slate-950 border-b border-slate-800">
-        <HeroCanvas />
+      <section
+        className="relative min-h-screen flex flex-col overflow-hidden"
+        style={{ background: `linear-gradient(135deg, ${currentHero.gradientFrom} 0%, ${currentHero.gradientTo} 100%)` }}
+      >
+        {/* Animated mesh background */}
+        <div className="absolute inset-0 z-0">
+          <HeroCanvas />
+          {/* Diagonal stripe overlay — ISI Security pattern */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 60px)'
+            }}
+          />
+          {/* Bottom gradient for stat card readability */}
+          <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-slate-950/80 to-transparent" />
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-4xl">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-blue-500/40 text-blue-300 text-xs font-semibold tracking-wider uppercase mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(59,130,246,0.2)]">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-400 shadow-[0_0_8px_#3b82f6]"></span>
-              </span>
-              <span>AI VALUE ENGINEERING &amp; ACCELERATION</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-300 font-medium">Enterprise Value Operating System</span>
-            </div>
+        {/* SLIDE CONTENT — centered vertically with top padding for nav */}
+        <div className="relative z-10 flex-1 flex flex-col justify-center pt-32 pb-24">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div
+              className="transition-all duration-500"
+              style={{ opacity: heroAnimating ? 0 : 1, transform: heroAnimating ? 'translateY(12px)' : 'translateY(0)' }}
+            >
+              {/* Eyebrow tag */}
+              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/20 bg-white/8 backdrop-blur-sm text-white/70 text-xs font-semibold tracking-widest uppercase mb-8">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-60"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                </span>
+                {currentHero.eyebrow}
+              </div>
 
-            {/* Primary Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12] mb-6">
-              Proven Methodologies.{' '}
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-300 bg-clip-text text-transparent">
-                Industrialized by AI.
-              </span>{' '}
-              Value That Compounds.
-            </h1>
+              {/* Main headline — large, bold, ISI-style split */}
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] mb-5 max-w-5xl">
+                {currentHero.headline}{' '}
+                <span className={`bg-gradient-to-r ${currentHero.accentColor} bg-clip-text text-transparent`}>
+                  {currentHero.headlineAccent}
+                </span>
+              </h1>
 
-            {/* Supporting Copy */}
-            <div className="text-base sm:text-lg text-slate-300 leading-relaxed font-normal mb-8 space-y-4 max-w-3xl">
-              <p>
-                <strong className="text-white font-semibold">Lean saved Toyota.</strong> Six Sigma saved Motorola and GE. Theory of Constraints, TPM, Hoshin Kanri, and classical Value Engineering built entire industrial legends. These operational sciences are proven — what fails is their traditional execution economics: too slow, too human-bottlenecked, and gone the day consultants pack their bags.
+              {/* Sub-headline */}
+              <p className="text-xl sm:text-2xl font-medium text-white/60 mb-6 tracking-wide">
+                {currentHero.subheadline}
               </p>
-              <p>
-                TrustGrid fixes the execution, not the method. AI agent fleets run the world&apos;s proven operational performance methodologies <strong className="text-white font-semibold">4–10x faster, 24/7</strong>, across your entire enterprise — structured through the 70-year-old Value Engineering Job Plan, certified by your Finance function, and compounding at a measured factor year after year.
-              </p>
-              <p className="text-blue-300 font-medium text-sm sm:text-base border-l-2 border-blue-500 pl-3">
-                We don&apos;t invent new ways to create value. We industrialize the proven ones — permanently.
-              </p>
-            </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-4 mb-14">
-              <a
-                href="#strategy-session-section"
-                onClick={() => trackCTA('Book Strategy Session', 'hero', '#strategy-session-section')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_35px_rgba(59,130,246,0.5)] hover:-translate-y-0.5 transition-all"
-              >
-                <Sparkles size={16} />
-                <span>Book Strategy Session</span>
-              </a>
-              <a
-                href="#models-section"
-                onClick={() => trackCTA('Explore AI-VE Models', 'hero', '#models-section')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:border-blue-500/50 backdrop-blur-md shadow-xs hover:-translate-y-0.5 transition-all"
-              >
-                <span>Explore AI-VE Models</span>
-                <ChevronDown size={16} />
-              </a>
-              <a
-                href="#ledger-economics"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-400 hover:text-cyan-300 font-semibold text-sm transition-colors"
-              >
-                <span>Function-Cost Ledger</span>
-                <ArrowRight size={15} />
-              </a>
+              {/* Description */}
+              <p className="text-base sm:text-lg text-white/55 leading-relaxed max-w-3xl mb-10 font-normal">
+                {currentHero.description}
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href={currentHero.primaryCTA.href}
+                  onClick={() => trackCTA(currentHero.primaryCTA.label, 'hero_slider', currentHero.primaryCTA.href)}
+                  className={`inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-gradient-to-r ${currentHero.accentColor} text-slate-900 font-bold text-sm shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)] hover:-translate-y-0.5 transition-all`}
+                >
+                  <Sparkles size={16} />
+                  {currentHero.primaryCTA.label}
+                </a>
+                <a
+                  href={currentHero.secondaryCTA.href}
+                  onClick={() => trackCTA(currentHero.secondaryCTA.label, 'hero_slider', currentHero.secondaryCTA.href)}
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/20 hover:border-white/40 backdrop-blur-sm transition-all"
+                >
+                  {currentHero.secondaryCTA.label}
+                  <ArrowRight size={15} />
+                </a>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* ========================================================= */}
-          {/* 2. STATS SECTION */}
-          {/* ========================================================= */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t border-slate-800/80">
-            <div className="relative p-5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-blue-500/40 transition-all overflow-hidden group">
-              <BorderBeam size={100} duration={8} colorFrom="#38bdf8" colorTo="#3b82f6" />
-              <span className="text-2xl sm:text-4xl font-extrabold text-blue-400 block mb-1 tracking-tight">3–10x</span>
-              <span className="text-xs font-bold text-slate-200 uppercase tracking-wider block">ROI on Initiatives</span>
-              <span className="text-[11px] text-slate-400 mt-1 block">P&amp;L-engineered return</span>
-            </div>
+        {/* SLIDE NAVIGATION — bottom bar (ISI style) */}
+        <div className="relative z-10 border-t border-white/10 bg-black/25 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between py-4">
 
-            <div className="relative p-5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-cyan-500/40 transition-all overflow-hidden group">
-              <span className="text-2xl sm:text-4xl font-extrabold text-cyan-400 block mb-1 tracking-tight">4–10x</span>
-              <span className="text-xs font-bold text-slate-200 uppercase tracking-wider block">Execution Speed</span>
-              <span className="text-[11px] text-slate-400 mt-1 block">Accelerated methodology cycle</span>
-            </div>
+              {/* Dot indicators */}
+              <div className="flex items-center gap-3">
+                {heroSlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToHeroSlide(idx)}
+                    aria-label={`Go to slide ${idx + 1}`}
+                    className={`transition-all duration-300 rounded-full ${
+                      idx === heroIndex
+                        ? 'w-8 h-2.5 bg-white'
+                        : 'w-2.5 h-2.5 bg-white/30 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
+              </div>
 
-            <div className="relative p-5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-emerald-500/40 transition-all overflow-hidden group">
-              <span className="text-2xl sm:text-4xl font-extrabold text-emerald-400 block mb-1 tracking-tight">100%</span>
-              <span className="text-xs font-bold text-slate-200 uppercase tracking-wider block">Finance-Certified</span>
-              <span className="text-[11px] text-slate-400 mt-1 block">Co-signed value claims</span>
-            </div>
+              {/* Slide counter */}
+              <span className="text-xs font-mono text-white/40 hidden sm:block">
+                {String(heroIndex + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
+              </span>
 
-            <div className="relative p-5 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-purple-500/40 transition-all overflow-hidden group">
-              <span className="text-2xl sm:text-4xl font-extrabold text-purple-400 block mb-1 tracking-tight">≥1.3x</span>
-              <span className="text-xs font-bold text-slate-200 uppercase tracking-wider block">Compounding Factor</span>
-              <span className="text-[11px] text-slate-400 mt-1 block">Measured annual advantage</span>
+              {/* Prev / Next arrows */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={heroPrev}
+                  aria-label="Previous slide"
+                  className="w-10 h-10 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all hover:scale-105"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+                <button
+                  onClick={heroNext}
+                  aria-label="Next slide"
+                  className="w-10 h-10 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all hover:scale-105"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
+      {/* 2. STATS BAR — Immediately below hero */}
+      {/* ========================================================= */}
+      <section className="bg-slate-950 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-0 divide-x divide-slate-800/60">
+            {[
+              { value: '3–10x', label: 'ROI on Initiatives', sub: 'P&L-engineered return', color: 'text-blue-400' },
+              { value: '4–10x', label: 'Execution Speed', sub: 'Accelerated methodology cycle', color: 'text-cyan-400' },
+              { value: '100%', label: 'Finance-Certified', sub: 'Co-signed value claims', color: 'text-emerald-400' },
+              { value: '≥1.3x', label: 'Compounding Factor', sub: 'Measured annual advantage', color: 'text-purple-400' },
+            ].map((stat) => (
+              <div key={stat.label} className="p-6 sm:p-8 flex flex-col justify-center hover:bg-slate-900/50 transition-colors">
+                <span className={`text-3xl sm:text-4xl font-black tracking-tight ${stat.color} mb-0.5`}>{stat.value}</span>
+                <span className="text-xs font-bold text-white uppercase tracking-widest mb-0.5">{stat.label}</span>
+                <span className="text-[11px] text-slate-500">{stat.sub}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
