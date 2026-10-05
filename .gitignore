@@ -22,3 +22,6 @@ data/
 *.db
 *.db-wal
 *.db-shm
+tab*.txt
+doc_export.txt
+Lean-Ai-Value-EngineeringVx1.html
