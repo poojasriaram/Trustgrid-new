@@ -188,7 +188,7 @@ export const openInnovationInitiatives = [
       "Fast-track hiring into TrustGrid Labs"
     ],
     linkText: "Sponsor or Join Next Hackathon",
-    url: "/book-ai-diagnostic",
+    url: "/book-ai-diagnostic#diagnostic-form-section",
     isExternal: false
   },
   {
@@ -201,7 +201,7 @@ export const openInnovationInitiatives = [
       "Zero-Trust & Quantum Security Researchers"
     ],
     linkText: "Explore Open Engineering Roles",
-    url: "/book-ai-diagnostic",
+    url: "/book-ai-diagnostic#diagnostic-form-section",
     isExternal: false
   }
 ]
@@ -282,5 +282,5 @@ export const aboutNavMenu = [
   { label: "Global Presence", href: "/about#presence" },
   { label: "Case Studies", href: "/about#case-studies" },
   { label: "Insights & Research", href: "/about#insights" },
-  { label: "Book AI Diagnostic", href: "/book-ai-diagnostic" }
+  { label: "Book AI Diagnostic", href: "/book-ai-diagnostic#diagnostic-form-section" }
 ]

@@ -483,7 +483,7 @@ const commonFoundationMenuItems = [
   },
   {
     label: 'Book Your AI Diagnostic',
-    href: '/book-ai-diagnostic',
+    href: '/book-ai-diagnostic#diagnostic-form-section',
     icon: ArrowUpRight,
     desc: 'Executive technical & financial evaluation of enterprise AI readiness'
   }
@@ -910,7 +910,7 @@ export function SiteHeader() {
                   <span>Full-stack engineering accountability from power delivery to token delivery</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-infra-engineering"
+                  href="/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1003,7 +1003,7 @@ export function SiteHeader() {
                   <span>Governed AgentOps, continuous evaluation & multi-agent swarms</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-agentic-factory"
+                  href="/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1096,7 +1096,7 @@ export function SiteHeader() {
                   <span>Rail-optimized Dragonfly+ topologies & autonomous NOC self-healing</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-networking"
+                  href="/book-ai-diagnostic?solution=ai-networking#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1189,7 +1189,7 @@ export function SiteHeader() {
                   <span>Air-gapped defense, prompt firewalls & 24/7 Managed AI SOC</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe"
+                  href="/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1285,7 +1285,7 @@ export function SiteHeader() {
                   <span>Throughput accounting, TOC & CFO consensus canvases</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-value-engineering"
+                  href="/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1377,7 +1377,7 @@ export function SiteHeader() {
                   <span>Executive technical & financial evaluation of enterprise AI readiness</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic"
+                  href="/book-ai-diagnostic#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >

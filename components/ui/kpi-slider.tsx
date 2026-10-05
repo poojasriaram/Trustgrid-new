@@ -195,7 +195,7 @@ export function KPISlider() {
             </div>
 
             <div className="kpi-action-row">
-              <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
                 <span>Audit Your Organization&apos;s Baseline</span>
                 <ArrowUpRight size={14} />
               </Link>

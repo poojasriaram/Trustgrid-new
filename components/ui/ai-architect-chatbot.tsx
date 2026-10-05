@@ -46,7 +46,7 @@ const trustgridKnowledge = [
     offering: 'Executive Strategy Session',
     response: 'An Executive Strategy Session is a focused 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap. You can schedule immediately on our live Google Calendar or request an executive agenda.',
     followUpQuestion: 'Would you like to schedule a dedicated 45-minute Strategy Session with our principal engineering team?',
-    pageLink: { label: 'Book Executive Strategy Session (45-Min)', href: '/book-ai-diagnostic?type=strategy-session' }
+    pageLink: { label: 'Book Executive Strategy Session (45-Min)', href: '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section' }
   },
   {
     keywords: ['infra', 'infrastructure', 'gpu', 'data center', 'datacenter', 'liquid cooling', 'blackwell', 'h100', 'h200', 'cluster', 'pue', 'compute', 'utilization', 'substation', 'subsea'],
@@ -95,7 +95,7 @@ const trustgridKnowledge = [
     offering: 'Executive AI Diagnostic',
     response: 'The TRUSTGRID.AI Executive Diagnostic is a structured 2–4 week technical and financial evaluation conducted by senior AI architects. We evaluate compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced 90-day production roadmap.',
     followUpQuestion: 'Would you like to start the Executive Diagnostic scoping form for your organization?',
-    pageLink: { label: 'Start Executive Diagnostic Form', href: '/book-ai-diagnostic' }
+    pageLink: { label: 'Start Executive Diagnostic Form', href: '/book-ai-diagnostic#diagnostic-form-section' }
   },
   {
     keywords: ['contact', 'email', 'phone', 'whatsapp', 'reach out', 'call', 'office', 'headquarters', 'inquiry', 'message'],
@@ -123,7 +123,7 @@ const trustgridKnowledge = [
     offering: 'Engagement & Advisory',
     response: 'TRUSTGRID.AI engagements range from Fixed-Scope AI Diagnostics (2–4 weeks) and 90-Day Rapid Value Sprints (12 weeks) to Turnkey Design & Build (16–32 weeks) and Enterprise Operating Partnerships. Would you like to connect with a principal architect to discuss your scope?',
     followUpQuestion: 'Would you like to schedule an Executive Strategy Session or submit an initial project scope?',
-    pageLink: { label: 'Book Strategy Session', href: '/book-ai-diagnostic?type=strategy-session' }
+    pageLink: { label: 'Book Strategy Session', href: '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section' }
   }
 ]
 
@@ -279,7 +279,7 @@ export function AIArchitectChatbot() {
 
   const handleQuickAction = (action: string) => {
     if (action === 'book_strategy') {
-      window.location.href = '/book-ai-diagnostic?type=strategy-session'
+      window.location.href = '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section'
     } else if (action === 'schedule_calendar') {
       window.open('https://calendar.app.google/voXXRkbgVuuft3fz6', '_blank')
     } else if (action === 'contact') {

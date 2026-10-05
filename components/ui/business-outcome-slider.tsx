@@ -269,7 +269,7 @@ export function BusinessOutcomeSlider({ pillars = defaultOutcomePillars }: { pil
 
             {/* Actions & Navigation */}
             <div className="outcome-footer-actions">
-              <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
                 <span>Evaluate {current.title} Posture</span>
                 <ArrowUpRight size={15} />
               </Link>

@@ -182,13 +182,13 @@ export default async function SolutionDetailPage({
             <p className="solution-hero-copy">{solution.heroStatement}</p>
 
             <div className="solution-hero-actions">
-              <Link
+              <a
                 className="button button-primary"
-                href={`/book-ai-diagnostic?solution=${solution.slug}`}
+                href="#intake-form"
               >
                 <span>Book {solution.shortTitle} Diagnostic</span>
                 <ArrowUpRight size={17} />
-              </Link>
+              </a>
               <WhatsAppCTA inline label="Discuss on WhatsApp" />
               <a className="button button-ghost" href="#architecture">
                 <span>View Architecture Blueprint</span>
@@ -271,13 +271,13 @@ export default async function SolutionDetailPage({
               <p>{solution.overview}</p>
             </div>
 
-            <Link
+            <a
               className="inline-diagnostic-link"
-              href={`/book-ai-diagnostic?solution=${solution.slug}`}
+              href="#intake-form"
             >
               <span>Assess your organization&apos;s posture in this domain</span>
               <ArrowUpRight size={16} />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
@@ -458,13 +458,13 @@ export default async function SolutionDetailPage({
                 </div>
                 <h3 className="engagement-title">{model.title}</h3>
                 <p className="engagement-desc">{model.description}</p>
-                <Link
-                  href={`/book-ai-diagnostic?solution=${solution.slug}&model=${encodeURIComponent(model.title)}`}
+                <a
+                  href="#intake-form"
                   className="engagement-cta-link"
                 >
                   <span>Select this model</span>
                   <ArrowUpRight size={15} />
-                </Link>
+                </a>
               </div>
             </div>
           ))}
@@ -548,6 +548,60 @@ export default async function SolutionDetailPage({
         </div>
 
         <div style={{ maxWidth: '840px', margin: '0 auto' }}>
+          {/* LIVE GOOGLE CALENDAR STRATEGY SESSION INTEGRATION */}
+          <div style={{
+            marginBottom: '24px',
+            padding: '16px 20px',
+            borderRadius: '16px',
+            background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%)',
+            color: '#ffffff',
+            border: '1px solid rgba(59, 130, 246, 0.4)',
+            boxShadow: '0 8px 24px rgba(29, 92, 255, 0.15)',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px'
+          }}>
+            <div style={{ maxWidth: '520px' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(59, 130, 246, 0.25)', border: '1px solid rgba(59, 130, 246, 0.45)', padding: '3px 8px', borderRadius: '6px', fontSize: '10.5px', fontWeight: 700, color: '#93c5fd', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px' }}>
+                <Calendar size={12} />
+                <span>Live Strategy Session Booking</span>
+              </div>
+              <h4 style={{ margin: '0 0 4px', fontSize: '16px', fontWeight: 800, color: '#ffffff' }}>
+                Need an immediate 45-minute architectural Strategy Session?
+              </h4>
+              <p style={{ margin: 0, fontSize: '12.5px', color: '#cbd5e1', lineHeight: 1.4 }}>
+                Lock a confirmed slot directly on our live Google Calendar with principal systems engineers, or submit the form below.
+              </p>
+            </div>
+            <a
+              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="button button-primary button-sm"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                background: '#1d5cff',
+                color: '#ffffff',
+                padding: '10px 18px',
+                borderRadius: '10px',
+                fontWeight: 700,
+                fontSize: '13px',
+                textDecoration: 'none',
+                boxShadow: '0 4px 14px rgba(29, 92, 255, 0.4)',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              <Calendar size={15} />
+              <span>Schedule on Google Calendar</span>
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+
           <TrustGridForm
             variant="diagnostic"
             formId={`form_${solution.slug}`}

@@ -180,7 +180,7 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
                   <ArrowUpRight size={16} />
                 </Link>
                 <Link
-                  href={`/book-ai-diagnostic?solution=${active.slug}`}
+                  href={`/book-ai-diagnostic?solution=${active.slug}#diagnostic-form-section`}
                   className="button button-ghost button-sm"
                 >
                   <span>Audit This Layer</span>

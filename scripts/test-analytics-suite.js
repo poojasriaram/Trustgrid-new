@@ -246,7 +246,7 @@ async function runTests() {
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     'sess_003', 'usr_001', sess1Start, sess1Last, 180, 4,
-    '/book-ai-diagnostic', '/contact', 'Paid Search', 'United States', 'San Francisco', 0, 1, 'returning'
+    '/book-ai-diagnostic#diagnostic-form-section', '/contact', 'Paid Search', 'United States', 'San Francisco', 0, 1, 'returning'
   )
 
   const sessionSummary = db.prepare(`

@@ -175,7 +175,7 @@ function run() {
         duration: 180,
         pages: 3,
         entry: '/solutions/ai-infra-engineering',
-        exit: '/book-ai-diagnostic',
+        exit: '/book-ai-diagnostic#diagnostic-form-section',
         converted: 1,
         bounce: 0,
         type: 'returning'

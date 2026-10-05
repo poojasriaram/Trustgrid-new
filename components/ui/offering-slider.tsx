@@ -290,7 +290,7 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
                           <ArrowUpRight size={16} />
                         </Link>
                         <Link
-                          href={`/book-ai-diagnostic?solution=${offering.slug}`}
+                          href={`/book-ai-diagnostic?solution=${offering.slug}#diagnostic-form-section`}
                           className="button button-ghost button-sm"
                         >
                           <span>Audit & Diagnostic</span>

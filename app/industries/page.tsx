@@ -40,7 +40,7 @@ export default function IndustriesPage() {
           description="From sovereign high-frequency banking enclaves and FDA-compliant clinical AI to air-gapped defense meshes and discrete shop floors. We engineer the hardware, agent architectures, and operational excellence for the world's most demanding enterprises."
           thesisHighlight="Domain Rigor: Zero-downtime, mathematically verified, and compliance-ready architectures engineered for high-stakes environments."
           image="/images/industry-manufacturing.jpg"
-          primaryCta={{ text: 'Book Industry Diagnostic', href: '/book-ai-diagnostic' }}
+          primaryCta={{ text: 'Book Industry Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }}
           secondaryCta={{ text: 'Explore All 12 Verticals', href: '#industries-list' }}
           metrics={{
             statValue: '12 Sectors',
@@ -177,7 +177,7 @@ export default function IndustriesPage() {
                     Ready to deploy production AI for <strong>{ind.name}</strong>?
                   </span>
                   <Link
-                    href={`/book-ai-diagnostic?industry=${encodeURIComponent(ind.name)}`}
+                    href={`/book-ai-diagnostic?industry=${encodeURIComponent(ind.name)}#diagnostic-form-section`}
                     className="button button-primary button-sm"
                   >
                     <span>Request {ind.name} Diagnostic</span>
@@ -201,7 +201,7 @@ export default function IndustriesPage() {
               Our principal systems architects and methodology black belts deliver concrete production architectures, air-gapped deployments, and provable economic value.
             </p>
             <div className="cta-actions">
-              <Link href="/book-ai-diagnostic" className="button button-primary">
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
                 <span>Schedule an AI Diagnostic Assessment</span>
                 <ArrowUpRight size={16} />
               </Link>

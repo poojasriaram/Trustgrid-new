@@ -427,7 +427,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
     mostActivePage: '/solutions/enterprise-ai-factory',
     topPages: [
       { page: '/solutions/enterprise-ai-factory', visits: Math.round(12450 * multiplier), uniqueIps: Math.round(7890 * multiplier), share: 25.5 },
-      { page: '/book-ai-diagnostic', visits: Math.round(9820 * multiplier), uniqueIps: Math.round(6240 * multiplier), share: 20.1 },
+      { page: '/book-ai-diagnostic#diagnostic-form-section', visits: Math.round(9820 * multiplier), uniqueIps: Math.round(6240 * multiplier), share: 20.1 },
       { page: '/ai-readiness-assessment', visits: Math.round(7420 * multiplier), uniqueIps: Math.round(5120 * multiplier), share: 15.2 },
       { page: '/methodology-engine', visits: Math.round(6180 * multiplier), uniqueIps: Math.round(4320 * multiplier), share: 12.6 },
       { page: '/use-cases/autonomous-fleet-ops', visits: Math.round(4890 * multiplier), uniqueIps: Math.round(3410 * multiplier), share: 10.0 }
@@ -435,7 +435,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
     topPagesByDwell: [
       { page: '/methodology-engine', avgSec: 218, maxSec: 890 },
       { page: '/solutions/enterprise-ai-factory', avgSec: 184, maxSec: 740 },
-      { page: '/book-ai-diagnostic', avgSec: 165, maxSec: 620 },
+      { page: '/book-ai-diagnostic#diagnostic-form-section', avgSec: 165, maxSec: 620 },
       { page: '/ai-readiness-assessment', avgSec: 148, maxSec: 580 },
       { page: '/case-studies', avgSec: 135, maxSec: 490 }
     ],
@@ -448,7 +448,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
     ],
     masterPageMetrics: [
       { url: '/solutions/enterprise-ai-factory', totalVisits: Math.round(12450 * multiplier), uniqueUsers: Math.round(7890 * multiplier), avgTime: 184, maxTime: 740 },
-      { url: '/book-ai-diagnostic', totalVisits: Math.round(9820 * multiplier), uniqueUsers: Math.round(6240 * multiplier), avgTime: 165, maxTime: 620 },
+      { url: '/book-ai-diagnostic#diagnostic-form-section', totalVisits: Math.round(9820 * multiplier), uniqueUsers: Math.round(6240 * multiplier), avgTime: 165, maxTime: 620 },
       { url: '/ai-readiness-assessment', totalVisits: Math.round(7420 * multiplier), uniqueUsers: Math.round(5120 * multiplier), avgTime: 148, maxTime: 580 },
       { url: '/methodology-engine', totalVisits: Math.round(6180 * multiplier), uniqueUsers: Math.round(4320 * multiplier), avgTime: 218, maxTime: 890 },
       { url: '/use-cases/autonomous-fleet-ops', totalVisits: Math.round(4890 * multiplier), uniqueUsers: Math.round(3410 * multiplier), avgTime: 124, maxTime: 510 },
@@ -472,7 +472,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
     campaigns: [
       { campaign: 'Q3-Enterprise-AI-Factory-US', source: 'Google', medium: 'cpc', landingPage: '/solutions/enterprise-ai-factory', visits: Math.round(9420 * multiplier), leads: Math.round(104 * multiplier), convRate: 1.10 },
       { campaign: 'EU-AI-Readiness-Audit-2026', source: 'Google', medium: 'cpc', landingPage: '/ai-readiness-assessment', visits: Math.round(5120 * multiplier), leads: Math.round(52 * multiplier), convRate: 1.02 },
-      { campaign: 'LinkedIn-CTO-Diagnostic-Blitz', source: 'Meta', medium: 'paid-social', landingPage: '/book-ai-diagnostic', visits: Math.round(4820 * multiplier), leads: Math.round(48 * multiplier), convRate: 1.00 },
+      { campaign: 'LinkedIn-CTO-Diagnostic-Blitz', source: 'Meta', medium: 'paid-social', landingPage: '/book-ai-diagnostic#diagnostic-form-section', visits: Math.round(4820 * multiplier), leads: Math.round(48 * multiplier), convRate: 1.00 },
       { campaign: 'YouTube-GPU-Orchestration-DeepDive', source: 'YouTube', medium: 'video', landingPage: '/methodology-engine', visits: Math.round(3240 * multiplier), leads: Math.round(31 * multiplier), convRate: 0.96 },
       { campaign: 'Partner-Inbound-Dealflow', source: 'Affiliate', medium: 'partner-network', landingPage: '/request-proposal', visits: Math.round(2110 * multiplier), leads: Math.round(22 * multiplier), convRate: 1.04 }
     ],
@@ -514,7 +514,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
   const pareto: ParetoData = {
     items: [
       { item: '/solutions/enterprise-ai-factory', visits: Math.round(12450 * multiplier), share: 0.255, cumulativeShare: 0.255, isWithin80: true },
-      { item: '/book-ai-diagnostic', visits: Math.round(9820 * multiplier), share: 0.201, cumulativeShare: 0.456, isWithin80: true },
+      { item: '/book-ai-diagnostic#diagnostic-form-section', visits: Math.round(9820 * multiplier), share: 0.201, cumulativeShare: 0.456, isWithin80: true },
       { item: '/ai-readiness-assessment', visits: Math.round(7420 * multiplier), share: 0.152, cumulativeShare: 0.608, isWithin80: true },
       { item: '/methodology-engine', visits: Math.round(6180 * multiplier), share: 0.126, cumulativeShare: 0.734, isWithin80: true },
       { item: '/use-cases/autonomous-fleet-ops', visits: Math.round(4890 * multiplier), share: 0.100, cumulativeShare: 0.834, isWithin80: true },
@@ -777,7 +777,7 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
       { url: '/', status: 'Working', statusCode: 200, latencyMs: 142, lastChecked: 'Just now' },
       { url: '/about', status: 'Working', statusCode: 200, latencyMs: 168, lastChecked: 'Just now' },
       { url: '/solutions', status: 'Working', statusCode: 200, latencyMs: 184, lastChecked: 'Just now' },
-      { url: '/book-ai-diagnostic', status: 'Working', statusCode: 200, latencyMs: 156, lastChecked: 'Just now' },
+      { url: '/book-ai-diagnostic#diagnostic-form-section', status: 'Working', statusCode: 200, latencyMs: 156, lastChecked: 'Just now' },
       { url: '/request-proposal', status: 'Working', statusCode: 200, latencyMs: 172, lastChecked: 'Just now' },
       { url: '/talk-to-ai-architect', status: 'Working', statusCode: 200, latencyMs: 194, lastChecked: 'Just now' },
       { url: '/careers', status: 'Working', statusCode: 200, latencyMs: 148, lastChecked: 'Just now' },

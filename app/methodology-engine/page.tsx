@@ -27,7 +27,7 @@ export default function MethodologyEnginePage() {
         image="/images/methodology-engine.jpg"
         primaryCta={{
           label: "Book AI Diagnostic",
-          href: "/book-ai-diagnostic"
+          href: "/book-ai-diagnostic#diagnostic-form-section"
         }}
         secondaryCta={{
           label: "Explore Offerings",

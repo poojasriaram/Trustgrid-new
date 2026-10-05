@@ -53,7 +53,7 @@ export function PageBannerHero({
   description,
   thesisHighlight,
   image,
-  primaryCta = { text: 'Book AI Diagnostic', href: '/book-ai-diagnostic' },
+  primaryCta = { text: 'Book AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' },
   secondaryCta,
   tertiaryCta = { text: 'Talk to an Architect', href: '/contact' },
   quickNavItems,

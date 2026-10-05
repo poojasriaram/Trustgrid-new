@@ -541,7 +541,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="cta-actions">
-            <Link className="button button-light" href="/book-ai-diagnostic">
+            <Link className="button button-light" href="/book-ai-diagnostic#diagnostic-form-section">
               <span>Book your AI diagnostic</span>
               <ArrowUpRight size={17} />
             </Link>

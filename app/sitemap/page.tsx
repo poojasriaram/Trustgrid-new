@@ -418,7 +418,7 @@ export default function SiteMapV14Page() {
 
                                           <div className="offering-cta-row">
                                             <Link
-                                              href={`/book-ai-diagnostic?group=${group.id}&solution=${sa.slug}&offering=${encodeURIComponent(offering.title)}`}
+                                              href={`/book-ai-diagnostic?group=${group.id}&solution=${sa.slug}&offering=${encodeURIComponent(offering.title)}#diagnostic-form-section`}
                                               className="offering-action-link"
                                             >
                                               <span>Scope this capability</span>
@@ -527,7 +527,7 @@ export default function SiteMapV14Page() {
                 ))}
               </ul>
               <div className="foundation-card-foot">
-                <Link href="/book-ai-diagnostic" className="text-link-arrow">
+                <Link href="/book-ai-diagnostic#diagnostic-form-section" className="text-link-arrow">
                   <span>Model your workload economics</span>
                   <ArrowUpRight size={14} />
                 </Link>
@@ -544,7 +544,7 @@ export default function SiteMapV14Page() {
                 Select Group &rarr; Select Solution Area &rarr; Select Engineering Area &rarr; Select Industry &rarr; Submit Workload Parameters
               </p>
             </div>
-            <Link href="/book-ai-diagnostic" className="button button-primary">
+            <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
               Book AI Diagnostic <ArrowUpRight size={16} />
             </Link>
           </div>

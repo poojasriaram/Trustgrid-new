@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Clock,
   ShieldCheck,
+  Calendar,
   Globe2
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
@@ -42,12 +43,12 @@ export default function ContactPage() {
           }}
           secondaryCta={{
             label: "Book AI Diagnostic",
-            href: "/book-ai-diagnostic"
+            href: "/book-ai-diagnostic#diagnostic-form-section"
           }}
           quickNavItems={[
             { label: "1. Message Form", href: "#contact-form-section" },
             { label: "2. Global Offices", href: "#global-offices" },
-            { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic" },
+            { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic#diagnostic-form-section" },
             { label: "4. Solutions Portfolio", href: "/offerings" }
           ]}
           metrics={{
@@ -126,6 +127,37 @@ export default function ContactPage() {
                     <strong>SLA Commitment</strong>
                     <p>Direct response from a senior technical architect within 24–48 business hours.</p>
                   </div>
+                </div>
+              </div>
+
+              {/* DIRECT STRATEGY SESSION CALENDAR BOOKING */}
+              <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em' }}>
+                  DIRECT CALENDAR &amp; STRATEGY SESSION
+                </span>
+                <p style={{ fontSize: '13px', color: '#64748b', margin: '6px 0 14px' }}>
+                  Prefer an immediate 45-minute live architectural Strategy Session?
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <a
+                    href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button button-primary button-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '10px 14px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600, fontSize: '13px' }}
+                  >
+                    <Calendar size={15} />
+                    <span>Schedule on Google Calendar</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                  <Link
+                    href="/book-ai-diagnostic?type=strategy-session#diagnostic-form-section"
+                    className="button button-ghost button-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '9px 14px', fontSize: '13px' }}
+                  >
+                    <span>Book Strategy Session via Form</span>
+                    <ArrowUpRight size={14} />
+                  </Link>
                 </div>
               </div>
             </div>

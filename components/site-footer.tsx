@@ -24,7 +24,7 @@ export function SiteFooter() {
             </div>
           </div>
           <div style={{ marginTop: '16px' }}>
-            <Link href="/book-ai-diagnostic" className="button button-primary button-sm">
+            <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
               <span>Book Your AI Diagnostic</span>
             </Link>
           </div>
@@ -92,7 +92,7 @@ export function SiteFooter() {
             <li><Link href="/partners">Ecosystem Partners</Link></li>
             <li><Link href="/about#presence">Global Offices & Labs</Link></li>
             <li><Link href="/contact">Contact & Inquiries</Link></li>
-            <li><Link href="/book-ai-diagnostic">AI Diagnostic Assessment</Link></li>
+            <li><Link href="/book-ai-diagnostic#diagnostic-form-section">AI Diagnostic Assessment</Link></li>
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>

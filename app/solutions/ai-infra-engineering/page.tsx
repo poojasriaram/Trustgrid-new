@@ -6,6 +6,7 @@ import {
   Cpu,
   Layers,
   Building2,
+  Calendar,
   Network,
   Activity,
   Workflow,
@@ -520,14 +521,14 @@ export default function AIInfraEngineeringPage() {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mb-12">
-              <Link
-                href="/book-ai-diagnostic?solution=ai-infra-engineering"
-                onClick={() => trackCTA('Book AI Infrastructure Diagnostic', 'hero', '/book-ai-diagnostic')}
+              <a
+                href="#contact-advisory"
+                onClick={() => trackCTA('Book AI Infrastructure Diagnostic', 'hero', '#contact-advisory')}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 transition-all"
               >
                 <Sparkles size={16} />
                 <span>Book AI Infrastructure Diagnostic</span>
-              </Link>
+              </a>
               <a
                 href="#core-offerings"
                 onClick={() => trackCTA('Explore AI Data Center Capabilities', 'hero_cta', 'core-offerings')}
@@ -2421,15 +2422,45 @@ export default function AIInfraEngineeringPage() {
               {/* Quick CTAs */}
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <WhatsAppCTA />
-                <Link
-                  href="/book-ai-diagnostic?solution=ai-infra-engineering"
-                  onClick={() => trackCTA('Diagnostic Assessment Direct Link', 'bottom_cta', '/book-ai-diagnostic')}
+                <a
+                  href="#contact-advisory"
+                  onClick={() => trackCTA('Diagnostic Assessment Direct Link', 'bottom_cta', '#contact-advisory')}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-all hover:border-white/40"
                 >
                   <span>Interactive Diagnostic Assessment</span>
                   <ArrowUpRight size={14} />
-                </Link>
+                </a>
               </div>
+            </div>
+
+            {/* LIVE GOOGLE CALENDAR STRATEGY SESSION INTEGRATION */}
+            <div className="mb-6 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-950/90 via-indigo-950/70 to-slate-950 border border-blue-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-white relative z-10">
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-blue-600/25 border border-blue-500/40 text-cyan-400 flex items-center justify-center shrink-0">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono font-bold tracking-wider text-cyan-400 uppercase block">
+                    LIVE STRATEGY SESSION BOOKING
+                  </span>
+                  <p className="text-sm font-semibold text-white m-0">
+                    Need an immediate 45-minute AI Infrastructure Strategy Session?
+                  </p>
+                  <p className="text-xs text-slate-400 m-0">
+                    Lock a direct slot on our live Google Calendar with principal AI data center architects.
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
+              >
+                <Calendar size={14} />
+                <span>Schedule on Google Calendar</span>
+                <ArrowUpRight size={13} />
+              </a>
             </div>
 
             {/* Enterprise Embedded Form Card */}

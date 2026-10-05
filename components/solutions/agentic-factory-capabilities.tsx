@@ -477,13 +477,13 @@ export function AgenticFactoryCapabilities() {
               Evaluate your enterprise workflows, identify top multi-agent candidate tasks, benchmark security guardrails, and receive a quantitative 12-week deployment roadmap.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/book-ai-diagnostic?solution=ai-agentic-factory"
+              <a
+                href="#intake-form"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-400 text-white text-sm font-bold shadow-lg transition-all"
               >
                 <span>Schedule Agentic Diagnostic</span>
                 <ArrowUpRight size={16} />
-              </Link>
+              </a>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-semibold border border-white/20 transition-all"

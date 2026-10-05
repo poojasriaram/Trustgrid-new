@@ -50,7 +50,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     ],
     expectedOutcome: 'Board-ready executive report with definitive technical baselines, prioritized high-yield projects, and clear ROI targets.',
     ctaText: 'Book Executive Diagnostic',
-    ctaLink: '/book-ai-diagnostic'
+    ctaLink: '/book-ai-diagnostic#diagnostic-form-section'
   },
   {
     id: 'sprint',

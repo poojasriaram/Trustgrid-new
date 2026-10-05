@@ -1196,13 +1196,13 @@ export function AIValueCapabilities() {
               Partner with our AI economics and operations engineering team to audit your current AI spend, eliminate compute waste, model unit economics, and build a CFO-approved business case.
             </p>
             <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/book-ai-diagnostic?solution=ai-value-engineering"
+              <a
+                href="#intake-form"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-400 text-white text-sm font-bold shadow-lg transition-all"
               >
                 <span>Schedule Value Diagnostic</span>
                 <ArrowUpRight size={16} />
-              </Link>
+              </a>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-semibold border border-white/20 transition-all"

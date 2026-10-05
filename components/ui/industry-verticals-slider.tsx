@@ -158,7 +158,7 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
             {/* Actions and Navigation */}
             <div className="ind-actions-footer">
               <Link
-                href={`/book-ai-diagnostic?industry=${encodeURIComponent(current.name)}`}
+                href={`/book-ai-diagnostic?industry=${encodeURIComponent(current.name)}#diagnostic-form-section`}
                 className="button button-primary button-sm"
               >
                 <span>Request {current.name.split(' ')[0]} Diagnostic</span>

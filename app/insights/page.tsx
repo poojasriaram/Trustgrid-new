@@ -45,7 +45,7 @@ export default function InsightsPage() {
           image="/images/offering-trusted-ai.jpg"
           primaryCta={{
             label: "Request Executive Briefing",
-            href: "/book-ai-diagnostic"
+            href: "/book-ai-diagnostic#diagnostic-form-section"
           }}
           secondaryCta={{
             label: "Launch Crowd Safety App",
@@ -56,7 +56,7 @@ export default function InsightsPage() {
             { label: "All Insights", href: "#articles-grid" },
             { label: "Featured Innovation", href: "#innovation-spotlight" },
             { label: "Case Studies", href: "/case-studies" },
-            { label: "Executive Diagnostic", href: "/book-ai-diagnostic" }
+            { label: "Executive Diagnostic", href: "/book-ai-diagnostic#diagnostic-form-section" }
           ]}
           metrics={{
             statValue: "Frontier",
@@ -200,7 +200,7 @@ export default function InsightsPage() {
                         <ArrowUpRight size={14} />
                       </Link>
                       <Link
-                        href="/book-ai-diagnostic?type=strategy-session"
+                        href="/book-ai-diagnostic?type=strategy-session#diagnostic-form-section"
                         className="button button-ghost button-sm"
                       >
                         <span>Book Strategy Session</span>
@@ -208,7 +208,7 @@ export default function InsightsPage() {
                     </div>
                   ) : (
                     <Link
-                      href="/book-ai-diagnostic"
+                      href="/book-ai-diagnostic#diagnostic-form-section"
                       className="button button-ghost button-sm"
                     >
                       <span>Request Full Document</span>
@@ -266,7 +266,7 @@ export default function InsightsPage() {
               Engage our systems architects for specialized architecture audits, inference benchmarking, or joint enterprise research initiatives.
             </p>
             <div className="cta-actions">
-              <Link href="/book-ai-diagnostic" className="button button-primary">
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
                 <span>Book Your AI Diagnostic Assessment</span>
                 <ArrowUpRight size={16} />
               </Link>

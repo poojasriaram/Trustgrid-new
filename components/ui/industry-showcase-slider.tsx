@@ -249,7 +249,7 @@ export function IndustryShowcaseSlider() {
                 <span>Explore {current.name.split(' ')[0]} Solutions</span>
                 <ArrowUpRight size={16} />
               </Link>
-              <Link href="/book-ai-diagnostic" className="button button-ghost button-sm">
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-ghost button-sm">
                 <span>Request Industry Diagnostic</span>
               </Link>
             </div>

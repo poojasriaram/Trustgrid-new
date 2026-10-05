@@ -552,7 +552,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                 </div>
 
                 <div className="model-action">
-                  <Link href={`/book-ai-diagnostic?engagement=${model.number}`} className="button button-ghost button-sm">
+                  <Link href={`/book-ai-diagnostic?engagement=${model.number}#diagnostic-form-section`} className="button button-ghost button-sm">
                     Select This Model <ArrowUpRight size={14} />
                   </Link>
                 </div>
@@ -588,7 +588,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
 
         <div className="promise-footer-note">
           <p>{trustgridPromise.footerNote}</p>
-          <Link href="/book-ai-diagnostic" className="button button-primary">
+          <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
             Begin with an AI Diagnostic Assessment <ArrowUpRight size={16} />
           </Link>
         </div>

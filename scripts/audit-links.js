@@ -8,7 +8,7 @@ const validPages = new Set([
   '/ai-diagnostic',
   '/ai-methodology',
   '/ai-readiness-assessment',
-  '/book-ai-diagnostic',
+  '/book-ai-diagnostic#diagnostic-form-section',
   '/careers',
   '/case-studies',
   '/contact',

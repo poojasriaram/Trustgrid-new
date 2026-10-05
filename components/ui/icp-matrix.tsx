@@ -44,7 +44,7 @@ export const icpSegments: ICPSegment[] = [
       'Zero physical bottleneck up to 100kW/rack density'
     ],
     ctaText: 'Assess Your Compute Architecture',
-    ctaHref: '/book-ai-diagnostic?solution=ai-infra-engineering'
+    ctaHref: '/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section'
   },
   {
     id: 'ciso',
@@ -61,7 +61,7 @@ export const icpSegments: ICPSegment[] = [
       'Ephemeral, least-privilege tool access for autonomous agents'
     ],
     ctaText: 'Evaluate Your AI Security Posture',
-    ctaHref: '/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe'
+    ctaHref: '/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe#diagnostic-form-section'
   },
   {
     id: 'ai-leaders',
@@ -78,7 +78,7 @@ export const icpSegments: ICPSegment[] = [
       'Native enterprise tool integration via Model Context Protocol (MCP)'
     ],
     ctaText: 'Discuss Your Agentic AI Fleet',
-    ctaHref: '/book-ai-diagnostic?solution=ai-agentic-factory'
+    ctaHref: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section'
   },
   {
     id: 'infra-leaders',
@@ -95,7 +95,7 @@ export const icpSegments: ICPSegment[] = [
       'Self-healing autonomous AI NOC packet telemetry'
     ],
     ctaText: 'Evaluate Your AI Network Fabric',
-    ctaHref: '/book-ai-diagnostic?solution=ai-networking'
+    ctaHref: '/book-ai-diagnostic?solution=ai-networking#diagnostic-form-section'
   },
   {
     id: 'cfo-finance',
@@ -112,7 +112,7 @@ export const icpSegments: ICPSegment[] = [
       'Executive Value Realization Office (VRO) governance'
     ],
     ctaText: 'Identify AI Value Opportunities',
-    ctaHref: '/book-ai-diagnostic?solution=ai-value-engineering'
+    ctaHref: '/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section'
   }
 ]
 

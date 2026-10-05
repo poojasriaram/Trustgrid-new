@@ -35,7 +35,7 @@ function getContextualMessage(pathname: string): string {
   if (pathname.includes('/solutions/ai-value-engineering')) {
     return 'Hi TrustGrid team, I would like to discuss AI FinOps unit economics and value acceleration.'
   }
-  if (pathname.includes('/book-ai-diagnostic') || pathname.includes('/ai-diagnostic')) {
+  if (pathname.includes('/book-ai-diagnostic#diagnostic-form-section') || pathname.includes('/ai-diagnostic')) {
     return 'Hi TrustGrid team, I would like to schedule an Executive AI Diagnostic session.'
   }
   if (pathname.includes('/industries')) {

@@ -62,7 +62,7 @@ export default function AboutPage() {
         description={aboutHero.description}
         thesisHighlight="Strategic Pedigree: Industrial engineering disciplines fused with silicon-level AI architecture and sovereign cybersecurity."
         image="/images/hero-ai-infra.jpg"
-        primaryCta={{ text: 'Book AI Diagnostic', href: '/book-ai-diagnostic' }}
+        primaryCta={{ text: 'Book AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }}
         secondaryCta={{ text: 'Meet Our Leadership', href: '#leadership' }}
         quickNavItems={aboutNavMenu}
         metrics={{
@@ -317,7 +317,7 @@ export default function AboutPage() {
                   <ArrowUpRight size={14} />
                 </a>
               ) : (
-                <Link href={init.url || "/book-ai-diagnostic"} className="button button-ghost button-sm">
+                <Link href={init.url || "/book-ai-diagnostic#diagnostic-form-section"} className="button button-ghost button-sm">
                   <span>{init.linkText}</span>
                   <ArrowUpRight size={14} />
                 </Link>
@@ -428,7 +428,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="cta-actions">
-            <Link className="button button-light" href="/book-ai-diagnostic">
+            <Link className="button button-light" href="/book-ai-diagnostic#diagnostic-form-section">
               Book Your AI Diagnostic <ArrowUpRight size={17} />
             </Link>
           </div>

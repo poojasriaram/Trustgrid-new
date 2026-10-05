@@ -58,7 +58,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'Predictable, board-defensible AI deployment with verified compliance, unified FinOps governance, and sustainable organizational adoption.',
     ctaText: 'Explore CIO Executive Diagnostic',
-    ctaLink: '/book-ai-diagnostic?role=cio',
+    ctaLink: '/book-ai-diagnostic?role=cio#diagnostic-form-section',
     icon: Users
   },
   {
@@ -81,7 +81,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'High-throughput, resilient AI platform architecture operating with maximum accelerator utilization and ultra-low inference latency.',
     ctaText: 'Schedule CTO Technical Audit',
-    ctaLink: '/book-ai-diagnostic?role=cto',
+    ctaLink: '/book-ai-diagnostic?role=cto#diagnostic-form-section',
     icon: Cpu
   },
   {
@@ -103,7 +103,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'Zero-trust agent isolation, complete visibility across cryptographic assets, and perpetual resilience against quantum decryption threats.',
     ctaText: 'Audit Security & PQC Posture',
-    ctaLink: '/book-ai-diagnostic?role=ciso',
+    ctaLink: '/book-ai-diagnostic?role=ciso#diagnostic-form-section',
     icon: Lock
   },
   {
@@ -125,7 +125,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'Autonomous digital worker fleets executing complex operational processes with deterministic accuracy and full auditability.',
     ctaText: 'Deploy Governed Agent Fleets',
-    ctaLink: '/book-ai-diagnostic?solution=ai-agentic-factory',
+    ctaLink: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section',
     icon: Bot
   },
   {
@@ -147,7 +147,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'High-density, liquid-cooled compute facilities operating at industry-leading PUE with zero thermal throttling.',
     ctaText: 'Evaluate Facility Density & PUE',
-    ctaLink: '/book-ai-diagnostic?solution=ai-infra-engineering',
+    ctaLink: '/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section',
     icon: Layers
   },
   {
@@ -169,7 +169,7 @@ export const defaultICPs: ICPPersona[] = [
     ],
     expectedOutcome: 'Defensible 90-day ROI, deterministic cost-per-task unit economics, and total visibility over enterprise token expenditure.',
     ctaText: 'Calculate AI Unit Economics',
-    ctaLink: '/book-ai-diagnostic?role=cfo',
+    ctaLink: '/book-ai-diagnostic?role=cfo#diagnostic-form-section',
     icon: TrendingUp
   }
 ]
