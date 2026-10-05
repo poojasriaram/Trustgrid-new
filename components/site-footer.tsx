@@ -108,7 +108,6 @@ export function SiteFooter() {
           <Link href="/methodology-engine">AI Methodology</Link>
           <Link href="/about">About Us</Link>
           <Link href="/insights">Insights</Link>
-          <Link href="/analytics" style={{ color: '#0ea5e9' }}>Analytics Suite</Link>
           <Link href="/privacy-policy">Privacy Policy</Link>
           <a href="#top">Back to top ↑</a>
         </div>

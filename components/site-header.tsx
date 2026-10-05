@@ -1508,16 +1508,7 @@ export function SiteHeader() {
           </svg>
         </a>
 
-        {/* INTELLIGENCE SUITE / ANALYTICS */}
-        <Link
-          href="/analytics"
-          className="nav-analytics-link hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10 border border-cyan-500/20 transition-all shadow-sm"
-          title="TrustGrid Unified Intelligence & Analytics Suite"
-          onClick={closeAll}
-        >
-          <ShieldAlert size={14} className="text-cyan-400" />
-          <span>Intelligence Suite</span>
-        </Link>
+
 
         {/* 9. CONTACT US — Primary CTA */}
         <Link
@@ -1547,10 +1538,7 @@ export function SiteHeader() {
             <Link href="/" className="mobile-nav-link" onClick={closeAll}>
               Home
             </Link>
-            <Link href="/analytics" className="mobile-nav-link text-cyan-400 font-semibold flex items-center justify-between" onClick={closeAll}>
-              <span>Intelligence Suite</span>
-              <ShieldAlert size={15} />
-            </Link>
+
 
             {/* Mobile AI Infra & Data Center Accordion */}
             <div className="mobile-accordion">
