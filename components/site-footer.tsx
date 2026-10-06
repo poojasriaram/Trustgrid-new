@@ -93,6 +93,7 @@ export function SiteFooter() {
             <li><Link href="/about#presence">Global Offices & Labs</Link></li>
             <li><Link href="/contact">Contact & Inquiries</Link></li>
             <li><Link href="/book-ai-diagnostic#diagnostic-form-section">AI Diagnostic Assessment</Link></li>
+            <li><a href="/linkedin" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', fontWeight: 600 }}>LinkedIn Official Page ↗</a></li>
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>

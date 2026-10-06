@@ -27,6 +27,7 @@ export type ChannelAttribution =
   | 'Community'
   | 'Direct'
   | 'Referral'
+  | 'LinkedIn'
   | 'Other'
 
 export interface RawLeadInput {
@@ -57,6 +58,9 @@ export interface RawLeadInput {
   selectedSolutions?: string | string[]
   ctaSource?: string
   leadSource?: string
+  source?: string
+  service?: string
+  website?: string
   chatIntent?: string
   pageUrl?: string
   page_url?: string
@@ -227,14 +231,17 @@ export function deriveChannelAttribution(utmSource: string, utmMedium: string, r
     return 'Affiliate'
   }
 
-  // Community / LinkedIn / Twitter / Reddit / Slack
+  // LinkedIn
+  if (src.includes('linkedin') || ref.includes('linkedin.com')) {
+    return 'LinkedIn'
+  }
+
+  // Community / Twitter / Reddit / Slack
   if (
-    src.includes('linkedin') ||
     src.includes('twitter') ||
     src.includes('x.com') ||
     src.includes('reddit') ||
     src.includes('community') ||
-    ref.includes('linkedin.com') ||
     ref.includes('t.co') ||
     ref.includes('reddit.com')
   ) {

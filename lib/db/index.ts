@@ -182,5 +182,48 @@ function initSchema(db: DatabaseSync): void {
       ip_masked TEXT DEFAULT '',
       updated_at TEXT NOT NULL
     );
+
+    -- 7. Production Leads Storage (Normalized Enterprise & LinkedIn Leads)
+    CREATE TABLE IF NOT EXISTS leads (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      company TEXT NOT NULL,
+      phone TEXT DEFAULT '',
+      message TEXT DEFAULT '',
+      source TEXT DEFAULT 'LinkedIn',
+      service TEXT DEFAULT 'LinkedIn API Integration',
+      website TEXT DEFAULT 'TRUSTGRID.AI',
+      metadata_json TEXT DEFAULT '{}',
+      createdAt TEXT NOT NULL,
+      updatedAt TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_leads_email ON leads(email);
+    CREATE INDEX IF NOT EXISTS idx_leads_source ON leads(source);
+    CREATE INDEX IF NOT EXISTS idx_leads_created ON leads(createdAt);
+
+    -- 8. LinkedIn Server-Side OAuth Connection & Secure Token Store
+    CREATE TABLE IF NOT EXISTS linkedin_connections (
+      id TEXT PRIMARY KEY,
+      account_id TEXT DEFAULT 'admin',
+      account_name TEXT DEFAULT '',
+      account_email TEXT DEFAULT '',
+      access_token TEXT NOT NULL,
+      refresh_token TEXT DEFAULT '',
+      expires_at TEXT,
+      scope TEXT DEFAULT '',
+      profile_json TEXT DEFAULT '{}',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+
+    -- 9. OAuth CSRF State Validation
+    CREATE TABLE IF NOT EXISTS oauth_states (
+      state TEXT PRIMARY KEY,
+      provider TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      expires_at TEXT NOT NULL
+    );
   `)
 }
