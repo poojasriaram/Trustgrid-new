@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/site-footer'
 import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
 import { MethodologyJourneySlider } from '@/components/ui/methodology-journey-slider'
 import { PageBannerHero } from '@/components/ui/page-banner-hero'
+import { FullSpectrumArchitecture } from '@/components/ui/full-spectrum-architecture'
 import { Zap } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -31,13 +32,13 @@ export default function MethodologyEnginePage() {
         }}
         secondaryCta={{
           label: "Explore Offerings",
-          href: "/offerings"
+          href: "/#offerings"
         }}
         quickNavItems={[
-          { label: "1. Diagnostic", href: "#diagnostic" },
-          { label: "2. Architecture", href: "#architecture" },
-          { label: "3. Deployment", href: "#deployment" },
-          { label: "4. Governance", href: "#governance" },
+          { label: "1. Full-Spectrum", href: "#full-spectrum-architecture" },
+          { label: "2. Diagnostic", href: "#diagnostic" },
+          { label: "3. Architecture", href: "#architecture" },
+          { label: "4. Deployment", href: "#deployment" },
           { label: "5. Compounding", href: "#compounding" }
         ]}
         metrics={{
@@ -55,6 +56,10 @@ export default function MethodologyEnginePage() {
       <section className="section" style={{ paddingTop: '40px', paddingBottom: '20px' }}>
         <MethodologyJourneySlider />
       </section>
+
+      {/* SECTION 7: FULL-SPECTRUM AI ARCHITECTURE */}
+      <FullSpectrumArchitecture />
+
       <section className="section methodology-engine-page-section" style={{ paddingTop: '0px' }}>
         <MethodologyEngineSpecialSection />
       </section>

@@ -11,6 +11,7 @@ const validPages = new Set([
   '/book-ai-diagnostic#diagnostic-form-section',
   '/careers',
   '/case-studies',
+  '/case-studies/medical-supplies-ai',
   '/contact',
   '/industries',
   '/insights',

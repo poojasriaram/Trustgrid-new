@@ -29,6 +29,10 @@ export interface CaseStudy {
   intervention: string
   interventionItems: { label: string; detail: string }[]
   outcome: string
+  link?: string
+  linkText?: string
+  subtitle?: string
+  tags?: string[]
 }
 
 export const aboutHero = {
@@ -207,6 +211,23 @@ export const openInnovationInitiatives = [
 ]
 
 export const caseStudiesList: CaseStudy[] = [
+  {
+    client: "Global Medical Supplies & Manufacturing Enterprise",
+    industry: "Medical Supplies & Manufacturing",
+    subtitle: "End-to-End AI Automation in Medical Supplies Packaging, Regulatory Labeling, Supply Chain Inspection & Warranty Management",
+    situation: "Distributing disposable hygiene and sterile surgical supplies across 40+ international markets required 3–4 weeks of localized legal review per market, manual conveyor seal inspection with 4.5% returns, and slow 10–14 day warranty claim processing.",
+    intervention: "Generative AI RAG legal matrix, dynamic inline packaging labeling with verified license numbers, edge computer vision inspection, and agentic touchless claims adjudication.",
+    interventionItems: [
+      { label: "Generative AI Compliance", detail: "Automated multi-jurisdiction warranty T&C generation across 40+ countries in 3 days vs 3-4 weeks." },
+      { label: "Dynamic Regulatory Labeling", detail: "Direct factory inkjet integration printing verified regional registrations (FDA, ANVISA, CDSCO)." },
+      { label: "Edge Computer Vision", detail: "Optical beam-triggered OCR and seal integrity checks with 74% inspection power reduction." },
+      { label: "Touchless Claim Adjudication", detail: "85% auto-approval straight-through processing in under 2 minutes." }
+    ],
+    outcome: "3-day T&C turnaround, 300% distribution velocity increase, 90% return/recall reduction, and 99.9% license placement defect prevention.",
+    tags: ["Generative AI", "Computer Vision", "Regulatory AI", "Supply Chain", "Warranty Automation"],
+    link: "/case-studies/medical-supplies-ai",
+    linkText: "View Case Study →"
+  },
   {
     client: "Government Defense & Intelligence Agency",
     industry: "Public Sector / Air-Gapped",

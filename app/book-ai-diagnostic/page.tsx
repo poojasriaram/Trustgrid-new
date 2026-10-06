@@ -55,7 +55,7 @@ function DiagnosticContent() {
         quickNavItems={[
           { label: isStrategySession ? "1. Strategy Session Form" : "1. Diagnostic Form", href: "#diagnostic-form-section" },
           { label: "2. Methodology", href: "/methodology-engine" },
-          { label: "3. Enterprise Solutions", href: "/offerings" },
+          { label: "3. Enterprise Solutions", href: "/#offerings" },
           { label: "4. Direct Contact", href: "/contact" }
         ]}
         metrics={{

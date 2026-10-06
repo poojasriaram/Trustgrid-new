@@ -348,6 +348,20 @@ export default function AboutPage() {
               <div className="cs-top">
                 <span className="cs-industry">{cs.industry}</span>
                 <h4>{cs.client}</h4>
+                {cs.subtitle && (
+                  <p style={{ fontSize: '13px', color: 'var(--ink-soft)', margin: '6px 0 0', fontWeight: 500, lineHeight: 1.45 }}>
+                    {cs.subtitle}
+                  </p>
+                )}
+                {cs.tags && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '10px' }}>
+                    {cs.tags.map((tag, tIdx) => (
+                      <span key={tIdx} className="tag-pill" style={{ fontSize: '11px', padding: '3px 8px' }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="cs-block">
@@ -370,6 +384,19 @@ export default function AboutPage() {
                 <strong>Outcome:</strong>
                 <p>{cs.outcome}</p>
               </div>
+
+              {cs.link && (
+                <div style={{ marginTop: 'auto', paddingTop: '8px' }}>
+                  <Link
+                    href={cs.link}
+                    className="button button-primary button-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                  >
+                    <span>{cs.linkText || 'View Case Study →'}</span>
+                    <ArrowUpRight size={14} />
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>

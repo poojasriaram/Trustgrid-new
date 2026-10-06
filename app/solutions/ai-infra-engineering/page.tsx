@@ -492,7 +492,7 @@ export default function AIInfraEngineeringPage() {
           <div className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-6">
             <Link href="/" className="hover:text-cyan-400 transition-colors">Home</Link>
             <ChevronRight size={12} className="text-slate-600" />
-            <Link href="/solutions" className="hover:text-cyan-400 transition-colors">Solutions</Link>
+            <Link href="/#offerings" className="hover:text-cyan-400 transition-colors">Solutions</Link>
             <ChevronRight size={12} className="text-slate-600" />
             <span className="text-cyan-400 font-semibold">AI Infrastructure & Data Center Engineering</span>
           </div>
@@ -845,7 +845,7 @@ export default function AIInfraEngineeringPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* GPU Infrastructure */}
             <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
               <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4">
@@ -904,6 +904,57 @@ export default function AIInfraEngineeringPage() {
                 <li className="flex items-center gap-2"><strong>• Digital Twin:</strong> Continuous thermal simulation</li>
                 <li className="flex items-center gap-2"><strong>• Self-Healing:</strong> Automated workload failover</li>
               </ul>
+            </div>
+          </div>
+
+          {/* ADVANCED AI COMPUTE, KUBERNETES & MODEL SERVING ARCHITECTURE */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 text-white border border-slate-800 shadow-md">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+              <div>
+                <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-1">
+                  Full-Stack Compute &amp; Model Serving Acceleration
+                </span>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                  Kubernetes AI Orchestration, CUDA Optimization &amp; Triton Serving
+                </h3>
+              </div>
+              <span className="text-xs px-3 py-1.5 rounded-full bg-blue-950/80 border border-blue-700 text-cyan-300 font-semibold self-start sm:self-auto">
+                Silicon-to-Token Performance
+              </span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-4xl">
+              Modern AI success depends on purpose-engineered compute efficiency. TrustGrid transforms raw GPU hardware into hyper-optimized AI Factories through kernel-level CUDA tuning, NCCL collective synchronization, and enterprise model serving stacks.
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider block mb-1.5">Compute Orchestration</span>
+                <h5 className="font-bold text-white text-sm mb-1.5">Kubernetes &amp; Slurm AI Fabrics</h5>
+                <p className="text-xs text-slate-300 mb-2">Automated multi-tenant cluster scheduling, dynamic MIG partitioning, and auto-scaling GPU worker pools.</p>
+                <div className="text-[11px] text-cyan-300 font-mono">30–70% utilization boost</div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider block mb-1.5">Kernel Optimization</span>
+                <h5 className="font-bold text-white text-sm mb-1.5">NVIDIA CUDA &amp; NCCL Tuning</h5>
+                <p className="text-xs text-slate-300 mb-2">Custom CUDA kernels, FlashAttention-3 integration, and line-rate NCCL barrier tuning for zero-straggler training.</p>
+                <div className="text-[11px] text-blue-300 font-mono">&gt;90% theoretical peak FLOPS</div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wider block mb-1.5">Model Serving Engines</span>
+                <h5 className="font-bold text-white text-sm mb-1.5">TensorRT-LLM, vLLM &amp; Triton</h5>
+                <p className="text-xs text-slate-300 mb-2">Continuous batching, chunked prefill, speculative decoding, and dynamic multi-LoRA adapters served at line speed.</p>
+                <div className="text-[11px] text-indigo-300 font-mono">2–4x inference throughput</div>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <span className="text-[11px] font-bold text-teal-400 uppercase tracking-wider block mb-1.5">Quantization &amp; Unit Cost</span>
+                <h5 className="font-bold text-white text-sm mb-1.5">FP8 / INT4 Precision Serving</h5>
+                <p className="text-xs text-slate-300 mb-2">Activation-aware weight quantization and KV-cache compression minimizing footprint per token produced.</p>
+                <div className="text-[11px] text-teal-300 font-mono">30–60% TCO cost reduction</div>
+              </div>
             </div>
           </div>
         </section>

@@ -111,13 +111,41 @@ export default function IndustriesPage() {
 
                 <p className="ind-summary">{ind.summary}</p>
 
+                {/* 5-STAGE BLUEPRINT FLOW STRIP (HIGH-CONTRAST LIGHT THEME) */}
+                <div className="my-4 py-2 px-3 rounded-lg bg-slate-50 border border-slate-200/80 flex items-center justify-between text-[11px] font-mono text-slate-700 overflow-x-auto shadow-xs">
+                  <span className="flex items-center gap-1.5 whitespace-nowrap text-blue-900 font-bold">
+                    <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-bold">1</span>
+                    Industry
+                  </span>
+                  <span className="text-slate-400 px-1 font-bold">→</span>
+                  <span className="flex items-center gap-1.5 whitespace-nowrap text-amber-900 font-bold">
+                    <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px] font-bold">2</span>
+                    Enterprise Challenge
+                  </span>
+                  <span className="text-slate-400 px-1 font-bold">→</span>
+                  <span className="flex items-center gap-1.5 whitespace-nowrap text-cyan-900 font-bold">
+                    <span className="w-4 h-4 rounded-full bg-cyan-100 text-cyan-800 flex items-center justify-center text-[10px] font-bold">3</span>
+                    AI Architecture
+                  </span>
+                  <span className="text-slate-400 px-1 font-bold">→</span>
+                  <span className="flex items-center gap-1.5 whitespace-nowrap text-indigo-900 font-bold">
+                    <span className="w-4 h-4 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-[10px] font-bold">4</span>
+                    TrustGrid Solution
+                  </span>
+                  <span className="text-slate-400 px-1 font-bold">→</span>
+                  <span className="flex items-center gap-1.5 whitespace-nowrap text-emerald-900 font-bold">
+                    <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">5</span>
+                    Business Outcome
+                  </span>
+                </div>
+
                 <div className="ind-split-content">
                   {/* LEFT: CHALLENGES & METHODOLOGIES */}
                   <div className="ind-left-col">
                     <div className="ind-sub-box">
                       <h4>
                         <ShieldCheck size={16} className="text-blue-600" />
-                        <span>Core Industry Constraints</span>
+                        <span>Enterprise Challenges & Technical Constraints</span>
                       </h4>
                       <ul className="ind-list">
                         {ind.challenges.map((c, cIdx) => (
@@ -146,7 +174,7 @@ export default function IndustriesPage() {
                   <div className="ind-right-col">
                     <h4>
                       <Layers size={16} className="text-blue-600" />
-                      <span>TrustGrid Solution Architecture Mappings</span>
+                      <span>AI Architecture & TrustGrid Solution Deployments</span>
                     </h4>
                     <div className="ind-solutions-stack">
                       {ind.solutionApplications.map((app, aIdx) => (

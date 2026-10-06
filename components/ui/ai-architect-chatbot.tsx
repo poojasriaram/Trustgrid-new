@@ -246,7 +246,7 @@ export function AIArchitectChatbot() {
       responseText =
         'TRUSTGRID.AI is a specialized full-stack AI engineering operating company. We architect high-density GPU infrastructure, autonomous multi-agent fleets, lossless AI networking, quantum-safe cybersecurity, trusted explainability, and AI value engineering.'
       followUpQuestion = 'Which layer of your AI stack is your current priority: compute infrastructure, multi-agent workflows, networking, or security?'
-      pageLink = { label: 'Explore All Enterprise Offerings', href: '/offerings' }
+      pageLink = { label: 'Explore All Enterprise Offerings', href: '/#offerings' }
     }
 
     // 3. Propose Lead Connection for High-Intent or Offering Questions

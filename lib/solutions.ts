@@ -227,22 +227,27 @@ export const solutions: Solution[] = [
       {
         title: 'AI Factory Design & Architecture',
         description: 'End-to-end engineering of production AI compute environments — from accelerator selection and cluster topology to power, cooling, networking, and storage.',
-        subItems: ['Integrated accelerator topology design', 'Power and liquid cooling engineering', 'Multi-region distributed compute fabrics', 'Sovereign and air-gapped deployments'],
+        subItems: ['Integrated accelerator topology design (Blackwell / HGX / MI300X)', 'Direct-to-chip liquid cooling engineering (30–100kW/rack)', 'Multi-region distributed compute fabrics & sovereign deployments', 'Bare-metal & Kubernetes AI cluster orchestration'],
+      },
+      {
+        title: 'LLMOps & Model Lifecycle Engineering',
+        description: 'We engineer the complete model lifecycle — from foundation model selection and optimization to production deployment, evaluation, observability, and continuous improvement.',
+        subItems: ['Foundation model selection, fine-tuning & LoRA/DPO adaptation', 'Inference acceleration via TensorRT-LLM, vLLM & Triton Inference Server', 'FP8, INT8 & INT4 activation-aware quantization', 'Continuous model evaluation, drift benchmarking & LLM observability'],
       },
       {
         title: 'Inference Optimization Engineering',
         description: 'Deep specialization in model serving economics and latency reduction — the single largest recurring cost in production AI.',
-        subItems: ['Quantization (INT4/INT8/FP8) & Speculative Decoding', 'Continuous batching & PagedAttention KV-cache management', 'Prefix caching & dynamic request routing', 'Multi-model serving optimization'],
+        subItems: ['Speculative decoding (Medusa, Eagle, lookahead)', 'Continuous batching & PagedAttention KV-cache management', 'Prefix caching & dynamic multi-LoRA switching at line speed', 'Multi-tenant GPU slicing (MIG, vGPU) & distributed serving'],
       },
       {
         title: 'Cluster Performance & Utilization Engineering',
         description: 'Continuous measurement, profiling, and optimization of accelerator utilization, memory bandwidth, and interconnect efficiency.',
-        subItems: ['GPU memory bandwidth optimization', 'Workload-aware intelligent scheduling', 'Elimination of idle cycles & thermal throttling', 'Multi-tenant partition optimization (MIG, vGPU)'],
+        subItems: ['GPU memory bandwidth optimization & kernel micro-tuning', 'Workload-aware intelligent Slurm/K8s scheduling', 'Elimination of idle cycles, thermal throttling & straggler jobs', 'Distributed tensor & pipeline parallelism tuning'],
       },
       {
         title: 'AI Infrastructure Deployment & Managed Services',
         description: 'Full lifecycle deployment from procurement coordination and hardware installation to software stack validation and 24/7 Managed AI Factory operations.',
-        subItems: ['Turnkey cluster deployment & validation', 'Software stack configuration (vLLM, TensorRT-LLM, Triton)', 'Continuous SLA monitoring and incident response', 'Capacity planning and cost engineering'],
+        subItems: ['Turnkey cluster deployment & validation', 'Software stack configuration (vLLM, TensorRT-LLM, Triton, Ray)', 'Continuous SLA monitoring and incident response', 'Capacity planning and cost engineering'],
       },
       {
         title: 'Hybrid Classical–Quantum Readiness',
@@ -293,20 +298,20 @@ export const solutions: Solution[] = [
     ],
     capabilities: [
       {
-        category: 'Full-Stack Accelerator Architecture',
-        items: ['NVIDIA Blackwell, HGX, DGX, Grace Hopper', 'AMD MI300X & Instinct series', 'Custom ASIC deployments & heterogeneous orchestration', 'Bare-metal & Kubernetes AI orchestration'],
+        category: 'Full-Stack Accelerator & Compute Architecture',
+        items: ['NVIDIA Blackwell GB200, HGX H100/H200, DGX, Grace Hopper', 'AMD Instinct MI300X & MI350X series', 'Custom ASIC deployments & heterogeneous orchestration (TPU, Trainium)', 'Bare-metal & Kubernetes AI orchestration with Slurm scheduler integration'],
       },
       {
-        category: 'Advanced Model Serving Engineering',
-        items: ['vLLM, TensorRT-LLM, NVIDIA NIM, Triton Inference Server', 'Custom serving runtime development', 'Dynamic multi-LoRA switching at line speed', 'Distributed tensor & pipeline parallelism'],
+        category: 'LLMOps & Foundation Model Engineering',
+        items: ['Complete model lifecycle: selection, fine-tuning (LoRA/DPO), evaluation & deployment', 'Model serving via vLLM, TensorRT-LLM, NVIDIA NIM, and Triton Inference Server', 'Continuous model evaluation, regression benchmarking & output guardrails', 'Full-stack LLM observability, distributed tracing & token telemetry'],
       },
       {
-        category: 'Inference Micro-Optimization',
-        items: ['INT4/INT8/FP8 activation-aware quantization', 'Speculative decoding (Medusa, Eagle, lookahead)', 'Continuous batching & chunked prefill', 'PagedAttention & KV-cache compression'],
+        category: 'Inference Micro-Optimization & Serving Performance',
+        items: ['FP8, INT8 & INT4 activation-aware quantization runtimes', 'Speculative decoding (Medusa, Eagle, lookahead)', 'Continuous batching, chunked prefill & prefix caching', 'PagedAttention & KV-cache memory compression'],
       },
       {
         category: 'AI-for-AI Infrastructure Optimization',
-        items: ['Automated profiling & tuning engines', 'Continuous performance regression detection', 'Workload-aware dynamic power capping', 'Predictive capacity and failure forecasting'],
+        items: ['Automated profiling & kernel tuning engines', 'Continuous performance regression detection', 'Workload-aware dynamic power capping', 'Predictive capacity and failure forecasting'],
       },
     ],
     metrics: [
@@ -358,7 +363,12 @@ export const solutions: Solution[] = [
       {
         title: 'Agentic System Architecture',
         description: 'End-to-end architectural design of enterprise multi-agent systems — agent roles, communication protocols, memory architectures, planning hierarchies, and tool integration.',
-        subItems: ['Multi-agent topology design (hierarchical, swarm, consensus)', 'Agent communication protocols and message buses', 'Persistent memory architectures (episodic, procedural, semantic)', 'Tool integration and API authorization boundaries'],
+        subItems: ['Multi-agent topology design (hierarchical, swarm, consensus)', 'Agent communication protocols and message buses', 'Persistent memory architectures (episodic, procedural, semantic)', 'Tool integration and API authorization boundaries via Model Context Protocol (MCP)'],
+      },
+      {
+        title: 'Long-Memory AI & Persistent Enterprise Intelligence',
+        description: 'Engineering the continuous cognitive spine: Enterprise Data → Knowledge Graph → Vector Memory → RAG → Semantic Search → Long-Term Memory → Enterprise Agents.',
+        subItems: ['Enterprise data consolidation & automated knowledge graph construction', 'Vector database infrastructure & sub-50ms semantic search', 'Hybrid retrieval-augmented generation (RAG & GraphRAG)', 'Persistent cross-session long-term memory for digital worker fleets'],
       },
       {
         title: 'Vertical Agent Factories',
@@ -378,13 +388,17 @@ export const solutions: Solution[] = [
       {
         title: 'Multi-Agent Orchestration Platforms',
         description: 'Engineering the orchestration middleware that coordinates complex multi-agent workflows across sequential, parallel, hierarchical, swarm, debate, and consensus patterns.',
-        subItems: ['Dynamic task decomposition and delegation engines', 'Shared team memory & cross-agent context sharing', 'Inter-agent conflict resolution & consensus mechanisms', 'Distributed agent execution runtime'],
+        subItems: ['Dynamic task decomposition and delegation engines', 'Shared team memory & cross-agent context sharing', 'Inter-agent conflict resolution & consensus mechanisms', 'Distributed agent execution runtime (LangGraph, CrewAI, AutoGen)'],
       },
     ],
     useCases: [
       {
         title: 'Autonomous Finance Operations',
         description: 'Multi-agent systems handling billing discrepancy detection, accounts receivable reconciliation, financial anomaly investigation, and cash forecasting 24/7.',
+      },
+      {
+        title: 'Persistent Long-Memory Intelligence Hub',
+        description: 'Unified enterprise cognitive core indexing multi-decade corporate data, technical manuals, contracts, and customer interactions into a searchable knowledge graph and vector memory.',
       },
       {
         title: 'Multi-Agent Supply Chain Planning',
@@ -428,15 +442,15 @@ export const solutions: Solution[] = [
     capabilities: [
       {
         category: 'Multi-Agent Orchestration Architectures',
-        items: ['Hierarchical delegation & supervisor patterns', 'Swarm intelligence & autonomous peer collaboration', 'Adversarial debate & consensus protocols', 'Dynamic graph-based workflow execution'],
+        items: ['Hierarchical delegation & supervisor patterns', 'Swarm intelligence & autonomous peer collaboration', 'Adversarial debate & consensus protocols', 'Dynamic graph-based workflow execution (LangGraph, CrewAI, AutoGen)'],
       },
       {
-        category: 'Agent Memory Systems',
-        items: ['Short-term working memory & context window optimization', 'Episodic long-term memory with vector indexing', 'Shared team memory & cross-session entity stores', 'Automated memory consolidation and pruning'],
+        category: 'Long-Memory AI & Enterprise Memory Systems',
+        items: ['Enterprise Data → Knowledge Graph → Vector Memory → RAG pipeline', 'Episodic, procedural and semantic memory with vector database indexing', 'GraphRAG relationship querying and entity resolution', 'Cross-session long-term memory with automated consolidation and pruning'],
       },
       {
         category: 'Planning & Reasoning Frameworks',
-        items: ['ReAct, Plan-and-Execute, Tree-of-Thought, Graph-of-Thought', 'Reflection and Self-Refine validation loops', 'Domain-specific symbolic + neural reasoning hybrids', 'Dynamic tool discovery and schema binding'],
+        items: ['ReAct, Plan-and-Execute, Tree-of-Thought, Graph-of-Thought', 'Reflection and Self-Refine validation loops', 'Domain-specific symbolic + neural reasoning hybrids', 'Dynamic tool discovery and Model Context Protocol (MCP) schema binding'],
       },
       {
         category: 'Governance & Human-in-the-Loop',

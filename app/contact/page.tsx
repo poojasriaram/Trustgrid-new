@@ -49,7 +49,7 @@ export default function ContactPage() {
             { label: "1. Message Form", href: "#contact-form-section" },
             { label: "2. Global Offices", href: "#global-offices" },
             { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic#diagnostic-form-section" },
-            { label: "4. Solutions Portfolio", href: "/offerings" }
+            { label: "4. Solutions Portfolio", href: "/#offerings" }
           ]}
           metrics={{
             statValue: "5 Global",

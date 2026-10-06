@@ -42,7 +42,7 @@ export function AgenticFactoryCapabilities() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4">
               <Bot size={20} />
@@ -80,6 +80,49 @@ export function AgenticFactoryCapabilities() {
               <li className="flex items-center gap-2">• Few-shot exemplar retrieval from golden corpus</li>
               <li className="flex items-center gap-2">• Token budget exhaustion guardrails</li>
             </ul>
+          </div>
+        </div>
+
+        {/* LONG-MEMORY AI: PERSISTENT ENTERPRISE INTELLIGENCE PIPELINE */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-950 to-blue-950 text-white border border-slate-800 shadow-md">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+            <div>
+              <span className="text-xs font-bold text-cyan-400 uppercase tracking-widest block mb-1">
+                Persistent Enterprise Intelligence Architecture
+              </span>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                Long-Memory AI: From Raw Enterprise Data to Autonomous Action
+              </h3>
+            </div>
+            <span className="text-xs px-3 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 font-semibold self-start sm:self-auto">
+              Zero Context Loss
+            </span>
+          </div>
+
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-4xl">
+            Single-session LLMs forget past interactions, leading to repetitive context stuffing and ballooning inference costs. TrustGrid engineers persistent enterprise long-term memory that preserves factual provenance, causal relationships, and cross-departmental context.
+          </p>
+
+          {/* 7-Step Horizontal Flow Diagram */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
+            {[
+              { step: '01', title: 'Enterprise Data', desc: 'ERP, CRM, logs, unstructured docs', badge: 'Source' },
+              { step: '02', title: 'Knowledge Graph', desc: 'Ontological entities & causal links', badge: 'Structure' },
+              { step: '03', title: 'Vector Memory', desc: 'High-dimensional dense embeddings', badge: 'Index' },
+              { step: '04', title: 'RAG / GraphRAG', desc: 'Hybrid dense + graph retrieval', badge: 'Retrieval' },
+              { step: '05', title: 'Semantic Search', desc: 'Sub-50ms intent & entity matching', badge: 'Rank' },
+              { step: '06', title: 'Long-Term Memory', desc: 'Durable episodic & procedural state', badge: 'Recall' },
+              { step: '07', title: 'Enterprise Agents', desc: 'Deterministic autonomous execution', badge: 'Action' }
+            ].map((node, i) => (
+              <div key={i} className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-center flex flex-col justify-between hover:bg-white/10 transition-colors">
+                <div>
+                  <span className="text-[10px] font-bold text-cyan-400 block mb-1 uppercase tracking-wider">{node.badge}</span>
+                  <div className="text-xs font-black text-white mb-1">{node.title}</div>
+                  <div className="text-[10px] text-slate-400 leading-snug">{node.desc}</div>
+                </div>
+                <div className="mt-2 text-[10px] font-mono text-slate-500 font-semibold">Stage {node.step}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

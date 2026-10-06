@@ -56,18 +56,18 @@ const solutionIcons = {
 // 5-Layer Engineering Architecture Mappings
 const fiveLayerModels: Record<string, { name: string; purpose: string; components: string[]; outcome: string }[]> = {
   'ai-agentic-factory': [
-    { name: 'Layer 01: Cognitive Foundation', purpose: 'Establish reasoning models, memory architectures, and MCP interfaces.', components: ['Model Context Protocol (MCP) servers', 'Episodic & vector semantic memory', 'ReAct / Tree-of-Thought planning'], outcome: 'Standardized tool integration and durable cross-session context' },
-    { name: 'Layer 02: Multi-Agent Orchestration', purpose: 'Coordinate specialized agent swarms with deterministic execution DAGs.', components: ['LangGraph / AutoGen / CrewAI engines', 'Agent-to-Agent (A2A) protocol', 'Consensus & conflict resolution'], outcome: 'Deadlock-free, predictable multi-agent collaboration' },
-    { name: 'Layer 03: Domain Reasoning & Connectors', purpose: 'Equip agent teams with industry schemas and enterprise connectors.', components: ['ERP/CRM/ITSM enterprise connectors', 'Dynamic few-shot context retrieval', 'Test-time compute allocation'], outcome: 'High-precision task execution in complex domain systems' },
-    { name: 'Layer 04: AgentOps & Governance', purpose: 'Continuous real-time observability, policy enforcement, and validation.', components: ['Distributed trace logging', 'Real-time safety guardrails', 'Human-in-the-loop approval gates'], outcome: 'Deterministic compliance and complete decision auditability' },
-    { name: 'Layer 05: Autonomous Business Outcome', purpose: 'Embed digital workers into core enterprise operations to compound productivity.', components: ['Autonomous finance reconciliation', 'Supply chain inventory balancing', 'Autonomous SRE incident loops'], outcome: '50–80% reduction in operational cycle times' }
+    { name: 'Layer 01: Cognitive Foundation & Long-Memory AI', purpose: 'Establish reasoning models, memory architectures, and MCP interfaces: Enterprise Data → Knowledge Graph → Vector Memory → RAG → Semantic Search → Long-Term Memory → Enterprise Agents.', components: ['Model Context Protocol (MCP) servers', 'Knowledge Graph & sub-50ms vector databases', 'GraphRAG & episodic semantic memory', 'ReAct / Tree-of-Thought planning loops'], outcome: 'Continuous persistent memory and zero context loss across sessions' },
+    { name: 'Layer 02: Multi-Agent Swarm Orchestration', purpose: 'Coordinate specialized agent swarms with deterministic execution DAGs and consensus quorums.', components: ['LangGraph / AutoGen / CrewAI engines', 'Agent-to-Agent (A2A) protocol', 'Consensus & conflict resolution quorums', 'Dynamic task decomposition DAGs'], outcome: 'Deadlock-free, predictable multi-agent collaboration' },
+    { name: 'Layer 03: Domain Reasoning & Connectors', purpose: 'Equip agent teams with industry schemas and enterprise connectors across ERP, CRM, and SCM.', components: ['Enterprise connectors (SAP, Salesforce, ServiceNow)', 'Dynamic few-shot context retrieval', 'Test-time compute scaling', 'Vertical reasoning libraries'], outcome: 'High-precision task execution in complex domain systems' },
+    { name: 'Layer 04: AgentOps, Governance & Safety', purpose: 'Continuous real-time observability, policy enforcement, anti-injection firewalls, and validation.', components: ['Distributed trace logging & token telemetry', 'Prompt injection firewalls & safety shields', 'Human-in-the-loop approval gates', 'Automated red-teaming harnesses'], outcome: 'Deterministic compliance and complete decision auditability' },
+    { name: 'Layer 05: Autonomous Business Outcome', purpose: 'Embed digital workers into core enterprise operations to compound productivity.', components: ['Autonomous finance reconciliation', 'Supply chain inventory balancing', 'Autonomous SRE incident loops', '70–90% touchless task automation'], outcome: '50–80% reduction in operational cycle times' }
   ],
   'ai-infra-engineering': [
-    { name: 'Layer 01: High-Density Physical Facility', purpose: 'Build the physical, electrical, and thermal envelope for extreme density.', components: ['Direct-to-chip liquid cooling', '30–100kW per rack distribution', 'PUE optimization & power conditioning'], outcome: 'Uninterrupted power & thermal stability for dense compute' },
-    { name: 'Layer 02: Accelerator Cluster Topology', purpose: 'Interconnect GPU/ASIC compute nodes and ultra-fast NVMe storage.', components: ['NVIDIA HGX/Blackwell & AMD MI300X', 'NVMe-over-Fabrics parallel storage', 'Lossless cluster interconnects'], outcome: 'Continuous data feeding without GPU I/O starvation' },
-    { name: 'Layer 03: Inference & Serving Acceleration', purpose: 'Minimize latency and cost-per-token through runtime kernel optimization.', components: ['PagedAttention KV-cache management', 'Continuous batching & chunked prefill', 'INT4/INT8/FP8 quantization runtimes'], outcome: '30–60% reduction in production cost-per-token' },
-    { name: 'Layer 04: Cluster Workload Operations', purpose: 'Maximize equipment effectiveness and balance multi-tenant resource demand.', components: ['Workload-aware scheduling', 'MIG/vGPU partition management', 'Thermal telemetry & predictive maintenance'], outcome: '30–70% higher GPU cluster utilization yield' },
-    { name: 'Layer 05: Sovereign & Economical AI Factory', purpose: 'Deliver fully controlled, cost-governed enterprise intelligence production.', components: ['Private/sovereign AI deployment', 'Total cost of ownership modeling', 'Carbon-optimized compute scheduling'], outcome: 'Predictable, sustainable intelligence scaling' }
+    { name: 'Layer 01: High-Density Physical Facility', purpose: 'Build the physical, electrical, and thermal envelope for extreme density (30–100kW/rack).', components: ['Direct-to-chip liquid cooling (DLC)', '30–100kW per rack distribution', 'PUE <1.15 optimization & power conditioning', 'Tier III/IV redundant power paths'], outcome: 'Uninterrupted power & thermal stability for dense compute' },
+    { name: 'Layer 02: Accelerator Cluster Topology', purpose: 'Interconnect GPU/ASIC compute nodes and ultra-fast NVMe storage fabrics.', components: ['NVIDIA Blackwell GB200 & HGX H100/H200', 'AMD Instinct MI300X/MI350X clusters', 'NVMe-over-Fabrics & GPUDirect Storage', 'Non-blocking rail-optimized fat-tree'], outcome: 'Continuous data feeding without GPU I/O starvation' },
+    { name: 'Layer 03: LLMOps & Serving Acceleration', purpose: 'Minimize latency and cost-per-token through runtime kernel optimization and model engineering.', components: ['TensorRT-LLM, vLLM & Triton Inference Server', 'PagedAttention KV-cache management', 'Continuous batching & speculative decoding', 'FP8, INT8 & INT4 quantization runtimes'], outcome: '30–60% reduction in production cost-per-token' },
+    { name: 'Layer 04: Kubernetes & Fleet Operations', purpose: 'Maximize equipment effectiveness and balance multi-tenant resource demand.', components: ['Slurm / Kubernetes AI cluster orchestration', 'Workload-aware intelligent scheduling', 'MIG/vGPU partition management', 'AI-DCIM thermal telemetry & self-healing'], outcome: '30–70% higher GPU cluster utilization yield' },
+    { name: 'Layer 05: Sovereign & Economical AI Factory', purpose: 'Deliver fully controlled, cost-governed enterprise intelligence production.', components: ['Private/sovereign AI deployment', 'Total cost of ownership modeling', 'Carbon-optimized compute scheduling', '24/7 Managed AI Factory operations'], outcome: 'Predictable, sustainable intelligence scaling' }
   ],
   'ai-networking': [
     { name: 'Layer 01: Physical Optics & Cabling', purpose: 'Ensure flawless physical signal integrity across high-speed connections.', components: ['400G/800G OSFP/QSFP optics', 'Structured high-density fiber arrays', 'Low-loss active optical cables'], outcome: 'Clean, error-free physical signal transmission' },
@@ -99,13 +99,15 @@ const fiveLayerModels: Record<string, { name: string; purpose: string; component
   ]
 }
 
-// Temporal Spectrum Mappings
+// Temporal Spectrum Mappings — AI Across Every Enterprise Timescale (Section 13)
 const temporalSpectrums: Record<string, { phase: string; title: string; focus: string; outcome: string }[]> = {
   default: [
-    { phase: 'NOW', title: 'Assess & Benchmark', focus: 'Audit existing systems, identify bottlenecks, and establish baseline performance metrics.', outcome: 'Actionable diagnostic & gap prioritization roadmap' },
-    { phase: 'NEXT', title: 'Optimize & Re-architect', focus: 'Deploy targeted architectural improvements, guardrails, and runtime acceleration.', outcome: 'Immediate 30–60% efficiency & throughput gains' },
-    { phase: 'SCALE', title: 'Industrialize & Expand', focus: 'Roll out enterprise-grade fleets, high-density pods, and multi-tenant operations.', outcome: 'Predictable, continuous enterprise-wide scaling' },
-    { phase: 'FUTURE', title: 'Autonomous Compounding', focus: 'Self-tuning architectures, closed-loop telemetry, and quantum-hybrid readiness.', outcome: 'Defensible, compounding competitive advantage' }
+    { phase: '< 1 μs', title: 'REFLEX', focus: 'Infrastructure-level decisions, line-rate packet routing, hardware flow control, and zero-loss backpressure.', outcome: 'Zero-loss line-rate hardware execution' },
+    { phase: 'Milliseconds', title: 'PERCEPTION', focus: 'Real-time sensing, edge telemetry, vision inference, and sub-50ms token generation.', outcome: 'Sub-second perception & low-latency inference' },
+    { phase: 'Seconds', title: 'INTERACTION', focus: 'AI-human collaboration, dynamic copilot dialogue, tool authorization, and contextual responses.', outcome: 'Deterministic agent-human teaming & UI responsiveness' },
+    { phase: 'Minutes', title: 'OPERATION', focus: 'Automated task execution, multi-agent workflow choreography, and transactional API reconciliation.', outcome: '70–90% touchless operational workflow automation' },
+    { phase: 'Hours', title: 'ANALYSIS', focus: 'Operational intelligence, root-cause anomaly triage, batch model evaluation, and process mining.', outcome: 'Continuous operational clarity & self-healing triage' },
+    { phase: 'Days', title: 'STRATEGY', focus: 'Autonomous enterprise planning, portfolio rebalancing, demand forecasting, and P&L value compounding.', outcome: 'Compounding balance sheet value & executive foresight' }
   ]
 }
 
@@ -343,17 +345,17 @@ export default async function SolutionDetailPage({
         <div className="section-intro">
           <div className="intro-left">
             <span className="section-badge">TEMPORAL SPECTRUM</span>
-            <p className="section-label">Enterprise AI Maturity & Compounding Progression</p>
+            <p className="section-label">AI Across Every Enterprise Timescale</p>
           </div>
-          <span className="section-index">MATURITY</span>
+          <span className="section-index">TIMESCALE</span>
         </div>
 
         <div className="offerings-header">
           <h2>
-            Compounding progression over time. <span>Not a one-off implementation.</span>
+            AI across every enterprise timescale. <span>From Sub-Microsecond Reflex to Autonomous Strategy.</span>
           </h2>
           <p>
-            How TrustGrid partners with your leadership from immediate bottleneck diagnosis to continuous enterprise AI operations.
+            Operating across every temporal order of magnitude — from physical line-rate packets and sub-50ms perception to multi-day strategic portfolio planning.
           </p>
         </div>
 

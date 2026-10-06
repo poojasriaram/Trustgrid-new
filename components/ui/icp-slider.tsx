@@ -41,22 +41,22 @@ export const defaultICPs: ICPPersona[] = [
   {
     id: 'cio',
     role: 'Chief Information Officer (CIO)',
-    title: 'Enterprise AI Strategy & Governance',
+    title: 'Infrastructure Modernization & AI Operating Model',
     badge: 'EXECUTIVE LEADERSHIP',
     whatTheyCareAbout: [
-      'Enterprise AI Strategy & Cross-Unit Alignment',
-      'Technology Investment Return & Capex/Opex Efficiency',
+      'Infrastructure Modernization across Legacy & Hybrid Clouds',
+      'Enterprise Scalability & Unified AI Operating Model',
       'AI Value Realization & Compounding Productivity',
       'Continuous Governance & EU AI Act / NIST Compliance'
     ],
     theirChallenge: 'Trapped between board demands for rapid AI adoption and operational realities of uncoordinated pilot sprawl, runaway token costs, and black-box regulatory risk.',
-    trustgridRelevance: 'TrustGrid provides structured Enterprise AI Factory operating models, industrial Lean/TOC disciplines, and mathematical governance to turn experimental pilots into reliable, compounding balance sheet assets.',
+    trustgridRelevance: 'TrustGrid delivers turnkey enterprise AI operating models, industrial Lean/TOC disciplines, and mathematical governance to turn experimental pilots into scalable, board-defensible enterprise assets.',
     relevantSolutions: [
       { title: 'AI Value Engineering', slug: 'ai-value-engineering' },
       { title: 'Trusted AI Transformation', slug: 'trusted-ai-transformation' },
       { title: 'Agentic Enterprise Factory', slug: 'ai-agentic-factory' }
     ],
-    expectedOutcome: 'Predictable, board-defensible AI deployment with verified compliance, unified FinOps governance, and sustainable organizational adoption.',
+    expectedOutcome: 'Infrastructure modernization, predictable AI operating model, enterprise scalability, unified FinOps governance, and sustainable organizational adoption.',
     ctaText: 'Explore CIO Executive Diagnostic',
     ctaLink: '/book-ai-diagnostic?role=cio#diagnostic-form-section',
     icon: Users
@@ -64,22 +64,22 @@ export const defaultICPs: ICPPersona[] = [
   {
     id: 'cto',
     role: 'Chief Technology Officer (CTO)',
-    title: 'Scalable Systems & AI Architecture',
+    title: 'AI Architecture & Platform Engineering',
     badge: 'TECHNICAL LEADERSHIP',
     whatTheyCareAbout: [
-      'Production AI Systems Architecture & Modularity',
-      'GPU Compute & Accelerator Utilization Efficiency',
-      'Low-Latency Inference Serving at Scale',
-      'Avoiding Premature Vendor Lock-In & Retaining Sovereign IP'
+      'AI Architecture & Full-Stack Platform Engineering',
+      'Model Engineering, Fine-Tuning & Quantization Pipelines',
+      'GPU Compute & Accelerator Utilization Efficiency (Blackwell/HGX)',
+      'Low-Latency Inference Serving & Line-Rate Fabrics'
     ],
     theirChallenge: 'Engineering teams struggle with cluster thermal throttling, distributed inter-node network latency, model fragmentation, and fragile multi-agent orchestration DAGs.',
-    trustgridRelevance: 'TrustGrid delivers hardware-to-code systems engineering: 30–100kW direct-to-chip liquid cooling, lossless InfiniBand/RoCEv2 fabrics, kernel micro-tuning, and robust Model Context Protocol (MCP) multi-agent runtimes.',
+    trustgridRelevance: 'TrustGrid delivers hardware-to-code systems engineering: 30–100kW direct-to-chip liquid cooling, lossless InfiniBand/RoCEv2 fabrics, kernel micro-tuning (vLLM/TensorRT-LLM), and robust Model Context Protocol (MCP) multi-agent runtimes.',
     relevantSolutions: [
       { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' },
       { title: 'Lossless AI Networking', slug: 'ai-networking' },
       { title: 'Agentic Enterprise Systems', slug: 'ai-agentic-factory' }
     ],
-    expectedOutcome: 'High-throughput, resilient AI platform architecture operating with maximum accelerator utilization and ultra-low inference latency.',
+    expectedOutcome: 'Full-spectrum AI architecture, robust model engineering pipelines, high-throughput platform engineering operating with maximum accelerator utilization and ultra-low latency.',
     ctaText: 'Schedule CTO Technical Audit',
     ctaLink: '/book-ai-diagnostic?role=cto#diagnostic-form-section',
     icon: Cpu
@@ -87,21 +87,21 @@ export const defaultICPs: ICPPersona[] = [
   {
     id: 'ciso',
     role: 'Chief Information Security Officer (CISO)',
-    title: 'AI Cybersecurity & Quantum Defense',
+    title: 'AI Security, Zero Trust & Threat Detection',
     badge: 'SECURITY & RISK LEADERSHIP',
     whatTheyCareAbout: [
-      'Defending Against Prompt Injection & Agent Hijacking',
-      'Zero-Trust Identity for Non-Deterministic Agents',
-      'NIST Post-Quantum Cryptography Migration (PQC)',
-      'Real-Time Cryptographic Bill of Materials (CBOM) Visibility'
+      'AI Security & Runtime Defenses (Prompt Injection / Agent Hijacking)',
+      'Zero-Trust Cryptographic Workload Identity for Autonomous Agents',
+      'AI Governance & Regulatory Conformity (NIST AI RMF / ISO 42001)',
+      'Threat Detection, 24/7 AI SOC & Post-Quantum Cryptography (PQC / CBOM)'
     ],
     theirChallenge: 'Autonomous agents introduce novel attack surfaces across tool integrations while harvest-now-decrypt-later quantum campaigns threaten existing enterprise encryption foundations.',
-    trustgridRelevance: 'TrustGrid engineers runtime prompt firewalls, behavioral tool sandboxing, automated CBOM inventory, and L1–L7 post-quantum cryptographic transitions compliant with NIST FIPS 203/204/205.',
+    trustgridRelevance: 'TrustGrid engineers runtime prompt firewalls, behavioral tool sandboxing, automated CBOM inventory, 24/7 Managed AI SOC monitoring, and L1–L7 post-quantum cryptographic transitions compliant with NIST FIPS 203/204/205.',
     relevantSolutions: [
       { title: 'AI Cybersecurity & Quantum-Safe', slug: 'ai-cybersecurity-quantum-safe' },
       { title: 'Trusted AI Governance', slug: 'trusted-ai-transformation' }
     ],
-    expectedOutcome: 'Zero-trust agent isolation, complete visibility across cryptographic assets, and perpetual resilience against quantum decryption threats.',
+    expectedOutcome: 'Zero-trust agent isolation, proactive AI threat detection, continuous AI governance, complete CBOM visibility, and perpetual resilience against quantum decryption threats.',
     ctaText: 'Audit Security & PQC Posture',
     ctaLink: '/book-ai-diagnostic?role=ciso#diagnostic-form-section',
     icon: Lock
@@ -109,21 +109,21 @@ export const defaultICPs: ICPPersona[] = [
   {
     id: 'ai-ml-leader',
     role: 'Head of AI / ML & Platform Engineering',
-    title: 'Agentic Fleets & Productionization',
+    title: 'Model Performance, Agentic Systems & LLMOps',
     badge: 'AI ENGINEERING LEADERSHIP',
     whatTheyCareAbout: [
-      'Multi-Agent System Orchestration (LangGraph / AutoGen / CrewAI)',
-      'Persistent Memory Fabrics (Episodic, Semantic, Relational)',
-      'Real-Time AgentOps Tracing, Evaluation & Drift Telemetry',
-      'Deterministic Task Execution Accuracy with Strict SLAs'
+      'Model Performance, Evaluation & Quantization (INT4/INT8/FP8)',
+      'Agentic Systems & Multi-Agent Swarm Orchestration (LangGraph / AutoGen)',
+      'End-to-End LLMOps & Real-Time Distributed Tracing',
+      'AI Operations, Persistent Memory & Deterministic Task Execution'
     ],
     theirChallenge: 'Simple chatbot wrappers fail in production when executing multi-step business logic due to hallucination compounding, context drift, and unmonitored tool failures.',
-    trustgridRelevance: 'TrustGrid architects governed multi-agent cognitive swarms with deterministic reasoning DAGs, automated fallback circuits, Model Context Protocol tooling, and real-time AgentOps evaluation.',
+    trustgridRelevance: 'TrustGrid architects governed multi-agent cognitive swarms with deterministic reasoning DAGs, automated fallback circuits, Model Context Protocol tooling, and industrial LLMOps pipelines with continuous evaluation.',
     relevantSolutions: [
       { title: 'Agentic Enterprise Factory', slug: 'ai-agentic-factory' },
       { title: 'Trusted AI Transformation', slug: 'trusted-ai-transformation' }
     ],
-    expectedOutcome: 'Autonomous digital worker fleets executing complex operational processes with deterministic accuracy and full auditability.',
+    expectedOutcome: 'High-precision model performance, enterprise-grade agentic systems, seamless LLMOps lifecycle management, and scalable 24/7 AI operations with verifiable SLAs.',
     ctaText: 'Deploy Governed Agent Fleets',
     ctaLink: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section',
     icon: Bot
@@ -153,13 +153,13 @@ export const defaultICPs: ICPPersona[] = [
   {
     id: 'cfo-business',
     role: 'Chief Financial Officer & Business Leaders',
-    title: 'Unit Economics & CFO-Defensible ROI',
+    title: 'Cost Optimization, Unit Economics & AI ROI',
     badge: 'FINANCIAL LEADERSHIP',
     whatTheyCareAbout: [
-      'Transparent AI Unit Economics & Cost-Per-Task Attribution',
-      'Rapid Time-to-First-Measurable Yield (90 Days)',
-      'Elimination of Unattributed Subscription & Token Sprawl',
-      'Defensible Balance Sheet Returns Tied to Operational Throughput'
+      'Infrastructure & GPU Cost Optimization across Cloud & On-Prem',
+      'Granular Unit Economics (Cost-Per-Token & Cost-Per-Task)',
+      'AI ROI & Defensible Balance Sheet Realization in 90 Days',
+      'Value Realization Office (VRO) Governance & P&L Proof'
     ],
     theirChallenge: 'Substantial capital allocated to AI initiatives with zero transparency into cost-per-task, ballooning cloud inference bills, and unverified top-line revenue attribution.',
     trustgridRelevance: 'TrustGrid embeds Theory of Constraints (TOC) value stream mapping, AI FinOps governance, and the Value Realization Office (VRO) to guarantee measurable financial yield.',

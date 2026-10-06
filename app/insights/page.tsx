@@ -22,8 +22,14 @@ import {
   AlertCircle
 } from 'lucide-react'
 
-export default function InsightsPage() {
-  const [activeCategory, setActiveCategory] = useState<string>('all')
+import { MedicalSuppliesCaseStudyCard } from '@/components/case-studies/case-study-card'
+
+interface InsightsPageProps {
+  initialCategory?: string
+}
+
+export default function InsightsPage({ initialCategory = 'all' }: InsightsPageProps) {
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory)
 
   const filteredArticles = activeCategory === 'all'
     ? insightsArticles
@@ -153,7 +159,14 @@ export default function InsightsPage() {
             </button>
           </div>
 
-          <div className="insights-grid" style={{ marginTop: '32px' }}>
+          {/* FEATURED CASE STUDY CARD (Shows when viewing Case Studies or All Publications) */}
+          {(activeCategory === 'case-study' || activeCategory === 'all') && (
+            <div style={{ marginTop: '32px', marginBottom: '8px' }}>
+              <MedicalSuppliesCaseStudyCard variant="featured" />
+            </div>
+          )}
+
+          <div className="insights-grid" style={{ marginTop: '24px' }}>
             {filteredArticles.map((article: InsightArticle) => (
               <div key={article.id} className="insight-card animated-card reveal-up">
                 <div className="insight-card-meta">
@@ -165,7 +178,22 @@ export default function InsightsPage() {
                 </div>
 
                 <h3>{article.title}</h3>
+                {article.subtitle && (
+                  <p style={{ fontSize: '13px', fontWeight: 600, color: 'var(--ink)', margin: '-4px 0 8px', lineHeight: 1.45 }}>
+                    {article.subtitle}
+                  </p>
+                )}
                 <p className="insight-abstract">{article.abstract}</p>
+
+                {article.tags && article.tags.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', margin: '10px 0' }}>
+                    {article.tags.map((tag, tIdx) => (
+                      <span key={tIdx} className="tag-pill" style={{ fontSize: '11px', padding: '2px 8px' }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
                 <div className="insight-highlights-box">
                   <strong>Key Takeaways:</strong>
@@ -196,7 +224,7 @@ export default function InsightsPage() {
                         href={article.internalLink}
                         className="button button-primary button-sm"
                       >
-                        <span>Explore Architecture</span>
+                        <span>{article.ctaLabel || 'Explore Architecture'}</span>
                         <ArrowUpRight size={14} />
                       </Link>
                       <Link

@@ -9,9 +9,39 @@ export interface InsightArticle {
   externalUrl?: string
   internalLink?: string
   slug: string
+  subtitle?: string
+  tags?: string[]
+  ctaLabel?: string
+  industryTag?: string
 }
 
 export const insightsArticles: InsightArticle[] = [
+  {
+    id: 'case-study-medical-supplies-ai',
+    title: 'GLOBAL CASE STUDY: Medical Supplies & Manufacturing',
+    subtitle: 'End-to-End AI Automation in Medical Supplies Packaging, Regulatory Labeling, Supply Chain Inspection & Warranty Management',
+    category: 'Case Study',
+    industryTag: 'Medical Supplies & Manufacturing',
+    readTime: 'Enterprise Case Study',
+    date: 'March 2026',
+    abstract: 'How TRUSTGRID.AI combines Generative AI, RAG, Edge Computer Vision, dynamic regulatory labeling, and agentic warranty automation to transform global compliance, quality verification, supply chain inspection, and claim adjudication.',
+    highlights: [
+      '3-Day T&C lead time across 40+ global jurisdictions (vs 3-4 weeks)',
+      'Dynamic packaging labeling with verified FDA, ANVISA, CDSCO license numbers',
+      'Edge Computer Vision multi-node seal & OCR inspection with 74% energy savings',
+      '85% touchless warranty claims auto-approved in under 2 minutes (STP)'
+    ],
+    tags: [
+      'Generative AI',
+      'Computer Vision',
+      'Regulatory AI',
+      'Supply Chain',
+      'Warranty Automation'
+    ],
+    internalLink: '/case-studies/medical-supplies-ai',
+    ctaLabel: 'View Case Study →',
+    slug: 'medical-supplies-ai'
+  },
   {
     id: 'crowd-safety-hackathon',
     title: 'Crowd Safety Predictor: Real-Time Computer Vision & Thermal Telemetry at Scale',
@@ -141,6 +171,81 @@ export const insightsArticles: InsightArticle[] = [
     ],
     slug: 'ai-native-enterprise-networking',
     internalLink: '/solutions/ai-networking'
+  },
+  {
+    id: 'case-study-gpu-performance-engineering',
+    title: 'GPU Performance Engineering: 12× H100 Cluster Inference & Training Optimization',
+    subtitle: 'Kernel-Level CUDA Tuning, NCCL Ring Communication & TensorRT-LLM Serving Acceleration',
+    category: 'Case Study',
+    industryTag: 'Enterprise AI Infrastructure',
+    readTime: '6 min read',
+    date: 'February 2026',
+    abstract: 'How TrustGrid engineered kernel optimizations, FP8/INT4 precision quantization, and non-blocking RoCEv2 fabrics to achieve 12× throughput on a 128+ H100 GPU cluster while eliminating communication deadlocks.',
+    highlights: [
+      '12× inference throughput scaling across 128+ NVIDIA H100 GPUs',
+      '40–75% reduction in compute and power costs per million tokens',
+      'Zero packet drop and deterministic NCCL collective communications'
+    ],
+    tags: [
+      'GPU Infrastructure',
+      'CUDA',
+      'TensorRT-LLM',
+      'NCCL',
+      'RoCEv2'
+    ],
+    internalLink: '/solutions/ai-infra-engineering',
+    ctaLabel: 'View Architecture →',
+    slug: 'gpu-performance-engineering-h100'
+  },
+  {
+    id: 'case-study-autonomous-operations',
+    title: 'Autonomous Enterprise Operations: 70–90% End-to-End Workflow Automation',
+    subtitle: 'Multi-Agent Orchestration, Long-Memory AI, and Graph-Based State Machines',
+    category: 'Case Study',
+    industryTag: 'Autonomous Operations',
+    readTime: '8 min read',
+    date: 'January 2026',
+    abstract: 'Deploying hierarchical multi-agent swarms with persistent episodic memory and Model Context Protocol (MCP) tooling to automate complex multi-departmental workflows with human-in-the-loop oversight.',
+    highlights: [
+      '70–90% automation across multi-step enterprise workflows',
+      'Persistent memory retrieval via hybrid vector + knowledge graph search',
+      'Automated Poka-Yoke mistake-proofing with deterministic audit logs'
+    ],
+    tags: [
+      'Agentic Enterprise',
+      'Multi-Agent Systems',
+      'Long-Memory AI',
+      'RAG',
+      'Knowledge Graphs'
+    ],
+    internalLink: '/solutions/ai-agentic-factory',
+    ctaLabel: 'View Architecture →',
+    slug: 'autonomous-enterprise-operations'
+  },
+  {
+    id: 'case-study-enterprise-ai-deployment',
+    title: 'Enterprise AI Deployment: 10× Velocity Acceleration Across Regulated Environments',
+    subtitle: 'Deterministic Methodology Stage Gates, Full-Spectrum Architecture & Sovereign CI/CD',
+    category: 'Case Study',
+    industryTag: 'Government & Regulated AI',
+    readTime: '7 min read',
+    date: 'March 2026',
+    abstract: 'Accelerating mission-critical AI delivery from exploratory proof-of-concept to air-gapped production deployment in under 90 days with mathematical verification and zero regulatory drift.',
+    highlights: [
+      '10× faster AI deployment lifecycle from diagnostic to production',
+      'Full-spectrum architecture unifying infrastructure, agents, and governance',
+      'Continuous compliance against EU AI Act, Fed SR 11-7, and NIST AI RMF'
+    ],
+    tags: [
+      'Enterprise AI',
+      'Methodology Engine',
+      'Trusted AI',
+      'Governance',
+      'FinOps'
+    ],
+    internalLink: '/methodology-engine',
+    ctaLabel: 'View Architecture →',
+    slug: 'enterprise-ai-deployment-velocity'
   }
 ]
 

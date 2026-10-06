@@ -346,6 +346,100 @@ export default function HomePage() {
         <OfferingSlider offerings={primaryOfferingsData} />
       </section>
 
+      {/* 2B. ENTERPRISE AI IMPACT & PROOF (SECTION 6 & 10) */}
+      <section className="section proof-section" id="impact">
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">MEASURABLE IMPACT</span>
+            <p className="section-label">Enterprise AI Impact &amp; Empirical Proof</p>
+          </div>
+          <span className="section-index">PROOF</span>
+        </div>
+
+        <div className="showcase-header">
+          <h2>
+            Engineered for <span>measurable enterprise impact.</span>
+          </h2>
+          <p>
+            AI engineering isn&apos;t measured by models deployed. It is measured by performance, reliability, economics, deployment velocity, and verifiable business outcomes.
+          </p>
+        </div>
+
+        {/* 6 Verified Metrics Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 mb-10">
+          {[
+            { metric: '10×', label: 'Faster AI Deployment', desc: 'From sandbox to production scale' },
+            { metric: '3–15×', label: 'Performance Improvement', desc: 'Throughput & latency gains' },
+            { metric: '40–75%', label: 'Cost Reduction', desc: 'Inference & infrastructure TCO' },
+            { metric: '128+', label: 'GPU Scaling', desc: 'Linear non-blocking fabric yield' },
+            { metric: '20+', label: 'Industry Verticals', desc: 'Pre-calibrated regulatory models' },
+            { metric: '24/7', label: 'Enterprise Operations', desc: 'Continuous autonomous reliability' },
+          ].map((item, i) => (
+            <div key={i} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs text-center flex flex-col justify-between hover:border-blue-300 transition-all">
+              <div>
+                <span className="text-2xl sm:text-3xl font-extrabold text-blue-600 block mb-1 tracking-tight">{item.metric}</span>
+                <span className="text-xs font-bold text-slate-900 block leading-tight mb-1">{item.label}</span>
+              </div>
+              <span className="text-[10px] text-slate-500 block leading-tight">{item.desc}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* 3 Production Case Proof Highlights */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-400 transition-all">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 uppercase tracking-wide">
+                Enterprise AI Infrastructure
+              </span>
+              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+            </div>
+            <h4 className="text-base font-extrabold text-slate-900 mb-2">GPU Performance Engineering</h4>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Re-engineered cluster topologies, kernel scheduling, and memory caching on NVIDIA H100 clusters to achieve up to 12× throughput yield on mission-critical inference workloads without additional silicon investment.
+            </p>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-blue-600">12× H100 Performance</span>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 transition-all">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200 uppercase tracking-wide">
+                Autonomous Operations
+              </span>
+              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+            </div>
+            <h4 className="text-base font-extrabold text-slate-900 mb-2">Autonomous Enterprise Operations</h4>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Deployed multi-agent collaborative swarms with deterministic consensus DAGs and persistent long-term memory across enterprise finance, supply chain, and IT operations.
+            </p>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-indigo-600">70–90% Workflow Automation</span>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-cyan-400 transition-all">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[11px] font-bold text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200 uppercase tracking-wide">
+                Production Velocity
+              </span>
+              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+            </div>
+            <h4 className="text-base font-extrabold text-slate-900 mb-2">Enterprise AI Deployment</h4>
+            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+              Eliminated pilot purgatory by transitioning experimental research models to production-grade, highly governed, observable inference pipelines in rapid 90-day execution cycles.
+            </p>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-cyan-600">10× Faster AI Deployment</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ICP / TARGET AUDIENCE CLARITY SLIDER */}
       <section className="section icp-section" id="icp">
         <ICPSlider />
