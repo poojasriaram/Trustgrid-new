@@ -5,7 +5,7 @@ import { createLinkedInJiraLead } from '@/lib/services/jira'
 
 export const dynamic = 'force-dynamic'
 
-const TARGET_LINKEDIN_URL = 'https://www.linkedin.com/company/trustgridai/'
+const TARGET_LINKEDIN_URL = 'https://www.linkedin.com/company/trustgridai/home/'
 
 /**
  * GET /linkedin
