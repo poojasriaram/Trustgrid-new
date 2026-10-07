@@ -353,75 +353,105 @@ export default function HomePage() {
         </div>
 
         {/* 6 Verified Metrics Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 mb-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
           {[
-            { metric: '10×', label: 'Faster AI Deployment', desc: 'From sandbox to production scale' },
-            { metric: '3–15×', label: 'Performance Improvement', desc: 'Throughput & latency gains' },
-            { metric: '40–75%', label: 'Cost Reduction', desc: 'Inference & infrastructure TCO' },
-            { metric: '128+', label: 'GPU Scaling', desc: 'Linear non-blocking fabric yield' },
-            { metric: '20+', label: 'Industry Verticals', desc: 'Pre-calibrated regulatory models' },
-            { metric: '24/7', label: 'Enterprise Operations', desc: 'Continuous autonomous reliability' },
-          ].map((item, i) => (
-            <div key={i} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs text-center flex flex-col justify-between hover:border-blue-300 transition-all">
-              <div>
-                <span className="text-2xl sm:text-3xl font-extrabold text-blue-700 block mb-1 tracking-tight">{item.metric}</span>
-                <span className="text-xs font-bold text-slate-900 block leading-tight mb-1">{item.label}</span>
+            { metric: '10×', label: 'Faster Deployment', desc: 'From sandbox to production scale', icon: Zap },
+            { metric: '3–15×', label: 'Performance Yield', desc: 'Throughput & latency gains', icon: Activity },
+            { metric: '40–75%', label: 'Cost Reduction', desc: 'Inference & infrastructure TCO', icon: TrendingUp },
+            { metric: '128+', label: 'GPU Scaling', desc: 'Linear non-blocking fabric yield', icon: Cpu },
+            { metric: '20+', label: 'Regulated Verticals', desc: 'Pre-calibrated domain models', icon: Building2 },
+            { metric: '24/7', label: 'Predictive Ops', desc: 'Continuous autonomous reliability', icon: ShieldCheck },
+          ].map((item, i) => {
+            const ItemIcon = item.icon
+            return (
+              <div
+                key={i}
+                className="group relative p-5 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-blue-400/80 transition-all flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50/80 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                    <ItemIcon size={16} />
+                  </div>
+                  <span className="text-[10px] font-mono font-bold text-slate-400">0{i + 1}</span>
+                </div>
+                <div>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight block mb-1">
+                    {item.metric}
+                  </span>
+                  <span className="text-xs font-bold text-slate-800 block mb-1">
+                    {item.label}
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-normal leading-relaxed block">
+                    {item.desc}
+                  </span>
+                </div>
               </div>
-              <span className="text-[10px] text-slate-600 font-medium block leading-tight">{item.desc}</span>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         {/* 3 Production Case Proof Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-400 transition-all">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 uppercase tracking-wide">
-                Enterprise AI Infrastructure
-              </span>
-              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
+          <div className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-blue-400 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[11px] font-bold text-blue-800 bg-blue-50/90 px-3 py-1 rounded-full border border-blue-200 uppercase tracking-wide">
+                  Enterprise AI Infrastructure
+                </span>
+                <span className="text-xs font-mono font-bold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 size={13} /> VERIFIED
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-slate-900 mb-2.5">GPU Performance Engineering</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                Re-engineered cluster topologies, kernel scheduling, and memory caching on NVIDIA H100 clusters to achieve up to 12× throughput yield on mission-critical inference workloads without additional silicon investment.
+              </p>
             </div>
-            <h3 className="text-base font-extrabold text-slate-900 mb-2">GPU Performance Engineering</h3>
-            <p className="text-xs text-slate-700 leading-relaxed mb-4">
-              Re-engineered cluster topologies, kernel scheduling, and memory caching on NVIDIA H100 clusters to achieve up to 12× throughput yield on mission-critical inference workloads without additional silicon investment.
-            </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-blue-700">12× H100 Performance</span>
-            </div>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 transition-all">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200 uppercase tracking-wide">
-                Autonomous Operations
-              </span>
-              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
-            </div>
-            <h3 className="text-base font-extrabold text-slate-900 mb-2">Autonomous Enterprise Operations</h3>
-            <p className="text-xs text-slate-700 leading-relaxed mb-4">
-              Deployed multi-agent collaborative swarms with deterministic consensus DAGs and persistent long-term memory across enterprise finance, supply chain, and IT operations.
-            </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-indigo-700">70–90% Workflow Automation</span>
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-medium">Benchmark Yield:</span>
+              <span className="text-xs font-extrabold text-blue-700">12× H100 Throughput</span>
             </div>
           </div>
 
-          <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-cyan-400 transition-all">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-cyan-800 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200 uppercase tracking-wide">
-                Production Velocity
-              </span>
-              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
+          <div className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-indigo-400 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[11px] font-bold text-indigo-800 bg-indigo-50/90 px-3 py-1 rounded-full border border-indigo-200 uppercase tracking-wide">
+                  Autonomous Operations
+                </span>
+                <span className="text-xs font-mono font-bold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 size={13} /> VERIFIED
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-slate-900 mb-2.5">Autonomous Enterprise Operations</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                Deployed multi-agent collaborative swarms with deterministic consensus DAGs and persistent long-term memory across enterprise finance, supply chain, and IT operations.
+              </p>
             </div>
-            <h3 className="text-base font-extrabold text-slate-900 mb-2">Enterprise AI Deployment</h3>
-            <p className="text-xs text-slate-700 leading-relaxed mb-4">
-              Eliminated pilot purgatory by transitioning experimental research models to production-grade, highly governed, observable inference pipelines in rapid 90-day execution cycles.
-            </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-cyan-700">10× Faster AI Deployment</span>
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-medium">Automation Rate:</span>
+              <span className="text-xs font-extrabold text-indigo-700">70–90% Task Autonomy</span>
+            </div>
+          </div>
+
+          <div className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-cyan-400 transition-all flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-[11px] font-bold text-cyan-800 bg-cyan-50/90 px-3 py-1 rounded-full border border-cyan-200 uppercase tracking-wide">
+                  Production Velocity
+                </span>
+                <span className="text-xs font-mono font-bold text-emerald-600 flex items-center gap-1">
+                  <CheckCircle2 size={13} /> VERIFIED
+                </span>
+              </div>
+              <h3 className="text-base font-extrabold text-slate-900 mb-2.5">Enterprise AI Deployment</h3>
+              <p className="text-xs text-slate-600 leading-relaxed mb-6">
+                Eliminated pilot purgatory by transitioning experimental research models to production-grade, highly governed, observable inference pipelines in rapid 90-day execution cycles.
+              </p>
+            </div>
+            <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex items-center justify-between">
+              <span className="text-xs text-slate-600 font-medium">Deployment Velocity:</span>
+              <span className="text-xs font-extrabold text-cyan-700">10× Faster Production</span>
             </div>
           </div>
         </div>
