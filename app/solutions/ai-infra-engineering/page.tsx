@@ -847,62 +847,166 @@ export default function AIInfraEngineeringPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {/* GPU Infrastructure */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4">
-                <Cpu size={20} />
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4">
+                  <Cpu size={20} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">GPU Infrastructure</h4>
+                <p className="text-xs text-slate-600 mb-4 leading-relaxed">Multi-vendor silicon architectures tuned for distributed LLM training and high-throughput inference.</p>
               </div>
-              <h4 className="font-bold text-slate-900 text-base mb-2">GPU Infrastructure</h4>
-              <p className="text-xs text-slate-600 mb-4">Multi-vendor silicon architectures tuned for distributed LLM training and high-throughput inference.</p>
-              <ul className="text-xs text-slate-700 space-y-2">
-                <li className="flex items-center gap-2"><strong>• NVIDIA H100 / H200:</strong> HGX SXM5 8-GPU nodes</li>
-                <li className="flex items-center gap-2"><strong>• NVIDIA Blackwell:</strong> GB200 NVL72 / B200</li>
-                <li className="flex items-center gap-2"><strong>• AMD Instinct:</strong> MI300X &amp; MI350X</li>
-                <li className="flex items-center gap-2"><strong>• Custom ASICs:</strong> TPU, Trainium &amp; Gaudi 3</li>
+              <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">NVIDIA H100 / H200: </span>
+                    <span className="text-slate-600">HGX SXM5 8-GPU nodes</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">NVIDIA Blackwell: </span>
+                    <span className="text-slate-600">GB200 NVL72 / B200</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">AMD Instinct: </span>
+                    <span className="text-slate-600">MI300X &amp; MI350X</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Custom ASICs: </span>
+                    <span className="text-slate-600">TPU, Trainium &amp; Gaudi 3</span>
+                  </div>
+                </li>
               </ul>
             </div>
 
             {/* Rack Infrastructure */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold mb-4">
-                <Server size={20} />
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-cyan-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold mb-4">
+                  <Server size={20} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">Rack Infrastructure</h4>
+                <p className="text-xs text-slate-600 mb-4 leading-relaxed">Ultra-high density structural and power distribution envelopes engineered for next-gen GPU clusters.</p>
               </div>
-              <h4 className="font-bold text-slate-900 text-base mb-2">Rack Infrastructure</h4>
-              <p className="text-xs text-slate-600 mb-4">Ultra-high density structural and power distribution envelopes engineered for next-gen GPU clusters.</p>
-              <ul className="text-xs text-slate-700 space-y-2">
-                <li className="flex items-center gap-2"><strong>• Rack Density:</strong> 30 kW to 120 kW+ continuous</li>
-                <li className="flex items-center gap-2"><strong>• Busbar / Busway:</strong> Overhead plug-in tap-offs</li>
-                <li className="flex items-center gap-2"><strong>• Dual PDU:</strong> A+B redundant intelligent feeds</li>
-                <li className="flex items-center gap-2"><strong>• Floor Loading:</strong> 2,500–3,500 kg/m² rated</li>
+              <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Rack Density: </span>
+                    <span className="text-slate-600">30 kW to 120 kW+ continuous</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Busbar / Busway: </span>
+                    <span className="text-slate-600">Overhead plug-in tap-offs</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Dual PDU: </span>
+                    <span className="text-slate-600">A+B redundant intelligent feeds</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Floor Loading: </span>
+                    <span className="text-slate-600">2,500–3,500 kg/m² rated</span>
+                  </div>
+                </li>
               </ul>
             </div>
 
             {/* AI Networking */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">
-                <Network size={20} />
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4">
+                  <Network size={20} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">AI Networking</h4>
+                <p className="text-xs text-slate-600 mb-4 leading-relaxed">Lossless, non-blocking interconnects designed for sub-microsecond collective all-reduce operations.</p>
               </div>
-              <h4 className="font-bold text-slate-900 text-base mb-2">AI Networking</h4>
-              <p className="text-xs text-slate-600 mb-4">Lossless, non-blocking interconnects designed for sub-microsecond collective all-reduce operations.</p>
-              <ul className="text-xs text-slate-700 space-y-2">
-                <li className="flex items-center gap-2"><strong>• Speed:</strong> 400G / 800G Ethernet &amp; InfiniBand</li>
-                <li className="flex items-center gap-2"><strong>• Fabric:</strong> NDR / XDR &amp; RoCEv2 RDMA</li>
-                <li className="flex items-center gap-2"><strong>• Congestion:</strong> ECN, PFC &amp; adaptive routing</li>
-                <li className="flex items-center gap-2"><strong>• Spine-Leaf:</strong> EVPN-VXLAN non-oversubscribed</li>
+              <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Speed: </span>
+                    <span className="text-slate-600">400G / 800G Ethernet &amp; InfiniBand</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Fabric: </span>
+                    <span className="text-slate-600">NDR / XDR &amp; RoCEv2 RDMA</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Congestion: </span>
+                    <span className="text-slate-600">ECN, PFC &amp; adaptive routing</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Spine-Leaf: </span>
+                    <span className="text-slate-600">EVPN-VXLAN non-oversubscribed</span>
+                  </div>
+                </li>
               </ul>
             </div>
 
             {/* AI Operations */}
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold mb-4">
-                <Activity size={20} />
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-purple-300 transition-all flex flex-col justify-between">
+              <div>
+                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold mb-4">
+                  <Activity size={20} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">AI Operations</h4>
+                <p className="text-xs text-slate-600 mb-4 leading-relaxed">Real-time telemetry ingestion and predictive self-healing across physical and compute planes.</p>
               </div>
-              <h4 className="font-bold text-slate-900 text-base mb-2">AI Operations</h4>
-              <p className="text-xs text-slate-600 mb-4">Real-time telemetry ingestion and predictive self-healing across physical and compute planes.</p>
-              <ul className="text-xs text-slate-700 space-y-2">
-                <li className="flex items-center gap-2"><strong>• AI-DCIM:</strong> Power/cooling/space telemetry</li>
-                <li className="flex items-center gap-2"><strong>• AIOps:</strong> Real-time anomaly detection</li>
-                <li className="flex items-center gap-2"><strong>• Digital Twin:</strong> Continuous thermal simulation</li>
-                <li className="flex items-center gap-2"><strong>• Self-Healing:</strong> Automated workload failover</li>
+              <ul className="space-y-2.5 text-xs text-slate-700 pt-3 border-t border-slate-100">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">AI-DCIM: </span>
+                    <span className="text-slate-600">Power/cooling/space telemetry</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">AIOps: </span>
+                    <span className="text-slate-600">Real-time anomaly detection</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Digital Twin: </span>
+                    <span className="text-slate-600">Continuous thermal simulation</span>
+                  </div>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-1.5 shrink-0" />
+                  <div className="leading-relaxed">
+                    <span className="font-bold text-slate-900">Self-Healing: </span>
+                    <span className="text-slate-600">Automated workload failover</span>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
