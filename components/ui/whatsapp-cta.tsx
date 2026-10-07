@@ -8,7 +8,7 @@ import { trackWhatsAppClick } from '@/lib/analytics'
 interface WhatsAppCTAProps {
   customMessage?: string
   customNumber?: string
-  position?: 'bottom-left' | 'bottom-right'
+  position?: 'top-right' | 'bottom-left' | 'bottom-right'
   inline?: boolean
   label?: string
 }
@@ -35,7 +35,7 @@ function getContextualMessage(pathname: string): string {
   if (pathname.includes('/solutions/ai-value-engineering')) {
     return 'Hi TrustGrid team, I would like to discuss AI FinOps unit economics and value acceleration.'
   }
-  if (pathname.includes('/book-ai-diagnostic#diagnostic-form-section') || pathname.includes('/ai-diagnostic')) {
+  if (pathname.includes('/book-ai-diagnostic') || pathname.includes('/ai-diagnostic')) {
     return 'Hi TrustGrid team, I would like to schedule an Executive AI Diagnostic session.'
   }
   if (pathname.includes('/industries')) {
@@ -47,7 +47,7 @@ function getContextualMessage(pathname: string): string {
 export function WhatsAppCTA({
   customMessage,
   customNumber,
-  position = 'bottom-left',
+  position = 'top-right',
   inline = false,
   label = 'Chat with TRUSTGRID.AI'
 }: WhatsAppCTAProps) {
@@ -93,14 +93,17 @@ export function WhatsAppCTA({
     )
   }
 
+  const isTop = position === 'top-right'
+
   return (
     <div
       className="whatsapp-floating-container"
       style={{
         position: 'fixed',
-        bottom: '24px',
+        top: isTop ? '82px' : 'auto',
+        bottom: isTop ? 'auto' : '24px',
         left: position === 'bottom-left' ? '24px' : 'auto',
-        right: position === 'bottom-right' ? '24px' : 'auto',
+        right: position === 'bottom-right' || isTop ? '20px' : 'auto',
         zIndex: 9990
       }}
       onMouseEnter={() => setShowTooltip(true)}
@@ -111,8 +114,9 @@ export function WhatsAppCTA({
         <div
           style={{
             position: 'absolute',
-            bottom: '56px',
-            left: '0',
+            top: isTop ? '46px' : 'auto',
+            bottom: isTop ? 'auto' : '56px',
+            right: '0',
             width: '260px',
             background: '#ffffff',
             borderRadius: '10px',
@@ -122,7 +126,8 @@ export function WhatsAppCTA({
             fontSize: '12px',
             color: '#1e293b',
             lineHeight: 1.4,
-            animation: 'fadeIn 0.2s ease'
+            animation: 'fadeIn 0.2s ease',
+            zIndex: 9991
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#15803d', marginBottom: '4px' }}>
@@ -147,22 +152,23 @@ export function WhatsAppCTA({
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          padding: '10px 16px',
+          padding: '8px 15px',
           background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
           color: '#ffffff',
           borderRadius: '999px',
           boxShadow: '0 6px 20px rgba(37, 211, 102, 0.35)',
           textDecoration: 'none',
           fontWeight: 600,
-          fontSize: '12.5px',
+          fontSize: '12px',
           border: '1px solid rgba(255,255,255,0.35)',
+          backdropFilter: 'blur(8px)'
         }}
       >
         <span style={{ position: 'relative', display: 'flex', height: '8px', width: '8px' }}>
           <span style={{ position: 'absolute', display: 'inline-flex', height: '100%', width: '100%', borderRadius: '999px', background: '#ffffff', opacity: 0.75, animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite' }} />
           <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '999px', height: '8px', width: '8px', background: '#ffffff' }} />
         </span>
-        <MessageCircle size={17} />
+        <MessageCircle size={16} />
         <span>{label}</span>
       </a>
     </div>

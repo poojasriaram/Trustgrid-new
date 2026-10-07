@@ -2472,7 +2472,7 @@ export default function AIInfraEngineeringPage() {
 
               {/* Quick CTAs */}
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <WhatsAppCTA />
+                <WhatsAppCTA inline label="Chat with TRUSTGRID.AI on WhatsApp" />
                 <a
                   href="#contact-advisory"
                   onClick={() => trackCTA('Diagnostic Assessment Direct Link', 'bottom_cta', '#contact-advisory')}

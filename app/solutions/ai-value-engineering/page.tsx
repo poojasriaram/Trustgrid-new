@@ -3448,9 +3448,8 @@ export default function AIValueEngineeringPage() {
         </div>
       </section>
 
-      {/* FOOTER & WHATSAPP FLOATING CTA */}
+      {/* FOOTER */}
       <SiteFooter />
-      <WhatsAppCTA />
     </div>
   )
 }
