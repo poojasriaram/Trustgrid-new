@@ -845,33 +845,33 @@ export default function AIInfraEngineeringPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 xl:gap-6 items-stretch mb-10">
             {/* GPU Infrastructure */}
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div className="h-full min-h-[420px] p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4 shrink-0">
-                  <Cpu size={20} />
+                <div className="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold mb-4 shrink-0">
+                  <Cpu size={22} />
                 </div>
-                <h4 className="font-bold text-slate-900 text-base mb-2.5 min-h-[24px]">GPU Infrastructure</h4>
-                <p className="text-xs text-slate-600 mb-5 leading-relaxed min-h-[56px]">
+                <h4 className="font-bold text-slate-900 text-lg mb-2 min-h-[28px]">GPU Infrastructure</h4>
+                <p className="text-xs sm:text-[13px] text-slate-600 mb-5 leading-relaxed min-h-[58px]">
                   Multi-vendor silicon architectures tuned for distributed LLM training and high-throughput inference.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
-                    <span>NVIDIA H100 / H200:</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span>NVIDIA H100/H200:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
                     <span>HGX SXM5 8-GPU nodes</span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>NVIDIA Blackwell:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -879,9 +879,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AMD Instinct:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -889,9 +889,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Custom ASICs:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -902,21 +902,21 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             {/* Rack Infrastructure */}
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-cyan-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div className="h-full min-h-[420px] p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-cyan-300 hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold mb-4 shrink-0">
-                  <Server size={20} />
+                <div className="w-11 h-11 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center font-bold mb-4 shrink-0">
+                  <Server size={22} />
                 </div>
-                <h4 className="font-bold text-slate-900 text-base mb-2.5 min-h-[24px]">Rack Infrastructure</h4>
-                <p className="text-xs text-slate-600 mb-5 leading-relaxed min-h-[56px]">
+                <h4 className="font-bold text-slate-900 text-lg mb-2 min-h-[28px]">Rack Infrastructure</h4>
+                <p className="text-xs sm:text-[13px] text-slate-600 mb-5 leading-relaxed min-h-[58px]">
                   Ultra-high density structural and power distribution envelopes engineered for next-gen GPU clusters.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Rack Density:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -924,9 +924,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Busbar / Busway:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -934,9 +934,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Dual PDU:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -944,9 +944,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Floor Loading:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -957,21 +957,21 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             {/* AI Networking */}
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div className="h-full min-h-[420px] p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4 shrink-0">
-                  <Network size={20} />
+                <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold mb-4 shrink-0">
+                  <Network size={22} />
                 </div>
-                <h4 className="font-bold text-slate-900 text-base mb-2.5 min-h-[24px]">AI Networking</h4>
-                <p className="text-xs text-slate-600 mb-5 leading-relaxed min-h-[56px]">
+                <h4 className="font-bold text-slate-900 text-lg mb-2 min-h-[28px]">AI Networking</h4>
+                <p className="text-xs sm:text-[13px] text-slate-600 mb-5 leading-relaxed min-h-[58px]">
                   Lossless, non-blocking interconnects designed for sub-microsecond collective all-reduce operations.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Speed:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -979,9 +979,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Fabric:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -989,9 +989,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Congestion:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -999,9 +999,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Spine-Leaf:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1012,21 +1012,21 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             {/* AI Operations */}
-            <div className="h-full p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between">
+            <div className="h-full min-h-[420px] p-6 sm:p-7 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:border-purple-300 hover:shadow-md transition-all flex flex-col justify-between">
               <div>
-                <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold mb-4 shrink-0">
-                  <Activity size={20} />
+                <div className="w-11 h-11 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center font-bold mb-4 shrink-0">
+                  <Activity size={22} />
                 </div>
-                <h4 className="font-bold text-slate-900 text-base mb-2.5 min-h-[24px]">AI Operations</h4>
-                <p className="text-xs text-slate-600 mb-5 leading-relaxed min-h-[56px]">
+                <h4 className="font-bold text-slate-900 text-lg mb-2 min-h-[28px]">AI Operations</h4>
+                <p className="text-xs sm:text-[13px] text-slate-600 mb-5 leading-relaxed min-h-[58px]">
                   Real-time telemetry ingestion and predictive self-healing across physical and compute planes.
                 </p>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AI-DCIM:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1034,9 +1034,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AIOps:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1044,9 +1044,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Digital Twin:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1054,9 +1054,9 @@ export default function AIInfraEngineeringPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-[115px_1fr] gap-2.5 items-start text-xs leading-relaxed">
+                <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0">•</span>
+                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Self-Healing:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
