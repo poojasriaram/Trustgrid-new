@@ -48,6 +48,7 @@ import {
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
 import { trackWhatsAppClick } from '@/lib/analytics'
+import { AiInfraMegaMenu, MobileAiInfraAccordion } from '@/components/ui/ai-infra-mega-menu'
 
 // 1. AI Infra Menu Items (12 Items)
 const aiInfraMenuItems = [
@@ -718,9 +719,17 @@ export function SiteHeader() {
         setActiveMenu(null)
       }
     }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveMenu(null)
+        setOpen(false)
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
@@ -820,7 +829,7 @@ export function SiteHeader() {
       className={`site-header ${scrolled ? 'site-header-scrolled' : ''}`}
     >
       <Link className="brand" href="/" aria-label="TRUSTGRID.AI home" onClick={closeAll}>
-        <img src={logoUrl} alt="TRUSTGRID.AI" />
+        <img src={logoUrl} alt="TRUSTGRID.AI" width="90" height="75" fetchPriority="high" />
       </Link>
 
       <nav className={`nav ${open ? 'nav-open' : ''}`} aria-label="Primary navigation">
@@ -845,80 +854,7 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'ai-infra' && (
-            <div className="isi-mega-panel isi-mega-infra">
-              <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      STRATEGIC BLUEPRINT V2.0
-                    </span>
-                    <h3 className="isi-sidebar-title">AI Infra & Data Center</h3>
-                    <p className="isi-sidebar-desc">
-                      End-to-end AI Factory engineering from 100MW–GW greenfield to GPU Ops & token unit economics.
-                    </p>
-                  </div>
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>30–70% Higher GPU Yield</span>
-                    </div>
-                    <Link
-                      href="/solutions/ai-infra-engineering"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore Blueprint</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Structured Grid (3 columns, 12 items) */}
-                <div className="isi-mega-content columns-3">
-                  {aiInfraMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    const itemHref = `/solutions/ai-infra-engineering#${item.id}`
-                    return (
-                      <Link
-                        key={idx}
-                        href={itemHref}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
-                          </div>
-                          <p className="isi-card-desc">{item.desc}</p>
-                        </div>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Mega-Menu Footer */}
-              <div className="isi-mega-footer">
-                <div className="isi-footer-badge">
-                  <Sparkles size={13} className="text-blue-600" />
-                  <span>Full-stack engineering accountability from power delivery to token delivery</span>
-                </div>
-                <Link
-                  href="/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section"
-                  className="isi-footer-action"
-                  onClick={closeAll}
-                >
-                  <span>Book AI Diagnostic Assessment</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-            </div>
+            <AiInfraMegaMenu onNavigate={handleNavClick} onClose={closeAll} />
           )}
         </div>
 
@@ -1551,22 +1487,7 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'ai-infra' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-infra-engineering" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>AI Infra Blueprint Overview →</span>
-                  </Link>
-                  {aiInfraMenuItems.map((item, i) => {
-                    const itemHref = `/solutions/ai-infra-engineering#${item.id}`
-                    return (
-                      <Link
-                        key={i}
-                        href={itemHref}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
-                    )
-                  })}
+                  <MobileAiInfraAccordion onNavigate={handleNavClick} onClose={closeAll} />
                 </div>
               )}
             </div>

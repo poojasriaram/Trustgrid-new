@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import './sitemap.css'
 import {
   ArrowUpRight,
   ChevronDown,

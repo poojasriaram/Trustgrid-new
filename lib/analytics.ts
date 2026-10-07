@@ -272,53 +272,75 @@ interface GeoData {
   longitude: number | string
 }
 
+const DEFAULT_GEO: GeoData = {
+  ip: '',
+  country: 'United States',
+  state: '',
+  city: '',
+  latitude: '',
+  longitude: ''
+}
+
 let cachedGeo: GeoData | null = null
+let geoFetchPromise: Promise<GeoData> | null = null
+
+function scheduleGeoFetch() {
+  if (typeof window === 'undefined' || geoFetchPromise) return
+  
+  const fetchTask = async () => {
+    try {
+      const res = await fetch('https://ipapi.co/json/', { mode: 'cors', cache: 'force-cache' })
+      if (res.ok) {
+        const d = await res.json()
+        cachedGeo = {
+          ip: d.ip || '',
+          country: d.country_name || 'United States',
+          state: d.region || '',
+          city: d.city || '',
+          latitude: d.latitude || '',
+          longitude: d.longitude || ''
+        }
+        try {
+          localStorage.setItem(STORAGE_KEYS.GEO_CACHE, JSON.stringify(cachedGeo))
+          sessionStorage.setItem(STORAGE_KEYS.GEO_CACHE, JSON.stringify(cachedGeo))
+        } catch (e) {}
+        return cachedGeo
+      }
+    } catch (err) {}
+    return cachedGeo || DEFAULT_GEO
+  }
+
+  // Defer execution until browser is idle
+  if ('requestIdleCallback' in window) {
+    ;(window as any).requestIdleCallback(() => {
+      geoFetchPromise = fetchTask()
+    }, { timeout: 4000 })
+  } else {
+    setTimeout(() => {
+      geoFetchPromise = fetchTask()
+    }, 3500)
+  }
+}
 
 export async function fetchGeoData(): Promise<GeoData> {
   if (typeof window === 'undefined') {
-    return { ip: '', country: '', state: '', city: '', latitude: '', longitude: '' }
+    return DEFAULT_GEO
   }
   if (cachedGeo) return cachedGeo
 
   try {
-    const stored = sessionStorage.getItem(STORAGE_KEYS.GEO_CACHE)
+    const stored = localStorage.getItem(STORAGE_KEYS.GEO_CACHE) || sessionStorage.getItem(STORAGE_KEYS.GEO_CACHE)
     if (stored) {
       cachedGeo = JSON.parse(stored)
       return cachedGeo!
     }
   } catch (e) {}
 
-  try {
-    const res = await fetch('https://ipapi.co/json/', { mode: 'cors', cache: 'force-cache' })
-    if (res.ok) {
-      const d = await res.json()
-      cachedGeo = {
-        ip: d.ip || '',
-        country: d.country_name || '',
-        state: d.region || '',
-        city: d.city || '',
-        latitude: d.latitude || '',
-        longitude: d.longitude || ''
-      }
-      try {
-        sessionStorage.setItem(STORAGE_KEYS.GEO_CACHE, JSON.stringify(cachedGeo))
-      } catch (e) {}
-      return cachedGeo
-    }
-  } catch (err) {
-    // Fallback if blocked
-  }
-
-  cachedGeo = {
-    ip: '61.0.101.193',
-    country: 'India',
-    state: 'Tamil Nadu',
-    city: 'Tirunelveli',
-    latitude: 8.7272,
-    longitude: 77.687
-  }
-  return cachedGeo
+  // Trigger non-blocking background fetch and return non-blocking default immediately
+  scheduleGeoFetch()
+  return DEFAULT_GEO
 }
+
 
 /**
  * User Identity Linking

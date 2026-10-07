@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ChevronLeft,
   ChevronRight,
@@ -25,7 +26,7 @@ export interface PrimaryOffering {
   groupTag: string
   title: string
   slug: string
-  icon: LucideIcon
+  icon?: LucideIcon
   badge: string
   image: string
   problem: string
@@ -33,6 +34,15 @@ export interface PrimaryOffering {
   deliverables: string[]
   metric: string
   duration: string
+}
+
+const defaultOfferingIcons: Record<string, LucideIcon> = {
+  'ai-infra-engineering': Cpu,
+  'ai-agentic-factory': Bot,
+  'ai-networking': Network,
+  'ai-cybersecurity-quantum-safe': Lock,
+  'trusted-ai-transformation': ShieldCheck,
+  'ai-value-engineering': TrendingUp,
 }
 
 interface OfferingSliderProps {
@@ -188,7 +198,7 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
           }}
         >
           {offerings.map((offering, idx) => {
-            const Icon = offering.icon
+            const Icon = offering.icon || defaultOfferingIcons[offering.slug] || Cpu
             const isExpanded = !!expandedDeliverables[offering.slug]
             const isSlideActive = idx === currentIndex
 
@@ -204,12 +214,16 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
                   {/* Top Split: Visual Preview + Summary */}
                   <div className="offering-card-main-split">
                     {/* Visual Media Container with Hover Zoom */}
-                    <div className="offering-image-container">
-                      <img
+                    <div className="offering-image-container relative overflow-hidden aspect-[16/10]">
+                      <Image
                         src={offering.image}
                         alt={offering.title}
-                        className="offering-featured-img"
+                        width={540}
+                        height={338}
                         loading={idx === 0 ? 'eager' : 'lazy'}
+                        sizes="(max-width: 768px) 100vw, 540px"
+                        quality={80}
+                        className="offering-featured-img object-cover w-full h-full"
                       />
                       <div className="offering-image-overlay" />
                       

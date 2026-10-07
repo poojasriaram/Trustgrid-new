@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowUpRight,
   ChevronRight,
@@ -200,13 +201,18 @@ export default async function SolutionDetailPage({
           </div>
 
           <div className="solution-hero-media-col">
-            <div className="solution-featured-image-frame animated-card">
+            <div className="solution-featured-image-frame animated-card relative overflow-hidden aspect-[16/10]">
               <span className="card-corner-tl" />
               <span className="card-corner-br" />
-              <img
+              <Image
                 src={featuredImage}
                 alt={solution.shortTitle}
-                className="solution-hero-image"
+                width={540}
+                height={338}
+                priority
+                sizes="(max-width: 768px) 100vw, 540px"
+                quality={80}
+                className="solution-hero-image object-cover w-full h-full"
               />
               <div className="solution-image-overlay" />
               <div className="solution-image-chip">

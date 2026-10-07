@@ -14,6 +14,8 @@ import {
   ArrowRight
 } from 'lucide-react'
 
+import Image from 'next/image'
+
 export interface MarketGapItem {
   number: string
   name: string
@@ -70,8 +72,9 @@ export function MarketGapsSlider({ gaps }: MarketGapsSliderProps) {
             <button
               key={gap.name}
               type="button"
-              className={`gap-tab-pill ${isActive ? 'active' : ''}`}
+              className={`gap-tab-pill min-h-[38px] ${isActive ? 'active' : ''}`}
               onClick={() => setActiveIndex(idx)}
+              aria-label={`Select ${gap.name}`}
             >
               <TabIcon size={14} className="tab-icon" />
               <span className="tab-name">{gap.name.replace('The ', '').replace(' Gap', '')}</span>
@@ -119,11 +122,16 @@ export function MarketGapsSlider({ gaps }: MarketGapsSliderProps) {
 
           {/* Right Column: High-Impact Visual */}
           <div className="gap-visual-column">
-            <div className="gap-image-frame">
-              <img
+            <div className="gap-image-frame relative overflow-hidden aspect-[16/10]">
+              <Image
                 src={current.image}
                 alt={current.name}
-                className="gap-featured-visual"
+                width={540}
+                height={338}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 540px"
+                quality={80}
+                className="gap-featured-visual object-cover w-full h-full"
               />
               <div className="gap-visual-gradient" />
               

@@ -1,95 +1,117 @@
 const fs = require('fs');
 const path = require('path');
 
-// 1. Gather all actual Next.js app routes
-const validPages = new Set([
-  '/',
-  '/about',
-  '/ai-diagnostic',
-  '/ai-methodology',
-  '/ai-readiness-assessment',
-  '/book-ai-diagnostic#diagnostic-form-section',
-  '/careers',
-  '/case-studies',
-  '/case-studies/medical-supplies-ai',
-  '/contact',
-  '/industries',
-  '/insights',
-  '/leadership',
-  '/methodology-engine',
-  '/partners',
-  '/request-proposal',
-  '/sitemap',
-  '/talk-to-ai-architect',
-  '/use-case-workshop',
-  '/use-cases'
-]);
-
-// Read solutions slugs from lib/solutions.ts
-try {
-  const solContent = fs.readFileSync(path.join(__dirname, '../lib/solutions.ts'), 'utf8');
-  const slugRegex = /slug:\s*['"]([^'"]+)['"]/g;
-  let m;
-  while ((m = slugRegex.exec(solContent)) !== null) {
-    validPages.add('/solutions/' + m[1]);
-  }
-} catch (e) {
-  console.error('Error reading lib/solutions.ts:', e.message);
-}
-
-console.log('Total valid registered routes:', validPages.size);
-
-// 2. Scan all codebase files for href="..."
-function walk(dir) {
-  let results = [];
-  const list = fs.readdirSync(dir);
-  for (const file of list) {
-    if (file === 'node_modules' || file === '.next' || file === '.git' || file === 'scripts') continue;
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-    if (stat && stat.isDirectory()) {
-      results = results.concat(walk(fullPath));
-    } else if (/\.(tsx|jsx|ts|js)$/.test(file)) {
-      results.push(fullPath);
+// 1. Get all physical page routes
+function getRoutes(dir, base = '') {
+  let routes = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const e of entries) {
+    if (e.name.startsWith('_') || e.name.startsWith('.')) continue;
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) {
+      routes.push(...getRoutes(full, path.join(base, e.name)));
+    } else if (e.name === 'page.tsx' || e.name === 'page.js') {
+      let route = '/' + base.replace(/\\/g, '/');
+      if (route === '/.') route = '/';
+      routes.push(route);
     }
   }
-  return results;
+  return routes;
 }
 
-const allFiles = walk(path.join(__dirname, '..'));
-const brokenLinks = [];
-const verifiedLinks = new Set();
+const pageRoutes = new Set(getRoutes('./app').map(r => r.replace(/\\/g, '/')));
 
-const hrefRegex = /href=["'`](\/[^"'`?#]*)/g;
+// Add solutions slugs
+const solutionSlugs = [
+  'ai-infra-engineering',
+  'ai-infrastructure',
+  'infra',
+  'ai-agentic-factory',
+  'agentic-enterprise',
+  'ai-agents',
+  'ai-networking',
+  'networking',
+  'ultra-low-latency-ai-fabrics',
+  'ai-cybersecurity-quantum-safe',
+  'ai-cybersecurity',
+  'quantum-safe-ai-security',
+  'trusted-ai-transformation',
+  'trusted-ai',
+  'explainable-robust-governed-ai',
+  'ai-value-engineering',
+  'ai-value',
+  'lean-ai-value-engineering',
+  'medical-supplies-ai',
+  'medical-supplies-packaging-automation'
+];
+
+solutionSlugs.forEach(s => {
+  pageRoutes.add('/solutions/' + s);
+});
+
+// Crawl all code files
+function scanDir(dir) {
+  let files = [];
+  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (item.name === 'node_modules' || item.name === '.next' || item.name === '.git' || item.name === 'scratch' || item.name === 'dist') continue;
+    const full = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      files.push(...scanDir(full));
+    } else if (item.name.endsWith('.tsx') || item.name.endsWith('.ts') || item.name.endsWith('.js') || item.name.endsWith('.mjs')) {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
+const allFiles = scanDir('.');
+const hrefRegex = /href=["']([^"']+)["']/g;
+const hrefs = new Map();
 
 for (const file of allFiles) {
   const content = fs.readFileSync(file, 'utf8');
   let match;
   while ((match = hrefRegex.exec(content)) !== null) {
-    const rawPath = match[1];
-    if (
-      rawPath.startsWith('/_') ||
-      rawPath.startsWith('/images') ||
-      rawPath.startsWith('/api') ||
-      rawPath.startsWith('/favicon') ||
-      rawPath.includes('${')
-    ) {
-      continue;
-    }
-
-    if (!validPages.has(rawPath)) {
-      brokenLinks.push({ file: path.relative(path.join(__dirname, '..'), file), path: rawPath });
-    } else {
-      verifiedLinks.add(rawPath);
-    }
+    const rawHref = match[1];
+    if (!hrefs.has(rawHref)) hrefs.set(rawHref, []);
+    hrefs.get(rawHref).push(file);
   }
 }
 
-console.log('Total unique valid routes linked:', verifiedLinks.size);
-console.log('Broken internal links found:', brokenLinks.length);
+console.log('Total unique hrefs found:', hrefs.size);
 
-if (brokenLinks.length > 0) {
-  console.log('BROKEN LINKS DETAILS:', JSON.stringify(brokenLinks, null, 2));
-} else {
-  console.log('✅ ALL INTERNAL ROUTE LINKS VERIFIED 100% HEALTHY!');
+const broken = [];
+const external = [];
+const placeholders = [];
+const validInternal = [];
+
+for (const [rawHref, callers] of hrefs.entries()) {
+  if (rawHref.startsWith('http://') || rawHref.startsWith('https://') || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) {
+    external.push({ href: rawHref, count: callers.length });
+    continue;
+  }
+  if (rawHref === '#' || rawHref.startsWith('javascript:')) {
+    placeholders.push({ href: rawHref, callers: callers.slice(0, 3) });
+    continue;
+  }
+
+  // Parse path (strip hash and query)
+  let cleanPath = rawHref.split('#')[0].split('?')[0];
+  if (cleanPath === '') cleanPath = '/'; // anchor on same page or /
+  if (cleanPath.length > 1 && cleanPath.endsWith('/')) cleanPath = cleanPath.slice(0, -1);
+
+  if (pageRoutes.has(cleanPath)) {
+    validInternal.push(rawHref);
+  } else {
+    broken.push({ rawHref, cleanPath, callers: callers.slice(0, 3) });
+  }
 }
+
+console.log('\n=== POTENTIAL BROKEN / 404 INTERNAL LINKS (' + broken.length + ') ===');
+console.log(JSON.stringify(broken, null, 2));
+
+console.log('\n=== PLACEHOLDER LINKS (' + placeholders.length + ') ===');
+console.log(JSON.stringify(placeholders, null, 2));
+
+console.log('\n=== EXTERNAL LINKS (' + external.length + ') ===');
+console.log(JSON.stringify(external, null, 2));

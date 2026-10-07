@@ -225,5 +225,33 @@ function initSchema(db: DatabaseSync): void {
       created_at TEXT NOT NULL,
       expires_at TEXT NOT NULL
     );
+
+    -- 10. LinkedIn Posts & Automation Store
+    CREATE TABLE IF NOT EXISTS linkedin_posts (
+      id TEXT PRIMARY KEY,
+      text TEXT NOT NULL,
+      visibility TEXT DEFAULT 'PUBLIC',
+      organization_id TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'DRAFT',
+      scheduled_at TEXT,
+      published_at TEXT,
+      linkedin_post_id TEXT,
+      error_message TEXT,
+      response_json TEXT DEFAULT '{}',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_linkedin_posts_status ON linkedin_posts(status);
+    CREATE INDEX IF NOT EXISTS idx_linkedin_posts_created ON linkedin_posts(created_at);
+    CREATE INDEX IF NOT EXISTS idx_linkedin_posts_scheduled ON linkedin_posts(scheduled_at);
   `)
+
+  try {
+    db.exec(`ALTER TABLE linkedin_connections ADD COLUMN organization_id TEXT DEFAULT '';`)
+  } catch {}
+  try {
+    db.exec(`ALTER TABLE linkedin_connections ADD COLUMN organization_name TEXT DEFAULT '';`)
+  } catch {}
 }
+

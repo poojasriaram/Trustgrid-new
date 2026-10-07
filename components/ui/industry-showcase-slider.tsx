@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Building2,
   ChevronLeft,
@@ -157,11 +158,16 @@ export function IndustryShowcaseSlider() {
         <div className="industry-card-grid">
           {/* Visual Column */}
           <div className="industry-visual-col">
-            <div className="industry-image-wrapper">
-              <img
+            <div className="industry-image-wrapper relative overflow-hidden aspect-[16/10]">
+              <Image
                 src={current.image}
                 alt={current.name}
-                className="industry-img"
+                width={540}
+                height={338}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 540px"
+                quality={80}
+                className="industry-img object-cover w-full h-full"
               />
               <div className="industry-img-overlay" />
               

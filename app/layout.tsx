@@ -3,32 +3,51 @@ import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
-import './sitemap-styles.css'
+import './main.css'
 import { ScrollRevealObserver } from '@/components/scroll-reveal-observer'
 import { AnalyticsTracker } from '@/components/analytics-tracker'
-import { AIArchitectChatbot } from '@/components/ui/ai-architect-chatbot'
-import { FloatingLeadForm } from '@/components/ui/floating-lead-form'
-import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
-
-import { PrivacyConsentBanner } from '@/components/ui/privacy-consent-banner'
+import { ClientOverlays } from '@/components/client-overlays'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   variable: '--font-sans',
   display: 'swap',
-  weight: ['400', '500', '600', '700', '800'],
 })
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '600', '700'],
 })
 
 export const metadata: Metadata = {
-  title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
+  title: {
+    default: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
+    template: '%s | TRUSTGRID.AI',
+  },
   description: 'TRUSTGRID.AI architects, deploys, optimizes, and secures full-stack enterprise AI infrastructure, GPU factories, autonomous agent fleets, and quantum-safe networks.',
+  metadataBase: new URL('https://trustgrid.ai'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
+    description: 'Engineering the resilient, hyper-optimized backbone of the global AI economy from silicon to autonomous agents.',
+    url: 'https://trustgrid.ai',
+    siteName: 'TRUSTGRID.AI',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'TRUSTGRID.AI — Enterprise AI Engineering Operating Company',
+    description: 'Full-stack enterprise AI infrastructure, GPU factories, and autonomous agent fleets.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export const viewport: Viewport = {
@@ -42,13 +61,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`bg-background ${plusJakartaSans.variable} ${ibmPlexMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap"
-          rel="stylesheet"
-        />
-        <Script id="microsoft-clarity" strategy="afterInteractive">
+        <Script id="microsoft-clarity" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -62,12 +75,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <AnalyticsTracker />
         {children}
         <ScrollRevealObserver />
-        <FloatingLeadForm />
-        <WhatsAppCTA />
-        <AIArchitectChatbot />
-        <PrivacyConsentBanner />
+        <ClientOverlays />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
 }
+
+

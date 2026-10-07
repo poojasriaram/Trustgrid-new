@@ -37,7 +37,6 @@ import {
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
 import { HeroSlider } from '@/components/ui/hero-slider'
 import { OfferingSlider, PrimaryOffering } from '@/components/ui/offering-slider'
 import { MarketGapsSlider, MarketGapItem } from '@/components/ui/market-gaps-slider'
@@ -48,6 +47,7 @@ import { ComparisonTable } from '@/components/ui/comparison-table'
 import { PrinciplesSlider } from '@/components/ui/principles-slider'
 import { ICPSlider } from '@/components/ui/icp-slider'
 import { EngagementModelsSlider } from '@/components/ui/engagement-models-slider'
+import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
 import {
   solutions,
   differentiationData,
@@ -60,7 +60,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'AI INFRASTRUCTURE',
     title: 'AI Infra & Data Center',
     slug: 'ai-infra-engineering',
-    icon: Cpu,
     badge: 'HIGH-DENSITY COMPUTE',
     image: '/images/offering-infra.jpg',
     problem: 'GPU clusters suffer from 30–50% utilization while data center power & cooling walls halt scale.',
@@ -78,7 +77,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'AGENTIC ENTERPRISE',
     title: 'Agentic Enterprise',
     slug: 'ai-agentic-factory',
-    icon: Bot,
     badge: 'AUTONOMOUS OPERATIONS',
     image: '/images/offering-agentic.jpg',
     problem: 'Enterprises remain trapped in fragile chatbot pilots unable to execute multi-step business operations.',
@@ -96,7 +94,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'AI NETWORKING',
     title: 'AI Networking',
     slug: 'ai-networking',
-    icon: Network,
     badge: 'LOSSLESS FABRIC',
     image: '/images/offering-networking.jpg',
     problem: 'Inter-node latency spikes and silent packet drops stall distributed AI training and inference.',
@@ -114,7 +111,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'AI CYBERSECURITY',
     title: 'AI Cybersecurity',
     slug: 'ai-cybersecurity-quantum-safe',
-    icon: Lock,
     badge: 'QUANTUM-SAFE DEFENSE',
     image: '/images/offering-security.jpg',
     problem: 'Novel AI attack surfaces (prompt injection, agent hijacking) paired with Harvest Now Decrypt Later quantum threats.',
@@ -132,7 +128,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'TRUSTED AI',
     title: 'Trusted AI Engineering',
     slug: 'trusted-ai-transformation',
-    icon: ShieldCheck,
     badge: 'EXPLAINABLE & GOVERNED',
     image: '/images/offering-trusted-ai.jpg',
     problem: 'Black-box non-deterministic AI decisions fail EU AI Act, NIST AI RMF, ISO 42001, and board oversight audits.',
@@ -150,7 +145,6 @@ const primaryOfferingsData: PrimaryOffering[] = [
     groupTag: 'VALUE ENGINEERING',
     title: 'AI Value Engineering',
     slug: 'ai-value-engineering',
-    icon: TrendingUp,
     badge: 'FINANCIAL ATTRIBUTION',
     image: '/images/offering-value.jpg',
     problem: 'Opaque AI returns, untracked token sprawl, and failure to bridge compute spend directly to CFO balance sheets.',
@@ -220,7 +214,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Efficient AI Infrastructure',
     description: 'Purpose-engineered AI Factories delivering maximum intelligence per dollar and watt.',
     slug: 'ai-infra-engineering',
-    icon: Cpu,
     image: '/images/hero-ai-infra.jpg',
     capabilities: [
       'High-Density Facility (30–100kW/rack) & Liquid Cooling',
@@ -234,7 +227,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Autonomous Agentic Systems',
     description: 'Digital workers and multi-agent systems turning autonomy into compounding capability.',
     slug: 'ai-agentic-factory',
-    icon: Bot,
     image: '/images/offering-agentic.jpg',
     capabilities: [
       'Hierarchical, Swarm & Consensus Orchestration Protocols',
@@ -248,7 +240,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Trusted, Governed Intelligence',
     description: 'Explainable, robust, auditable AI meeting strict global regulatory and board standards.',
     slug: 'trusted-ai-transformation',
-    icon: ShieldCheck,
     image: '/images/offering-security.jpg',
     capabilities: [
       'Mathematical Explainability (SHAP, LIME, Integrated Gradients)',
@@ -262,7 +253,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Secure & Quantum-Ready Foundations',
     description: 'Zero-trust agent protection and post-quantum cryptographic transitions (PQC / CBOM).',
     slug: 'ai-cybersecurity-quantum-safe',
-    icon: Lock,
     image: '/images/offering-security.jpg',
     capabilities: [
       'NIST Post-Quantum Cryptography (CRYSTALS-Kyber/Dilithium)',
@@ -276,7 +266,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'High-Performance AI Networking',
     description: 'Ultra-low latency InfiniBand/RoCEv2 fabrics connecting distributed AI compute lines.',
     slug: 'ai-networking',
-    icon: Network,
     image: '/images/offering-networking.jpg',
     capabilities: [
       'Lossless RoCEv2 & Quantum-2 InfiniBand Network Fabrics',
@@ -290,7 +279,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Rapid Organizational Transformation',
     description: 'Accelerating enterprises from pilot purgatory to production-scale AI operations in months.',
     slug: 'trusted-ai-transformation',
-    icon: Workflow,
     image: '/images/methodology-engine.jpg',
     capabilities: [
       'Internal AI Factory & Agent Factory Operating Hubs',
@@ -304,7 +292,6 @@ const enrichedLayersData: StackLayerItem[] = [
     title: 'Measurable, Compounding Business Value',
     description: 'Operational excellence (Lean, TOC, DMAIC) and AI FinOps ensuring 3-10x ROI.',
     slug: 'ai-value-engineering',
-    icon: TrendingUp,
     image: '/images/offering-value.jpg',
     capabilities: [
       'Theory of Constraints (TOC) Infrastructure Bottleneck Removal',
@@ -377,10 +364,10 @@ export default function HomePage() {
           ].map((item, i) => (
             <div key={i} className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs text-center flex flex-col justify-between hover:border-blue-300 transition-all">
               <div>
-                <span className="text-2xl sm:text-3xl font-extrabold text-blue-600 block mb-1 tracking-tight">{item.metric}</span>
+                <span className="text-2xl sm:text-3xl font-extrabold text-blue-700 block mb-1 tracking-tight">{item.metric}</span>
                 <span className="text-xs font-bold text-slate-900 block leading-tight mb-1">{item.label}</span>
               </div>
-              <span className="text-[10px] text-slate-500 block leading-tight">{item.desc}</span>
+              <span className="text-[10px] text-slate-600 font-medium block leading-tight">{item.desc}</span>
             </div>
           ))}
         </div>
@@ -389,52 +376,52 @@ export default function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-400 transition-all">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-blue-800 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200 uppercase tracking-wide">
                 Enterprise AI Infrastructure
               </span>
-              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
             </div>
-            <h4 className="text-base font-extrabold text-slate-900 mb-2">GPU Performance Engineering</h4>
-            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            <h3 className="text-base font-extrabold text-slate-900 mb-2">GPU Performance Engineering</h3>
+            <p className="text-xs text-slate-700 leading-relaxed mb-4">
               Re-engineered cluster topologies, kernel scheduling, and memory caching on NVIDIA H100 clusters to achieve up to 12× throughput yield on mission-critical inference workloads without additional silicon investment.
             </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-blue-600">12× H100 Performance</span>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-blue-700">12× H100 Performance</span>
             </div>
           </div>
 
           <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-indigo-400 transition-all">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-md border border-indigo-200 uppercase tracking-wide">
                 Autonomous Operations
               </span>
-              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
             </div>
-            <h4 className="text-base font-extrabold text-slate-900 mb-2">Autonomous Enterprise Operations</h4>
-            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            <h3 className="text-base font-extrabold text-slate-900 mb-2">Autonomous Enterprise Operations</h3>
+            <p className="text-xs text-slate-700 leading-relaxed mb-4">
               Deployed multi-agent collaborative swarms with deterministic consensus DAGs and persistent long-term memory across enterprise finance, supply chain, and IT operations.
             </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-indigo-600">70–90% Workflow Automation</span>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-indigo-700">70–90% Workflow Automation</span>
             </div>
           </div>
 
           <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-cyan-400 transition-all">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] font-bold text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200 uppercase tracking-wide">
+              <span className="text-[11px] font-bold text-cyan-800 bg-cyan-50 px-2.5 py-1 rounded-md border border-cyan-200 uppercase tracking-wide">
                 Production Velocity
               </span>
-              <span className="text-xs font-mono font-bold text-slate-500">PROVEN</span>
+              <span className="text-xs font-mono font-bold text-slate-700">PROVEN</span>
             </div>
-            <h4 className="text-base font-extrabold text-slate-900 mb-2">Enterprise AI Deployment</h4>
-            <p className="text-xs text-slate-600 leading-relaxed mb-4">
+            <h3 className="text-base font-extrabold text-slate-900 mb-2">Enterprise AI Deployment</h3>
+            <p className="text-xs text-slate-700 leading-relaxed mb-4">
               Eliminated pilot purgatory by transitioning experimental research models to production-grade, highly governed, observable inference pipelines in rapid 90-day execution cycles.
             </p>
-            <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-              <span className="text-xs text-slate-600 font-semibold">Verified Benchmark:</span>
-              <span className="text-xs font-extrabold text-cyan-600">10× Faster AI Deployment</span>
+            <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+              <span className="text-xs text-slate-700 font-semibold">Verified Benchmark:</span>
+              <span className="text-xs font-extrabold text-cyan-700">10× Faster AI Deployment</span>
             </div>
           </div>
         </div>

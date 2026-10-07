@@ -38,6 +38,7 @@ export type TabKey =
   | 'mission-control'
   | 'executive-kpis'
   | 'ad-intelligence'
+  | 'linkedin-automation'
   | 'geo-map'
   | 'visitor-ratio'
   | 'tech-profile'
@@ -72,8 +73,9 @@ const NAVIGATION_GROUPS: NavGroup[] = [
     ]
   },
   {
-    name: 'Acquisition',
+    name: 'Acquisition & Social',
     items: [
+      { key: 'linkedin-automation', label: 'LinkedIn Automation', icon: Megaphone, badge: 'Page' },
       { key: 'ad-intelligence', label: 'Ad Intelligence', icon: Megaphone }
     ]
   },

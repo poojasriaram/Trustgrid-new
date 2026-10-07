@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowRight,
   ShieldCheck,
@@ -83,11 +84,16 @@ export function MedicalSuppliesCaseStudyCard({
         </div>
 
         <div className="card-visual-column">
-          <div className="image-wrap">
-            <img
+          <div className="image-wrap relative overflow-hidden aspect-[16/10]">
+            <Image
               src="/images/case-study-medical-packaging.jpg"
               alt="Medical Supplies AI Packaging Automation & Inspection"
-              className="card-feature-img"
+              width={540}
+              height={338}
+              loading="lazy"
+              sizes="(max-width: 768px) 100vw, 540px"
+              quality={80}
+              className="card-feature-img object-cover w-full h-full"
             />
             <div className="img-overlay-badge">
               <ShieldCheck size={14} />

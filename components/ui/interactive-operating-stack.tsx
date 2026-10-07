@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowUpRight,
   Check,
@@ -37,7 +38,20 @@ const defaultIcons: Record<string, LucideIcon> = {
   '04': Lock,
   '05': Network,
   '06': Workflow,
-  '07': TrendingUp
+  '07': TrendingUp,
+  'INFRA': Cpu,
+  'AGENTS': Bot,
+  'TRUST': ShieldCheck,
+  'CYBER': Lock,
+  'FABRIC': Network,
+  'TRANSFORM': Workflow,
+  'VALUE': TrendingUp,
+  'ai-infra-engineering': Cpu,
+  'ai-agentic-factory': Bot,
+  'trusted-ai-transformation': ShieldCheck,
+  'ai-cybersecurity-quantum-safe': Lock,
+  'ai-networking': Network,
+  'ai-value-engineering': TrendingUp,
 }
 
 export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackProps) {
@@ -60,7 +74,7 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
   }, [isPaused, nextLayer])
 
   const active = layers[selectedLayer] || layers[0]
-  const ActiveIcon = active.icon || defaultIcons[active.number] || Cpu
+  const ActiveIcon = (active && (active.icon || defaultIcons[active.number || ''] || defaultIcons[active.slug || ''])) || Cpu
 
   return (
     <div
@@ -74,7 +88,7 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
         <div className="stack-layers-column" role="tablist" aria-label="Enterprise AI Architecture Layers">
           {layers.map((layer, idx) => {
             const isSelected = selectedLayer === idx
-            const Icon = layer.icon || defaultIcons[layer.number || ''] || Cpu
+            const Icon = layer.icon || defaultIcons[layer.number || ''] || defaultIcons[layer.slug || ''] || Cpu
 
             return (
               <div
@@ -131,11 +145,16 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
             <span className="card-corner-br" />
 
             {/* Inspector Visual Header */}
-            <div className="inspector-media-box">
-              <img
+            <div className="inspector-media-box relative overflow-hidden aspect-[16/10]">
+              <Image
                 src={active.image}
                 alt={active.title}
-                className="inspector-image"
+                width={540}
+                height={338}
+                loading="lazy"
+                sizes="(max-width: 768px) 100vw, 540px"
+                quality={80}
+                className="inspector-image object-cover w-full h-full"
               />
               <div className="inspector-gradient" />
               

@@ -23,10 +23,10 @@ export async function GET(req: NextRequest) {
 
   const origin = req.nextUrl.origin || 'https://trustgrid.ai'
   const redirectTarget = (status: 'success' | 'error', msg?: string) => {
-    const url = new URL('/', origin)
+    const url = new URL('/analytics', origin)
+    url.searchParams.set('tab', 'linkedin-automation')
     url.searchParams.set('linkedin_status', status)
     if (msg) url.searchParams.set('message', msg)
-    url.hash = 'integrated-services'
     return url.toString()
   }
 

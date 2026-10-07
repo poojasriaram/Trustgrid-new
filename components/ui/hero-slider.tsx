@@ -191,6 +191,8 @@ export const heroSlidesData: HeroSlideData[] = [
   }
 ]
 
+import Image from 'next/image'
+
 export function HeroSlider() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
@@ -253,10 +255,14 @@ export function HeroSlider() {
     >
       {/* Dynamic Background Banner Image with Space-Grade Glassmorphic Overlay */}
       <div className="hero-banner-image-backdrop" key={currentSlide.id + '-backdrop'}>
-        <img
+        <Image
           src={currentSlide.image}
           alt={currentSlide.title}
-          className="hero-banner-img"
+          fill
+          priority={currentSlideIndex === 0}
+          sizes="100vw"
+          quality={80}
+          className="hero-banner-img object-cover"
         />
         <div className="hero-banner-overlay" />
       </div>
@@ -344,29 +350,29 @@ export function HeroSlider() {
                 <button
                   key={idx}
                   type="button"
-                  className={`hero-dot-pill ${idx === currentSlideIndex ? 'active' : ''}`}
+                  className={`hero-dot-pill min-w-[32px] min-h-[32px] p-1.5 flex items-center justify-center ${idx === currentSlideIndex ? 'active' : ''}`}
                   onClick={() => setCurrentSlideIndex(idx)}
                   aria-label={`Jump to slide ${idx + 1}`}
                 />
               ))}
             </div>
 
-            <div className="hero-slider-nav-arrows">
+            <div className="hero-slider-nav-arrows flex items-center gap-1.5">
               <button
                 type="button"
-                className="hero-arrow-btn"
+                className="hero-arrow-btn min-w-[40px] min-h-[40px] flex items-center justify-center"
                 onClick={goToPrev}
                 aria-label="Previous hero slide"
               >
-                <ChevronLeft size={16} />
+                <ChevronLeft size={18} />
               </button>
               <button
                 type="button"
-                className="hero-arrow-btn"
+                className="hero-arrow-btn min-w-[40px] min-h-[40px] flex items-center justify-center"
                 onClick={goToNext}
                 aria-label="Next hero slide"
               >
-                <ChevronRight size={16} />
+                <ChevronRight size={18} />
               </button>
             </div>
           </div>
@@ -376,11 +382,16 @@ export function HeroSlider() {
         <div className="hero-aside-banner-card" aria-label="TrustGrid Offering Banner Showcase">
           <div className="banner-card-frame">
             {/* The Main High-Res Thematic Image */}
-            <div className="banner-card-image-wrap">
-              <img
+            <div className="banner-card-image-wrap relative overflow-hidden aspect-[16/10]">
+              <Image
                 src={currentSlide.image}
                 alt={currentSlide.title}
-                className="banner-card-img"
+                width={680}
+                height={425}
+                priority={currentSlideIndex === 0}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 680px"
+                quality={80}
+                className="banner-card-img object-cover w-full h-full"
               />
               <div className="banner-card-glow-overlay" />
               <div className="banner-card-scanline" />
@@ -438,3 +449,4 @@ export function HeroSlider() {
     </section>
   )
 }
+

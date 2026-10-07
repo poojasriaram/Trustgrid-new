@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import '../case-study.css'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { MedicalSuppliesCaseStudyContent } from '@/components/case-studies/medical-supplies-case-study-content'

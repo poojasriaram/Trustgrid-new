@@ -8,18 +8,18 @@ export function SiteFooter() {
       <div className="footer-top">
         <div className="footer-brand-col">
           <Link href="/" className="footer-brand-link" aria-label="TRUSTGRID.AI home">
-            <img src={logoUrl} alt="TRUSTGRID.AI" />
+            <img src={logoUrl} alt="TRUSTGRID.AI" width="90" height="75" loading="lazy" />
           </Link>
           <p>
             The Enterprise AI Operating Company for the AGI Era. Engineering the complete vertical stack from silicon to strategy.
           </p>
-          <div style={{ marginTop: '12px', fontSize: '13px', color: '#94a3b8' }}>
+          <div style={{ marginTop: '12px', fontSize: '13px', color: '#cbd5e1' }}>
             <div style={{ marginBottom: '4px' }}>
-              <span style={{ color: '#64748b' }}>Global Inquiries: </span>
+              <span style={{ color: '#94a3b8' }}>Global Inquiries: </span>
               <a href="mailto:connect@trustgrid.ai" style={{ color: '#60a5fa', textDecoration: 'none' }}>connect@trustgrid.ai</a>
             </div>
             <div>
-              <span style={{ color: '#64748b' }}>Support & Operations: </span>
+              <span style={{ color: '#94a3b8' }}>Support & Operations: </span>
               <a href="mailto:cs@trustgrid.in" style={{ color: '#60a5fa', textDecoration: 'none' }}>cs@trustgrid.in</a>
             </div>
           </div>
@@ -93,7 +93,7 @@ export function SiteFooter() {
             <li><Link href="/about#presence">Global Offices & Labs</Link></li>
             <li><Link href="/contact">Contact & Inquiries</Link></li>
             <li><Link href="/book-ai-diagnostic#diagnostic-form-section">AI Diagnostic Assessment</Link></li>
-            <li><a href="/linkedin" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', fontWeight: 600 }}>LinkedIn Official Page ↗</a></li>
+            <li><a href="https://www.linkedin.com/company/trustgridai/" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', fontWeight: 600 }}>LinkedIn Official Page ↗</a></li>
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>

@@ -1114,4 +1114,4 @@ export const getSolution = (slug: string): Solution | undefined => {
   )
 }
 
-export const logoUrl = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-ZiG71IVCBhuuI9JfPR9GkYPPFqccm5.png'
+export const logoUrl = '/images/trustgrid-logo.webp'

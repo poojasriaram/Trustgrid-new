@@ -25,6 +25,7 @@ import { LeadScoringTab } from '@/components/analytics/tabs/lead-scoring-tab'
 import { BrokenLinkQaTab } from '@/components/analytics/tabs/broken-link-qa-tab'
 import { NetworkIntelTab } from '@/components/analytics/tabs/network-intel-tab'
 import { ReportsExportTab } from '@/components/analytics/tabs/reports-export-tab'
+import { LinkedInAutomationTab } from '@/components/analytics/tabs/linkedin-automation-tab'
 
 import {
   Lock,
@@ -52,12 +53,17 @@ export default function AnalyticsPage() {
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [loadError, setLoadError] = useState<string | null>(null)
 
-  // Check stored authorization on mount
+  // Check stored authorization on mount and URL tab parameter
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const stored = sessionStorage.getItem('tg_analytics_auth')
       if (stored === 'authorized') {
         setIsAuthenticated(true)
+      }
+      const params = new URLSearchParams(window.location.search)
+      const tabParam = params.get('tab') as TabKey | null
+      if (tabParam) {
+        setActiveTab(tabParam)
       }
     }
   }, [])
@@ -262,6 +268,12 @@ export default function AnalyticsPage() {
         {activeTab === 'ad-intelligence' && (
           <ModuleErrorBoundary moduleTitle="Ad Intelligence" onRetry={handleRefresh}>
             <AdIntelligenceTab data={dataset.adIntelligence} />
+          </ModuleErrorBoundary>
+        )}
+
+        {activeTab === 'linkedin-automation' && (
+          <ModuleErrorBoundary moduleTitle="LinkedIn Automation" onRetry={handleRefresh}>
+            <LinkedInAutomationTab />
           </ModuleErrorBoundary>
         )}
 

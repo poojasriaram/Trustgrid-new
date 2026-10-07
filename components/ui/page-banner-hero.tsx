@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   ArrowUpRight,
   ArrowRight,
@@ -69,10 +70,14 @@ export function PageBannerHero({
     <section className="hero hero-slider-section page-banner-standard-hero" id="top">
       {/* Background Banner Image Backdrop */}
       <div className="hero-banner-image-backdrop">
-        <img
+        <Image
           src={image}
           alt={title}
-          className="hero-banner-img"
+          fill
+          priority
+          sizes="100vw"
+          quality={80}
+          className="hero-banner-img object-cover"
         />
         <div className="hero-banner-overlay" />
       </div>
@@ -163,11 +168,16 @@ export function PageBannerHero({
           <div className="hero-aside-banner-card" aria-label="Page Domain Showcase">
             <div className="banner-card-frame">
               {/* Featured Visual */}
-              <div className="banner-card-image-wrap">
-                <img
+              <div className="banner-card-image-wrap relative overflow-hidden aspect-[16/10]">
+                <Image
                   src={image}
                   alt={title}
-                  className="banner-card-img"
+                  width={680}
+                  height={425}
+                  priority
+                  sizes="(max-width: 768px) 100vw, 680px"
+                  quality={80}
+                  className="banner-card-img object-cover w-full h-full"
                 />
                 <div className="banner-card-glow-overlay" />
                 <div className="banner-card-scanline" />
