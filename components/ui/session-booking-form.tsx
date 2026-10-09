@@ -484,14 +484,15 @@ export function SessionBookingForm({
       style={{
         background: '#ffffff',
         borderRadius: '20px',
-        padding: compact ? '20px 16px' : 'clamp(20px, 3.5vw, 36px)',
+        padding: compact ? '20px 16px' : 'clamp(20px, 3vw, 32px)',
         border: '1px solid #e2e8f0',
         boxShadow: '0 10px 30px rgba(15, 23, 42, 0.06)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '24px',
+        gap: '22px',
         width: '100%',
-        maxWidth: '100%',
+        maxWidth: '580px',
+        margin: '0 auto',
         boxSizing: 'border-box',
         overflow: 'hidden'
       }}
@@ -502,12 +503,63 @@ export function SessionBookingForm({
           <Sparkles size={13} />
           <span>DIRECT ARCHITECT CONSULTATION</span>
         </div>
-        <h3 style={{ margin: '0 0 6px', fontSize: '22px', fontWeight: 800, color: '#0f172a' }}>
+        <h3 style={{ margin: '0 0 6px', fontSize: '21px', fontWeight: 800, color: '#0f172a' }}>
           Book a Session with an AI Architect
         </h3>
-        <p style={{ margin: 0, fontSize: '14px', color: '#64748b', lineHeight: 1.5 }}>
-          Schedule a dedicated 45-minute architectural &amp; strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.
+        <p style={{ margin: 0, fontSize: '13.5px', color: '#64748b', lineHeight: 1.5 }}>
+          Schedule a dedicated 45-minute architectural &amp; strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security.
         </p>
+      </div>
+
+      {/* 1-CLICK DIRECT GOOGLE CALENDAR APPOINTMENT BANNER */}
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+          border: '1px solid #86efac',
+          borderRadius: '12px',
+          padding: '12px 14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '10px',
+          flexWrap: 'wrap'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#16a34a', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <CalendarIcon size={16} />
+          </div>
+          <div>
+            <span style={{ fontSize: '12px', fontWeight: 700, color: '#14532d', display: 'block' }}>
+              Direct Google Calendar Scheduler
+            </span>
+            <span style={{ fontSize: '11px', color: '#166534' }}>
+              Official auto-booking with Google Meet &amp; timezone sync
+            </span>
+          </div>
+        </div>
+        <a
+          href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '5px',
+            fontSize: '11.5px',
+            fontWeight: 700,
+            padding: '7px 12px',
+            borderRadius: '8px',
+            background: '#16a34a',
+            color: '#ffffff',
+            textDecoration: 'none',
+            boxShadow: '0 2px 8px rgba(22, 163, 74, 0.25)',
+            transition: 'all 0.15s ease'
+          }}
+        >
+          <span>Open Direct Scheduler</span>
+          <ArrowUpRight size={13} />
+        </a>
       </div>
 
       {/* GLOBAL ERROR BANNER */}

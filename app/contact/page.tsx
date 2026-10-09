@@ -146,6 +146,16 @@ export default function ContactPage() {
                     <span>Book AI Architect Session</span>
                     <ArrowUpRight size={14} />
                   </Link>
+                  <a
+                    href="https://calendar.app.google/voXXRkbgVuuft3fz6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button button-ghost button-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '8px 12px', fontSize: '12px', color: '#16a34a', borderColor: '#86efac' }}
+                  >
+                    <span>⚡ Instant Google Calendar Scheduler</span>
+                    <ArrowUpRight size={13} />
+                  </a>
                 </div>
               </div>
             </div>
