@@ -190,7 +190,8 @@ export async function createJiraLead(
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify(parentPayload)
+      body: JSON.stringify(parentPayload),
+      signal: AbortSignal.timeout(3000)
     })
 
     if (!parentRes.ok) {
@@ -243,7 +244,8 @@ export async function createJiraLead(
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           },
-          body: JSON.stringify(subtaskPayload)
+          body: JSON.stringify(subtaskPayload),
+          signal: AbortSignal.timeout(2000)
         })
 
         if (subtaskRes.ok) {

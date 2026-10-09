@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef, useId } from 'react'
+import React, { useState, useRef, useId, useEffect } from 'react'
 import {
   Send,
   CheckCircle2,
@@ -9,9 +9,15 @@ import {
   Lock,
   ArrowUpRight,
   MessageSquare,
-  Sparkles
+  ChevronDown
 } from 'lucide-react'
-import { submitTrustGridForm, validateEmail, validatePhone } from '@/lib/form-submission'
+import {
+  submitTrustGridForm,
+  validateEmail,
+  validatePhone,
+  COUNTRY_CODES
+} from '@/lib/form-submission'
+import { isValidName } from '@/lib/validation'
 import {
   trackFormView,
   trackFormStart,
@@ -22,11 +28,18 @@ import {
 
 export const ENQUIRY_TYPES = [
   'General Business Enquiry',
-  'Technical Architecture & Advisory',
+  'AI Infrastructure & GPU Cluster Engineering',
+  'Agentic Enterprise & Multi-Agent Systems',
+  'MES Automation & Industrial Quality',
+  'Supply Chain & Logistics Automation',
+  'AI Networking & Lossless Fabric (RoCEv2 / IB)',
+  'AI Cybersecurity & Quantum-Safe Defense (PQC)',
+  'Trusted AI Engineering & Governance (NIST / EU AI Act)',
+  'AI Value Engineering & FinOps (Lean / TOC)',
+  'LLM, Fine-Tuning & High-Throughput RAG Systems',
+  'Turnkey DBOT AI Factory Delivery',
   'Partnership & Ecosystem Alliance',
-  'Career & Research Fellowship',
-  'Press & Media Communications',
-  'Other'
+  'Career & Research Fellowship'
 ] as const
 
 interface QuickContactFormProps {
@@ -42,13 +55,20 @@ export function QuickContactForm({
 }: QuickContactFormProps) {
   const formId = useId()
   const formRef = useRef<HTMLFormElement>(null)
+  const countryDropdownRef = useRef<HTMLDivElement>(null)
 
   // Fields
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [countryCode, setCountryCode] = useState('+91')
+  const [phone, setPhone] = useState('')
   const [company, setCompany] = useState('')
   const [enquiryType, setEnquiryType] = useState<string>(ENQUIRY_TYPES[0])
   const [message, setMessage] = useState('')
+
+  // Country Code Dropdown UI State
+  const [isCountryOpen, setIsCountryOpen] = useState(false)
+  const [countrySearch, setCountrySearch] = useState('')
 
   // State
   const [touched, setTouched] = useState<Record<string, boolean>>({})
@@ -58,19 +78,41 @@ export function QuickContactForm({
   const [refId, setRefId] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const targetNode = event.target as Node
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(targetNode)) {
+        setIsCountryOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
   const validateField = (fieldName: string, value: string): string => {
     let err = ''
     if (fieldName === 'name') {
-      if (!value.trim()) err = 'Please enter your full name.'
-      else if (value.trim().length < 2) err = 'Name must be at least 2 characters.'
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your full name'
+      } else if (!isValidName(trimmed)) {
+        err = 'Please enter a valid full name (at least 2 characters)'
+      }
     } else if (fieldName === 'email') {
-      if (!value.trim()) err = 'Please enter your business email.'
-      else if (!validateEmail(value.trim())) err = 'Please enter a valid work email address.'
-    } else if (fieldName === 'company') {
-      if (!value.trim()) err = 'Please enter your company name.'
-    } else if (fieldName === 'message') {
-      if (!value.trim()) err = 'Please enter your message or enquiry.'
-      else if (value.trim().length < 8) err = 'Message must be at least 8 characters.'
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your work email'
+      } else if (!validateEmail(trimmed)) {
+        err = 'Please enter a valid email address'
+      }
+    } else if (fieldName === 'phone') {
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your phone number'
+      } else if (!validatePhone(`${countryCode}${trimmed}`, true)) {
+        err = 'Please enter a valid phone number (7–16 digits)'
+      }
     }
     setFieldErrors((prev) => ({ ...prev, [fieldName]: err }))
     return err
@@ -90,20 +132,17 @@ export function QuickContactForm({
 
     const nameErr = validateField('name', name)
     const emailErr = validateField('email', email)
-    const companyErr = validateField('company', company)
-    const msgErr = validateField('message', message)
+    const phoneErr = validateField('phone', phone)
 
     setTouched({
       name: true,
       email: true,
-      company: true,
-      message: true
+      phone: true
     })
 
     if (nameErr) errors.name = nameErr
     if (emailErr) errors.email = emailErr
-    if (companyErr) errors.company = companyErr
-    if (msgErr) errors.message = msgErr
+    if (phoneErr) errors.phone = phoneErr
 
     if (Object.keys(errors).length > 0) {
       const firstError = Object.values(errors)[0]
@@ -115,6 +154,8 @@ export function QuickContactForm({
     setIsSubmitting(true)
     trackFormStart('form_quick_contact', 'Quick Contact Form', 'submit_click')
 
+    const normalizedPhone = `${countryCode} ${phone.trim()}`
+
     try {
       const result = await submitTrustGridForm({
         formId: 'form_quick_contact',
@@ -122,10 +163,14 @@ export function QuickContactForm({
         form_type: 'CONTACT',
         name: name.trim(),
         email: email.trim(),
-        company: company.trim(),
-        requirement: `[${enquiryType}] ${message.trim()}`,
-        message: message.trim(),
-        subject: `[TG Contact] ${enquiryType} — ${company.trim()}`,
+        mobile: normalizedPhone,
+        phone: normalizedPhone,
+        company: company.trim() || undefined,
+        currentPreviousCompany: company.trim() || undefined,
+        requirement: `[${enquiryType}] ${message.trim()}`.trim(),
+        message: message.trim() || undefined,
+        selectedSolutions: enquiryType !== 'General Business Enquiry' ? [enquiryType] : undefined,
+        subject: `[TG Contact] ${enquiryType} — ${company.trim() || name.trim()}`,
         ctaSource
       })
 
@@ -148,6 +193,12 @@ export function QuickContactForm({
     }
   }
 
+  // Filtered countries for search
+  const filteredCountries = COUNTRY_CODES.filter(c =>
+    c.country.toLowerCase().includes(countrySearch.toLowerCase()) ||
+    c.code.includes(countrySearch)
+  )
+
   // =========================================================================
   // SUCCESS STATE
   // =========================================================================
@@ -160,7 +211,9 @@ export function QuickContactForm({
           border: '1px solid #86efac',
           borderRadius: '16px',
           padding: 'clamp(24px, 4vw, 36px)',
-          boxShadow: '0 10px 30px rgba(22, 163, 74, 0.08)'
+          boxShadow: '0 10px 30px rgba(22, 163, 74, 0.08)',
+          width: '100%',
+          boxSizing: 'border-box'
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
@@ -207,6 +260,7 @@ export function QuickContactForm({
               setSubmitted(false)
               setName('')
               setEmail('')
+              setPhone('')
               setCompany('')
               setMessage('')
               setTouched({})
@@ -232,7 +286,7 @@ export function QuickContactForm({
   }
 
   // =========================================================================
-  // QUICK FORM RENDER
+  // QUICK FORM RENDER - STRICT VERTICAL SINGLE COLUMN
   // =========================================================================
   return (
     <form
@@ -248,22 +302,21 @@ export function QuickContactForm({
         boxShadow: '0 4px 20px rgba(15, 23, 42, 0.05)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '18px',
+        gap: '16px',
         width: '100%',
-        maxWidth: '100%',
         boxSizing: 'border-box'
       }}
     >
       <div>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#eff6ff', color: '#1d5cff', padding: '3px 8px', borderRadius: '6px', fontSize: '11px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '6px' }}>
           <MessageSquare size={12} />
-          <span>QUICK ENQUIRY</span>
+          <span>DIRECT ENQUIRY</span>
         </div>
         <h3 style={{ margin: '0 0 4px', fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>
           Send an Executive Message
         </h3>
         <p style={{ margin: 0, fontSize: '13px', color: '#64748b', lineHeight: 1.4 }}>
-          Have a general question, partnership inquiry, or technical proposal? Send a brief message and our team will get back to you promptly.
+          Have a general question, partnership inquiry, or technical proposal? Send a brief message and our systems leads will respond promptly.
         </p>
       </div>
 
@@ -289,7 +342,7 @@ export function QuickContactForm({
         </div>
       )}
 
-      {/* FULL NAME */}
+      {/* 1. FULL NAME (MANDATORY) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         <label htmlFor={`${formId}_name`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
           Full Name <span style={{ color: '#ef4444' }}>*</span>
@@ -309,6 +362,8 @@ export function QuickContactForm({
           onBlur={() => handleBlur('name', name)}
           style={{
             width: '100%',
+            minHeight: '44px',
+            boxSizing: 'border-box',
             padding: '11px 14px',
             fontSize: '13.5px',
             borderRadius: '10px',
@@ -325,84 +380,220 @@ export function QuickContactForm({
         )}
       </div>
 
-      {/* 2-COL GRID: BUSINESS EMAIL & COMPANY */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <label htmlFor={`${formId}_email`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Business Email <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${formId}_email`}
-            type="email"
-            required
-            disabled={isSubmitting}
-            placeholder="name@company.com"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              if (touched.email) validateField('email', e.target.value)
-            }}
-            onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'email')}
-            onBlur={() => handleBlur('email', email)}
-            style={{
-              width: '100%',
-              padding: '11px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none'
-            }}
-          />
-          {touched.email && fieldErrors.email && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.email}
-            </span>
-          )}
-        </div>
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-          <label htmlFor={`${formId}_company`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Company Name <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${formId}_company`}
-            type="text"
-            required
-            disabled={isSubmitting}
-            placeholder="Enter company name"
-            value={company}
-            onChange={(e) => {
-              setCompany(e.target.value)
-              if (touched.company) validateField('company', e.target.value)
-            }}
-            onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'company')}
-            onBlur={() => handleBlur('company', company)}
-            style={{
-              width: '100%',
-              padding: '11px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: touched.company && fieldErrors.company ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.company && fieldErrors.company ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none'
-            }}
-          />
-          {touched.company && fieldErrors.company && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.company}
-            </span>
-          )}
-        </div>
+      {/* 2. BUSINESS EMAIL (MANDATORY) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label htmlFor={`${formId}_email`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+          Business Email <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <input
+          id={`${formId}_email`}
+          type="email"
+          required
+          disabled={isSubmitting}
+          placeholder="name@company.com"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if (touched.email) validateField('email', e.target.value)
+          }}
+          onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'email')}
+          onBlur={() => handleBlur('email', email)}
+          style={{
+            width: '100%',
+            minHeight: '44px',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+            background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
+            color: '#0f172a',
+            outline: 'none'
+          }}
+        />
+        {touched.email && fieldErrors.email && (
+          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.email}
+          </span>
+        )}
       </div>
 
-      {/* ENQUIRY TYPE */}
+      {/* 3. PHONE NUMBER (MANDATORY WITH COUNTRY CODE SELECTOR) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-        <label htmlFor={`${formId}_type`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-          Enquiry Type <span style={{ color: '#ef4444' }}>*</span>
+        <label htmlFor={`${formId}_phone`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+          Phone Number <span style={{ color: '#ef4444' }}>*</span>
         </label>
+        <div style={{ display: 'flex', gap: '8px', width: '100%', boxSizing: 'border-box' }}>
+          {/* Country Code Dropdown */}
+          <div style={{ position: 'relative', width: '120px', flexShrink: 0 }} ref={countryDropdownRef}>
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => setIsCountryOpen(prev => !prev)}
+              style={{
+                width: '100%',
+                minHeight: '44px',
+                padding: '10px 8px',
+                fontSize: '13px',
+                fontWeight: 600,
+                borderRadius: '10px',
+                border: '1px solid #cbd5e1',
+                background: '#f8fafc',
+                color: '#0f172a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                boxSizing: 'border-box'
+              }}
+            >
+              <span>{COUNTRY_CODES.find(c => c.code === countryCode)?.flag || '🌐'} {countryCode}</span>
+              <ChevronDown size={14} className="text-slate-500" />
+            </button>
+
+            {isCountryOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  width: '230px',
+                  maxHeight: '210px',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                  zIndex: 60,
+                  marginTop: '4px',
+                  overflowY: 'auto',
+                  padding: '6px'
+                }}
+              >
+                <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '4px' }}>
+                  <input
+                    type="text"
+                    placeholder="Search country..."
+                    value={countrySearch}
+                    onChange={(e) => setCountrySearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '6px 8px',
+                      fontSize: '12px',
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+                {filteredCountries.map(c => (
+                  <button
+                    key={`${c.iso}_${c.code}`}
+                    type="button"
+                    onClick={() => {
+                      setCountryCode(c.code)
+                      setIsCountryOpen(false)
+                      setCountrySearch('')
+                    }}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      padding: '7px 8px',
+                      fontSize: '12px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      background: countryCode === c.code ? '#eff6ff' : 'transparent',
+                      color: countryCode === c.code ? '#1d5cff' : '#1e293b',
+                      fontWeight: countryCode === c.code ? 700 : 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <span>{c.flag}</span>
+                    <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.country}</span>
+                    <span style={{ color: '#64748b', fontSize: '11px' }}>{c.code}</span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <input
+            id={`${formId}_phone`}
+            type="tel"
+            required
+            disabled={isSubmitting}
+            placeholder="9876543210"
+            value={phone}
+            onChange={(e) => {
+              setPhone(e.target.value)
+              if (touched.phone) validateField('phone', e.target.value)
+            }}
+            onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'phone')}
+            onBlur={() => handleBlur('phone', phone)}
+            style={{
+              flex: 1,
+              width: '100%',
+              minHeight: '44px',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
+              fontSize: '13.5px',
+              borderRadius: '10px',
+              border: touched.phone && fieldErrors.phone ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+              background: touched.phone && fieldErrors.phone ? '#fef2f2' : '#ffffff',
+              color: '#0f172a',
+              outline: 'none'
+            }}
+          />
+        </div>
+        {touched.phone && fieldErrors.phone && (
+          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.phone}
+          </span>
+        )}
+      </div>
+
+      {/* 4. COMPANY NAME (OPTIONAL) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label htmlFor={`${formId}_company`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+            Company / Organization
+          </label>
+          <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+        </div>
+        <input
+          id={`${formId}_company`}
+          type="text"
+          disabled={isSubmitting}
+          placeholder="Enter company name (optional)"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'company')}
+          style={{
+            width: '100%',
+            minHeight: '44px',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: '1px solid #cbd5e1',
+            background: '#ffffff',
+            color: '#0f172a',
+            outline: 'none'
+          }}
+        />
+      </div>
+
+      {/* 5. ENQUIRY / SERVICE TYPE (OPTIONAL) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label htmlFor={`${formId}_type`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+            Enquiry / Practice Interest
+          </label>
+          <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+        </div>
         <select
           id={`${formId}_type`}
           value={enquiryType}
@@ -410,6 +601,8 @@ export function QuickContactForm({
           onChange={(e) => setEnquiryType(e.target.value)}
           style={{
             width: '100%',
+            minHeight: '44px',
+            boxSizing: 'border-box',
             padding: '11px 14px',
             fontSize: '13.5px',
             borderRadius: '10px',
@@ -428,58 +621,53 @@ export function QuickContactForm({
         </select>
       </div>
 
-      {/* MESSAGE */}
+      {/* 6. MESSAGE (OPTIONAL) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-        <label htmlFor={`${formId}_msg`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-          Message <span style={{ color: '#ef4444' }}>*</span>
-        </label>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label htmlFor={`${formId}_msg`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+            Message / Requirements
+          </label>
+          <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+        </div>
         <textarea
           id={`${formId}_msg`}
           rows={3}
-          required
           disabled={isSubmitting}
-          placeholder="How can TRUSTGRID.AI assist your organization?"
+          placeholder="How can TRUSTGRID.AI assist your organization? (Optional)"
           value={message}
-          onChange={(e) => {
-            setMessage(e.target.value)
-            if (touched.message) validateField('message', e.target.value)
-          }}
+          onChange={(e) => setMessage(e.target.value)}
           onFocus={() => trackFormFieldInteraction('form_quick_contact', 'Quick Contact Form', 'message')}
-          onBlur={() => handleBlur('message', message)}
           style={{
             width: '100%',
+            minHeight: '80px',
+            boxSizing: 'border-box',
             padding: '11px 14px',
             fontSize: '13.5px',
             borderRadius: '10px',
-            border: touched.message && fieldErrors.message ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-            background: touched.message && fieldErrors.message ? '#fef2f2' : '#ffffff',
+            border: '1px solid #cbd5e1',
+            background: '#ffffff',
             color: '#0f172a',
             outline: 'none',
             resize: 'vertical',
-            minHeight: '80px',
             fontFamily: 'inherit'
           }}
         />
-        {touched.message && fieldErrors.message && (
-          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <AlertCircle size={12} /> {fieldErrors.message}
-          </span>
-        )}
       </div>
 
-      {/* SUBMIT BUTTON */}
+      {/* 7. SUBMIT BUTTON */}
       <button
         type="submit"
         disabled={isSubmitting}
         className="button button-primary tg-btn-shine"
         style={{
           width: '100%',
+          minHeight: '46px',
           padding: '13px 20px',
           borderRadius: '10px',
           background: 'linear-gradient(135deg, #1d5cff 0%, #0d3eb8 100%)',
           color: '#ffffff',
           fontWeight: 700,
-          fontSize: '14px',
+          fontSize: '14.5px',
           border: 'none',
           cursor: isSubmitting ? 'not-allowed' : 'pointer',
           opacity: isSubmitting ? 0.75 : 1,
@@ -495,11 +683,11 @@ export function QuickContactForm({
         {isSubmitting ? (
           <>
             <Loader2 size={16} className="animate-spin" />
-            <span>Sending Message...</span>
+            <span>Sending Enquiry...</span>
           </>
         ) : (
           <>
-            <span>Send Message</span>
+            <span>Submit Enquiry</span>
             <Send size={15} />
           </>
         )}

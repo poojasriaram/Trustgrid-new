@@ -24,7 +24,6 @@ import { TrustGridForm } from '@/components/ui/trustgrid-form'
 import { SessionBookingForm } from '@/components/ui/session-booking-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { DiagnosticJourneySlider } from '@/components/ui/diagnostic-journey-slider'
-import { PageBannerHero } from '@/components/ui/page-banner-hero'
 
 function DiagnosticContent() {
   const searchParams = useSearchParams()
@@ -34,92 +33,52 @@ function DiagnosticContent() {
 
   return (
     <>
-      {/* STANDARD PAGE BANNER HERO */}
-      <PageBannerHero
-        badge={isStrategySession ? "STRATEGY SESSION" : "EXECUTIVE DIAGNOSTIC"}
-        badgeTag={isStrategySession ? "45-MIN EXECUTIVE SCOPING" : "SYSTEMS & TCO AUDIT"}
-        title={isStrategySession ? "Book Your Executive AI Strategy Session with" : "Find the Fastest Path from AI Ambition to"}
-        titleHighlight={isStrategySession ? "Principal Systems Architects" : "Operational Production Value"}
-        description={isStrategySession
-          ? "Schedule a dedicated 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap."
-          : "Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced execution roadmap."}
-        thesisHighlight="Principal Systems Engineering • Quantifiable TCO Modeling • 90-Day Production Roadmap"
-        image="/images/offering-agentic.jpg"
-        primaryCta={{
-          label: isStrategySession ? "Book Strategy Session" : "Start Diagnostic Form",
-          href: "#diagnostic-form-section"
-        }}
-        secondaryCta={{
-          label: "Explore Methodology",
-          href: "/methodology-engine"
-        }}
-        quickNavItems={[
-          { label: isStrategySession ? "1. Strategy Session Form" : "1. Diagnostic Form", href: "#diagnostic-form-section" },
-          { label: "2. Methodology", href: "/methodology-engine" },
-          { label: "3. Enterprise Solutions", href: "/#offerings" },
-          { label: "4. Direct Contact", href: "/contact" }
-        ]}
-        metrics={{
-          statValue: isStrategySession ? "45-Min" : "90-Day",
-          statLabel: isStrategySession ? "Architect Briefing" : "Production Roadmap",
-          icon: ShieldCheck,
-          features: [
-            "Deep Systems Engineering Audit",
-            "TCO & Token Cost Economics",
-            "Post-Quantum Security Baseline"
-          ]
-        }}
-      />
-
-      <div className="diagnostic-container" id="diagnostic-form-section" style={{ paddingTop: '40px' }}>
-        {/* DIAGNOSTIC JOURNEY SLIDER */}
-        <div style={{ marginBottom: '40px' }}>
-          <DiagnosticJourneySlider />
-        </div>
-
-        <div className="diagnostic-grid-layout">
-          {/* LEFT: INTRO & VALUE POINTS */}
+      {/* ABOVE-THE-FOLD DEDICATED DIAGNOSTIC & PROPOSAL INTAKE SECTION */}
+      <section className="section dedicated-form-hero-section" id="diagnostic-form-section" style={{ paddingTop: '24px', paddingBottom: '40px' }}>
+        <div className="diagnostic-grid-layout" style={{ alignItems: 'flex-start' }}>
+          {/* LEFT: INTRO & VALUE PROPOSITIONS */}
           <div className="diagnostic-intro-col">
             <div className="diagnostic-badge-wrap">
-              <span className="section-label" style={{ color: '#1d5cff' }}>
-                TRUSTGRID.AI / {isStrategySession ? 'STRATEGY SESSION' : 'EXECUTIVE DIAGNOSTIC'}
+              <span className="section-label" style={{ color: '#1d5cff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <Sparkles size={13} />
+                <span>TRUSTGRID.AI &bull; {isStrategySession ? 'EXECUTIVE STRATEGY BRIEFING' : 'ENTERPRISE AI DIAGNOSTIC'}</span>
               </span>
-              <h2>
+              <h1 style={{ fontSize: 'clamp(28px, 3.8vw, 42px)', fontWeight: 800, color: '#0f172a', lineHeight: 1.15, margin: '8px 0 14px' }}>
                 {isStrategySession ? (
-                  <>Schedule an Executive <span>AI Strategy Session.</span></>
+                  <>Schedule an Executive <span style={{ color: '#1d5cff' }}>AI Strategy Session.</span></>
                 ) : (
-                  <>Find the fastest path from AI ambition to <span>operational value.</span></>
+                  <>Fastest Path from AI Ambition to <span style={{ color: '#1d5cff' }}>Operational Value.</span></>
                 )}
-              </h2>
-              <p className="diagnostic-hero-lead">
+              </h1>
+              <p className="diagnostic-hero-lead" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.55 }}>
                 {isStrategySession
-                  ? "Engage directly with senior infrastructure and multi-agent architects. In 45 minutes, we examine your deployment bottlenecks, GPU cluster topology, security boundaries, and deliver an actionable execution path."
-                  : "Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, governance posture, and quantum security to build a sequenced execution roadmap."}
+                  ? 'Engage directly with senior infrastructure and multi-agent architects. In 45 minutes, we examine your deployment bottlenecks, GPU cluster topology, and deliver an actionable execution path.'
+                  : 'Start with a structured, executive-level technical diagnostic. We evaluate your compute economics, multi-agent readiness, governance posture, and quantum security to build a sequenced 90-day execution roadmap.'}
               </p>
             </div>
 
-            <div className="diagnostic-value-points">
+            <div className="diagnostic-value-points" style={{ marginTop: '20px' }}>
               <div className="value-point">
                 <div className="value-point-icon">
-                  <Check size={16} />
+                  <Cpu size={16} />
                 </div>
                 <div>
-                  <strong>Deep Systems Engineering</strong>
+                  <strong>Deep Systems Engineering Audit</strong>
                   <p>Direct engagement with senior AI infrastructure and multi-agent architects.</p>
                 </div>
               </div>
               <div className="value-point">
                 <div className="value-point-icon">
-                  <Check size={16} />
+                  <TrendingUp size={16} />
                 </div>
                 <div>
-                  <strong>Rigorous Financial &amp; Technical Audit</strong>
+                  <strong>Rigorous Financial &amp; Technical Profiling</strong>
                   <p>Quantifiable cost-per-token profiling, bottleneck diagnosis, and TCO modeling.</p>
                 </div>
               </div>
               <div className="value-point">
                 <div className="value-point-icon">
-                  <Check size={16} />
+                  <FileCheck size={16} />
                 </div>
                 <div>
                   <strong>90-Day Execution Roadmap</strong>
@@ -128,7 +87,7 @@ function DiagnosticContent() {
               </div>
             </div>
 
-            <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)' }}>
+            <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 2px 10px rgba(0,0,0,0.03)' }}>
               <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em' }}>
                 DIRECT CALENDAR &amp; CHANNELS
               </span>
@@ -150,7 +109,7 @@ function DiagnosticContent() {
             </div>
           </div>
 
-          {/* RIGHT: STANDARDIZED DIAGNOSTIC / STRATEGY SESSION FORM */}
+          {/* RIGHT: STANDARDIZED DIAGNOSTIC / STRATEGY SESSION FORM (IMMEDIATELY VISIBLE ABOVE THE FOLD) */}
           <div className="diagnostic-form-col">
             {isStrategySession ? (
               <SessionBookingForm
@@ -169,7 +128,22 @@ function DiagnosticContent() {
             )}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* SECTION 2: DIAGNOSTIC JOURNEY SLIDER & METHODOLOGY */}
+      <section className="section" style={{ paddingTop: '40px', paddingBottom: '60px', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">DIAGNOSTIC METHODOLOGY</span>
+            <p className="section-label">4-Stage Systematic Evaluation Process</p>
+          </div>
+          <span className="section-index">ROADMAP</span>
+        </div>
+
+        <div style={{ marginTop: '20px' }}>
+          <DiagnosticJourneySlider />
+        </div>
+      </section>
     </>
   )
 }
@@ -178,17 +152,10 @@ export default function BookDiagnosticPage() {
   return (
     <main className="page-wrapper">
       <SiteHeader />
-      <Suspense
-        fallback={
-          <div className="loading-state" style={{ padding: '80px', textAlign: 'center' }}>
-            <p>Loading AI Diagnostic Portal...</p>
-          </div>
-        }
-      >
+      <Suspense fallback={<div style={{ padding: '60px 20px', textAlign: 'center', color: '#64748b' }}>Loading diagnostic intake...</div>}>
         <DiagnosticContent />
       </Suspense>
       <SiteFooter />
     </main>
   )
 }
-

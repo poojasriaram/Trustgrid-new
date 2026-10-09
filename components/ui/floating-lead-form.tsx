@@ -43,13 +43,8 @@ export function FloatingLeadForm() {
       return
     }
 
-    if (!mobile.trim() || !validatePhone(mobile)) {
+    if (!mobile.trim() || !validatePhone(mobile, true)) {
       setErrorMessage('Please enter your mobile number')
-      return
-    }
-
-    if (!company.trim()) {
-      setErrorMessage('Please enter your company name')
       return
     }
 
@@ -63,7 +58,7 @@ export function FloatingLeadForm() {
       email: email.trim(),
       mobile: mobile.trim(),
       phone: mobile.trim(),
-      company: company.trim(),
+      company: company.trim() || undefined,
       ctaSource: 'floating_quick_cta'
     })
 
@@ -334,13 +329,15 @@ export function FloatingLeadForm() {
                 </div>
 
                 <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Company <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
+                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#334155' }}>
+                      Company
+                    </label>
+                    <span style={{ fontSize: '10px', color: '#94a3b8' }}>Optional</span>
+                  </div>
                   <input
                     type="text"
-                    required
-                    placeholder="Enter your company name"
+                    placeholder="Enter company name (optional)"
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
                     style={{

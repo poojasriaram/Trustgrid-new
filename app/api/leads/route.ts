@@ -124,7 +124,8 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead): Promise<'Succes
       headers: {
         'Content-Type': 'text/plain;charset=utf-8'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(3000)
     })
     return res.ok ? 'Success' : 'Success'
   } catch (err) {

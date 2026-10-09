@@ -11,9 +11,19 @@ import {
   Upload,
   FileText,
   Calendar,
-  X
+  X,
+  ChevronDown
 } from 'lucide-react'
-import { submitTrustGridForm, validateEmail, validatePhone } from '@/lib/form-submission'
+import {
+  submitTrustGridForm,
+  validateEmail,
+  validatePhone,
+  COUNTRY_CODES,
+  CAREER_ROLES,
+  PARTNERSHIP_TYPES,
+  SALES_SERVICES
+} from '@/lib/form-submission'
+import { isValidName } from '@/lib/validation'
 import {
   trackFormView,
   trackFormStart,
@@ -21,6 +31,8 @@ import {
   trackFormValidationError,
   trackFormAbandon
 } from '@/lib/analytics'
+
+export { CAREER_ROLES, PARTNERSHIP_TYPES, SALES_SERVICES }
 
 export type FormVariant =
   | 'diagnostic'
@@ -58,8 +70,9 @@ export function TrustGridForm({
 }: TrustGridFormProps) {
   const formRef = useRef<HTMLFormElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const countryDropdownRef = useRef<HTMLDivElement>(null)
 
-  // Determine Form Identifier
+  // Determine Form Identifier & Descriptive Titles
   const resolvedFormId = customFormId || `form_${variant}`
   const resolvedFormName = customFormName || (
     variant === 'diagnostic' ? 'AI Diagnostic Form' :
@@ -74,17 +87,26 @@ export function TrustGridForm({
   )
 
   const isCareer = variant === 'career'
-  // Single consolidated requirement field if contact or explicitly requested
-  const showRequirement = includeRequirement ?? (variant === 'contact' || variant === 'proposal')
+  const isPartner = variant === 'partner'
+  const isSalesEnquiry = variant === 'diagnostic' || variant === 'proposal' || variant === 'contact' || variant === 'strategy_session'
+  const showRequirement = includeRequirement ?? (variant === 'contact' || variant === 'proposal' || variant === 'partner' || variant === 'diagnostic' || isCareer)
 
   // Form Fields State
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [mobile, setMobile] = useState('')
+  const [countryCode, setCountryCode] = useState('+91')
+  const [phone, setPhone] = useState('')
   const [company, setCompany] = useState('')
+  const [role, setRole] = useState(isCareer ? CAREER_ROLES[0] : '')
+  const [partnershipType, setPartnershipType] = useState(isPartner ? PARTNERSHIP_TYPES[0] : '')
+  const [selectedService, setSelectedService] = useState(defaultSolution || '')
   const [message, setMessage] = useState('')
 
-  // Careers Specific State
+  // Country Code Dropdown UI State
+  const [isCountryOpen, setIsCountryOpen] = useState(false)
+  const [countrySearch, setCountrySearch] = useState('')
+
+  // Careers Specific Resume State
   const [resumeFile, setResumeFile] = useState<File | null>(null)
   const [resumeBase64, setResumeBase64] = useState<string>('')
   const [resumeError, setResumeError] = useState<string>('')
@@ -103,6 +125,18 @@ export function TrustGridForm({
   // Funnel tracking flags
   const hasStartedRef = useRef(false)
   const lastFieldInteractedRef = useRef<string>('')
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const targetNode = event.target as Node
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(targetNode)) {
+        setIsCountryOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   // 1. Funnel View tracking with Intersection Observer
   useEffect(() => {
@@ -148,22 +182,29 @@ export function TrustGridForm({
   const validateField = (fieldName: string, value: string): string => {
     let err = ''
     if (fieldName === 'name') {
-      if (!value.trim()) err = 'Please enter your name'
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your full name'
+      } else if (!isValidName(trimmed)) {
+        err = 'Please enter a valid name (at least 2 characters)'
+      }
     } else if (fieldName === 'email') {
-      if (!value.trim()) {
-        err = 'Please enter a valid email address'
-      } else if (!validateEmail(value.trim())) {
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your email address'
+      } else if (!validateEmail(trimmed)) {
         err = 'Please enter a valid email address'
       }
-    } else if (fieldName === 'mobile') {
-      if (!value.trim()) {
-        err = 'Please enter your mobile number'
-      } else if (!validatePhone(value.trim())) {
-        err = 'Please enter your mobile number'
+    } else if (fieldName === 'phone') {
+      const trimmed = value.trim()
+      if (!trimmed) {
+        err = 'Please enter your phone number'
+      } else if (!validatePhone(`${countryCode}${trimmed}`, true)) {
+        err = 'Please enter a valid phone number (7–16 digits)'
       }
-    } else if (fieldName === 'company') {
+    } else if (fieldName === 'role' && isCareer) {
       if (!value.trim()) {
-        err = isCareer ? 'Please enter your company name' : 'Please enter your company name'
+        err = 'Please select the role you are applying for'
       }
     }
     setFieldErrors((prev) => ({ ...prev, [fieldName]: err }))
@@ -196,7 +237,7 @@ export function TrustGridForm({
     setResumeFile(file)
     handleFieldFocusOrChange('resume')
 
-    // Read as Base64 Data URL for API transmission
+    // Read as Base64 Data URL for secure transmission
     const reader = new FileReader()
     reader.onload = () => {
       setResumeBase64(reader.result as string)
@@ -237,20 +278,20 @@ export function TrustGridForm({
 
     const nameErr = validateField('name', name)
     const emailErr = validateField('email', email)
-    const mobileErr = validateField('mobile', mobile)
-    const companyErr = validateField('company', company)
+    const phoneErr = validateField('phone', phone)
+    const roleErr = isCareer ? validateField('role', role) : ''
 
-    setTouched({ name: true, email: true, mobile: true, company: true })
+    setTouched({
+      name: true,
+      email: true,
+      phone: true,
+      role: true
+    })
 
     if (nameErr) errors.name = nameErr
     if (emailErr) errors.email = emailErr
-    if (mobileErr) errors.mobile = mobileErr
-    if (companyErr) errors.company = companyErr
-
-    if (isCareer && !resumeFile) {
-      setResumeError('Please upload your resume')
-      errors.resume = 'Please upload your resume'
-    }
+    if (phoneErr) errors.phone = phoneErr
+    if (roleErr) errors.role = roleErr
 
     if (Object.keys(errors).length > 0) {
       const firstError = Object.values(errors)[0]
@@ -262,15 +303,17 @@ export function TrustGridForm({
     setIsSubmitting(true)
 
     const formType = isCareer ? 'CAREER' : (
+      isPartner ? 'PARTNER' :
       variant === 'diagnostic' ? 'AI_DIAGNOSTIC' :
       variant === 'strategy_session' ? 'STRATEGY_SESSION' :
       variant === 'contact' ? 'CONTACT' :
       variant === 'proposal' ? 'PROPOSAL' :
-      variant === 'partner' ? 'PARTNER' :
       variant === 'newsletter' ? 'NEWSLETTER' :
       variant === 'workshop' ? 'WORKSHOP' :
       'GENERAL_LEAD'
     )
+
+    const normalizedPhone = `${countryCode} ${phone.trim()}`
 
     const result = await submitTrustGridForm({
       formId: resolvedFormId,
@@ -278,14 +321,18 @@ export function TrustGridForm({
       form_type: formType,
       name: name.trim(),
       email: email.trim(),
-      mobile: mobile.trim(),
-      phone: mobile.trim(),
-      company: company.trim(),
-      currentPreviousCompany: isCareer ? company.trim() : undefined,
+      mobile: normalizedPhone,
+      phone: normalizedPhone,
+      company: company.trim() || undefined,
+      currentPreviousCompany: company.trim() || undefined,
+      role: isCareer ? role : undefined,
+      designation: isCareer ? role : undefined,
+      partnershipType: isPartner ? partnershipType : undefined,
+      partnershipInterest: isPartner ? partnershipType : undefined,
       resume: isCareer ? (resumeBase64 || resumeFile?.name || '') : undefined,
       message: message.trim() || undefined,
-      requirement: message.trim() || undefined,
-      selectedSolutions: defaultSolution ? [defaultSolution] : undefined,
+      requirement: message.trim() || (selectedService ? `Interested in: ${selectedService}` : undefined),
+      selectedSolutions: selectedService ? [selectedService] : (defaultSolution ? [defaultSolution] : undefined),
       industry: defaultIndustry || undefined,
       ctaSource
     })
@@ -302,8 +349,23 @@ export function TrustGridForm({
     }
   }
 
+  // Filtered countries for search
+  const filteredCountries = COUNTRY_CODES.filter(c =>
+    c.country.toLowerCase().includes(countrySearch.toLowerCase()) ||
+    c.code.includes(countrySearch)
+  )
+
+  // Submit button text based on form type
+  const submitButtonText = isCareer
+    ? 'Submit Application'
+    : isPartner
+    ? 'Become a Partner'
+    : variant === 'proposal'
+    ? 'Submit Proposal Request'
+    : 'Submit Enquiry'
+
   // ==========================================
-  // 10. SUCCESS MESSAGE STATE
+  // SUCCESS MESSAGE STATE
   // ==========================================
   if (submitted) {
     return (
@@ -314,7 +376,9 @@ export function TrustGridForm({
           borderRadius: '16px',
           border: '1px solid #86efac',
           background: 'linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%)',
-          boxShadow: '0 10px 30px rgba(22, 163, 74, 0.08)'
+          boxShadow: '0 10px 30px rgba(22, 163, 74, 0.08)',
+          width: '100%',
+          boxSizing: 'border-box'
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
@@ -345,12 +409,18 @@ export function TrustGridForm({
           </div>
           <div>
             <h3 style={{ margin: '0 0 6px', fontSize: '20px', fontWeight: 700, color: '#0f172a' }}>
-              {isCareer ? 'Application Submitted' : 'Thank You'}
+              {isCareer
+                ? 'Application Successfully Submitted'
+                : isPartner
+                ? 'Partner Application Received'
+                : 'Enquiry Successfully Submitted'}
             </h3>
             <p style={{ margin: 0, color: '#475569', fontSize: '14px', lineHeight: 1.5 }}>
               {isCareer
-                ? 'Thank you for your application. Our team will review your resume and contact you if your profile matches an opportunity.'
-                : 'Your request has been submitted successfully. Our team will get back to you soon.'}
+                ? `Thank you for applying for ${role}. Our talent engineering team will review your profile and reach out directly.`
+                : isPartner
+                ? 'Thank you for your partnership interest. Our alliances and ecosystem team will connect with you within 24–48 business hours.'
+                : 'Your inquiry has been routed to our principal systems engineering team. You will receive a direct technical response within 24–48 business hours.'}
             </p>
           </div>
         </div>
@@ -376,7 +446,7 @@ export function TrustGridForm({
               setSubmitted(false)
               setName('')
               setEmail('')
-              setMobile('')
+              setPhone('')
               setCompany('')
               setMessage('')
               setResumeFile(null)
@@ -390,7 +460,7 @@ export function TrustGridForm({
             {isCareer ? 'Submit Another Application' : 'Submit Another Request'}
           </button>
           <a
-            href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20submission%20"
+            href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20submission"
             target="_blank"
             rel="noopener noreferrer"
             className="button button-ghost button-sm"
@@ -405,7 +475,7 @@ export function TrustGridForm({
   }
 
   // ==========================================
-  // FORM RENDER
+  // FORM RENDER - STRICT VERTICAL SINGLE COLUMN
   // ==========================================
   return (
     <form
@@ -418,9 +488,31 @@ export function TrustGridForm({
         borderRadius: '16px',
         padding: compact ? '20px' : '28px',
         border: '1px solid #e2e8f0',
-        boxShadow: '0 4px 20px rgba(15, 23, 42, 0.05)'
+        boxShadow: '0 4px 20px rgba(15, 23, 42, 0.05)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+        width: '100%',
+        boxSizing: 'border-box'
       }}
     >
+      {/* FORM TITLE & HEADER */}
+      <div>
+        <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          {isCareer ? 'CAREER APPLICATION' : isPartner ? 'PARTNER PROGRAM' : 'SECURE ENQUIRY'}
+        </span>
+        <h3 style={{ margin: '4px 0 6px', fontSize: '20px', fontWeight: 700, color: '#0f172a' }}>
+          {resolvedFormName}
+        </h3>
+        <p style={{ margin: 0, fontSize: '13px', color: '#64748b', lineHeight: 1.4 }}>
+          {isCareer
+            ? 'Apply to join TRUSTGRID.AI bare-metal GPU & autonomous systems teams.'
+            : isPartner
+            ? 'Collaborate on high-density AI infrastructure, compute fabrics, and enterprise DBOT delivery.'
+            : 'Connect with our principal AI architects and systems engineers for tailored solutions.'}
+        </p>
+      </div>
+
       {/* GLOBAL ERROR BANNER */}
       {errorMessage && (
         <div
@@ -435,7 +527,6 @@ export function TrustGridForm({
             gap: '8px',
             color: '#b91c1c',
             fontSize: '13px',
-            marginBottom: '18px',
             fontWeight: 500
           }}
         >
@@ -444,237 +535,425 @@ export function TrustGridForm({
         </div>
       )}
 
-      {/* STRATEGY SESSION: GOOGLE CALENDAR DIRECT BOOKING NOTICE */}
-      {variant === 'strategy_session' && (
-        <div
-          style={{
-            background: 'linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%)',
-            border: '1px solid #bfdbfe',
-            borderRadius: '12px',
-            padding: '14px 16px',
-            marginBottom: '18px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px'
-          }}
+      {/* 1. FULL NAME (MANDATORY) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label
+          htmlFor={`${resolvedFormId}_name`}
+          style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Calendar size={18} style={{ color: '#1d5cff' }} />
-              <span style={{ fontSize: '13px', fontWeight: 700, color: '#1e3a8a' }}>
-                Direct Calendar Booking Available
-              </span>
-            </div>
-            <a
-              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-              target="_blank"
-              rel="noopener noreferrer"
+          Full Name <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <input
+          id={`${resolvedFormId}_name`}
+          type="text"
+          name="name"
+          autoComplete="name"
+          required
+          disabled={isSubmitting}
+          placeholder="Enter your full name"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value)
+            if (touched.name) validateField('name', e.target.value)
+          }}
+          onFocus={() => handleFieldFocusOrChange('name')}
+          onBlur={() => handleBlur('name', name)}
+          style={{
+            width: '100%',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            minHeight: '44px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: touched.name && fieldErrors.name ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+            background: touched.name && fieldErrors.name ? '#fef2f2' : '#ffffff',
+            color: '#0f172a',
+            outline: 'none',
+            transition: 'border-color 0.15s ease'
+          }}
+        />
+        {touched.name && fieldErrors.name && (
+          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.name}
+          </span>
+        )}
+      </div>
+
+      {/* 2. EMAIL ADDRESS (MANDATORY) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label
+          htmlFor={`${resolvedFormId}_email`}
+          style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+        >
+          Email Address <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <input
+          id={`${resolvedFormId}_email`}
+          type="email"
+          name="email"
+          autoComplete="email"
+          required
+          disabled={isSubmitting}
+          placeholder={isCareer ? 'your.email@domain.com' : 'name@company.com'}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if (touched.email) validateField('email', e.target.value)
+          }}
+          onFocus={() => handleFieldFocusOrChange('email')}
+          onBlur={() => handleBlur('email', email)}
+          style={{
+            width: '100%',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            minHeight: '44px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+            background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
+            color: '#0f172a',
+            outline: 'none',
+            transition: 'border-color 0.15s ease'
+          }}
+        />
+        {touched.email && fieldErrors.email && (
+          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.email}
+          </span>
+        )}
+      </div>
+
+      {/* 3. PHONE NUMBER (MANDATORY WITH COUNTRY CODE SELECTOR) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label
+          htmlFor={`${resolvedFormId}_phone`}
+          style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+        >
+          Phone Number <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <div style={{ display: 'flex', gap: '8px', width: '100%', boxSizing: 'border-box' }}>
+          {/* Country Code Dropdown */}
+          <div style={{ position: 'relative', width: '120px', flexShrink: 0 }} ref={countryDropdownRef}>
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => setIsCountryOpen(prev => !prev)}
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                background: '#1d5cff',
-                color: '#ffffff',
-                padding: '6px 12px',
-                borderRadius: '6px',
-                fontSize: '12px',
+                width: '100%',
+                minHeight: '44px',
+                padding: '10px 8px',
+                fontSize: '13px',
                 fontWeight: 600,
-                textDecoration: 'none'
+                borderRadius: '10px',
+                border: '1px solid #cbd5e1',
+                background: '#f8fafc',
+                color: '#0f172a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                boxSizing: 'border-box'
               }}
             >
-              <span>Schedule on Google Calendar</span>
-              <ArrowUpRight size={13} />
-            </a>
+              <span>{COUNTRY_CODES.find(c => c.code === countryCode)?.flag || '🌐'} {countryCode}</span>
+              <ChevronDown size={14} className="text-slate-500" />
+            </button>
+
+            {isCountryOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  width: '230px',
+                  maxHeight: '210px',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                  zIndex: 60,
+                  marginTop: '4px',
+                  overflowY: 'auto',
+                  padding: '6px'
+                }}
+              >
+                <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '4px' }}>
+                  <input
+                    type="text"
+                    placeholder="Search country..."
+                    value={countrySearch}
+                    onChange={(e) => setCountrySearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '6px 8px',
+                      fontSize: '12px',
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+                {filteredCountries.map(c => (
+                  <button
+                    key={`${c.iso}_${c.code}`}
+                    type="button"
+                    onClick={() => {
+                      setCountryCode(c.code)
+                      setIsCountryOpen(false)
+                      setCountrySearch('')
+                    }}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      padding: '7px 8px',
+                      fontSize: '12px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      background: countryCode === c.code ? '#eff6ff' : 'transparent',
+                      color: countryCode === c.code ? '#1d5cff' : '#1e293b',
+                      fontWeight: countryCode === c.code ? 700 : 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <span>{c.flag}</span>
+                    <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.country}</span>
+                    <span style={{ color: '#64748b', fontSize: '11px' }}>{c.code}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-          <p style={{ margin: 0, fontSize: '12px', color: '#475569', lineHeight: 1.4 }}>
-            Prefer to pick a live 45-minute slot immediately? Open our Google Calendar schedule above, or complete this brief intake form to receive a tailored briefing agenda.
-          </p>
-        </div>
-      )}
 
-      {/* INPUTS CONTAINER: BALANCED 2-COL DESKTOP, 1-COL MOBILE */}
-      <div style={{ display: 'grid', gridTemplateColumns: compact ? '1fr' : 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '16px' }}>
-        
-        {/* 1. NAME FIELD */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label
-            htmlFor={`${resolvedFormId}_name`}
-            style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
-          >
-            Name <span style={{ color: '#ef4444' }}>*</span>
-          </label>
+          {/* Phone Input */}
           <input
-            id={`${resolvedFormId}_name`}
-            type="text"
-            name="name"
-            autoComplete="name"
-            required
-            disabled={isSubmitting}
-            placeholder="Enter your name"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value)
-              if (touched.name) validateField('name', e.target.value)
-            }}
-            onFocus={() => handleFieldFocusOrChange('name')}
-            onBlur={() => handleBlur('name', name)}
-            style={{
-              width: '100%',
-              padding: '11px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: touched.name && fieldErrors.name ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.name && fieldErrors.name ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none',
-              transition: 'border-color 0.15s ease, box-shadow 0.15s ease'
-            }}
-          />
-          {touched.name && fieldErrors.name && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.name}
-            </span>
-          )}
-        </div>
-
-        {/* 2. EMAIL FIELD */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label
-            htmlFor={`${resolvedFormId}_email`}
-            style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
-          >
-            Email <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${resolvedFormId}_email`}
-            type="email"
-            name="email"
-            autoComplete="email"
-            required
-            disabled={isSubmitting}
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              if (touched.email) validateField('email', e.target.value)
-            }}
-            onFocus={() => handleFieldFocusOrChange('email')}
-            onBlur={() => handleBlur('email', email)}
-            style={{
-              width: '100%',
-              padding: '11px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none',
-              transition: 'border-color 0.15s ease, box-shadow 0.15s ease'
-            }}
-          />
-          {touched.email && fieldErrors.email && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.email}
-            </span>
-          )}
-        </div>
-
-        {/* 3. MOBILE NUMBER FIELD */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label
-            htmlFor={`${resolvedFormId}_mobile`}
-            style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
-          >
-            Mobile Number <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${resolvedFormId}_mobile`}
+            id={`${resolvedFormId}_phone`}
             type="tel"
-            name="mobile"
+            name="phone"
             autoComplete="tel"
             required
             disabled={isSubmitting}
-            placeholder="Enter your mobile number"
-            value={mobile}
+            placeholder="9876543210"
+            value={phone}
             onChange={(e) => {
-              setMobile(e.target.value)
-              if (touched.mobile) validateField('mobile', e.target.value)
+              setPhone(e.target.value)
+              if (touched.phone) validateField('phone', e.target.value)
             }}
-            onFocus={() => handleFieldFocusOrChange('mobile')}
-            onBlur={() => handleBlur('mobile', mobile)}
+            onFocus={() => handleFieldFocusOrChange('phone')}
+            onBlur={() => handleBlur('phone', phone)}
             style={{
+              flex: 1,
               width: '100%',
+              minHeight: '44px',
+              boxSizing: 'border-box',
               padding: '11px 14px',
               fontSize: '13.5px',
               borderRadius: '10px',
-              border: touched.mobile && fieldErrors.mobile ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.mobile && fieldErrors.mobile ? '#fef2f2' : '#ffffff',
+              border: touched.phone && fieldErrors.phone ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+              background: touched.phone && fieldErrors.phone ? '#fef2f2' : '#ffffff',
               color: '#0f172a',
               outline: 'none',
-              transition: 'border-color 0.15s ease, box-shadow 0.15s ease'
+              transition: 'border-color 0.15s ease'
             }}
           />
-          {touched.mobile && fieldErrors.mobile && (
+        </div>
+        {touched.phone && fieldErrors.phone && (
+          <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.phone}
+          </span>
+        )}
+      </div>
+
+      {/* 4. CAREER SPECIFIC: ROLE APPLIED FOR (MANDATORY) */}
+      {isCareer && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <label
+            htmlFor={`${resolvedFormId}_role`}
+            style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+          >
+            Role Applied For <span style={{ color: '#ef4444' }}>*</span>
+          </label>
+          <select
+            id={`${resolvedFormId}_role`}
+            name="role"
+            required
+            disabled={isSubmitting}
+            value={role}
+            onChange={(e) => {
+              setRole(e.target.value)
+              if (touched.role) validateField('role', e.target.value)
+            }}
+            onFocus={() => handleFieldFocusOrChange('role')}
+            onBlur={() => handleBlur('role', role)}
+            style={{
+              width: '100%',
+              minHeight: '44px',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
+              fontSize: '13.5px',
+              borderRadius: '10px',
+              border: touched.role && fieldErrors.role ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+              background: '#ffffff',
+              color: '#0f172a',
+              outline: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            {CAREER_ROLES.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+          {touched.role && fieldErrors.role && (
             <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.mobile}
+              <AlertCircle size={12} /> {fieldErrors.role}
             </span>
           )}
         </div>
+      )}
 
-        {/* 4. COMPANY (OR CURRENT / PREVIOUS COMPANY FOR CAREERS) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      {/* 5. PARTNER SPECIFIC: PARTNERSHIP INTEREST (OPTIONAL) */}
+      {isPartner && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label
+              htmlFor={`${resolvedFormId}_partnership_type`}
+              style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+            >
+              Partnership Interest
+            </label>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+          </div>
+          <select
+            id={`${resolvedFormId}_partnership_type`}
+            name="partnershipType"
+            disabled={isSubmitting}
+            value={partnershipType}
+            onChange={(e) => setPartnershipType(e.target.value)}
+            onFocus={() => handleFieldFocusOrChange('partnershipType')}
+            style={{
+              width: '100%',
+              minHeight: '44px',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
+              fontSize: '13.5px',
+              borderRadius: '10px',
+              border: '1px solid #cbd5e1',
+              background: '#ffffff',
+              color: '#0f172a',
+              outline: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            {PARTNERSHIP_TYPES.map((pt) => (
+              <option key={pt} value={pt}>
+                {pt}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* 6. SALES / DIAGNOSTIC SPECIFIC: SERVICE OR PRODUCT INTEREST (OPTIONAL) */}
+      {isSalesEnquiry && !isPartner && !isCareer && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label
+              htmlFor={`${resolvedFormId}_service`}
+              style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+            >
+              Service / Product Interest
+            </label>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+          </div>
+          <select
+            id={`${resolvedFormId}_service`}
+            name="service"
+            disabled={isSubmitting}
+            value={selectedService}
+            onChange={(e) => setSelectedService(e.target.value)}
+            onFocus={() => handleFieldFocusOrChange('service')}
+            style={{
+              width: '100%',
+              minHeight: '44px',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
+              fontSize: '13.5px',
+              borderRadius: '10px',
+              border: '1px solid #cbd5e1',
+              background: '#ffffff',
+              color: '#0f172a',
+              outline: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            <option value="">Select an interest area (or leave blank for general enquiry)</option>
+            {SALES_SERVICES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {/* 7. COMPANY / ORGANIZATION (OPTIONAL) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <label
             htmlFor={`${resolvedFormId}_company`}
             style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
           >
-            {isCareer ? 'Current / Previous Company' : 'Company'} <span style={{ color: '#ef4444' }}>*</span>
+            {isCareer ? 'Current / Previous Organization' : 'Company / Organization'}
           </label>
-          <input
-            id={`${resolvedFormId}_company`}
-            type="text"
-            name="company"
-            autoComplete="organization"
-            required
-            disabled={isSubmitting}
-            placeholder={isCareer ? 'Enter your current or previous company' : 'Enter your company name'}
-            value={company}
-            onChange={(e) => {
-              setCompany(e.target.value)
-              if (touched.company) validateField('company', e.target.value)
-            }}
-            onFocus={() => handleFieldFocusOrChange('company')}
-            onBlur={() => handleBlur('company', company)}
-            style={{
-              width: '100%',
-              padding: '11px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: touched.company && fieldErrors.company ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.company && fieldErrors.company ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none',
-              transition: 'border-color 0.15s ease, box-shadow 0.15s ease'
-            }}
-          />
-          {touched.company && fieldErrors.company && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.company}
-            </span>
-          )}
+          <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
         </div>
+        <input
+          id={`${resolvedFormId}_company`}
+          type="text"
+          name="company"
+          autoComplete="organization"
+          disabled={isSubmitting}
+          placeholder={isCareer ? 'e.g. Current or past company (optional)' : 'e.g. Enterprise / Company Name'}
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          onFocus={() => handleFieldFocusOrChange('company')}
+          style={{
+            width: '100%',
+            minHeight: '44px',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: '1px solid #cbd5e1',
+            background: '#ffffff',
+            color: '#0f172a',
+            outline: 'none',
+            transition: 'border-color 0.15s ease'
+          }}
+        />
       </div>
 
-      {/* 5. CAREERS FORM: RESUME / CV UPLOAD (ISI SECURITY FUNCTIONAL & UX REFERENCE) */}
+      {/* 8. CAREERS FORM: RESUME / CV UPLOAD (OPTIONAL) */}
       {isCareer && (
-        <div style={{ marginBottom: '18px' }}>
-          <label
-            htmlFor={`${resolvedFormId}_resume`}
-            style={{ display: 'block', fontSize: '13px', fontWeight: 600, color: '#1e293b', marginBottom: '4px' }}
-          >
-            Resume / CV Upload <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <p style={{ margin: '0 0 8px', fontSize: '12px', color: '#64748b' }}>
-            Upload your resume (PDF, DOC, or DOCX) • Maximum file size: 10 MB
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <label
+              htmlFor={`${resolvedFormId}_resume`}
+              style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
+            >
+              Resume / CV Upload
+            </label>
+            <span style={{ fontSize: '11px', color: '#16a34a', background: '#dcfce7', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
+              Optional
+            </span>
+          </div>
+          <p style={{ margin: 0, fontSize: '12px', color: '#64748b' }}>
+            Accepted formats: PDF, DOCX, DOC • Maximum file size: 10 MB
           </p>
 
           <input
@@ -699,32 +978,33 @@ export function TrustGridForm({
                 border: isDragging ? '2px dashed #2563eb' : resumeError ? '2px dashed #ef4444' : '2px dashed #cbd5e1',
                 background: isDragging ? '#eff6ff' : resumeError ? '#fef2f2' : '#f8fafc',
                 borderRadius: '12px',
-                padding: '24px 16px',
+                padding: '20px 16px',
                 textAlign: 'center',
                 cursor: 'pointer',
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease',
+                minHeight: '44px'
               }}
             >
               <div
                 style={{
-                  width: '42px',
-                  height: '42px',
+                  width: '38px',
+                  height: '38px',
                   borderRadius: '10px',
                   background: isDragging ? '#dbeafe' : '#f1f5f9',
                   color: isDragging ? '#2563eb' : '#475569',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  margin: '0 auto 10px'
+                  margin: '0 auto 8px'
                 }}
               >
-                <Upload size={20} />
+                <Upload size={18} />
               </div>
-              <p style={{ margin: '0 0 4px', fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>
-                Click to browse or drag and drop your file here
+              <p style={{ margin: '0 0 2px', fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>
+                Click to browse or drag &amp; drop resume
               </p>
               <p style={{ margin: 0, fontSize: '11.5px', color: '#64748b' }}>
-                Supported Formats: PDF, DOC, DOCX (Max 10 MB)
+                PDF, DOCX, DOC (up to 10 MB)
               </p>
             </div>
           ) : (
@@ -733,7 +1013,7 @@ export function TrustGridForm({
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '12px 16px',
+                padding: '12px 14px',
                 background: '#f0fdf4',
                 border: '1px solid #bbf7d0',
                 borderRadius: '10px',
@@ -743,8 +1023,8 @@ export function TrustGridForm({
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', overflow: 'hidden' }}>
                 <div
                   style={{
-                    width: '34px',
-                    height: '34px',
+                    width: '32px',
+                    height: '32px',
                     borderRadius: '8px',
                     background: '#dcfce7',
                     color: '#16a34a',
@@ -754,7 +1034,7 @@ export function TrustGridForm({
                     flexShrink: 0
                   }}
                 >
-                  <FileText size={18} />
+                  <FileText size={16} />
                 </div>
                 <div style={{ overflow: 'hidden' }}>
                   <p style={{ margin: 0, fontSize: '13px', fontWeight: 600, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -766,46 +1046,64 @@ export function TrustGridForm({
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={removeResumeFile}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: '#64748b',
-                  cursor: 'pointer',
-                  padding: '4px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  borderRadius: '6px'
-                }}
-                aria-label="Remove uploaded resume"
-              >
-                <X size={18} />
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #cbd5e1',
+                    color: '#334155',
+                    fontSize: '11.5px',
+                    fontWeight: 600,
+                    padding: '4px 8px',
+                    borderRadius: '6px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Replace
+                </button>
+                <button
+                  type="button"
+                  onClick={removeResumeFile}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#64748b',
+                    cursor: 'pointer',
+                    padding: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: '6px'
+                  }}
+                  aria-label="Remove uploaded resume"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </div>
           )}
 
           {resumeError && (
-            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px', marginTop: '6px' }}>
+            <span style={{ fontSize: '11.5px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
               <AlertCircle size={12} /> {resumeError}
             </span>
           )}
         </div>
       )}
 
-      {/* 6. CONSOLIDATED LONG FORM: REQUIREMENT / MESSAGE (ONLY WHEN GENUINELY REQUIRED) */}
-      {showRequirement && !isCareer && (
-        <div style={{ marginBottom: '18px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+      {/* 9. MESSAGE / SCOPE / REQUIREMENT (OPTIONAL) */}
+      {showRequirement && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <label
               htmlFor={`${resolvedFormId}_message`}
               style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}
             >
-              Requirement / Message
+              {isCareer ? 'Additional Notes / Cover Summary' : isPartner ? 'Partnership Scope / Objectives' : 'Requirements / Message'}
             </label>
-            <span style={{ fontSize: '11px', color: '#64748b', background: '#f1f5f9', padding: '1px 6px', borderRadius: '4px' }}>
+            <span style={{ fontSize: '11px', color: '#64748b' }}>
               Optional
             </span>
           </div>
@@ -813,12 +1111,20 @@ export function TrustGridForm({
             id={`${resolvedFormId}_message`}
             rows={compact ? 2 : 3}
             disabled={isSubmitting}
-            placeholder="Enter your requirements or message"
+            placeholder={
+              isCareer
+                ? 'Highlight your systems engineering, GPU, or research experience...'
+                : isPartner
+                ? 'Briefly describe your alliance goals, infrastructure stack, or co-delivery scope...'
+                : 'Share any specific requirements or technical objectives...'
+            }
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onFocus={() => handleFieldFocusOrChange('message')}
             style={{
               width: '100%',
+              minHeight: '75px',
+              boxSizing: 'border-box',
               padding: '11px 14px',
               fontSize: '13.5px',
               borderRadius: '10px',
@@ -826,26 +1132,26 @@ export function TrustGridForm({
               color: '#0f172a',
               outline: 'none',
               resize: 'vertical',
-              minHeight: '80px',
               fontFamily: 'inherit'
             }}
           />
         </div>
       )}
 
-      {/* 7. CTA SUBMISSION BUTTON */}
+      {/* 10. CTA SUBMIT BUTTON */}
       <button
         type="submit"
         disabled={isSubmitting}
         className="button button-primary tg-btn-shine"
         style={{
           width: '100%',
+          minHeight: '46px',
           padding: '13px 20px',
           borderRadius: '10px',
           background: 'linear-gradient(135deg, #1d5cff 0%, #0d3eb8 100%)',
           color: '#ffffff',
-          fontWeight: 600,
-          fontSize: '14px',
+          fontWeight: 700,
+          fontSize: '14.5px',
           border: 'none',
           cursor: isSubmitting ? 'not-allowed' : 'pointer',
           opacity: isSubmitting ? 0.75 : 1,
@@ -854,26 +1160,27 @@ export function TrustGridForm({
           justifyContent: 'center',
           gap: '8px',
           boxShadow: '0 4px 14px rgba(29, 92, 255, 0.3)',
-          transition: 'all 0.2s ease'
+          transition: 'all 0.2s ease',
+          marginTop: '4px'
         }}
       >
         {isSubmitting ? (
           <>
             <Loader2 size={16} className="animate-spin" />
-            <span>Processing Request...</span>
+            <span>Processing...</span>
           </>
         ) : (
           <>
-            <span>{isCareer ? 'Apply Now' : 'Submit Request'}</span>
+            <span>{submitButtonText}</span>
             <Send size={15} />
           </>
         )}
       </button>
 
       {/* CONFIDENTIALITY FOOTNOTE */}
-      <p style={{ margin: '12px 0 0', fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+      <p style={{ margin: 0, fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
         <Lock size={12} className="text-slate-400" />
-        <span>Enterprise confidentiality guaranteed. Disclosures handled under mutual NDA standards.</span>
+        <span>Enterprise confidentiality guaranteed under mutual NDA standards.</span>
       </p>
     </form>
   )

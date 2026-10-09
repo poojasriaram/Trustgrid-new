@@ -7,12 +7,16 @@ import {
   CheckCircle2,
   Cpu,
   Layers,
-  ShieldCheck
+  ShieldCheck,
+  Sparkles,
+  Network,
+  Globe2,
+  Boxes
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
-import { PageBannerHero } from '@/components/ui/page-banner-hero'
+import { PARTNERSHIP_TYPES } from '@/lib/form-submission'
 
 export default function PartnersPage() {
   return (
@@ -20,47 +24,111 @@ export default function PartnersPage() {
       <SiteHeader />
 
       <main className="main-content">
-        {/* STANDARD PAGE BANNER HERO */}
-        <PageBannerHero
-          badge="ECOSYSTEM ALLIANCES"
-          badgeTag="STRATEGIC PARTNERSHIPS"
-          title="Accelerating the Frontier AI Economy with"
-          titleHighlight="Strategic Enterprise Partners"
-          description="Join our global network of GPU compute providers, systems integrators, academic research labs, and enterprise technology innovators."
-          thesisHighlight="Hyperscaler Alliances • Silicon & Hardware Partners • Global Systems Integrators"
-          image="/images/offering-security.jpg"
-          primaryCta={{
-            label: "Join Partner Ecosystem",
-            href: "#partner-form-section"
-          }}
-          secondaryCta={{
-            label: "Explore Offerings",
-            href: "/#offerings"
-          }}
-          quickNavItems={[
-            { label: "1. Technology Ecosystem", href: "#technology-ecosystem" },
-            { label: "2. Partner Application", href: "#partner-form-section" },
-            { label: "3. Strategic Alliances", href: "/about#footprint" },
-            { label: "4. Contact Team", href: "/contact" }
-          ]}
-          metrics={{
-            statValue: "Ecosystem",
-            statLabel: "Strategic Alliances",
-            icon: Handshake,
-            features: [
-              "Multi-Model & Multi-Cloud Interop",
-              "Silicon & GPU Acceleration Stack",
-              "Distributed Orchestration & MLflow"
-            ]
-          }}
-        />
+        {/* ABOVE-THE-FOLD DEDICATED PARTNER APPLICATION SECTION */}
+        <section className="section dedicated-form-hero-section" id="partner-top" style={{ paddingTop: '24px', paddingBottom: '50px' }}>
+          <div className="diagnostic-grid-layout" style={{ alignItems: 'flex-start' }}>
+            {/* LEFT COLUMN: STRATEGIC ALLIANCE OVERVIEW */}
+            <div className="diagnostic-intro-col">
+              <div className="diagnostic-badge-wrap">
+                <span className="section-label" style={{ color: '#1d5cff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  <Handshake size={13} />
+                  <span>ECOSYSTEM &amp; STRATEGIC ALLIANCES</span>
+                </span>
+                <h1 style={{ fontSize: 'clamp(28px, 3.8vw, 42px)', fontWeight: 800, color: '#0f172a', lineHeight: 1.15, margin: '8px 0 14px' }}>
+                  Accelerate the Frontier AI Economy with <span style={{ color: '#1d5cff' }}>Strategic Ecosystem Alliances.</span>
+                </h1>
+                <p className="diagnostic-hero-lead" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.55 }}>
+                  We collaborate with silicon manufacturers, cloud hyperscalers, global systems integrators, and academic research labs to co-engineer resilient, sovereign, and post-quantum AI operating fabrics.
+                </p>
+              </div>
 
-        {/* SECTION 9: TECHNOLOGY ECOSYSTEM & PLATFORM INTEROPERABILITY */}
-        <section className="section" id="technology-ecosystem" style={{ paddingTop: '40px', paddingBottom: '30px' }}>
+              {/* CORE PARTNER PILLARS */}
+              <div className="diagnostic-value-points" style={{ marginTop: '20px' }}>
+                <div className="value-point">
+                  <div className="value-point-icon">
+                    <Cpu size={16} />
+                  </div>
+                  <div>
+                    <strong>Silicon &amp; Hardware Alliances</strong>
+                    <p>Benchmarking, kernel tuning, liquid cooling validation, and bare-metal cluster optimization with leading chip designers.</p>
+                  </div>
+                </div>
+
+                <div className="value-point">
+                  <div className="value-point-icon">
+                    <Layers size={16} />
+                  </div>
+                  <div>
+                    <strong>Systems Integrators &amp; Co-Delivery</strong>
+                    <p>Turnkey DBOT AI Factory co-delivery, high-risk compliance certifications, and global enterprise client deployments.</p>
+                  </div>
+                </div>
+
+                <div className="value-point">
+                  <div className="value-point-icon">
+                    <Globe2 size={16} />
+                  </div>
+                  <div>
+                    <strong>Hyperscaler &amp; Sovereign Cloud Mesh</strong>
+                    <p>Air-gapped confidential compute enclaves, multi-cloud interconnects, and zero-data-leakage compliance fabrics.</p>
+                  </div>
+                </div>
+
+                <div className="value-point">
+                  <div className="value-point-icon">
+                    <Boxes size={16} />
+                  </div>
+                  <div>
+                    <strong>Research Labs &amp; Academic Fellowships</strong>
+                    <p>Joint hackathons, post-quantum cryptographic safety benchmarks, and grant sponsorships for AI systems research.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* PROGRAM TRACKS CHIPS */}
+              <div style={{ marginTop: '24px', padding: '16px 18px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                <span style={{ fontSize: '11px', fontWeight: 700, color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                  ACTIVE ALLIANCE TRACKS
+                </span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '10px' }}>
+                  {PARTNERSHIP_TYPES.slice(0, 4).map((pt) => (
+                    <span
+                      key={pt}
+                      style={{
+                        fontSize: '11.5px',
+                        padding: '4px 10px',
+                        background: '#ffffff',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '6px',
+                        color: '#334155',
+                        fontWeight: 500
+                      }}
+                    >
+                      {pt}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN: VERTICAL PARTNER FORM (IMMEDIATELY VISIBLE ABOVE THE FOLD) */}
+            <div className="diagnostic-form-col">
+              <TrustGridForm
+                variant="partner"
+                formId="form_partner_inquiry"
+                formName="Partner Application Form"
+                ctaSource="partners_page_primary"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION 2: TECHNOLOGY ECOSYSTEM & PLATFORM INTEROPERABILITY */}
+        <section className="section" id="technology-ecosystem" style={{ paddingTop: '40px', paddingBottom: '60px', borderTop: '1px solid #e2e8f0', background: '#f8fafc' }}>
           <div className="section-intro">
             <div className="intro-left">
               <span className="section-badge">INTEROPERABLE TECHNOLOGY STACK</span>
-              <p className="section-label">Multi-Model, Cloud, Framework & Acceleration Interoperability</p>
+              <p className="section-label">Multi-Model, Cloud, Framework &amp; Acceleration Interoperability</p>
             </div>
             <span className="section-index">ECOSYSTEM</span>
           </div>
@@ -82,7 +150,7 @@ export default function PartnersPage() {
                   01
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 tracking-wider uppercase mb-1">AI Models</h3>
-                <p className="text-xs text-slate-600 mb-4">Foundation, open-weights & reasoning architectures</p>
+                <p className="text-xs text-slate-600 mb-4">Foundation, open-weights &amp; reasoning architectures</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['OpenAI', 'Anthropic', 'Google Gemini', 'Llama', 'Mistral'].map((tech) => (
                     <span key={tech} className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-800 border border-slate-200/90 font-medium">
@@ -92,7 +160,7 @@ export default function PartnersPage() {
                 </div>
               </div>
               <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
-                Dynamic routing, fine-tuning & model distillation interoperability.
+                Dynamic routing, fine-tuning &amp; model distillation interoperability.
               </p>
             </div>
 
@@ -103,7 +171,7 @@ export default function PartnersPage() {
                   02
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 tracking-wider uppercase mb-1">Cloud</h3>
-                <p className="text-xs text-slate-600 mb-4">Sovereign, hybrid & multi-cloud hyperscaler fabrics</p>
+                <p className="text-xs text-slate-600 mb-4">Sovereign, hybrid &amp; multi-cloud hyperscaler fabrics</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['AWS', 'Microsoft Azure', 'Google Cloud'].map((tech) => (
                     <span key={tech} className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-800 border border-slate-200/90 font-medium">
@@ -113,7 +181,7 @@ export default function PartnersPage() {
                 </div>
               </div>
               <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
-                Air-gapped enclaves & multi-cloud confidential compute topologies.
+                Air-gapped enclaves &amp; multi-cloud confidential compute topologies.
               </p>
             </div>
 
@@ -124,7 +192,7 @@ export default function PartnersPage() {
                   03
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 tracking-wider uppercase mb-1">AI / ML Engineering</h3>
-                <p className="text-xs text-slate-600 mb-4">Distributed training, lifecycle & serving engines</p>
+                <p className="text-xs text-slate-600 mb-4">Distributed training, lifecycle &amp; serving engines</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['PyTorch', 'Ray', 'Kubeflow', 'MLflow', 'vLLM'].map((tech) => (
                     <span key={tech} className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-800 border border-slate-200/90 font-medium">
@@ -134,7 +202,7 @@ export default function PartnersPage() {
                 </div>
               </div>
               <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
-                Distributed data-parallel DAGs & dynamic KV cache optimization.
+                Distributed data-parallel DAGs &amp; dynamic KV cache optimization.
               </p>
             </div>
 
@@ -145,7 +213,7 @@ export default function PartnersPage() {
                   04
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 tracking-wider uppercase mb-1">Containers</h3>
-                <p className="text-xs text-slate-600 mb-4">Microservices orchestration & GPU node scheduling</p>
+                <p className="text-xs text-slate-600 mb-4">Microservices orchestration &amp; GPU node scheduling</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['Kubernetes', 'Docker'].map((tech) => (
                     <span key={tech} className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-800 border border-slate-200/90 font-medium">
@@ -155,7 +223,7 @@ export default function PartnersPage() {
                 </div>
               </div>
               <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
-                K8s device plugins, DRA scheduling & Slurm co-orchestration.
+                K8s device plugins, DRA scheduling &amp; Slurm co-orchestration.
               </p>
             </div>
 
@@ -166,7 +234,7 @@ export default function PartnersPage() {
                   05
                 </div>
                 <h3 className="text-sm font-bold text-slate-900 tracking-wider uppercase mb-1">GPU Acceleration</h3>
-                <p className="text-xs text-slate-600 mb-4">Kernel execution, collective comms & compiler stack</p>
+                <p className="text-xs text-slate-600 mb-4">Kernel execution, collective comms &amp; compiler stack</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['NVIDIA', 'CUDA', 'TensorRT', 'NCCL', 'Triton'].map((tech) => (
                     <span key={tech} className="px-2 py-1 text-xs rounded-md bg-slate-100 text-slate-800 border border-slate-200/90 font-medium">
@@ -176,71 +244,13 @@ export default function PartnersPage() {
                 </div>
               </div>
               <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
-                Hardware-level kernel tuning, FP8 precision & RoCEv2 AllReduce.
+                Hardware-level kernel tuning, FP8 precision &amp; RoCEv2 AllReduce.
               </p>
             </div>
           </div>
 
           <div className="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 text-center shadow-xs">
             <strong className="text-slate-800">Architecture Notice:</strong> Technologies and frameworks listed represent production platforms engineered and supported by TrustGrid systems architects. All trademarks belong to their respective owners and indicate interoperability capabilities.
-          </div>
-        </section>
-
-        {/* CONTENT & FORM */}
-        <section className="section" id="partner-form-section" style={{ paddingTop: '30px', paddingBottom: '60px' }}>
-          <div className="diagnostic-grid-layout">
-            <div className="diagnostic-intro-col">
-              <div className="diagnostic-badge-wrap">
-                <span className="section-label" style={{ color: '#1d5cff' }}>
-                  ECOSYSTEM PROGRAM
-                </span>
-                <h2>Co-Engineering the Frontier AI Economy</h2>
-                <p className="diagnostic-hero-lead">
-                  We collaborate with hardware designers, hyperscalers, multi-agent frameworks, and enterprise consultants to deploy trusted AI operating systems.
-                </p>
-              </div>
-
-              <div className="diagnostic-value-points">
-                <div className="value-point">
-                  <div className="value-point-icon">
-                    <Cpu size={16} />
-                  </div>
-                  <div>
-                    <strong>Compute & Hardware Alliances</strong>
-                    <p>Benchmarking, token cost optimization, and bare-metal cluster engineering.</p>
-                  </div>
-                </div>
-
-                <div className="value-point">
-                  <div className="value-point-icon">
-                    <Layers size={16} />
-                  </div>
-                  <div>
-                    <strong>Systems Integration</strong>
-                    <p>Co-delivery of high-risk enterprise AI platforms and compliance audits.</p>
-                  </div>
-                </div>
-
-                <div className="value-point">
-                  <div className="value-point-icon">
-                    <Handshake size={16} />
-                  </div>
-                  <div>
-                    <strong>Research & Innovation Labs</strong>
-                    <p>Joint hackathons, post-quantum cryptographic safety, and grant fellowships.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="diagnostic-form-col">
-              <TrustGridForm
-                variant="partner"
-                formId="form_partner_inquiry"
-                formName="Partner Application Form"
-                ctaSource="partners_page"
-              />
-            </div>
           </div>
         </section>
       </main>

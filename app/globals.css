@@ -34,6 +34,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
   button, input, optgroup, select, textarea {
     font-family: inherit;
@@ -45,3 +46,43 @@
     scroll-margin-top: 90px;
   }
 }
+
+/* Dedicated Form Page & Form Responsiveness Utilities */
+.dedicated-form-hero-section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .dedicated-form-hero-section {
+    padding-top: 16px !important;
+    padding-bottom: 36px !important;
+  }
+  .diagnostic-grid-layout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .interactive-diagnostic-form,
+  .quick-contact-form,
+  .session-booking-form {
+    padding: 18px 14px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .interactive-diagnostic-form input,
+  .interactive-diagnostic-form select,
+  .interactive-diagnostic-form textarea,
+  .quick-contact-form input,
+  .quick-contact-form select,
+  .quick-contact-form textarea,
+  .session-booking-form input,
+  .session-booking-form select,
+  .session-booking-form textarea {
+    font-size: 13px !important;
+    padding: 10px 12px !important;
+  }
+}
+
