@@ -342,40 +342,6 @@ export function HeroSlider() {
               <ArrowRight size={15} />
             </Link>
           </div>
-
-          {/* Minimalist Slide Progress Dots & Arrow Controls */}
-          <div className="hero-bottom-controls">
-            <div className="hero-indicator-dots">
-              {heroSlidesData.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  className={`hero-dot-pill min-w-[32px] min-h-[32px] p-1.5 flex items-center justify-center ${idx === currentSlideIndex ? 'active' : ''}`}
-                  onClick={() => setCurrentSlideIndex(idx)}
-                  aria-label={`Jump to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            <div className="hero-slider-nav-arrows flex items-center gap-1.5">
-              <button
-                type="button"
-                className="hero-arrow-btn min-w-[40px] min-h-[40px] flex items-center justify-center"
-                onClick={goToPrev}
-                aria-label="Previous hero slide"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                type="button"
-                className="hero-arrow-btn min-w-[40px] min-h-[40px] flex items-center justify-center"
-                onClick={goToNext}
-                aria-label="Next hero slide"
-              >
-                <ChevronRight size={18} />
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* RIGHT COLUMN: HIGH-IMPACT ENTERPRISE BANNER VISUAL SHOWCASE */}
@@ -445,6 +411,39 @@ export function HeroSlider() {
             <span className="sub-telemetry-item">COMPOUNDING VALUE</span>
           </div>
         </div>
+      </div>
+
+      {/* DOWN CENTER SUBTLE SLIDE DOTS */}
+      <div className="hero-center-dots-bar">
+        <button
+          type="button"
+          className="hero-dot-nav-arrow"
+          onClick={goToPrev}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={14} />
+        </button>
+
+        <div className="hero-indicator-dots-center">
+          {heroSlidesData.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={`hero-dot-small ${idx === currentSlideIndex ? 'active' : ''}`}
+              onClick={() => setCurrentSlideIndex(idx)}
+              aria-label={`Jump to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="hero-dot-nav-arrow"
+          onClick={goToNext}
+          aria-label="Next slide"
+        >
+          <ChevronRight size={14} />
+        </button>
       </div>
     </section>
   )
