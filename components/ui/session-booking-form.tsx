@@ -108,7 +108,7 @@ export function SessionBookingForm({
 }: SessionBookingFormProps) {
   const formId = useId()
   const formRef = useRef<HTMLFormElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const countryDropdownRef = useRef<HTMLDivElement>(null)
 
   // Form Fields State
   const [name, setName] = useState('')
@@ -119,7 +119,6 @@ export function SessionBookingForm({
   const [requirements, setRequirements] = useState('')
 
   // UI / Dropdown Search State
-  const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [serviceSearch, setServiceSearch] = useState('')
   const [isCountryOpen, setIsCountryOpen] = useState(false)
   const [countrySearch, setCountrySearch] = useState('')
@@ -151,11 +150,11 @@ export function SessionBookingForm({
     }
   }, [initialArea])
 
-  // Close dropdowns on outside click
+  // Click Outside Handler for country dropdown
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsServicesOpen(false)
+      const targetNode = event.target as Node
+      if (countryDropdownRef.current && !countryDropdownRef.current.contains(targetNode)) {
         setIsCountryOpen(false)
       }
     }
@@ -212,6 +211,7 @@ export function SessionBookingForm({
       next = [...selectedServices, serviceLabel]
     }
     setSelectedServices(next)
+    setFieldErrors(prev => ({ ...prev, services: '' }))
     if (touched.services) validateField('services', next)
   }
 
@@ -445,7 +445,7 @@ export function SessionBookingForm({
         width: '100%',
         maxWidth: '100%',
         boxSizing: 'border-box',
-        overflow: 'hidden'
+        overflow: 'visible'
       }}
     >
       {/* FORM HEADING & DESCRIPTION */}
@@ -544,13 +544,16 @@ export function SessionBookingForm({
         <label htmlFor={`${formId}_phone`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
           Phone Number <span style={{ color: '#ef4444' }}>*</span>
         </label>
-        <div style={{ display: 'flex', gap: '8px', width: '100%', boxSizing: 'border-box' }} ref={dropdownRef}>
+        <div style={{ display: 'flex', gap: '8px', width: '100%', boxSizing: 'border-box' }}>
           {/* Searchable Country Code Dropdown */}
-          <div style={{ position: 'relative', width: '130px', flexShrink: 0 }}>
+          <div style={{ position: 'relative', width: '130px', flexShrink: 0 }} ref={countryDropdownRef}>
             <button
               type="button"
               disabled={isSubmitting}
-              onClick={() => setIsCountryOpen(!isCountryOpen)}
+              onClick={(e) => {
+                e.stopPropagation()
+                setIsCountryOpen(prev => !prev)
+              }}
               style={{
                 width: '100%',
                 padding: '11px 10px',
@@ -588,6 +591,7 @@ export function SessionBookingForm({
                   overflowY: 'auto',
                   padding: '6px'
                 }}
+                onClick={(e) => e.stopPropagation()}
               >
                 <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '4px' }}>
                   <input
@@ -713,156 +717,212 @@ export function SessionBookingForm({
         )}
       </div>
 
-      {/* 5. SERVICES AREA INTERESTED (MULTI-SELECT FROM ACTUAL OFFERINGS) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', position: 'relative' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <label style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Services Area Interested <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          {selectedServices.length > 0 && (
-            <span style={{ fontSize: '11.5px', color: '#1d5cff', fontWeight: 600 }}>
-              {selectedServices.length} selected
+      {/* 5. SERVICES AREA INTERESTED (INLINE MULTI-SELECT CHECKLIST GRID) */}
+      <div
+        id={`${formId}_services_group`}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px',
+          background: '#f8fafc',
+          border: touched.services && fieldErrors.services ? '1.5px solid #ef4444' : '1px solid #e2e8f0',
+          borderRadius: '14px',
+          padding: '14px'
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
+          <div>
+            <label style={{ fontSize: '13px', fontWeight: 700, color: '#1e293b', display: 'block' }}>
+              Services Area Interested <span style={{ color: '#ef4444' }}>*</span>
+            </label>
+            <span style={{ fontSize: '11.5px', color: '#64748b' }}>
+              Select one or more practice areas you want to consult on
             </span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            {selectedServices.length > 0 && (
+              <span
+                style={{
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#1d5cff',
+                  background: '#eff6ff',
+                  padding: '2px 8px',
+                  borderRadius: '100px',
+                  border: '1px solid #bfdbfe'
+                }}
+              >
+                {selectedServices.length} Selected
+              </span>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                if (selectedServices.length === OFFERINGS_SERVICES.length) {
+                  setSelectedServices([])
+                } else {
+                  setSelectedServices(OFFERINGS_SERVICES.map(s => s.label))
+                  setFieldErrors(prev => ({ ...prev, services: '' }))
+                }
+              }}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#1d5cff',
+                fontSize: '11.5px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                padding: '2px 4px',
+                textDecoration: 'underline'
+              }}
+            >
+              {selectedServices.length === OFFERINGS_SERVICES.length ? 'Deselect All' : 'Select All'}
+            </button>
+          </div>
+        </div>
+
+        {/* Quick Search / Filter Bar */}
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: '#ffffff',
+            border: '1px solid #cbd5e1',
+            borderRadius: '8px',
+            padding: '6px 10px'
+          }}
+        >
+          <Search size={14} className="text-slate-400 shrink-0" />
+          <input
+            type="text"
+            placeholder="Search / filter practice areas..."
+            value={serviceSearch}
+            onChange={(e) => setServiceSearch(e.target.value)}
+            style={{
+              border: 'none',
+              background: 'transparent',
+              outline: 'none',
+              fontSize: '12px',
+              width: '100%',
+              color: '#0f172a'
+            }}
+          />
+          {serviceSearch && (
+            <button
+              type="button"
+              onClick={() => setServiceSearch('')}
+              style={{ border: 'none', background: 'transparent', color: '#94a3b8', cursor: 'pointer', padding: 0 }}
+              aria-label="Clear filter"
+            >
+              <X size={13} />
+            </button>
           )}
         </div>
 
-        {/* Dropdown trigger button */}
-        <button
-          type="button"
-          disabled={isSubmitting}
-          onClick={() => setIsServicesOpen(!isServicesOpen)}
+        {/* Interactive Selection Grid */}
+        <div
           style={{
-            width: '100%',
-            maxWidth: '100%',
-            boxSizing: 'border-box',
-            padding: '11px 14px',
-            fontSize: '13.5px',
-            borderRadius: '10px',
-            border: touched.services && fieldErrors.services ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-            background: '#ffffff',
-            color: selectedServices.length === 0 ? '#94a3b8' : '#0f172a',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            cursor: 'pointer',
-            textAlign: 'left'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+            gap: '8px',
+            maxHeight: '260px',
+            overflowY: 'auto',
+            paddingRight: '2px',
+            marginTop: '2px'
           }}
         >
-          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: '8px' }}>
-            {selectedServices.length === 0
-              ? 'Select interested service offerings...'
-              : selectedServices.join(', ')}
-          </span>
-          <ChevronDown size={16} className={`text-slate-400 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
-        </button>
-
-        {/* Searchable multi-select menu */}
-        {isServicesOpen && (
-          <div
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              right: 0,
-              background: '#ffffff',
-              border: '1px solid #cbd5e1',
-              borderRadius: '12px',
-              boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
-              zIndex: 40,
-              marginTop: '4px',
-              maxHeight: '260px',
-              overflowY: 'auto',
-              padding: '8px',
-              boxSizing: 'border-box'
-            }}
-          >
-            <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '6px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-                <Search size={13} className="text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Filter offerings..."
-                  value={serviceSearch}
-                  onChange={(e) => setServiceSearch(e.target.value)}
+          {filteredServices.map(service => {
+            const isChecked = selectedServices.includes(service.label)
+            return (
+              <button
+                key={service.id}
+                type="button"
+                onClick={() => toggleService(service.label)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '9px 12px',
+                  borderRadius: '10px',
+                  border: isChecked ? '1.5px solid #1d5cff' : '1px solid #cbd5e1',
+                  background: isChecked ? '#eff6ff' : '#ffffff',
+                  color: isChecked ? '#1d5cff' : '#1e293b',
+                  textAlign: 'left',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                  boxShadow: isChecked ? '0 2px 8px rgba(29, 92, 255, 0.12)' : 'none',
+                  minHeight: '44px'
+                }}
+              >
+                <div
                   style={{
-                    border: 'none',
-                    background: 'transparent',
-                    outline: 'none',
-                    fontSize: '12px',
-                    width: '100%'
+                    width: '18px',
+                    height: '18px',
+                    borderRadius: '5px',
+                    border: isChecked ? '1.5px solid #1d5cff' : '1.5px solid #94a3b8',
+                    background: isChecked ? '#1d5cff' : '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    transition: 'all 0.15s ease'
                   }}
-                />
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-              {filteredServices.map(service => {
-                const isChecked = selectedServices.includes(service.label)
-                return (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => toggleService(service.label)}
+                >
+                  {isChecked && <Check size={12} style={{ color: '#ffffff', strokeWidth: 3 }} />}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
                     style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      borderRadius: '8px',
-                      border: 'none',
-                      background: isChecked ? '#eff6ff' : 'transparent',
-                      textAlign: 'left',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      cursor: 'pointer',
-                      transition: 'all 0.1s ease'
+                      fontSize: '12.5px',
+                      fontWeight: isChecked ? 700 : 600,
+                      lineHeight: 1.3,
+                      whiteSpace: 'normal',
+                      wordBreak: 'break-word'
                     }}
                   >
-                    <div
-                      style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRadius: '4px',
-                        border: isChecked ? '1.5px solid #1d5cff' : '1.5px solid #cbd5e1',
-                        background: isChecked ? '#1d5cff' : '#ffffff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0
-                      }}
-                    >
-                      {isChecked && <Check size={11} className="text-white" />}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <span style={{ fontSize: '13px', fontWeight: isChecked ? 600 : 500, color: isChecked ? '#1d5cff' : '#1e293b' }}>
-                        {service.label}
-                      </span>
-                      <span style={{ display: 'block', fontSize: '11px', color: '#64748b' }}>
-                        {service.groupTag}
-                      </span>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        )}
+                    {service.label}
+                  </div>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      fontSize: '10.5px',
+                      color: isChecked ? '#2563eb' : '#64748b',
+                      marginTop: '2px'
+                    }}
+                  >
+                    {service.groupTag}
+                  </span>
+                </div>
+              </button>
+            )
+          })}
+        </div>
 
-        {/* Selected Service Pills */}
+        {/* Selected Services Tags summary */}
         {selectedServices.length > 0 && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '6px',
+              paddingTop: '8px',
+              borderTop: '1px solid #e2e8f0'
+            }}
+          >
             {selectedServices.map(s => (
               <span
-                key={s}
+                key={`badge_${s}`}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '5px',
-                  background: '#eff6ff',
-                  border: '1px solid #bfdbfe',
-                  color: '#1d5cff',
+                  background: '#1d5cff',
+                  color: '#ffffff',
                   padding: '3px 8px',
                   borderRadius: '6px',
-                  fontSize: '11.5px',
+                  fontSize: '11px',
                   fontWeight: 600
                 }}
               >
@@ -870,9 +930,18 @@ export function SessionBookingForm({
                 <button
                   type="button"
                   onClick={() => toggleService(s)}
-                  style={{ border: 'none', background: 'transparent', padding: 0, cursor: 'pointer', color: '#1d5cff', display: 'flex' }}
+                  style={{
+                    border: 'none',
+                    background: 'transparent',
+                    padding: 0,
+                    cursor: 'pointer',
+                    color: '#ffffff',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                  aria-label={`Remove ${s}`}
                 >
-                  <X size={12} />
+                  <X size={11} />
                 </button>
               </span>
             ))}
@@ -880,13 +949,13 @@ export function SessionBookingForm({
         )}
 
         {touched.services && fieldErrors.services && (
-          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <AlertCircle size={12} /> {fieldErrors.services}
+          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={13} /> {fieldErrors.services}
           </span>
         )}
       </div>
 
-      {/* 6. KEY REQUIREMENTS / COMMENTS (OPTIONAL) */}
+      {/* 6. KEY SECTOR REQUIREMENTS / COMMENTS (OPTIONAL) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <label htmlFor={`${formId}_req`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
