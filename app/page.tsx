@@ -48,6 +48,7 @@ import { PrinciplesSlider } from '@/components/ui/principles-slider'
 import { ICPSlider } from '@/components/ui/icp-slider'
 import { EngagementModelsSlider } from '@/components/ui/engagement-models-slider'
 import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
+import { CommonFoundationSection } from '@/components/common-foundation-section'
 import {
   solutions,
   differentiationData,
@@ -596,6 +597,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* L1 COMMON FOUNDATION ARCHITECTURE */}
+      <CommonFoundationSection />
 
       {/* OPERATING PRINCIPLES (INTERACTIVE CORE DNA SLIDER) */}
       <section className="section principles-section" id="principles">

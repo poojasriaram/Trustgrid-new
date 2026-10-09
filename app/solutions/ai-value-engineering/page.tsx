@@ -3034,6 +3034,309 @@ export default function AIValueEngineeringPage() {
       </section>
 
       {/* ========================================================= */}
+      {/* 16.5. DEDICATED INDUSTRIES VALUE ENGINEERING SECTION */}
+      {/* ========================================================= */}
+      <section id="industries" className="scroll-mt-28 py-16 sm:py-24 bg-slate-50 text-slate-900 border-b border-slate-200 relative">
+        <span id="value-engineering-industries" className="scroll-mt-28 -top-28 absolute block" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/60 inline-flex items-center gap-1.5 mb-3">
+              <Building2 size={12} className="text-blue-600" />
+              Vertical Domain Mastery
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              AI Value Engineering Across Regulated Industries
+            </h2>
+            <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
+              Industrial operational excellence, Theory of Constraints bottleneck removal, and unit-economic attribution calibrated to mission-critical global sectors.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 1. MANUFACTURING & MES */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                    <Boxes size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200/60">
+                    ISA-95 · OEE · TPM
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Manufacturing &amp; MES</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Autonomous vision inspection, real-time OEE machine scoring, and predictive maintenance to compress cycle times and eliminate scrap.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>+18–28% OEE Throughput Lift</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>40% Unplanned Downtime Drop</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore MES Blueprint</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 2. HEALTHCARE & LIFE SCIENCES */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <ShieldCheck size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">
+                    FDA 21 CFR · HIPAA
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Healthcare &amp; Life Sciences</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Deterministic regulatory documentation agents, clinical trial pipeline acceleration, and GxP-compliant audit logging.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>3.5x Faster Protocol Drafting</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>100% Audit-Ready Provenance</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore BioTech Scope</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 3. BFSI & CAPITAL MARKETS */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                    <BarChart3 size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200/60">
+                    SEC · FINRA · SOX 404
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">BFSI &amp; Capital Markets</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Agentic AML investigation, automated SOX 404 ledger reconciliations, and real-time portfolio risk sensitivity analysis.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>65% AML False-Positive Reduction</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>Zero Reconciliation Drift</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore BFSI Models</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 4. SEMICONDUCTOR & FOUNDRY */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center">
+                    <Cpu size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded border border-cyan-200/60">
+                    SECS/GEM · Yield ML
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Semiconductor &amp; Fab</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Lithography parameter tuning, wafer defect classification, and fab cycle-time Theory of Constraints scheduling.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>+3.2% Wafer Yield Recovery</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>14% Fab Cycle Time Compression</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore Fab Engineering</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 5. SUPPLY CHAIN & LOGISTICS */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                    <Workflow size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60">
+                    TOC Buffers · Routing
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Supply Chain &amp; Logistics</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Multi-echelon inventory buffer management, dynamic dispatching agents, and warehouse throughput optimization.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>22–35% Working Capital Release</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>99.2% On-Time Fulfillment SLA</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore Logistics Stack</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 6. ENERGY, UTILITIES & POWER */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                    <Zap size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/60">
+                    BESS · Grid AI · PPA
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Energy &amp; Utilities</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Microgrid load forecasting, BESS battery degradation mitigation, and renewable curtailment minimization.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>15–24% Peak Tariff Reduction</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>Maximized Clean Energy Yield</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore Energy Blueprint</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 7. TELECOM & DATA CENTERS */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                    <Layers size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded border border-sky-200/60">
+                    PUE &lt; 1.2 · Optical NOC
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Telecom &amp; Data Centers</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Direct-to-chip liquid cooling tuning, autonomous optical NOC fault isolation, and PUE optimization across 50–100kW racks.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>PUE Slashed to &lt;1.18</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>99.999% Lossless Uptime</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore Infra Blueprint</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+
+            {/* 8. AEROSPACE, DEFENSE & SOVEREIGN AI */}
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs hover:border-blue-300 hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-slate-100 text-slate-800 flex items-center justify-center">
+                    <Lock size={20} />
+                  </div>
+                  <span className="text-[10.5px] font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-300">
+                    ITAR · Air-Gapped · PQC
+                  </span>
+                </div>
+                <h3 className="text-lg font-extrabold text-slate-900 mb-2">Aerospace &amp; Sovereign AI</h3>
+                <p className="text-xs text-slate-600 leading-relaxed mb-4">
+                  Air-gapped agentic orchestration, post-quantum cryptographic defenses, and formal safety verification for mission systems.
+                </p>
+                <div className="space-y-1.5 border-t border-slate-100 pt-3 mb-4 text-xs text-slate-700">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>100% Air-Gapped Sovereignty</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 size={13} className="text-emerald-600 shrink-0" />
+                    <span>Zero External Cloud Leaks</span>
+                  </div>
+                </div>
+              </div>
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline pt-2 border-t border-slate-100"
+              >
+                <span>Explore Defense Scope</span>
+                <ArrowRight size={13} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================= */}
       {/* 17. ENGAGEMENT MODELS & DIFFERENTIATION */}
       {/* ========================================================= */}
       <section id="sprints-diagnostic" className="scroll-mt-28 py-16 sm:py-24 bg-white text-slate-900 border-b border-slate-200 relative">

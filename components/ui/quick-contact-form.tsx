@@ -250,8 +250,7 @@ export function QuickContactForm({
         flexDirection: 'column',
         gap: '18px',
         width: '100%',
-        maxWidth: '540px',
-        margin: '0 auto',
+        maxWidth: '100%',
         boxSizing: 'border-box'
       }}
     >

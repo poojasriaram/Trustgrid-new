@@ -4,82 +4,97 @@ import React, { useState, useEffect, useRef, useId } from 'react'
 import {
   Calendar as CalendarIcon,
   Clock,
-  Globe2,
   CheckCircle2,
   AlertCircle,
   Loader2,
-  Send,
   Lock,
   ArrowUpRight,
+  ArrowRight,
   Sparkles,
-  Building2,
   Mail,
   User,
   Phone,
-  Briefcase,
-  HelpCircle,
-  RefreshCw,
-  Video
+  Search,
+  Check,
+  ChevronDown,
+  X
 } from 'lucide-react'
-import { TimeSlot, BookingResult } from '@/lib/services/google-calendar'
-import { validateEmail, validatePhone } from '@/lib/form-submission'
-import { trackFormView, trackFormStart, trackFormFieldInteraction, trackFormValidationError, trackFormSubmit } from '@/lib/analytics'
+import { submitTrustGridForm } from '@/lib/form-submission'
+import {
+  trackFormView,
+  trackFormStart,
+  trackFormFieldInteraction,
+  trackFormValidationError,
+  trackFormSubmit
+} from '@/lib/analytics'
 
-export const AREAS_OF_INTEREST = [
-  'AI Infrastructure and GPU Optimization',
-  'AI Agents and Multi-Agent Systems',
-  'LLM and RAG Engineering',
-  'AI Security and Governance',
-  'AI Networking and Infrastructure',
-  'Enterprise AI Architecture',
-  'Other'
-] as const
+// Configured direct Google Calendar scheduling link
+export const GOOGLE_CALENDAR_SCHEDULING_URL = 'https://calendar.app.google/voXXRkbgVuuft3fz6'
 
-export const COMMON_TIMEZONES = [
-  { value: 'America/New_York', label: 'Eastern Time (ET) — US & Canada' },
-  { value: 'America/Chicago', label: 'Central Time (CT) — US & Canada' },
-  { value: 'America/Denver', label: 'Mountain Time (MT) — US & Canada' },
-  { value: 'America/Los_Angeles', label: 'Pacific Time (PT) — US & Canada' },
-  { value: 'Europe/London', label: 'London (GMT / BST) — UK' },
-  { value: 'Europe/Frankfurt', label: 'Central European Time (CET) — Europe' },
-  { value: 'Asia/Dubai', label: 'Gulf Standard Time (GST) — UAE' },
-  { value: 'Asia/Kolkata', label: 'India Standard Time (IST) — India (+5:30)' },
-  { value: 'Asia/Singapore', label: 'Singapore Standard Time (SGT) — Singapore' },
-  { value: 'Asia/Tokyo', label: 'Japan Standard Time (JST) — Tokyo' },
-  { value: 'Australia/Sydney', label: 'Australian Eastern Time (AET) — Sydney' },
-  { value: 'UTC', label: 'Coordinated Universal Time (UTC)' }
+// Dynamically mapped from TrustGrid.AI verified Offerings list
+export const OFFERINGS_SERVICES = [
+  { id: 'ai-infra', label: 'AI Infrastructure & GPU Optimization', groupTag: 'Compute & DC' },
+  { id: 'ai-agents', label: 'Agentic Enterprise & Autonomous Multi-Agent Systems', groupTag: 'Cognitive Systems' },
+  { id: 'ai-networking', label: 'AI Networking & Lossless RoCEv2/InfiniBand Fabric', groupTag: 'Lossless Fabric' },
+  { id: 'ai-security', label: 'AI Cybersecurity & Quantum-Safe Defense (PQC)', groupTag: 'Quantum-Safe' },
+  { id: 'trusted-ai', label: 'Trusted AI Engineering & Governance (NIST / EU AI Act)', groupTag: 'Trust & Safety' },
+  { id: 'ai-value', label: 'AI Value Engineering & ROI Optimization (Lean / TOC)', groupTag: 'Financial ROI' },
+  { id: 'llm-rag', label: 'LLM, Fine-Tuning & High-Throughput RAG Systems', groupTag: 'Model Serving' },
+  { id: 'turnkey-dbot', label: 'Turnkey DBOT AI Factory Delivery', groupTag: 'Turnkey Suite' }
 ]
 
-// Generate selectable business dates (next 30 days, skipping weekends)
-function getSelectableDates(count: number = 20): { dateStr: string; label: string; dayName: string }[] {
-  const dates: { dateStr: string; label: string; dayName: string }[] = []
-  const d = new Date()
-  // Start from next business day
-  d.setDate(d.getDate() + 1)
+// Searchable international dialing country codes with +91 (India) default
+export const COUNTRY_CODES = [
+  { code: '+91', country: 'India', flag: '🇮🇳', iso: 'IN' },
+  { code: '+1', country: 'United States / Canada', flag: '🇺🇸', iso: 'US' },
+  { code: '+65', country: 'Singapore', flag: '🇸🇬', iso: 'SG' },
+  { code: '+44', country: 'United Kingdom', flag: '🇬🇧', iso: 'GB' },
+  { code: '+971', country: 'United Arab Emirates', flag: '🇦🇪', iso: 'AE' },
+  { code: '+61', country: 'Australia', flag: '🇦🇺', iso: 'AU' },
+  { code: '+49', country: 'Germany', flag: '🇩🇪', iso: 'DE' },
+  { code: '+33', country: 'France', flag: '🇫🇷', iso: 'FR' },
+  { code: '+81', country: 'Japan', flag: '🇯🇵', iso: 'JP' },
+  { code: '+966', country: 'Saudi Arabia', flag: '🇸🇦', iso: 'SA' },
+  { code: '+974', country: 'Qatar', flag: '🇶🇦', iso: 'QA' },
+  { code: '+31', country: 'Netherlands', flag: '🇳🇱', iso: 'NL' },
+  { code: '+41', country: 'Switzerland', flag: '🇨🇭', iso: 'CH' },
+  { code: '+46', country: 'Sweden', flag: '🇸🇪', iso: 'SE' },
+  { code: '+353', country: 'Ireland', flag: '🇮🇪', iso: 'IE' },
+  { code: '+60', country: 'Malaysia', flag: '🇲🇾', iso: 'MY' },
+  { code: '+62', country: 'Indonesia', flag: '🇮🇩', iso: 'ID' },
+  { code: '+63', country: 'Philippines', flag: '🇵🇭', iso: 'PH' },
+  { code: '+82', country: 'South Korea', flag: '🇰🇷', iso: 'KR' },
+  { code: '+852', country: 'Hong Kong', flag: '🇭🇰', iso: 'HK' },
+  { code: '+55', country: 'Brazil', flag: '🇧🇷', iso: 'BR' },
+  { code: '+27', country: 'South Africa', flag: '🇿🇦', iso: 'ZA' },
+  { code: '+64', country: 'New Zealand', flag: '🇳🇿', iso: 'NZ' },
+  { code: '+972', country: 'Israel', flag: '🇮🇱', iso: 'IL' },
+  { code: '+34', country: 'Spain', flag: '🇪🇸', iso: 'ES' },
+  { code: '+39', country: 'Italy', flag: '🇮🇹', iso: 'IT' },
+  { code: '+52', country: 'Mexico', flag: '🇲🇽', iso: 'MX' },
+  { code: '+47', country: 'Norway', flag: '🇳🇴', iso: 'NO' },
+  { code: '+45', country: 'Denmark', flag: '🇩🇰', iso: 'DK' },
+  { code: '+358', country: 'Finland', flag: '🇫🇮', iso: 'FI' },
+  { code: '+32', country: 'Belgium', flag: '🇧🇪', iso: 'BE' },
+  { code: '+43', country: 'Austria', flag: '🇦🇹', iso: 'AT' },
+  { code: '+48', country: 'Poland', flag: '🇵🇱', iso: 'PL' },
+  { code: '+886', country: 'Taiwan', flag: '🇹🇼', iso: 'TW' },
+  { code: '+66', country: 'Thailand', flag: '🇹🇭', iso: 'TH' },
+  { code: '+84', country: 'Vietnam', flag: '🇻🇳', iso: 'VN' },
+  { code: '+234', country: 'Nigeria', flag: '🇳🇬', iso: 'NG' },
+  { code: '+20', country: 'Egypt', flag: '🇪🇬', iso: 'EG' },
+  { code: '+254', country: 'Kenya', flag: '🇰🇪', iso: 'KE' }
+]
 
-  while (dates.length < count) {
-    const day = d.getDay()
-    if (day !== 0 && day !== 6) { // Skip Saturday and Sunday
-      const year = d.getFullYear()
-      const month = String(d.getMonth() + 1).padStart(2, '0')
-      const dateNum = String(d.getDate()).padStart(2, '0')
-      const dateStr = `${year}-${month}-${dateNum}`
-      
-      const dayName = d.toLocaleDateString('en-US', { weekday: 'short' })
-      const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-      dates.push({ dateStr, label, dayName })
-    }
-    d.setDate(d.getDate() + 1)
-  }
-  return dates
-}
+// Backwards compatibility export
+export const AREAS_OF_INTEREST = OFFERINGS_SERVICES.map(s => s.label)
 
 interface SessionBookingFormProps {
   initialArea?: string
   ctaSource?: string
   compact?: boolean
   className?: string
-  onBookingSuccess?: (result: BookingResult) => void
+  onBookingSuccess?: (result: any) => void
 }
 
 export function SessionBookingForm({
@@ -91,381 +106,316 @@ export function SessionBookingForm({
 }: SessionBookingFormProps) {
   const formId = useId()
   const formRef = useRef<HTMLFormElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Form Fields State
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [company, setCompany] = useState('')
-  const [jobTitle, setJobTitle] = useState('')
+  const [countryCode, setCountryCode] = useState('+91')
   const [phone, setPhone] = useState('')
-  const [areaOfInterest, setAreaOfInterest] = useState(initialArea || AREAS_OF_INTEREST[0])
-  const [challengeDescription, setChallengeDescription] = useState('')
-  const [additionalContext, setAdditionalContext] = useState('')
+  const [email, setEmail] = useState('')
+  const [selectedServices, setSelectedServices] = useState<string[]>([])
+  const [requirements, setRequirements] = useState('')
 
-  // Calendar & Scheduling State
-  const selectableDates = useRef(getSelectableDates(20)).current
-  const [selectedDate, setSelectedDate] = useState<string>(selectableDates[0]?.dateStr || '')
-  const [timezone, setTimezone] = useState<string>('America/New_York')
-  const [slots, setSlots] = useState<TimeSlot[]>([])
-  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
-  const [isLoadingSlots, setIsLoadingSlots] = useState(false)
-  const [slotFetchError, setSlotFetchError] = useState('')
+  // UI / Dropdown Search State
+  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [serviceSearch, setServiceSearch] = useState('')
+  const [isCountryOpen, setIsCountryOpen] = useState(false)
+  const [countrySearch, setCountrySearch] = useState('')
 
-  // Validation & UI State
-  const [touched, setTouched] = useState<Record<string, boolean>>({})
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
+  // Validation and Submission State
+  const [touched, setTouched] = useState<{ [k: string]: boolean }>({})
+  const [fieldErrors, setFieldErrors] = useState<{ [k: string]: string }>({})
+  const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [bookingResult, setBookingResult] = useState<BookingResult | null>(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [submissionId, setSubmissionId] = useState('')
 
-  // Auto-detect browser timezone on mount
+  // Track initial view
   useEffect(() => {
-    try {
-      const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone
-      if (userTz) {
-        setTimezone(userTz)
-      }
-    } catch {
-      // Fallback remains America/New_York
-    }
+    trackFormView('form_session_booking', 'Session Booking Form')
   }, [])
 
-  // Update initialArea when prop changes
+  // Auto-select initial area of interest if provided via props
   useEffect(() => {
     if (initialArea) {
-      // Match normalized or partial strings
-      const found = AREAS_OF_INTEREST.find(
-        (a) => a.toLowerCase().includes(initialArea.toLowerCase()) || initialArea.toLowerCase().includes(a.toLowerCase().slice(0, 10))
+      const match = OFFERINGS_SERVICES.find(s =>
+        s.id.toLowerCase().includes(initialArea.toLowerCase()) ||
+        s.label.toLowerCase().includes(initialArea.toLowerCase()) ||
+        initialArea.toLowerCase().includes(s.id.toLowerCase())
       )
-      if (found) {
-        setAreaOfInterest(found)
-      } else {
-        setAreaOfInterest(initialArea)
+      if (match && !selectedServices.includes(match.label)) {
+        setSelectedServices([match.label])
       }
     }
   }, [initialArea])
 
-  // Track form view
+  // Close dropdowns on outside click
   useEffect(() => {
-    trackFormView('form_session_booking', 'Executive Session Booking Form', 'strategy_session', ctaSource)
-  }, [ctaSource])
-
-  // Fetch available slots when selectedDate or timezone changes
-  useEffect(() => {
-    if (!selectedDate) return
-
-    let isMounted = true
-    setIsLoadingSlots(true)
-    setSlotFetchError('')
-    setSelectedSlot(null)
-
-    fetch(`/api/calendar/availability?date=${encodeURIComponent(selectedDate)}&timezone=${encodeURIComponent(timezone)}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (!isMounted) return
-        if (data.success && Array.isArray(data.slots)) {
-          setSlots(data.slots)
-          // Auto-select first available slot
-          const firstAvailable = data.slots.find((s: TimeSlot) => s.available)
-          if (firstAvailable) {
-            setSelectedSlot(firstAvailable)
-          }
-        } else {
-          setSlotFetchError(data.message || 'Unable to load real-time slots.')
-        }
-      })
-      .catch((err) => {
-        if (!isMounted) return
-        console.error('[Slot Fetch Error]', err)
-        setSlotFetchError('Unable to connect to Google Calendar. Please try refreshing.')
-      })
-      .finally(() => {
-        if (isMounted) setIsLoadingSlots(false)
-      })
-
-    return () => {
-      isMounted = false
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsServicesOpen(false)
+        setIsCountryOpen(false)
+      }
     }
-  }, [selectedDate, timezone])
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
-  const validateField = (fieldName: string, value: string): string => {
+  // Validate individual field
+  const validateField = (field: string, val: any): string => {
     let err = ''
-    if (fieldName === 'name') {
-      if (!value.trim()) err = 'Please enter your full name.'
-      else if (value.trim().length < 2) err = 'Name must be at least 2 characters.'
-    } else if (fieldName === 'email') {
-      if (!value.trim()) err = 'Please enter your business email.'
-      else if (!validateEmail(value.trim())) err = 'Please enter a valid work email address.'
-    } else if (fieldName === 'company') {
-      if (!value.trim()) err = 'Please enter your company name.'
-    } else if (fieldName === 'phone') {
-      if (value.trim() && !validatePhone(value.trim())) err = 'Please enter a valid phone number.'
-    } else if (fieldName === 'challengeDescription') {
-      if (!value.trim()) err = 'Please provide a brief description of your challenge or business requirement.'
-      else if (value.trim().length < 10) err = 'Description must be at least 10 characters.'
+    if (field === 'name') {
+      const trimmed = (val || '').trim()
+      if (!trimmed) {
+        err = 'Please enter your full name.'
+      } else if (trimmed.length < 2) {
+        err = 'Name must be at least 2 characters.'
+      } else if (!/^[a-zA-Z\s\-'.]+$/.test(trimmed)) {
+        err = 'Name must only contain letters, spaces, hyphens, or apostrophes.'
+      }
+    } else if (field === 'email') {
+      const trimmed = (val || '').trim()
+      if (!trimmed) {
+        err = 'Please enter your email address.'
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+        err = 'Please enter a valid email address.'
+      }
+    } else if (field === 'phone') {
+      const raw = (val || '').replace(/[\s\-\(\)]/g, '')
+      if (!raw) {
+        err = 'Please enter your phone number.'
+      } else if (!/^\d{6,14}$/.test(raw)) {
+        err = 'Please enter a valid phone number (6–14 digits).'
+      }
+    } else if (field === 'services') {
+      if (!val || val.length === 0) {
+        err = 'Please select at least one service area.'
+      }
     }
-    setFieldErrors((prev) => ({ ...prev, [fieldName]: err }))
+
+    setFieldErrors(prev => ({ ...prev, [field]: err }))
     return err
   }
 
-  const handleBlur = (fieldName: string, value: string) => {
-    setTouched((prev) => ({ ...prev, [fieldName]: true }))
-    validateField(fieldName, value)
+  const handleBlur = (field: string, val: any) => {
+    setTouched(prev => ({ ...prev, [field]: true }))
+    validateField(field, val)
   }
 
+  const toggleService = (serviceLabel: string) => {
+    let next: string[]
+    if (selectedServices.includes(serviceLabel)) {
+      next = selectedServices.filter(s => s !== serviceLabel)
+    } else {
+      next = [...selectedServices, serviceLabel]
+    }
+    setSelectedServices(next)
+    if (touched.services) validateField('services', next)
+  }
+
+  // Handle Form Submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (isSubmitting) return
 
-    setErrorMessage('')
-    const errors: Record<string, string> = {}
-
-    const nameErr = validateField('name', name)
-    const emailErr = validateField('email', email)
-    const companyErr = validateField('company', company)
-    const phoneErr = validateField('phone', phone)
-    const descErr = validateField('challengeDescription', challengeDescription)
-
     setTouched({
       name: true,
       email: true,
-      company: true,
       phone: true,
-      challengeDescription: true,
-      areaOfInterest: true
+      services: true
     })
 
-    if (nameErr) errors.name = nameErr
-    if (emailErr) errors.email = emailErr
-    if (companyErr) errors.company = companyErr
-    if (phoneErr) errors.phone = phoneErr
-    if (descErr) errors.challengeDescription = descErr
+    const nameErr = validateField('name', name)
+    const emailErr = validateField('email', email)
+    const phoneErr = validateField('phone', phone)
+    const servicesErr = validateField('services', selectedServices)
 
-    if (!selectedDate) {
-      errors.selectedDate = 'Please choose a consultation date.'
-    }
-
-    if (!selectedSlot) {
-      errors.selectedSlot = 'Please choose an available time slot.'
-    }
-
-    if (Object.keys(errors).length > 0) {
-      const firstError = Object.values(errors)[0]
-      setErrorMessage(firstError)
-      trackFormValidationError('form_session_booking', 'Session Booking Form', Object.keys(errors)[0], firstError)
+    if (nameErr || emailErr || phoneErr || servicesErr) {
+      const first = nameErr || emailErr || phoneErr || servicesErr
+      setErrorMessage(first)
+      trackFormValidationError('form_session_booking', 'Session Booking Form', 'general', first)
       return
     }
 
+    setErrorMessage('')
     setIsSubmitting(true)
     trackFormStart('form_session_booking', 'Session Booking Form', 'submit_click')
 
+    const normalizedPhone = `${countryCode}${phone.replace(/[\s\-\(\)]/g, '')}`
+
     try {
-      const response = await fetch('/api/calendar/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          company: company.trim(),
-          jobTitle: jobTitle.trim(),
-          phone: phone.trim(),
-          areaOfInterest,
-          challengeDescription: challengeDescription.trim(),
-          bookingDate: selectedDate,
-          startTime: selectedSlot!.startTime,
-          endTime: selectedSlot!.endTime,
-          timezone,
-          additionalContext: additionalContext.trim()
-        })
+      const result = await submitTrustGridForm({
+        formId: 'form_session_booking_simplified',
+        formName: 'AI Architect Consultation Booking',
+        form_type: 'CONSULTATION',
+        name: name.trim(),
+        email: email.trim(),
+        phone: normalizedPhone,
+        mobile: normalizedPhone,
+        requirement: requirements.trim()
+          ? `[Services: ${selectedServices.join(', ')}] ${requirements.trim()}`
+          : `[Services: ${selectedServices.join(', ')}]`,
+        message: requirements.trim() || `Consultation request for ${selectedServices.join(', ')}`,
+        subject: `[Architect Consultation] ${name.trim()} (${selectedServices.join(', ')})`,
+        selectedSolutions: selectedServices,
+        ctaSource
       })
 
-      const data: BookingResult = await response.json()
-
-      if (response.ok && data.success) {
-        setBookingResult(data)
+      if (result.success) {
+        const id = result.submissionId || `TG-ARCH-${Date.now().toString().slice(-6)}`
+        setSubmissionId(id)
         setSubmitted(true)
-        trackFormSubmit('form_session_booking', 'Session Booking Form', true, data.bookingId)
-        if (onBookingSuccess) onBookingSuccess(data)
+        trackFormSubmit('form_session_booking', 'Session Booking Form', true, id)
+        if (onBookingSuccess) {
+          onBookingSuccess(result)
+        }
       } else {
-        setErrorMessage(data.message || 'Unable to confirm session booking. Please select another slot or try again.')
-        trackFormSubmit('form_session_booking', 'Session Booking Form', false, undefined, data.message)
+        setErrorMessage(result.message || 'Submission failed. Please try again.')
+        trackFormSubmit('form_session_booking', 'Session Booking Form', false, undefined, result.message)
       }
     } catch (err: any) {
       console.error('[Session Booking Error]', err)
-      setErrorMessage('Network error while booking session. Please check your connection and retry.')
+      setErrorMessage('Network transmission failure. Please retry or contact connect@trustgrid.ai directly.')
       trackFormSubmit('form_session_booking', 'Session Booking Form', false, undefined, err?.message)
     } finally {
       setIsSubmitting(false)
     }
   }
 
+  // Filtered services based on search input
+  const filteredServices = OFFERINGS_SERVICES.filter(s =>
+    s.label.toLowerCase().includes(serviceSearch.toLowerCase()) ||
+    s.groupTag.toLowerCase().includes(serviceSearch.toLowerCase())
+  )
+
+  // Filtered countries based on search input
+  const filteredCountries = COUNTRY_CODES.filter(c =>
+    c.country.toLowerCase().includes(countrySearch.toLowerCase()) ||
+    c.code.includes(countrySearch)
+  )
+
   // =========================================================================
-  // CONFIRMATION SUCCESS VIEW
+  // SUCCESS STATE (WITH 1-CLICK GOOGLE CALENDAR SCHEDULING LINK)
   // =========================================================================
-  if (submitted && bookingResult) {
+  if (submitted) {
     return (
       <div
-        className={`session-booking-success-box tg-card-interactive ${className}`}
+        className={`session-booking-success tg-card-interactive ${className}`}
         style={{
-          background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 100%)',
-          border: '1px solid rgba(59, 130, 246, 0.4)',
+          background: 'linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%)',
           borderRadius: '20px',
-          padding: 'clamp(24px, 4vw, 40px)',
-          color: '#ffffff',
-          boxShadow: '0 20px 50px rgba(15, 23, 42, 0.4)'
+          padding: 'clamp(28px, 4vw, 40px)',
+          border: '1px solid #86efac',
+          boxShadow: '0 10px 30px rgba(22, 101, 52, 0.08)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '20px',
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '10px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(34, 197, 94, 0.15)', border: '1px solid rgba(34, 197, 94, 0.3)', padding: '6px 12px', borderRadius: '8px', color: '#4ade80', fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em' }}>
-            <CheckCircle2 size={15} />
-            <span>SESSION CONFIRMED &amp; DISPATCHED</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              background: '#dcfce7',
+              color: '#15803d',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0
+            }}
+          >
+            <CheckCircle2 size={28} />
           </div>
-          <span style={{ fontSize: '13px', fontWeight: 600, color: '#93c5fd', background: 'rgba(59, 130, 246, 0.1)', padding: '4px 10px', borderRadius: '6px', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
-            REF: {bookingResult.bookingId}
-          </span>
+          <div>
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#15803d', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              ENQUIRY SUBMITTED • REF #{submissionId}
+            </span>
+            <h3 style={{ margin: '4px 0 0', fontSize: '20px', fontWeight: 800, color: '#0f172a' }}>
+              Thank You, {name.split(' ')[0]}!
+            </h3>
+          </div>
         </div>
 
-        <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#ffffff', margin: '0 0 8px' }}>
-          Your AI Architecture Briefing is Confirmed
-        </h3>
-        <p style={{ color: '#cbd5e1', fontSize: '14.5px', lineHeight: 1.6, margin: '0 0 24px' }}>
-          A calendar invitation and briefing agenda have been dispatched to <strong>{email}</strong>. Our Principal Systems Engineers are reviewing your requirement to prepare tailored architectural benchmarks.
+        <p style={{ margin: 0, fontSize: '14px', color: '#334155', lineHeight: 1.55 }}>
+          Your details and selected focus areas (<strong>{selectedServices.join(', ')}</strong>) have been received by our principal systems architecture practice.
         </p>
 
-        {/* DETAILS GRID */}
+        {/* PROMINENT GOOGLE CALENDAR BOOKING CARD */}
         <div
           style={{
-            background: 'rgba(15, 23, 42, 0.6)',
-            border: '1px solid rgba(148, 163, 184, 0.15)',
+            background: '#ffffff',
             borderRadius: '14px',
+            border: '1.5px solid #1d5cff',
             padding: '20px',
-            marginBottom: '24px',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '16px'
+            boxShadow: '0 4px 16px rgba(29, 92, 255, 0.12)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px'
           }}
         >
-          <div>
-            <span style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Date &amp; Time
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+            <span style={{ fontSize: '12px', fontWeight: 700, color: '#1d5cff', display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <CalendarIcon size={14} />
+              <span>STEP 2: LOCK YOUR 45-MINUTE CALENDAR SLOT</span>
             </span>
-            <p style={{ margin: '4px 0 0', fontSize: '14px', fontWeight: 700, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <CalendarIcon size={15} className="text-blue-400" />
-              <span>{bookingResult.date}</span>
-            </p>
-            <p style={{ margin: '2px 0 0', fontSize: '13px', color: '#60a5fa', fontWeight: 600 }}>
-              {bookingResult.startTime} – {bookingResult.endTime}
-            </p>
+            <span style={{ fontSize: '11px', background: '#eff6ff', color: '#1d5cff', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>
+              45-Min Duration
+            </span>
           </div>
 
-          <div>
-            <span style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Time Zone
-            </span>
-            <p style={{ margin: '4px 0 0', fontSize: '13.5px', fontWeight: 600, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Globe2 size={15} className="text-blue-400" />
-              <span>{bookingResult.timezone}</span>
-            </p>
-          </div>
-
-          <div>
-            <span style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Consultation Topic
-            </span>
-            <p style={{ margin: '4px 0 0', fontSize: '13.5px', fontWeight: 600, color: '#ffffff' }}>
-              {areaOfInterest}
-            </p>
-          </div>
-
-          <div>
-            <span style={{ fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Meeting Channel
-            </span>
-            <p style={{ margin: '4px 0 0', fontSize: '13.5px', fontWeight: 600, color: '#ffffff', display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <Video size={15} className="text-green-400" />
-              <span>Google Meet / Calendar Invite</span>
-            </p>
-          </div>
-        </div>
-
-        {/* ACTION BUTTONS */}
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
-          {bookingResult.googleCalendarUrl && (
-            <a
-              href={bookingResult.googleCalendarUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button button-primary"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: '#1d5cff',
-                color: '#ffffff',
-                padding: '12px 20px',
-                borderRadius: '10px',
-                fontWeight: 700,
-                fontSize: '13.5px',
-                textDecoration: 'none',
-                boxShadow: '0 4px 14px rgba(29, 92, 255, 0.4)'
-              }}
-            >
-              <CalendarIcon size={16} />
-              <span>Add to Google Calendar</span>
-              <ArrowUpRight size={14} />
-            </a>
-          )}
+          <p style={{ margin: 0, fontSize: '13px', color: '#475569', lineHeight: 1.45 }}>
+            Pick your preferred date and time directly on our live Google Calendar with principal AI architects.
+          </p>
 
           <a
-            href={`https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20session%20booking%20(Ref%3A%20${bookingResult.bookingId})`}
+            href={GOOGLE_CALENDAR_SCHEDULING_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="button button-ghost"
+            className="button button-primary"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '8px',
-              padding: '11px 18px',
+              padding: '13px 22px',
               borderRadius: '10px',
-              borderColor: 'rgba(37, 211, 102, 0.4)',
-              color: '#25D366',
-              background: 'rgba(37, 211, 102, 0.08)',
+              background: 'linear-gradient(135deg, #1d5cff 0%, #0d3eb8 100%)',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '14px',
               textDecoration: 'none',
-              fontSize: '13px',
-              fontWeight: 600
+              boxShadow: '0 4px 14px rgba(29, 92, 255, 0.35)',
+              transition: 'all 0.2s ease'
             }}
           >
-            <span>Direct WhatsApp Advisory</span>
-            <ArrowUpRight size={14} />
+            <CalendarIcon size={16} />
+            <span>Book 45-Min Slot on Google Calendar</span>
+            <ArrowUpRight size={15} />
           </a>
+        </div>
 
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', paddingTop: '4px' }}>
           <button
             type="button"
-            className="button button-ghost"
+            className="button button-ghost button-sm"
             onClick={() => {
               setSubmitted(false)
-              setBookingResult(null)
               setName('')
               setEmail('')
-              setCompany('')
-              setJobTitle('')
               setPhone('')
-              setChallengeDescription('')
-              setAdditionalContext('')
+              setSelectedServices([])
+              setRequirements('')
               setTouched({})
               setFieldErrors({})
             }}
-            style={{
-              padding: '11px 18px',
-              borderRadius: '10px',
-              borderColor: 'rgba(255, 255, 255, 0.2)',
-              color: '#cbd5e1',
-              fontSize: '13px',
-              cursor: 'pointer'
-            }}
+            style={{ fontSize: '12.5px' }}
           >
-            Book Another Session
+            Submit Another Request
           </button>
         </div>
       </div>
@@ -473,7 +423,7 @@ export function SessionBookingForm({
   }
 
   // =========================================================================
-  // MAIN SINGLE-COLUMN BOOKING FORM RENDER
+  // SIMPLIFIED SINGLE-COLUMN CONSULTATION FORM RENDER
   // =========================================================================
   return (
     <form
@@ -484,22 +434,36 @@ export function SessionBookingForm({
       style={{
         background: '#ffffff',
         borderRadius: '20px',
-        padding: compact ? '20px 16px' : 'clamp(20px, 3vw, 32px)',
+        padding: compact ? '20px 16px' : 'clamp(22px, 3.5vw, 36px)',
         border: '1px solid #e2e8f0',
         boxShadow: '0 10px 30px rgba(15, 23, 42, 0.06)',
         display: 'flex',
         flexDirection: 'column',
-        gap: '22px',
+        gap: '20px',
         width: '100%',
-        maxWidth: '580px',
-        margin: '0 auto',
+        maxWidth: '100%',
         boxSizing: 'border-box',
         overflow: 'hidden'
       }}
     >
-      {/* FORM HEADER */}
+      {/* FORM HEADING & DESCRIPTION */}
       <div>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: '#eff6ff', color: '#1d5cff', padding: '4px 10px', borderRadius: '6px', fontSize: '11.5px', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: '8px' }}>
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            background: '#eff6ff',
+            color: '#1d5cff',
+            padding: '4px 10px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            marginBottom: '8px'
+          }}
+        >
           <Sparkles size={13} />
           <span>DIRECT ARCHITECT CONSULTATION</span>
         </div>
@@ -507,62 +471,11 @@ export function SessionBookingForm({
           Book a Session with an AI Architect
         </h3>
         <p style={{ margin: 0, fontSize: '13.5px', color: '#64748b', lineHeight: 1.5 }}>
-          Schedule a dedicated 45-minute architectural &amp; strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security.
+          Schedule a dedicated 45-minute architectural &amp; strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.
         </p>
       </div>
 
-      {/* 1-CLICK DIRECT GOOGLE CALENDAR APPOINTMENT BANNER */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
-          border: '1px solid #86efac',
-          borderRadius: '12px',
-          padding: '12px 14px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '10px',
-          flexWrap: 'wrap'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#16a34a', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            <CalendarIcon size={16} />
-          </div>
-          <div>
-            <span style={{ fontSize: '12px', fontWeight: 700, color: '#14532d', display: 'block' }}>
-              Direct Google Calendar Scheduler
-            </span>
-            <span style={{ fontSize: '11px', color: '#166534' }}>
-              Official auto-booking with Google Meet &amp; timezone sync
-            </span>
-          </div>
-        </div>
-        <a
-          href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '5px',
-            fontSize: '11.5px',
-            fontWeight: 700,
-            padding: '7px 12px',
-            borderRadius: '8px',
-            background: '#16a34a',
-            color: '#ffffff',
-            textDecoration: 'none',
-            boxShadow: '0 2px 8px rgba(22, 163, 74, 0.25)',
-            transition: 'all 0.15s ease'
-          }}
-        >
-          <span>Open Direct Scheduler</span>
-          <ArrowUpRight size={13} />
-        </a>
-      </div>
-
-      {/* GLOBAL ERROR BANNER */}
+      {/* ERROR BANNER */}
       {errorMessage && (
         <div
           role="alert"
@@ -570,35 +483,26 @@ export function SessionBookingForm({
             background: '#fef2f2',
             border: '1px solid #fecaca',
             borderRadius: '10px',
-            padding: '12px 16px',
+            padding: '10px 14px',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
+            gap: '8px',
             color: '#b91c1c',
-            fontSize: '13.5px',
+            fontSize: '13px',
             fontWeight: 500
           }}
         >
-          <AlertCircle size={18} className="shrink-0 text-red-600" />
+          <AlertCircle size={16} className="shrink-0 text-red-600" />
           <span>{errorMessage}</span>
         </div>
       )}
 
-      {/* ========================================================================= */}
-      {/* SECTION 1: CONTACT DETAILS (PURE SINGLE COLUMN) */}
-      {/* ========================================================================= */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-          <span style={{ fontSize: '12px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            1. Contact &amp; Organization Details
-          </span>
-        </div>
-
-        {/* 1. FULL NAME */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_name`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Full Name <span style={{ color: '#ef4444' }}>*</span>
-          </label>
+      {/* 1. FULL NAME */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label htmlFor={`${formId}_name`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+          Full Name <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <div style={{ position: 'relative' }}>
           <input
             id={`${formId}_name`}
             type="text"
@@ -614,7 +518,9 @@ export function SessionBookingForm({
             onBlur={() => handleBlur('name', name)}
             style={{
               width: '100%',
-              padding: '12px 14px',
+              maxWidth: '100%',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
               fontSize: '14px',
               borderRadius: '10px',
               border: touched.name && fieldErrors.name ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
@@ -623,126 +529,122 @@ export function SessionBookingForm({
               outline: 'none'
             }}
           />
-          {touched.name && fieldErrors.name && (
-            <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.name}
-            </span>
-          )}
         </div>
+        {touched.name && fieldErrors.name && (
+          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.name}
+          </span>
+        )}
+      </div>
 
-        {/* 2. BUSINESS EMAIL */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_email`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Business Email <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${formId}_email`}
-            type="email"
-            required
-            disabled={isSubmitting}
-            placeholder="alex@enterprise.com"
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value)
-              if (touched.email) validateField('email', e.target.value)
-            }}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'email')}
-            onBlur={() => handleBlur('email', email)}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none'
-            }}
-          />
-          {touched.email && fieldErrors.email && (
-            <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.email}
-            </span>
-          )}
-        </div>
+      {/* 2 & 3. COUNTRY CODE & PHONE NUMBER */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label htmlFor={`${formId}_phone`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+          Phone Number <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <div style={{ display: 'flex', gap: '8px', width: '100%', boxSizing: 'border-box' }} ref={dropdownRef}>
+          {/* Searchable Country Code Dropdown */}
+          <div style={{ position: 'relative', width: '130px', flexShrink: 0 }}>
+            <button
+              type="button"
+              disabled={isSubmitting}
+              onClick={() => setIsCountryOpen(!isCountryOpen)}
+              style={{
+                width: '100%',
+                padding: '11px 10px',
+                fontSize: '13.5px',
+                fontWeight: 600,
+                borderRadius: '10px',
+                border: '1px solid #cbd5e1',
+                background: '#f8fafc',
+                color: '#0f172a',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                cursor: 'pointer',
+                boxSizing: 'border-box'
+              }}
+            >
+              <span>{COUNTRY_CODES.find(c => c.code === countryCode)?.flag || '🌐'} {countryCode}</span>
+              <ChevronDown size={14} className="text-slate-500" />
+            </button>
 
-        {/* 3. COMPANY NAME */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_company`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Company Name <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <input
-            id={`${formId}_company`}
-            type="text"
-            required
-            disabled={isSubmitting}
-            placeholder="e.g. Apex Global Systems"
-            value={company}
-            onChange={(e) => {
-              setCompany(e.target.value)
-              if (touched.company) validateField('company', e.target.value)
-            }}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'company')}
-            onBlur={() => handleBlur('company', company)}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: touched.company && fieldErrors.company ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.company && fieldErrors.company ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none'
-            }}
-          />
-          {touched.company && fieldErrors.company && (
-            <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.company}
-            </span>
-          )}
-        </div>
-
-        {/* 4. JOB TITLE (OPTIONAL) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label htmlFor={`${formId}_jobTitle`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-              Job Title
-            </label>
-            <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+            {isCountryOpen && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  width: '240px',
+                  maxHeight: '220px',
+                  background: '#ffffff',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: '10px',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                  zIndex: 50,
+                  marginTop: '4px',
+                  overflowY: 'auto',
+                  padding: '6px'
+                }}
+              >
+                <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '4px' }}>
+                  <input
+                    type="text"
+                    placeholder="Search country..."
+                    value={countrySearch}
+                    onChange={(e) => setCountrySearch(e.target.value)}
+                    style={{
+                      width: '100%',
+                      padding: '6px 8px',
+                      fontSize: '12px',
+                      borderRadius: '6px',
+                      border: '1px solid #e2e8f0',
+                      outline: 'none',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+                {filteredCountries.map(c => (
+                  <button
+                    key={`${c.iso}_${c.code}`}
+                    type="button"
+                    onClick={() => {
+                      setCountryCode(c.code)
+                      setIsCountryOpen(false)
+                      setCountrySearch('')
+                    }}
+                    style={{
+                      width: '100%',
+                      textAlign: 'left',
+                      padding: '7px 8px',
+                      fontSize: '12.5px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      background: countryCode === c.code ? '#eff6ff' : 'transparent',
+                      color: countryCode === c.code ? '#1d5cff' : '#1e293b',
+                      fontWeight: countryCode === c.code ? 700 : 500,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px'
+                    }}
+                  >
+                    <span>{c.flag}</span>
+                    <span style={{ flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.country}</span>
+                    <span style={{ color: '#64748b', fontSize: '11.5px' }}>{c.code}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-          <input
-            id={`${formId}_jobTitle`}
-            type="text"
-            disabled={isSubmitting}
-            placeholder="e.g. VP AI Infrastructure / CIO / Lead Architect"
-            value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'jobTitle')}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
-              outline: 'none'
-            }}
-          />
-        </div>
 
-        {/* 5. PHONE NUMBER (OPTIONAL) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label htmlFor={`${formId}_phone`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-              Phone Number
-            </label>
-            <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
-          </div>
+          {/* Numeric Phone Field */}
           <input
             id={`${formId}_phone`}
             type="tel"
+            required
             disabled={isSubmitting}
-            placeholder="+1 (555) 000-0000"
+            placeholder="9876543210"
             value={phone}
             onChange={(e) => {
               setPhone(e.target.value)
@@ -751,8 +653,10 @@ export function SessionBookingForm({
             onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'phone')}
             onBlur={() => handleBlur('phone', phone)}
             style={{
+              flex: 1,
               width: '100%',
-              padding: '12px 14px',
+              boxSizing: 'border-box',
+              padding: '11px 14px',
               fontSize: '14px',
               borderRadius: '10px',
               border: touched.phone && fieldErrors.phone ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
@@ -761,307 +665,287 @@ export function SessionBookingForm({
               outline: 'none'
             }}
           />
-          {touched.phone && fieldErrors.phone && (
-            <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.phone}
-            </span>
-          )}
         </div>
+        {touched.phone && fieldErrors.phone && (
+          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.phone}
+          </span>
+        )}
       </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION 2: CONSULTATION REQUIREMENTS */}
-      {/* ========================================================================= */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px' }}>
-          <span style={{ fontSize: '12px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            2. Consultation Focus &amp; Requirements
+      {/* 4. EMAIL ADDRESS */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <label htmlFor={`${formId}_email`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+          Email Address <span style={{ color: '#ef4444' }}>*</span>
+        </label>
+        <input
+          id={`${formId}_email`}
+          type="email"
+          required
+          disabled={isSubmitting}
+          placeholder="alex@enterprise.com"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if (touched.email) validateField('email', e.target.value)
+          }}
+          onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'email')}
+          onBlur={() => handleBlur('email', email)}
+          style={{
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '14px',
+            borderRadius: '10px',
+            border: touched.email && fieldErrors.email ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+            background: touched.email && fieldErrors.email ? '#fef2f2' : '#ffffff',
+            color: '#0f172a',
+            outline: 'none'
+          }}
+        />
+        {touched.email && fieldErrors.email && (
+          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.email}
           </span>
-        </div>
-
-        {/* AREA OF INTEREST DROPDOWN */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_area`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Area of Interest <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <select
-            id={`${formId}_area`}
-            required
-            disabled={isSubmitting}
-            value={areaOfInterest}
-            onChange={(e) => setAreaOfInterest(e.target.value)}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'areaOfInterest')}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
-              background: '#ffffff',
-              outline: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            {AREAS_OF_INTEREST.map((area) => (
-              <option key={area} value={area}>
-                {area}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* BRIEF CHALLENGE / REQUIREMENT DESCRIPTION */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_challenge`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Brief Description of Challenge or Business Requirement <span style={{ color: '#ef4444' }}>*</span>
-          </label>
-          <textarea
-            id={`${formId}_challenge`}
-            rows={3}
-            required
-            disabled={isSubmitting}
-            placeholder="Describe your compute bottlenecks, agent deployment scale, networking requirements, or current AI initiatives..."
-            value={challengeDescription}
-            onChange={(e) => {
-              setChallengeDescription(e.target.value)
-              if (touched.challengeDescription) validateField('challengeDescription', e.target.value)
-            }}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'challengeDescription')}
-            onBlur={() => handleBlur('challengeDescription', challengeDescription)}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: touched.challengeDescription && fieldErrors.challengeDescription ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
-              background: touched.challengeDescription && fieldErrors.challengeDescription ? '#fef2f2' : '#ffffff',
-              color: '#0f172a',
-              outline: 'none',
-              resize: 'vertical',
-              minHeight: '85px',
-              fontFamily: 'inherit'
-            }}
-          />
-          {touched.challengeDescription && fieldErrors.challengeDescription && (
-            <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <AlertCircle size={12} /> {fieldErrors.challengeDescription}
-            </span>
-          )}
-        </div>
-
-        {/* ADDITIONAL CONTEXT (OPTIONAL) */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label htmlFor={`${formId}_context`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-              Additional Context / Current Tech Stack
-            </label>
-            <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
-          </div>
-          <textarea
-            id={`${formId}_context`}
-            rows={2}
-            disabled={isSubmitting}
-            placeholder="e.g. Currently operating 128x H100 cluster on Slurm, evaluating liquid immersion upgrade..."
-            value={additionalContext}
-            onChange={(e) => setAdditionalContext(e.target.value)}
-            onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'additionalContext')}
-            style={{
-              width: '100%',
-              padding: '12px 14px',
-              fontSize: '14px',
-              borderRadius: '10px',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
-              outline: 'none',
-              resize: 'vertical',
-              minHeight: '65px',
-              fontFamily: 'inherit'
-            }}
-          />
-        </div>
+        )}
       </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION 3: LIVE CALENDAR & REAL-TIME AVAILABILITY */}
-      {/* ========================================================================= */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '8px' }}>
-          <span style={{ fontSize: '12px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            3. Select Date &amp; Available Slot (Google Calendar Synced)
-          </span>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontSize: '11.5px', color: '#15803d', background: '#dcfce7', padding: '2px 8px', borderRadius: '4px', fontWeight: 600 }}>
-            <Clock size={12} />
-            <span>45-Min Session Duration</span>
-          </div>
-        </div>
-
-        {/* TIMEZONE SELECTOR */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-          <label htmlFor={`${formId}_tz`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b', display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Globe2 size={15} className="text-blue-600" />
-            <span>Your Time Zone</span>
-          </label>
-          <select
-            id={`${formId}_tz`}
-            value={timezone}
-            disabled={isSubmitting}
-            onChange={(e) => setTimezone(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px 14px',
-              fontSize: '13.5px',
-              borderRadius: '10px',
-              border: '1px solid #cbd5e1',
-              color: '#0f172a',
-              background: '#f8fafc',
-              outline: 'none',
-              cursor: 'pointer'
-            }}
-          >
-            {COMMON_TIMEZONES.map((tz) => (
-              <option key={tz.value} value={tz.value}>
-                {tz.label} ({tz.value})
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* DATE HORIZONTAL SCROLLER / PICKER */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      {/* 5. SERVICES AREA INTERESTED (MULTI-SELECT FROM ACTUAL OFFERINGS) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <label style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Preferred Consultation Date <span style={{ color: '#ef4444' }}>*</span>
+            Services Area Interested <span style={{ color: '#ef4444' }}>*</span>
           </label>
-          <div
-            style={{
-              display: 'flex',
-              gap: '8px',
-              overflowX: 'auto',
-              paddingBottom: '8px',
-              scrollbarWidth: 'thin'
-            }}
-          >
-            {selectableDates.map((d) => {
-              const isSelected = selectedDate === d.dateStr
-              return (
-                <button
-                  key={d.dateStr}
-                  type="button"
-                  onClick={() => setSelectedDate(d.dateStr)}
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minWidth: '70px',
-                    padding: '10px 8px',
-                    borderRadius: '12px',
-                    border: isSelected ? '2px solid #1d5cff' : '1px solid #cbd5e1',
-                    background: isSelected ? 'linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%)' : '#ffffff',
-                    color: isSelected ? '#1e3a8a' : '#334155',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s ease',
-                    flexShrink: 0
-                  }}
-                >
-                  <span style={{ fontSize: '11px', textTransform: 'uppercase', fontWeight: 600, color: isSelected ? '#1d5cff' : '#64748b' }}>
-                    {d.dayName}
-                  </span>
-                  <span style={{ fontSize: '14px', fontWeight: 800, marginTop: '2px' }}>
-                    {d.label}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+          {selectedServices.length > 0 && (
+            <span style={{ fontSize: '11.5px', color: '#1d5cff', fontWeight: 600 }}>
+              {selectedServices.length} selected
+            </span>
+          )}
         </div>
 
-        {/* TIME SLOTS SELECTION */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <label style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-              Available Time Slots <span style={{ color: '#ef4444' }}>*</span>
-            </label>
-            {isLoadingSlots && (
-              <span style={{ fontSize: '12px', color: '#1d5cff', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Loader2 size={13} className="animate-spin" />
-                <span>Checking live calendar...</span>
-              </span>
-            )}
-          </div>
+        {/* Dropdown trigger button */}
+        <button
+          type="button"
+          disabled={isSubmitting}
+          onClick={() => setIsServicesOpen(!isServicesOpen)}
+          style={{
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: touched.services && fieldErrors.services ? '1.5px solid #ef4444' : '1px solid #cbd5e1',
+            background: '#ffffff',
+            color: selectedServices.length === 0 ? '#94a3b8' : '#0f172a',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            textAlign: 'left'
+          }}
+        >
+          <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', paddingRight: '8px' }}>
+            {selectedServices.length === 0
+              ? 'Select interested service offerings...'
+              : selectedServices.join(', ')}
+          </span>
+          <ChevronDown size={16} className={`text-slate-400 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+        </button>
 
-          {slotFetchError && (
-            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: '8px', padding: '8px 12px', color: '#b91c1c', fontSize: '12px' }}>
-              {slotFetchError}
+        {/* Searchable multi-select menu */}
+        {isServicesOpen && (
+          <div
+            style={{
+              position: 'absolute',
+              top: '100%',
+              left: 0,
+              right: 0,
+              background: '#ffffff',
+              border: '1px solid #cbd5e1',
+              borderRadius: '12px',
+              boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
+              zIndex: 40,
+              marginTop: '4px',
+              maxHeight: '260px',
+              overflowY: 'auto',
+              padding: '8px',
+              boxSizing: 'border-box'
+            }}
+          >
+            <div style={{ padding: '4px', borderBottom: '1px solid #f1f5f9', marginBottom: '6px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: '#f8fafc', padding: '6px 10px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
+                <Search size={13} className="text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Filter offerings..."
+                  value={serviceSearch}
+                  onChange={(e) => setServiceSearch(e.target.value)}
+                  style={{
+                    border: 'none',
+                    background: 'transparent',
+                    outline: 'none',
+                    fontSize: '12px',
+                    width: '100%'
+                  }}
+                />
+              </div>
             </div>
-          )}
 
-          {!isLoadingSlots && slots.length === 0 && (
-            <p style={{ fontSize: '13px', color: '#64748b', fontStyle: 'italic', margin: '4px 0' }}>
-              No available slots found for the selected date. Please pick another date.
-            </p>
-          )}
-
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
-              gap: '10px'
-            }}
-          >
-            {slots.map((slot) => {
-              const isSelected = selectedSlot?.startTime === slot.startTime
-              return (
-                <button
-                  key={slot.startTime}
-                  type="button"
-                  disabled={!slot.available || isSubmitting}
-                  onClick={() => setSelectedSlot(slot)}
-                  style={{
-                    padding: '10px 8px',
-                    borderRadius: '10px',
-                    fontSize: '12.5px',
-                    fontWeight: 600,
-                    textAlign: 'center',
-                    border: isSelected
-                      ? '2px solid #1d5cff'
-                      : slot.available
-                      ? '1px solid #cbd5e1'
-                      : '1px dashed #e2e8f0',
-                    background: isSelected
-                      ? '#1d5cff'
-                      : slot.available
-                      ? '#f8fafc'
-                      : '#f1f5f9',
-                    color: isSelected
-                      ? '#ffffff'
-                      : slot.available
-                      ? '#0f172a'
-                      : '#94a3b8',
-                    cursor: slot.available ? 'pointer' : 'not-allowed',
-                    opacity: slot.available ? 1 : 0.6,
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  {slot.label.split('–')[0].trim()}
-                </button>
-              )
-            })}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+              {filteredServices.map(service => {
+                const isChecked = selectedServices.includes(service.label)
+                return (
+                  <button
+                    key={service.id}
+                    type="button"
+                    onClick={() => toggleService(service.label)}
+                    style={{
+                      width: '100%',
+                      padding: '8px 10px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      background: isChecked ? '#eff6ff' : 'transparent',
+                      textAlign: 'left',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      cursor: 'pointer',
+                      transition: 'all 0.1s ease'
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: '16px',
+                        height: '16px',
+                        borderRadius: '4px',
+                        border: isChecked ? '1.5px solid #1d5cff' : '1.5px solid #cbd5e1',
+                        background: isChecked ? '#1d5cff' : '#ffffff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}
+                    >
+                      {isChecked && <Check size={11} className="text-white" />}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <span style={{ fontSize: '13px', fontWeight: isChecked ? 600 : 500, color: isChecked ? '#1d5cff' : '#1e293b' }}>
+                        {service.label}
+                      </span>
+                      <span style={{ display: 'block', fontSize: '11px', color: '#64748b' }}>
+                        {service.groupTag}
+                      </span>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
           </div>
+        )}
 
-          {selectedSlot && (
-            <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: '#15803d', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <CheckCircle2 size={14} />
-              <span>Selected Slot: {selectedSlot.label} ({timezone})</span>
-            </p>
-          )}
-        </div>
+        {/* Selected Service Pills */}
+        {selectedServices.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '4px' }}>
+            {selectedServices.map(s => (
+              <span
+                key={s}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  background: '#eff6ff',
+                  border: '1px solid #bfdbfe',
+                  color: '#1d5cff',
+                  padding: '3px 8px',
+                  borderRadius: '6px',
+                  fontSize: '11.5px',
+                  fontWeight: 600
+                }}
+              >
+                <span>{s}</span>
+                <button
+                  type="button"
+                  onClick={() => toggleService(s)}
+                  style={{ border: 'none', background: 'transparent', padding: 0, cursor: 'pointer', color: '#1d5cff', display: 'flex' }}
+                >
+                  <X size={12} />
+                </button>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {touched.services && fieldErrors.services && (
+          <span style={{ fontSize: '12px', color: '#dc2626', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <AlertCircle size={12} /> {fieldErrors.services}
+          </span>
+        )}
       </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION 4: PRIMARY SUBMIT CTA */}
-      {/* ========================================================================= */}
-      <div style={{ marginTop: '8px' }}>
+      {/* 6. KEY REQUIREMENTS / COMMENTS (OPTIONAL) */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <label htmlFor={`${formId}_req`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
+            Key Requirements / Comments
+          </label>
+          <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
+        </div>
+        <textarea
+          id={`${formId}_req`}
+          rows={3}
+          disabled={isSubmitting}
+          placeholder="Briefly describe your requirements or comments."
+          value={requirements}
+          onChange={(e) => setRequirements(e.target.value)}
+          onFocus={() => trackFormFieldInteraction('form_session_booking', 'Session Booking Form', 'requirements')}
+          style={{
+            width: '100%',
+            maxWidth: '100%',
+            boxSizing: 'border-box',
+            padding: '11px 14px',
+            fontSize: '13.5px',
+            borderRadius: '10px',
+            border: '1px solid #cbd5e1',
+            color: '#0f172a',
+            outline: 'none',
+            resize: 'vertical',
+            minHeight: '75px',
+            fontFamily: 'inherit'
+          }}
+        />
+      </div>
+
+      {/* 7. BOOK A SLOT NOTICE & PRIMARY SUBMIT BUTTON */}
+      <div style={{ marginTop: '6px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div
+          style={{
+            background: '#f8fafc',
+            border: '1px dashed #cbd5e1',
+            borderRadius: '10px',
+            padding: '10px 14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '10px'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#475569' }}>
+            <Clock size={14} className="text-blue-600 shrink-0" />
+            <span>Dedicated 45-Minute Briefing with AI Architect</span>
+          </div>
+          <a
+            href={GOOGLE_CALENDAR_SCHEDULING_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontSize: '12px', color: '#1d5cff', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '3px' }}
+          >
+            <span>Preview Calendar</span>
+            <ArrowUpRight size={12} />
+          </a>
+        </div>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -1088,20 +972,20 @@ export function SessionBookingForm({
           {isSubmitting ? (
             <>
               <Loader2 size={18} className="animate-spin" />
-              <span>Verifying &amp; Reserving Calendar Slot...</span>
+              <span>Submitting Consultation Request...</span>
             </>
           ) : (
             <>
-              <CalendarIcon size={18} />
-              <span>Confirm Session Booking</span>
-              <ArrowUpRight size={17} />
+              <CalendarIcon size={17} />
+              <span>Submit &amp; Proceed to Calendar Slot Booking</span>
+              <ArrowRight size={16} />
             </>
           )}
         </button>
 
-        <p style={{ margin: '14px 0 0', fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+        <p style={{ margin: '4px 0 0', fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
           <Lock size={12} className="text-slate-400" />
-          <span>Enterprise Confidentiality Guaranteed. Disclosures protected under mutual NDA standards.</span>
+          <span>Enterprise Confidentiality Guaranteed under mutual NDA standards.</span>
         </p>
       </div>
     </form>
