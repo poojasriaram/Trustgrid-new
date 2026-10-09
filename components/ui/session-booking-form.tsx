@@ -250,6 +250,9 @@ export function SessionBookingForm({
         formId: 'form_session_booking_simplified',
         formName: 'AI Architect Consultation Booking',
         form_type: 'CONSULTATION',
+        company: email.includes('@') && !email.includes('gmail.') && !email.includes('yahoo.') && !email.includes('outlook.') && !email.includes('hotmail.')
+          ? email.split('@')[1].split('.')[0].toUpperCase()
+          : 'Enterprise / Strategic Consultation',
         name: name.trim(),
         email: email.trim(),
         phone: normalizedPhone,

@@ -128,12 +128,22 @@ export async function submitTrustGridForm(
     return { success: false, message: 'Please enter your mobile number' }
   }
 
+  const formType = deriveFormType(formData.formId, formData.formName, formData.form_type || formData.formType)
+
   const companyVal = (formData.currentPreviousCompany || formData.company || '').trim()
   if (!companyVal) {
-    return { success: false, message: 'Please enter your company name' }
+    if (
+      formType === 'CONSULTATION' ||
+      formType === 'TALK_TO_ARCHITECT' ||
+      (formData.formId && (formData.formId.includes('session_booking') || formData.formId.includes('consultation'))) ||
+      (formData.formName && formData.formName.toLowerCase().includes('consultation'))
+    ) {
+      formData.company = 'Enterprise / Strategic Consultation'
+    } else {
+      return { success: false, message: 'Please enter your company name' }
+    }
   }
 
-  const formType = deriveFormType(formData.formId, formData.formName, formData.form_type || formData.formType)
   if (formType === 'CAREER') {
     if (!formData.resume || formData.resume.trim() === '') {
       return { success: false, message: 'Please upload your resume' }

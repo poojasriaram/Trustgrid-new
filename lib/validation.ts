@@ -74,7 +74,17 @@ export function validateLeadSubmission(data: any): LeadValidationResult & { data
   }
 
   if (!company) {
-    errors.company = 'Company name is required.'
+    const formType = (data.form_type || data.formType || data.formId || '').toUpperCase()
+    if (
+      formType.includes('CONSULTATION') ||
+      formType.includes('TALK_TO_ARCHITECT') ||
+      formType.includes('SESSION_BOOKING') ||
+      formType.includes('ARCHITECT')
+    ) {
+      data.company = 'Enterprise / Strategic Consultation'
+    } else {
+      errors.company = 'Company name is required.'
+    }
   }
 
   if (phone && !isValidPhone(phone)) {
