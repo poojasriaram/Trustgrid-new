@@ -388,18 +388,22 @@ CONFIDENTIALITY: Mutual NDA standards apply.`
 
   if (token) {
     try {
-      const startDateTime = `${bookingDate}T${startTime}:00`
-      const endDateTime = `${bookingDate}T${endTime}:00`
+      const startDateTime = startTime.includes(':') && startTime.split(':').length === 3 
+        ? `${bookingDate}T${startTime}` 
+        : `${bookingDate}T${startTime}:00`
+      const endDateTime = endTime.includes(':') && endTime.split(':').length === 3 
+        ? `${bookingDate}T${endTime}` 
+        : `${bookingDate}T${endTime}:00`
 
       const eventPayload = {
         summary: eventTitle,
         description: eventDescription,
         start: {
-          dateTime: `${startDateTime}:00`,
+          dateTime: startDateTime,
           timeZone: timezone
         },
         end: {
-          dateTime: `${endDateTime}:00`,
+          dateTime: endDateTime,
           timeZone: timezone
         },
         attendees: [

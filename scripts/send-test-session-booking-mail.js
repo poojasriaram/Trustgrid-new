@@ -42,7 +42,7 @@ async function sendTestSessionBookingMail() {
     areaOfInterest: 'AI Infrastructure and GPU Optimization [TEST]',
     selectedSolutions: ['AI Infrastructure and GPU Optimization [TEST]'],
     solutions: ['AI Infrastructure and GPU Optimization [TEST]'],
-    requirement: '[TEST SESSION] Validating automated calendar booking and multi-recipient notification dispatch to attendee, bv@trustflow.in, and poojasri.aram@gmail.com.',
+    requirement: '[TEST SESSION] Validating automated calendar booking and multi-recipient notification dispatch to attendee, bv@trustflow.in, poojasri.aram@gmail.com, and connect@trustgrid.ai.',
     message: '[TEST SESSION BOOKING]\n\nThis is a verification test for the TRUSTGRID.AI calendar and consultation scheduling engine.\n\nDate: ' + dateStr + '\nTime: ' + timeStr + '\nRecipients: ' + recipientEmails.join(', ') + '\nMeeting Link: https://meet.google.com/test-tg-arch',
     subject: '[TEST] AI Architecture Session Booking Confirmation — TEST — Dr. Poojasri Aram (TRUSTGRID)',
     notificationEmails: recipientEmails,

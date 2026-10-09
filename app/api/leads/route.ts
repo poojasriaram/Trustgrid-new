@@ -89,8 +89,11 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead): Promise<'Succes
     fullName: lead.name,
     name: lead.name,
     email: lead.email,
+    userEmail: lead.email,
     work_email: lead.email,
+    attendeeEmail: lead.email,
     phone: lead.phone,
+    mobile: lead.phone,
     company: lead.company,
     role: lead.jobTitle,
     designation: lead.jobTitle,
@@ -125,7 +128,7 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead): Promise<'Succes
         'Content-Type': 'text/plain;charset=utf-8'
       },
       body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(3000)
+      signal: AbortSignal.timeout(15000)
     })
     return res.ok ? 'Success' : 'Success'
   } catch (err) {
