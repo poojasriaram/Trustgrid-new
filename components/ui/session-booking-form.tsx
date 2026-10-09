@@ -33,13 +33,15 @@ export const GOOGLE_CALENDAR_SCHEDULING_URL = 'https://calendar.app.google/voXXR
 
 // Dynamically mapped from TrustGrid.AI verified Offerings list
 export const OFFERINGS_SERVICES = [
-  { id: 'ai-infra', label: 'AI Infrastructure & GPU Optimization', groupTag: 'Compute & DC' },
-  { id: 'ai-agents', label: 'Agentic Enterprise & Autonomous Multi-Agent Systems', groupTag: 'Cognitive Systems' },
-  { id: 'ai-networking', label: 'AI Networking & Lossless RoCEv2/InfiniBand Fabric', groupTag: 'Lossless Fabric' },
+  { id: 'ai-infra', label: 'AI Infrastructure & GPU Ops', groupTag: 'Compute & DC' },
+  { id: 'ai-agents', label: 'Agentic Enterprise & Multi-Agent Systems', groupTag: 'Cognitive' },
+  { id: 'mes-automation', label: 'MES Automation & Industrial Quality', groupTag: 'Industrial AI' },
+  { id: 'supply-chain', label: 'Supply Chain & Logistics Automation', groupTag: 'Operations' },
+  { id: 'ai-networking', label: 'AI Networking & Lossless Fabric (RoCEv2 / IB)', groupTag: 'Lossless Fabric' },
   { id: 'ai-security', label: 'AI Cybersecurity & Quantum-Safe Defense (PQC)', groupTag: 'Quantum-Safe' },
-  { id: 'trusted-ai', label: 'Trusted AI Engineering & Governance (NIST / EU AI Act)', groupTag: 'Trust & Safety' },
-  { id: 'ai-value', label: 'AI Value Engineering & ROI Optimization (Lean / TOC)', groupTag: 'Financial ROI' },
-  { id: 'llm-rag', label: 'LLM, Fine-Tuning & High-Throughput RAG Systems', groupTag: 'Model Serving' },
+  { id: 'trusted-ai', label: 'Trusted AI Engineering & Governance (NIST / EU AI Act)', groupTag: 'Governance' },
+  { id: 'ai-value', label: 'AI Value Engineering & FinOps (Lean / TOC)', groupTag: 'Economics' },
+  { id: 'llm-rag', label: 'LLM, Fine-Tuning & High-Throughput RAG Systems', groupTag: 'Models' },
   { id: 'turnkey-dbot', label: 'Turnkey DBOT AI Factory Delivery', groupTag: 'Turnkey Suite' }
 ]
 
@@ -888,7 +890,7 @@ export function SessionBookingForm({
       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <label htmlFor={`${formId}_req`} style={{ fontSize: '13px', fontWeight: 600, color: '#1e293b' }}>
-            Key Requirements / Comments
+            Key Sector Requirements / Comments
           </label>
           <span style={{ fontSize: '11px', color: '#64748b' }}>Optional</span>
         </div>
