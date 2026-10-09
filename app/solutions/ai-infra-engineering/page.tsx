@@ -2662,16 +2662,14 @@ export default function AIInfraEngineeringPage() {
                   </p>
                 </div>
               </div>
-              <a
-                href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/talk-to-ai-architect?topic=ai-infra-engineering#session-booking-section"
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
               >
                 <Calendar size={14} />
-                <span>Schedule on Google Calendar</span>
-                <ArrowUpRight size={13} />
-              </a>
+                <span>Schedule Strategy Session</span>
+                <ArrowRight size={13} />
+              </Link>
             </div>
 
             {/* Enterprise Embedded Form Card */}

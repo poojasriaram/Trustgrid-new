@@ -3344,21 +3344,50 @@ h1, h2, h3, h4, h5, h6 {
    =================================================== */
 
 .diagnostic-container {
-  padding: clamp(50px, 7vw, 95px) clamp(24px, 7vw, 120px);
+  padding: clamp(30px, 4vw, 60px) clamp(16px, 4vw, 40px);
   background: var(--ice);
   min-height: calc(100vh - 84px);
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .diagnostic-grid-layout {
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 6vw;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(24px, 4vw, 48px);
   align-items: start;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .diagnostic-intro-col {
   position: sticky;
   top: 110px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.diagnostic-form-col {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .diagnostic-grid-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 36px;
+  }
+  .diagnostic-intro-col {
+    position: relative;
+    top: 0;
+  }
 }
 
 .diagnostic-intro-col h1 {

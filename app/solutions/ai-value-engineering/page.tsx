@@ -3183,16 +3183,14 @@ export default function AIValueEngineeringPage() {
                   </p>
                 </div>
               </div>
-              <a
-                href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
               >
                 <Calendar size={15} />
-                <span>Schedule on Google Calendar</span>
-                <ArrowUpRight size={14} />
-              </a>
+                <span>Schedule Strategy Session</span>
+                <ArrowRight size={14} />
+              </Link>
             </div>
 
             {/* Corporate Strategy Session Form */}
@@ -3206,15 +3204,13 @@ export default function AIValueEngineeringPage() {
                   Thank you, <strong>{formFullName}</strong>. Your session request has been received. Our senior systems engineering practice lead will review your submission and contact you within one business day with a confirmed briefing invitation.
                 </p>
                 <div className="pt-4">
-                  <a
-                    href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
                     className="inline-flex items-center gap-2 text-xs font-semibold text-cyan-400 hover:underline"
                   >
-                    <span>Need instant confirmation? Open Google Calendar</span>
-                    <ArrowUpRight size={13} />
-                  </a>
+                    <span>Need instant slot confirmation? Book live with AI Architect</span>
+                    <ArrowRight size={13} />
+                  </Link>
                 </div>
               </div>
             ) : (

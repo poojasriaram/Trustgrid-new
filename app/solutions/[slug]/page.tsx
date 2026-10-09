@@ -584,10 +584,8 @@ export default async function SolutionDetailPage({
                 Lock a confirmed slot directly on our live Google Calendar with principal systems engineers, or submit the form below.
               </p>
             </div>
-            <a
-              href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href={`/talk-to-ai-architect?topic=${encodeURIComponent(solution.shortTitle)}#session-booking-section`}
               className="button button-primary button-sm"
               style={{
                 display: 'inline-flex',
@@ -605,9 +603,9 @@ export default async function SolutionDetailPage({
               }}
             >
               <Calendar size={15} />
-              <span>Schedule on Google Calendar</span>
+              <span>Book Strategy Session</span>
               <ArrowUpRight size={14} />
-            </a>
+            </Link>
           </div>
 
           <TrustGridForm

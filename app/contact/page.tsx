@@ -15,7 +15,7 @@ import {
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
-import { TrustGridForm } from '@/components/ui/trustgrid-form'
+import { QuickContactForm } from '@/components/ui/quick-contact-form'
 import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
 import { PageBannerHero } from '@/components/ui/page-banner-hero'
 import { officeLocations } from '@/lib/about-data'
@@ -36,17 +36,17 @@ export default function ContactPage() {
           thesisHighlight="US, Singapore & India R&D Centers • 24-Hour Turnaround • Direct Architect Scoping"
           image="/images/hero-ai-infra.jpg"
           primaryCta={{
-            label: "Send Engineering Message",
+            label: "Send Quick Message",
             href: "#contact-form-section"
           }}
           secondaryCta={{
-            label: "Book AI Diagnostic",
-            href: "/book-ai-diagnostic#diagnostic-form-section"
+            label: "Book AI Strategy Session",
+            href: "/talk-to-ai-architect#session-booking-section"
           }}
           quickNavItems={[
-            { label: "1. Message Form", href: "#contact-form-section" },
-            { label: "2. Global Offices", href: "#global-offices" },
-            { label: "3. Executive Diagnostic", href: "/book-ai-diagnostic#diagnostic-form-section" },
+            { label: "1. Quick Form", href: "#contact-form-section" },
+            { label: "2. Strategy Session", href: "/talk-to-ai-architect#session-booking-section" },
+            { label: "3. Global Offices", href: "#global-offices" },
             { label: "4. Solutions Portfolio", href: "/#offerings" }
           ]}
           metrics={{
@@ -70,7 +70,7 @@ export default function ContactPage() {
                 <span className="section-label" style={{ color: '#1d5cff' }}>
                   DIRECT CHANNELS
                 </span>
-                <h2>Executive Advisory & Engineering Support</h2>
+                <h2>Executive Advisory &amp; Engineering Support</h2>
                 <p className="diagnostic-hero-lead">
                   We collaborate with Fortune 500 enterprises, government bodies, defense contractors, and frontier startups to deliver dependable AI infrastructure.
                 </p>
@@ -99,8 +99,8 @@ export default function ContactPage() {
                     <Building2 size={16} />
                   </div>
                   <div>
-                    <strong>Executive HQ & Labs</strong>
-                    <p>US Americas HQ (Tampa) • Singapore APAC Hub • Bengaluru & Mumbai R&D</p>
+                    <strong>Executive HQ &amp; Labs</strong>
+                    <p>US Americas HQ (Tampa) • Singapore APAC Hub • Bengaluru &amp; Mumbai R&D</p>
                   </div>
                 </div>
 
@@ -131,43 +131,28 @@ export default function ContactPage() {
               {/* DIRECT STRATEGY SESSION CALENDAR BOOKING */}
               <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)' }}>
                 <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em' }}>
-                  DIRECT CALENDAR &amp; STRATEGY SESSION
+                  CONSULTATION &amp; STRATEGY SESSION
                 </span>
                 <p style={{ fontSize: '13px', color: '#64748b', margin: '6px 0 14px' }}>
-                  Prefer an immediate 45-minute live architectural Strategy Session?
+                  Looking for a live 45-minute architectural &amp; compute briefing?
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <a
-                    href="https://calendar.app.google/voXXRkbgVuuft3fz6"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/talk-to-ai-architect#session-booking-section"
                     className="button button-primary button-sm"
                     style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '10px 14px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600, fontSize: '13px' }}
                   >
                     <Calendar size={15} />
-                    <span>Schedule on Google Calendar</span>
-                    <ArrowUpRight size={14} />
-                  </a>
-                  <Link
-                    href="/book-ai-diagnostic?type=strategy-session#diagnostic-form-section"
-                    className="button button-ghost button-sm"
-                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '9px 14px', fontSize: '13px' }}
-                  >
-                    <span>Book Strategy Session via Form</span>
+                    <span>Book AI Architect Session</span>
                     <ArrowUpRight size={14} />
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: STANDARDIZED CONTACT FORM */}
+            {/* RIGHT: STANDARDIZED QUICK CONTACT FORM */}
             <div className="diagnostic-form-col">
-              <TrustGridForm
-                variant="contact"
-                formId="form_contact"
-                formName="Contact Form"
-                ctaSource="contact_page"
-              />
+              <QuickContactForm ctaSource="contact_page" />
             </div>
           </div>
         </section>

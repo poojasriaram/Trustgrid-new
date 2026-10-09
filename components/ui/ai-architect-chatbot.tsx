@@ -278,18 +278,15 @@ export function AIArchitectChatbot() {
   }
 
   const handleQuickAction = (action: string) => {
-    if (action === 'book_strategy') {
-      window.location.href = '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section'
-    } else if (action === 'schedule_calendar') {
-      window.open('https://calendar.app.google/voXXRkbgVuuft3fz6', '_blank')
+    if (action === 'book_strategy' || action === 'schedule_calendar') {
+      window.location.href = '/talk-to-ai-architect#session-booking-section'
     } else if (action === 'contact') {
-      window.location.href = '/contact'
+      window.location.href = '/contact#contact-form-section'
     } else if (action === 'diagnostic') {
       handleSendMessage('I would like to book an executive AI Diagnostic assessment.')
       startLeadFlow('AI Diagnostic')
     } else if (action === 'connect_architect') {
-      handleSendMessage('I would like to speak directly with a TRUSTGRID.AI Systems Architect.')
-      startLeadFlow('Architect Consultation')
+      window.location.href = '/talk-to-ai-architect#session-booking-section'
     } else if (action === 'solutions') {
       handleSendMessage('Tell me about the 6 TRUSTGRID.AI solution groups.')
     } else if (action === 'infra') {

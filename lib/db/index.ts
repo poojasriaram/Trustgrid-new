@@ -274,6 +274,33 @@ function initSchema(db: any): void {
     CREATE INDEX IF NOT EXISTS idx_linkedin_posts_status ON linkedin_posts(status);
     CREATE INDEX IF NOT EXISTS idx_linkedin_posts_created ON linkedin_posts(created_at);
     CREATE INDEX IF NOT EXISTS idx_linkedin_posts_scheduled ON linkedin_posts(scheduled_at);
+
+    -- 11. Unified Consultation & Session Bookings Store (Google Calendar Integrated)
+    CREATE TABLE IF NOT EXISTS session_bookings (
+      id TEXT PRIMARY KEY,
+      name TEXT NOT NULL,
+      email TEXT NOT NULL,
+      company TEXT NOT NULL,
+      job_title TEXT DEFAULT '',
+      phone TEXT DEFAULT '',
+      area_of_interest TEXT NOT NULL,
+      challenge_description TEXT NOT NULL,
+      booking_date TEXT NOT NULL,
+      start_time TEXT NOT NULL,
+      end_time TEXT NOT NULL,
+      timezone TEXT NOT NULL,
+      additional_context TEXT DEFAULT '',
+      google_calendar_event_id TEXT DEFAULT '',
+      google_calendar_status TEXT DEFAULT 'pending',
+      meet_link TEXT DEFAULT '',
+      status TEXT DEFAULT 'confirmed',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_bookings_date ON session_bookings(booking_date);
+    CREATE INDEX IF NOT EXISTS idx_bookings_email ON session_bookings(email);
+    CREATE INDEX IF NOT EXISTS idx_bookings_status ON session_bookings(status);
   `)
 
   try {
