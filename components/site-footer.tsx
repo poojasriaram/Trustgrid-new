@@ -63,6 +63,7 @@ export function SiteFooter() {
         <div className="footer-links-col">
           <h4>Methodology & Insights</h4>
           <ul>
+            <li><Link href="/blog" style={{ color: '#60a5fa', fontWeight: 600 }}>Blog & Engineering Insights</Link></li>
             <li><Link href="/methodology-engine">AI Methodology Engine</Link></li>
             <li><Link href="/sitemap" style={{ color: '#60a5fa', fontWeight: 600 }}>Site Map v14.0 (5-Levels)</Link></li>
             <li><Link href="/insights">AI Insights & Papers</Link></li>

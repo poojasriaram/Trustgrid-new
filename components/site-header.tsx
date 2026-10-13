@@ -614,10 +614,10 @@ const aboutMenuItems = [
     desc: 'Production outcomes across defense, banking, and enterprise AI'
   },
   {
-    label: 'Methodology Engine',
-    href: '/methodology-engine',
-    icon: Sparkles,
-    desc: 'Proprietary AI-driven methodology implementation framework'
+    label: 'Blog',
+    href: '/blog',
+    icon: BookOpen,
+    desc: 'Engineering insights on AI-native networking, infrastructure, distributed AI, and enterprise AI systems.'
   }
 ]
 
