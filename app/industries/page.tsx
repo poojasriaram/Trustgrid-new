@@ -17,7 +17,6 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { industriesData, IndustryDetail } from '@/lib/industries-data'
 import { PageBannerHero } from '@/components/ui/page-banner-hero'
-import { IndustryVerticalsSlider } from '@/components/ui/industry-verticals-slider'
 
 export default function IndustriesPage() {
   const [selectedIndustry, setSelectedIndustry] = useState<string>('all')
@@ -53,11 +52,6 @@ export default function IndustriesPage() {
             ]
           }}
         />
-
-        {/* ENTERPRISE INDUSTRY VERTICALS SLIDER */}
-        <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
-          <IndustryVerticalsSlider />
-        </section>
 
         {/* INDUSTRY FILTER PILLS */}
         <section className="section" style={{ paddingTop: '20px', paddingBottom: '30px' }}>
