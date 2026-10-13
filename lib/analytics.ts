@@ -753,6 +753,16 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
         page_path: payload.page || (typeof window !== 'undefined' ? window.location.pathname : ''),
         value: payload.conversion_value || 1
       })
+
+      // Standard GA4 Lead Conversion Event
+      if (payload.event_name === 'form_submit' || payload.goal_completed) {
+        w.gtag('event', 'generate_lead', {
+          event_category: 'Leads',
+          event_label: payload.form_id || 'Lead Form',
+          currency: 'USD',
+          value: payload.conversion_value || 1
+        })
+      }
     }
   } catch (e) {}
 
