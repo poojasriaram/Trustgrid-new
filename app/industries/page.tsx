@@ -89,8 +89,8 @@ export default function IndustriesPage() {
         </section>
 
         {/* INDUSTRIES LIST GRID */}
-        <section className="section" style={{ paddingTop: '0px' }}>
-          <div className="industries-deep-grid">
+        <section className="section" id="industries-list" style={{ paddingTop: '0px' }}>
+          <div className="industries-deep-grid" id="use-cases">
             {filteredIndustries.map((ind: IndustryDetail) => (
               <div key={ind.id} className="industry-deep-card animated-card reveal-up" id={ind.slug}>
                 <div className="ind-header-row">

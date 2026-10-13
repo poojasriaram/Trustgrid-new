@@ -354,139 +354,245 @@ const aiCybersecurityMenuItems = [
   }
 ]
 
-// 5. AI Value Engineering Menu Items (Structured across Core Architecture & Frameworks)
+// 5. Unified AI Value Engineering & Common Foundation Menu Items (12 Consolidated Capabilities)
 const aiValueMenuItems = [
-  // --- USE CASE COMPENDIUM & TECH STACK ---
   {
-    category: 'Industrial Verticals',
-    id: 'industrial-use-cases',
-    label: '10 Industrial Verticals Compendium',
-    desc: 'Automotive, Heavy Machinery, Pharma, Semiconductors, Aerospace & Mining',
-    icon: Building2
-  },
-  {
-    category: 'Technology Enablers',
-    id: 'technology-enablers',
-    label: 'Physical & Digital Technology Stack',
-    desc: 'RFID, IIoT condition sensors, TSN, Video Analytics, Blockchain & Digital Twins',
-    icon: Cpu
-  },
-  {
-    category: 'Edge Fleets',
-    id: 'edge-orchestration',
-    label: 'Edge Gateways & Autonomous Fleets',
-    desc: 'Shop-floor low latency sensing, device orchestration & Tier 2–5 agent routing',
+    category: 'ENGAGEMENT MODELS',
+    id: 'engagement-models',
+    href: '/request-proposal',
+    label: 'Engagement Models & Turnkey DBOT',
+    desc: 'Diagnostic sprints, co-engineering, and turnkey DBOT delivery frameworks',
     icon: Workflow
   },
-
-  // --- METHODOLOGY ENGINE & ARCHITECTURE ---
   {
-    category: 'Methodology Engine',
+    category: 'METHODOLOGY ENGINE',
     id: 'methodology-engine',
-    label: '40+ Proven Operational Methodologies',
-    desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, TRIZ industrialized by AI agents',
+    href: '/methodology-engine',
+    label: 'AI-Driven Methodology Engine',
+    desc: 'Proprietary framework to assess, select, automate, and compound operational methods',
+    icon: Sparkles
+  },
+  {
+    category: 'OPERATIONAL TOOLBOX',
+    id: '80-methodologies',
+    href: '/solutions/ai-value-engineering#methodology-engine',
+    label: '80+ Operational Methodologies',
+    desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ industrialized by AI agents',
     icon: Boxes
   },
   {
-    category: 'System Architecture',
-    id: 'five-layer-architecture',
-    label: '5-Layer Agent Fleet Architecture',
-    desc: 'Discovery, Cost Truth, Methodology Execution, VRO & Compounding OS',
-    icon: Layers
-  },
-  {
-    category: 'Balance Sheet Proof',
-    id: 'value-currencies',
-    label: 'Five Enterprise Value Currencies',
-    desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & Growth Option P&L proof',
-    icon: TrendingUp
-  },
-
-  // --- LEAN AI VALUE ENGINEERING HANDBOOK ---
-  {
-    category: 'Operating System',
-    id: 'operating-system',
-    label: 'The One-Page Operating System',
-    desc: 'The 7-Step Method: Constraint, Waste, Proof, Flow, Function, Execution & Compound',
-    icon: SlidersHorizontal
-  },
-  {
-    category: 'Multi-Model Stack',
-    id: 'tier-architecture',
-    label: 'Tier 0–6 Multi-Model System',
-    desc: 'Deterministic sensor reads to multi-agent reasoning & board governance',
+    category: 'FINANCIAL ARCHITECTURE',
+    id: 'unit-economics',
+    href: '/solutions/ai-value-engineering#ledger-economics',
+    label: 'AI Economics & Unit Economics',
+    desc: 'Cost-to-serve, inference unit economics & function-cost ledger decomposition',
     icon: BarChart3
   },
   {
-    category: 'Governance & Risk',
-    id: 'waste-governance',
-    label: 'DOWNTIME Waste & Risk Governance',
-    desc: 'Shop-floor waste elimination coupled with deterministic human risk bands',
+    category: 'COST GOVERNANCE',
+    id: 'finops-governance',
+    href: '/solutions/ai-value-engineering#operating-system',
+    label: 'AI FinOps & Cost Governance',
+    desc: 'Continuous GPU token governance, infrastructure OpEx & budget attribution',
+    icon: SlidersHorizontal
+  },
+  {
+    category: 'VALUE REALIZATION',
+    id: 'value-currencies',
+    href: '/solutions/ai-value-engineering#value-currencies',
+    label: 'ROI, TCO & Value Realization',
+    desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & growth option P&L proof',
+    icon: TrendingUp
+  },
+  {
+    category: 'ENTERPRISE PROOF',
+    id: 'case-studies-metrics',
+    href: '/case-studies',
+    label: 'Case Studies & Performance Metrics',
+    desc: 'Production outcomes, GPU yield gains, latency & balance-sheet impact',
+    icon: FileText
+  },
+  {
+    category: 'TECHNOLOGY STACK',
+    id: 'tech-ecosystem',
+    href: '/partners',
+    label: 'Technology Ecosystem & Enablers',
+    desc: 'Hardware accelerators, silicon platforms, orchestration & partner network',
+    icon: Network
+  },
+  {
+    category: 'SYSTEM ARCHITECTURE',
+    id: 'system-architecture',
+    href: '/solutions/ai-value-engineering#five-layer-architecture',
+    label: 'System Architecture & Frameworks',
+    desc: '5-layer agent fleet architecture from sensory ingest to compounding OS',
+    icon: Layers
+  },
+  {
+    category: 'RISK & COMPLIANCE',
+    id: 'governance-risk',
+    href: '/solutions/ai-value-engineering#waste-governance',
+    label: 'Governance, Risk & Excellence',
+    desc: 'DOWNTIME waste elimination coupled with deterministic human risk bands',
     icon: ShieldCheck
   },
-
-  // --- EXECUTIVE DELIVERABLES & FUNCTION-COST LEDGER ---
   {
-    category: 'Job Plan',
-    id: 'job-plan-stages',
+    category: 'DELIVERY STANDARDS',
+    id: 'job-plan',
+    href: '/solutions/ai-value-engineering#job-plan-stages',
     label: '70-Year AI-VE Job Plan (8 Stages)',
     desc: 'SAVE International standard re-engineered with AI: Info to Audit',
     icon: Zap
   },
   {
-    category: 'Cost Truth',
-    id: 'ledger-economics',
-    label: 'Enterprise Function-Cost Ledger',
-    desc: 'Granular verb–noun decomposition & Should-Cost modeling across operations',
-    icon: CheckCircle2
-  },
-  {
-    category: 'Diagnostic Sprints',
-    id: 'sprints-diagnostic',
-    label: '90-Day Sprints & Diagnostic Intake',
-    desc: 'Rapid cash-out acceleration sprints, VRO setup & CFO consensus canvas',
-    icon: Sparkles
+    category: 'STRATEGIC EVALUATION',
+    id: 'diagnostic-assessment',
+    href: '/book-ai-diagnostic#diagnostic-form-section',
+    label: 'AI Diagnostic & Assessment',
+    desc: 'Executive technical & financial evaluation of enterprise AI readiness',
+    icon: ArrowUpRight
   }
 ]
 
-
-// 6. Common Foundation Menu Items (6 Items)
-const commonFoundationMenuItems = [
+// 6. Industries Mega Menu Data (3 Non-Negotiable Categories: 70 Industries, Methodologies, Use Cases)
+const industriesMegaCategories = [
   {
-    label: 'Industries',
-    href: '/industries',
+    id: '70-industries',
+    title: '70 Industries',
+    tagline: 'Sector Directory & Vertical Blueprints',
     icon: Building2,
-    desc: '20+ specialized enterprise verticals from banking to aerospace & defense'
+    items: [
+      {
+        label: '70 Industries Directory & Overview',
+        desc: 'Explore all specialized enterprise verticals, regulatory profiles & architectures',
+        href: '/industries',
+        icon: Building2
+      },
+      {
+        label: 'Banking & Financial Services',
+        desc: 'High-frequency trading, underwriting agent fleets, AML & quantum-safe payments',
+        href: '/industries#banking-financial-services',
+        icon: TrendingUp
+      },
+      {
+        label: 'Healthcare & Life Sciences',
+        desc: 'Sovereign clinical AI clusters, molecular agent discovery & HIPAA/FDA compliance',
+        href: '/industries#healthcare-life-sciences',
+        icon: ShieldCheck
+      },
+      {
+        label: 'Manufacturing (Discrete & Process)',
+        desc: 'Shop-floor vision QC, predictive robotics maintenance, OEE & chemical yield tuning',
+        href: '/industries#manufacturing-discrete',
+        icon: Cpu
+      },
+      {
+        label: 'Energy, Utilities & Smart Grids',
+        desc: 'Autonomous grid balancing, renewable dispatch forecasting & NERC-CIP defense',
+        href: '/industries#energy-utilities',
+        icon: Zap
+      },
+      {
+        label: 'Aerospace, Defense & GovTech',
+        desc: 'Air-gapped tactical AI, DO-178C Level A assurance & sovereign citizen workflows',
+        href: '/industries#aerospace-defense',
+        icon: Lock
+      },
+      {
+        label: 'Telecom, Retail & Supply Chain',
+        desc: 'Autonomous network slicing, multi-agent freight bidding & dynamic retail pricing',
+        href: '/industries#telecommunications',
+        icon: Network
+      }
+    ]
   },
   {
-    label: 'Methodology Engine',
-    href: '/methodology-engine',
+    id: 'methodologies',
+    title: 'Methodologies',
+    tagline: 'Operational Disciplines for Industry',
     icon: Sparkles,
-    desc: 'Lean, TOC, DMAIC, OEE, TPM and 80+ operational AI engineering models'
+    items: [
+      {
+        label: 'AI-Driven Methodology Engine',
+        desc: 'Systematic approach to evaluate, select, and automate operational methods',
+        href: '/methodology-engine',
+        icon: Sparkles
+      },
+      {
+        label: 'Lean Thinking & DMAIC Six Sigma',
+        desc: 'Compute waste elimination, cycle time reduction & shop-floor defect mitigation',
+        href: '/methodology-engine#full-spectrum-architecture',
+        icon: Workflow
+      },
+      {
+        label: 'Theory of Constraints (TOC)',
+        desc: 'Bottleneck triage, throughput accounting & GPU cluster queue optimization',
+        href: '/methodology-engine#diagnostic',
+        icon: SlidersHorizontal
+      },
+      {
+        label: 'FMEA & Mistake-Proofing (Poka-Yoke)',
+        desc: 'Risk priority numbers, failure mode prevention & deterministic safety boundaries',
+        href: '/methodology-engine#architecture',
+        icon: ShieldCheck
+      },
+      {
+        label: 'TPM & OEE Asset Optimization',
+        desc: 'Machine telemetry, predictive maintenance & zero-downtime equipment yield',
+        href: '/methodology-engine#deployment',
+        icon: Target
+      },
+      {
+        label: 'Explore 80+ Methodology Catalog',
+        desc: 'Comprehensive library of operational AI frameworks across all sectors',
+        href: '/solutions/ai-value-engineering#methodology-engine',
+        icon: Boxes
+      }
+    ]
   },
   {
-    label: 'Engagement Models',
-    href: '/request-proposal',
-    icon: Workflow,
-    desc: 'Diagnostic, sprint, co-engineering, and turnkey DBOT delivery frameworks'
-  },
-  {
-    label: 'Case Studies & Metrics',
-    href: '/case-studies',
-    icon: BarChart3,
-    desc: 'Measurable enterprise impact, GPU yield, latency & P&L outcomes'
-  },
-  {
-    label: 'Technology Ecosystem',
-    href: '/partners',
-    icon: Network,
-    desc: 'Hardware accelerators, silicon platforms, orchestration & PQC stacks'
-  },
-  {
-    label: 'Book Your AI Diagnostic',
-    href: '/book-ai-diagnostic#diagnostic-form-section',
-    icon: ArrowUpRight,
-    desc: 'Executive technical & financial evaluation of enterprise AI readiness'
+    id: 'use-cases',
+    title: 'Use Cases',
+    tagline: 'Enterprise Deployments & Workflows',
+    icon: Target,
+    items: [
+      {
+        label: 'Enterprise Use Case Compendium',
+        desc: 'Practical cross-industry deployment blueprints with clear inputs, outputs & KPIs',
+        href: '/industries#use-cases',
+        icon: Layers
+      },
+      {
+        label: 'Financial Fraud & Surveillance',
+        desc: 'Sub-millisecond inference scoring for algorithmic compliance & fraud rings',
+        href: '/industries#banking-financial-services',
+        icon: TrendingUp
+      },
+      {
+        label: 'Shop-Floor Visual Quality Control',
+        desc: 'High-speed edge vision inspection achieving 92% defect escape reduction',
+        href: '/industries#manufacturing-discrete',
+        icon: Cpu
+      },
+      {
+        label: 'Autonomous Grid Outage Prevention',
+        desc: '45-minute advance warning & predictive transmission line load balancing',
+        href: '/industries#energy-utilities',
+        icon: Zap
+      },
+      {
+        label: 'Automated Claims Adjudication',
+        desc: '4.2x claims processing speedup with transparent actuarial lineage',
+        href: '/industries#insurance',
+        icon: CheckCircle2
+      },
+      {
+        label: 'Use Case Prioritization Workshop',
+        desc: 'Executive technical sprint to evaluate, prioritize, and roadmap AI initiatives',
+        href: '/use-case-workshop',
+        icon: ArrowUpRight
+      }
+    ]
   }
 ]
 
@@ -1137,7 +1243,7 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 6. AI VALUE ENGINEERING */}
+        {/* 6. AI VALUE ENGINEERING (UNIFIED WITH COMMON FOUNDATION) */}
         <div
           className="nav-dropdown-wrapper"
           onMouseEnter={() => handleMouseEnter('value')}
@@ -1160,25 +1266,39 @@ export function SiteHeader() {
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      ECONOMIC GOVERNANCE & FINOPS
+                      ENTERPRISE VALUE & OPERATIONAL EXCELLENCE
                     </span>
                     <h3 className="isi-sidebar-title">AI Value Engineering</h3>
                     <p className="isi-sidebar-desc">
-                      Bridge technical compute metrics directly to CFO-approved P&L earnings and unit economics.
+                      Connect enterprise AI strategy, proven operational methodologies, implementation frameworks, and financial accountability to measurable business outcomes.
                     </p>
+                    <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(37, 99, 235, 0.05)', borderRadius: '6px', borderLeft: '3px solid #2563eb' }}>
+                      <p style={{ margin: 0, fontSize: '11px', color: '#475569', lineHeight: 1.45 }}>
+                        From methodology selection to implementation and value realization, establish a disciplined approach to enterprise AI performance.
+                      </p>
+                    </div>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>3–10x Verifiable ROI</span>
+                      <span>3–10x Verifiable ROI • 80+ Methods</span>
                     </div>
                     <Link
-                      href="/solutions/ai-value-engineering"
+                      href="/book-ai-diagnostic#diagnostic-form-section"
+                      className="isi-sidebar-action"
+                      style={{ background: '#2563eb', color: '#ffffff' }}
+                      onClick={closeAll}
+                    >
+                      <span>Book AI Value Diagnostic</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                    <Link
+                      href="/methodology-engine"
                       className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <span>Explore Blueprint</span>
-                      <ArrowUpRight size={13} />
+                      <span>Explore Methodology Engine</span>
+                      <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
@@ -1187,7 +1307,7 @@ export function SiteHeader() {
                 <div className="isi-mega-content columns-3">
                   {aiValueMenuItems.map((item, idx) => {
                     const Icon = item.icon
-                    const itemHref = `/solutions/ai-value-engineering#${item.id}`
+                    const itemHref = item.href || `/solutions/ai-value-engineering#${item.id}`
                     return (
                       <Link
                         key={idx}
@@ -1218,14 +1338,14 @@ export function SiteHeader() {
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Throughput accounting, TOC & CFO consensus canvases</span>
+                  <span>From operational methodology to measurable enterprise AI value.</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section"
+                  href="/solutions/ai-value-engineering"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Book AI Diagnostic Assessment</span>
+                  <span>Explore Value Engineering Blueprint</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -1233,74 +1353,91 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 7. COMMON FOUNDATION */}
+        {/* 7. INDUSTRIES (SEPARATE TOP-LEVEL MENU) */}
         <div
           className="nav-dropdown-wrapper"
-          onMouseEnter={() => handleMouseEnter('foundation')}
+          onMouseEnter={() => handleMouseEnter('industries')}
           onMouseLeave={handleMouseLeave}
         >
           <button
-            className={`nav-menu-trigger ${activeMenu === 'foundation' ? 'active' : ''}`}
-            onClick={() => toggleMenu('foundation')}
-            aria-expanded={activeMenu === 'foundation'}
+            className={`nav-menu-trigger ${activeMenu === 'industries' ? 'active' : ''}`}
+            onClick={() => toggleMenu('industries')}
+            aria-expanded={activeMenu === 'industries'}
           >
-            <span>Common Foundation</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'foundation' ? 'rotate-180' : ''}`} />
+            <span>Industries</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'industries' ? 'rotate-180' : ''}`} />
           </button>
 
-          {activeMenu === 'foundation' && (
-            <div className="isi-mega-panel isi-mega-foundation">
+          {activeMenu === 'industries' && (
+            <div className="isi-mega-panel isi-mega-industries">
               <div className="isi-mega-layout">
                 {/* Left Category Introduction */}
                 <div className="isi-mega-sidebar">
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      STRATEGIC ENABLERS
+                      MISSION-CRITICAL & REGULATED
                     </span>
-                    <h3 className="isi-sidebar-title">Common Foundation</h3>
+                    <h3 className="isi-sidebar-title">Industries</h3>
                     <p className="isi-sidebar-desc">
-                      Enterprise frameworks, industry vertical blueprints, operational methodology engines, and partner ecosystems.
+                      Domain-specific AI architectures, regulated sector blueprints, operational methodologies, and verified use cases across 70 industries.
                     </p>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>80+ Operational Methodologies</span>
+                      <span>70 Sector Blueprints</span>
                     </div>
                     <Link
-                      href="/sitemap"
+                      href="/industries"
                       className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <span>Full Taxonomy</span>
+                      <span>Explore Directory</span>
                       <ArrowUpRight size={13} />
                     </Link>
                   </div>
                 </div>
 
-                {/* Right Structured Grid (2 columns, 6 items) */}
-                <div className="isi-mega-content columns-2">
-                  {commonFoundationMenuItems.map((item, idx) => {
-                    const Icon = item.icon
+                {/* Right Structured 3-Category Layout: 70 Industries, Methodologies, Use Cases */}
+                <div className="isi-industries-grid">
+                  {industriesMegaCategories.map((category) => {
+                    const CatIcon = category.icon
                     return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, item.href)}
-                      >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
+                      <div key={category.id} className="isi-category-col">
+                        <div className="isi-category-header">
+                          <div className="isi-category-header-top">
+                            <CatIcon size={14} className="text-blue-600" />
+                            <span className="isi-category-title">{category.title}</span>
                           </div>
-                          <p className="isi-card-desc">{item.desc}</p>
+                          <span className="isi-category-tagline">{category.tagline}</span>
                         </div>
-                      </Link>
+
+                        <div className="isi-category-items">
+                          {category.items.map((item, idx) => {
+                            const ItemIcon = item.icon
+                            return (
+                              <Link
+                                key={idx}
+                                href={item.href}
+                                className="isi-menu-card isi-category-card"
+                                onClick={(e) => handleNavClick(e, item.href)}
+                              >
+                                <div className="isi-card-icon">
+                                  <ItemIcon size={14} />
+                                </div>
+                                <div className="isi-card-body">
+                                  <div className="isi-card-heading">
+                                    <span className="isi-card-title">{item.label}</span>
+                                    <ArrowRight size={12} className="isi-card-arrow" />
+                                  </div>
+                                  <p className="isi-card-desc">{item.desc}</p>
+                                </div>
+                              </Link>
+                            )
+                          })}
+                        </div>
+                      </div>
                     )
                   })}
                 </div>
@@ -1310,14 +1447,14 @@ export function SiteHeader() {
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Executive technical & financial evaluation of enterprise AI readiness</span>
+                  <span>Zero-downtime, mathematically verified, and compliance-ready architectures</span>
                 </div>
                 <Link
                   href="/book-ai-diagnostic#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Schedule AI Diagnostic</span>
+                  <span>Schedule Industry Diagnostic</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -1600,7 +1737,7 @@ export function SiteHeader() {
                     <span>AI Value Engineering Blueprint Overview →</span>
                   </Link>
                   {aiValueMenuItems.map((item, i) => {
-                    const itemHref = `/solutions/ai-value-engineering#${item.id}`
+                    const itemHref = item.href || `/solutions/ai-value-engineering#${item.id}`
                     return (
                       <Link
                         key={i}
@@ -1617,29 +1754,36 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* Mobile Common Foundation Accordion */}
+            {/* Mobile Industries Accordion */}
             <div className="mobile-accordion">
               <button
                 className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('foundation')}
+                onClick={() => toggleMobileSection('industries')}
               >
-                <span>Common Foundation</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'foundation' ? 'rotate-180' : ''}`} />
+                <span>Industries</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'industries' ? 'rotate-180' : ''}`} />
               </button>
-              {mobileSection === 'foundation' && (
+              {mobileSection === 'industries' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/sitemap" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>Full Taxonomy Overview →</span>
+                  <Link href="/industries" className="mobile-sublink font-semibold" onClick={closeAll}>
+                    <span>70 Industries Directory Overview →</span>
                   </Link>
-                  {commonFoundationMenuItems.map((item, i) => (
-                    <Link
-                      key={i}
-                      href={item.href}
-                      className="mobile-sublink"
-                      onClick={(e) => handleNavClick(e, item.href)}
-                    >
-                      <span>{item.label}</span>
-                    </Link>
+                  {industriesMegaCategories.map((category) => (
+                    <div key={category.id} style={{ marginTop: '10px', marginBottom: '4px' }}>
+                      <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block px-3 py-1 bg-blue-50/60 rounded">
+                        {category.title}
+                      </span>
+                      {category.items.map((item, i) => (
+                        <Link
+                          key={i}
+                          href={item.href}
+                          className="mobile-sublink"
+                          onClick={(e) => handleNavClick(e, item.href)}
+                        >
+                          <span>{item.label}</span>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
               )}
