@@ -737,13 +737,21 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
     }
   } catch (e) {}
 
-  // 1. GTM / GA4 dataLayer push
+  // 1. GTM / GA4 dataLayer push & direct gtag event dispatch
   try {
     const w = window as any
     if (w.dataLayer && Array.isArray(w.dataLayer)) {
       w.dataLayer.push({
         event: payload.event_name,
         ...payload
+      })
+    }
+    if (typeof w.gtag === 'function') {
+      w.gtag('event', payload.event_name, {
+        event_category: payload.event_category,
+        event_label: payload.event_label,
+        page_path: payload.page || (typeof window !== 'undefined' ? window.location.pathname : ''),
+        value: payload.conversion_value || 1
       })
     }
   } catch (e) {}

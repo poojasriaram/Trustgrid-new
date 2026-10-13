@@ -86,3 +86,28 @@
   }
 }
 
+/* Contact Page Parallel Alignment & Form Width Controls */
+.contact-grid-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 460px);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+  width: 100%;
+}
+
+.contact-form-col {
+  width: 100%;
+  max-width: 460px;
+}
+
+@media (max-width: 1024px) {
+  .contact-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .contact-form-col {
+    max-width: 100%;
+  }
+}
+
+

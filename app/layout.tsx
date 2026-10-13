@@ -70,6 +70,22 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             })(window, document, "clarity", "script", "yj0srnjmcb");
           `}
         </Script>
+        {/* Google Analytics (GA4) */}
+        <Script
+          id="google-analytics-tag"
+          strategy="lazyOnload"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-F0BHWRT22R'}`}
+        />
+        <Script id="google-analytics-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-F0BHWRT22R'}', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
       </head>
       <body className={`antialiased ${plusJakartaSans.className}`}>
         <AnalyticsTracker />

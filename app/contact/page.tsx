@@ -1,16 +1,11 @@
 import React from 'react'
-import Link from 'next/link'
 import {
-  ArrowUpRight,
   Building2,
   Mail,
   Phone,
   MapPin,
-  Sparkles,
   MessageCircle,
   Clock,
-  ShieldCheck,
-  Calendar,
   Globe2
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
@@ -27,9 +22,9 @@ export default function ContactPage() {
       <main className="main-content">
         {/* ABOVE-THE-FOLD DEDICATED CONTACT & SALES ENQUIRY SECTION */}
         <section className="section dedicated-form-hero-section" id="contact-form-section" style={{ paddingTop: '24px', paddingBottom: '50px' }}>
-          <div className="diagnostic-grid-layout" style={{ alignItems: 'flex-start' }}>
+          <div className="contact-grid-layout" style={{ alignItems: 'flex-start' }}>
             {/* LEFT COLUMN: DIRECT CHANNELS & EXECUTIVE CONTACT */}
-            <div className="diagnostic-intro-col">
+            <div className="diagnostic-intro-col" style={{ position: 'relative', top: 0 }}>
               <div className="diagnostic-badge-wrap">
                 <span className="section-label" style={{ color: '#1d5cff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                   <Globe2 size={13} />
@@ -95,31 +90,10 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-
-              {/* STRATEGY SESSION CALENDAR CALLOUT */}
-              <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid var(--border)', boxShadow: '0 2px 10px rgba(0,0,0,0.03)' }}>
-                <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em' }}>
-                  CONSULTATION &amp; STRATEGY SESSION
-                </span>
-                <p style={{ fontSize: '13px', color: '#64748b', margin: '6px 0 14px' }}>
-                  Looking for a live 45-minute architectural &amp; compute briefing?
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <Link
-                    href="/talk-to-ai-architect#session-booking-section"
-                    className="button button-primary button-sm"
-                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '10px 14px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600, fontSize: '13px' }}
-                  >
-                    <Calendar size={15} />
-                    <span>Book AI Architect Session</span>
-                    <ArrowUpRight size={14} />
-                  </Link>
-                </div>
-              </div>
             </div>
 
             {/* RIGHT COLUMN: VERTICAL QUICK CONTACT / SALES ENQUIRY FORM (IMMEDIATELY VISIBLE ABOVE THE FOLD) */}
-            <div className="diagnostic-form-col">
+            <div className="contact-form-col">
               <QuickContactForm ctaSource="contact_page_above_fold" />
             </div>
           </div>

@@ -5,6 +5,8 @@ import { validateLeadSubmission } from '@/lib/validation'
 import { insertLeadDb, getAllLeadsDb, DbLeadRecord } from '@/lib/db/leads'
 import { appendLeadToGoogleSheets } from '@/lib/services/google-sheets'
 import { createLinkedInJiraLead } from '@/lib/services/jira'
+import { sendWhatsAppLeadAlert } from '@/lib/services/whatsapp'
+import { sendTelegramLeadAlert } from '@/lib/services/telegram'
 
 // In-memory lead repository for runtime monitoring, deduplication, and retry management
 export interface StoredLeadRecord {
@@ -242,7 +244,30 @@ export async function POST(req: NextRequest) {
         jiraResult = { success: false, status: 'Failed', error: jiraErr?.message }
       }
 
-      // D. Register in runtime monitor store
+      // D. Dispatch WhatsApp & Telegram Instant Alerts (Non-blocking)
+      sendWhatsAppLeadAlert({
+        leadId,
+        name: leadRecord.name,
+        email: leadRecord.email,
+        company: leadRecord.company,
+        phone: leadRecord.phone,
+        service: 'LinkedIn API Integration',
+        source: 'LinkedIn Inbound',
+        message: leadRecord.message
+      }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
+
+      sendTelegramLeadAlert({
+        leadId,
+        name: leadRecord.name,
+        email: leadRecord.email,
+        company: leadRecord.company,
+        phone: leadRecord.phone,
+        service: 'LinkedIn API Integration',
+        source: 'LinkedIn Inbound',
+        message: leadRecord.message
+      }).catch((err) => console.warn('[Telegram Alert Notice]', err))
+
+      // E. Register in runtime monitor store
       leadsStore.set(leadId, {
         leadId,
         normalized: {
@@ -319,6 +344,35 @@ export async function POST(req: NextRequest) {
         error: jiraErr?.message || 'Failed to create Jira issue'
       }
     }
+
+    // Dispatch WhatsApp & Telegram Instant Alerts (Non-blocking)
+    sendWhatsAppLeadAlert({
+      leadId: normalized.leadId,
+      name: normalized.name,
+      email: normalized.email,
+      company: normalized.company,
+      phone: normalized.phone,
+      service: normalized.interestedSolution || normalized.leadTypeLabel,
+      source: normalized.channelAttribution || 'Website Form',
+      formType: normalized.leadType,
+      pageUrl: normalized.pageUrl,
+      utmCampaign: normalized.utmCampaign,
+      message: normalized.message
+    }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
+
+    sendTelegramLeadAlert({
+      leadId: normalized.leadId,
+      name: normalized.name,
+      email: normalized.email,
+      company: normalized.company,
+      phone: normalized.phone,
+      service: normalized.interestedSolution || normalized.leadTypeLabel,
+      source: normalized.channelAttribution || 'Website Form',
+      formType: normalized.leadType,
+      pageUrl: normalized.pageUrl,
+      utmCampaign: normalized.utmCampaign,
+      message: normalized.message
+    }).catch((err) => console.warn('[Telegram Alert Notice]', err))
 
     // Store Record in In-Memory System Store
     leadsStore.set(normalized.leadId, {
