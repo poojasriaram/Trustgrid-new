@@ -11,10 +11,10 @@ export const article03: BlogArticleData = {
   publishedDate: 'April 7, 2026',
   updatedDate: 'April 12, 2026',
   author: {
-    name: 'Dr. Vikram Nair',
-    role: 'Principal AI Infrastructure & Network Architect',
+    name: 'Poojasri',
+    role: '',
     avatar: '/images/trustgrid-logo.png',
-    bio: 'Leads high-performance fabric engineering and GPU cluster optimization at TRUSTGRID.AI. Co-developed high-throughput RDMA telemetry pipelines.'
+    bio: 'AI/ML Engineer at TRUSTGRID.AI.'
   },
   excerpt: 'In distributed GPU training, packet drops are fatal to throughput. Learn the physics of buffer headroom calculation, how GPUDirect RDMA bypasses host CPUs, and how to calibrate PFC and DCQCN to eliminate pause storms in high-concurrency clusters.',
   featuredImage: '/images/blog/lossless-ai-network-design.jpg',

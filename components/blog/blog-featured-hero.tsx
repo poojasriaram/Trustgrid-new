@@ -85,7 +85,9 @@ export function BlogFeaturedHero({ post }: BlogFeaturedHeroProps) {
                 </div>
                 <div className="tg-author-info">
                   <span className="tg-author-name">{post.author.name}</span>
-                  <span className="tg-author-role">{post.author.role}</span>
+                  {post.author.role ? (
+                    <span className="tg-author-role">{post.author.role}</span>
+                  ) : null}
                 </div>
               </div>
 

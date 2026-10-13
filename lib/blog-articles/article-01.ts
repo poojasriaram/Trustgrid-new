@@ -10,9 +10,9 @@ export interface BlogArticleData {
   updatedDate: string
   author: {
     name: string
-    role: string
+    role?: string
     avatar: string
-    bio: string
+    bio?: string
   }
   excerpt: string
   featuredImage: string
@@ -63,10 +63,10 @@ export const article01: BlogArticleData = {
   publishedDate: 'April 2, 2026',
   updatedDate: 'April 12, 2026',
   author: {
-    name: 'Dr. Vikram Nair',
-    role: 'Principal AI Infrastructure & Network Architect',
+    name: 'Poojasri',
+    role: '',
     avatar: '/images/trustgrid-logo.png',
-    bio: 'Leads high-performance fabric engineering and GPU cluster optimization at TRUSTGRID.AI. Formerly architected ultra-scale distributed compute fabrics across Tier-1 hyperscale environments.'
+    bio: 'AI/ML Engineer at TRUSTGRID.AI.'
   },
   excerpt: 'Traditional data center networks designed for asynchronous client-server traffic collapse under the synchronized, all-to-all communication demands of distributed AI. Discover why tail latency stalls 1,024-GPU clusters and how AI-native networking restores Model FLOPs Utilization (MFU).',
   featuredImage: '/images/blog/ai-native-networking-distributed-ai.jpg',

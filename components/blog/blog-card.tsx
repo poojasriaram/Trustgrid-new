@@ -63,7 +63,9 @@ export function BlogCard({ post }: BlogCardProps) {
             </div>
             <div className="tg-author-info">
               <span className="tg-author-name">{post.author.name}</span>
-              <span className="tg-author-role">{post.author.role.split(',')[0]}</span>
+              {post.author.role ? (
+                <span className="tg-author-role">{post.author.role.split(',')[0]}</span>
+              ) : null}
             </div>
           </div>
 

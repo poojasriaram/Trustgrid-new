@@ -11,10 +11,10 @@ export const article02: BlogArticleData = {
   publishedDate: 'April 4, 2026',
   updatedDate: 'April 12, 2026',
   author: {
-    name: 'Elena Rostova',
-    role: 'Lead Distributed Systems & High-Performance Fabrics Engineer',
+    name: 'Poojasri',
+    role: '',
     avatar: '/images/trustgrid-logo.png',
-    bio: 'Specializes in RDMA kernel bypassing, ultra-low latency optical fabrics, and high-concurrency multi-tenant cluster architectures at TRUSTGRID.AI.'
+    bio: 'AI/ML Engineer at TRUSTGRID.AI.'
   },
   excerpt: 'The debate between RoCEv2 and InfiniBand is often dominated by vendor dogma. We examine the empirical engineering trade-offs between hardware credit-based flow control and Ethernet PFC/DCQCN, providing a clear decision framework for enterprise AI clusters.',
   featuredImage: '/images/blog/rocev2-vs-infiniband-ai.jpg',

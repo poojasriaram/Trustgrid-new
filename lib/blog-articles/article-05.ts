@@ -11,10 +11,10 @@ export const article05: BlogArticleData = {
   publishedDate: 'April 11, 2026',
   updatedDate: 'April 12, 2026',
   author: {
-    name: 'Dr. Vikram Nair',
-    role: 'Principal AI Infrastructure & Network Architect',
+    name: 'Poojasri',
+    role: '',
     avatar: '/images/trustgrid-logo.png',
-    bio: 'Leads high-performance fabric engineering and GPU cluster optimization at TRUSTGRID.AI. Formerly architected ultra-scale distributed compute fabrics across Tier-1 hyperscale environments.'
+    bio: 'AI/ML Engineer at TRUSTGRID.AI.'
   },
   excerpt: 'Deploying an AI cluster is not like expanding a virtualized enterprise data center. A single cabling error or mismatched switch buffer halts 512 GPUs. Discover our 5-pillar readiness framework and 20-point scorecard before ordering your next rack.',
   featuredImage: '/images/blog/enterprise-ai-network-readiness.jpg',

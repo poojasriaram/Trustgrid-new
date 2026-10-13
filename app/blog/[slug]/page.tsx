@@ -109,7 +109,7 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
         author: {
           '@type': 'Person',
           name: post.author.name,
-          jobTitle: post.author.role,
+          ...(post.author.role ? { jobTitle: post.author.role } : {}),
         },
         publisher: {
           '@type': 'Organization',
@@ -193,7 +193,9 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
                 </div>
                 <div className="tg-author-info">
                   <span className="tg-author-name">{post.author.name}</span>
-                  <span className="tg-author-role">{post.author.role}</span>
+                  {post.author.role ? (
+                    <span className="tg-author-role">{post.author.role}</span>
+                  ) : null}
                 </div>
               </div>
 

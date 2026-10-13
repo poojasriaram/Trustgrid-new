@@ -11,10 +11,10 @@ export const article04: BlogArticleData = {
   publishedDate: 'April 9, 2026',
   updatedDate: 'April 12, 2026',
   author: {
-    name: 'Elena Rostova',
-    role: 'Lead Distributed Systems & High-Performance Fabrics Engineer',
+    name: 'Poojasri',
+    role: '',
     avatar: '/images/trustgrid-logo.png',
-    bio: 'Specializes in distributed profiling, PyTorch/NCCL telemetry, and multi-tenant accelerator utilization engineering at TRUSTGRID.AI.'
+    bio: 'AI/ML Engineer at TRUSTGRID.AI.'
   },
   excerpt: 'When nvidia-smi shows 100% GPU utilization but training throughput lags 40% below target, where is the bottleneck? Learn how to distinguish network synchronization stalls from host bus limits, storage I/O, and NCCL configuration errors.',
   featuredImage: '/images/blog/ai-network-performance-optimization.jpg',
