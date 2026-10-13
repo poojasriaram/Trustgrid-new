@@ -201,16 +201,22 @@ export default function IndustriesPage() {
                 </div>
 
                 <div className="ind-card-footer">
-                  <span className="ind-footer-text">
-                    Ready to deploy production AI for <strong>{ind.name}</strong>?
-                  </span>
-                  <Link
-                    href={`/book-ai-diagnostic?industry=${encodeURIComponent(ind.name)}#diagnostic-form-section`}
-                    className="button button-primary button-sm"
-                  >
-                    <span>Request {ind.name} Diagnostic</span>
-                    <ArrowUpRight size={14} />
-                  </Link>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <Link
+                      href={`/industries/${ind.slug}`}
+                      className="button button-ghost button-sm"
+                    >
+                      <span>Explore Full {ind.name} Blueprint</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                    <Link
+                      href={`/book-ai-diagnostic?industry=${encodeURIComponent(ind.name)}#diagnostic-form-section`}
+                      className="button button-primary button-sm"
+                    >
+                      <span>Request {ind.name} Diagnostic</span>
+                      <ArrowUpRight size={14} />
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}

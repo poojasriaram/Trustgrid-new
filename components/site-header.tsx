@@ -474,25 +474,25 @@ const industriesMegaCategories = [
       {
         label: 'Banking & Financial Services',
         desc: 'High-frequency trading, underwriting agent fleets, AML & quantum-safe payments',
-        href: '/industries#banking-financial-services',
+        href: '/industries/banking-financial-services',
         icon: TrendingUp
       },
       {
         label: 'Healthcare & Life Sciences',
         desc: 'Sovereign clinical AI clusters, molecular agent discovery & HIPAA/FDA compliance',
-        href: '/industries#healthcare-life-sciences',
+        href: '/industries/healthcare-life-sciences',
         icon: ShieldCheck
       },
       {
         label: 'Manufacturing (Discrete & Process)',
         desc: 'Shop-floor vision QC, predictive robotics maintenance, OEE & chemical yield tuning',
-        href: '/industries#manufacturing-discrete',
+        href: '/industries/manufacturing-discrete',
         icon: Cpu
       },
       {
         label: 'Aerospace, Defense & GovTech',
         desc: 'Air-gapped tactical AI, DO-178C Level A assurance & sovereign citizen workflows',
-        href: '/industries#aerospace-defense',
+        href: '/industries/aerospace-defense',
         icon: Lock
       }
     ]
