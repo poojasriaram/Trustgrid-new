@@ -73,10 +73,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Google Analytics (GA4) */}
         <Script
           id="google-analytics-tag"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-F0BHWRT22R'}`}
         />
-        <Script id="google-analytics-init" strategy="lazyOnload">
+        <Script id="google-analytics-init" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
