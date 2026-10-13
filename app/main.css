@@ -13869,9 +13869,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------- ISI SECURITY-STYLE ENTERPRISE MEGA-MENU ARCHITECTURE ---------- */
+@media (min-width: 1024px) {
+  .nav-dropdown-wrapper {
+    position: static;
+  }
+}
+
 .isi-mega-panel {
   position: absolute;
-  top: 44px;
+  top: calc(100% - 6px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 16px;
@@ -13881,6 +13891,17 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   animation: isiMegaFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Hover bridge between header navbar and mega menu popup */
+.isi-mega-panel::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+  pointer-events: auto;
 }
 
 @keyframes isiMegaFadeIn {
@@ -13894,59 +13915,40 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Individual menu widths and alignments */
-.isi-mega-infra {
-  width: 1020px;
-  left: -80px;
-  max-width: calc(100vw - 32px);
-}
-
-.isi-mega-agentic {
-  width: 1020px;
-  left: -140px;
-  max-width: calc(100vw - 32px);
-}
-
-.isi-mega-networking {
-  width: 1020px;
-  left: -220px;
-  max-width: calc(100vw - 32px);
-}
-
-.isi-mega-cybersecurity {
-  width: 1020px;
-  left: -300px;
-  max-width: calc(100vw - 32px);
-}
-
-.isi-mega-value {
-  width: 1040px;
-  left: -380px;
-  max-width: calc(100vw - 32px);
-}
-
+/* Individual menu widths — all horizontally centered within viewport bounds */
+.isi-mega-infra,
+.isi-mega-agentic,
+.isi-mega-networking,
+.isi-mega-cybersecurity,
+.isi-mega-value,
 .isi-mega-industries {
-  width: 1060px;
-  right: -80px;
-  left: auto;
-  transform: none;
+  width: min(1040px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: none;
 }
 
-.isi-mega-foundation {
-  width: 840px;
-  right: 0;
-  left: auto;
-  transform: none;
+.isi-mega-v5-infra {
+  width: min(1140px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: none;
 }
 
 .isi-mega-about {
-  width: 800px;
-  right: 0;
-  left: auto;
-  transform: none;
+  width: min(840px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: none;
 }
 
 /* 2-Panel Layout: Left Category Intro Sidebar + Right Submenu Grid */
@@ -14081,6 +14083,16 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 6px;
   min-width: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 9px;
+  transition: all 0.2s ease;
+}
+
+.isi-category-col:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
 }
 
 .isi-category-header {
@@ -14088,11 +14100,18 @@ h1, h2, h3, h4, h5, h6 {
   flex-direction: column;
   gap: 2px;
   padding-bottom: 6px;
-  border-bottom: 2px solid #eff6ff;
+  border-bottom: 1.5px solid #e2e8f0;
   margin-bottom: 4px;
 }
 
 .isi-category-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.isi-category-header-left {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -14101,9 +14120,21 @@ h1, h2, h3, h4, h5, h6 {
 .isi-category-title {
   font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #1e3a8a;
+}
+
+.isi-category-badge {
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
 }
 
 .isi-category-tagline {
@@ -14119,32 +14150,81 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex: 1;
 }
 
 .isi-category-card {
   padding: 7px 9px;
   gap: 9px;
+  background: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 7px;
+  transition: all 0.18s ease;
+}
+
+.isi-category-card:hover {
+  background: #ffffff;
+  border-color: #93c5fd;
+  transform: translateX(2px);
+  box-shadow: 0 4px 10px -2px rgba(37, 99, 235, 0.08);
 }
 
 .isi-category-card .isi-card-icon {
   width: 26px;
   height: 26px;
   border-radius: 6px;
+  background: #eff6ff;
+  color: #2563eb;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.isi-category-card:hover .isi-card-icon {
+  background: #2563eb;
+  color: #ffffff;
 }
 
 .isi-category-card .isi-card-title {
   font-size: 11.5px;
   font-weight: 700;
+  color: #0f172a;
+}
+
+.isi-category-card:hover .isi-card-title {
+  color: #1d4ed8;
 }
 
 .isi-category-card .isi-card-desc {
-  font-size: 10.5px;
+  font-size: 10px;
   line-height: 1.35;
   color: #64748b;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.isi-category-footer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px dashed #cbd5e1;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #2563eb;
+  text-decoration: none;
+  transition: all 0.18s ease;
+}
+
+.isi-category-footer-link:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  transform: translateX(1px);
 }
 
 /* Submenu Item Card */
@@ -14335,22 +14415,31 @@ h1, h2, h3, h4, h5, h6 {
    ========================================================================== */
 
 .isi-mega-v5-infra {
-  width: 1220px;
-  left: -80px;
+  width: min(1140px, calc(100vw - 32px));
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   max-width: calc(100vw - 32px);
 }
 
 @media (max-width: 1300px) {
   .isi-mega-v5-infra {
-    width: 1100px;
-    left: -140px;
+    width: min(1080px, calc(100vw - 32px));
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 @media (max-width: 1180px) {
   .isi-mega-v5-infra {
-    width: 980px;
-    left: -200px;
+    width: min(980px, calc(100vw - 32px));
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 

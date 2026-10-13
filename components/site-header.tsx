@@ -460,12 +460,15 @@ const industriesMegaCategories = [
     id: '70-industries',
     title: '70 Industries',
     tagline: 'Sector Directory & Vertical Blueprints',
+    badge: '70 SECTORS',
+    ctaText: 'View All 70 Industries Directory →',
+    ctaHref: '/industries#industries-list',
     icon: Building2,
     items: [
       {
         label: '70 Industries Directory & Overview',
         desc: 'Explore all specialized enterprise verticals, regulatory profiles & architectures',
-        href: '/industries',
+        href: '/industries#industries-list',
         icon: Building2
       },
       {
@@ -487,22 +490,10 @@ const industriesMegaCategories = [
         icon: Cpu
       },
       {
-        label: 'Energy, Utilities & Smart Grids',
-        desc: 'Autonomous grid balancing, renewable dispatch forecasting & NERC-CIP defense',
-        href: '/industries#energy-utilities',
-        icon: Zap
-      },
-      {
         label: 'Aerospace, Defense & GovTech',
         desc: 'Air-gapped tactical AI, DO-178C Level A assurance & sovereign citizen workflows',
         href: '/industries#aerospace-defense',
         icon: Lock
-      },
-      {
-        label: 'Telecom, Retail & Supply Chain',
-        desc: 'Autonomous network slicing, multi-agent freight bidding & dynamic retail pricing',
-        href: '/industries#telecommunications',
-        icon: Network
       }
     ]
   },
@@ -510,6 +501,9 @@ const industriesMegaCategories = [
     id: 'methodologies',
     title: 'Methodologies',
     tagline: 'Operational Disciplines for Industry',
+    badge: '80+ METHODS',
+    ctaText: 'Explore Methodology Engine →',
+    ctaHref: '/methodology-engine',
     icon: Sparkles,
     items: [
       {
@@ -541,12 +535,6 @@ const industriesMegaCategories = [
         desc: 'Machine telemetry, predictive maintenance & zero-downtime equipment yield',
         href: '/methodology-engine#deployment',
         icon: Target
-      },
-      {
-        label: 'Explore 80+ Methodology Catalog',
-        desc: 'Comprehensive library of operational AI frameworks across all sectors',
-        href: '/solutions/ai-value-engineering#methodology-engine',
-        icon: Boxes
       }
     ]
   },
@@ -554,43 +542,40 @@ const industriesMegaCategories = [
     id: 'use-cases',
     title: 'Use Cases',
     tagline: 'Enterprise Deployments & Workflows',
+    badge: 'VERIFIED DEPLOYMENTS',
+    ctaText: 'Browse Use Cases Compendium →',
+    ctaHref: '/use-cases',
     icon: Target,
     items: [
       {
         label: 'Enterprise Use Case Compendium',
         desc: 'Practical cross-industry deployment blueprints with clear inputs, outputs & KPIs',
-        href: '/industries#use-cases',
+        href: '/use-cases',
         icon: Layers
       },
       {
-        label: 'Financial Fraud & Surveillance',
-        desc: 'Sub-millisecond inference scoring for algorithmic compliance & fraud rings',
-        href: '/industries#banking-financial-services',
+        label: 'Sub-Millisecond Algorithmic Finance',
+        desc: 'Real-time inference scoring for algorithmic compliance & fraud ring detection',
+        href: '/use-cases#banking-finance',
         icon: TrendingUp
       },
       {
         label: 'Shop-Floor Visual Quality Control',
         desc: 'High-speed edge vision inspection achieving 92% defect escape reduction',
-        href: '/industries#manufacturing-discrete',
+        href: '/use-cases#manufacturing-industry',
         icon: Cpu
       },
       {
         label: 'Autonomous Grid Outage Prevention',
         desc: '45-minute advance warning & predictive transmission line load balancing',
-        href: '/industries#energy-utilities',
+        href: '/use-cases#energy-utilities',
         icon: Zap
       },
       {
         label: 'Automated Claims Adjudication',
-        desc: '4.2x claims processing speedup with transparent actuarial lineage',
-        href: '/industries#insurance',
+        desc: '4.2x claims processing speedup with transparent actuarial lineage & audit',
+        href: '/use-cases#insurance',
         icon: CheckCircle2
-      },
-      {
-        label: 'Use Case Prioritization Workshop',
-        desc: 'Executive technical sprint to evaluate, prioritize, and roadmap AI initiatives',
-        href: '/use-case-workshop',
-        icon: ArrowUpRight
       }
     ]
   }
@@ -1382,19 +1367,33 @@ export function SiteHeader() {
                     <p className="isi-sidebar-desc">
                       Domain-specific AI architectures, regulated sector blueprints, operational methodologies, and verified use cases across 70 industries.
                     </p>
+                    <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(37, 99, 235, 0.05)', borderRadius: '6px', borderLeft: '3px solid #2563eb' }}>
+                      <p style={{ margin: 0, fontSize: '11px', color: '#475569', lineHeight: 1.45 }}>
+                        From sovereign trading enclaves to shop-floor vision and air-gapped defense meshes.
+                      </p>
+                    </div>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>70 Sector Blueprints</span>
+                      <span>70 Sectors • 80+ Methods</span>
                     </div>
                     <Link
-                      href="/industries"
+                      href="/industries#industries-list"
+                      className="isi-sidebar-action"
+                      style={{ background: '#2563eb', color: '#ffffff' }}
+                      onClick={closeAll}
+                    >
+                      <span>Explore 70 Industries</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                    <Link
+                      href="/use-cases"
                       className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <span>Explore Directory</span>
-                      <ArrowUpRight size={13} />
+                      <span>Browse Use Cases</span>
+                      <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
@@ -1407,8 +1406,13 @@ export function SiteHeader() {
                       <div key={category.id} className="isi-category-col">
                         <div className="isi-category-header">
                           <div className="isi-category-header-top">
-                            <CatIcon size={14} className="text-blue-600" />
-                            <span className="isi-category-title">{category.title}</span>
+                            <div className="isi-category-header-left">
+                              <CatIcon size={14} className="text-blue-600" />
+                              <span className="isi-category-title">{category.title}</span>
+                            </div>
+                            {category.badge && (
+                              <span className="isi-category-badge">{category.badge}</span>
+                            )}
                           </div>
                           <span className="isi-category-tagline">{category.tagline}</span>
                         </div>
@@ -1437,6 +1441,17 @@ export function SiteHeader() {
                             )
                           })}
                         </div>
+
+                        {category.ctaText && category.ctaHref && (
+                          <Link
+                            href={category.ctaHref}
+                            className="isi-category-footer-link"
+                            onClick={(e) => handleNavClick(e, category.ctaHref)}
+                          >
+                            <span>{category.ctaText}</span>
+                            <ArrowRight size={12} />
+                          </Link>
+                        )}
                       </div>
                     )
                   })}
