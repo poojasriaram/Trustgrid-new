@@ -24,6 +24,29 @@ import {
 export function AICybersecurityCapabilities() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-28">
+      {/* UNIFIED MASTER PORTFOLIO SPOTLIGHT BANNER */}
+      <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950 to-slate-900 text-white border border-purple-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-400/30 text-[11px] font-mono uppercase font-bold mb-2">
+            <Sparkles size={13} className="text-purple-400" />
+            <span>Master Portfolio v1.0 Update</span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">
+            Unified AI Networking &amp; Cybersecurity Intelligence
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+            Cybersecurity and AI Networking converged into one nervous system: automated CBOM, NIST PQC migration, lossless RoCEv2/InfiniBand fabrics, and 24/7 AI SOC across 7 physical sectors.
+          </p>
+        </div>
+        <Link
+          href="/solutions/ai-networking-cybersecurity"
+          className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition-all shadow-md shadow-purple-600/30"
+        >
+          <span>Explore Master Portfolio</span>
+          <ArrowRight size={14} />
+        </Link>
+      </div>
+
       {/* SECTION 1: L1-L7 POST-QUANTUM CRYPTOGRAPHY & CBOM */}
       <section id="pqc-cbom" className="scroll-mt-32">
         <div className="max-w-3xl mb-8">

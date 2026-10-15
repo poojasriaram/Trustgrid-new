@@ -202,157 +202,85 @@ const agenticEnterpriseMenuItems = [
   }
 ]
 
-// 3. AI Networking Menu Items (12 Items)
-const aiNetworkingMenuItems = [
+// 3. AI Networking & Cybersecurity Intelligence Menu Items (12 Consolidated Items)
+const aiNetworkingCyberMenuItems = [
   {
     id: 'lossless-fabrics',
-    label: 'Lossless RoCEv2 & InfiniBand',
-    desc: 'Quantum-2 InfiniBand & Spectrum-X RoCEv2 for zero packet loss',
+    label: 'Lossless RoCEv2 & InfiniBand Fabrics',
+    desc: 'Quantum-2 InfiniBand & Spectrum-X RoCEv2 with rail-optimized topologies for zero packet loss',
     icon: Network
-  },
-  {
-    id: 'rail-topologies',
-    label: 'Rail-Optimized & Dragonfly+',
-    desc: 'Symmetrical Fat-Tree, non-blocking bisection & GPU-rail alignment',
-    icon: Layers
-  },
-  {
-    id: 'collective-tuning',
-    label: 'Collective Communications & NCCL',
-    desc: 'AllReduce, AlltoAll barrier tuning, SHARP in-network compute',
-    icon: Cpu
-  },
-  {
-    id: 'optics-transceivers',
-    label: '400G / 800G / 1.6T Co-Packaged Optics',
-    desc: 'OSFP, QSFP-DD, low-loss active optical cabling & single-mode fiber',
-    icon: Zap
   },
   {
     id: 'autonomous-ai-noc',
     label: 'Autonomous AI NOC & Telemetry',
-    desc: 'In-band Network Telemetry (INT), silent drop detection & self-healing',
+    desc: 'In-band Network Telemetry (INT), sub-100ms silent drop detection & self-healing rerouting',
     icon: Workflow
   },
   {
-    id: 'congestion-control',
-    label: 'Hardware Congestion Control',
-    desc: 'PFC watchdog, ECN thresholds & dynamic packet routing algorithms',
+    id: 'pqc-cbom',
+    label: 'L1–L7 Post-Quantum Cryptography & CBOM',
+    desc: 'Automated CBOM discovery, NIST PQC migration (ML-KEM/ML-DSA) & line-rate MACsec',
+    icon: Lock
+  },
+  {
+    id: 'managed-ai-soc',
+    label: '24/7 Managed AI SOC & Threat Intelligence',
+    desc: 'Cross-layer correlation (network + agent + model), sub-3m MTTC & adversarial red-teaming',
+    icon: ShieldCheck
+  },
+  {
+    id: 'cognitive-wifi-7',
+    label: 'Cognitive / AI-Native WiFi 7 Fabric',
+    desc: 'AI-RRM real-time RF optimization, multi-link operation, campus-gateway roaming & dynamic segmentation',
+    icon: Zap
+  },
+  {
+    id: 'agent-identity-iam',
+    label: 'Zero-Trust Agent Identity & IAM',
+    desc: 'Cryptographic SPIFFE/SPIRE ephemeral workload identities & least-privilege boundary enforcement',
+    icon: Cpu
+  },
+  {
+    id: 'collective-tuning',
+    label: 'Collective Communications & NCCL/RCCL',
+    desc: 'AllReduce/AllGather barrier optimization, SHARP in-network compute & GPUDirect Storage/RDMA',
     icon: SlidersHorizontal
   },
   {
-    id: 'ntn-satellite',
-    label: 'Non-Terrestrial Networks (NTN)',
-    desc: '9 Tbps satellite ground stations, LEO/MEO tracking & space relay',
+    id: 'confidential-compute',
+    label: 'Confidential Compute & Model Defense',
+    desc: 'Hardware TEEs, cryptographic weight signing, prompt injection firewalls & data-poisoning shields',
+    icon: ShieldAlert
+  },
+  {
+    id: 'ntn-satellite-subsea',
+    label: 'Satellite NTN & Subsea Cable Landing',
+    desc: 'Multi-Tbps orbital feeders, adaptive space-ground routing, coherent DCI/DWDM & sovereign perimeters',
     icon: Satellite
   },
   {
-    id: 'dci-interconnect',
-    label: 'Coherent Data Center Interconnect',
-    desc: 'Sub-millisecond DWDM metro interconnects & multi-campus sync',
-    icon: Cable
+    id: 'urwb-mission-critical',
+    label: 'Industrial URWB & Mobile Determinism',
+    desc: 'Ultra-reliable wireless with <10ms make-before-break roaming, OT/IT convergence & SCADA defense',
+    icon: Layers
   },
   {
-    id: 'storage-fabrics',
-    label: 'NVMe-oF & GPUDirect Storage',
-    desc: 'Sub-microsecond storage transport, parallel file systems & zero-copy',
-    icon: Building2
+    id: 'compliance-immutable-audit',
+    label: 'Regulatory Conformity & Decision Provenance',
+    desc: 'EU AI Act, NIST AI RMF, ISO 42001 evidence automation & immutable cryptographic decision replay',
+    icon: FileSpreadsheet
   },
   {
-    id: 'hybrid-multicloud-mesh',
-    label: 'Hybrid Sovereign Cloud Fabric',
-    desc: 'Private AI clusters securely meshed with sovereign cloud enclaves',
-    icon: Globe2
-  },
-  {
-    id: 'network-yield-kpis',
-    label: 'Fabric Throughput & OEE Metrics',
-    desc: 'Effective bandwidth yield, tail latency elimination & jitter metrics',
-    icon: BarChart3
-  },
-  {
-    id: 'network-diagnostic',
-    label: 'AI Network Diagnostic & Audit',
-    desc: 'Live fabric packet loss analysis, latency profiling & topology audit',
+    id: 'sector-portfolios-diagnostic',
+    label: '7 Sector Portfolios & Diagnostic Sprints',
+    desc: 'Plan → Design → Implement → Operate frameworks, AIOps thread & 90-day value realization plans',
     icon: Sparkles
   }
 ]
 
-// 4. AI Cybersecurity Menu Items (12 Items)
-const aiCybersecurityMenuItems = [
-  {
-    id: 'pqc-cbom',
-    label: 'L1–L7 Post-Quantum Cryptography',
-    desc: 'NIST PQC standards (ML-KEM, ML-DSA) & automated CBOM discovery',
-    icon: Lock
-  },
-  {
-    id: 'prompt-firewalls',
-    label: 'Prompt Firewalls & Hijack Defense',
-    desc: 'In-line real-time prompt injection shields, jailbreak defense & safety',
-    icon: ShieldAlert
-  },
-  {
-    id: 'agent-identity-iam',
-    label: 'Zero-Trust Identity for Agents',
-    desc: 'Cryptographic SPIFFE/SPIRE workload identity & ephemeral IAM',
-    icon: ShieldCheck
-  },
-  {
-    id: 'training-security',
-    label: 'Model Provenance & Data Defense',
-    desc: 'Cryptographic weight signing, data pipeline verification & watermarks',
-    icon: CheckCircle2
-  },
-  {
-    id: 'managed-ai-soc',
-    label: '24/7 Managed AI SOC & Hunting',
-    desc: 'Autonomous threat detection, AI SIEM correlation & synthetic triage',
-    icon: Workflow
-  },
-  {
-    id: 'confidential-compute',
-    label: 'Confidential Compute & Enclaves',
-    desc: 'Hardware TEEs, encrypted GPU memory & multi-party computation',
-    icon: Cpu
-  },
-  {
-    id: 'air-gapped-sovereign',
-    label: 'Air-Gapped Sovereign AI Enclaves',
-    desc: 'Classified zero-outbound defense pods & defense-grade isolation',
-    icon: Building2
-  },
-  {
-    id: 'ai-red-teaming',
-    label: 'Automated Red-Teaming & Stress Tests',
-    desc: 'Continuous model fuzzing, evasion probes & hallucination testing',
-    icon: Target
-  },
-  {
-    id: 'regulatory-compliance',
-    label: 'EU AI Act & ISO 42001 Compliance',
-    desc: 'Automated conformity assessment, NIST AI RMF & audit-ready evidence',
-    icon: FileSpreadsheet
-  },
-  {
-    id: 'immutable-audit',
-    label: 'Cryptographic Decision Provenance',
-    desc: 'Tamper-proof audit ledgers, causal decision replay & legal defense logs',
-    icon: Layers
-  },
-  {
-    id: 'cyber-posture-kpis',
-    label: 'Quantum & Cyber Resilience Metrics',
-    desc: 'Harvest-Now risk index, CBOM migration progress & containment times',
-    icon: BarChart3
-  },
-  {
-    id: 'cyber-audit-cta',
-    label: 'Quantum & AI Security Diagnostic',
-    desc: 'Cryptographic inventory assessment, agent vulnerability audit & roadmap',
-    icon: Sparkles
-  }
-]
+// Backwards compatibility aliases
+const aiNetworkingMenuItems = aiNetworkingCyberMenuItems
+const aiCybersecurityMenuItems = aiNetworkingCyberMenuItems
 
 // 5. Unified AI Value Engineering & Common Foundation Menu Items (12 Consolidated Capabilities)
 const aiValueMenuItems = [
@@ -750,22 +678,13 @@ const solutionGroups = [
     icon: Cpu,
   },
   {
-    groupTag: 'AI NETWORKING',
-    name: 'AI NETWORKING',
-    title: 'AI NETWORKING',
-    slug: 'ai-networking',
+    groupTag: 'AI NETWORKING & CYBERSECURITY',
+    name: 'AI NETWORKING & CYBERSECURITY INTELLIGENCE',
+    title: 'AI NETWORKING & CYBERSECURITY INTELLIGENCE',
+    slug: 'ai-networking-cybersecurity',
     sitemapAnchor: 'group-3',
-    desc: 'Enterprise & DC Fabrics, Non-Terrestrial Networks (NTN / Satellite / FSO) & Autonomous AI NOC',
+    desc: 'Lossless Fabrics (RoCEv2/InfiniBand), L1–L7 Post-Quantum Cryptography (PQC/CBOM), Autonomous AI NOC/SOC, Cognitive WiFi 7 & 7 Sector Portfolios',
     icon: Network,
-  },
-  {
-    groupTag: 'AI CYBERSECURITY',
-    name: 'AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
-    title: 'AI CYBERSECURITY & QUANTUM-SAFE NETWORKING',
-    slug: 'ai-cybersecurity-quantum-safe',
-    sitemapAnchor: 'group-4',
-    desc: 'L1–L7 Post-Quantum Cryptography (PQC / CBOM), Agent Guardrails, Zero-Trust & Managed AI SOC',
-    icon: Lock,
   },
   {
     groupTag: 'TRUSTED AI',
@@ -1042,22 +961,22 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 4. AI NETWORKING */}
+        {/* 3. AI NETWORKING & CYBERSECURITY INTELLIGENCE (UNIFIED) */}
         <div
           className="nav-dropdown-wrapper"
-          onMouseEnter={() => handleMouseEnter('networking')}
+          onMouseEnter={() => handleMouseEnter('networking-cybersecurity')}
           onMouseLeave={handleMouseLeave}
         >
           <button
-            className={`nav-menu-trigger ${activeMenu === 'networking' ? 'active' : ''}`}
-            onClick={() => toggleMenu('networking')}
-            aria-expanded={activeMenu === 'networking'}
+            className={`nav-menu-trigger ${activeMenu === 'networking-cybersecurity' ? 'active' : ''}`}
+            onClick={() => toggleMenu('networking-cybersecurity')}
+            aria-expanded={activeMenu === 'networking-cybersecurity'}
           >
-            <span>AI Networking</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'networking' ? 'rotate-180' : ''}`} />
+            <span>AI Networking & Cyber</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'networking-cybersecurity' ? 'rotate-180' : ''}`} />
           </button>
 
-          {activeMenu === 'networking' && (
+          {activeMenu === 'networking-cybersecurity' && (
             <div className="isi-mega-panel isi-mega-networking">
               <div className="isi-mega-layout">
                 {/* Left Category Introduction */}
@@ -1065,24 +984,24 @@ export function SiteHeader() {
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      LOSSLESS FABRIC & INTERCONNECT
+                      UNIFIED FULL-STACK FABRIC
                     </span>
-                    <h3 className="isi-sidebar-title">AI Networking</h3>
+                    <h3 className="isi-sidebar-title">AI Networking & Cyber</h3>
                     <p className="isi-sidebar-desc">
-                      Ultra-low latency, non-blocking InfiniBand and RoCEv2 fabrics engineered for zero packet loss.
+                      Lossless RoCEv2/InfiniBand fabrics, autonomous AI NOC, quantum-safe cryptography, 24/7 AI SOC, and Cognitive WiFi 7.
                     </p>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>Zero Loss at 400G / 800G</span>
+                      <span>Zero Loss · Sub-3m MTTC</span>
                     </div>
                     <Link
-                      href="/solutions/ai-networking"
+                      href="/solutions/ai-networking-cybersecurity"
                       className="isi-sidebar-action"
                       onClick={closeAll}
                     >
-                      <span>Explore Blueprint</span>
+                      <span>Explore Solutions</span>
                       <ArrowUpRight size={13} />
                     </Link>
                   </div>
@@ -1090,9 +1009,9 @@ export function SiteHeader() {
 
                 {/* Right Structured Grid (3 columns, 12 items) */}
                 <div className="isi-mega-content columns-3">
-                  {aiNetworkingMenuItems.map((item, idx) => {
+                  {aiNetworkingCyberMenuItems.map((item, idx) => {
                     const Icon = item.icon
-                    const itemHref = `/solutions/ai-networking#${item.id}`
+                    const itemHref = `/solutions/ai-networking-cybersecurity#${item.id}`
                     return (
                       <Link
                         key={idx}
@@ -1120,10 +1039,10 @@ export function SiteHeader() {
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Rail-optimized Dragonfly+ topologies & autonomous NOC self-healing</span>
+                  <span>One common nervous system: unified NOC/SOC intelligence from WiFi 7 to hyperscale</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-networking#diagnostic-form-section"
+                  href="/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
@@ -1135,100 +1054,7 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* 5. AI CYBERSECURITY */}
-        <div
-          className="nav-dropdown-wrapper"
-          onMouseEnter={() => handleMouseEnter('cybersecurity')}
-          onMouseLeave={handleMouseLeave}
-        >
-          <button
-            className={`nav-menu-trigger ${activeMenu === 'cybersecurity' ? 'active' : ''}`}
-            onClick={() => toggleMenu('cybersecurity')}
-            aria-expanded={activeMenu === 'cybersecurity'}
-          >
-            <span>AI Cybersecurity</span>
-            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'cybersecurity' ? 'rotate-180' : ''}`} />
-          </button>
-
-          {activeMenu === 'cybersecurity' && (
-            <div className="isi-mega-panel isi-mega-cybersecurity">
-              <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      QUANTUM-SAFE DEFENSE & SOC
-                    </span>
-                    <h3 className="isi-sidebar-title">AI Cybersecurity</h3>
-                    <p className="isi-sidebar-desc">
-                      L1–L7 Post-Quantum Cryptography (PQC / CBOM) paired with non-deterministic agent guardrails.
-                    </p>
-                  </div>
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>100% CBOM Visibility</span>
-                    </div>
-                    <Link
-                      href="/solutions/ai-cybersecurity-quantum-safe"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore Blueprint</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right Structured Grid (3 columns, 12 items) */}
-                <div className="isi-mega-content columns-3">
-                  {aiCybersecurityMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    const itemHref = `/solutions/ai-cybersecurity-quantum-safe#${item.id}`
-                    return (
-                      <Link
-                        key={idx}
-                        href={itemHref}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
-                          </div>
-                          <p className="isi-card-desc">{item.desc}</p>
-                        </div>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Mega-Menu Footer */}
-              <div className="isi-mega-footer">
-                <div className="isi-footer-badge">
-                  <Sparkles size={13} className="text-blue-600" />
-                  <span>Air-gapped defense, prompt firewalls & 24/7 Managed AI SOC</span>
-                </div>
-                <Link
-                  href="/book-ai-diagnostic?solution=ai-cybersecurity-quantum-safe#diagnostic-form-section"
-                  className="isi-footer-action"
-                  onClick={closeAll}
-                >
-                  <span>Book AI Diagnostic Assessment</span>
-                  <ArrowUpRight size={13} />
-                </Link>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* 6. AI VALUE ENGINEERING (UNIFIED WITH COMMON FOUNDATION) */}
+        {/* 4. AI VALUE ENGINEERING (UNIFIED WITH COMMON FOUNDATION) */}
         <div
           className="nav-dropdown-wrapper"
           onMouseEnter={() => handleMouseEnter('value')}
@@ -1675,53 +1501,22 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* Mobile AI Networking Accordion */}
+            {/* Mobile AI Networking & Cybersecurity Accordion */}
             <div className="mobile-accordion">
               <button
                 className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('networking')}
+                onClick={() => toggleMobileSection('networking-cybersecurity')}
               >
-                <span>AI Networking</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'networking' ? 'rotate-180' : ''}`} />
+                <span>AI Networking & Cybersecurity</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'networking-cybersecurity' ? 'rotate-180' : ''}`} />
               </button>
-              {mobileSection === 'networking' && (
+              {mobileSection === 'networking-cybersecurity' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-networking" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>AI Networking Blueprint Overview →</span>
+                  <Link href="/solutions/ai-networking-cybersecurity" className="mobile-sublink font-semibold text-blue-600" onClick={closeAll}>
+                    <span>★ Master Portfolio: AI Networking & Cyber Intelligence →</span>
                   </Link>
-                  {aiNetworkingMenuItems.map((item, i) => {
-                    const itemHref = `/solutions/ai-networking#${item.id}`
-                    return (
-                      <Link
-                        key={i}
-                        href={itemHref}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
-                    )
-                  })}
-                </div>
-              )}
-            </div>
-
-            {/* Mobile AI Cybersecurity Accordion */}
-            <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('cybersecurity')}
-              >
-                <span>AI Cybersecurity</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'cybersecurity' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'cybersecurity' && (
-                <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-cybersecurity-quantum-safe" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>AI Cybersecurity Blueprint Overview →</span>
-                  </Link>
-                  {aiCybersecurityMenuItems.map((item, i) => {
-                    const itemHref = `/solutions/ai-cybersecurity-quantum-safe#${item.id}`
+                  {aiNetworkingCyberMenuItems.map((item, i) => {
+                    const itemHref = `/solutions/ai-networking-cybersecurity#${item.id}`
                     return (
                       <Link
                         key={i}

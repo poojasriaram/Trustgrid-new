@@ -51,6 +51,7 @@ const solutionIcons = {
   'trusted-ai-transformation': ShieldCheck,
   'ai-cybersecurity-quantum-safe': Lock,
   'ai-networking': Network,
+  'ai-networking-cybersecurity': Network,
   'ai-value-engineering': TrendingUp,
 }
 
@@ -83,6 +84,13 @@ const fiveLayerModels: Record<string, { name: string; purpose: string; component
     { name: 'Layer 03: Runtime Guardrails & Prompt Defense', purpose: 'Sanitize runtime inputs and filter non-deterministic outputs in real-time.', components: ['Prompt injection firewalls', 'Semantic jailbreak detection', 'Output hallucination & PII filters'], outcome: 'Safe, policy-bounded model execution' },
     { name: 'Layer 04: Zero-Trust Agent IAM & AI SOC', purpose: 'Enforce ephemeral permissions and monitor agent execution paths 24/7.', components: ['Ephemeral tool-access tokens', 'AI-aware SIEM/SOC correlation', 'Tamper-proof immutable audit logs'], outcome: 'Least-privilege agent autonomy and instant threat containment' },
     { name: 'Layer 05: Enterprise Trust & Regulatory Posture', purpose: 'Provide verifiable compliance with global AI and data protection standards.', components: ['NIST AI RMF & ISO 42001 governance', 'EU AI Act compliance reporting', 'Board-level cyber risk dashboards'], outcome: 'Confident, board-approved enterprise AI scaling' }
+  ],
+  'ai-networking-cybersecurity': [
+    { name: 'Layer 01: Lossless Fabrics & Optical Underlay', purpose: 'Eliminate packet loss and minimize tail latency across high-speed RoCEv2 and InfiniBand fabrics.', components: ['400G–1.6T optics & DWDM DCI', 'Quantum-2 InfiniBand & Spectrum-X RoCEv2', 'Rail-optimized Dragonfly+ topologies', 'Hardware line-rate MACsec'], outcome: 'Zero packet loss and sub-microsecond tail latency' },
+    { name: 'Layer 02: Collective Tuning & Congestion Control', purpose: 'Accelerate distributed training and inference collectives without network stalls.', components: ['NCCL / RCCL collective library tuning', 'Hardware DCQCN & Priority Flow Control (PFC)', 'GPUDirect RDMA & GPUDirect Storage', 'Dynamic packet routing algorithms'], outcome: '20–50% higher effective GPU throughput' },
+    { name: 'Layer 03: Post-Quantum Cryptography & Zero-Trust IAM', purpose: 'Safeguard all network flows, models, and agents against quantum decryption and lateral movement.', components: ['Automated CBOM discovery (NIST ML-KEM / ML-DSA)', 'Ephemeral SPIFFE/SPIRE agent identities', 'Dynamic micro-segmentation & confidential compute', 'Model weight cryptographic signing'], outcome: '100% CBOM visibility and quantum-safe immunity' },
+    { name: 'Layer 04: Autonomous AI NOC/SOC & Telemetry', purpose: 'Unify network telemetry and cyber defense into a single, self-healing nervous system.', components: ['In-band Network Telemetry (INT) <100ms silent drop detection', '24/7 Managed AI SOC with cross-layer correlation', 'AIOps self-driving remediation (70–80% target)', 'Prompt injection firewalls & data poisoning shields'], outcome: 'Sub-3-minute MTTC and 60–80% MTTR reduction' },
+    { name: 'Layer 05: Sector Mission Fabrics & Cognitive WiFi 7', purpose: 'Extend high-assurance resilience from the campus and factory floor to orbital satellite and subsea interconnects.', components: ['Cognitive WiFi 7 with AI-RRM & campus-gateway roaming', 'Industrial URWB (<10ms make-before-break handoff)', 'Satellite NTN multi-Tbps feeder landing', 'Automated EU AI Act & NIST compliance evidence'], outcome: 'Purpose-engineered resilience from edge AP to hyperscale AI factory' }
   ],
   'trusted-ai-transformation': [
     { name: 'Layer 01: Mathematical Foundation', purpose: 'Implement formal explainability algorithms (SHAP/LIME/Integrated Gradients).', components: ['Local feature attribution', 'Global surrogate modeling', 'Counterfactual explanation engines'], outcome: '100% auditable model decision reasoning' },
@@ -117,6 +125,7 @@ const solutionImages: Record<string, string> = {
   'ai-infra-engineering': '/images/offering-infra.jpg',
   'ai-networking': '/images/offering-networking.jpg',
   'ai-cybersecurity-quantum-safe': '/images/offering-security.jpg',
+  'ai-networking-cybersecurity': '/images/offering-networking.jpg',
   'ai-value-engineering': '/images/offering-value.jpg',
   'trusted-ai-transformation': '/images/offering-security.jpg',
 }

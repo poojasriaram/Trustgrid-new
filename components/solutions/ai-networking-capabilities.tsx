@@ -26,6 +26,29 @@ import {
 export function AINetworkingCapabilities() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-28">
+      {/* UNIFIED MASTER PORTFOLIO SPOTLIGHT BANNER */}
+      <div className="p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white border border-blue-800 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-blue-500/20 text-cyan-300 border border-blue-400/30 text-[11px] font-mono uppercase font-bold mb-2">
+            <Sparkles size={13} className="text-cyan-400" />
+            <span>Master Portfolio v1.0 Update</span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-white">
+            Unified AI Networking &amp; Cybersecurity Intelligence
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+            Explore TrustGrid AI&apos;s complete unified offering across 7 Sector Portfolios (Enterprises, Hyperscale, Campus, Manufacturing, Satellite, Subsea, Aerospace), Plan → Operate delivery lifecycle, and Cognitive WiFi 7.
+          </p>
+        </div>
+        <Link
+          href="/solutions/ai-networking-cybersecurity"
+          className="shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all shadow-md shadow-blue-600/30"
+        >
+          <span>Explore Master Portfolio</span>
+          <ArrowRight size={14} />
+        </Link>
+      </div>
+
       {/* SECTION 1: LOSSLESS ROCEV2 & INFINIBAND */}
       <section id="lossless-fabrics" className="scroll-mt-32">
         <div className="max-w-3xl mb-8">

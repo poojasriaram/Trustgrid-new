@@ -30,6 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95,
     },
     {
+      url: `${BASE_URL}/solutions/ai-networking-cybersecurity`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
+    {
       url: `${BASE_URL}/solutions/ai-value-engineering`,
       lastModified: new Date(),
       changeFrequency: 'weekly',

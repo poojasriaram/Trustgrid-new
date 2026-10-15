@@ -135,12 +135,32 @@ const nextConfig = {
       },
       {
         source: '/solutions/networking',
-        destination: '/solutions/ai-networking',
+        destination: '/solutions/ai-networking-cybersecurity',
+        permanent: true,
+      },
+      {
+        source: '/solutions/ai-networking',
+        destination: '/solutions/ai-networking-cybersecurity',
+        permanent: true,
+      },
+      {
+        source: '/solutions/networking-cybersecurity',
+        destination: '/solutions/ai-networking-cybersecurity',
+        permanent: true,
+      },
+      {
+        source: '/solutions/cybersecurity-networking',
+        destination: '/solutions/ai-networking-cybersecurity',
         permanent: true,
       },
       {
         source: '/solutions/cybersecurity',
-        destination: '/solutions/ai-cybersecurity-quantum-safe',
+        destination: '/solutions/ai-networking-cybersecurity',
+        permanent: true,
+      },
+      {
+        source: '/solutions/ai-cybersecurity-quantum-safe',
+        destination: '/solutions/ai-networking-cybersecurity',
         permanent: true,
       },
       {
