@@ -81,7 +81,7 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
                 <span>Sector Constraint & Regulatory Bottleneck</span>
               </div>
               <ul className="ind-bullet-list">
-                {current.challenges.map((c, i) => (
+                {(current.challenges || []).map((c, i) => (
                   <li key={i}>
                     <span className="bullet-dot" />
                     <span>{c}</span>
@@ -105,10 +105,14 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
                 <span>Target Stakeholders & Decision Makers</span>
               </div>
               <div className="ind-stakeholders-tags">
-                <span className="stakeholder-tag">Chief Information Officer (CIO)</span>
-                <span className="stakeholder-tag">Chief Technology Officer (CTO)</span>
-                <span className="stakeholder-tag">Chief Information Security Officer (CISO)</span>
-                <span className="stakeholder-tag">Domain Operations Leaders</span>
+                {(current.icp?.decisionMakers || [
+                  'Chief Information Officer (CIO)',
+                  'Chief Technology Officer (CTO)',
+                  'Chief Information Security Officer (CISO)',
+                  'Domain Operations Leaders'
+                ]).slice(0, 4).map((dm, idx) => (
+                  <span key={idx} className="stakeholder-tag">{dm}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -121,14 +125,14 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
                 TrustGrid Solution Architecture
               </span>
               <div className="solutions-cards-stack">
-                {current.solutionApplications.map((app, i) => (
+                {(current.solutionApplications || []).map((app, i) => (
                   <div key={i} className="solution-app-mini-card">
                     <div className="app-card-head">
                       <Cpu size={14} className="text-blue-500" />
                       <strong>{app.solutionTitle}</strong>
                     </div>
                     <ul className="app-uc-list">
-                      {app.useCases.map((uc, ucIdx) => (
+                      {(app.useCases || []).map((uc, ucIdx) => (
                         <li key={ucIdx}>
                           <CheckCircle2 size={13} className="text-blue-500 shrink-0 mt-0.5" />
                           <span>{uc}</span>
@@ -146,10 +150,10 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
                 <span>Engineered Business & Technical Outcomes</span>
               </div>
               <div className="ind-metrics-pills">
-                {current.metricsImpact.map((m, i) => (
+                {(current.statCards?.slice(0, 4) || []).map((m, i) => (
                   <div key={i} className="metric-pill-item">
-                    <strong>{m.metric}:</strong>
-                    <span>{m.value}</span>
+                    <strong>{m.value}:</strong>
+                    <span>{m.label}</span>
                   </div>
                 ))}
               </div>
@@ -158,14 +162,18 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
             {/* Actions and Navigation */}
             <div className="ind-actions-footer">
               <Link
+                href={`/industries/${current.slug}`}
+                className="button button-ghost button-sm"
+              >
+                <span>View Full Blueprint</span>
+                <ArrowUpRight size={13} />
+              </Link>
+              <Link
                 href={`/book-ai-diagnostic?industry=${encodeURIComponent(current.name)}#diagnostic-form-section`}
                 className="button button-primary button-sm"
               >
-                <span>Request {current.name.split(' ')[0]} Diagnostic</span>
-                <ArrowUpRight size={15} />
-              </Link>
-              <Link href="/contact" className="button button-ghost button-sm">
-                <span>Talk to a Sector Architect</span>
+                <span>Schedule Diagnostic</span>
+                <ArrowUpRight size={14} />
               </Link>
 
               <div className="ind-nav-buttons ml-auto">
