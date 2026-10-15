@@ -51,6 +51,7 @@ const defaultIcons: Record<string, LucideIcon> = {
   'trusted-ai-transformation': ShieldCheck,
   'ai-cybersecurity-quantum-safe': Lock,
   'ai-networking': Network,
+  'ai-networking-cybersecurity': Network,
   'ai-value-engineering': TrendingUp,
 }
 

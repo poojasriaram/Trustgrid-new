@@ -72,7 +72,7 @@ export function FullSpectrumArchitecture() {
       description: 'Continuous auditability, mathematical explainability, zero-trust network isolation, and automated validation against EU AI Act and Fed SR 11-7.',
       technologies: ['NIST PQC (FIPS 203/204)', 'Zero-Trust Isolation', 'Continuous Red Teaming', 'Deterministic Guardrails', 'SR 11-7 Audit Rails'],
       practices: 'Practice 5: AI Cybersecurity & Trusted AI Transformation',
-      practiceHref: '/solutions/ai-cybersecurity-quantum-safe-networking',
+      practiceHref: '/solutions/ai-networking-cybersecurity',
       accentColor: 'border-amber-500/40 text-amber-400 bg-amber-500/10'
     },
     {

@@ -40,6 +40,7 @@ const defaultOfferingIcons: Record<string, LucideIcon> = {
   'ai-infra-engineering': Cpu,
   'ai-agentic-factory': Bot,
   'ai-networking': Network,
+  'ai-networking-cybersecurity': Network,
   'ai-cybersecurity-quantum-safe': Lock,
   'trusted-ai-transformation': ShieldCheck,
   'ai-value-engineering': TrendingUp,

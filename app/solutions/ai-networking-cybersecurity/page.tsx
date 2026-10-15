@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import {
   Network,
@@ -73,6 +73,51 @@ export default function AINetworkingCybersecurityPage() {
 
   // Delivery Framework interactive state
   const [activePhaseIndex, setActivePhaseIndex] = useState<number>(0)
+
+  // Hash navigation and sector auto-switching
+  useEffect(() => {
+    const handleHash = () => {
+      if (typeof window === 'undefined') return
+      const rawHash = window.location.hash.replace('#', '')
+      if (!rawHash) return
+
+      // Sector mapping by hash
+      const sectorIds = ['enterprises', 'hyperscale-datacenters', 'campus-environments', 'manufacturing-mission-critical', 'satellite-networking', 'cable-landing-stations', 'aerospace-air-tech']
+      const matchingSector = sectorIds.find(id => id === rawHash || rawHash.includes(id) || id.includes(rawHash))
+      
+      if (matchingSector) {
+        setActiveSectorId(matchingSector)
+      } else if (rawHash.includes('satellite') || rawHash.includes('subsea') || rawHash === 'ntn-satellite-subsea') {
+        if (rawHash.includes('subsea') || rawHash.includes('cable-landing')) {
+          setActiveSectorId('cable-landing-stations')
+        } else {
+          setActiveSectorId('satellite-networking')
+        }
+      } else if (rawHash.includes('urwb') || rawHash.includes('manufacturing') || rawHash === 'urwb-mission-critical') {
+        setActiveSectorId('manufacturing-mission-critical')
+      } else if (rawHash.includes('aerospace')) {
+        setActiveSectorId('aerospace-air-tech')
+      } else if (rawHash.includes('campus')) {
+        setActiveSectorId('campus-environments')
+      } else if (rawHash.includes('hyperscale') || rawHash.includes('datacenter')) {
+        setActiveSectorId('hyperscale-datacenters')
+      }
+
+      // Smooth scroll with offset for sticky header
+      setTimeout(() => {
+        const el = document.getElementById(rawHash)
+        if (el) {
+          const top = el.getBoundingClientRect().top + window.scrollY - 90
+          window.scrollTo({ top, behavior: 'smooth' })
+        }
+      }, 80)
+    }
+
+    handleHash()
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+  }, [])
+
 
   // Calculator state
   const [gpuCount, setGpuCount] = useState<number>(1024)
@@ -224,7 +269,7 @@ export default function AINetworkingCybersecurityPage() {
       {/* =================================================================== */}
       {/* 2. THE UNIFYING IDEA: ONE NERVOUS SYSTEM */}
       {/* =================================================================== */}
-      <section className="py-20 bg-white border-b border-slate-200">
+      <section className="py-20 bg-white border-b border-slate-200" id="nervous-system">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200/70 inline-block mb-3">
@@ -243,7 +288,7 @@ export default function AINetworkingCybersecurityPage() {
           {/* Interactive Visual Correlation Flow */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 relative">
             {/* Left Column: Network Telemetry */}
-            <div className="relative p-6 sm:p-8 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl overflow-hidden">
+            <div id="agent-identity-iam" className="relative p-6 sm:p-8 rounded-2xl bg-slate-900 text-white border border-slate-800 shadow-xl overflow-hidden">
               <BorderBeam size={160} duration={9} colorFrom="#38bdf8" colorTo="#3b82f6" />
               <div className="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold mb-5 border border-blue-500/30">
                 <Network size={24} />
@@ -328,7 +373,7 @@ export default function AINetworkingCybersecurityPage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle2 size={14} className="text-purple-400 shrink-0" />
-                  <span>Hardware TEEs &amp; confidential compute</span>
+                  <span id="confidential-compute">Hardware TEEs &amp; confidential compute</span>
                 </li>
               </ul>
               <div className="mt-6 p-3 rounded-lg bg-purple-950/60 border border-purple-800/40 text-[11px] text-purple-200">
@@ -366,11 +411,14 @@ export default function AINetworkingCybersecurityPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {platformOfferings.map((item, idx) => {
+                        {platformOfferings.map((item, idx) => {
               const Icon = item.icon
+              const anchorIds = ['lossless-fabrics', 'autonomous-ai-noc', 'pqc-cbom', 'managed-ai-soc', 'cognitive-wifi-7-offering', 'domain-overlay']
+              const cardId = anchorIds[idx] || `platform-offering-${idx}`
               return (
                 <div
                   key={idx}
+                  id={cardId}
                   className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between"
                 >
                   <div>
@@ -407,7 +455,7 @@ export default function AINetworkingCybersecurityPage() {
           </div>
 
           {/* Cognitive WiFi Excellence Spotlight */}
-          <div className="mt-12 p-8 rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white border border-blue-800 shadow-xl">
+          <div id="cognitive-wifi-7" className="mt-12 p-8 rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white border border-blue-800 shadow-xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8">
                 <span className="text-xs font-mono uppercase tracking-wider text-cyan-300 font-semibold px-2.5 py-1 rounded bg-blue-800/50 border border-blue-400/30 inline-block mb-3">
@@ -556,7 +604,7 @@ export default function AINetworkingCybersecurityPage() {
           )}
 
           {/* AI NOC 5-Step Setup Pathway */}
-          <div className="mt-16 max-w-5xl mx-auto">
+          <div id="ai-noc-setup" className="mt-16 max-w-5xl mx-auto">
             <div className="text-center mb-8">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
                 Standard Operational Pathway
@@ -583,6 +631,9 @@ export default function AINetworkingCybersecurityPage() {
       {/* 5. SECTOR PORTFOLIOS — DEEP INTERACTIVE EXPLORER */}
       {/* =================================================================== */}
       <section className="py-20 bg-slate-50 border-b border-slate-200" id="sectors">
+        <div id="sector-portfolios-diagnostic" />
+        <div id="ntn-satellite-subsea" />
+        <div id="urwb-mission-critical" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100/60 px-3 py-1 rounded-full border border-blue-200 inline-block mb-3">
@@ -614,6 +665,7 @@ export default function AINetworkingCybersecurityPage() {
                       label: sec.title
                     })
                   }}
+                  id={sec.id}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all ${
                     isSelected
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
@@ -775,6 +827,7 @@ export default function AINetworkingCybersecurityPage() {
       {/* 6. INTERACTIVE NETWORK & CYBER RESILIENCE CALCULATOR */}
       {/* =================================================================== */}
       <section className="py-20 bg-slate-900 text-white border-b border-slate-800" id="calculator">
+        <div id="collective-tuning" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-widest text-cyan-400 bg-cyan-950/60 px-3 py-1 rounded-full border border-cyan-800/80 inline-block mb-3">
@@ -922,6 +975,7 @@ export default function AINetworkingCybersecurityPage() {
       {/* 7. ENGAGEMENT MODELS & DELIVERY TRACKS */}
       {/* =================================================================== */}
       <section className="py-20 bg-white border-b border-slate-200" id="engagement-models">
+        <div id="diagnostic-engagement" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200/70 inline-block mb-3">
@@ -1054,6 +1108,7 @@ export default function AINetworkingCybersecurityPage() {
       {/* 8. VALUE REALIZATION METRICS TABLE (SECTION 7) */}
       {/* =================================================================== */}
       <section className="py-20 bg-slate-50 border-b border-slate-200" id="metrics">
+        <div id="compliance-immutable-audit" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-block mb-3">

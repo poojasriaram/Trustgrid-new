@@ -87,15 +87,15 @@ export const icpSegments: ICPSegment[] = [
     icon: Building2,
     challenge: 'Silent packet drops, inter-node jitter stalling collective training jobs, and thermal limits shutting down high-density compute.',
     solution: 'Non-blocking InfiniBand / RoCEv2 network fabrics, dragonfly+ topologies, and direct-to-chip liquid thermal distribution.',
-    offeringSlug: 'ai-networking',
-    offeringName: 'AI Networking',
+    offeringSlug: 'ai-networking-cybersecurity',
+    offeringName: 'AI Networking & Cybersecurity Intelligence',
     keyOutcomes: [
       'Zero-loss packet flow at full 400G/800G line rate',
       'Minimization of GPU collective wait states (NCCL/RCCL)',
       'Self-healing autonomous AI NOC packet telemetry'
     ],
     ctaText: 'Evaluate Your AI Network Fabric',
-    ctaHref: '/book-ai-diagnostic?solution=ai-networking#diagnostic-form-section'
+    ctaHref: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section'
   },
   {
     id: 'cfo-finance',

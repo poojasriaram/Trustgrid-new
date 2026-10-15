@@ -23,6 +23,9 @@ function getContextualMessage(pathname: string): string {
   if (pathname.includes('/solutions/ai-agentic-factory')) {
     return 'Hi TrustGrid team, I would like to discuss autonomous multi-agent systems and production AgentOps.'
   }
+  if (pathname.includes('/solutions/ai-networking-cybersecurity')) {
+    return 'Hi TrustGrid team, I would like to discuss unified AI Networking & Quantum-Safe Cybersecurity Intelligence.'
+  }
   if (pathname.includes('/solutions/ai-networking')) {
     return 'Hi TrustGrid team, I would like to evaluate low-latency InfiniBand and RoCEv2 AI network fabrics.'
   }

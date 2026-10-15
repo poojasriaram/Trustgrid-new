@@ -37,6 +37,7 @@ export const OFFERINGS_SERVICES = [
   { id: 'ai-agents', label: 'Agentic Enterprise & Multi-Agent Systems', groupTag: 'Cognitive' },
   { id: 'mes-automation', label: 'MES Automation & Industrial Quality', groupTag: 'Industrial AI' },
   { id: 'supply-chain', label: 'Supply Chain & Logistics Automation', groupTag: 'Operations' },
+  { id: 'ai-networking-cybersecurity', label: 'AI Networking & Cybersecurity Intelligence (Lossless / PQC / SOC)', groupTag: 'Fabric & Cyber' },
   { id: 'ai-networking', label: 'AI Networking & Lossless Fabric (RoCEv2 / IB)', groupTag: 'Lossless Fabric' },
   { id: 'ai-security', label: 'AI Cybersecurity & Quantum-Safe Defense (PQC)', groupTag: 'Quantum-Safe' },
   { id: 'trusted-ai', label: 'Trusted AI Engineering & Governance (NIST / EU AI Act)', groupTag: 'Governance' },

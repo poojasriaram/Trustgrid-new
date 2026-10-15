@@ -76,7 +76,7 @@ export const defaultICPs: ICPPersona[] = [
     trustgridRelevance: 'TrustGrid delivers hardware-to-code systems engineering: 30–100kW direct-to-chip liquid cooling, lossless InfiniBand/RoCEv2 fabrics, kernel micro-tuning (vLLM/TensorRT-LLM), and robust Model Context Protocol (MCP) multi-agent runtimes.',
     relevantSolutions: [
       { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' },
-      { title: 'Lossless AI Networking', slug: 'ai-networking' },
+      { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' },
       { title: 'Agentic Enterprise Systems', slug: 'ai-agentic-factory' }
     ],
     expectedOutcome: 'Full-spectrum AI architecture, robust model engineering pipelines, high-throughput platform engineering operating with maximum accelerator utilization and ultra-low latency.',
@@ -98,7 +98,7 @@ export const defaultICPs: ICPPersona[] = [
     theirChallenge: 'Autonomous agents introduce novel attack surfaces across tool integrations while harvest-now-decrypt-later quantum campaigns threaten existing enterprise encryption foundations.',
     trustgridRelevance: 'TrustGrid engineers runtime prompt firewalls, behavioral tool sandboxing, automated CBOM inventory, 24/7 Managed AI SOC monitoring, and L1–L7 post-quantum cryptographic transitions compliant with NIST FIPS 203/204/205.',
     relevantSolutions: [
-      { title: 'AI Cybersecurity & Quantum-Safe', slug: 'ai-cybersecurity-quantum-safe' },
+      { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' },
       { title: 'Trusted AI Governance', slug: 'trusted-ai-transformation' }
     ],
     expectedOutcome: 'Zero-trust agent isolation, proactive AI threat detection, continuous AI governance, complete CBOM visibility, and perpetual resilience against quantum decryption threats.',
@@ -143,7 +143,7 @@ export const defaultICPs: ICPPersona[] = [
     trustgridRelevance: 'TrustGrid delivers turnkey facility thermal engineering, liquid cooling retrofits, power distribution design, and continuous AI NOC telemetry to safely operate up to 100kW per rack.',
     relevantSolutions: [
       { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' },
-      { title: 'Lossless AI Networking', slug: 'ai-networking' }
+      { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' }
     ],
     expectedOutcome: 'High-density, liquid-cooled compute facilities operating at industry-leading PUE with zero thermal throttling.',
     ctaText: 'Evaluate Facility Density & PUE',

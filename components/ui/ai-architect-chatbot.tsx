@@ -67,14 +67,14 @@ const trustgridKnowledge = [
     offering: 'AI-Native Networking',
     response: 'TRUSTGRID.AI designs ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, NCCL/RCCL collective tuning, and autonomous AI NOC telemetry.',
     followUpQuestion: 'Are you currently encountering packet drops or tail latency spikes in your GPU distributed training fabric?',
-    pageLink: { label: 'Explore AI-Native Networking', href: '/solutions/ai-networking' }
+    pageLink: { label: 'Explore AI Networking & Cybersecurity', href: '/solutions/ai-networking-cybersecurity' }
   },
   {
     keywords: ['security', 'cybersecurity', 'quantum', 'pqc', 'cbom', 'guardrail', 'prompt injection', 'jailbreak', 'soc', 'zero-trust', 'ml-kem', 'ml-dsa'],
     offering: 'AI Cybersecurity & Quantum-Safe Networking',
     response: 'TRUSTGRID.AI provides comprehensive security protecting autonomous agents with zero-trust permissions and real-time prompt firewalls, while migrating enterprise infrastructure to NIST Post-Quantum Cryptography standards (ML-KEM/ML-DSA) with automated Cryptographic Bill of Materials (CBOM).',
     followUpQuestion: 'Has your security team established a Cryptographic Bill of Materials (CBOM) for post-quantum readiness?',
-    pageLink: { label: 'Explore AI Cybersecurity Solutions', href: '/solutions/ai-cybersecurity' }
+    pageLink: { label: 'Explore AI Networking & Cybersecurity', href: '/solutions/ai-networking-cybersecurity' }
   },
   {
     keywords: ['trust', 'trusted', 'explainability', 'shap', 'lime', 'eu ai act', 'nist', 'governance', 'compliance', 'audit', 'iso 42001', 'black box', 'hallucination'],
