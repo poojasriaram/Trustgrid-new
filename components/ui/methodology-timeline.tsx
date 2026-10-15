@@ -213,11 +213,11 @@ export function MethodologyTimeline() {
 
             <div className="stage-action-row">
               <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
-                <span>Initiate Diagnostic Assessment</span>
+                <span>Book an AI Diagnostic</span>
                 <ArrowUpRight size={16} />
               </Link>
               <Link href="/methodology-engine" className="button button-ghost button-sm">
-                <span>Methodology Engine →</span>
+                <span>Explore Methodology Engine</span>
               </Link>
             </div>
           </div>

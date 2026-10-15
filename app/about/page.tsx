@@ -3,6 +3,7 @@ import Link from 'next/link'
 import {
   Sparkles,
   ArrowUpRight,
+  ArrowRight,
   CheckCircle2,
   Cpu,
   Bot,
@@ -456,7 +457,12 @@ export default function AboutPage() {
           </div>
           <div className="cta-actions">
             <Link className="button button-light" href="/book-ai-diagnostic#diagnostic-form-section">
-              Book Your AI Diagnostic <ArrowUpRight size={17} />
+              <span>Book an AI Diagnostic</span>
+              <ArrowUpRight size={17} />
+            </Link>
+            <Link className="button button-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)' }} href="/talk-to-ai-architect">
+              <span>Talk to an AI Architect</span>
+              <ArrowRight size={16} />
             </Link>
           </div>
         </div>

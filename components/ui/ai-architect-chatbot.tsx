@@ -81,7 +81,7 @@ const trustgridKnowledge = [
     offering: 'Trusted AI Engineering',
     response: 'TRUSTGRID.AI turns non-deterministic AI into mathematically explainable, auditable enterprise systems using SHAP/LIME explainability, continuous Statistical Process Control (SPC), and immutable cryptographic audit logging compliant with the EU AI Act and NIST AI RMF.',
     followUpQuestion: 'Which regulatory framework is your primary compliance target (e.g., EU AI Act, NIST AI RMF, ISO 42001)?',
-    pageLink: { label: 'Explore Trusted AI Framework', href: '/solutions/trusted-ai' }
+    pageLink: { label: 'Explore Trusted AI Framework', href: '/solutions/trusted-ai-transformation' }
   },
   {
     keywords: ['value', 'roi', 'finops', 'cost', 'economics', 'token', 'p&l', 'business case', 'lean', 'toc', 'theory of constraints', 'dmaic'],
@@ -95,7 +95,7 @@ const trustgridKnowledge = [
     offering: 'Executive AI Diagnostic',
     response: 'The TRUSTGRID.AI Executive Diagnostic is a structured 2–4 week technical and financial evaluation conducted by senior AI architects. We evaluate compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced 90-day production roadmap.',
     followUpQuestion: 'Would you like to start the Executive Diagnostic scoping form for your organization?',
-    pageLink: { label: 'Start Executive Diagnostic Form', href: '/book-ai-diagnostic#diagnostic-form-section' }
+    pageLink: { label: 'Book an AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }
   },
   {
     keywords: ['contact', 'email', 'phone', 'whatsapp', 'reach out', 'call', 'office', 'headquarters', 'inquiry', 'message'],
@@ -123,7 +123,7 @@ const trustgridKnowledge = [
     offering: 'Engagement & Advisory',
     response: 'TRUSTGRID.AI engagements range from Fixed-Scope AI Diagnostics (2–4 weeks) and 90-Day Rapid Value Sprints (12 weeks) to Turnkey Design & Build (16–32 weeks) and Enterprise Operating Partnerships. Would you like to connect with a principal architect to discuss your scope?',
     followUpQuestion: 'Would you like to schedule an Executive Strategy Session or submit an initial project scope?',
-    pageLink: { label: 'Book Strategy Session', href: '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section' }
+    pageLink: { label: 'Talk to an AI Architect', href: '/talk-to-ai-architect#session-booking-section' }
   }
 ]
 
@@ -137,11 +137,11 @@ export function AIArchitectChatbot() {
       text: 'Hello, I am the TRUSTGRID.AI Architect Assistant. How can I assist you with evaluating, architecting, or scaling your enterprise AI infrastructure, autonomous agent fleets, or quantum-safe networks?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickActions: [
-        { label: 'Book Strategy Session', action: 'book_strategy' },
+        { label: 'Book an AI Diagnostic', action: 'diagnostic' },
+        { label: 'Talk to an AI Architect', action: 'connect_architect' },
         { label: 'Explore Solutions', action: 'solutions' },
         { label: 'AI Infrastructure', action: 'infra' },
         { label: 'Agentic Enterprise', action: 'agentic' },
-        { label: 'AI Cybersecurity', action: 'cybersecurity' },
         { label: 'Contact Us', action: 'contact' }
       ]
     }
@@ -267,9 +267,9 @@ export function AIArchitectChatbot() {
       pageLink,
       followUpQuestion,
       quickActions: [
-        { label: 'Book Strategy Session', action: 'book_strategy' },
-        { label: 'Talk to an Architect', action: 'connect_architect' },
-        { label: 'Book AI Diagnostic', action: 'diagnostic' },
+        { label: 'Book an AI Diagnostic', action: 'diagnostic' },
+        { label: 'Talk to an AI Architect', action: 'connect_architect' },
+        { label: 'Explore Solutions', action: 'solutions' },
         { label: 'Contact Us', action: 'contact' }
       ]
     }

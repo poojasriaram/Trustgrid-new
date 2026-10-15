@@ -25,7 +25,7 @@ export function SiteFooter() {
           </div>
           <div style={{ marginTop: '16px' }}>
             <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
-              <span>Book Your AI Diagnostic</span>
+              <span>Book an AI Diagnostic</span>
             </Link>
           </div>
         </div>

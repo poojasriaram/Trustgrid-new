@@ -214,7 +214,7 @@ export default function AINetworkingCybersecurityPage() {
                 onClick={() => trackCTA('book_diagnostic_hero', 'solutions_ai_net_cyber')}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-lg shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <span>Book Executive Diagnostic (2–4 Wks)</span>
+                <span>Book an AI Diagnostic</span>
                 <ArrowRight size={16} />
               </a>
 

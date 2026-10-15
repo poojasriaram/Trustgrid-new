@@ -657,11 +657,11 @@ export default function HomePage() {
           </div>
           <div className="cta-actions">
             <Link className="button button-light" href="/book-ai-diagnostic#diagnostic-form-section">
-              <span>Book your AI diagnostic</span>
+              <span>Book an AI Diagnostic</span>
               <ArrowUpRight size={17} />
             </Link>
-            <Link className="button button-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)' }} href="/contact">
-              <span>Contact Us Directly</span>
+            <Link className="button button-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)' }} href="/talk-to-ai-architect">
+              <span>Talk to an AI Architect</span>
               <ArrowRight size={16} />
             </Link>
             <span className="cta-subtext">Typically 2–4 weeks structured engagement with senior AI architects.</span>

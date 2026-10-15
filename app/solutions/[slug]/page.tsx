@@ -198,7 +198,7 @@ export default async function SolutionDetailPage({
                 className="button button-primary"
                 href="#intake-form"
               >
-                <span>Book {solution.shortTitle} Diagnostic</span>
+                <span>Book an AI Diagnostic</span>
                 <ArrowUpRight size={17} />
               </a>
               <WhatsAppCTA inline label="Discuss on WhatsApp" />
@@ -612,7 +612,7 @@ export default async function SolutionDetailPage({
               }}
             >
               <Calendar size={15} />
-              <span>Book Strategy Session</span>
+              <span>Talk to an AI Architect</span>
               <ArrowUpRight size={14} />
             </Link>
           </div>

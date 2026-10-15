@@ -54,16 +54,16 @@ export function PageBannerHero({
   description,
   thesisHighlight,
   image,
-  primaryCta = { text: 'Book AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' },
+  primaryCta = { text: 'Book an AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' },
   secondaryCta,
-  tertiaryCta = { text: 'Talk to an Architect', href: '/contact' },
+  tertiaryCta = { text: 'Talk to an AI Architect', href: '/talk-to-ai-architect' },
   quickNavItems,
   metrics
 }: PageBannerHeroProps) {
   const StatIcon = metrics?.icon || Sparkles
-  const primaryText = primaryCta?.label || primaryCta?.text || 'Book AI Diagnostic'
-  const secondaryText = secondaryCta?.label || secondaryCta?.text || 'Explore Offerings'
-  const tertiaryText = tertiaryCta?.label || tertiaryCta?.text || 'Talk to an Architect'
+  const primaryText = primaryCta?.label || primaryCta?.text || 'Book an AI Diagnostic'
+  const secondaryText = secondaryCta?.label || secondaryCta?.text || 'Explore Our AI Engineering Practices'
+  const tertiaryText = tertiaryCta?.label || tertiaryCta?.text || 'Talk to an AI Architect'
 
 
   return (

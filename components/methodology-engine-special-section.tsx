@@ -589,7 +589,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
         <div className="promise-footer-note">
           <p>{trustgridPromise.footerNote}</p>
           <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
-            Begin with an AI Diagnostic Assessment <ArrowUpRight size={16} />
+            <span>Book an AI Diagnostic</span> <ArrowUpRight size={16} />
           </Link>
         </div>
       </div>

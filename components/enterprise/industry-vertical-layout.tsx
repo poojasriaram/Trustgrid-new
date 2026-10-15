@@ -117,14 +117,14 @@ export function IndustryVerticalLayout({
               href={`/book-ai-diagnostic?industry=${encodeURIComponent(industry.name)}#diagnostic-form-section`}
               className="button button-primary button-md"
             >
-              <span>Book {industry.name} Diagnostic</span>
+              <span>Book an AI Diagnostic</span>
               <ArrowUpRight size={16} />
             </Link>
             <Link
               href={`/talk-to-ai-architect?topic=${encodeURIComponent(industry.name)}#session-booking-section`}
               className="button button-ghost button-md text-white border-slate-700 hover:border-slate-500 hover:bg-slate-800/60"
             >
-              <span>Consult Principal Systems Architect</span>
+              <span>Talk to an AI Architect</span>
               <ChevronRight size={16} />
             </Link>
           </div>
@@ -751,14 +751,14 @@ export function IndustryVerticalLayout({
               href={`/book-ai-diagnostic?industry=${encodeURIComponent(industry.name)}#diagnostic-form-section`}
               className="button button-primary"
             >
-              <span>Schedule {industry.name} Diagnostic</span>
+              <span>Book an AI Diagnostic</span>
               <ArrowUpRight size={16} />
             </Link>
             <Link
               href={`/talk-to-ai-architect?topic=${encodeURIComponent(industry.name)}#session-booking-section`}
               className="button button-ghost"
             >
-              <span>Book Strategy Session</span>
+              <span>Talk to an AI Architect</span>
               <ChevronRight size={16} />
             </Link>
           </div>

@@ -98,7 +98,7 @@ export default function IndustriesPage() {
           description="From sovereign high-frequency banking enclaves and FDA-compliant clinical AI to air-gapped defense meshes and discrete shop floors. We engineer the hardware, agent architectures, and operational excellence for the world's most demanding enterprises."
           thesisHighlight="Domain Rigor: Zero-downtime, mathematically verified, and compliance-ready architectures engineered for high-stakes environments."
           image="/images/industry-manufacturing.jpg"
-          primaryCta={{ text: 'Book Industry Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }}
+          primaryCta={{ text: 'Book an AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }}
           secondaryCta={{ text: 'Explore All 12 Verticals', href: '#industries-list' }}
           metrics={{
             statValue: '12 Sectors',
@@ -424,11 +424,11 @@ export default function IndustriesPage() {
             </p>
             <div className="cta-actions">
               <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
-                <span>Schedule an AI Diagnostic Assessment</span>
+                <span>Book an AI Diagnostic</span>
                 <ArrowUpRight size={16} />
               </Link>
               <Link href="/methodology-engine" className="button button-ghost">
-                <span>Explore AI Methodology Engine</span>
+                <span>Explore Methodology Engine</span>
                 <ChevronRight size={16} />
               </Link>
             </div>

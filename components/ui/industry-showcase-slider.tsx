@@ -251,12 +251,12 @@ export function IndustryShowcaseSlider() {
             </div>
 
             <div className="industry-card-cta">
-              <Link href={current.href} className="button button-primary button-sm">
-                <span>Explore {current.name.split(' ')[0]} Solutions</span>
+              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
+                <span>Book an AI Diagnostic</span>
                 <ArrowUpRight size={16} />
               </Link>
-              <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-ghost button-sm">
-                <span>Request Industry Diagnostic</span>
+              <Link href={current.href} className="button button-ghost button-sm">
+                <span>Explore {current.name.split(' ')[0]} Solutions</span>
               </Link>
             </div>
           </div>

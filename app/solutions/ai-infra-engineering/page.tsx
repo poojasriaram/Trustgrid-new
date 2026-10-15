@@ -523,11 +523,11 @@ export default function AIInfraEngineeringPage() {
             <div className="flex flex-wrap items-center gap-4 mb-12">
               <a
                 href="#contact-advisory"
-                onClick={() => trackCTA('Book AI Infrastructure Diagnostic', 'hero', '#contact-advisory')}
+                onClick={() => trackCTA('Book an AI Diagnostic', 'hero', '#contact-advisory')}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 transition-all"
               >
                 <Sparkles size={16} />
-                <span>Book AI Infrastructure Diagnostic</span>
+                <span>Book an AI Diagnostic</span>
               </a>
               <a
                 href="#core-offerings"
@@ -2667,7 +2667,7 @@ export default function AIInfraEngineeringPage() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs tracking-wide shadow-md transition-all shrink-0 hover:scale-105"
               >
                 <Calendar size={14} />
-                <span>Schedule Strategy Session</span>
+                <span>Talk to an AI Architect</span>
                 <ArrowRight size={13} />
               </Link>
             </div>

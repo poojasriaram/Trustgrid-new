@@ -101,7 +101,7 @@ function DiagnosticContent() {
                   style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '6px', textDecoration: 'none', padding: '10px 14px', background: '#1d5cff', color: '#ffffff', borderRadius: '8px', fontWeight: 600, fontSize: '13px' }}
                 >
                   <Calendar size={15} />
-                  <span>Book on Google Calendar</span>
+                  <span>Talk to an AI Architect</span>
                   <ArrowUpRight size={14} />
                 </Link>
                 <WhatsAppCTA inline label="Instant WhatsApp Consultation" />

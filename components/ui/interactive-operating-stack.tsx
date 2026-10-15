@@ -193,17 +193,17 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
 
               <div className="inspector-actions">
                 <Link
-                  href={`/solutions/${active.slug}`}
+                  href={`/book-ai-diagnostic?solution=${active.slug}#diagnostic-form-section`}
                   className="button button-primary button-sm"
                 >
-                  <span>Explore Layer Architecture</span>
+                  <span>Book an AI Diagnostic</span>
                   <ArrowUpRight size={16} />
                 </Link>
                 <Link
-                  href={`/book-ai-diagnostic?solution=${active.slug}#diagnostic-form-section`}
+                  href={`/solutions/${active.slug}`}
                   className="button button-ghost button-sm"
                 >
-                  <span>Audit This Layer</span>
+                  <span>Explore Layer Architecture</span>
                 </Link>
               </div>
             </div>

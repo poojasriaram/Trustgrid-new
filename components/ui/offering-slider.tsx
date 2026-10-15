@@ -298,23 +298,23 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
                       {/* Footer CTA Action Group */}
                       <div className="offering-card-actions">
                         <Link
-                          href={`/solutions/${offering.slug}`}
+                          href={`/book-ai-diagnostic?solution=${offering.slug}#diagnostic-form-section`}
                           className="button button-primary button-sm"
                         >
-                          <span>Explore {offering.title}</span>
+                          <span>Book an AI Diagnostic</span>
                           <ArrowUpRight size={16} />
                         </Link>
                         <Link
-                          href={`/book-ai-diagnostic?solution=${offering.slug}#diagnostic-form-section`}
+                          href={`/solutions/${offering.slug}`}
                           className="button button-ghost button-sm"
                         >
-                          <span>Audit & Diagnostic</span>
+                          <span>Explore {offering.title}</span>
                         </Link>
                         <Link
                           href="/sitemap"
                           className="text-link-subtle ml-auto"
                         >
-                          <span>Taxonomy →</span>
+                          <span>Explore Technical Architecture</span>
                         </Link>
                       </div>
                     </div>
