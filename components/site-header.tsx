@@ -207,180 +207,256 @@ const agenticEnterpriseMenuItems = [
   }
 ]
 
-// 3. AI Networking & Cybersecurity Intelligence (12 Networking & 12 Cybersecurity Categories)
-export const networkingCategories = [
+// 3. AI Networking & Cybersecurity Intelligence (Categorized Thematic Architecture)
+export interface SubmenuItem {
+  id: string
+  label: string
+  desc: string
+  tooltip?: string
+  icon: any
+  href: string
+}
+
+export interface ThematicGroup {
+  id: string
+  title: string
+  badge: string
+  icon: any
+  items: SubmenuItem[]
+}
+
+export const networkingThematicGroups: ThematicGroup[] = [
   {
-    id: 'campus-networking',
-    label: 'Campus Networking',
-    desc: 'Multi-gigabit access, automated segmentation & zero-loss campus core',
-    icon: Building2,
-    href: '/solutions/ai-networking-cybersecurity#campus-environments'
-  },
-  {
-    id: 'enterprise-networking',
-    label: 'Enterprise Networking',
-    desc: 'Wired & wireless underlay, SD-WAN overlay & unified policy governance',
-    icon: Network,
-    href: '/solutions/ai-networking-cybersecurity#enterprises'
-  },
-  {
-    id: 'datacenter-networking',
-    label: 'Data Center Networking',
-    desc: 'Ultra-low latency RoCEv2, Spectrum-X & InfiniBand AI cluster fabrics',
+    id: 'datacenter-cloud-fabric',
+    title: 'Data Center & Cloud Fabric',
+    badge: 'FABRIC',
     icon: Server,
-    href: '/solutions/ai-networking-cybersecurity#hyperscale-datacenters'
+    items: [
+      {
+        id: 'datacenter-networking',
+        label: 'Data Center Networking',
+        desc: 'Ultra-low latency RoCEv2, Spectrum-X, and InfiniBand fabrics for high-throughput distributed AI cluster training.',
+        icon: Server,
+        href: '/solutions/ai-networking-cybersecurity#hyperscale-datacenters'
+      },
+      {
+        id: 'storage-networking-san',
+        label: 'Storage Networking (SAN)',
+        tooltip: 'Storage Area Networking (SAN) & NVMe-oF Interconnects',
+        desc: 'Non-blocking NVMe-oF and GPUDirect Storage interconnects eliminating I/O bottlenecks in GPU memory pipelines.',
+        icon: Layers,
+        href: '/solutions/ai-networking-cybersecurity#hyperscale-datacenters'
+      },
+      {
+        id: 'cloud-networking',
+        label: 'Cloud Networking',
+        desc: 'Multi-cloud transit fabrics and hybrid interconnects engineered for optimized egress costs and deterministic connectivity.',
+        icon: Globe2,
+        href: '/solutions/ai-networking-cybersecurity#enterprises'
+      },
+      {
+        id: 'edge-networking',
+        label: 'Edge Networking',
+        desc: 'Micro-edge compute clusters and rugged mesh networks delivering deterministic real-time inferencing at line speed.',
+        icon: Cpu,
+        href: '/solutions/ai-networking-cybersecurity#aerospace-air-tech'
+      }
+    ]
   },
   {
-    id: 'space-networking',
-    label: 'Space Networking',
-    desc: 'Satellite NTN, orbital feeder links, space-ground routing & GSaaS',
-    icon: Satellite,
-    href: '/solutions/ai-networking-cybersecurity#satellite-networking'
+    id: 'enterprise-connected-environments',
+    title: 'Enterprise & Connected Environments',
+    badge: 'ENTERPRISE',
+    icon: Building2,
+    items: [
+      {
+        id: 'campus-networking',
+        label: 'Campus Networking',
+        desc: 'Multi-gigabit access, automated policy segmentation, and zero-loss core switching for modern enterprise campuses.',
+        icon: Building2,
+        href: '/solutions/ai-networking-cybersecurity#campus-environments'
+      },
+      {
+        id: 'enterprise-networking',
+        label: 'Enterprise Networking',
+        desc: 'Resilient wired and wireless underlay infrastructure unified with software-defined overlay governance and QoS.',
+        icon: Network,
+        href: '/solutions/ai-networking-cybersecurity#enterprises'
+      },
+      {
+        id: 'wireless-networking',
+        label: 'Wireless Networking',
+        desc: 'Cognitive WiFi 7 with AI-RRM spectrum tuning ensuring seamless client roaming across dense enterprise environments.',
+        icon: Wifi,
+        href: '/solutions/ai-networking-cybersecurity#cognitive-wifi-7'
+      },
+      {
+        id: 'iot-networking',
+        label: 'IoT Networking',
+        desc: 'Scalable sensor fabric with automated device profiling and real-time telemetry ingestion for operational environments.',
+        icon: Radio,
+        href: '/solutions/ai-networking-cybersecurity#manufacturing-mission-critical'
+      }
+    ]
   },
   {
-    id: 'industrial-networking',
-    label: 'Industrial Networking',
-    desc: 'Time-sensitive networking (TSN), URWB wireless & OT/IT convergence',
-    icon: Factory,
-    href: '/solutions/ai-networking-cybersecurity#manufacturing-mission-critical'
-  },
-  {
-    id: 'cloud-networking',
-    label: 'Cloud Networking',
-    desc: 'Multi-cloud interconnects, hybrid transit fabrics & egress optimization',
-    icon: Globe2,
-    href: '/solutions/ai-networking-cybersecurity#enterprises'
-  },
-  {
-    id: 'edge-networking',
-    label: 'Edge Networking',
-    desc: 'Micro-edge compute clusters, rugged field mesh & local deterministic routing',
-    icon: Cpu,
-    href: '/solutions/ai-networking-cybersecurity#aerospace-air-tech'
-  },
-  {
-    id: 'service-provider-networking',
-    label: 'Service Provider Networking',
-    desc: 'Subsea cable landing (CLS), coherent DCI/DWDM & multi-Tbps backhauls',
-    icon: Cable,
-    href: '/solutions/ai-networking-cybersecurity#cable-landing-stations'
-  },
-  {
-    id: 'wireless-networking',
-    label: 'Wireless Networking',
-    desc: 'Cognitive WiFi 7, AI-RRM spectrum tuning & campus-gateway roaming',
-    icon: Wifi,
-    href: '/solutions/ai-networking-cybersecurity#cognitive-wifi-7'
-  },
-  {
-    id: 'iot-networking',
-    label: 'IoT Networking',
-    desc: 'Scalable IoT sensor fabrics, dynamic device profiling & telemetry ingest',
-    icon: Radio,
-    href: '/solutions/ai-networking-cybersecurity#manufacturing-mission-critical'
-  },
-  {
-    id: 'storage-area-networking',
-    label: 'Storage Area Networking (SAN)',
-    desc: 'NVMe-oF, GPUDirect Storage (GDS) & non-blocking storage interconnects',
-    icon: Layers,
-    href: '/solutions/ai-networking-cybersecurity#hyperscale-datacenters'
-  },
-  {
-    id: 'wide-area-networking',
-    label: 'Wide Area Networking (SD-WAN)',
-    desc: 'AI-driven SD-WAN, adaptive path selection & sovereign encryption overlays',
+    id: 'global-carrier-specialized',
+    title: 'Global, Carrier & Specialized Networks',
+    badge: 'CARRIER & WAN',
     icon: Compass,
-    href: '/solutions/ai-networking-cybersecurity#enterprises'
+    items: [
+      {
+        id: 'wide-area-networking-wan',
+        label: 'Wide Area Networking (WAN)',
+        tooltip: 'Software-Defined Wide Area Networking (SD-WAN / WAN)',
+        desc: 'AI-driven SD-WAN with intelligent path selection and sovereign encryption overlays across distributed enterprise branches.',
+        icon: Compass,
+        href: '/solutions/ai-networking-cybersecurity#enterprises'
+      },
+      {
+        id: 'service-provider-networking',
+        label: 'Service Provider Networking',
+        desc: 'Coherent DCI/DWDM transport and cable landing architectures delivering multi-terabit capacity for carrier networks.',
+        icon: Cable,
+        href: '/solutions/ai-networking-cybersecurity#cable-landing-stations'
+      },
+      {
+        id: 'space-satellite-networking-ntn',
+        label: 'Space & Satellite Networking (NTN)',
+        tooltip: 'Non-Terrestrial Networks (NTN) & Satellite Feeder Routing',
+        desc: 'Orbital feeder links and non-terrestrial network routing enabling resilient global communication beyond terrestrial infrastructure.',
+        icon: Satellite,
+        href: '/solutions/ai-networking-cybersecurity#satellite-networking'
+      },
+      {
+        id: 'industrial-networking',
+        label: 'Industrial Networking',
+        desc: 'Time-sensitive networking (TSN) and ultra-reliable wireless bridging mission-critical OT/IT convergence on factory floors.',
+        icon: Factory,
+        href: '/solutions/ai-networking-cybersecurity#manufacturing-mission-critical'
+      }
+    ]
   }
 ]
 
-export const cybersecurityCategories = [
+export const cybersecurityThematicGroups: ThematicGroup[] = [
   {
-    id: 'threat-detection-prevention',
-    label: 'AI Threat Detection & Prevention',
-    desc: 'Cross-layer threat correlation, real-time blocking & sub-3m MTTC containment',
+    id: 'threat-detection-defense',
+    title: 'Threat Detection & Defense',
+    badge: 'DETECTION',
     icon: ShieldCheck,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+    items: [
+      {
+        id: 'threat-detection-prevention',
+        label: 'Threat Detection & Prevention',
+        desc: 'Cross-layer behavioral threat hunting and automated line-rate blocking achieving sub-3-minute incident containment.',
+        icon: ShieldCheck,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'nids-nips',
+        label: 'Network Intrusion Detection & Prevention (NIDS/NIPS)',
+        tooltip: 'Network Intrusion Detection and Prevention Systems (NIDS/NIPS)',
+        desc: 'Deep in-band packet inspection and adversarial pattern matching with automated threat vector shunting.',
+        icon: Network,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'anomaly-drift-detection',
+        label: 'Anomaly & Drift Detection',
+        desc: 'Continuous telemetry baselining and silent drop forensics detecting early deviations in model and cluster performance.',
+        icon: Activity,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'malware-analysis-sandboxing',
+        label: 'Malware Analysis & Sandboxing',
+        desc: 'Automated reverse-engineering and zero-day heuristic sandboxing isolating suspicious payloads in air-gapped runtimes.',
+        icon: ShieldAlert,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      }
+    ]
   },
   {
-    id: 'anomaly-detection',
-    label: 'AI Anomaly Detection',
-    desc: 'Continuous telemetry baseline, silent drop forensics & model drift alerts',
-    icon: Activity,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'malware-analysis',
-    label: 'AI Malware Analysis & Classification',
-    desc: 'Automated reverse-engineering, zero-day heuristics & payload sandboxing',
-    icon: ShieldAlert,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'phishing-social-defense',
-    label: 'AI Phishing & Social Defense',
-    desc: 'Contextual NLP threat shields, credential-harvesting defense & spoof traps',
-    icon: Target,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'network-intrusion-detection',
-    label: 'AI Network Intrusion (NIDS/NIPS)',
-    desc: 'In-band packet inspection, adversarial pattern matching & automated shunting',
-    icon: Network,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'endpoint-protection',
-    label: 'AI Endpoint Protection',
-    desc: 'Agent-side behavioral containment, memory-space shields & tamper defense',
-    icon: Cpu,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'ueba',
-    label: 'AI User & Entity Behavior (UEBA)',
-    desc: 'Continuous operator, digital worker & microservice behavioral baselining',
-    icon: Users,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'soar',
-    label: 'AI Security Orchestration (SOAR)',
-    desc: 'Autonomous incident playbooks, self-healing isolation & forensic reporting',
-    icon: Workflow,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'vulnerability-management',
-    label: 'AI Vulnerability Management',
-    desc: 'Continuous automated CBOM discovery, CVE scoring & remediation guidance',
-    icon: BarChart3,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'fraud-detection',
-    label: 'AI Fraud Detection',
-    desc: 'Financial transaction anomalies, synthetic identity abuse & token telemetry',
-    icon: TrendingUp,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
-  },
-  {
-    id: 'identity-access-management',
-    label: 'AI Identity & Access (Zero-Trust IAM)',
-    desc: 'Cryptographic SPIFFE/SPIRE ephemeral IDs, PQC keys & least-privilege enforcement',
+    id: 'identity-trust-digital-risk',
+    title: 'Identity, Trust & Digital Risk',
+    badge: 'IDENTITY',
     icon: Lock,
-    href: '/solutions/ai-networking-cybersecurity#agent-identity-iam'
+    items: [
+      {
+        id: 'zero-trust-identity-access-iam',
+        label: 'Zero-Trust Identity & Access (IAM)',
+        tooltip: 'Identity and Access Management (Zero-Trust IAM)',
+        desc: 'Cryptographic SPIFFE/SPIRE ephemeral identities and post-quantum keys enforcing continuous least-privilege verification.',
+        icon: Lock,
+        href: '/solutions/ai-networking-cybersecurity#agent-identity-iam'
+      },
+      {
+        id: 'user-entity-behavior-analytics-ueba',
+        label: 'User & Entity Behavior Analytics (UEBA)',
+        tooltip: 'User and Entity Behavior Analytics (UEBA)',
+        desc: 'Continuous behavioral baselining of operators, digital workers, and microservices to detect insider threats.',
+        icon: Users,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'fraud-abuse-detection',
+        label: 'Fraud & Abuse Detection',
+        desc: 'Real-time transaction anomaly analysis and synthetic identity defense safeguarding financial platforms and tokens.',
+        icon: TrendingUp,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'phishing-social-engineering-defense',
+        label: 'Phishing & Social Engineering Defense',
+        desc: 'Contextual natural language threat shields neutralizing credential-harvesting attempts and executive spoofing in real time.',
+        icon: Target,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      }
+    ]
   },
   {
-    id: 'predictive-threat-intelligence',
-    label: 'AI Predictive Threat Intelligence',
-    desc: 'Global threat feed correlation, proactive MITRE ATLAS mapping & red-teaming',
-    icon: Sparkles,
-    href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+    id: 'secops-resilience',
+    title: 'Security Operations & Resilience',
+    badge: 'SECOPS',
+    icon: Workflow,
+    items: [
+      {
+        id: 'security-orchestration-automated-response-soar',
+        label: 'Security Orchestration & Automated Response (SOAR)',
+        tooltip: 'Security Orchestration, Automation, and Response (SOAR)',
+        desc: 'Autonomous incident playbooks and self-healing isolation workflows accelerating enterprise mean time to remediation.',
+        icon: Workflow,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'predictive-threat-intelligence',
+        label: 'Predictive Threat Intelligence',
+        desc: 'Proactive global adversary intelligence correlated with MITRE ATLAS matrices for continuous threat preparedness.',
+        icon: Sparkles,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'vulnerability-management',
+        label: 'Vulnerability Management',
+        desc: 'Continuous automated Cryptographic Bill of Materials (CBOM) discovery and risk-based vulnerability remediation.',
+        icon: BarChart3,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      },
+      {
+        id: 'endpoint-protection-response-edr',
+        label: 'Endpoint Protection & Response (EDR)',
+        tooltip: 'Endpoint Detection and Response (EDR)',
+        desc: 'Agentic behavioral runtime shields and memory-space protection preventing unauthorized privilege escalation across endpoints.',
+        icon: Cpu,
+        href: '/solutions/ai-networking-cybersecurity#platform-offerings'
+      }
+    ]
   }
 ]
+
+export const networkingCategories = networkingThematicGroups.flatMap((g) => g.items)
+export const cybersecurityCategories = cybersecurityThematicGroups.flatMap((g) => g.items)
 
 // Backwards compatibility aliases
 const aiNetworkingCyberMenuItems = [...networkingCategories, ...cybersecurityCategories]
@@ -816,9 +892,23 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [mobileSection, setMobileSection] = useState<string | null>(null)
+  const [mobileDomainNetOpen, setMobileDomainNetOpen] = useState(true)
+  const [mobileDomainCyberOpen, setMobileDomainCyberOpen] = useState(true)
+  const [desktopActiveDomain, setDesktopActiveDomain] = useState<'networking' | 'cybersecurity'>('networking')
+  const [mobileOpenGroups, setMobileOpenGroups] = useState<Record<string, boolean>>({
+    'datacenter-cloud-fabric': true,
+    'threat-detection-defense': true
+  })
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  const toggleMobileGroup = (groupId: string) => {
+    setMobileOpenGroups((prev) => ({
+      ...prev,
+      [groupId]: !prev[groupId]
+    }))
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1082,20 +1172,68 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'networking-cybersecurity' && (
-            <div className="isi-mega-panel isi-mega-networking">
+            <div
+              className="isi-mega-panel isi-mega-networking tg-minimized-mega"
+              role="region"
+              aria-label="AI Networking & Cybersecurity Mega Menu"
+            >
               <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
+                {/* Left Category Introduction & Interactive Domain Switcher */}
+                <div className="isi-mega-sidebar tg-menu-sidebar">
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      UNIFIED FULL-STACK FABRIC
+                      FULL-STACK FABRIC
                     </span>
                     <h3 className="isi-sidebar-title">AI Networking & Cyber</h3>
                     <p className="isi-sidebar-desc">
-                      Converged high-performance AI networking and autonomous AI-driven cyber defense from WiFi 7 to hyperscale factories.
+                      Converged high-speed AI networking fabric and autonomous AI cybersecurity.
                     </p>
+
+                    {/* Domain Navigation Tabs */}
+                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Architecture Domains">
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopActiveDomain === 'networking'}
+                        className={`tg-domain-tab-btn ${desktopActiveDomain === 'networking' ? 'active-networking' : ''}`}
+                        onClick={() => setDesktopActiveDomain('networking')}
+                        onMouseEnter={() => setDesktopActiveDomain('networking')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box tg-icon-net">
+                            <Network size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">AI Networking</span>
+                            <span className="tg-tab-sub">High-Performance Fabric</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
+
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopActiveDomain === 'cybersecurity'}
+                        className={`tg-domain-tab-btn ${desktopActiveDomain === 'cybersecurity' ? 'active-cyber' : ''}`}
+                        onClick={() => setDesktopActiveDomain('cybersecurity')}
+                        onMouseEnter={() => setDesktopActiveDomain('cybersecurity')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box tg-icon-cyber">
+                            <ShieldCheck size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">AI Cybersecurity</span>
+                            <span className="tg-tab-sub">Autonomous Zero-Trust</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
+                    </div>
                   </div>
+
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
@@ -1112,84 +1250,94 @@ export function SiteHeader() {
                   </div>
                 </div>
 
-                {/* Right Dual-Column Converged Grid: 12 Networking & 12 Cybersecurity */}
-                <div className="isi-converged-dual-grid">
-                  {/* Column 1: 12 Categories of Networking */}
-                  <div className="isi-converged-col">
-                    <div className="isi-category-header">
-                      <div className="isi-category-header-top">
-                        <div className="isi-category-header-left">
-                          <Network size={14} className="text-blue-600" />
-                          <span className="isi-category-title">12 Categories of Networking</span>
-                        </div>
-                        <span className="isi-category-badge">HIGH-PERFORMANCE FABRICS</span>
+                {/* Right Structured 3-Group Content Area */}
+                <div className="tg-minimized-content-area">
+                  {/* Domain Sub-header with quick toggle pills */}
+                  <div className="tg-content-header-bar">
+                    <div className="tg-content-header-info">
+                      <div className="flex items-center gap-2">
+                        {desktopActiveDomain === 'networking' ? (
+                          <>
+                            <Network size={15} className="text-blue-600" />
+                            <span className="tg-active-domain-heading">AI Networking Architecture</span>
+                          </>
+                        ) : (
+                          <>
+                            <ShieldCheck size={15} className="text-indigo-600" />
+                            <span className="tg-active-domain-heading">AI Cybersecurity Architecture</span>
+                          </>
+                        )}
                       </div>
-                      <span className="isi-category-tagline">Campus to Hyperscale, Cloud &amp; Space</span>
+                      <span className="tg-active-domain-tagline">
+                        {desktopActiveDomain === 'networking'
+                          ? 'Ultra-low latency RoCEv2, WiFi 7, DWDM & space NTN fabric'
+                          : 'Zero-trust IAM, continuous UEBA, SOAR & EDR runtime defense'}
+                      </span>
                     </div>
 
-                    <div className="isi-converged-subgrid">
-                      {networkingCategories.map((item, idx) => {
-                        const Icon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="isi-converged-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="isi-card-icon">
-                              <Icon size={13} />
-                            </div>
-                            <div className="isi-card-body">
-                              <div className="isi-card-heading">
-                                <span className="isi-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="isi-card-arrow" />
-                              </div>
-                              <p className="isi-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
+                    <div className="tg-domain-pills-row">
+                      <button
+                        type="button"
+                        className={`tg-quick-pill ${desktopActiveDomain === 'networking' ? 'active-pill' : ''}`}
+                        onClick={() => setDesktopActiveDomain('networking')}
+                      >
+                        <Network size={12} />
+                        <span>Networking</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={`tg-quick-pill ${desktopActiveDomain === 'cybersecurity' ? 'active-pill-cyber' : ''}`}
+                        onClick={() => setDesktopActiveDomain('cybersecurity')}
+                      >
+                        <ShieldCheck size={12} />
+                        <span>Cybersecurity</span>
+                      </button>
                     </div>
                   </div>
 
-                  {/* Column 2: 12 Categories of AI-Driven Cybersecurity */}
-                  <div className="isi-converged-col">
-                    <div className="isi-category-header">
-                      <div className="isi-category-header-top">
-                        <div className="isi-category-header-left">
-                          <ShieldCheck size={14} className="text-blue-600" />
-                          <span className="isi-category-title">12 Categories of AI Cybersecurity</span>
-                        </div>
-                        <span className="isi-category-badge">ZERO-TRUST &amp; PQC</span>
-                      </div>
-                      <span className="isi-category-tagline">Continuous Defense, UEBA, SOAR &amp; PQC</span>
-                    </div>
+                  {/* 3 Columns matching Group A, Group B, Group C */}
+                  <div className="tg-thematic-columns-3">
+                    {(desktopActiveDomain === 'networking' ? networkingThematicGroups : cybersecurityThematicGroups).map((group) => {
+                      const GroupIcon = group.icon
+                      const isCyber = desktopActiveDomain === 'cybersecurity'
+                      return (
+                        <div key={group.id} className="tg-category-col">
+                          <div className="tg-category-col-header">
+                            <div className="tg-category-col-left">
+                              <GroupIcon size={13} className={isCyber ? 'text-indigo-600' : 'text-blue-600'} />
+                              <span className="tg-category-col-title">{group.title}</span>
+                            </div>
+                            <span className="tg-category-col-badge">{group.badge}</span>
+                          </div>
 
-                    <div className="isi-converged-subgrid">
-                      {cybersecurityCategories.map((item, idx) => {
-                        const Icon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="isi-converged-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="isi-card-icon">
-                              <Icon size={13} />
-                            </div>
-                            <div className="isi-card-body">
-                              <div className="isi-card-heading">
-                                <span className="isi-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="isi-card-arrow" />
-                              </div>
-                              <p className="isi-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
+                          <div className="tg-category-items-stack">
+                            {group.items.map((item) => {
+                              const ItemIcon = item.icon
+                              return (
+                                <Link
+                                  key={item.id}
+                                  href={item.href}
+                                  className="tg-compact-menu-card"
+                                  title={item.tooltip || `${item.label} — ${item.desc}`}
+                                  onClick={(e) => handleNavClick(e, item.href)}
+                                >
+                                  <div className={`tg-compact-icon-box ${isCyber ? 'tg-box-cyber' : ''}`}>
+                                    <ItemIcon size={13} />
+                                  </div>
+                                  <div className="tg-compact-card-body">
+                                    <div className="tg-compact-card-head">
+                                      <span className="tg-compact-card-title">{item.label}</span>
+                                      <ArrowRight size={11} className="tg-compact-arrow" />
+                                    </div>
+                                    <p className="tg-compact-card-desc">{item.desc}</p>
+                                  </div>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        </div>
+                      )
+                    })}
                   </div>
                 </div>
               </div>
@@ -1671,42 +1819,144 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'networking-cybersecurity' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-networking-cybersecurity" className="mobile-sublink font-semibold text-blue-600" onClick={closeAll}>
+                  <Link href="/solutions/ai-networking-cybersecurity" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
                     <span>★ Master Portfolio: AI Networking & Cyber Intelligence →</span>
                   </Link>
 
-                  {/* 12 Categories of Networking */}
-                  <div style={{ marginTop: '10px', marginBottom: '6px' }}>
-                    <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block px-3 py-1 bg-blue-50/70 rounded">
-                      12 Categories of Networking
-                    </span>
-                    {networkingCategories.map((item, i) => (
-                      <Link
-                        key={i}
-                        href={item.href}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, item.href)}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
+                  {/* Expandable Section 1: AI Networking */}
+                  <div className="mobile-domain-section">
+                    <button
+                      type="button"
+                      className="mobile-domain-accordion-btn"
+                      onClick={() => setMobileDomainNetOpen(!mobileDomainNetOpen)}
+                      aria-expanded={mobileDomainNetOpen}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Network size={14} className="text-blue-600" />
+                        <span>AI Networking</span>
+                      </div>
+                      <ChevronDown size={14} className={`chevron-icon transition-transform ${mobileDomainNetOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {mobileDomainNetOpen && (
+                      <div className="mobile-domain-content">
+                        {networkingThematicGroups.map((group) => {
+                          const GroupIcon = group.icon
+                          const isOpen = !!mobileOpenGroups[group.id]
+                          return (
+                            <div key={group.id} className="mobile-group-wrapper">
+                              <button
+                                type="button"
+                                className="mobile-group-accordion-btn"
+                                onClick={() => toggleMobileGroup(group.id)}
+                                aria-expanded={isOpen}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <GroupIcon size={12} className="text-blue-600 shrink-0" />
+                                  <span className="truncate">{group.title}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                  <span className="mobile-group-count">4</span>
+                                  <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                                </div>
+                              </button>
+
+                              {isOpen && (
+                                <div className="mobile-group-body">
+                                  {group.items.map((item) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={item.id}
+                                        href={item.href}
+                                        className="mobile-cap-card"
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="mobile-cap-icon">
+                                          <ItemIcon size={12} />
+                                        </div>
+                                        <div className="mobile-cap-info">
+                                          <span className="mobile-cap-title">{item.label}</span>
+                                          <span className="mobile-cap-desc">{item.desc}</span>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
 
-                  {/* 12 Categories of AI-Driven Cybersecurity */}
-                  <div style={{ marginTop: '10px', marginBottom: '6px' }}>
-                    <span className="text-[10px] font-mono font-bold text-indigo-600 uppercase tracking-wider block px-3 py-1 bg-indigo-50/70 rounded">
-                      12 Categories of AI Cybersecurity
-                    </span>
-                    {cybersecurityCategories.map((item, i) => (
-                      <Link
-                        key={i}
-                        href={item.href}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, item.href)}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
+                  {/* Expandable Section 2: AI Cybersecurity */}
+                  <div className="mobile-domain-section mt-2">
+                    <button
+                      type="button"
+                      className="mobile-domain-accordion-btn"
+                      onClick={() => setMobileDomainCyberOpen(!mobileDomainCyberOpen)}
+                      aria-expanded={mobileDomainCyberOpen}
+                    >
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck size={14} className="text-indigo-600" />
+                        <span>AI Cybersecurity</span>
+                      </div>
+                      <ChevronDown size={14} className={`chevron-icon transition-transform ${mobileDomainCyberOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {mobileDomainCyberOpen && (
+                      <div className="mobile-domain-content">
+                        {cybersecurityThematicGroups.map((group) => {
+                          const GroupIcon = group.icon
+                          const isOpen = !!mobileOpenGroups[group.id]
+                          return (
+                            <div key={group.id} className="mobile-group-wrapper">
+                              <button
+                                type="button"
+                                className="mobile-group-accordion-btn"
+                                onClick={() => toggleMobileGroup(group.id)}
+                                aria-expanded={isOpen}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <GroupIcon size={12} className="text-indigo-600 shrink-0" />
+                                  <span className="truncate">{group.title}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                  <span className="mobile-group-count">4</span>
+                                  <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                                </div>
+                              </button>
+
+                              {isOpen && (
+                                <div className="mobile-group-body">
+                                  {group.items.map((item) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={item.id}
+                                        href={item.href}
+                                        className="mobile-cap-card"
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="mobile-cap-icon mobile-cap-icon-cyber">
+                                          <ItemIcon size={12} />
+                                        </div>
+                                        <div className="mobile-cap-info">
+                                          <span className="mobile-cap-title">{item.label}</span>
+                                          <span className="mobile-cap-desc">{item.desc}</span>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
