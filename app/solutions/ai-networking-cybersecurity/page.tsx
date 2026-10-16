@@ -63,10 +63,15 @@ import {
   valueRealizationMetrics,
   glossaryTerms,
   acronymsList,
-  SectorPortfolio
+  SectorPortfolio,
+  networkingCategoriesData,
+  cybersecurityCategoriesData
 } from '@/lib/ai-networking-cybersecurity-data'
 
 export default function AINetworkingCybersecurityPage() {
+  // Converged Architecture Category Tab state (12 Networking & 12 Cybersecurity)
+  const [activeCategoryTab, setActiveCategoryTab] = useState<'all' | 'networking' | 'cybersecurity'>('all')
+
   // Sector Portfolio interactive state
   const [activeSectorId, setActiveSectorId] = useState<string>('enterprises')
   const [sectorPhaseFilter, setSectorPhaseFilter] = useState<'All' | 'Plan' | 'Design' | 'Implement' | 'Operate'>('All')
@@ -81,31 +86,49 @@ export default function AINetworkingCybersecurityPage() {
       const rawHash = window.location.hash.replace('#', '')
       if (!rawHash) return
 
-      // Sector mapping by hash
+      // Category tab switching if directly targeting a category
+      const isNetworking = ['campus-networking', 'enterprise-networking', 'datacenter-networking', 'space-networking', 'industrial-networking', 'cloud-networking', 'edge-networking', 'service-provider-networking', 'wireless-networking', 'iot-networking', 'storage-area-networking', 'wide-area-networking'].includes(rawHash)
+      const isCyber = ['threat-detection-prevention', 'anomaly-detection', 'malware-analysis', 'phishing-social-defense', 'network-intrusion-detection', 'endpoint-protection', 'ueba', 'soar', 'vulnerability-management', 'fraud-detection', 'identity-access-management', 'predictive-threat-intelligence'].includes(rawHash)
+      
+      if (isNetworking && activeCategoryTab === 'cybersecurity') {
+        setActiveCategoryTab('networking')
+      } else if (isCyber && activeCategoryTab === 'networking') {
+        setActiveCategoryTab('cybersecurity')
+      }
+
+      // Sector and Category mapping by hash
       const sectorIds = ['enterprises', 'hyperscale-datacenters', 'campus-environments', 'manufacturing-mission-critical', 'satellite-networking', 'cable-landing-stations', 'aerospace-air-tech']
       const matchingSector = sectorIds.find(id => id === rawHash || rawHash.includes(id) || id.includes(rawHash))
       
       if (matchingSector) {
         setActiveSectorId(matchingSector)
-      } else if (rawHash.includes('satellite') || rawHash.includes('subsea') || rawHash === 'ntn-satellite-subsea') {
-        if (rawHash.includes('subsea') || rawHash.includes('cable-landing')) {
+      } else if (rawHash.includes('satellite') || rawHash.includes('space') || rawHash.includes('subsea') || rawHash === 'ntn-satellite-subsea') {
+        if (rawHash.includes('subsea') || rawHash.includes('cable-landing') || rawHash.includes('service-provider')) {
           setActiveSectorId('cable-landing-stations')
         } else {
           setActiveSectorId('satellite-networking')
         }
-      } else if (rawHash.includes('urwb') || rawHash.includes('manufacturing') || rawHash === 'urwb-mission-critical') {
+      } else if (rawHash.includes('urwb') || rawHash.includes('manufacturing') || rawHash.includes('industrial') || rawHash.includes('iot') || rawHash === 'urwb-mission-critical') {
         setActiveSectorId('manufacturing-mission-critical')
-      } else if (rawHash.includes('aerospace')) {
+      } else if (rawHash.includes('aerospace') || rawHash.includes('edge')) {
         setActiveSectorId('aerospace-air-tech')
-      } else if (rawHash.includes('campus')) {
+      } else if (rawHash.includes('campus') || rawHash.includes('wireless') || rawHash.includes('wifi')) {
         setActiveSectorId('campus-environments')
-      } else if (rawHash.includes('hyperscale') || rawHash.includes('datacenter')) {
+      } else if (rawHash.includes('hyperscale') || rawHash.includes('datacenter') || rawHash.includes('storage')) {
         setActiveSectorId('hyperscale-datacenters')
+      } else if (rawHash.includes('enterprise') || rawHash.includes('cloud') || rawHash.includes('wide-area')) {
+        setActiveSectorId('enterprises')
       }
 
       // Smooth scroll with offset for sticky header
       setTimeout(() => {
-        const el = document.getElementById(rawHash)
+        let el = document.getElementById(rawHash)
+        if (!el && (rawHash.includes('threat') || rawHash.includes('anomaly') || rawHash.includes('malware') || rawHash.includes('phishing') || rawHash.includes('intrusion') || rawHash.includes('endpoint') || rawHash.includes('ueba') || rawHash.includes('soar') || rawHash.includes('vulnerability') || rawHash.includes('fraud'))) {
+          el = document.getElementById('platform-offerings') || document.getElementById('nervous-system')
+        }
+        if (!el && (rawHash.includes('campus') || rawHash.includes('enterprise') || rawHash.includes('datacenter') || rawHash.includes('space') || rawHash.includes('industrial') || rawHash.includes('edge') || rawHash.includes('service-provider'))) {
+          el = document.getElementById('sectors')
+        }
         if (el) {
           const top = el.getBoundingClientRect().top + window.scrollY - 90
           window.scrollTo({ top, behavior: 'smooth' })
@@ -385,74 +408,244 @@ export default function AINetworkingCybersecurityPage() {
       </section>
 
       {/* =================================================================== */}
-      {/* 3. CORE CROSS-CUTTING PLATFORM OFFERINGS */}
+      {/* 3. CONVERGED ARCHITECTURE: 12 NETWORKING & 12 CYBERSECURITY CATEGORIES */}
       {/* =================================================================== */}
       <section className="py-20 bg-slate-50 border-b border-slate-200" id="platform-offerings">
+        {/* Backwards compatibility anchor points */}
+        <div id="lossless-fabrics" />
+        <div id="autonomous-ai-noc" />
+        <div id="pqc-cbom" />
+        <div id="managed-ai-soc" />
+        <div id="cognitive-wifi-7-offering" />
+        <div id="domain-overlay" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
             <div>
               <span className="text-xs font-bold uppercase tracking-widest text-blue-600 bg-blue-100/60 px-3 py-1 rounded-full border border-blue-200 inline-block mb-3">
-                Section 3 · Platform Foundation
+                Section 3 · Converged Master Architecture
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-                Core Cross-Cutting Platform Offerings
+                12 Categories of Networking &amp; 12 Categories of AI Cybersecurity
               </h2>
-              <p className="text-base text-slate-600 mt-2 max-w-2xl">
-                These six core offerings are available standalone or act as the foundational bedrock across every sector engagement.
+              <p className="text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+                A unified, user-friendly taxonomy delivering zero-loss, low-latency fabrics and zero-trust,
+                quantum-safe cyber defense from campus WiFi 7 to hyperscale AI factories and orbital assets.
               </p>
             </div>
             <a
               href="#intake-form"
-              className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+              className="mt-4 md:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 shrink-0"
             >
-              <span>Request Platform Scope</span>
+              <span>Scope Converged Architecture</span>
               <ArrowUpRight size={16} />
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {platformOfferings.map((item, idx) => {
-              const Icon = item.icon
-              const anchorIds = ['lossless-fabrics', 'autonomous-ai-noc', 'pqc-cbom', 'managed-ai-soc', 'cognitive-wifi-7-offering', 'domain-overlay']
-              const cardId = anchorIds[idx] || `platform-offering-${idx}`
-              return (
-                <div
-                  key={idx}
-                  id={cardId}
-                  className="p-6 sm:p-7 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-300 transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md border border-blue-200/50">
-                        Offering {item.number}
-                      </span>
-                      <div className="w-9 h-9 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center">
-                        <Icon size={18} />
-                      </div>
-                    </div>
-                    <h3 className="text-lg font-bold text-slate-900 mb-2">{item.title}</h3>
-                    <p className="text-xs sm:text-sm text-slate-600 mb-5 leading-relaxed">
-                      {item.summary}
-                    </p>
-                    <div className="space-y-2 border-t border-slate-100 pt-4 mb-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Key Deliverables</div>
-                      <ul className="text-xs text-slate-700 space-y-1.5">
-                        {item.deliverables.map((del, dIdx) => (
-                          <li key={dIdx} className="flex items-start gap-2">
-                            <Check size={13} className="text-blue-600 shrink-0 mt-0.5" />
-                            <span>{del}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+          {/* Interactive Domain Filter Tabs */}
+          <div className="flex flex-wrap items-center gap-2 mb-10 p-1.5 rounded-2xl bg-white border border-slate-200 shadow-sm max-w-fit">
+            <button
+              onClick={() => setActiveCategoryTab('all')}
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                activeCategoryTab === 'all'
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
+            >
+              All 24 Converged Domains
+            </button>
+            <button
+              onClick={() => setActiveCategoryTab('networking')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                activeCategoryTab === 'networking'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+              }`}
+            >
+              <Network size={15} />
+              <span>12 Categories of Networking</span>
+            </button>
+            <button
+              onClick={() => setActiveCategoryTab('cybersecurity')}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all ${
+                activeCategoryTab === 'cybersecurity'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50'
+              }`}
+            >
+              <ShieldCheck size={15} />
+              <span>12 Categories of AI Cybersecurity</span>
+            </button>
+          </div>
+
+          {/* 1. NETWORKING CATEGORIES SECTION */}
+          {(activeCategoryTab === 'all' || activeCategoryTab === 'networking') && (
+            <div className="mb-14">
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                    <Network size={18} />
                   </div>
-                  <div className="pt-3 border-t border-slate-100 text-[11px] text-slate-500 italic">
-                    <strong>Differentiator:</strong> {item.differentiator}
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900">12 Categories of High-Performance Networking</h3>
+                    <p className="text-xs text-slate-500">From Campus &amp; Enterprise to Hyperscale GPU Fabrics, OT &amp; Space</p>
                   </div>
                 </div>
-              )
-            })}
-          </div>
+                <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
+                  12 CATEGORIES
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {networkingCategoriesData.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <div
+                      key={item.id}
+                      id={item.id}
+                      className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-400 transition-all flex flex-col justify-between group scroll-mt-24"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-[11px] font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-100">
+                            NETWORKING #{item.number < 10 ? `0${item.number}` : item.number}
+                          </span>
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                            {item.badge}
+                          </span>
+                        </div>
+
+                        <div className="flex items-start gap-3 mb-2">
+                          <div className="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <Icon size={18} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-base leading-snug">{item.label}</h4>
+                            <p className="text-xs text-slate-400 font-medium">{item.tagline}</p>
+                          </div>
+                        </div>
+
+                        <p className="text-xs text-slate-600 leading-relaxed my-3">
+                          {item.description}
+                        </p>
+
+                        <div className="border-t border-slate-100 pt-3 space-y-1.5 mb-4">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            Core Capabilities
+                          </span>
+                          {item.capabilities.map((cap, cIdx) => (
+                            <div key={cIdx} className="flex items-start gap-2 text-xs text-slate-700">
+                              <CheckCircle2 size={13} className="text-blue-500 shrink-0 mt-0.5" />
+                              <span className="text-[11px] leading-tight">{cap}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <span className="text-[10.5px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-100 truncate max-w-[190px]">
+                          {item.impactMetric}
+                        </span>
+                        <a
+                          href={item.href}
+                          onClick={() => {
+                            if (item.sectorId) setActiveSectorId(item.sectorId)
+                          }}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 hover:text-blue-700 group-hover:translate-x-0.5 transition-transform shrink-0"
+                        >
+                          <span>Explore Sector</span>
+                          <ArrowRight size={12} />
+                        </a>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* 2. CYBERSECURITY CATEGORIES SECTION */}
+          {(activeCategoryTab === 'all' || activeCategoryTab === 'cybersecurity') && (
+            <div>
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-200">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold">
+                    <ShieldCheck size={18} />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-extrabold text-slate-900">12 Categories of AI-Driven Cybersecurity</h3>
+                    <p className="text-xs text-slate-500">Continuous Behavioral Defense, Zero-Trust Identity, SOAR &amp; Post-Quantum Security</p>
+                  </div>
+                </div>
+                <span className="text-xs font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">
+                  12 CATEGORIES
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cybersecurityCategoriesData.map((item) => {
+                  const Icon = item.icon
+                  return (
+                    <div
+                      key={item.id}
+                      id={item.id}
+                      className="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-400 transition-all flex flex-col justify-between group scroll-mt-24"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-[11px] font-mono font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                            CYBERSECURITY #{item.number < 10 ? `0${item.number}` : item.number}
+                          </span>
+                          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                            {item.badge}
+                          </span>
+                        </div>
+
+                        <div className="flex items-start gap-3 mb-2">
+                          <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <Icon size={18} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-base leading-snug">{item.label}</h4>
+                            <p className="text-xs text-slate-400 font-medium">{item.tagline}</p>
+                          </div>
+                        </div>
+
+                        <p className="text-xs text-slate-600 leading-relaxed my-3">
+                          {item.description}
+                        </p>
+
+                        <div className="border-t border-slate-100 pt-3 space-y-1.5 mb-4">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                            Core Capabilities
+                          </span>
+                          {item.capabilities.map((cap, cIdx) => (
+                            <div key={cIdx} className="flex items-start gap-2 text-xs text-slate-700">
+                              <CheckCircle2 size={13} className="text-indigo-500 shrink-0 mt-0.5" />
+                              <span className="text-[11px] leading-tight">{cap}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <span className="text-[10.5px] font-medium text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-100 truncate max-w-[190px]">
+                          {item.impactMetric}
+                        </span>
+                        <a
+                          href={item.href}
+                          className="inline-flex items-center gap-1 text-xs font-bold text-indigo-600 hover:text-indigo-700 group-hover:translate-x-0.5 transition-transform shrink-0"
+                        >
+                          <span>Explore Spec</span>
+                          <ArrowRight size={12} />
+                        </a>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Cognitive WiFi Excellence Spotlight */}
           <div id="cognitive-wifi-7" className="mt-12 p-8 rounded-3xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white border border-blue-800 shadow-xl">
@@ -703,17 +896,14 @@ export default function AINetworkingCybersecurityPage() {
                 </div>
               </div>
 
-              {/* At A Glance Badge Strip */}
-              <div className="flex flex-wrap gap-2.5 lg:flex-col lg:items-end shrink-0">
-                <div className="px-3.5 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs text-slate-700 font-semibold">
-                  {currentSector.offeringsCount} Focused Offerings
-                </div>
-                <div className="px-3.5 py-1.5 rounded-lg bg-blue-50 border border-blue-200 text-xs text-blue-700 font-semibold">
-                  {currentSector.capabilitiesCount} Core Capabilities
-                </div>
-                <div className="px-3.5 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 font-semibold">
-                  {currentSector.phasesSummary}
-                </div>
+              <div className="shrink-0 flex items-center gap-3">
+                <a
+                  href="#intake-form"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs shadow-md shadow-blue-600/20 transition-all hover:scale-[1.02]"
+                >
+                  <span>Engage {currentSector.title} Pod</span>
+                  <ArrowRight size={14} />
+                </a>
               </div>
             </div>
 

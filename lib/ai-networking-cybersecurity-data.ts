@@ -25,7 +25,9 @@ import {
   FileSpreadsheet,
   Boxes,
   Compass,
-  Briefcase
+  Briefcase,
+  Users,
+  TrendingUp
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -1482,3 +1484,424 @@ export const acronymsList: AcronymItem[] = [
   { acronym: 'URWB', meaning: 'Ultra-Reliable Wireless Backhaul', domain: 'Wireless' },
   { acronym: 'VRF', meaning: 'Virtual Routing and Forwarding', domain: 'Networking' }
 ]
+
+// ============================================================================
+// 10. REFINED 12 CATEGORIES OF NETWORKING & 12 CATEGORIES OF CYBERSECURITY
+// ============================================================================
+
+export interface CategoryDetailItem {
+  id: string
+  number: number
+  label: string
+  badge: string
+  tagline: string
+  description: string
+  capabilities: string[]
+  impactMetric: string
+  icon: LucideIcon
+  href: string
+  sectorId?: string
+}
+
+export const networkingCategoriesData: CategoryDetailItem[] = [
+  {
+    id: 'campus-networking',
+    number: 1,
+    label: 'Campus Networking',
+    badge: 'ZERO-TRUST CAMPUS',
+    tagline: 'High-Density Wired & Wireless Access Fabric',
+    description: 'Unified multi-gigabit access, dynamic identity-based micro-segmentation, and seamless roaming designed for modern enterprise campuses and research facilities.',
+    capabilities: [
+      'Multi-gigabit PoE switching and automated client profiling',
+      'Dynamic identity segmentation isolating IoT, guest, and corporate flows',
+      'Microsecond campus-gateway handoffs supporting dense client fleets'
+    ],
+    impactMetric: 'Sub-5ms roaming handoff · Zero configuration drift',
+    icon: Building2,
+    href: '#campus-environments',
+    sectorId: 'campus-environments'
+  },
+  {
+    id: 'enterprise-networking',
+    number: 2,
+    label: 'Enterprise Networking',
+    badge: 'HYBRID ENTERPRISE CORE',
+    tagline: 'Resilient Multi-Cloud LAN/WAN Architecture',
+    description: 'Software-defined enterprise fabric interconnecting branch offices, corporate headquarters, and sovereign clouds with automated traffic engineering.',
+    capabilities: [
+      'Autonomous failover routing with real-time path health scoring',
+      'Unified multi-cloud transit fabric with deterministic QoS guarantees',
+      'Zero-touch branch provisioning with centralized policy compliance'
+    ],
+    impactMetric: '99.999% transport uptime · 40% egress cost reduction',
+    icon: Globe2,
+    href: '#enterprises',
+    sectorId: 'enterprises'
+  },
+  {
+    id: 'datacenter-networking',
+    number: 3,
+    label: 'Data Center Networking',
+    badge: 'LOSSLESS AI FABRIC',
+    tagline: 'RoCEv2 & Quantum-2 InfiniBand GPU Fabrics',
+    description: 'High-density, non-blocking network topologies engineered for ultra-large GPU training clusters and inference factories with zero packet drops.',
+    capabilities: [
+      'DCQCN, PFC, and dynamic buffer tuning eliminating packet loss',
+      'In-Band Network Telemetry (INT) with sub-100ms silent drop detection',
+      'Rail-optimized Fat-Tree & Dragonfly+ topologies (400G–1.6T)'
+    ],
+    impactMetric: '>96% effective GPU fabric yield · Zero packet drop',
+    icon: Server,
+    href: '#hyperscale-datacenters',
+    sectorId: 'hyperscale-datacenters'
+  },
+  {
+    id: 'space-networking',
+    number: 4,
+    label: 'Space Networking',
+    badge: 'ORBITAL NTN INTEGRATION',
+    tagline: 'Non-Terrestrial Network & Space-Ground Relays',
+    description: 'Resilient multi-terabit space-to-ground communication links connecting LEO/MEO/GEO constellations with terrestrial AI processing hubs.',
+    capabilities: [
+      'Adaptive orbital routing adjusting for dynamic satellite ephemeris',
+      'Jam-resistant self-healing mesh maintaining throughput under attack',
+      'Continuous attestation and quantum-safe key distribution for orbital nodes'
+    ],
+    impactMetric: 'Multi-Tbps feeder throughput · Sub-minute orbital reroute',
+    icon: Satellite,
+    href: '#satellite-networking',
+    sectorId: 'satellite-networking'
+  },
+  {
+    id: 'industrial-networking',
+    number: 5,
+    label: 'Industrial Networking',
+    badge: 'DETERMINISTIC OT/IT',
+    tagline: 'Time-Sensitive Industrial Manufacturing Fabrics',
+    description: 'Ruggedized deterministic networks connecting plant-floor robotics, automated guided vehicles, and SCADA systems with enterprise AI models.',
+    capabilities: [
+      'Ultra-Reliable Wireless Backhaul (URWB) with make-before-break roaming',
+      'Sub-10ms deterministic latency across heavy electromagnetic interference',
+      'Strict protocol air-gapping separating safety systems from enterprise IT'
+    ],
+    impactMetric: '<10ms deterministic latency · 92% lower unplanned downtime',
+    icon: Factory,
+    href: '#manufacturing-mission-critical',
+    sectorId: 'manufacturing-mission-critical'
+  },
+  {
+    id: 'cloud-networking',
+    number: 6,
+    label: 'Cloud Networking',
+    badge: 'MULTI-CLOUD TRANSIT',
+    tagline: 'Sovereign Multi-Cloud Interconnects & Overlays',
+    description: 'High-bandwidth, encrypted hybrid cloud mesh interconnecting AWS, Azure, GCP, and private on-premises AI infrastructure with zero egress sprawl.',
+    capabilities: [
+      'Direct cloud interconnects (DCI/DWDM) with line-rate MACsec encryption',
+      'Consistent security policy overlays across disparate cloud providers',
+      'Real-time egress route optimization reducing inter-cloud transit bills'
+    ],
+    impactMetric: 'Line-rate MACsec encryption · 35% latency improvement',
+    icon: Layers,
+    href: '#enterprises',
+    sectorId: 'enterprises'
+  },
+  {
+    id: 'edge-networking',
+    number: 7,
+    label: 'Edge Networking',
+    badge: 'LOW-LATENCY EDGE',
+    tagline: 'Decentralized Micro-Edge Inference Clusters',
+    description: 'Decentralized edge computing networks executing real-time AI inference at the point of data creation with local autonomous survival.',
+    capabilities: [
+      'Local deterministic routing keeping processing close to physical sensors',
+      'Rugged field cluster interconnects operating in harsh environments',
+      'Offline-first edge survivability maintaining operations during backhaul cuts'
+    ],
+    impactMetric: 'Sub-2ms local response · 100% offline survivability',
+    icon: Cpu,
+    href: '#aerospace-air-tech',
+    sectorId: 'aerospace-air-tech'
+  },
+  {
+    id: 'service-provider-networking',
+    number: 8,
+    label: 'Service Provider Networking',
+    badge: 'OPTICAL SUBSEA CORE',
+    tagline: 'Carrier-Grade Subsea Landing & Backhaul Transport',
+    description: 'Multi-terabit coherent optical transport networks powering intercontinental cable landing stations and carrier exchanges with zero-loss assurance.',
+    capabilities: [
+      'Coherent DWDM transmission optimizing optical spectrum utilization',
+      'Differentiated analytics distinguishing fiber cuts from cyber interference',
+      'Automated optical link restoration with sub-50ms protection switching'
+    ],
+    impactMetric: 'Multi-Tbps line-rate throughput · <50ms optical failover',
+    icon: Cable,
+    href: '#cable-landing-stations',
+    sectorId: 'cable-landing-stations'
+  },
+  {
+    id: 'wireless-networking',
+    number: 9,
+    label: 'Wireless Networking',
+    badge: 'COGNITIVE WIFI 7',
+    tagline: 'AI-Native Spectrum Optimization & Dynamic Steering',
+    description: 'Intelligent radio resource management optimizing channel width, transmit power, and client steering across ultra-dense enterprise environments.',
+    capabilities: [
+      'AI-RRM real-time RF tuning resolving interference autonomously',
+      'Multi-Link Operation (MLO) aggregation for ultra-low wireless latency',
+      'WPA3 Enterprise encryption with dynamic micro-segmentation'
+    ],
+    impactMetric: '70–80% autonomous RF remediation · 5x client density',
+    icon: Wifi,
+    href: '#cognitive-wifi-7',
+    sectorId: 'campus-environments'
+  },
+  {
+    id: 'iot-networking',
+    number: 10,
+    label: 'IoT Networking',
+    badge: 'SECURE IOT FABRIC',
+    tagline: 'Scalable Machine Telemetry & Sensor Integration',
+    description: 'Secure, high-density machine-to-machine networks ingesting millions of telemetry streams from industrial and smart infrastructure sensors.',
+    capabilities: [
+      'Automated device fingerprinting and zero-trust onboarding',
+      'Massive scale IoT protocol translation (MQTT, CoAP, Modbus)',
+      'Continuous behavioral profiling isolating compromised sensor nodes'
+    ],
+    impactMetric: 'Sub-second sensor telemetry · 100% device visibility',
+    icon: Radio,
+    href: '#manufacturing-mission-critical',
+    sectorId: 'manufacturing-mission-critical'
+  },
+  {
+    id: 'storage-area-networking',
+    number: 11,
+    label: 'Storage Area Networking (SAN)',
+    badge: 'GPUDIRECT NVME-OF',
+    tagline: 'Ultra-Fast NVMe-oF & Direct Memory Interconnects',
+    description: 'High-throughput, microsecond-latency storage networks engineered to feed massive datasets directly to GPU memory without CPU bottlenecks.',
+    capabilities: [
+      'GPUDirect Storage (GDS) over fabrics with RDMA acceleration',
+      'Non-blocking storage fabric buffers preventing I/O queue stalls',
+      'End-to-end data integrity validation with zero throughput penalty'
+    ],
+    impactMetric: '3.2 TB/s cluster read throughput · Zero CPU bottleneck',
+    icon: Zap,
+    href: '#hyperscale-datacenters',
+    sectorId: 'hyperscale-datacenters'
+  },
+  {
+    id: 'wide-area-networking',
+    number: 12,
+    label: 'Wide Area Networking (SD-WAN)',
+    badge: 'SOVEREIGN SD-WAN',
+    tagline: 'AI-Driven Adaptive SD-WAN Path Optimization',
+    description: 'Self-optimizing wide-area networks that dynamically steer enterprise traffic across fiber, 5G, and satellite paths based on real-time SLA metrics.',
+    capabilities: [
+      'Application-aware path selection prioritizing mission-critical AI flows',
+      'Sub-second link failover without session drops or packet loss',
+      'Centralized cryptographic policy enforcement across all branch endpoints'
+    ],
+    impactMetric: '99.999% application SLA · Sub-second link failover',
+    icon: Compass,
+    href: '#enterprises',
+    sectorId: 'enterprises'
+  }
+]
+
+export const cybersecurityCategoriesData: CategoryDetailItem[] = [
+  {
+    id: 'threat-detection-prevention',
+    number: 1,
+    label: 'AI Threat Detection & Prevention',
+    badge: 'SUB-3M CONTAINMENT',
+    tagline: 'Cross-Layer Behavioral Threat Hunting & Blocking',
+    description: 'Unified detection engine correlating network packet flows, host telemetry, and AI model tokens to neutralize active cyber intrusions in real time.',
+    capabilities: [
+      'Line-rate behavioral anomaly scoring across network and host layers',
+      'Automated perimeter and micro-segmentation quarantine workflows',
+      'Continuous MITRE ATT&CK and ATLAS adversarial mapping'
+    ],
+    impactMetric: '<3 minute Mean Time to Contain (MTTC) · Zero alert fatigue',
+    icon: ShieldCheck,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'anomaly-detection',
+    number: 2,
+    label: 'AI Anomaly Detection',
+    badge: 'TELEMETRY BASELINING',
+    tagline: 'Multi-Domain Telemetry Baselining & Drift Forensics',
+    description: 'Unsupervised machine learning models continuously baselining normal network, user, and compute behavior to detect silent operational deviations.',
+    capabilities: [
+      'Microburst and silent packet drop detection under 100 milliseconds',
+      'Model input drift and adversarial data poisoning early warning',
+      'Cross-domain telemetry correlation identifying hidden failure modes'
+    ],
+    impactMetric: 'Sub-100ms silent drop alert · 98% lower false positives',
+    icon: Activity,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'malware-analysis',
+    number: 3,
+    label: 'AI Malware Analysis & Classification',
+    badge: 'HEURISTIC SANDBOXING',
+    tagline: 'Automated Reverse-Engineering & Zero-Day Heuristics',
+    description: 'Deep-learning inspection engines analyzing unknown payloads, scripts, and binaries in isolated micro-virtual environments before execution.',
+    capabilities: [
+      'Zero-day behavioral signature synthesis without prior CVE knowledge',
+      'Memory injection and process hollowing detection at runtime',
+      'Automated disassembly and threat provenance attribution'
+    ],
+    impactMetric: 'Sub-second payload verdict · 100% air-gapped sandboxing',
+    icon: ShieldAlert,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'phishing-social-defense',
+    number: 4,
+    label: 'AI Phishing & Social Defense',
+    badge: 'SEMANTIC SHIELDS',
+    tagline: 'Contextual NLP Semantic Shields & Deception Traps',
+    description: 'Natural language processing engines analyzing incoming communications, executive impersonation patterns, and credential harvesting attempts.',
+    capabilities: [
+      'Deepfake voice and video biometric anomaly detection',
+      'Semantic invoice and business email compromise (BEC) inspection',
+      'Dynamic decoy credential traps neutralizing credential harvesting'
+    ],
+    impactMetric: '99.8% executive spoof capture · Real-time user warnings',
+    icon: Target,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'network-intrusion-detection',
+    number: 5,
+    label: 'AI Network Intrusion (NIDS/NIPS)',
+    badge: 'IN-BAND INSPECTION',
+    tagline: 'Line-Rate In-Band Packet Inspection & Shunting',
+    description: 'Line-rate hardware inspection engines inspecting 400G+ flows to detect lateral movement, command-and-control beacons, and exfiltration attempts.',
+    capabilities: [
+      'Hardware-accelerated Deep Packet Inspection (DPI) at line rate',
+      'Automated adversary traffic shunting isolating attack vectors',
+      'Encrypted traffic pattern analysis without breaking TLS confidentiality'
+    ],
+    impactMetric: 'Line-rate 400G–800G inspection · Zero latency penalty',
+    icon: Network,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'endpoint-protection',
+    number: 6,
+    label: 'AI Endpoint Protection',
+    badge: 'RUNTIME SHIELDS',
+    tagline: 'Agentic Runtime Behavioral Shields & Tamper Defense',
+    description: 'Lightweight endpoint agents monitoring process executions, memory spaces, and container boundaries to prevent unauthorized privilege escalation.',
+    capabilities: [
+      'Process memory behavioral monitoring blocking in-memory exploits',
+      'Autonomous ransomware kill-switch halting unauthorized encryption',
+      'Kernel-level tamper defense with immutable cryptographic auditing'
+    ],
+    impactMetric: 'Sub-second agent isolation · Zero kernel tamper vulnerability',
+    icon: Cpu,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'ueba',
+    number: 7,
+    label: 'AI User & Entity Behavior (UEBA)',
+    badge: 'CONTINUOUS PROFILING',
+    tagline: 'Continuous Identity Profiling & Insider Threat Analytics',
+    description: 'Machine learning models baselining normal work patterns for employees, contractors, and autonomous AI agents to spot credential misuse instantly.',
+    capabilities: [
+      'Dynamic peer group baseline modeling and anomaly scoring',
+      'Autonomous agent behavioral containment upon workflow drift',
+      'Real-time risk scoring dictating ephemeral access permissions'
+    ],
+    impactMetric: 'Continuous identity profiling · Sub-second lateral halt',
+    icon: Users,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'soar',
+    number: 8,
+    label: 'AI Security Orchestration (SOAR)',
+    badge: 'AUTONOMOUS PLAYBOOKS',
+    tagline: 'Autonomous Incident Playbooks & Self-Healing Security',
+    description: 'Pre-engineered, closed-loop playbooks that triage alerts, execute forensic data collection, and isolate compromised assets without human delay.',
+    capabilities: [
+      'Automated multi-system playbook execution spanning network and IAM',
+      'Cryptographic forensic artifact preservation for legal auditability',
+      'Closed-loop change verification ensuring remediation success'
+    ],
+    impactMetric: '85% autonomous alert triage · Sub-5m end-to-end resolution',
+    icon: Workflow,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'vulnerability-management',
+    number: 9,
+    label: 'AI Vulnerability Management',
+    badge: 'CONTINUOUS CBOM',
+    tagline: 'Continuous CBOM Discovery & Exploitability Prioritization',
+    description: 'Automated engines maintaining an exact Cryptographic and Software Bill of Materials (CBOM/SBOM) with proactive vulnerability prioritization.',
+    capabilities: [
+      'Real-time cryptographic asset inventory mapped for post-quantum risk',
+      'Weaponized exploit correlation prioritizing actively targeted CVEs',
+      'Automated patch orchestration with automated rollback verification'
+    ],
+    impactMetric: '100% CBOM visibility · Zero untracked cryptographic assets',
+    icon: BarChart3,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'fraud-detection',
+    number: 10,
+    label: 'AI Fraud Detection',
+    badge: 'TRANSACTION INTELLIGENCE',
+    tagline: 'Sub-Millisecond Transaction Intelligence & Ring Defense',
+    description: 'High-speed inference models analyzing transaction graph topologies and user signals to stop synthetic identity theft and payment fraud rings.',
+    capabilities: [
+      'Graph neural network fraud detection discovering hidden syndicate rings',
+      'Synthetic identity correlation identifying fraudulent account creation',
+      'Account takeover (ATO) prevention with continuous behavioral checks'
+    ],
+    impactMetric: 'Sub-10ms scoring latency · 75% fraud loss reduction',
+    icon: TrendingUp,
+    href: '#platform-offerings'
+  },
+  {
+    id: 'identity-access-management',
+    number: 11,
+    label: 'AI Identity & Access (Zero-Trust IAM)',
+    badge: 'PQC SPIFFE/SPIRE',
+    tagline: 'Cryptographic Ephemeral Identities & Least-Privilege IAM',
+    description: 'Micro-segmented identity fabric issuing short-lived, verifiable credentials (SPIFFE/SPIRE) to every user, microservice, and autonomous agent.',
+    capabilities: [
+      'Cryptographic SPIFFE/SPIRE ephemeral workload identities',
+      'NIST PQC hybrid key encapsulation protecting against quantum decryption',
+      'Just-in-time least-privilege tool execution for autonomous AI workers'
+    ],
+    impactMetric: 'Zero static secret exposure · Continuous token attestation',
+    icon: Lock,
+    href: '#agent-identity-iam'
+  },
+  {
+    id: 'predictive-threat-intelligence',
+    number: 12,
+    label: 'AI Predictive Threat Intelligence',
+    badge: 'ADVERSARIAL RED-TEAMING',
+    tagline: 'Global Threat Feed Synthesis & Adversarial Simulation',
+    description: 'Autonomous threat modeling ingesting worldwide attacker telemetry and running continuous adversarial breach simulations across your attack surface.',
+    capabilities: [
+      'Autonomous LLM jailbreak simulation and prompt-injection testing',
+      'MITRE ATLAS adversarial profiling tailored to your model weights',
+      'Predictive threat shielding pushing defensive rules before zero-days hit'
+    ],
+    impactMetric: 'Continuous 24/7 automated red-teaming · Predictive shielding',
+    icon: Sparkles,
+    href: '#platform-offerings'
+  }
+]
+
