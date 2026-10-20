@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next'
 import { solutions } from '@/lib/solutions'
 
+export const dynamic = 'force-static'
+
 const BASE_URL = 'https://trustgrid.ai'
 
 export default function sitemap(): MetadataRoute.Sitemap {

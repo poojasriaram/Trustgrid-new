@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getDatabase } from '@/lib/db'
 import { extractClientIp, maskIp, resolveGeoAndNetwork, evaluateSecurity } from '@/lib/network-intel'
 import { classifyTraffic } from '@/lib/traffic-attribution'
+import {
+  checkRateLimit,
+  trackRedisEvent,
+  sanitizePath,
+  sanitizeParam,
+  AllowedEventType,
+  ALLOWED_EVENT_TYPES,
+  SafeAnalyticsEvent
+} from '@/lib/redis-analytics'
 
 export const runtime = 'nodejs'
 
@@ -69,6 +78,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: 'Empty payload' }, { status: 400 })
     }
 
+    // 1. Strict Payload Size Check (Max 32KB)
+    if (rawBody.length > 32768) {
+      return NextResponse.json(
+        { success: false, message: 'Payload too large. Maximum size is 32KB.' },
+        { status: 413 }
+      )
+    }
+
     let parsed: any
     try {
       parsed = JSON.parse(rawBody)
@@ -91,7 +108,16 @@ export async function POST(req: NextRequest) {
     const nowUtc = new Date().toISOString()
     const nowMs = Date.now()
 
-    // 1. Security Check on Client IP
+    // 2. Redis-backed Sliding Window Rate Limiter (120 req / min)
+    const isRateAllowed = await checkRateLimit(clientIp, 120, 60)
+    if (!isRateAllowed) {
+      return NextResponse.json(
+        { success: false, message: 'Rate limit exceeded. Please throttle requests.' },
+        { status: 429 }
+      )
+    }
+
+    // 3. Security Check on Client IP
     const secResult = evaluateSecurity(clientIp, events[0].page_path || '/', userAgent)
     if (secResult.isRateLimited) {
       return NextResponse.json(
@@ -100,8 +126,45 @@ export async function POST(req: NextRequest) {
       )
     }
 
-    // 2. Resolve Geolocation & Network ASN
+    // 4. Resolve Geolocation & Network ASN
     const geo = await resolveGeoAndNetwork(clientIp, req.headers)
+
+    // 5. Ingest into Redis Cloud Data Store (Allowlist & Privacy Guarded)
+    for (const rawEv of events) {
+      let eventType: AllowedEventType | null = null
+      const rawName = (rawEv.event_name || '').toLowerCase()
+
+      if (rawName === 'page_view' || rawName === 'pageview') eventType = 'page_view'
+      else if (rawName === 'session_start') eventType = 'session_start'
+      else if (rawName.includes('cta') || rawName.includes('click')) eventType = 'cta_click'
+      else if (rawName.includes('form') || rawName.includes('submit') || rawEv.is_conversion) eventType = 'form_success'
+
+      if (eventType && ALLOWED_EVENT_TYPES.includes(eventType)) {
+        const safeEvent: SafeAnalyticsEvent = {
+          event_id: rawEv.event_id || `ev_${nowMs}_${Math.random().toString(36).slice(2, 8)}`,
+          event_type: eventType,
+          session_id: sanitizeParam(rawEv.session_id, 64) || `sess_${nowMs}`,
+          timestamp: nowUtc,
+          page_path: sanitizePath(rawEv.page_path),
+          page_title: sanitizeParam(rawEv.page_title, 120),
+          referrer: sanitizeParam(rawEv.referrer, 200),
+          traffic_source: sanitizeParam(rawEv.utm_source ? `${rawEv.utm_source} / ${rawEv.utm_medium || 'cpc'}` : (rawEv.referrer && !rawEv.referrer.includes(currentHost) ? 'Referral' : 'Direct'), 60),
+          utm_source: sanitizeParam(rawEv.utm_source, 50),
+          utm_medium: sanitizeParam(rawEv.utm_medium, 50),
+          utm_campaign: sanitizeParam(rawEv.utm_campaign, 50),
+          cta_name: sanitizeParam(rawEv.event_action || rawEv.event_category || rawEv.metadata?.cta_label, 80),
+          device_type: sanitizeParam(rawEv.device_type, 30),
+          browser: sanitizeParam(rawEv.browser, 30),
+          operating_system: sanitizeParam(rawEv.operating_system, 30),
+          country: sanitizeParam(geo?.country, 50),
+          consent_granted: rawEv.consent_status !== 'denied'
+        }
+
+        trackRedisEvent(safeEvent).catch((err) => {
+          console.warn('[Redis Async Track Warning]', err?.message)
+        })
+      }
+    }
 
     const db = getDatabase()
 

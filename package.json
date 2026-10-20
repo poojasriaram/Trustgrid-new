@@ -8,8 +8,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:export": "node scripts/build-export.js",
     "start": "next start",
-    "linkedin:publish": "node scripts/publish-gpu-post.js"
+    "linkedin:publish": "node scripts/publish-gpu-post.js",
+    "analytics:view": "npx tsx scripts/view-redis-analytics.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
@@ -20,6 +22,7 @@
     "next": "16.3.3",
     "react": "^19",
     "react-dom": "^19",
+    "redis": "^6.3.0",
     "shadcn": "^4.11.0",
     "sharp": "^0.35.5",
     "tailwind-merge": "^3.3.1",

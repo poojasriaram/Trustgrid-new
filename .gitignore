@@ -28,3 +28,5 @@ data/
 tab*.txt
 doc_export.txt
 Lean-Ai-Value-EngineeringVx1.html
+.vercel
+.env*

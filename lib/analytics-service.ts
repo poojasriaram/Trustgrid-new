@@ -286,6 +286,7 @@ export interface DashboardDataset {
   brokenLinkQa: BrokenLinkQaData
   networkIntel?: NetworkIntelData
   realDataSummary?: RealDataSummary
+  redisAnalytics?: import('./redis-analytics').RedisAnalyticsDashboardData
   dataSource?: 'LIVE_DATABASE' | 'HYBRID_INTELLIGENCE' | 'SHEET2_SYNC'
 }
 

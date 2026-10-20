@@ -1266,6 +1266,15 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
     var isUtm = normKey.indexOf("utm") !== -1;
     var prettyKey = rawKey.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); }).replace(/_/g, ' ').trim();
 
+    if (normKey === "leadsource" || normKey === "source") {
+      prettyKey = "Lead Source";
+      seenKeys["source"] = true;
+      seenKeys["leadsource"] = true;
+      var lowVal = String(val || "").toLowerCase();
+      if (!val || lowVal === "organic" || lowVal === "organic search" || lowVal.indexOf("organic") !== -1 || lowVal.indexOf("direct") !== -1) {
+        val = "Google Organic Search";
+      }
+    }
     if (normKey === "submissionid") prettyKey = "Submission ID";
     if (normKey === "workemail") prettyKey = "Work Email";
     if (normKey === "companyname") prettyKey = "Company Name";
@@ -1285,6 +1294,14 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
                   '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#0f172a;font-size:13px;font-weight:500;">' + valStr + '</td>' +
                   '</tr>';
     }
+  }
+
+  if (!seenKeys["leadsource"] && !seenKeys["source"]) {
+    var defaultSourceVal = "Google Organic Search";
+    formRows = '<tr>' +
+               '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#64748b;font-size:13px;width:35%;vertical-align:top;">Lead Source</td>' +
+               '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#0f172a;font-size:13px;font-weight:500;">' + escapeHtml(defaultSourceVal) + '</td>' +
+               '</tr>' + formRows;
   }
 
   // Action Buttons
@@ -1368,7 +1385,7 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
     '      ' + coverLetterSection,
     '',
     '      <!-- FORM DATA TABLE -->',
-    '      <h4 style="margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #4338ca; font-weight: 700;">Submission Parameters</h4>',
+    '      <h4 style="margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #4338ca; font-weight: 700;">Lead Details</h4>',
     '      <table style="width: 100%; border-collapse: collapse; border: 1px solid #f1f5f9; border-radius: 8px; overflow: hidden;">',
     '        <tbody>' + formRows + '</tbody>',
     '      </table>',
@@ -2686,7 +2703,7 @@ function normalizeTrafficSource(src, utmSrc) {
   if (s.indexOf("google_ad") !== -1 || s.indexOf("cpc") !== -1 || s.indexOf("adwords") !== -1) return "Google Ads";
   if (s.indexOf("linkedin") !== -1) return "LinkedIn";
   if (s.indexOf("twitter") !== -1 || s.indexOf("x.com") !== -1) return "X / Twitter";
-  if (s.indexOf("organic") !== -1 || s.indexOf("google") !== -1 || s.indexOf("search") !== -1) return "Organic Search";
+  if (s.indexOf("organic") !== -1 || s.indexOf("google") !== -1 || s.indexOf("search") !== -1) return "Google Organic Search";
   if (s.indexOf("referral") !== -1) return "Referral";
   return "Direct / Unknown";
 }

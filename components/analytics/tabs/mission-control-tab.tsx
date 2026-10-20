@@ -13,15 +13,22 @@ import {
   ShieldCheck,
   Terminal,
   Zap,
-  CheckCircle2
+  CheckCircle2,
+  Database,
+  Radio,
+  Cpu,
+  ArrowUpRight,
+  Shield
 } from 'lucide-react'
 import { MissionControlData } from '@/lib/analytics-service'
+import { RedisAnalyticsDashboardData } from '@/lib/redis-analytics'
 
 interface Props {
   data: MissionControlData
+  redisAnalytics?: RedisAnalyticsDashboardData
 }
 
-export function MissionControlTab({ data }: Props) {
+export function MissionControlTab({ data, redisAnalytics }: Props) {
   const kpiCards = [
     { title: 'Global Traffic', value: data.globalTraffic.toLocaleString(), subtitle: 'Raw pageviews recorded', icon: Activity, color: 'text-indigo-400', bg: 'from-indigo-500/10 to-indigo-950/30', border: 'border-indigo-500/30' },
     { title: 'Number of Sessions', value: data.sessions.toLocaleString(), subtitle: 'Validated visit journeys', icon: Zap, color: 'text-cyan-400', bg: 'from-cyan-500/10 to-cyan-950/30', border: 'border-cyan-500/30' },
@@ -267,6 +274,151 @@ export function MissionControlTab({ data }: Props) {
           </div>
         </div>
       </div>
+
+      {/* LIVE REDIS CLOUD REAL-TIME TELEMETRY & HEALTH SECTION */}
+      {redisAnalytics && (
+        <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-slate-900/90 to-slate-950 p-6 shadow-2xl backdrop-blur-md space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
+                <Database className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-bold text-white tracking-wide">Redis Cloud Live Telemetry & Session Engine</h3>
+                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold border ${
+                    redisAnalytics.health.status === 'connected'
+                      ? 'bg-emerald-950/80 text-emerald-400 border-emerald-500/40'
+                      : redisAnalytics.health.status === 'fallback'
+                      ? 'bg-amber-950/80 text-amber-400 border-amber-500/40'
+                      : 'bg-rose-950/80 text-rose-400 border-rose-500/40'
+                  }`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${
+                      redisAnalytics.health.status === 'connected' ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'
+                    }`} />
+                    {redisAnalytics.health.status === 'connected'
+                      ? `CONNECTED (${redisAnalytics.health.latencyMs || 0}ms)`
+                      : redisAnalytics.health.status === 'fallback'
+                      ? 'SAFE IN-MEMORY FALLBACK'
+                      : 'OFFLINE'}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Serverless connection reuse &bull; Atomic counter aggregation &bull; Bounded TTL retention
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+              <Radio className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
+              <span>Real-Time Stream Active</span>
+            </div>
+          </div>
+
+          {/* Quick Redis Metrics Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Active Sessions (20m)</span>
+              <span className="text-xl font-bold font-mono text-cyan-400 mt-1 block">
+                {redisAnalytics.overview.activeSessions}
+              </span>
+            </div>
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Live Pageviews</span>
+              <span className="text-xl font-bold font-mono text-indigo-400 mt-1 block">
+                {redisAnalytics.overview.totalPageViews.toLocaleString()}
+              </span>
+            </div>
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Total CTA Clicks</span>
+              <span className="text-xl font-bold font-mono text-emerald-400 mt-1 block">
+                {redisAnalytics.overview.totalCtaClicks.toLocaleString()}
+              </span>
+            </div>
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Form Conversions</span>
+              <span className="text-xl font-bold font-mono text-rose-400 mt-1 block">
+                {redisAnalytics.overview.totalFormSuccess.toLocaleString()}
+              </span>
+            </div>
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Conversion Rate</span>
+              <span className="text-xl font-bold font-mono text-amber-400 mt-1 block">
+                {redisAnalytics.overview.conversionRatePercent}%
+              </span>
+            </div>
+            <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
+              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Unique Sessions</span>
+              <span className="text-xl font-bold font-mono text-sky-400 mt-1 block">
+                {redisAnalytics.overview.uniqueSessions.toLocaleString()}
+              </span>
+            </div>
+          </div>
+
+          {/* Top Pages & Traffic Sources Breakdown */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+            {/* Top Visited Pages */}
+            <div className="p-4 rounded-lg border border-slate-800/80 bg-black/40">
+              <h4 className="text-xs font-semibold uppercase text-slate-300 tracking-wider mb-2.5 flex items-center justify-between">
+                <span>Top Pages (Redis Sorted Set)</span>
+                <span className="text-[10px] font-mono text-cyan-400">Views</span>
+              </h4>
+              <div className="space-y-1.5 text-xs font-mono">
+                {redisAnalytics.topPages.length > 0 ? (
+                  redisAnalytics.topPages.slice(0, 5).map((p, i) => (
+                    <div key={i} className="flex items-center justify-between py-1 border-b border-slate-800/40 text-slate-300">
+                      <span className="truncate max-w-[200px]" title={p.path}>{p.path}</span>
+                      <span className="text-cyan-400 font-bold">{p.views}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-slate-500 text-[11px] py-2">Awaiting incoming pageview events...</p>
+                )}
+              </div>
+            </div>
+
+            {/* Traffic Sources */}
+            <div className="p-4 rounded-lg border border-slate-800/80 bg-black/40">
+              <h4 className="text-xs font-semibold uppercase text-slate-300 tracking-wider mb-2.5 flex items-center justify-between">
+                <span>Traffic Sources (Hash)</span>
+                <span className="text-[10px] font-mono text-indigo-400">Hits</span>
+              </h4>
+              <div className="space-y-1.5 text-xs font-mono">
+                {redisAnalytics.trafficSources.length > 0 ? (
+                  redisAnalytics.trafficSources.slice(0, 5).map((s, i) => (
+                    <div key={i} className="flex items-center justify-between py-1 border-b border-slate-800/40 text-slate-300">
+                      <span className="truncate max-w-[200px]">{s.source}</span>
+                      <span className="text-indigo-400 font-bold">{s.count}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-slate-500 text-[11px] py-2">Awaiting inbound referral traffic...</p>
+                )}
+              </div>
+            </div>
+
+            {/* CTA Performance */}
+            <div className="p-4 rounded-lg border border-slate-800/80 bg-black/40">
+              <h4 className="text-xs font-semibold uppercase text-slate-300 tracking-wider mb-2.5 flex items-center justify-between">
+                <span>CTA Interactions</span>
+                <span className="text-[10px] font-mono text-emerald-400">Clicks</span>
+              </h4>
+              <div className="space-y-1.5 text-xs font-mono">
+                {redisAnalytics.ctaPerformance.length > 0 ? (
+                  redisAnalytics.ctaPerformance.slice(0, 5).map((c, i) => (
+                    <div key={i} className="flex items-center justify-between py-1 border-b border-slate-800/40 text-slate-300">
+                      <span className="truncate max-w-[200px]">{c.cta}</span>
+                      <span className="text-emerald-400 font-bold">{c.clicks}</span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-slate-500 text-[11px] py-2">Awaiting user button interactions...</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
