@@ -730,62 +730,104 @@ const aboutMenuItems = [
   }
 ]
 
-// 8. Consolidated Practice Areas: 5 Core Menus (Left Sidebar & Right Submenus)
+// 8. Consolidated Practice Areas: 5 Core Menus (Left Sidebar & Right Categorized Submenus)
 const practiceAreasFiveSections = [
   {
     id: 'engineering' as const,
     num: '1',
     title: 'Engineering Practices',
     shortLabel: 'Engineering Practices',
-    sub: 'Silicon · Fabrics · Agent Swarms · Edge',
+    sub: 'Silicon · Fabrics · Agent Swarms · Sovereign',
     badge: 'CORE SYSTEMS ENGINEERING',
     headerTitle: 'Core Systems Engineering & AI Computing Practices',
     tagline: 'Deterministic systems engineering across silicon, data center hardware, fabrics, and multi-agent systems.',
     ctaText: 'Explore Engineering Directory →',
     ctaHref: '/practice-areas#primary-categories',
     icon: Cpu,
-    items: [
+    categories: [
       {
-        category: 'HARDWARE & ACCELERATION',
-        label: 'AI Data Center & Compute Factory',
-        href: '/practice-areas/compute-data-center',
-        desc: 'GPU clusters, ASIC accelerators, high-density power distribution, and liquid cooling architectures.',
-        icon: Cpu
+        title: 'Silicon & Data Center',
+        badge: 'L1-L3 COMPUTE',
+        icon: Cpu,
+        items: [
+          {
+            category: 'HARDWARE ACCELERATION',
+            label: 'AI Data Center & Compute Factory',
+            href: '/practice-areas/compute-data-center',
+            desc: 'GPU clusters, ASIC accelerators, high-density power distribution, and liquid cooling architectures.',
+            icon: Cpu
+          },
+          {
+            category: 'LOSSLESS FABRIC',
+            label: 'Lossless AI Networking & Fabrics',
+            href: '/practice-areas/lossless-datacenter-fabric',
+            desc: 'Ultra-low latency RoCEv2, InfiniBand, adaptive routing, and telemetry for zero-drop AI workloads.',
+            icon: Activity
+          },
+          {
+            category: 'POWER & THERMAL',
+            label: 'High-Density Power & Facilities',
+            href: '/practice-areas/compute-data-center',
+            desc: 'Megawatt-scale power distribution, thermal envelope modeling, and liquid immersion cooling systems.',
+            icon: Zap
+          }
+        ]
       },
       {
-        category: 'LOSSLESS FABRIC',
-        label: 'Lossless AI Networking & Fabrics',
-        href: '/practice-areas/lossless-datacenter-fabric',
-        desc: 'Ultra-low latency RoCEv2, InfiniBand, adaptive routing, and telemetry for zero-drop AI workloads.',
-        icon: Activity
+        title: 'Agent Swarms & Mesh',
+        badge: 'ORCHESTRATION',
+        icon: Network,
+        items: [
+          {
+            category: 'AGENT FLEETS',
+            label: 'Distributed Agent Swarms & Mesh',
+            href: '/practice-areas/distributed-agent-swarms',
+            desc: 'Production-grade multi-agent swarms, deterministic execution, and distributed semantic memory.',
+            icon: Network
+          },
+          {
+            category: 'WORKFLOW ENGINE',
+            label: 'Agentic Workflow Orchestration',
+            href: '/practice-areas/distributed-agent-swarms',
+            desc: 'Deterministic multi-agent DAGs, tool-calling validation, and self-correcting feedback loops.',
+            icon: Workflow
+          },
+          {
+            category: 'RUNTIME & SERVING',
+            label: 'Model Lifecycle & Inference Serving',
+            href: '/solutions/ai-infra-engineering',
+            desc: 'Continuous quantization, speculative decoding, and high-throughput vLLM cluster serving.',
+            icon: Layers
+          }
+        ]
       },
       {
-        category: 'AGENT FLEETS',
-        label: 'Distributed Agent Swarms & Mesh',
-        href: '/practice-areas/distributed-agent-swarms',
-        desc: 'Production-grade multi-agent swarms, deterministic execution, and distributed semantic memory.',
-        icon: Network
-      },
-      {
-        category: 'SOVEREIGN AI',
-        label: 'Edge AI, Sovereign & Air-Gapped',
-        href: '/practice-areas/air-gapped-edge-ai',
-        desc: 'Air-gapped, zero-trust edge compute with on-device quantization and local compliance enforcement.',
-        icon: Server
-      },
-      {
-        category: 'CYBER DEFENSE',
-        label: 'AI-Native Cybersecurity & Defense Mesh',
-        href: '/practice-areas/agentic-threat-detection',
-        desc: 'Self-healing cyber mesh, autonomous threat neutralization, and post-quantum cryptographic resilience.',
-        icon: ShieldCheck
-      },
-      {
-        category: 'SYSTEMS INTEGRATION',
-        label: 'Full-Stack Systems Co-Engineering',
-        href: '/solutions/ai-infra-engineering',
-        desc: 'End-to-end integration uniting silicon primitives, model runtimes, and distributed enterprise workflows.',
-        icon: Workflow
+        title: 'Sovereign & Cyber Defense',
+        badge: 'MISSION-CRITICAL',
+        icon: ShieldCheck,
+        items: [
+          {
+            category: 'SOVEREIGN AI',
+            label: 'Edge AI, Sovereign & Air-Gapped',
+            href: '/practice-areas/air-gapped-edge-ai',
+            desc: 'Air-gapped, zero-trust edge compute with on-device quantization and local compliance enforcement.',
+            icon: Server
+          },
+          {
+            category: 'CYBER DEFENSE',
+            label: 'AI-Native Cybersecurity & Defense Mesh',
+            href: '/practice-areas/agentic-threat-detection',
+            desc: 'Self-healing cyber mesh, autonomous threat neutralization, and post-quantum cryptographic resilience.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'SYSTEMS INTEGRATION',
+            label: 'Full-Stack Systems Co-Engineering',
+            href: '/solutions/ai-infra-engineering',
+            desc: 'End-to-end integration uniting silicon primitives, model runtimes, and distributed enterprise workflows.',
+            icon: Bot
+          }
+        ]
       }
     ]
   },
@@ -794,55 +836,97 @@ const practiceAreasFiveSections = [
     num: '2',
     title: 'Functional Practices',
     shortLabel: 'Functional Practices',
-    sub: 'RevOps · Supply Chain · GRC · HR · IT',
+    sub: 'GRC · RevOps · Supply Chain · Finance',
     badge: '15 HORIZONTAL DISCIPLINES',
-    headerTitle: 'Cross-Industry Capabilities & Functional AI Transformation',
+    headerTitle: 'Cross-Industry Capabilities & Functional Transformation',
     tagline: '15 horizontal disciplines industrializing enterprise operations with compounding agent workflows.',
-    ctaText: 'View All 15 Capabilities →',
+    ctaText: 'View All 15 Disciplines →',
     ctaHref: '/practice-areas#primary-categories',
     icon: Workflow,
-    items: [
+    categories: [
       {
-        category: 'GOVERNANCE & RISK',
-        label: 'Enterprise AI Governance & GRC',
-        href: '/practice-areas/enterprise-ai-governance-grc',
-        desc: 'EU AI Act compliance, algorithmic auditability, bias monitoring, and safety guardrail frameworks.',
-        icon: ShieldAlert
+        title: 'Risk, GRC & Legal',
+        badge: 'BOARD DEFENSE',
+        icon: ShieldAlert,
+        items: [
+          {
+            category: 'GOVERNANCE & RISK',
+            label: 'Enterprise AI Governance & GRC',
+            href: '/practice-areas/enterprise-ai-governance-grc',
+            desc: 'EU AI Act compliance, algorithmic auditability, bias monitoring, and safety guardrail frameworks.',
+            icon: ShieldAlert
+          },
+          {
+            category: 'LEGAL & CONTRACTS',
+            label: 'Legal & Regulatory Compliance',
+            href: '/practice-areas/legal-contracts-regulatory-compliance',
+            desc: 'Automated contract redlining, regulatory change tracking, and corporate governance automation.',
+            icon: FileText
+          },
+          {
+            category: 'SUSTAINABILITY & ESG',
+            label: 'ESG & Sustainability Intelligence',
+            href: '/practice-areas/enterprise-ai-governance-grc',
+            desc: 'Automated Scope 1-3 carbon accounting, audit trail generation, and ESG disclosure intelligence.',
+            icon: Leaf
+          }
+        ]
       },
       {
-        category: 'CUSTOMER OPERATIONS',
-        label: 'Customer Operations & Service Excellence',
-        href: '/practice-areas/customer-operations-service-excellence',
-        desc: 'Omnichannel autonomous support swarms, contact center orchestration, and sentiment triage.',
-        icon: Users
+        title: 'Revenue & Customer Ops',
+        badge: 'COMMERCIAL GROWTH',
+        icon: Users,
+        items: [
+          {
+            category: 'CUSTOMER OPERATIONS',
+            label: 'Customer Operations & Service Excellence',
+            href: '/practice-areas/customer-operations-service-excellence',
+            desc: 'Omnichannel autonomous support swarms, contact center orchestration, and sentiment triage.',
+            icon: Users
+          },
+          {
+            category: 'REVENUE OPERATIONS',
+            label: 'Revenue Operations & Growth AI',
+            href: '/practice-areas/customer-operations-service-excellence',
+            desc: 'Predictive pipeline progression, churn mitigation swarms, and pricing elasticity models.',
+            icon: TrendingUp
+          },
+          {
+            category: 'SALES ACCELERATION',
+            label: 'Sales Engineering & Deal Intelligence',
+            href: '/practice-areas/customer-operations-service-excellence',
+            desc: 'Autonomous RFP parsing, dynamic proposal generation, and competitive battlecard synthesis.',
+            icon: Target
+          }
+        ]
       },
       {
-        category: 'SUPPLY & SOURCING',
-        label: 'Supply Chain & Logistics Intelligence',
-        href: '/practice-areas/supply-chain-logistics-intelligence',
-        desc: 'Predictive inventory allocation, supplier risk intelligence, and automated freight optimization.',
-        icon: Workflow
-      },
-      {
-        category: 'FINANCE & TREASURY',
-        label: 'Finance, Accounting & Treasury Automation',
-        href: '/practice-areas/finance-accounting-treasury-automation',
-        desc: 'Continuous close, automated reconciliation, algorithmic cash flow forecasting, and anomaly detection.',
-        icon: BarChart3
-      },
-      {
-        category: 'LEGAL & CONTRACTS',
-        label: 'Legal, Contracts & Regulatory Compliance',
-        href: '/practice-areas/legal-contracts-regulatory-compliance',
-        desc: 'Automated contract redlining, regulatory change tracking, and corporate governance automation.',
-        icon: FileText
-      },
-      {
-        category: 'SEMANTIC KNOWLEDGE',
-        label: 'Enterprise Knowledge & Semantic Fabric',
-        href: '/practice-areas/enterprise-knowledge-semantic-fabric',
-        desc: 'Enterprise semantic layer, knowledge graphs, and hybrid retrieval-augmented generation.',
-        icon: Layers
+        title: 'Supply Chain & Finance',
+        badge: 'OPERATIONS & LEDGER',
+        icon: BarChart3,
+        items: [
+          {
+            category: 'SUPPLY & SOURCING',
+            label: 'Supply Chain & Logistics Intelligence',
+            href: '/practice-areas/supply-chain-logistics-intelligence',
+            desc: 'Predictive inventory allocation, supplier risk intelligence, and automated freight optimization.',
+            icon: Workflow
+          },
+          {
+            category: 'FINANCE & TREASURY',
+            label: 'Finance, Accounting & Treasury Automation',
+            href: '/practice-areas/finance-accounting-treasury-automation',
+            desc: 'Continuous close, automated reconciliation, algorithmic cash flow forecasting, and anomaly detection.',
+            icon: BarChart3
+          },
+          {
+            category: 'SEMANTIC KNOWLEDGE',
+            label: 'Enterprise Knowledge & Semantic Fabric',
+            href: '/practice-areas/enterprise-knowledge-semantic-fabric',
+            desc: 'Enterprise semantic layer, knowledge graphs, and hybrid retrieval-augmented generation.',
+            icon: Layers
+          }
+        ]
       }
     ]
   },
@@ -858,48 +942,90 @@ const practiceAreasFiveSections = [
     ctaText: 'View All 8 Verticals →',
     ctaHref: '/practice-areas#primary-categories',
     icon: Building2,
-    items: [
+    categories: [
       {
-        category: 'FINANCIAL SERVICES',
-        label: 'Banking, Financial Services & Insurance',
-        href: '/practice-areas/banking-financial-services-bfsi',
-        desc: 'Algorithmic underwriting, real-time AML fraud graph defense, and Basel IV capital compliance.',
-        icon: Building2
+        title: 'Financial & Public Sector',
+        badge: 'HIGH REGULATION',
+        icon: Building2,
+        items: [
+          {
+            category: 'FINANCIAL SERVICES',
+            label: 'Banking, Financial Services & Insurance (BFSI)',
+            href: '/practice-areas/banking-financial-services-bfsi',
+            desc: 'Algorithmic underwriting, real-time AML fraud graph defense, and Basel IV capital compliance.',
+            icon: Building2
+          },
+          {
+            category: 'CAPITAL MARKETS',
+            label: 'Capital Markets & Asset Management',
+            href: '/practice-areas/banking-financial-services-bfsi',
+            desc: 'Algorithmic execution, quantitative risk modeling, and automated SEC regulatory filings.',
+            icon: BarChart3
+          },
+          {
+            category: 'CIVIC & DEFENSE',
+            label: 'Public Sector, Defense & Civic AI',
+            href: '/practice-areas/public-sector-defense-civic',
+            desc: 'FedRAMP High architectures, mission-critical workflow defense, and citizen service automation.',
+            icon: ShieldCheck
+          }
+        ]
       },
       {
-        category: 'HEALTHCARE & PHARMA',
-        label: 'Healthcare & Life Sciences',
-        href: '/practice-areas/healthcare-life-sciences',
-        desc: 'HIPAA-compliant clinical documentation, drug candidate discovery, and clinical trials.',
-        icon: Activity
+        title: 'Life Sciences & Energy',
+        badge: 'CRITICAL INFRA',
+        icon: Activity,
+        items: [
+          {
+            category: 'HEALTH SYSTEMS',
+            label: 'Healthcare & Health Systems',
+            href: '/practice-areas/healthcare-life-sciences',
+            desc: 'HIPAA-compliant clinical documentation, bedside triage, and diagnostic assistant workflows.',
+            icon: Activity
+          },
+          {
+            category: 'PHARMA & BIOTECH',
+            label: 'Life Sciences & Drug Discovery',
+            href: '/practice-areas/life-sciences-pharma',
+            desc: 'Target identification, molecular simulation, and automated clinical trial protocol design.',
+            icon: Compass
+          },
+          {
+            category: 'ENERGY & UTILITIES',
+            label: 'Energy, Utilities & Smart Infrastructure',
+            href: '/practice-areas/energy-utilities-smart-infrastructure',
+            desc: 'Smart grid load balancing, renewables yield forecasting, and predictive transformer maintenance.',
+            icon: Leaf
+          }
+        ]
       },
       {
-        category: 'MANUFACTURING',
-        label: 'Manufacturing & Industrial AI',
-        href: '/practice-areas/manufacturing-industrial',
-        desc: 'Predictive maintenance, digital twins, computer vision defect inspection, and shopfloor OEE.',
-        icon: Factory
-      },
-      {
-        category: 'COMMERCE & CPG',
-        label: 'Retail, E-Commerce & Consumer Goods',
-        href: '/practice-areas/retail-ecommerce-consumer-goods',
-        desc: 'Dynamic localized pricing engines, visual shelf merchandising, and hyper-personalized discovery.',
-        icon: Boxes
-      },
-      {
-        category: 'ENERGY & UTILITIES',
-        label: 'Energy, Utilities & Smart Infrastructure',
-        href: '/practice-areas/energy-utilities-smart-infrastructure',
-        desc: 'Smart grid load balancing, renewables yield forecasting, and predictive transformer maintenance.',
-        icon: Leaf
-      },
-      {
-        category: 'TELECOM & CLOUD',
-        label: 'Telecommunications, Media & Cloud',
-        href: '/practice-areas/telecommunications-media',
-        desc: '5G/6G autonomous RAN slice optimization, optical fiber anomaly triage, and automated CDN cache.',
-        icon: Satellite
+        title: 'Industrial, Retail & Telecom',
+        badge: 'COMMERCE & MFG',
+        icon: Factory,
+        items: [
+          {
+            category: 'MANUFACTURING',
+            label: 'Manufacturing & Industrial AI',
+            href: '/practice-areas/manufacturing-industrial',
+            desc: 'Predictive maintenance, digital twins, computer vision defect inspection, and shopfloor OEE.',
+            icon: Factory
+          },
+          {
+            category: 'COMMERCE & CPG',
+            label: 'Retail, E-Commerce & Consumer Goods',
+            href: '/practice-areas/retail-ecommerce-consumer-goods',
+            desc: 'Dynamic localized pricing engines, visual shelf merchandising, and hyper-personalized discovery.',
+            icon: Boxes
+          },
+          {
+            category: 'TELECOM & CLOUD',
+            label: 'Telecommunications, Media & Cloud',
+            href: '/practice-areas/telecommunications-media',
+            desc: '5G/6G autonomous RAN slice optimization, optical fiber anomaly triage, and automated CDN cache.',
+            icon: Satellite
+          }
+        ]
       }
     ]
   },
@@ -908,55 +1034,97 @@ const practiceAreasFiveSections = [
     num: '4',
     title: 'Engagement Models',
     shortLabel: 'Engagement Models',
-    sub: '5-Stage Proof · DBOT · Operating Model',
+    sub: '5-Stage Proof · DBOT · Gain-Share · Private Cloud',
     badge: 'OUTCOME-BASED DELIVERY',
     headerTitle: 'Outcome-Based Engagement Models & Turnkey Delivery',
     tagline: 'Commercially accountable delivery models tied directly to verified business impact & capability transfer.',
     ctaText: 'Request Outcome Proposal →',
     ctaHref: '/request-proposal',
     icon: Boxes,
-    items: [
+    categories: [
       {
-        category: 'OUTCOME PROOF',
-        label: '5-Stage Outcome Proof Framework',
-        href: '/request-proposal?model=proof-framework',
-        desc: 'Deterministic progression from validation to enterprise scale, with fees tied to milestones.',
-        icon: CheckCircle2
+        title: 'Outcome Proof & Value Share',
+        badge: 'GUARANTEED ROI',
+        icon: CheckCircle2,
+        items: [
+          {
+            category: 'OUTCOME PROOF',
+            label: '5-Stage Outcome Proof Framework',
+            href: '/request-proposal?model=proof-framework',
+            desc: 'Deterministic progression from validation to enterprise scale, with fees tied to milestones.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'SHARED RISK',
+            label: 'Shared-Risk / Gain-Share Model',
+            href: '/request-proposal?model=gain-share',
+            desc: 'Commercial alignment where fees are directly tied to verified cost-reduction and revenue metrics.',
+            icon: Trophy
+          },
+          {
+            category: 'CAPACITY PODS',
+            label: 'Fixed Capacity Pods & Squads',
+            href: '/request-proposal?model=pods',
+            desc: 'Dedicated elite pod of forward deployed engineers integrated directly into client sprints.',
+            icon: Users
+          }
+        ]
       },
       {
-        category: 'OPERATING MODEL',
-        label: 'Forward Deployment Engineering (FDE)',
-        href: '/practice-areas/forward-deployment-engineering',
-        desc: 'Elite AI engineers embedded on-site in your environment to co-engineer and scale production systems.',
-        icon: Layers
+        title: 'Operating & Turnkey Delivery',
+        badge: 'TURNKEY BUILDS',
+        icon: Boxes,
+        items: [
+          {
+            category: 'OPERATING MODEL',
+            label: 'Forward Deployment Engineering (FDE)',
+            href: '/practice-areas/forward-deployment-engineering',
+            desc: 'Elite AI engineers embedded on-site in your environment to co-engineer and scale production systems.',
+            icon: Layers
+          },
+          {
+            category: 'TURNKEY DELIVERY',
+            label: 'DBOT (Design-Build-Operate-Transfer)',
+            href: '/request-proposal?model=dbot',
+            desc: 'Full-lifecycle turnkey AI infrastructure and platform build, operated and transferred cleanly.',
+            icon: Boxes
+          },
+          {
+            category: 'SOVEREIGN DELIVERY',
+            label: 'Private Cloud & Sovereign Model',
+            href: '/request-proposal?model=sovereign',
+            desc: 'Air-gapped and on-premises delivery model guaranteeing complete data ownership and regulatory compliance.',
+            icon: Lock
+          }
+        ]
       },
       {
-        category: 'TURNKEY DELIVERY',
-        label: 'DBOT (Design-Build-Operate-Transfer)',
-        href: '/request-proposal?model=dbot',
-        desc: 'Full-lifecycle turnkey AI infrastructure and platform build, operated and transferred cleanly.',
-        icon: Boxes
-      },
-      {
-        category: 'SHARED RISK',
-        label: 'Shared-Risk / Gain-Share Model',
-        href: '/request-proposal?model=gain-share',
-        desc: 'Commercial alignment where fees are directly tied to verified cost-reduction and revenue metrics.',
-        icon: Trophy
-      },
-      {
-        category: 'CAPACITY CO-ENGINEERING',
-        label: 'Fixed Capacity Pods & Staff Augmentation',
-        href: '/request-proposal?model=pods',
-        desc: 'Dedicated elite pod of forward deployed engineers integrated directly into client engineering sprints.',
-        icon: Users
-      },
-      {
-        category: 'SOVEREIGN ENGAGEMENT',
-        label: 'Private Cloud & Sovereign Model',
-        href: '/request-proposal?model=sovereign',
-        desc: 'Air-gapped and on-premises delivery model guaranteeing complete data ownership and regulatory compliance.',
-        icon: Lock
+        title: 'Diagnostics & Continuous SRE',
+        badge: 'ASSURANCE',
+        icon: ShieldCheck,
+        items: [
+          {
+            category: 'DIAGNOSTIC AUDIT',
+            label: 'Zero-Footprint AI Diagnostic',
+            href: '/solutions/ai-value-engineering#diagnostic',
+            desc: '72-hour non-invasive diagnostic auditing compute waste, model latencies, and token inefficiencies.',
+            icon: Target
+          },
+          {
+            category: 'TALENT TRANSFER',
+            label: 'AI Capability & Team Bootcamps',
+            href: '/practice-areas/forward-deployment-engineering',
+            desc: 'Hands-on engineering bootcamps, architectural transfer, and production runbooks for internal squads.',
+            icon: Sparkles
+          },
+          {
+            category: 'SLA ASSURANCE',
+            label: '24/7 SRE & Mission-Critical SLAs',
+            href: '/solutions/ai-infra-engineering',
+            desc: 'Enterprise support, continuous latency profiling, model failover, and guaranteed uptime SLAs.',
+            icon: Activity
+          }
+        ]
       }
     ]
   },
@@ -965,55 +1133,97 @@ const practiceAreasFiveSections = [
     num: '5',
     title: 'Value Engineering',
     shortLabel: 'Value Engineering',
-    sub: 'Methodologies · Unit Economics · SAVE Plan',
+    sub: '80+ Methods · Unit Economics · SAVE Plan',
     badge: 'OPERATIONAL RIGOR & ROI',
     headerTitle: 'AI Value Engineering & Operational Methodologies',
     tagline: 'Uniting 80+ operational methodologies, token unit economics, and SAVE International job plans.',
     ctaText: 'Explore Value Blueprint →',
     ctaHref: '/solutions/ai-value-engineering',
     icon: TrendingUp,
-    items: [
+    categories: [
       {
-        category: 'METHODOLOGY ENGINE',
-        label: 'AI-Driven Methodology Engine (80+ Methods)',
-        href: '/methodology-engine',
-        desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ automated by deterministic agent workflows.',
-        icon: Sparkles
+        title: 'Methodology Engines',
+        badge: '80+ FRAMEWORKS',
+        icon: Sparkles,
+        items: [
+          {
+            category: 'METHODOLOGY ENGINE',
+            label: 'AI-Driven Methodology Engine (80+ Methods)',
+            href: '/methodology-engine',
+            desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ automated by deterministic agent workflows.',
+            icon: Sparkles
+          },
+          {
+            category: 'BOTTLENECK TRIAGE',
+            label: 'Theory of Constraints (TOC)',
+            href: '/methodology-engine#diagnostic',
+            desc: 'Identifying and resolving compute and memory bottlenecks using Drum-Buffer-Rope scheduling.',
+            icon: TrendingUp
+          },
+          {
+            category: 'GLOBAL STANDARD',
+            label: '70-Year AI-VE Job Plan (8 Stages)',
+            href: '/solutions/ai-value-engineering#job-plan-stages',
+            desc: 'The SAVE International value engineering methodology modernized for AI across 8 disciplined stages.',
+            icon: FileText
+          }
+        ]
       },
       {
-        category: 'FINANCIAL ARCHITECTURE',
-        label: 'AI Economics & Unit Cost-to-Serve',
-        href: '/solutions/ai-value-engineering#ledger-economics',
-        desc: 'Decomposing inference token economics, GPU amortized costs, and enterprise P&L impact.',
-        icon: BarChart3
+        title: 'Unit Economics & FinOps',
+        badge: 'COST ARCHITECTURE',
+        icon: BarChart3,
+        items: [
+          {
+            category: 'FINANCIAL ARCHITECTURE',
+            label: 'AI Economics & Unit Cost-to-Serve',
+            href: '/solutions/ai-value-engineering#ledger-economics',
+            desc: 'Decomposing inference token economics, GPU amortized costs, and enterprise P&L impact.',
+            icon: BarChart3
+          },
+          {
+            category: 'CONTINUOUS COST GOVERNANCE',
+            label: 'AI FinOps & Cloud Compute Governance',
+            href: '/solutions/ai-value-engineering#operating-system',
+            desc: 'Dynamic model routing, spot instance orchestration, and token wastage reduction.',
+            icon: SlidersHorizontal
+          },
+          {
+            category: 'BALANCE SHEET ROI',
+            label: 'Balance Sheet P&L Attribution',
+            href: '/solutions/ai-value-engineering',
+            desc: 'Direct mathematical linkage from GPU compute efficiency to audited net EBITDA and cash flow.',
+            icon: Trophy
+          }
+        ]
       },
       {
-        category: 'CONTINUOUS COST GOVERNANCE',
-        label: 'AI FinOps & Cloud Compute Governance',
-        href: '/solutions/ai-value-engineering#operating-system',
-        desc: 'Dynamic model routing, spot instance orchestration, and token wastage reduction.',
-        icon: SlidersHorizontal
-      },
-      {
-        category: 'PROCESS OPTIMIZATION',
-        label: 'Lean & Six Sigma AI Automation (DMAIC)',
-        href: '/methodology-engine#categories',
-        desc: 'Automated root-cause analysis, defect reduction, and statistical process control with agents.',
-        icon: Target
-      },
-      {
-        category: 'BOTTLENECK TRIAGE',
-        label: 'Theory of Constraints (TOC)',
-        href: '/methodology-engine#diagnostic',
-        desc: 'Identifying and resolving compute and memory bottlenecks using Drum-Buffer-Rope scheduling.',
-        icon: TrendingUp
-      },
-      {
-        category: 'GLOBAL STANDARD',
-        label: '70-Year AI-VE Job Plan (8 Stages)',
-        href: '/solutions/ai-value-engineering#job-plan-stages',
-        desc: 'The SAVE International value engineering methodology modernized for AI across 8 disciplined stages.',
-        icon: FileText
+        title: 'Diagnostics & Assurance',
+        badge: 'VERIFIED IMPACT',
+        icon: Target,
+        items: [
+          {
+            category: 'PROCESS OPTIMIZATION',
+            label: 'Lean & Six Sigma AI Automation (DMAIC)',
+            href: '/methodology-engine#categories',
+            desc: 'Automated root-cause analysis, defect reduction, and statistical process control with agents.',
+            icon: Target
+          },
+          {
+            category: 'READINESS BENCHMARK',
+            label: 'Executive AI Readiness Diagnostic',
+            href: '/methodology-engine#diagnostic',
+            desc: 'Comprehensive maturity benchmark across compute infrastructure, governance, and operational ROI.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'OUTCOME EVIDENCE',
+            label: 'Verified Case Studies & Outcomes',
+            href: '/case-studies',
+            desc: 'Documented P&L impact across Tier-1 financial institutions, healthcare networks, and manufacturers.',
+            icon: Award
+          }
+        ]
       }
     ]
   }
@@ -1906,37 +2116,60 @@ export function SiteHeader() {
                         </Link>
                       </div>
 
+                      {/* 3 Categorized Columns */}
                       <div
-                        className="isi-mega-content columns-3"
-                        style={{ padding: '10px 14px', overflowY: 'auto' }}
+                        style={{
+                          padding: '10px 14px',
+                          overflowY: 'auto',
+                          flex: 1,
+                          display: 'flex'
+                        }}
                       >
-                        {activeSection.items.map((item, idx) => {
-                          const ItemIcon = item.icon
-                          return (
-                            <Link
-                              key={idx}
-                              href={item.href}
-                              className="isi-menu-card"
-                              onClick={(e) => handleNavClick(e, item.href)}
-                            >
-                              <div className="isi-card-icon">
-                                <ItemIcon size={16} />
-                              </div>
-                              <div className="isi-card-body">
-                                <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
-                                  {item.category}
-                                </span>
-                                <div className="isi-card-heading">
-                                  <span className="isi-card-title">{item.label}</span>
-                                  <ArrowRight size={13} className="isi-card-arrow" />
+                        <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
+                          {activeSection.categories.map((cat, cIdx) => {
+                            const CatIcon = cat.icon
+                            return (
+                              <div key={cIdx} className="tg-category-col">
+                                <div className="tg-category-col-header">
+                                  <div className="tg-category-col-left">
+                                    <CatIcon size={12} className="text-blue-600" />
+                                    <span className="tg-category-col-title">{cat.title}</span>
+                                  </div>
+                                  <span className="tg-category-col-badge">{cat.badge}</span>
                                 </div>
-                                <p className="isi-card-desc">
-                                  {item.desc}
-                                </p>
+
+                                <div className="tg-category-items-stack">
+                                  {cat.items.map((item, iIdx) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={iIdx}
+                                        href={item.href}
+                                        className="tg-compact-menu-card"
+                                        title={`${item.label} — ${item.desc}`}
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="tg-compact-icon-box">
+                                          <ItemIcon size={13} />
+                                        </div>
+                                        <div className="tg-compact-card-body">
+                                          <span className="text-[9px] font-mono font-bold text-blue-600 uppercase tracking-wider block leading-tight">
+                                            {item.category}
+                                          </span>
+                                          <div className="tg-compact-card-head">
+                                            <span className="tg-compact-card-title">{item.label}</span>
+                                            <ArrowRight size={11} className="tg-compact-arrow" />
+                                          </div>
+                                          <p className="tg-compact-card-desc">{item.desc}</p>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
                               </div>
-                            </Link>
-                          )
-                        })}
+                            )
+                          })}
+                        </div>
                       </div>
                     </div>
                   )
@@ -2361,22 +2594,30 @@ export function SiteHeader() {
                     <span>★ View All Practice Areas Overview →</span>
                   </Link>
                   {practiceAreasFiveSections.map((sec) => (
-                    <div key={sec.id} style={{ marginTop: '8px', marginBottom: '8px' }}>
+                    <div key={sec.id} style={{ marginTop: '10px', marginBottom: '10px' }}>
                       <div style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '4px 8px', background: 'rgba(29, 92, 255, 0.06)', borderRadius: '4px', margin: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <span>{sec.num}. {sec.title}</span>
                         <span style={{ fontSize: '9px', fontWeight: 600, color: '#64748b' }}>{sec.badge}</span>
                       </div>
-                      {sec.items.map((item, i) => (
-                        <Link
-                          key={i}
-                          href={item.href}
-                          className="mobile-sublink"
-                          onClick={(e) => handleNavClick(e, item.href)}
-                        >
-                          <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
-                          <span style={{ fontWeight: 600, color: '#0f172a' }}>{item.label}</span>
-                          <span style={{ fontSize: '11px', color: '#64748b', display: 'block', marginTop: '2px', lineHeight: 1.35 }}>{item.desc}</span>
-                        </Link>
+                      {sec.categories.map((cat, cIdx) => (
+                        <div key={cIdx} style={{ margin: '6px 0 6px 4px' }}>
+                          <div style={{ fontSize: '10px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em', padding: '2px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span>{cat.title}</span>
+                            <span style={{ fontSize: '8px', fontWeight: 600, color: '#94a3b8' }}>{cat.badge}</span>
+                          </div>
+                          {cat.items.map((item, i) => (
+                            <Link
+                              key={i}
+                              href={item.href}
+                              className="mobile-sublink"
+                              onClick={(e) => handleNavClick(e, item.href)}
+                            >
+                              <span className="text-[9.5px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
+                              <span style={{ fontWeight: 600, color: '#0f172a' }}>{item.label}</span>
+                              <span style={{ fontSize: '11px', color: '#64748b', display: 'block', marginTop: '2px', lineHeight: 1.35 }}>{item.desc}</span>
+                            </Link>
+                          ))}
+                        </div>
                       ))}
                     </div>
                   ))}
