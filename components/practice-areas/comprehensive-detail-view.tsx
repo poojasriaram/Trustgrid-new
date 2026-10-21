@@ -42,7 +42,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
 
   const parentTitle = isCross ? data.practice.title : data.industry.title
   const subTitle = isCross ? `Horizontal Practice ${data.practice.code}` : data.subVertical.title
-  const categoryBadge = isCross ? 'Division 2 · Cross-Industry Practice' : 'Division 3 · Industry Vertical Practice'
+  const categoryBadge = isCross ? 'Cross-Industry Practice' : 'Industry Vertical Practice'
 
   const siblingAreas = isCross ? data.practice.practiceAreas : data.subVertical.practiceAreas
   const stakeholder = isCross ? data.area.buyer : data.area.targetStakeholder

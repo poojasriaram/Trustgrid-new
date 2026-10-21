@@ -140,13 +140,15 @@ export default function PracticeAreasPage() {
           </div>
 
           <h1 className="pa-hero-title">
-            Enterprise AI Engineering <span className="text-gradient">Practice Areas</span>
+            AI Consulting <span className="text-gradient">Practice Areas</span>
           </h1>
 
-          <p className="pa-hero-description">
-            TRUSTGRID.AI operates as an enterprise AI engineering and systems integration company.
-            We architect, build, integrate, secure, and operate production-grade AI across 
-            silicon, networks, models, workflows, and economic ledgers.
+          <p className="pa-hero-description" style={{ maxWidth: '820px' }}>
+            TRUSTGRID.AI combines industry expertise, AI engineering, enterprise data integration, and intelligent automation to solve complex business challenges.
+          </p>
+
+          <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl mx-auto mt-3">
+            We help organizations transform business operations, optimize technology infrastructure, accelerate decision-making, and implement secure, scalable AI solutions with measurable business outcomes. Our Practice Areas bring together industry-specific expertise and cross-industry capabilities to help enterprises move from strategy to production-ready implementation.
           </p>
 
           <div className="pa-hero-stats">
@@ -172,8 +174,8 @@ export default function PracticeAreasPage() {
           </div>
 
           <div className="pa-hero-actions">
-            <Link href="#comprehensive-explorer" className="button button-primary">
-              <span>Explore Practice Blueprints</span>
+            <Link href="#primary-categories" className="button button-primary">
+              <span>Explore Practice Categories</span>
               <ArrowRight size={15} />
             </Link>
             <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-outline">
@@ -184,13 +186,199 @@ export default function PracticeAreasPage() {
         </div>
       </section>
 
-      {/* 2. COMPREHENSIVE PRACTICE AREAS EXPLORER */}
+      {/* 2. TWO PRIMARY CATEGORIES SHOWCASE */}
+      <section className="py-14 bg-slate-950/90 border-b border-slate-800" id="primary-categories">
+        <div className="container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Category 1: Industry Vertical Practices */}
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-blue-500/30 hover:border-blue-500/60 transition-all flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                    PRIMARY CATEGORY 1
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">8 Verticals · 34 Sub-Verticals</span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
+                  Industry Vertical Practices
+                </h2>
+                <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                  Deliver AI-powered solutions tailored to the operational requirements, business models, and regulatory environments of different industries.
+                </p>
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 mb-6 font-medium">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Manufacturing &amp; Industrial</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Financial Services &amp; BFSI</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Retail, Wholesale &amp; CPG</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Healthcare &amp; Life Sciences</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Energy &amp; Utilities</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Mobility &amp; Logistics</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Telecom &amp; Digital Platforms</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                    <span>Public Sector &amp; Defense</span>
+                  </div>
+                </div>
+              </div>
+              <Link href="#comprehensive-explorer" className="button button-primary w-fit text-xs">
+                <span>Explore Industry Verticals</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            {/* Category 2: Cross-Industry Practices */}
+            <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-cyan-500/30 hover:border-cyan-500/60 transition-all flex flex-col justify-between relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                    PRIMARY CATEGORY 2
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono">15 Horizontal Disciplines</span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                  Cross-Industry Practices
+                </h2>
+                <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                  Provide reusable enterprise capabilities across governance, finance, workforce, revenue, supply chain, cybersecurity, customer operations, data management, enterprise knowledge, technology operations, and legal functions.
+                </p>
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 mb-6 font-medium">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>Governance, Risk &amp; GRC</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>ESG &amp; Sustainability</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>Workforce Transformation</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>AI FinOps &amp; Finance Command</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>Revenue &amp; Sales Acceleration</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>Supply Chain &amp; Demand Chain</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>Cybersecurity &amp; AI Security</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <span>End-to-End Data &amp; Knowledge</span>
+                  </div>
+                </div>
+              </div>
+              <Link href="#comprehensive-explorer" className="button button-outline w-fit text-xs">
+                <span>Explore Cross-Industry Capabilities</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. AI ENGINEERING & VALUE REALIZATION CONNECTIVITY */}
+      <section className="py-16 bg-slate-900/40 border-b border-slate-800" id="value-realization">
+        <div className="container">
+          <div className="section-head text-center max-w-3xl mx-auto mb-12">
+            <span className="badge badge-accent">Supporting Framework</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+              AI Engineering &amp; Value Realization
+            </h2>
+            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+              How TRUSTGRID.AI connects business objectives, AI architecture, data foundations, implementation, governance, and measurable outcomes into a unified delivery chain.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-blue-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider block mb-2">01 · Strategic Alignment</span>
+              <h3 className="text-lg font-bold text-white mb-2">Business Objectives</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                Ground every AI initiative in board-level value streams. We decompose strategic priorities into measurable P&amp;L outcomes: Cost Down, Cash Out, Revenue Up, and Risk Down.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-cyan-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block mb-2">02 · Systems Design</span>
+              <h3 className="text-lg font-bold text-white mb-2">AI Architecture</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                Deterministic multi-agent swarms, model routing, high-density GPU computing, and lossless networking fabrics engineered for resilient, low-latency execution.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-indigo-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-wider block mb-2">03 · Semantic Fabric</span>
+              <h3 className="text-lg font-bold text-white mb-2">Data Foundations</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                End-to-end data pipelines, master data governance, semantic knowledge graphs, and hybrid retrieval-augmented generation ensuring zero hallucination.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider block mb-2">04 · Productionization</span>
+              <h3 className="text-lg font-bold text-white mb-2">Production Implementation</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                Forward Deployed Engineers (FDEs) embedded directly on-site to build, harden, and scale production containerized microservices under turnkey DBOT.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-amber-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider block mb-2">05 · Board Defense</span>
+              <h3 className="text-lg font-bold text-white mb-2">Governance &amp; Risk</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                EU AI Act readiness, continuous automated audit evidence, model risk management (SR 11-7), algorithmic red-teaming, and deterministic human-in-the-loop rails.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-purple-500/40 transition-colors">
+              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider block mb-2">06 · Value Verification</span>
+              <h3 className="text-lg font-bold text-white mb-2">Measurable Outcomes</h3>
+              <p className="text-slate-300 text-xs leading-relaxed">
+                Contractually banked KPIs verified against financial baselines. Commercial milestones tied directly to certified operational performance and unit economics.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. COMPREHENSIVE PRACTICE AREAS EXPLORER */}
       <section className="py-16 bg-slate-950 border-b border-slate-800" id="comprehensive-explorer">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
             <span className="badge badge-accent">Enterprise Practice Areas</span>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
-              Industry Verticals &amp; Functional Practices
+              Industry Verticals &amp; Cross-Industry Practices
             </h2>
             <p className="text-slate-300 mt-2 text-sm leading-relaxed">
               Explore all 8 industry verticals (34 sub-verticals, 103 practice areas) and 15 cross-industry functional practices (45 practice areas). Every practice defines solution acceleration, KPIs banked, time to value, and value assurance.
