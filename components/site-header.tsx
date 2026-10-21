@@ -2119,7 +2119,7 @@ export function SiteHeader() {
                       {/* 3 Categorized Columns */}
                       <div
                         style={{
-                          padding: '10px 14px',
+                          padding: '12px 16px',
                           overflowY: 'auto',
                           flex: 1,
                           display: 'flex'
@@ -2132,7 +2132,7 @@ export function SiteHeader() {
                               <div key={cIdx} className="tg-category-col">
                                 <div className="tg-category-col-header">
                                   <div className="tg-category-col-left">
-                                    <CatIcon size={12} className="text-blue-600" />
+                                    <CatIcon size={13} className="text-blue-600" />
                                     <span className="tg-category-col-title">{cat.title}</span>
                                   </div>
                                   <span className="tg-category-col-badge">{cat.badge}</span>
@@ -2150,7 +2150,7 @@ export function SiteHeader() {
                                         onClick={(e) => handleNavClick(e, item.href)}
                                       >
                                         <div className="tg-compact-icon-box">
-                                          <ItemIcon size={13} />
+                                          <ItemIcon size={14} />
                                         </div>
                                         <div className="tg-compact-card-body">
                                           <span className="text-[9px] font-mono font-bold text-blue-600 uppercase tracking-wider block leading-tight">
