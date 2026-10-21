@@ -28,6 +28,11 @@ import {
   engagementModelCards,
   PracticeArea
 } from '@/lib/practice-areas-data'
+import {
+  getComprehensivePracticeBySlug,
+  getAllComprehensivePracticeSlugs
+} from '@/lib/comprehensive-practice-areas'
+import { ComprehensiveDetailView } from '@/components/practice-areas/comprehensive-detail-view'
 
 interface PageProps {
   params: Promise<{
@@ -36,13 +41,45 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllPracticeSlugs().map((slug) => ({
+  const legacySlugs = getAllPracticeSlugs()
+  const compSlugs = getAllComprehensivePracticeSlugs()
+  const allSlugs = Array.from(new Set([...legacySlugs, ...compSlugs]))
+  return allSlugs.map((slug) => ({
     slug
   }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
+
+  // Check comprehensive practice areas first
+  const comp = getComprehensivePracticeBySlug(slug)
+  if (comp) {
+    const area = comp.area
+    const parentTitle = comp.type === 'cross' ? comp.practice.title : comp.industry.title
+    return {
+      title: `${area.code} ${area.title} | ${parentTitle} | TRUSTGRID.AI`,
+      description: area.overview || `${area.title} practice area in ${parentTitle}.`,
+      keywords: [
+        area.title,
+        area.code,
+        parentTitle,
+        area.valueAssurance,
+        'TRUSTGRID.AI Systems Engineering'
+      ],
+      alternates: {
+        canonical: `https://trustgrid.ai/practice-areas/${area.slug}`
+      },
+      openGraph: {
+        title: `${area.code} ${area.title} | TRUSTGRID.AI`,
+        description: area.overview || `${area.title} practice area in ${parentTitle}.`,
+        url: `https://trustgrid.ai/practice-areas/${area.slug}`,
+        type: 'article'
+      }
+    }
+  }
+
+  // Fallback to legacy practice areas
   const practice = getPracticeBySlug(slug)
 
   if (!practice) {
@@ -74,6 +111,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function PracticeDetailPage({ params }: PageProps) {
   const { slug } = await params
+
+  // Render comprehensive practice area if matched
+  const comp = getComprehensivePracticeBySlug(slug)
+  if (comp) {
+    return <ComprehensiveDetailView data={comp} />
+  }
+
   const practice = getPracticeBySlug(slug)
 
   if (!practice) {

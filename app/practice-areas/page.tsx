@@ -35,6 +35,7 @@ import {
 } from '@/lib/practice-areas-data'
 import { PracticeAreasDirectory } from '@/components/practice-areas/practice-directory'
 import { PracticeDivisionsExplorer } from '@/components/practice-areas/practice-divisions-explorer'
+import { ComprehensivePracticeExplorer } from '@/components/practice-areas/comprehensive-explorer'
 
 export const metadata: Metadata = {
   title: 'Enterprise AI Engineering Practice Areas | TRUSTGRID.AI',
@@ -150,29 +151,29 @@ export default function PracticeAreasPage() {
 
           <div className="pa-hero-stats">
             <div className="pa-stat-card">
-              <span className="pa-stat-number">5</span>
-              <span className="pa-stat-label">Functional Practices</span>
+              <span className="pa-stat-number">8</span>
+              <span className="pa-stat-label">Industry Verticals</span>
             </div>
             <div className="pa-stat-divider" />
             <div className="pa-stat-card">
-              <span className="pa-stat-number">7</span>
-              <span className="pa-stat-label">Technology Practices</span>
+              <span className="pa-stat-number">34</span>
+              <span className="pa-stat-label">Sub-Verticals</span>
             </div>
             <div className="pa-stat-divider" />
             <div className="pa-stat-card">
-              <span className="pa-stat-number">7</span>
-              <span className="pa-stat-label">Engineering Capabilities</span>
+              <span className="pa-stat-number">15</span>
+              <span className="pa-stat-label">Cross-Industry Practices</span>
             </div>
             <div className="pa-stat-divider" />
             <div className="pa-stat-card">
-              <span className="pa-stat-number">80+</span>
-              <span className="pa-stat-label">Operational Methods</span>
+              <span className="pa-stat-number">148</span>
+              <span className="pa-stat-label">Production Practice Areas</span>
             </div>
           </div>
 
           <div className="pa-hero-actions">
-            <Link href="#practice-directory" className="button button-primary">
-              <span>Explore Practice Directory</span>
+            <Link href="#comprehensive-explorer" className="button button-primary">
+              <span>Explore Practice Blueprints</span>
               <ArrowRight size={15} />
             </Link>
             <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-outline">
@@ -183,8 +184,25 @@ export default function PracticeAreasPage() {
         </div>
       </section>
 
-      {/* 2. THE 5-DIVISION PRACTICE ARCHITECTURE CONSOLE */}
-      <section className="py-16 bg-slate-950/80 border-y border-slate-800" id="practice-architecture">
+      {/* 2. COMPREHENSIVE PRACTICE AREAS EXPLORER (DIVISIONS 2 & 3) */}
+      <section className="py-16 bg-slate-950 border-b border-slate-800" id="comprehensive-explorer">
+        <div className="container">
+          <div className="section-head text-center mb-8 max-w-3xl mx-auto">
+            <span className="badge badge-accent">Divisions 2 &amp; 3 — Comprehensive Practices</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+              Industry Verticals &amp; Cross-Industry Practices
+            </h2>
+            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+              Explore all 8 industry verticals (34 sub-verticals, 103 practice areas) and 15 cross-industry horizontal practices (45 practice areas). Every practice defines solution acceleration, KPIs banked, time to value, and value assurance.
+            </p>
+          </div>
+
+          <ComprehensivePracticeExplorer />
+        </div>
+      </section>
+
+      {/* 3. THE 5-DIVISION PRACTICE ARCHITECTURE CONSOLE */}
+      <section className="py-16 bg-slate-950/80 border-b border-slate-800" id="practice-architecture">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
             <span className="badge badge-primary">Operating Architecture &amp; Delivery</span>
