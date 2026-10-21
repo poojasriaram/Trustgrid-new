@@ -157,27 +157,22 @@ export default function ContactPage() {
                   )}
                   {office.phone && (
                     <div className="contact-row">
-                      <Phone size={14} />
+                      <Phone size={14} style={{ color: office.whatsappUrl ? '#059669' : undefined }} />
                       {office.whatsappUrl ? (
                         <a
                           href={office.whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                          style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                         >
                           <span>{office.phone}</span>
-                          <span style={{ fontSize: '10px', background: '#dcfce7', color: '#15803d', padding: '1px 5px', borderRadius: '4px' }}>WhatsApp</span>
+                          <span style={{ fontSize: '11px', background: '#dcfce7', color: '#15803d', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>WhatsApp</span>
                         </a>
                       ) : (
                         <a href={`tel:${office.phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                           {office.phone}
                         </a>
                       )}
-                    </div>
-                  )}
-                  {office.note && (
-                    <div className="contact-row" style={{ fontSize: '11px', color: '#64748b', fontStyle: 'italic' }}>
-                      <span>{office.note}</span>
                     </div>
                   )}
                   <div className="contact-row">

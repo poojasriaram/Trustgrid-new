@@ -730,13 +730,13 @@ const aboutMenuItems = [
   }
 ]
 
-// 8. Consolidated Practice Areas Menu Data (Core Practices, Industries, Outcomes, Engagement Models)
+// 8. Consolidated Practice Areas Menu Data (12 Structured Items for 3-Column Grid)
 const practiceAreasMenuItems = [
   {
     category: 'CORE PRACTICE',
     label: 'AI Infrastructure & Data Center',
     href: '/solutions/ai-infra-engineering',
-    desc: '30–100kW+ GPU racks, DLC liquid cooling & cluster fabric',
+    desc: '30–100kW+ GPU facilities, DLC liquid cooling & turnkey DBOT',
     icon: Cpu
   },
   {
@@ -750,42 +750,70 @@ const practiceAreasMenuItems = [
     category: 'CORE PRACTICE',
     label: 'AI Networking & Cybersecurity',
     href: '/solutions/ai-networking-cybersecurity',
-    desc: 'Zero-loss RoCEv2, InfiniBand, post-quantum crypto & SOC',
+    desc: 'Zero-loss RoCEv2/InfiniBand fabrics & quantum-safe zero-trust',
     icon: Network
   },
   {
     category: 'CORE PRACTICE',
     label: 'Trusted AI & Governance',
     href: '/practice-areas/ai-governance-risk-compliance',
-    desc: 'EU AI Act, NIST AI RMF, explainability & continuous safety',
+    desc: 'EU AI Act, NIST AI RMF, guardrails & continuous compliance',
     icon: ShieldCheck
   },
   {
     category: 'CORE PRACTICE',
     label: 'AI Value Engineering',
     href: '/solutions/ai-value-engineering',
-    desc: '80+ operational methods, Lean TOC & FinOps unit economics',
+    desc: '80+ operational methods, Lean TOC & unit economic yield',
     icon: TrendingUp
   },
   {
+    category: 'FORWARD DEPLOYMENT',
+    label: 'Forward Deployment Engineering',
+    href: '/practice-areas/forward-deployment-engineering',
+    desc: 'Embedded elite systems squads bridging prototype to production',
+    icon: Layers
+  },
+  {
+    category: 'SYSTEM ARCHITECTURE',
+    label: 'Enterprise LLM & RAG Systems',
+    href: '/practice-areas/enterprise-llm-rag-context-engineering',
+    desc: 'Hybrid context engineering, GraphRAG & sovereign clusters',
+    icon: Sparkles
+  },
+  {
+    category: 'OPERATIONAL RELIABILITY',
+    label: 'AI SRE & Managed Operations',
+    href: '/practice-areas/managed-ai-operations',
+    desc: '24/7 follow-the-sun NOC/SOC, model retraining & 99.99% SLAs',
+    icon: Activity
+  },
+  {
+    category: 'DATA INFRASTRUCTURE',
+    label: 'Real-Time Data Pipelines',
+    href: '/practice-areas/data-engineering-realtime-pipelines',
+    desc: 'Streaming Kafka, Flink & Apache Iceberg enterprise lakehouses',
+    icon: Server
+  },
+  {
     category: '70 SECTORS',
-    label: 'Industries & Verticals',
+    label: 'Vertical Industry Blueprints',
     href: '/industries',
-    desc: 'Domain-specific blueprints across Banking, Health, Energy & more',
+    desc: 'Specialized AI blueprints across Banking, Health, Energy & more',
     icon: Building2
   },
   {
     category: 'VERIFIED IMPACT',
     label: 'Business Outcomes & ROI',
     href: '/case-studies',
-    desc: '35–60% token spend reduction, MFU gains & proven case studies',
+    desc: '35–60% token spend reduction, MFU gains & verified ROI',
     icon: BarChart3
   },
   {
-    category: 'DELIVERY SUITE',
+    category: 'DELIVERY MODELS',
     label: 'Engagement Models & DBOT',
     href: '/request-proposal',
-    desc: 'Diagnostics, rapid value sprints & turnkey DBOT accountability',
+    desc: 'Executive diagnostics, value sprints & turnkey DBOT accountability',
     icon: Boxes
   }
 ]
@@ -1555,17 +1583,22 @@ export function SiteHeader() {
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      ENTERPRISE PRACTICES
+                      ENTERPRISE PRACTICES &amp; BLUEPRINTS
                     </span>
                     <h3 className="isi-sidebar-title">Practice Areas</h3>
                     <p className="isi-sidebar-desc">
-                      Full-spectrum enterprise AI engineering practices, vertical industry blueprints, and delivery models.
+                      Full-spectrum enterprise AI engineering: core practices, vertical industry blueprints, verified business outcomes, and structured DBOT delivery models.
                     </p>
+                    <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(37, 99, 235, 0.05)', borderRadius: '6px', borderLeft: '3px solid #2563eb' }}>
+                      <p style={{ margin: 0, fontSize: '11px', color: '#475569', lineHeight: 1.45 }}>
+                        From silicon infrastructure to autonomous agent fleets and vertical blueprints, deliver production AI systems with architectural certainty.
+                      </p>
+                    </div>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>19 Practices &amp; Capabilities</span>
+                      <span>19 Practices • 70 Verticals • 5 Models</span>
                     </div>
                     <Link
                       href="/practice-areas"
@@ -1573,14 +1606,22 @@ export function SiteHeader() {
                       style={{ background: '#2563eb', color: '#ffffff' }}
                       onClick={closeAll}
                     >
-                      <span>View All Practice Areas</span>
+                      <span>Explore Practice Directory</span>
                       <ArrowUpRight size={13} />
+                    </Link>
+                    <Link
+                      href="/industries"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore 70 Industries</span>
+                      <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
 
-                {/* Right Structured Grid (2 columns, 8 items) */}
-                <div className="isi-mega-content columns-2">
+                {/* Right Structured Grid (3 columns, 12 items) */}
+                <div className="isi-mega-content columns-3">
                   {practiceAreasMenuItems.map((item, idx) => {
                     const Icon = item.icon
                     return (
