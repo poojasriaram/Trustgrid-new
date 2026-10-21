@@ -1,4 +1,4 @@
-﻿import { Metadata } from 'next'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import './practice-areas.css'
 import {
@@ -34,6 +34,7 @@ import {
   engagementModelCards
 } from '@/lib/practice-areas-data'
 import { PracticeAreasDirectory } from '@/components/practice-areas/practice-directory'
+import { PracticeDivisionsExplorer } from '@/components/practice-areas/practice-divisions-explorer'
 
 export const metadata: Metadata = {
   title: 'Enterprise AI Engineering Practice Areas | TRUSTGRID.AI',
@@ -182,8 +183,25 @@ export default function PracticeAreasPage() {
         </div>
       </section>
 
-      {/* 2. INTERACTIVE SEARCHABLE / FILTERABLE PRACTICE DIRECTORY */}
-      <section className="py-16 bg-slate-900/40 border-y border-slate-800" id="practice-directory">
+      {/* 2. THE 5-DIVISION PRACTICE ARCHITECTURE CONSOLE */}
+      <section className="py-16 bg-slate-950/80 border-y border-slate-800" id="practice-architecture">
+        <div className="container">
+          <div className="section-head text-center mb-8 max-w-3xl mx-auto">
+            <span className="badge badge-primary">Operating Architecture &amp; Delivery</span>
+            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+              The Five Practice Divisions
+            </h2>
+            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+              Explore TRUSTGRID.AI across Engagement Models, Division 1 Engineering Practices, Division 2 Cross-Industry Capabilities, Focused Industry Blueprints, and Value Engineering.
+            </p>
+          </div>
+
+          <PracticeDivisionsExplorer />
+        </div>
+      </section>
+
+      {/* 3. INTERACTIVE SEARCHABLE / FILTERABLE PRACTICE DIRECTORY */}
+      <section className="py-16 bg-slate-900/40 border-b border-slate-800" id="practice-directory">
         <div className="container">
           <div className="section-head text-center mb-10">
             <span className="badge badge-accent">Interactive Directory</span>
