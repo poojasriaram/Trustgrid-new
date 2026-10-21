@@ -184,16 +184,16 @@ export default function PracticeAreasPage() {
         </div>
       </section>
 
-      {/* 2. COMPREHENSIVE PRACTICE AREAS EXPLORER (DIVISIONS 2 & 3) */}
+      {/* 2. COMPREHENSIVE PRACTICE AREAS EXPLORER */}
       <section className="py-16 bg-slate-950 border-b border-slate-800" id="comprehensive-explorer">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
-            <span className="badge badge-accent">Divisions 2 &amp; 3 — Comprehensive Practices</span>
+            <span className="badge badge-accent">Enterprise Practice Areas</span>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
-              Industry Verticals &amp; Cross-Industry Practices
+              Industry Verticals &amp; Functional Practices
             </h2>
             <p className="text-slate-300 mt-2 text-sm leading-relaxed">
-              Explore all 8 industry verticals (34 sub-verticals, 103 practice areas) and 15 cross-industry horizontal practices (45 practice areas). Every practice defines solution acceleration, KPIs banked, time to value, and value assurance.
+              Explore all 8 industry verticals (34 sub-verticals, 103 practice areas) and 15 cross-industry functional practices (45 practice areas). Every practice defines solution acceleration, KPIs banked, time to value, and value assurance.
             </p>
           </div>
 
@@ -201,16 +201,16 @@ export default function PracticeAreasPage() {
         </div>
       </section>
 
-      {/* 3. THE 5-DIVISION PRACTICE ARCHITECTURE CONSOLE */}
+      {/* 3. PRACTICE ARCHITECTURE & DELIVERY CONSOLE */}
       <section className="py-16 bg-slate-950/80 border-b border-slate-800" id="practice-architecture">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
             <span className="badge badge-primary">Operating Architecture &amp; Delivery</span>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
-              The Five Practice Divisions
+              Enterprise Practice Architecture
             </h2>
             <p className="text-slate-300 mt-2 text-sm leading-relaxed">
-              Explore TRUSTGRID.AI across Engagement Models, Division 1 Engineering Practices, Division 2 Cross-Industry Capabilities, Focused Industry Blueprints, and Value Engineering.
+              Explore TRUSTGRID.AI across Engagement Models, Engineering Practices, Functional Practices, Industry Blueprints, and Value Engineering.
             </p>
           </div>
 
