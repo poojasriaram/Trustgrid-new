@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -122,7 +122,7 @@ export function IndustryVerticalsSlider({ industries = industriesData }: Industr
             <div className="ind-solutions-section">
               <span className="section-label-chip">
                 <Layers size={14} className="text-blue-500" />
-                TrustGrid Solution Architecture
+                TRUSTGRID.AI Solution Architecture
               </span>
               <div className="solutions-cards-stack">
                 {(current.solutionApplications || []).map((app, i) => (

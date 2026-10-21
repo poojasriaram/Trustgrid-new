@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  * TRUSTGRID.AI — CONTEXTUAL REASONING & RESPONSE GENERATION ENGINE
  * ============================================================================
@@ -74,7 +74,7 @@ CRITICAL INSTRUCTIONS:
 2. Base all claims ONLY on the provided TRUSTGRID.AI Grounded Knowledge. Do NOT invent pricing, guarantees, or phantom case studies.
 3. Present answers in authoritative, professional markdown with crisp bullet points, bold key terms, and clear sections.
 4. If the user asks about challenges, explain the specific architectural bottlenecks.
-5. If the user asks how TrustGrid solves them, map the challenges directly to TrustGrid engineering services.
+5. If the user asks how TRUSTGRID.AI solves them, map the challenges directly to TRUSTGRID.AI engineering services.
 6. If the user asks about implementation, detail the stages, prerequisites, timeline, and deliverables.
 7. Offer to connect with an AI Architect or book an Executive AI Diagnostic when consultation intent is detected.
 
@@ -212,7 +212,7 @@ function synthesizeGroundedResponse(
       offeringTag: `${topicLabel} Challenges`,
       pageLink: { label: `Explore ${topicLabel}`, href: retrieval.primaryChunk.url },
       suggestedFollowUps: [
-        'How can TrustGrid solve them?',
+        'How can TRUSTGRID.AI solve them?',
         'What would the implementation involve?',
         'Can you audit our current GPU cluster utilization?'
       ],
@@ -224,7 +224,7 @@ function synthesizeGroundedResponse(
     }
   }
 
-  // Stage 3: User asking "How can TrustGrid solve them?"
+  // Stage 3: User asking "How can TRUSTGRID.AI solve them?"
   if (turn.taskStage === 'solution_mapping') {
     let solutionText = ''
     if (turn.activeTopic === 'ai_infrastructure') {
@@ -262,7 +262,7 @@ function synthesizeGroundedResponse(
 
     return {
       text: solutionText,
-      offeringTag: `TrustGrid ${topicLabel} Solutions`,
+      offeringTag: `TRUSTGRID.AI ${topicLabel} Solutions`,
       pageLink: { label: `View Complete ${topicLabel} Blueprints`, href: retrieval.primaryChunk.url },
       suggestedFollowUps: [
         'What would the implementation involve?',

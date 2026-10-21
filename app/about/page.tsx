@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import {
   Sparkles,
@@ -79,7 +79,7 @@ export default function AboutPage() {
         }}
       />
 
-      {/* TRUSTGRID STORY & PHILOSOPHY SLIDER */}
+      {/* TRUSTGRID.AI STORY & PHILOSOPHY SLIDER */}
       <section className="section" style={{ paddingTop: '20px', paddingBottom: '20px' }}>
         <AboutStorySlider />
       </section>
@@ -241,7 +241,7 @@ export default function AboutPage() {
         </div>
 
         <div className="team-header">
-          <h2>The Architects & Engineers Behind TrustGrid</h2>
+          <h2>The Architects & Engineers Behind TRUSTGRID.AI</h2>
           <p>
             A powerhouse of AI systems architects, blockchain leads, and industry advisors building the future of autonomous enterprise operations.
           </p>

@@ -1,4 +1,4 @@
-import { BlogArticleData } from './article-01'
+﻿import { BlogArticleData } from './article-01'
 
 export const article02: BlogArticleData = {
   id: 'blog-02',
@@ -49,7 +49,7 @@ export const article02: BlogArticleData = {
     { id: 'pfc-deadlocks-pause-storms', title: 'RoCEv2 Pitfalls: PFC Deadlocks and Slow-Drain Incast', level: 3 },
     { id: 'infiniband-subnet-scaling', title: 'InfiniBand Bottlenecks: Subnet Manager Overhead at Scale', level: 3 },
     { id: 'comprehensive-comparison-matrix', title: 'Comprehensive 10-Dimension Comparative Matrix', level: 2 },
-    { id: 'the-trustgrid-decision-framework', title: 'The TRUSTGRID Fabric Selection Decision Framework', level: 2 },
+    { id: 'the-trustgrid-decision-framework', title: 'The TRUSTGRID.AI Fabric Selection Decision Framework', level: 2 },
     { id: 'enterprise-tco-operational-realities', title: 'Total Cost of Ownership & Operational Realities', level: 2 },
     { id: 'key-takeaways', title: 'Key Engineering Takeaways', level: 2 },
     { id: 'frequently-asked-questions', title: 'Frequently Asked Questions', level: 2 },

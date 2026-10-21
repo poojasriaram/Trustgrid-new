@@ -1,4 +1,4 @@
-import {
+﻿import {
   Layers,
   Building2,
   Cpu,
@@ -251,7 +251,7 @@ export const strategicClustersData: StrategicCluster[] = [
     number: '04',
     title: 'Data Center Services Sales & Revenue Acceleration',
     shortTitle: 'Commercial & Revenue Engine',
-    description: "The commercial engine that converts TrustGrid's technical differentiation into booked, recurring, high-margin revenue.",
+    description: "The commercial engine that converts TRUSTGRID.AI's technical differentiation into booked, recurring, high-margin revenue.",
     icon: TrendingUp,
     ctaText: 'Explore Revenue Acceleration',
     ctaHref: '/solutions/ai-value-engineering',

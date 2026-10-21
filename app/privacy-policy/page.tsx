@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -6,7 +6,7 @@ import { ShieldCheck, Mail, MapPin, Building2, Calendar, CheckCircle2, AlertTria
 
 export const metadata: Metadata = {
   title: 'Privacy Notice | TRUSTGRID.AI',
-  description: 'Official Privacy Notice of TRUSTGRID AI INNOVATIONS PRIVATE LIMITED (TRUSTGRID.AI). Details personal data processing, enterprise security controls, AI disclaimers, and data subject rights under DPDP Act 2023, GDPR, and CCPA/CPRA.',
+  description: 'Official Privacy Notice of TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED (TRUSTGRID.AI). Details personal data processing, enterprise security controls, AI disclaimers, and data subject rights under DPDP Act 2023, GDPR, and CCPA/CPRA.',
   alternates: {
     canonical: 'https://trustgrid.ai/privacy-policy',
   },
@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed mb-6">
-              This Privacy Notice describes how <strong>TRUSTGRID AI INNOVATIONS PRIVATE LIMITED</strong> (“TRUSTGRID.AI”, “we”, “us” or “our”) collects, uses, protects, and handles personal data in connection with our website and generative AI enterprise platforms.
+              This Privacy Notice describes how <strong>TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED</strong> (“TRUSTGRID.AI”, “we”, “us” or “our”) collects, uses, protects, and handles personal data in connection with our website and generative AI enterprise platforms.
             </p>
 
             <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-400 border-t border-slate-800/80 pt-4">
@@ -73,7 +73,7 @@ export default function PrivacyPolicyPage() {
                     <p><strong>Last Updated:</strong> 5 October 2026</p>
                   </div>
                   <p>
-                    This Privacy Notice is issued by <strong>TRUSTGRID AI INNOVATIONS PRIVATE LIMITED</strong> (CIN: U72900KA2021PTC144782), a company incorporated under the Companies Act, 2013, having its registered office at:
+                    This Privacy Notice is issued by <strong>TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED</strong> (CIN: U72900KA2021PTC144782), a company incorporated under the Companies Act, 2013, having its registered office at:
                   </p>
                   <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/20 p-4 text-sm text-cyan-200">
                     <strong>235, 2nd &amp; 3rd Floor, 13th Cross Rd, Indiranagar, Bengaluru, Karnataka 560038, India</strong>

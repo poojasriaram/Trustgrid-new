@@ -1,4 +1,4 @@
-export interface BlogArticleData {
+﻿export interface BlogArticleData {
   id: string
   slug: string
   title: string
@@ -100,7 +100,7 @@ export const article01: BlogArticleData = {
     { id: 'the-last-packet-problem', title: 'The "Last Packet" Barrier: Tail Latency Amplification', level: 2 },
     { id: 'ecmp-polarization-hash-collisions', title: 'ECMP Polarization, Hash Collisions & Buffer Bloat', level: 3 },
     { id: 'architectural-remedies', title: 'Architectural Remedies: Packet Spraying, Adaptive Routing & Rail Fabrics', level: 2 },
-    { id: 'network-assessment-framework', title: 'The TRUSTGRID 4-Tier Network Assessment Framework', level: 2 },
+    { id: 'network-assessment-framework', title: 'The TRUSTGRID.AI 4-Tier Network Assessment Framework', level: 2 },
     { id: 'enterprise-impact-roi', title: 'The Enterprise Impact: Capital Efficiency and Time-to-Market', level: 2 },
     { id: 'key-takeaways', title: 'Key Engineering Takeaways', level: 2 },
     { id: 'frequently-asked-questions', title: 'Frequently Asked Questions', level: 2 },

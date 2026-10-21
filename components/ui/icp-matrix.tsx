@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -216,7 +216,7 @@ export function ICPMatrix() {
             padding: '12px 16px'
           }}>
             <div style={{ fontSize: '11px', fontWeight: 700, color: '#166534', marginBottom: '4px' }}>
-              TRUSTGRID ENGINEERED SOLUTION
+              TRUSTGRID.AI ENGINEERED SOLUTION
             </div>
             <p style={{ fontSize: '13px', color: '#14532d', margin: 0, lineHeight: 1.45 }}>
               {current.solution}

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import {
@@ -142,7 +142,7 @@ export function Article05Content() {
       <section id="readiness-audit-scorecard" className="tg-article-section">
         <h2>The 20-Point Enterprise AI Network Readiness Audit Scorecard</h2>
         <p>
-          To ensure definitive go/no-go gating before authorizing hardware acceptance or initiating multi-million-dollar training campaigns, infrastructure architects can utilize the TRUSTGRID Readiness Audit Scorecard:
+          To ensure definitive go/no-go gating before authorizing hardware acceptance or initiating multi-million-dollar training campaigns, infrastructure architects can utilize the TRUSTGRID.AI Readiness Audit Scorecard:
         </p>
 
         <Diagram5C_ReadinessScorecard />

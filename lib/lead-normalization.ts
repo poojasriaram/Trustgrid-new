@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TRUSTGRID.AI - Central Lead Normalization & Attribution Engine
  * Handles Lead ID generation, classification, channel attribution, and structured formatting.
  */
@@ -120,7 +120,7 @@ export interface NormalizedLead {
 }
 
 /**
- * Generate a unique TRUSTGRID Lead ID: TG-YYYYMMDD-XXXX
+ * Generate a unique TRUSTGRID.AI Lead ID: TG-YYYYMMDD-XXXX
  */
 export function generateLeadId(prefix: string = 'TG'): string {
   const now = new Date()

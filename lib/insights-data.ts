@@ -1,4 +1,4 @@
-export interface InsightArticle {
+﻿export interface InsightArticle {
   id: string
   title: string
   category: 'Case Study' | 'Whitepaper' | 'Research' | 'Blog' | 'Open Innovation'
@@ -180,7 +180,7 @@ export const insightsArticles: InsightArticle[] = [
     industryTag: 'Enterprise AI Infrastructure',
     readTime: '6 min read',
     date: 'February 2026',
-    abstract: 'How TrustGrid engineered kernel optimizations, FP8/INT4 precision quantization, and non-blocking RoCEv2 fabrics to achieve 12× throughput on a 128+ H100 GPU cluster while eliminating communication deadlocks.',
+    abstract: 'How TRUSTGRID.AI engineered kernel optimizations, FP8/INT4 precision quantization, and non-blocking RoCEv2 fabrics to achieve 12× throughput on a 128+ H100 GPU cluster while eliminating communication deadlocks.',
     highlights: [
       '12× inference throughput scaling across 128+ NVIDIA H100 GPUs',
       '40–75% reduction in compute and power costs per million tokens',

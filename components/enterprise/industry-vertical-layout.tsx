@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -423,7 +423,7 @@ export function IndustryVerticalLayout({
                       0{sIdx + 1}
                     </div>
                     <span className="text-[10px] font-mono text-blue-600 uppercase font-semibold">
-                      TrustGrid Solution
+                      TRUSTGRID.AI Solution
                     </span>
                   </div>
 

@@ -1,4 +1,4 @@
-import { BlogArticleData } from './article-01'
+﻿import { BlogArticleData } from './article-01'
 
 export const article05: BlogArticleData = {
   id: 'blog-05',
@@ -98,7 +98,7 @@ export const article05: BlogArticleData = {
       answer: 'Standard retimed optical transceivers include an internal Digital Signal Processor (DSP) chip to clean and retime the high-speed electrical signals, consuming 10–14 Watts per transceiver. Linear-Drive Pluggable Optics (LPO) and Near-Packaged Optics eliminate or bypass the DSP, relying directly on the host switch ASIC SerDes. This reduces latency by nanoseconds and cuts transceiver power consumption by 50%—a critical efficiency multiplier across a fabric with 10,000 optical links.'
     },
     {
-      question: 'How does TRUSTGRID conduct an AI Infrastructure Readiness Audit?',
+      question: 'How does TRUSTGRID.AI conduct an AI Infrastructure Readiness Audit?',
       answer: 'Our 20-point audit evaluates five core dimensions: (1) Workload profiling & communication matrix; (2) Physical power, cooling (PUE < 1.15 targets), and cable management; (3) Non-blocking fabric topology, oversubscription ratio, and buffer sizing; (4) Automated health checks, INT streaming telemetry, and Slurm integration; (5) Multi-tenant security, sovereign air-gapping, and 3-year TCO attribution. We deliver an executive scorecard and prioritized engineering remediation plan.'
     }
   ],

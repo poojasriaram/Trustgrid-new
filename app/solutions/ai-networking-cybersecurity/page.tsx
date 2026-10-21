@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
@@ -226,7 +226,7 @@ export default function AINetworkingCybersecurityPage() {
             {/* Subhead / Positioning Statement */}
             <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
               From the LAN switch and WiFi access point to the orbital asset and the hyperscale AI factory —
-              TrustGrid AI delivers measurable, purpose-engineered resilience with <strong>zero packet loss</strong>,
+              TRUSTGRID.AI AI delivers measurable, purpose-engineered resilience with <strong>zero packet loss</strong>,
               <strong>sub-microsecond tail latency</strong>, and <strong>L1–L7 post-quantum cyber defense</strong> engineered as one nervous system.
             </p>
 
@@ -658,7 +658,7 @@ export default function AINetworkingCybersecurityPage() {
                   Cognitive / AI-Native WiFi as a First-Class Fabric
                 </h3>
                 <p className="text-sm text-slate-300 mt-2 leading-relaxed">
-                  Wireless is no longer an afterthought. TrustGrid AI engineers WiFi 6E/7 as an intelligent, zero-trust,
+                  Wireless is no longer an afterthought. TRUSTGRID.AI AI engineers WiFi 6E/7 as an intelligent, zero-trust,
                   high-density access fabric capable of supporting tens of thousands of roams per second at stadium and campus scale,
                   with real-time AI radio resource management, WPA3 + MACsec, and autonomous rogue AP containment feeding the AI SOC.
                 </p>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import {
@@ -264,7 +264,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
           </div>
 
           <div className="mt-3 text-xs text-emerald-500 space-y-2 leading-relaxed">
-            <p className="text-slate-400 text-[11px]">&gt; TRUSTGRID DATA LINK ACTIVE</p>
+            <p className="text-slate-400 text-[11px]">&gt; TRUSTGRID.AI DATA LINK ACTIVE</p>
             <p>&gt; {data.globalTraffic.toLocaleString()} TELEMETRY LOGS COMPILED</p>
             <p>&gt; DEV SANITIZATION: {data.devRecordsPurged} LOCALHOST PURGED</p>
             <p>&gt; 16 INTELLIGENCE TABS OPERATIONAL</p>

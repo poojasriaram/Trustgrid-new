@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -100,7 +100,7 @@ export function AgenticFactoryCapabilities() {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-4xl">
-            Single-session LLMs forget past interactions, leading to repetitive context stuffing and ballooning inference costs. TrustGrid engineers persistent enterprise long-term memory that preserves factual provenance, causal relationships, and cross-departmental context.
+            Single-session LLMs forget past interactions, leading to repetitive context stuffing and ballooning inference costs. TRUSTGRID.AI engineers persistent enterprise long-term memory that preserves factual provenance, causal relationships, and cross-departmental context.
           </p>
 
           {/* 7-Step Horizontal Flow Diagram */}

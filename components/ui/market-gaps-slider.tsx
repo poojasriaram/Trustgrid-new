@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import {
@@ -106,7 +106,7 @@ export function MarketGapsSlider({ gaps }: MarketGapsSliderProps) {
               <p className="problem-text">{current.description}</p>
             </div>
 
-            {/* TrustGrid Resolution Block */}
+            {/* TRUSTGRID.AI Resolution Block */}
             <div className="gap-resolution-card">
               <div className="resolution-flag">
                 <CheckCircle2 size={16} className="text-blue-500" />

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -41,7 +41,7 @@ export const defaultAboutChapters: AboutStoryChapter[] = [
     badge: 'PURPOSE-DRIVEN ENGINEERING',
     title: 'From Infrastructure to Compounding Intelligence',
     headline: 'Engineering the full-stack foundation for the sovereign global AI economy.',
-    narrative: 'TrustGrid was founded to resolve the profound architectural friction between exploratory AI experimentation and industrial enterprise execution. While traditional consultancies sell strategy decks and point vendors hawk isolated chatbots, TrustGrid delivers full-stack systems engineering — from 30–100kW direct-to-chip liquid cooling to multi-agent cognitive swarms and post-quantum cryptographic defenses.',
+    narrative: 'TRUSTGRID.AI was founded to resolve the profound architectural friction between exploratory AI experimentation and industrial enterprise execution. While traditional consultancies sell strategy decks and point vendors hawk isolated chatbots, TRUSTGRID.AI delivers full-stack systems engineering — from 30–100kW direct-to-chip liquid cooling to multi-agent cognitive swarms and post-quantum cryptographic defenses.',
     pillars: [
       {
         title: 'Full-Stack Systems Rigor',
@@ -87,7 +87,7 @@ export const defaultAboutChapters: AboutStoryChapter[] = [
     tabLabel: 'Trust & Quantum Defense',
     badge: 'CRYPTOGRAPHIC AGILITY',
     headline: 'Trust is the non-negotiable precondition for autonomous enterprise intelligence.',
-    narrative: 'As AI systems take autonomous actions with consequential financial and operational impact, organizations must guarantee continuous compliance, data air-gapping, and quantum-safe cryptographic foundations. TrustGrid is pioneering the transition to NIST Post-Quantum Cryptography while providing zero-trust identity frameworks for digital worker fleets.',
+    narrative: 'As AI systems take autonomous actions with consequential financial and operational impact, organizations must guarantee continuous compliance, data air-gapping, and quantum-safe cryptographic foundations. TRUSTGRID.AI is pioneering the transition to NIST Post-Quantum Cryptography while providing zero-trust identity frameworks for digital worker fleets.',
     pillars: [
       {
         title: 'L1–L7 Post-Quantum Cryptography',
@@ -110,7 +110,7 @@ export const defaultAboutChapters: AboutStoryChapter[] = [
     tabLabel: 'The Co-Engineering Model',
     badge: 'TALENT & CAPABILITY TRANSFER',
     headline: 'Building capability alongside your teams — never creating permanent agency dependence.',
-    narrative: 'We reject the traditional billable-hour consultancy model. TrustGrid deploys senior principal fellows and systems engineers directly into collaborative co-development pods. We build production systems alongside your engineers, transfer deep architecture IP, and establish internal Enterprise AI Factory hubs that your team operates independently.',
+    narrative: 'We reject the traditional billable-hour consultancy model. TRUSTGRID.AI deploys senior principal fellows and systems engineers directly into collaborative co-development pods. We build production systems alongside your engineers, transfer deep architecture IP, and establish internal Enterprise AI Factory hubs that your team operates independently.',
     pillars: [
       {
         title: 'Embedded Principal Fellows',
@@ -133,7 +133,7 @@ export const defaultAboutChapters: AboutStoryChapter[] = [
     tabLabel: 'Global Presence & Innovation',
     badge: 'GLOBAL FOOTPRINT',
     headline: 'R&D labs and executive centers spanning the US, Singapore, and India.',
-    narrative: 'Headquartered with executive offices in key global enterprise hubs and advanced R&D labs in India, TrustGrid actively contributes to open-source agent frameworks, post-quantum research, and high-density thermal modeling. We foster open innovation hackathons and academic fellowships to continuously push frontier enterprise AI capabilities.',
+    narrative: 'Headquartered with executive offices in key global enterprise hubs and advanced R&D labs in India, TRUSTGRID.AI actively contributes to open-source agent frameworks, post-quantum research, and high-density thermal modeling. We foster open innovation hackathons and academic fellowships to continuously push frontier enterprise AI capabilities.',
     pillars: [
       {
         title: 'Global Delivery Enclaves',
@@ -172,7 +172,7 @@ export function AboutStorySlider({ chapters = defaultAboutChapters }: { chapters
       <span className="card-corner-br" />
 
       {/* Chapter Tabs Header */}
-      <div className="about-story-tabs" role="tablist" aria-label="TrustGrid Story & Philosophy">
+      <div className="about-story-tabs" role="tablist" aria-label="TRUSTGRID.AI Story & Philosophy">
         {chapters.map((ch, idx) => {
           const Icon = ch.icon || Building2
           const isActive = idx === activeIdx

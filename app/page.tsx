@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -463,12 +463,12 @@ export default function HomePage() {
         <ICPSlider />
       </section>
 
-      {/* WHY TRUSTGRID EXISTS - THE 5 GAPS (INTERACTIVE STORYTELLING SLIDER) */}
+      {/* WHY TRUSTGRID.AI EXISTS - THE 5 GAPS (INTERACTIVE STORYTELLING SLIDER) */}
       <section className="section why-section" id="why">
         <div className="section-intro">
           <div className="intro-left">
             <span className="section-badge">MARKET CONTEXT</span>
-            <p className="section-label">Why TrustGrid Exists — The Critical Market Gaps</p>
+            <p className="section-label">Why TRUSTGRID.AI Exists — The Critical Market Gaps</p>
           </div>
           <span className="section-index">MARKET GAPS</span>
         </div>
@@ -546,8 +546,8 @@ export default function HomePage() {
       <section className="section differentiation-section" id="differentiation">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">WHY TRUSTGRID IS DIFFERENT</span>
-            <p className="section-label">TrustGrid vs Typical AI Vendors & Strategy Consultancies</p>
+            <span className="section-badge">WHY TRUSTGRID.AI IS DIFFERENT</span>
+            <p className="section-label">TRUSTGRID.AI vs Typical AI Vendors & Strategy Consultancies</p>
           </div>
           <span className="section-index">DIFFERENTIATION</span>
         </div>
@@ -557,7 +557,7 @@ export default function HomePage() {
             A fundamentally different model for <span>the AGI era.</span>
           </h2>
           <p>
-            Most AI vendors deliver isolated point tools or PowerPoint strategy decks. TrustGrid delivers full-stack systems engineering, hardware-level rigor, and verifiable P&L outcome accountability.
+            Most AI vendors deliver isolated point tools or PowerPoint strategy decks. TRUSTGRID.AI delivers full-stack systems engineering, hardware-level rigor, and verifiable P&L outcome accountability.
           </p>
         </div>
 
@@ -606,7 +606,7 @@ export default function HomePage() {
         <div className="section-intro">
           <div className="intro-left">
             <span className="section-badge">CORE DNA</span>
-            <p className="section-label">TrustGrid Operating Principles</p>
+            <p className="section-label">TRUSTGRID.AI Operating Principles</p>
           </div>
           <span className="section-index">PRINCIPLES</span>
         </div>
@@ -616,7 +616,7 @@ export default function HomePage() {
             Engineered on non-negotiable <span>operating principles.</span>
           </h2>
           <p>
-            How TrustGrid approaches every problem, designs every system, and delivers compounding enterprise capability.
+            How TRUSTGRID.AI approaches every problem, designs every system, and delivers compounding enterprise capability.
           </p>
         </div>
 

@@ -1,4 +1,4 @@
-export interface PracticeArea {
+﻿export interface PracticeArea {
   slug: string
   title: string
   shortTitle: string
@@ -30,7 +30,7 @@ export const functionalPractices: PracticeArea[] = [
     category: 'functional',
     categoryLabel: 'Functional Practice',
     tagline: 'Embedded, high-velocity systems engineering squads executing in client environments to bridge AI prototype-to-production gaps.',
-    overview: 'Forward Deployment Engineering (FDE) embeds elite TrustGrid systems architects, distributed systems engineers, and security specialists directly into enterprise environments. Working shoulder-to-shoulder with internal engineering leadership, FDE squads unblock architectural roadblocks, harden infrastructure, integrate high-throughput inference pipelines into legacy ERP/MES stacks, and accelerate time-to-production under strict enterprise governance.',
+    overview: 'Forward Deployment Engineering (FDE) embeds elite TRUSTGRID.AI systems architects, distributed systems engineers, and security specialists directly into enterprise environments. Working shoulder-to-shoulder with internal engineering leadership, FDE squads unblock architectural roadblocks, harden infrastructure, integrate high-throughput inference pipelines into legacy ERP/MES stacks, and accelerate time-to-production under strict enterprise governance.',
     challenges: [
       'Prototypes failing to transition from lab notebooks into fault-tolerant production workflows.',
       'Complex sovereign, air-gapped, or hybrid infrastructure constraints delaying enterprise deployment.',
@@ -101,7 +101,7 @@ export const functionalPractices: PracticeArea[] = [
     category: 'functional',
     categoryLabel: 'Functional Practice',
     tagline: 'Bridging technical capabilities with verifiable financial returns through disciplined operational methodologies and unit economic modeling.',
-    overview: 'AI Value Engineering transforms enterprise AI from an experimental cost center into a mathematically defensible engine of business value. By decomposing enterprise workflows through 80+ industrialized operational methodologies (Lean, Six Sigma, Theory of Constraints, TPS, SMED, TRIZ), TrustGrid quantifies cost-per-token economics, eliminates operational bottlenecks, and ties every GPU cycle to EBITDA impact and working capital velocity.',
+    overview: 'AI Value Engineering transforms enterprise AI from an experimental cost center into a mathematically defensible engine of business value. By decomposing enterprise workflows through 80+ industrialized operational methodologies (Lean, Six Sigma, Theory of Constraints, TPS, SMED, TRIZ), TRUSTGRID.AI quantifies cost-per-token economics, eliminates operational bottlenecks, and ties every GPU cycle to EBITDA impact and working capital velocity.',
     challenges: [
       'Skyrocketing GPU compute and API token expenses lacking clear revenue attribution.',
       'Pilot fatigue: numerous generative AI proofs of concept demonstrating novelty without balance sheet ROI.',
@@ -138,7 +138,7 @@ export const functionalPractices: PracticeArea[] = [
       'Executive Boardroom Business Case and ROI Financial Model'
     ],
     technologiesAndStandards: [
-      'TrustGrid Methodology Engine, Tableau, PowerBI',
+      'TRUSTGRID.AI Methodology Engine, Tableau, PowerBI',
       'Prometheus, OpenTelemetry, Cost Allocation Tags',
       'Lean Six Sigma (DMAIC), ISO 9001, GAAP / IFRS IT Asset Accounting'
     ],
@@ -171,7 +171,7 @@ export const functionalPractices: PracticeArea[] = [
     category: 'functional',
     categoryLabel: 'Functional Practice',
     tagline: 'Independent architectural review, algorithmic risk audit, and milestone governance to protect enterprise AI investments.',
-    overview: 'Value Assurance Services provide corporate boards, CIOs, and investment committees with independent, objective verification of enterprise AI initiatives. Operating as an impartial engineering ombudsman, TrustGrid audits system architectures, verifies algorithmic safety, validates vendor claims, benchmarks infrastructure performance, and establishes gating criteria so capital is allocated only to verified, resilient milestones.',
+    overview: 'Value Assurance Services provide corporate boards, CIOs, and investment committees with independent, objective verification of enterprise AI initiatives. Operating as an impartial engineering ombudsman, TRUSTGRID.AI audits system architectures, verifies algorithmic safety, validates vendor claims, benchmarks infrastructure performance, and establishes gating criteria so capital is allocated only to verified, resilient milestones.',
     challenges: [
       'Vendor overpromising and opaque black-box AI claims causing costly deployment missteps.',
       'Uncontrolled architectural drift resulting in brittle, unmaintainable enterprise codebases.',
@@ -241,7 +241,7 @@ export const functionalPractices: PracticeArea[] = [
     category: 'functional',
     categoryLabel: 'Functional Practice',
     tagline: 'End-to-end cloud and bare-metal AI financial operations, GPU cluster efficiency optimization, and dynamic token cost control.',
-    overview: 'AI FinOps and Economic Optimization introduces financial rigor to cloud and data center AI consumption. As enterprises scale from experimental LLM calls to thousands of concurrent agentic loops and dedicated GPU clusters, unmanaged compute spend creates severe budget overruns. TrustGrid establishes granular cost allocation, semantic prompt caching, model routing, automated spot/reserved balancing, and hardware utilization tuning to deliver predictable, optimized unit economics.',
+    overview: 'AI FinOps and Economic Optimization introduces financial rigor to cloud and data center AI consumption. As enterprises scale from experimental LLM calls to thousands of concurrent agentic loops and dedicated GPU clusters, unmanaged compute spend creates severe budget overruns. TRUSTGRID.AI establishes granular cost allocation, semantic prompt caching, model routing, automated spot/reserved balancing, and hardware utilization tuning to deliver predictable, optimized unit economics.',
     challenges: [
       'Unpredictable monthly cloud AI bills driven by runaway agentic loops and unoptimized prompt contexts.',
       'Sub-40% average GPU cluster utilization on high-cost bare-metal reservations.',
@@ -312,7 +312,7 @@ export const functionalPractices: PracticeArea[] = [
     category: 'functional',
     categoryLabel: 'Functional Practice',
     tagline: 'Operationalizing regulatory compliance, algorithmic auditability, data provenance, and ethical safety across enterprise AI lifecycles.',
-    overview: 'AI Governance, Risk and Compliance (GRC) enables regulated enterprises to innovate with confidence. Moving beyond theoretical policy checklists, TrustGrid implements active engineering controls: automated model risk management (MRM), cryptographically verifiable data lineage, real-time guardrail enclaves, bias mitigation pipelines, and compliance telemetry conforming to the EU AI Act, NIST AI RMF, and ISO/IEC 42001.',
+    overview: 'AI Governance, Risk and Compliance (GRC) enables regulated enterprises to innovate with confidence. Moving beyond theoretical policy checklists, TRUSTGRID.AI implements active engineering controls: automated model risk management (MRM), cryptographically verifiable data lineage, real-time guardrail enclaves, bias mitigation pipelines, and compliance telemetry conforming to the EU AI Act, NIST AI RMF, and ISO/IEC 42001.',
     challenges: [
       'Strict regulatory penalties under the EU AI Act for high-risk autonomous AI systems.',
       'Uncontrolled data leakage and copyright infringement through employee and customer-facing LLMs.',
@@ -385,7 +385,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Turnkey engineering of 30–100kW+ high-density GPU racks, direct-to-chip liquid cooling, and hyperscale AI data centers.',
-    overview: 'Modern AI workloads break conventional data center designs. As rack power densities escalate beyond 30kW toward 100kW+ for next-generation GPU clusters, traditional air cooling and standard electrical distribution fail. TrustGrid engineers full-lifecycle high-density AI infrastructure: from electrical substations and green energy microgrids to direct-to-chip liquid immersion, non-blocking high-speed interconnects, and AI-DCIM telemetry delivering PUE < 1.10.',
+    overview: 'Modern AI workloads break conventional data center designs. As rack power densities escalate beyond 30kW toward 100kW+ for next-generation GPU clusters, traditional air cooling and standard electrical distribution fail. TRUSTGRID.AI engineers full-lifecycle high-density AI infrastructure: from electrical substations and green energy microgrids to direct-to-chip liquid immersion, non-blocking high-speed interconnects, and AI-DCIM telemetry delivering PUE < 1.10.',
     challenges: [
       'Severe thermal throttling on high-density GPU clusters exceeding traditional CRAC air limits.',
       'Multi-month power procurement delays and constrained utility grid interconnections.',
@@ -456,7 +456,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Architecting deterministic, self-healing multi-agent swarms with persistent episodic memory, tool use, and Model Context Protocol (MCP) integration.',
-    overview: 'Agentic AI moves enterprises beyond static chatbots into autonomous digital workforces. TrustGrid designs and deploys governed multi-agent systems that reason, plan, use tools, collaborate, and execute multi-step business workflows. Built on deterministic directed acyclic graphs (DAGs), stateful memory architectures, Model Context Protocol (MCP) server bridges, and human-in-the-loop consensus protocols, our agent swarms solve complex enterprise tasks with SLA-grade reliability.',
+    overview: 'Agentic AI moves enterprises beyond static chatbots into autonomous digital workforces. TRUSTGRID.AI designs and deploys governed multi-agent systems that reason, plan, use tools, collaborate, and execute multi-step business workflows. Built on deterministic directed acyclic graphs (DAGs), stateful memory architectures, Model Context Protocol (MCP) server bridges, and human-in-the-loop consensus protocols, our agent swarms solve complex enterprise tasks with SLA-grade reliability.',
     challenges: [
       'Infinite reasoning loops and non-deterministic agent hallucinations in production.',
       'Loss of context and memory across prolonged, multi-session customer or operational workflows.',
@@ -527,7 +527,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Designing zero-packet-loss, ultra-low-latency 400G/800G fabrics using RoCEv2, InfiniBand, and deterministic traffic engineering.',
-    overview: 'Distributed AI model training and real-time inference clusters place unprecedented demands on network fabrics. Even minor packet loss or micro-burst congestion causes GPU stall cycles and catastrophic training degradation. TrustGrid engineers AI-native, non-blocking network architectures: deploying 400G/800G leaf-spine fabrics, lossless RoCEv2 with advanced Congestion Notification (PFC/ECN), InfiniBand, and deep integration with enterprise storage and backhaul systems.',
+    overview: 'Distributed AI model training and real-time inference clusters place unprecedented demands on network fabrics. Even minor packet loss or micro-burst congestion causes GPU stall cycles and catastrophic training degradation. TRUSTGRID.AI engineers AI-native, non-blocking network architectures: deploying 400G/800G leaf-spine fabrics, lossless RoCEv2 with advanced Congestion Notification (PFC/ECN), InfiniBand, and deep integration with enterprise storage and backhaul systems.',
     challenges: [
       'GPU idle cycles caused by network tail latency and all-reduce synchronization delays.',
       'Packet drop in standard Ethernet fabrics triggering expensive TCP retransmissions during model training.',
@@ -598,7 +598,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Engineering high-accuracy, hallucination-resistant retrieval-augmented generation systems with advanced context compression and hybrid search.',
-    overview: 'Generic vector retrieval fails when confronted with complex enterprise documentation, tabular data, and domain-specific acronyms. TrustGrid engineers production-grade Retrieval-Augmented Generation (RAG) and context engineering pipelines: integrating hybrid sparse-dense search, hierarchical document chunking, graph-augmented retrieval (GraphRAG), reranking cross-encoders, and dynamic context compression that feed models the exact data needed for precise, verifiable outputs.',
+    overview: 'Generic vector retrieval fails when confronted with complex enterprise documentation, tabular data, and domain-specific acronyms. TRUSTGRID.AI engineers production-grade Retrieval-Augmented Generation (RAG) and context engineering pipelines: integrating hybrid sparse-dense search, hierarchical document chunking, graph-augmented retrieval (GraphRAG), reranking cross-encoders, and dynamic context compression that feed models the exact data needed for precise, verifiable outputs.',
     challenges: [
       'Severe hallucinations caused by naive chunking and semantic dilution in large vector databases.',
       'Inability of standard vector search to accurately answer queries spanning tabular data and structured SQL.',
@@ -669,7 +669,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Defending enterprise AI models, weights, prompts, and APIs against adversarial injection, data poisoning, and post-quantum cryptographic threats.',
-    overview: 'As AI models become central to enterprise decision-making, they introduce unprecedented attack surfaces: prompt injection, model weight exfiltration, training data poisoning, and membership inference attacks. Concurrently, the transition to post-quantum cryptography (PQC) requires protecting long-term enterprise secrets against "harvest now, decrypt later" threats. TrustGrid delivers defense-in-depth AI security: securing runtime model endpoints, isolating memory enclaves, and implementing NIST-standardized quantum-resistant cryptographic algorithms.',
+    overview: 'As AI models become central to enterprise decision-making, they introduce unprecedented attack surfaces: prompt injection, model weight exfiltration, training data poisoning, and membership inference attacks. Concurrently, the transition to post-quantum cryptography (PQC) requires protecting long-term enterprise secrets against "harvest now, decrypt later" threats. TRUSTGRID.AI delivers defense-in-depth AI security: securing runtime model endpoints, isolating memory enclaves, and implementing NIST-standardized quantum-resistant cryptographic algorithms.',
     challenges: [
       'Direct and indirect prompt injection attacks subverting enterprise guardrails.',
       'Model inversion and extraction attacks exfiltrating proprietary training data or weights.',
@@ -740,7 +740,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Building ultra-low-latency, streaming data ingestion backbones and unified lakehouse architectures for continuous model training and real-time inference.',
-    overview: 'High-performing AI models are only as good as the data that feeds them. Batch ETL pipelines operating on 24-hour cycles starve real-time agentic workflows and fraud detection engines. TrustGrid designs and deploys real-time, event-driven data streaming pipelines, feature stores, and unified lakehouses (Apache Iceberg, Delta Lake) that deliver millisecond-fresh operational telemetry directly into AI inference contexts.',
+    overview: 'High-performing AI models are only as good as the data that feeds them. Batch ETL pipelines operating on 24-hour cycles starve real-time agentic workflows and fraud detection engines. TRUSTGRID.AI designs and deploys real-time, event-driven data streaming pipelines, feature stores, and unified lakehouses (Apache Iceberg, Delta Lake) that deliver millisecond-fresh operational telemetry directly into AI inference contexts.',
     challenges: [
       'Stale enterprise data hampering decision accuracy in dynamic agentic and trading workflows.',
       'Training-serving skew where feature definitions in offline training differ from online production.',
@@ -811,7 +811,7 @@ export const technologyPractices: PracticeArea[] = [
     category: 'technology',
     categoryLabel: 'Technology Practice',
     tagline: 'Delivering 99.99% availability, automated failover, model drift tracking, and full-stack observability across distributed enterprise AI deployments.',
-    overview: 'AI systems fail differently than traditional microservices: non-deterministic responses, silent accuracy drift, GPU hardware dropouts, and sudden token latency spikes cannot be caught with simple ping health checks. TrustGrid brings Site Reliability Engineering (SRE) discipline to enterprise AI: deploying multi-tier telemetry across hardware, runtime inference, context health, and business metrics to ensure resilient, self-healing production operations.',
+    overview: 'AI systems fail differently than traditional microservices: non-deterministic responses, silent accuracy drift, GPU hardware dropouts, and sudden token latency spikes cannot be caught with simple ping health checks. TRUSTGRID.AI brings Site Reliability Engineering (SRE) discipline to enterprise AI: deploying multi-tier telemetry across hardware, runtime inference, context health, and business metrics to ensure resilient, self-healing production operations.',
     challenges: [
       'Silent model degradation where model answers become inaccurate without raising an infrastructure error.',
       'Sudden GPU node hardware failures crashing long-running distributed training and inference jobs.',
@@ -885,7 +885,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Designing modular, future-proof target architectures that harmonize multi-model selection, hybrid infrastructure, and enterprise data fabrics.',
-    overview: 'Enterprise AI Architecture establishes the overarching blueprint guiding every technology and functional practice. Without a unified architectural vision, enterprises fall into siloed tool sprawl, conflicting security boundaries, and incompatible data schemas. TrustGrid defines modular, decoupled target architectures that allow organizations to adopt frontier models, deploy private SLMs, scale compute on-premises or across clouds, and evolve without costly rewrites.',
+    overview: 'Enterprise AI Architecture establishes the overarching blueprint guiding every technology and functional practice. Without a unified architectural vision, enterprises fall into siloed tool sprawl, conflicting security boundaries, and incompatible data schemas. TRUSTGRID.AI defines modular, decoupled target architectures that allow organizations to adopt frontier models, deploy private SLMs, scale compute on-premises or across clouds, and evolve without costly rewrites.',
     challenges: [
       'Vendor lock-in to proprietary cloud APIs preventing workload migration.',
       'Fragmented AI initiatives across business units leading to redundant infrastructure spending.',
@@ -956,7 +956,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Converting Jupyter research notebooks into fault-tolerant, containerized, CI/CD-driven enterprise microservices.',
-    overview: 'The greatest point of failure in enterprise AI is the chasm between experimental data science code and resilient software engineering. TrustGrid productionizes raw models and proof-of-concept pipelines into enterprise-grade services: refactoring Python prototypes into high-throughput containerized deployments, building automated CI/CD pipelines, establishing canary rollout gates, and ensuring seamless horizontal scaling under peak enterprise concurrency.',
+    overview: 'The greatest point of failure in enterprise AI is the chasm between experimental data science code and resilient software engineering. TRUSTGRID.AI productionizes raw models and proof-of-concept pipelines into enterprise-grade services: refactoring Python prototypes into high-throughput containerized deployments, building automated CI/CD pipelines, establishing canary rollout gates, and ensuring seamless horizontal scaling under peak enterprise concurrency.',
     challenges: [
       'Fragile prototype code crashing under unexpected production data formats or sudden load spikes.',
       'Manual, error-prone model deployment processes lacking versioning, rollback, or automated testing.',
@@ -1027,7 +1027,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Bridging modern generative AI and agentic capabilities with core legacy systems of record (SAP, Oracle, AS400, mainframe) securely.',
-    overview: 'Enterprise AI creates value only when deeply embedded in existing systems of record: ERPs, CRMs, core banking platforms, and manufacturing execution systems (MES). Standalone web portals are ignored; intelligence must live where work happens. TrustGrid builds secure, bidirectional integration fabrics: deploying modern REST/gRPC wrappers, message queues, Model Context Protocol (MCP) servers, and transactional guardrails that connect autonomous AI agents directly to SAP, Oracle, Salesforce, and legacy mainframes.',
+    overview: 'Enterprise AI creates value only when deeply embedded in existing systems of record: ERPs, CRMs, core banking platforms, and manufacturing execution systems (MES). Standalone web portals are ignored; intelligence must live where work happens. TRUSTGRID.AI builds secure, bidirectional integration fabrics: deploying modern REST/gRPC wrappers, message queues, Model Context Protocol (MCP) servers, and transactional guardrails that connect autonomous AI agents directly to SAP, Oracle, Salesforce, and legacy mainframes.',
     challenges: [
       'Brittle, undocumented legacy APIs and proprietary mainframe protocols resisting modern AI integration.',
       'Risk of catastrophic data corruption if autonomous AI agents execute unvalidated write operations.',
@@ -1098,7 +1098,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Establishing rigorous, automated evaluation harnesses, synthetic benchmark datasets, and continuous feedback loops to prevent model drift.',
-    overview: 'You cannot improve what you cannot measure objectively. Relying on casual human spot-checking leads to severe quality regressions when updating prompt templates, model versions, or retrieval parameters. TrustGrid implements continuous AI evaluation frameworks: generating high-fidelity synthetic evaluation datasets, deploying LLM-as-a-judge scoring calibrated against human experts, running regression test suites on every build, and closing the loop between production feedback and model fine-tuning.',
+    overview: 'You cannot improve what you cannot measure objectively. Relying on casual human spot-checking leads to severe quality regressions when updating prompt templates, model versions, or retrieval parameters. TRUSTGRID.AI implements continuous AI evaluation frameworks: generating high-fidelity synthetic evaluation datasets, deploying LLM-as-a-judge scoring calibrated against human experts, running regression test suites on every build, and closing the loop between production feedback and model fine-tuning.',
     challenges: [
       'Silent accuracy regressions introduced when updating foundation model versions or prompt instructions.',
       'Prohibitive cost and turnaround time of manual human evaluation for enterprise-scale output volumes.',
@@ -1168,7 +1168,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Embedding defense-in-depth security, least-privilege RBAC, and continuous compliance telemetry directly into every engineering practice.',
-    overview: 'Security cannot be bolted on as an afterthought following deployment; it must be engineered into every layer of the enterprise AI stack. Security Engineering and Governance embeds automated security controls across infrastructure, data pipelines, model runtimes, and user interfaces. From zero-trust identity architectures to automated secrets management, data masking, and continuous compliance monitoring, TrustGrid protects enterprise IP, client privacy, and regulatory standing.',
+    overview: 'Security cannot be bolted on as an afterthought following deployment; it must be engineered into every layer of the enterprise AI stack. Security Engineering and Governance embeds automated security controls across infrastructure, data pipelines, model runtimes, and user interfaces. From zero-trust identity architectures to automated secrets management, data masking, and continuous compliance monitoring, TRUSTGRID.AI protects enterprise IP, client privacy, and regulatory standing.',
     challenges: [
       'Developers embedding hardcoded API keys and credentials in distributed AI notebooks and containers.',
       'Unrestricted model access permitting employees to query sensitive HR, executive, or financial data.',
@@ -1240,7 +1240,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: '24/7 proactive management, model retraining, infrastructure patching, and capacity planning for mission-critical enterprise AI deployments.',
-    overview: 'Deploying an AI system is only the beginning. Without dedicated operational management, GPU clusters suffer hardware degradation, models drift from changing customer behavior, and cloud bills expand unchecked. TrustGrid Managed AI Operations provides enterprise clients with comprehensive 24/7 engineering management: overseeing cluster health, managing model retraining pipelines, optimizing token budgets, and providing guaranteed SLAs.',
+    overview: 'Deploying an AI system is only the beginning. Without dedicated operational management, GPU clusters suffer hardware degradation, models drift from changing customer behavior, and cloud bills expand unchecked. TRUSTGRID.AI Managed AI Operations provides enterprise clients with comprehensive 24/7 engineering management: overseeing cluster health, managing model retraining pipelines, optimizing token budgets, and providing guaranteed SLAs.',
     challenges: [
       'Internal engineering teams overwhelmed by 24/7 maintenance of complex distributed AI clusters.',
       'Prolonged downtime when upstream commercial API providers experience outages or latency spikes.',
@@ -1266,7 +1266,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
       phases: [
         { name: 'Continuous Monitoring', detail: 'Automated telemetry scans infrastructure, models, and security 24/7/365.' },
         { name: 'Tier 1 & 2 Remediation', detail: 'Automated self-healing scripts resolve node failover and rate-limit buffering.' },
-        { name: 'Tier 3 Specialist Escalation', detail: 'TrustGrid systems leads step in for complex architectural or hardware triage.' },
+        { name: 'Tier 3 Specialist Escalation', detail: 'TRUSTGRID.AI systems leads step in for complex architectural or hardware triage.' },
         { name: 'Monthly Evolution Sprint', detail: 'Implement optimizations, update model weights, and tune unit economics.' }
       ]
     },
@@ -1311,7 +1311,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     category: 'cross-cutting',
     categoryLabel: 'Cross-Cutting Capability',
     tagline: 'Upskilling internal enterprise teams through paired engineering, architecture immersions, and comprehensive operational playbooks.',
-    overview: 'True systems integration leaves the client with complete operational sovereignty. TrustGrid rejects permanent vendor dependency. Under our Turnkey DBOT (Design, Build, Operate, Transfer) model and dedicated capability-building programs, we pair our elite systems engineers with client technical leads from Day 1. Through structured code reviews, architectural bootcamps, and comprehensive operational playbooks, we build lasting institutional capability so your teams can independently innovate, operate, and scale.',
+    overview: 'True systems integration leaves the client with complete operational sovereignty. TRUSTGRID.AI rejects permanent vendor dependency. Under our Turnkey DBOT (Design, Build, Operate, Transfer) model and dedicated capability-building programs, we pair our elite systems engineers with client technical leads from Day 1. Through structured code reviews, architectural bootcamps, and comprehensive operational playbooks, we build lasting institutional capability so your teams can independently innovate, operate, and scale.',
     challenges: [
       'Vendor capture: internal engineering teams unable to maintain or extend complex third-party AI builds.',
       'Talent shortage: difficulties recruiting senior distributed systems and AI infrastructure specialists.',
@@ -1319,7 +1319,7 @@ export const crossCuttingCapabilities: PracticeArea[] = [
       'Lack of standardized internal engineering guidelines for developing and evaluating new AI applications.'
     ],
     approach: [
-      'Paired Co-Engineering from Day 1: Client developers contribute directly to production pull requests alongside TrustGrid leads.',
+      'Paired Co-Engineering from Day 1: Client developers contribute directly to production pull requests alongside TRUSTGRID.AI leads.',
       'Comprehensive Architecture Playbooks: Documenting every design rationale, failover procedure, and operational runbook.',
       'Intensive Hands-On Immersions: Structured technical bootcamps on GPU orchestration, vLLM tuning, and multi-agent systems.',
       'Formal Graduation & Transfer Gates: Rigorous certification verifying internal team autonomy prior to project handover.'
@@ -1333,12 +1333,12 @@ export const crossCuttingCapabilities: PracticeArea[] = [
     ],
     referenceArchitecture: {
       title: 'Four-Stage Capability Transfer Model',
-      description: 'Progressive autonomy framework transitioning operational responsibility from TrustGrid to internal engineering leads.',
+      description: 'Progressive autonomy framework transitioning operational responsibility from TRUSTGRID.AI to internal engineering leads.',
       phases: [
-        { name: 'Stage 1: Foundation & Shadowing', detail: 'TrustGrid leads engineering; client teams shadow, review PRs, and attend daily standups.' },
-        { name: 'Stage 2: Paired Co-Engineering', detail: 'Client engineers co-author core modules and deployment scripts under TrustGrid mentorship.' },
+        { name: 'Stage 1: Foundation & Shadowing', detail: 'TRUSTGRID.AI leads engineering; client teams shadow, review PRs, and attend daily standups.' },
+        { name: 'Stage 2: Paired Co-Engineering', detail: 'Client engineers co-author core modules and deployment scripts under TRUSTGRID.AI mentorship.' },
         { name: 'Stage 3: Supervised Handover', detail: 'Client leads execute production deployments, triage incidents, and operate the platform.' },
-        { name: 'Stage 4: Autonomous Sovereignty', detail: 'Full client ownership with TrustGrid transitioning to advisory and board review.' }
+        { name: 'Stage 4: Autonomous Sovereignty', detail: 'Full client ownership with TRUSTGRID.AI transitioning to advisory and board review.' }
       ]
     },
     deliverables: [

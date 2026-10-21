@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -37,7 +37,7 @@ export function AINetworkingCapabilities() {
             Unified AI Networking &amp; Cybersecurity Intelligence
           </h3>
           <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-            Explore TrustGrid AI&apos;s complete unified offering across 7 Sector Portfolios (Enterprises, Hyperscale, Campus, Manufacturing, Satellite, Subsea, Aerospace), Plan → Operate delivery lifecycle, and Cognitive WiFi 7.
+            Explore TRUSTGRID.AI AI&apos;s complete unified offering across 7 Sector Portfolios (Enterprises, Hyperscale, Campus, Manufacturing, Satellite, Subsea, Aerospace), Plan → Operate delivery lifecycle, and Cognitive WiFi 7.
           </p>
         </div>
         <Link

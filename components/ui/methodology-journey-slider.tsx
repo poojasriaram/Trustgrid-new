@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -39,7 +39,7 @@ export const defaultMethodologyJourney: MethodologyJourneyStage[] = [
     name: 'DIAGNOSE',
     subtitle: 'Technical & Economic Discovery',
     objective: 'Establish a concrete, auditable baseline of enterprise compute efficiency, multi-agent readiness, security posture, and unit economics.',
-    whatHappens: 'TrustGrid principal architects conduct on-site and telemetry-driven audits across GPU clusters, inference latency, agent reasoning reliability, and token spend.',
+    whatHappens: 'TRUSTGRID.AI principal architects conduct on-site and telemetry-driven audits across GPU clusters, inference latency, agent reasoning reliability, and token spend.',
     trustgridActivities: [
       'Value Stream Mapping of existing AI inference pipelines',
       'Theory of Constraints (TOC) bottleneck identification across GPU compute and network fabrics',
@@ -83,7 +83,7 @@ export const defaultMethodologyJourney: MethodologyJourneyStage[] = [
     name: 'IMPLEMENT',
     subtitle: 'Production Systems Engineering',
     objective: 'Deploy, calibrate, benchmark, and harden production-grade GPU clusters, multi-agent execution fabrics, and continuous explainability pipelines.',
-    whatHappens: 'TrustGrid co-engineering squads deploy verified infrastructure, configure low-latency inference runtimes, tune collective communications, and install guardrail firewalls.',
+    whatHappens: 'TRUSTGRID.AI co-engineering squads deploy verified infrastructure, configure low-latency inference runtimes, tune collective communications, and install guardrail firewalls.',
     trustgridActivities: [
       'Deploying and micro-optimizing inference engines (vLLM, TensorRT-LLM) with granular KV-cache tuning',
       'Orchestrating multi-agent runtimes with tool sandboxing and real-time AgentOps tracing',
@@ -127,7 +127,7 @@ export const defaultMethodologyJourney: MethodologyJourneyStage[] = [
     name: 'ADOPT',
     subtitle: 'Workforce Enablement & Governance',
     objective: 'Integrate autonomous systems smoothly into day-to-day organizational workflows with executive governance and workforce capability building.',
-    whatHappens: 'TrustGrid facilitators upskill internal teams, establish internal AI Factory Centers of Excellence, and verify regulatory compliance with board committees.',
+    whatHappens: 'TRUSTGRID.AI facilitators upskill internal teams, establish internal AI Factory Centers of Excellence, and verify regulatory compliance with board committees.',
     trustgridActivities: [
       'Conducting hands-on co-engineering sprints with internal engineering and operations squads',
       'Establishing standard operating procedures for agent monitoring, retraining, and incident response',

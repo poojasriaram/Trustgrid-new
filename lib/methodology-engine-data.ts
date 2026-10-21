@@ -1,4 +1,4 @@
-export interface StageData {
+﻿export interface StageData {
   number: string
   name: string
   subtitle: string
@@ -61,11 +61,11 @@ export interface EngagementModelData {
 export const coreConviction = {
   title: "The Core Conviction",
   lead: "Every management consulting firm in the world knows the 80 methodologies listed in our framework. Every systems integrator can spell 'Lean' and 'Six Sigma.' Every Big Four firm has a 'Digital Transformation' practice with polished slide decks and credentialed partners.",
-  highlight: "None of them use AI and Agentic AI to implement, automate, continuously operate, and compound the value of these methodologies. That is what TrustGrid does. And no one else does it.",
+  highlight: "None of them use AI and Agentic AI to implement, automate, continuously operate, and compound the value of these methodologies. That is what TRUSTGRID.AI does. And no one else does it.",
   breakdown: [
     "The traditional approach to operational excellence transformation is a consulting engagement: consultants arrive, diagnose problems using manual workshops and spreadsheets, recommend methodology applications, deliver a report, maybe run a pilot, and leave.",
     "The historical result: 70% of operational excellence initiatives fail to sustain beyond 18 months. The methodology knowledge walks out the door with the consultants. The process improvements decay. The metrics stop being tracked. The organization reverts to old habits.",
-    "TrustGrid's approach is fundamentally, structurally, and irreversibly different. We do not just recommend methodologies. We deploy AI systems and Agentic AI fleets that implement, execute, monitor, optimize, and continuously improve these methodologies — permanently, autonomously, and at a scale that human teams alone cannot achieve.",
+    "TRUSTGRID.AI's approach is fundamentally, structurally, and irreversibly different. We do not just recommend methodologies. We deploy AI systems and Agentic AI fleets that implement, execute, monitor, optimize, and continuously improve these methodologies — permanently, autonomously, and at a scale that human teams alone cannot achieve.",
     "The Kaizen event does not end when the workshop closes. The DMAIC project does not conclude when the report is delivered. The Balanced Scorecard does not decay between quarterly reviews. Because AI agents are continuously running them — detecting opportunities, analyzing data, simulating improvements, implementing changes, measuring results, and learning from outcomes."
   ],
   tagline: "Operational Excellence as a continuously operating AI system, not a one-time consulting engagement."
@@ -76,7 +76,7 @@ export const engineStages: StageData[] = [
     number: "01",
     name: "DIAGNOSE",
     subtitle: "AI-Powered Enterprise Diagnostics",
-    whatIsUnique: "Traditional diagnostics rely on workshops, interviews, surveys, and manual data analysis — limited by human cognitive capacity, time constraints, and bias. TrustGrid deploys Diagnostic AI Agents that autonomously discover, analyze, and assess the operational reality of the enterprise at a depth and speed that human consultants cannot match.",
+    whatIsUnique: "Traditional diagnostics rely on workshops, interviews, surveys, and manual data analysis — limited by human cognitive capacity, time constraints, and bias. TRUSTGRID.AI deploys Diagnostic AI Agents that autonomously discover, analyze, and assess the operational reality of the enterprise at a depth and speed that human consultants cannot match.",
     agentFleetName: "Diagnostic Swarm",
     agents: [
       {
@@ -93,7 +93,7 @@ export const engineStages: StageData[] = [
       },
       {
         name: "Maturity Assessment Agents",
-        description: "Deploy the TrustGrid AI Maturity Model across the enterprise — scoring six dimensions (Strategy & Governance, Infrastructure & Platform, Data & Models, Agents & Automation, Trust & Security, Value & Outcomes) using automated data collection and AI-structured interviews."
+        description: "Deploy the TRUSTGRID.AI AI Maturity Model across the enterprise — scoring six dimensions (Strategy & Governance, Infrastructure & Platform, Data & Models, Agents & Automation, Trust & Security, Value & Outcomes) using automated data collection and AI-structured interviews."
       },
       {
         name: "Cultural Readiness Agents",
@@ -127,7 +127,7 @@ export const engineStages: StageData[] = [
     number: "02",
     name: "ARCHITECT",
     subtitle: "AI-Designed Transformation Architecture",
-    whatIsUnique: "After diagnostics, TrustGrid's Architecture AI Agents design the complete transformation — selecting methodologies, designing implementations, modeling outcomes, and optimizing the transformation sequence using AI-powered scenario analysis.",
+    whatIsUnique: "After diagnostics, TRUSTGRID.AI's Architecture AI Agents design the complete transformation — selecting methodologies, designing implementations, modeling outcomes, and optimizing the transformation sequence using AI-powered scenario analysis.",
     agentFleetName: "Architecture Design Agents",
     agents: [
       {
@@ -172,7 +172,7 @@ export const engineStages: StageData[] = [
     number: "03",
     name: "IMPLEMENT",
     subtitle: "AI-Accelerated Methodology Deployment",
-    whatIsUnique: "Traditional methodology implementation is slow, manual, and dependent on scarce expert practitioners. TrustGrid uses Implementation AI Agents to accelerate methodology deployment by 4–10x — automating analytical, data processing, and documentation work while human experts focus on judgment and stakeholder engagement.",
+    whatIsUnique: "Traditional methodology implementation is slow, manual, and dependent on scarce expert practitioners. TRUSTGRID.AI uses Implementation AI Agents to accelerate methodology deployment by 4–10x — automating analytical, data processing, and documentation work while human experts focus on judgment and stakeholder engagement.",
     agentFleetName: "Implementation Acceleration Agents",
     agents: [
       {
@@ -191,7 +191,7 @@ export const engineStages: StageData[] = [
     tables: [
       {
         title: "AI-Augmented DMAIC Implementation Comparison",
-        headers: ["DMAIC Phase", "Traditional Approach", "TrustGrid AI-Augmented Approach"],
+        headers: ["DMAIC Phase", "Traditional Approach", "TRUSTGRID.AI AI-Augmented Approach"],
         rows: [
           ["Define", "2–4 weeks of workshops, stakeholder interviews, manual SIPOC creation", "AI agents auto-generate SIPOC from system data, analyze stakeholder inputs via NLP, create problem statements from data — 1 week"],
           ["Measure", "4–8 weeks of data collection, measurement system analysis, manual validation", "AI agents automatically extract, validate, and structure measurement data from enterprise systems, run continuous MSA — 1–2 weeks"],
@@ -203,7 +203,7 @@ export const engineStages: StageData[] = [
       },
       {
         title: "AI-Augmented Value Stream Mapping (VSM) Comparison",
-        headers: ["VSM Step", "Traditional Approach", "TrustGrid AI-Augmented Approach"],
+        headers: ["VSM Step", "Traditional Approach", "TRUSTGRID.AI AI-Augmented Approach"],
         rows: [
           ["Select product family", "1–2 weeks of analysis", "AI agents analyze product volume, revenue, and complexity data — 2 days"],
           ["Draw current state map", "2–4 weeks of Gemba walks, interviews, observation", "AI agents auto-map from system logs, ERP data, and workflow telemetry — 1 week"],
@@ -229,7 +229,7 @@ export const engineStages: StageData[] = [
     number: "04",
     name: "AUTOMATE",
     subtitle: "Agentic AI Continuous Operation",
-    whatIsUnique: "This is the stage that no other organization in the world delivers. TrustGrid deploys Operational AI Agent Fleets that continuously execute activated methodologies — not as one-time projects, but as permanently operating intelligent systems. Traditional OpEx = temporary projects. TrustGrid OpEx = 24/7 operating systems.",
+    whatIsUnique: "This is the stage that no other organization in the world delivers. TRUSTGRID.AI deploys Operational AI Agent Fleets that continuously execute activated methodologies — not as one-time projects, but as permanently operating intelligent systems. Traditional OpEx = temporary projects. TRUSTGRID.AI OpEx = 24/7 operating systems.",
     agentFleetName: "Methodology Operating Agent Fleets",
     agents: [],
     operatingAgents: [
@@ -328,7 +328,7 @@ export const engineStages: StageData[] = [
     number: "05",
     name: "ADOPT",
     subtitle: "AI-Guided Human Enablement & Cultural Transformation",
-    whatIsUnique: "Technology deployment without human adoption is waste. TrustGrid uses Adoption AI Agents to personalize, accelerate, and sustain human adoption of AI-driven operational excellence — ensuring every employee builds the skills, mindset, and habits to work alongside AI agents.",
+    whatIsUnique: "Technology deployment without human adoption is waste. TRUSTGRID.AI uses Adoption AI Agents to personalize, accelerate, and sustain human adoption of AI-driven operational excellence — ensuring every employee builds the skills, mindset, and habits to work alongside AI agents.",
     agentFleetName: "Adoption & Enablement Agents",
     agents: [
       {
@@ -392,7 +392,7 @@ export const engineStages: StageData[] = [
     number: "06",
     name: "ACCELERATE",
     subtitle: "Continuous Value Compounding & Expansion",
-    whatIsUnique: "The final stage is not a conclusion — it is an exponential launchpad. TrustGrid's Agentic AI engine continuously identifies adjacent opportunities to expand methodology scope, deepen automation, and compound value. Each improvement cycle fuels the next.",
+    whatIsUnique: "The final stage is not a conclusion — it is an exponential launchpad. TRUSTGRID.AI's Agentic AI engine continuously identifies adjacent opportunities to expand methodology scope, deepen automation, and compound value. Each improvement cycle fuels the next.",
     agentFleetName: "Acceleration & Expansion Agents",
     agents: [
       {
@@ -896,7 +896,7 @@ export const engagementModels: EngagementModelData[] = [
     number: "03",
     title: "Full AI-Driven Enterprise Transformation",
     duration: "48–88 weeks to first compounding value, then ongoing",
-    scope: "All six stages — full Diagnose, Architect, Implement, Automate, Adopt, and Accelerate — across the entire enterprise with the complete TrustGrid AI-Driven Methodology Engine.",
+    scope: "All six stages — full Diagnose, Architect, Implement, Automate, Adopt, and Accelerate — across the entire enterprise with the complete TRUSTGRID.AI AI-Driven Methodology Engine.",
     deliverables: [
       "Everything in Diagnostic and Rapid Value Sprint",
       "Full methodology activation across all priority operational domains",
@@ -926,7 +926,7 @@ export const engagementModels: EngagementModelData[] = [
     number: "05",
     title: "Managed Methodology Operations",
     duration: "Ongoing",
-    scope: "TrustGrid operates the complete AI-Driven Methodology Engine on behalf of the enterprise — agent fleet management, methodology execution, continuous improvement, and value tracking.",
+    scope: "TRUSTGRID.AI operates the complete AI-Driven Methodology Engine on behalf of the enterprise — agent fleet management, methodology execution, continuous improvement, and value tracking.",
     deliverables: [
       "Continuous operation of all methodology agent fleets 24/7",
       "Monthly value realization reporting",
@@ -956,7 +956,7 @@ export const trustgridPromise = {
   headline: "Compounding Value, Continuous Improvement, Permanent Capability",
   subheadline: "We do not deliver projects. We deploy operating systems.",
   lead: "The traditional model of operational excellence — hire consultants, run a project, deliver results, move on — is fundamentally broken. The results decay. The capability dissipates. The value was never as large as projected because it depended on sustained human effort that never materialized.",
-  coreAssertion: "TrustGrid's AI-Driven Methodology Engine is a permanent, self-improving, continuously operating system for enterprise operational excellence. AI agents do not get tired. They do not leave for other jobs. They do not forget what they learned. They do not stop monitoring because it is Friday afternoon. They operate 24/7/365, and they get better every day.",
+  coreAssertion: "TRUSTGRID.AI's AI-Driven Methodology Engine is a permanent, self-improving, continuously operating system for enterprise operational excellence. AI agents do not get tired. They do not leave for other jobs. They do not forget what they learned. They do not stop monitoring because it is Friday afternoon. They operate 24/7/365, and they get better every day.",
   timelineMilestones: [
     {
       year: "Year 1",

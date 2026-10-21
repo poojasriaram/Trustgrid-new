@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  * TRUSTGRID.AI — APPROVED ENTERPRISE KNOWLEDGE BASE CORPUS (RAG)
  * ============================================================================
@@ -34,7 +34,7 @@ export const trustgridKnowledgeCorpus: KnowledgeChunk[] = [
     topics: ['ai infrastructure', 'gpu cluster', 'data center', 'liquid cooling', 'blackwell', 'h100', 'h200', 'b200', 'compute utilization', 'pue', 'ai factory'],
     content: `TRUSTGRID.AI architects high-density AI Factories and GPU superclusters (30–100kW/rack) designed for deterministic training and high-throughput inference. 
 We solve the critical physical and architectural bottlenecks that waste 30–50% of raw GPU compute capacity. Our engineering capabilities cover direct-to-chip (DLC) and rear-door heat exchanger (RDHx) liquid cooling transitions, high-radix InfiniBand/RoCEv2 fabrics, Slurm/Kubernetes GPU orchestration, and kernel-level CUDA optimizations (vLLM, TensorRT-LLM, continuous batching, FP8/INT4 quantization).
-By optimizing the physical layer through to the attention mechanism, TrustGrid slashes enterprise inference TCO by 30–60% and doubles cluster throughput without requiring new silicon procurement.`,
+By optimizing the physical layer through to the attention mechanism, TRUSTGRID.AI slashes enterprise inference TCO by 30–60% and doubles cluster throughput without requiring new silicon procurement.`,
     keyFacts: [
       '30–100kW/rack high-density thermal engineering with direct-to-chip liquid cooling',
       'Target PUE < 1.15 in sovereign and hybrid AI data center campuses',
@@ -43,7 +43,7 @@ By optimizing the physical layer through to the attention mechanism, TrustGrid s
     ],
     suggestedFollowUps: [
       'What are the main bottlenecks in enterprise GPU infrastructure?',
-      'How does TrustGrid optimize liquid cooling for 50kW+ racks?',
+      'How does TRUSTGRID.AI optimize liquid cooling for 50kW+ racks?',
       'What is involved in a GPU infrastructure assessment?'
     ],
     primaryCta: {
@@ -68,7 +68,7 @@ By optimizing the physical layer through to the attention mechanism, TrustGrid s
       'Kv-cache memory footprint scales linearly with concurrent agent context windows'
     ],
     suggestedFollowUps: [
-      'How does TrustGrid eliminate GPU communication deadlocks?',
+      'How does TRUSTGRID.AI eliminate GPU communication deadlocks?',
       'What cooling technologies do you engineer for Blackwell B200 clusters?',
       'How can we reduce our monthly cloud GPU inference spend?'
     ],
@@ -129,7 +129,7 @@ Key capabilities include:
       'Real-time automated prompt-injection & data leakage guardrails for LLM agents'
     ],
     suggestedFollowUps: [
-      'What causes packet drop in GPU clusters and how does TrustGrid fix it?',
+      'What causes packet drop in GPU clusters and how does TRUSTGRID.AI fix it?',
       'What is a Cryptographic Bill of Materials (CBOM)?',
       'How do you protect AI agents from prompt injection attacks?'
     ],
@@ -161,7 +161,7 @@ We implement:
     suggestedFollowUps: [
       'How do you meet EU AI Act requirements for high-risk models?',
       'What is the difference between SHAP and LIME in production systems?',
-      'How does TrustGrid implement immutable audit logging?'
+      'How does TRUSTGRID.AI implement immutable audit logging?'
     ],
     primaryCta: {
       label: 'Explore Trusted AI Governance',
@@ -220,7 +220,7 @@ Our 90-Day Rapid Value Sprints deliver 3–10x verified ROI by prioritizing high
     suggestedFollowUps: [
       'How does OEE apply to GPU clusters?',
       'What is Poka-Yoke in the context of LLM agents?',
-      'How does TrustGrid implement FMEA for AI workflows?'
+      'How does TRUSTGRID.AI implement FMEA for AI workflows?'
     ],
     primaryCta: {
       label: 'Explore Methodology Engine',
@@ -233,7 +233,7 @@ Our 90-Day Rapid Value Sprints deliver 3–10x verified ROI by prioritizing high
   // --------------------------------------------------------------------------
   {
     id: 'engagement-models',
-    title: 'TrustGrid Engagement Models & Executive AI Diagnostic',
+    title: 'TRUSTGRID.AI Engagement Models & Executive AI Diagnostic',
     category: 'diagnostic',
     url: '/book-ai-diagnostic',
     topics: ['diagnostic', 'consultation', 'talk to architect', 'engagement models', 'strategy session', 'dbot', 'pricing', 'hire', 'implementation timeline'],
@@ -279,7 +279,7 @@ Our 90-Day Rapid Value Sprints deliver 3–10x verified ROI by prioritizing high
       'Production case study in medical packaging achieved 300% distribution velocity and 99.9% defect prevention'
     ],
     suggestedFollowUps: [
-      'How does TrustGrid handle air-gapped deployments for defense and intelligence?',
+      'How does TRUSTGRID.AI handle air-gapped deployments for defense and intelligence?',
       'What compliance safeguards are in place for HIPAA and healthcare data?',
       'Can you share details on the medical manufacturing packaging case study?'
     ],

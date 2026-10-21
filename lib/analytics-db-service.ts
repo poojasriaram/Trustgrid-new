@@ -1,4 +1,4 @@
-import { getDatabase } from '@/lib/db'
+﻿import { getDatabase } from '@/lib/db'
 import {
   DashboardDataset,
   FilterOptions,
@@ -290,7 +290,7 @@ export function aggregateDashboardFromDb(
           status: 'ONLINE',
           lastSync: new Date().toLocaleTimeString(),
           activeNodes: Math.max(1, activeSessionsCount),
-          engineVersion: 'TrustGrid SQLite WAL v2.4'
+          engineVersion: 'TRUSTGRID.AI SQLite WAL v2.4'
         }
       },
       executiveKpis: {

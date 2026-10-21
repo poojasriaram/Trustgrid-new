@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -284,7 +284,7 @@ export default async function SolutionDetailPage({
             </div>
 
             <div className="overview-box">
-              <span className="problem-tag">TrustGrid Engineered Solution</span>
+              <span className="problem-tag">TRUSTGRID.AI Engineered Solution</span>
               <p>{solution.overview}</p>
             </div>
 
@@ -394,14 +394,14 @@ export default async function SolutionDetailPage({
         <div className="section-intro">
           <div className="intro-left">
             <span className="section-badge">DIFFERENTIATION</span>
-            <p className="section-label">Conventional Approach vs. TrustGrid Operating Model</p>
+            <p className="section-label">Conventional Approach vs. TRUSTGRID.AI Operating Model</p>
           </div>
           <span className="section-index">COMPARISON</span>
         </div>
 
         <div className="offerings-header">
           <h2>
-            Why traditional point solutions fail. <span>And how TrustGrid is different.</span>
+            Why traditional point solutions fail. <span>And how TRUSTGRID.AI is different.</span>
           </h2>
           <p>
             We eliminate the handoff friction between strategy, silicon, code, security, and financial value.
@@ -416,7 +416,7 @@ export default async function SolutionDetailPage({
               <tr>
                 <th style={{ width: '22%' }}>Dimension</th>
                 <th style={{ width: '38%' }}>Conventional Point Vendors / Consultancies</th>
-                <th style={{ width: '40%' }}>TrustGrid Operating Company</th>
+                <th style={{ width: '40%' }}>TRUSTGRID.AI Operating Company</th>
               </tr>
             </thead>
             <tbody>

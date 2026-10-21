@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { insertLeadDb } from '@/lib/db/leads'
 import { appendLeadToGoogleSheets } from '@/lib/services/google-sheets'
 import { createLinkedInJiraLead } from '@/lib/services/jira'
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
     email: customEmail,
     company: customCompany,
     phone: searchParams.get('phone') || '',
-    message: `Visited official TrustGrid LinkedIn feed: ${TARGET_LINKEDIN_URL} | Referrer: ${referrer} | IP: ${ip}`,
+    message: `Visited official TRUSTGRID.AI LinkedIn feed: ${TARGET_LINKEDIN_URL} | Referrer: ${referrer} | IP: ${ip}`,
     source: 'LinkedIn',
     service: 'LinkedIn Company Page Visit',
     website: 'TRUSTGRID.AI',

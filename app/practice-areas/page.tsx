@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+﻿import { Metadata } from 'next'
 import Link from 'next/link'
 import './practice-areas.css'
 import {
@@ -76,7 +76,7 @@ const engagementPathway = [
     title: 'Forward Deployment & Co-Engineering',
     timeline: 'Weeks 3–6',
     description:
-      'Embedded TrustGrid systems engineers deploy directly into client environments, pairing with internal teams to build resilient prototypes and containerized pipelines.',
+      'Embedded TRUSTGRID.AI systems engineers deploy directly into client environments, pairing with internal teams to build resilient prototypes and containerized pipelines.',
     outcome: 'Production-Ready Microservices & Infrastructure-as-Code'
   },
   {

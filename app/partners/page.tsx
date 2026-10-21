@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import Link from 'next/link'
 import {
   ArrowUpRight,
@@ -138,7 +138,7 @@ export default function PartnersPage() {
               Engineered across <span>the frontier AI stack.</span>
             </h2>
             <p>
-              TrustGrid engineers, benchmarks, and orchestrates production systems across leading foundation model architectures, hyperscale clouds, distributed ML runtimes, and bare-metal GPU acceleration frameworks.
+              TRUSTGRID.AI engineers, benchmarks, and orchestrates production systems across leading foundation model architectures, hyperscale clouds, distributed ML runtimes, and bare-metal GPU acceleration frameworks.
             </p>
           </div>
 
@@ -250,7 +250,7 @@ export default function PartnersPage() {
           </div>
 
           <div className="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 text-center shadow-xs">
-            <strong className="text-slate-800">Architecture Notice:</strong> Technologies and frameworks listed represent production platforms engineered and supported by TrustGrid systems architects. All trademarks belong to their respective owners and indicate interoperability capabilities.
+            <strong className="text-slate-800">Architecture Notice:</strong> Technologies and frameworks listed represent production platforms engineered and supported by TRUSTGRID.AI systems architects. All trademarks belong to their respective owners and indicate interoperability capabilities.
           </div>
         </section>
       </main>

@@ -1,4 +1,4 @@
-export type Offering = {
+﻿export type Offering = {
   title: string
   description: string
   subItems?: string[]
@@ -216,7 +216,7 @@ export const solutions: Solution[] = [
     heroStatement: 'We design, build, and continuously optimize production-grade AI Factories that deliver maximum intelligence per dollar and per watt — the foundational compute layer for enterprise AI at scale.',
     marketContext: 'The AI infrastructure landscape is in crisis. Enterprises are spending unprecedented sums on GPU hardware, cloud compute, and data center capacity — yet the majority of this investment is operationally inefficient. Training runs fail. Inference costs spiral. GPU utilization hovers at 30–50% in most environments.',
     problemStatement: 'Most enterprise AI infrastructure was built incrementally without systems-level engineering or holistic economics. True AI Factories are purpose-engineered, continuously optimized, economically governed compute systems designed to produce intelligence as reliably and efficiently as a semiconductor fab produces chips.',
-    overview: 'TrustGrid transforms experimental GPU clusters into hyper-optimized AI Factories — systems engineered end-to-end for throughput, latency, cost efficiency, energy sustainability, and operational resilience. We design, build, deploy, operate, and continuously optimize every watt, token, and dollar.',
+    overview: 'TRUSTGRID.AI transforms experimental GPU clusters into hyper-optimized AI Factories — systems engineered end-to-end for throughput, latency, cost efficiency, energy sustainability, and operational resilience. We design, build, deploy, operate, and continuously optimize every watt, token, and dollar.',
     offerings: [
       {
         title: 'AI Factory Design & Architecture',
@@ -352,7 +352,7 @@ export const solutions: Solution[] = [
     heroStatement: 'We architect, industrialize, and operate multi-agent systems that become the new operating system of the enterprise — turning autonomy into reliable, governed, and compounding business capability.',
     marketContext: 'The enterprise software application layer is giving way to autonomous digital workers that perceive, reason, plan, act, and collaborate across enterprise systems without human intervention at every step.',
     problemStatement: 'The gap between a single-agent demo and a production multi-agent system is vast. Production agent fleets require robust orchestration, persistent memory, hierarchical planning, tool integration at enterprise scale, comprehensive observability, human-in-the-loop governance, security boundaries, and continuous evaluation.',
-    overview: 'TrustGrid builds production-grade agentic systems on top of optimized AI Factories. We engineer multi-agent architectures that scale from pilot to enterprise-wide operation with the reliability, observability, and governance that production demands.',
+    overview: 'TRUSTGRID.AI builds production-grade agentic systems on top of optimized AI Factories. We engineer multi-agent architectures that scale from pilot to enterprise-wide operation with the reliability, observability, and governance that production demands.',
     offerings: [
       {
         title: 'Agentic System Architecture',
@@ -488,7 +488,7 @@ export const solutions: Solution[] = [
         number: '05',
         title: 'Managed Agent Fleet Operations',
         duration: 'Ongoing',
-        description: 'Continuous 24/7 operation, monitoring, optimization, and governance of production agent fleets operated by TrustGrid engineers.',
+        description: 'Continuous 24/7 operation, monitoring, optimization, and governance of production agent fleets operated by TRUSTGRID.AI engineers.',
       },
     ],
   },
@@ -501,7 +501,7 @@ export const solutions: Solution[] = [
     heroStatement: 'We engineer AI systems that are reliable, transparent, auditable, and trustworthy — while accelerating enterprises from fragmented pilots to governed, production-scale AI operations.',
     marketContext: 'Trust is the defining bottleneck of enterprise AI adoption. Black-box models cannot survive the EU AI Act, NIST AI RMF, ISO/IEC 42001, or board scrutiny. Simultaneously, most enterprises are stuck in "pilot purgatory" with dozens of disconnected proof-of-concepts that fail to scale.',
     problemStatement: 'Trust cannot be an afterthought or a compliance checkbox added after deployment. It must be engineered into the architecture, data pipelines, model lifecycle, and agent orchestration. Combined with rapid organizational transformation, enterprises achieve production-grade AI in months instead of years.',
-    overview: 'TrustGrid integrates TRUSTED AI Engineering with Enterprise Rapid Transformation into a cohesive discipline. We build verifiable, explainable, robust, and accountable AI systems while deploying the foundational operating model, platforms, and cultural literacy required to scale sustainably.',
+    overview: 'TRUSTGRID.AI integrates TRUSTED AI Engineering with Enterprise Rapid Transformation into a cohesive discipline. We build verifiable, explainable, robust, and accountable AI systems while deploying the foundational operating model, platforms, and cultural literacy required to scale sustainably.',
     offerings: [
       {
         title: 'TRUSTED AI Engineering',
@@ -700,7 +700,7 @@ export const solutions: Solution[] = [
     heroStatement: 'We engineer high-performance, intelligent, and quantum-resilient networking fabrics with end-to-end cybersecurity intelligence — delivering zero packet loss, sub-minute threat containment, and purpose-engineered resilience from the WiFi access point to the orbital asset and hyperscale AI factory.',
     marketContext: 'The industry has historically treated high-performance AI networking and enterprise cybersecurity as disconnected silos. In modern AI architectures, network bottlenecks cause GPU clusters to sit idle while fragmented security defenses fail to protect model weights, agent sessions, and telemetry streams from adversarial manipulation and quantum threats.',
     problemStatement: 'AI workloads demand lossless fabrics (RoCEv2, InfiniBand) with sub-microsecond tail latency, while adversaries exploit unencrypted interconnects, prompt injection, and Harvest-Now-Decrypt-Later campaigns. Addressing networking without embedded cybersecurity creates massive vulnerabilities, while securing networks without fabric-level optimization throttles AI throughput.',
-    overview: 'TrustGrid AI unites high-performance AI networking and full-stack cybersecurity into one common nervous system. We deliver lossless fabrics, autonomous AI NOC operations, post-quantum cryptography (PQC/CBOM), 24/7 managed AI SOC intelligence, and Cognitive WiFi 7 across seven sector domains — from Enterprise and Campus to Hyperscale, Manufacturing OT, Satellite NTN, Cable Landing Stations, and Aerospace.',
+    overview: 'TRUSTGRID.AI AI unites high-performance AI networking and full-stack cybersecurity into one common nervous system. We deliver lossless fabrics, autonomous AI NOC operations, post-quantum cryptography (PQC/CBOM), 24/7 managed AI SOC intelligence, and Cognitive WiFi 7 across seven sector domains — from Enterprise and Campus to Hyperscale, Manufacturing OT, Satellite NTN, Cable Landing Stations, and Aerospace.',
     offerings: [
       {
         title: 'Lossless AI Networking Fabrics',
@@ -852,8 +852,8 @@ export const solutions: Solution[] = [
     shortTitle: 'AI Value Engineering',
     heroStatement: 'We ensure every AI investment delivers quantifiable, accelerated, and sustainable enterprise value — through rigorous economics, operational excellence methodologies, and continuous value acceleration that makes the AI business case a living, breathing accountability framework.',
     marketContext: 'The global enterprise AI market will exceed $500 billion, yet the majority of enterprises cannot clearly quantify the business value of their AI investments. Budgets grow while returns remain ambiguous. Board presentations show impressive demos but struggle to demonstrate P&L impact.',
-    problemStatement: 'The cost of intelligence remains too high, inference expenses balloon without unit-cost tracking, and agent deployments generate activity metrics without connecting to revenue or cost elimination. TrustGrid brings the rigor of classical operational excellence into the AI-native era.',
-    overview: 'TrustGrid\'s AI Value Engineering practice applies advanced operational excellence methodologies (Lean, Theory of Constraints, Six Sigma DMAIC, Hoshin Kanri) combined with AI FinOps to ensure every dollar invested in AI generates measurable, compounding returns.',
+    problemStatement: 'The cost of intelligence remains too high, inference expenses balloon without unit-cost tracking, and agent deployments generate activity metrics without connecting to revenue or cost elimination. TRUSTGRID.AI brings the rigor of classical operational excellence into the AI-native era.',
+    overview: 'TRUSTGRID.AI\'s AI Value Engineering practice applies advanced operational excellence methodologies (Lean, Theory of Constraints, Six Sigma DMAIC, Hoshin Kanri) combined with AI FinOps to ensure every dollar invested in AI generates measurable, compounding returns.',
     offerings: [
       {
         title: 'AI Value Discovery & Business Case Engineering',

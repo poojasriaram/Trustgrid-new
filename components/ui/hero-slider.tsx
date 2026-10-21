@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
@@ -51,7 +51,7 @@ export const heroSlidesData: HeroSlideData[] = [
     layerTag: 'HIGH-DENSITY COMPUTE (30–100kW)',
     title: 'From Infrastructure to Intelligence.',
     titleHighlight: 'Engineered for Scale.',
-    copy: 'TrustGrid is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories with direct-to-chip liquid cooling to low-latency inference serving.',
+    copy: 'TRUSTGRID.AI is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories with direct-to-chip liquid cooling to low-latency inference serving.',
     thesisHighlight: 'Strategic Core: Purpose-engineered AI Factories delivering maximum intelligence per dollar and watt with 30–70% higher accelerator utilization.',
     primaryCtaText: 'Book an AI Diagnostic',
     primaryCtaLink: '/book-ai-diagnostic#diagnostic-form-section',
@@ -345,7 +345,7 @@ export function HeroSlider() {
         </div>
 
         {/* RIGHT COLUMN: HIGH-IMPACT ENTERPRISE BANNER VISUAL SHOWCASE */}
-        <div className="hero-aside-banner-card" aria-label="TrustGrid Offering Banner Showcase">
+        <div className="hero-aside-banner-card" aria-label="TRUSTGRID.AI Offering Banner Showcase">
           <div className="banner-card-frame">
             {/* The Main High-Res Thematic Image */}
             <div className="banner-card-image-wrap relative overflow-hidden aspect-[16/10]">

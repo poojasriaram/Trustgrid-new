@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  * TRUSTGRID.AI — LAYERED CONVERSATION CONTEXT ENGINE
  * ============================================================================
@@ -149,7 +149,7 @@ export function detectTaskStage(text: string, currentStage: TaskStage, turnCount
     return 'implementation_planning'
   }
 
-  // Solution Mapping / How TrustGrid Solves It
+  // Solution Mapping / How TRUSTGRID.AI Solves It
   const solveTriggers = [
     'how can trustgrid solve', 'how do you solve', 'your solution', 'trustgrid address',
     'what do you offer', 'how does trustgrid fix', 'solve them'
@@ -205,14 +205,14 @@ export function resolveContextualReferences(
       referenceEntity = `${topicLabel} challenges & bottlenecks`
       expandedQuery = `${query} regarding ${topicLabel} challenges, thermal constraints, and operational bottlenecks`
     } else if (lower.includes('solve them') || lower.includes('how can trustgrid solve') || lower.includes('how do you solve')) {
-      referenceEntity = `TrustGrid solutions for ${topicLabel} challenges`
-      expandedQuery = `How TrustGrid solves ${topicLabel} challenges through architectural engineering and methodology`
+      referenceEntity = `TRUSTGRID.AI solutions for ${topicLabel} challenges`
+      expandedQuery = `How TRUSTGRID.AI solves ${topicLabel} challenges through architectural engineering and methodology`
     } else if (lower.includes('implementation') || lower.includes('involve') || lower.includes('next step')) {
       referenceEntity = `${topicLabel} implementation stages, deliverables & diagnostic roadmap`
-      expandedQuery = `Implementation stages, prerequisites, and timeline for TrustGrid ${topicLabel}`
+      expandedQuery = `Implementation stages, prerequisites, and timeline for TRUSTGRID.AI ${topicLabel}`
     } else if (lower.includes('it') || lower.includes('that') || lower.includes('this')) {
       referenceEntity = topicLabel
-      expandedQuery = `${query} in relation to TrustGrid ${topicLabel}`
+      expandedQuery = `${query} in relation to TRUSTGRID.AI ${topicLabel}`
     }
   }
 

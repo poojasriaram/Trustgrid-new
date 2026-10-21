@@ -1,5 +1,5 @@
-/**
- * TrustGrid.AI - Attribution & System Tracking Engine
+﻿/**
+ * TRUSTGRID.AI.AI - Attribution & System Tracking Engine
  * Captures First-Touch and Last-Touch UTM parameters, referrer, landing page, device, OS, browser, and screen size.
  */
 

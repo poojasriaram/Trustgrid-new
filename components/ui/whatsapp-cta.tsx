@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
@@ -13,38 +13,38 @@ interface WhatsAppCTAProps {
   label?: string
 }
 
-// Configurable approved TrustGrid WhatsApp contact point
+// Configurable approved TRUSTGRID.AI WhatsApp contact point
 const DEFAULT_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+15550192834'
 
 function getContextualMessage(pathname: string): string {
   if (pathname.includes('/solutions/ai-infra-engineering')) {
-    return 'Hi TrustGrid team, I would like to discuss high-density GPU infrastructure, liquid cooling, and data center engineering.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss high-density GPU infrastructure, liquid cooling, and data center engineering.'
   }
   if (pathname.includes('/solutions/ai-agentic-factory')) {
-    return 'Hi TrustGrid team, I would like to discuss autonomous multi-agent systems and production AgentOps.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss autonomous multi-agent systems and production AgentOps.'
   }
   if (pathname.includes('/solutions/ai-networking-cybersecurity')) {
-    return 'Hi TrustGrid team, I would like to discuss unified AI Networking & Quantum-Safe Cybersecurity Intelligence.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss unified AI Networking & Quantum-Safe Cybersecurity Intelligence.'
   }
   if (pathname.includes('/solutions/ai-networking')) {
-    return 'Hi TrustGrid team, I would like to evaluate low-latency InfiniBand and RoCEv2 AI network fabrics.'
+    return 'Hi TRUSTGRID.AI team, I would like to evaluate low-latency InfiniBand and RoCEv2 AI network fabrics.'
   }
   if (pathname.includes('/solutions/ai-cybersecurity')) {
-    return 'Hi TrustGrid team, I would like to assess our AI security posture and Post-Quantum Cryptography transition.'
+    return 'Hi TRUSTGRID.AI team, I would like to assess our AI security posture and Post-Quantum Cryptography transition.'
   }
   if (pathname.includes('/solutions/trusted-ai')) {
-    return 'Hi TrustGrid team, I would like to discuss explainability, EU AI Act compliance, and trusted AI governance.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss explainability, EU AI Act compliance, and trusted AI governance.'
   }
   if (pathname.includes('/solutions/ai-value-engineering')) {
-    return 'Hi TrustGrid team, I would like to discuss AI FinOps unit economics and value acceleration.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss AI FinOps unit economics and value acceleration.'
   }
   if (pathname.includes('/book-ai-diagnostic') || pathname.includes('/ai-diagnostic')) {
-    return 'Hi TrustGrid team, I would like to schedule an Executive AI Diagnostic session.'
+    return 'Hi TRUSTGRID.AI team, I would like to schedule an Executive AI Diagnostic session.'
   }
   if (pathname.includes('/industries')) {
-    return 'Hi TrustGrid team, I would like to discuss specialized enterprise AI architectures for our industry vertical.'
+    return 'Hi TRUSTGRID.AI team, I would like to discuss specialized enterprise AI architectures for our industry vertical.'
   }
-  return 'Hi TrustGrid team, I would like to discuss an enterprise AI engineering requirement.'
+  return 'Hi TRUSTGRID.AI team, I would like to discuss an enterprise AI engineering requirement.'
 }
 
 export function WhatsAppCTA({

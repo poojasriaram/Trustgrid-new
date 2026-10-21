@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react'
+﻿import { LucideIcon } from 'lucide-react'
 
 // ============================================================================
 // TRUSTGRID.AI — COMPREHENSIVE INDUSTRY VERTICALS CONTENT MODEL
@@ -125,7 +125,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'BFSI & Fintech',
     tagline: 'High-frequency algorithmic trust, low-latency agentic finance, and post-quantum banking security.',
     summary: 'From sovereign on-prem GPU trading infrastructure and autonomous loan underwriting agents to strict regulatory compliance and quantum-safe payments.',
-    heroSubtitle: 'TrustGrid engineers sovereign AI compute clusters, sub-millisecond fraud scoring runtimes, post-quantum cryptography, and mathematically verified explainability frameworks meeting EU AI Act and Fed SR 11-7 requirements.',
+    heroSubtitle: 'TRUSTGRID.AI engineers sovereign AI compute clusters, sub-millisecond fraud scoring runtimes, post-quantum cryptography, and mathematically verified explainability frameworks meeting EU AI Act and Fed SR 11-7 requirements.',
     statCards: [
       {
         iconName: 'TrendingUp',
@@ -458,7 +458,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Underwriting & Claims',
     tagline: 'Autonomous claims adjudication, actuarial agent fleets, and decision explainability.',
     summary: 'Transform legacy actuarial models and claims pipelines with high-throughput agent fleets, explainable risk pricing, and secure data enclaves.',
-    heroSubtitle: 'TrustGrid equips insurance carriers with autonomous multi-agent claims swarms, zero-hallucination document intake, explainable actuarial risk engines, and Lean workflow optimization that eliminates loss adjustment friction.',
+    heroSubtitle: 'TRUSTGRID.AI equips insurance carriers with autonomous multi-agent claims swarms, zero-hallucination document intake, explainable actuarial risk engines, and Lean workflow optimization that eliminates loss adjustment friction.',
     statCards: [
       {
         iconName: 'Zap',
@@ -762,7 +762,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'HIPAA & Clinical AI',
     tagline: 'Sovereign clinical AI clusters, molecular agent discovery, and HIPAA-compliant zero trust.',
     summary: 'Accelerate drug discovery, optimize hospital bed telemetry, and enforce clinical safety boundaries across multimodal patient intelligence systems.',
-    heroSubtitle: 'TrustGrid engineers confidential clinical AI compute enclaves, deterministic medical guardrails that eliminate hallucinations, accelerated molecular simulation fabrics, and FDA SaMD compliance frameworks.',
+    heroSubtitle: 'TRUSTGRID.AI engineers confidential clinical AI compute enclaves, deterministic medical guardrails that eliminate hallucinations, accelerated molecular simulation fabrics, and FDA SaMD compliance frameworks.',
     statCards: [
       {
         iconName: 'Zap',
@@ -1071,7 +1071,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Industry 4.0 & Robotics',
     tagline: 'Real-time computer vision quality control, predictive robotics maintenance, and OEE optimization.',
     summary: 'Deploy edge AI factories to the shop floor for zero-defect assembly, autonomous robotic workcells, and shop-floor yield engineering.',
-    heroSubtitle: 'TrustGrid engineers ultra-low-latency edge computer vision nodes, predictive maintenance sensor telemetry, and industrial Lean OEE optimization to eliminate unplanned downtime and achieve zero-defect assembly.',
+    heroSubtitle: 'TRUSTGRID.AI engineers ultra-low-latency edge computer vision nodes, predictive maintenance sensor telemetry, and industrial Lean OEE optimization to eliminate unplanned downtime and achieve zero-defect assembly.',
     statCards: [
       {
         iconName: 'ShieldCheck',
@@ -1385,7 +1385,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Chemicals & Refining',
     tagline: 'Continuous yield optimization, thermodynamic control agents, and chemical process safety.',
     summary: 'Harness continuous time-series AI models, automated chemical process adjustments, and rigorous safety barrier monitoring.',
-    heroSubtitle: 'TrustGrid deploys continuous thermodynamic tuning agents, predictive hazardous runaway safety barriers, and air-gapped industrial OT cybersecurity for continuous chemical, petrochemical, and refining facilities.',
+    heroSubtitle: 'TRUSTGRID.AI deploys continuous thermodynamic tuning agents, predictive hazardous runaway safety barriers, and air-gapped industrial OT cybersecurity for continuous chemical, petrochemical, and refining facilities.',
     statCards: [
       {
         iconName: 'TrendingUp',
@@ -1689,7 +1689,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Smart Grid & Renewables',
     tagline: 'Autonomous grid balancing, renewable forecasting agents, and critical infrastructure defense.',
     summary: 'Power the energy transition with low-latency dispatch agents, predictive transmission maintenance, and quantum-safe grid telemetry.',
-    heroSubtitle: 'TrustGrid engineers autonomous grid-edge balancing agents, hyper-accurate renewable generation forecasting, predictive transformer maintenance, and quantum-safe NERC-CIP cyber defense for power utilities.',
+    heroSubtitle: 'TRUSTGRID.AI engineers autonomous grid-edge balancing agents, hyper-accurate renewable generation forecasting, predictive transformer maintenance, and quantum-safe NERC-CIP cyber defense for power utilities.',
     statCards: [
       {
         iconName: 'Zap',
@@ -1998,7 +1998,7 @@ export const industriesData: IndustryDetail[] = [
     badge: '5G / 6G & RAN',
     tagline: 'Autonomous network slicing, AI-driven traffic steering, and self-healing telco fabrics.',
     summary: 'Transform telco operations from reactive ticketing to predictive, autonomous self-optimizing RAN and core transport fabrics.',
-    heroSubtitle: 'TrustGrid engineers autonomous NOC/SRE remediation agent fleets, AI-driven dynamic spectrum allocation, predictive optical backhaul degradation analytics, and lossless 400G–1.6T transport fabrics for global telco carriers.',
+    heroSubtitle: 'TRUSTGRID.AI engineers autonomous NOC/SRE remediation agent fleets, AI-driven dynamic spectrum allocation, predictive optical backhaul degradation analytics, and lossless 400G–1.6T transport fabrics for global telco carriers.',
     statCards: [
       {
         iconName: 'Zap',
@@ -2307,7 +2307,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'ISVs & SaaS',
     tagline: 'GPU inference cost reduction (30–60%), automated SRE agent fleets, and AI-native architecture.',
     summary: 'Help AI product companies and SaaS enterprises scale model throughput 10x without ballooning compute budgets.',
-    heroSubtitle: 'TrustGrid equips SaaS providers and AI product companies with kernel-level inference optimization, multi-tenant GPU virtualization, autonomous DevOps/SRE agents, and AI FinOps unit-cost tracking that slashes inference expenses by 30–60%.',
+    heroSubtitle: 'TRUSTGRID.AI equips SaaS providers and AI product companies with kernel-level inference optimization, multi-tenant GPU virtualization, autonomous DevOps/SRE agents, and AI FinOps unit-cost tracking that slashes inference expenses by 30–60%.',
     statCards: [
       {
         iconName: 'Cpu',
@@ -2616,7 +2616,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Global Freight & Fulfillment',
     tagline: 'Multi-agent freight orchestration, predictive port logistics, and warehouse robotics AI.',
     summary: 'Build resilient, self-healing supply networks that dynamically reroute shipments, optimize freight load factors, and automate customs compliance.',
-    heroSubtitle: 'TrustGrid deploys autonomous multi-agent freight bidding, predictive port logistics rerouting, edge compute fabrics for warehouse sorting robots, and automated customs compliance that delivers 98.8% on-time delivery.',
+    heroSubtitle: 'TRUSTGRID.AI deploys autonomous multi-agent freight bidding, predictive port logistics rerouting, edge compute fabrics for warehouse sorting robots, and automated customs compliance that delivers 98.8% on-time delivery.',
     statCards: [
       {
         iconName: 'TrendingUp',
@@ -2920,7 +2920,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Omnichannel & CPG',
     tagline: 'Hyper-personalized customer agents, autonomous inventory optimization, and dynamic pricing.',
     summary: 'Maximize margins and customer lifetime value with real-time demand-sensing agent fleets and secure edge store intelligence.',
-    heroSubtitle: 'TrustGrid equips retailers and CPG brands with autonomous markdown optimization, conversational brand concierge fleets, real-time demand-sensing inventory balancing, and sub-100ms dynamic pricing that lifts gross margins by +240 bps.',
+    heroSubtitle: 'TRUSTGRID.AI equips retailers and CPG brands with autonomous markdown optimization, conversational brand concierge fleets, real-time demand-sensing inventory balancing, and sub-100ms dynamic pricing that lifts gross margins by +240 bps.',
     statCards: [
       {
         iconName: 'TrendingUp',
@@ -3224,7 +3224,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'GovTech & Civic AI',
     tagline: 'Sovereign citizen service agents, air-gapped defense enclaves, and public trust frameworks.',
     summary: 'Modernize civic operations with transparent, audited AI systems that maintain 100% data sovereignty and strict constitutional protections.',
-    heroSubtitle: 'TrustGrid engineers sovereign air-gapped citizen service agents, mathematically audited algorithmic fairness gateways, post-quantum FIPS 140-3 cryptographic enclaves, and transparent decision provenance for public sector agencies.',
+    heroSubtitle: 'TRUSTGRID.AI engineers sovereign air-gapped citizen service agents, mathematically audited algorithmic fairness gateways, post-quantum FIPS 140-3 cryptographic enclaves, and transparent decision provenance for public sector agencies.',
     statCards: [
       {
         iconName: 'TrendingUp',
@@ -3528,7 +3528,7 @@ export const industriesData: IndustryDetail[] = [
     badge: 'Mission-Critical & Edge',
     tagline: 'Air-gapped tactical AI, adversarial robustness, and quantum-resistant mission command.',
     summary: 'Deliver ruggedized, provably secure AI systems capable of autonomous mission execution in contested, GPS-denied, and electronic warfare environments.',
-    heroSubtitle: 'TrustGrid engineers ruggedized tactical edge AI runtimes, adversarial sensor perturbation defenses, DO-178C Level A verified mission assurance, and quantum-resistant mesh communications for aerospace and defense commands.',
+    heroSubtitle: 'TRUSTGRID.AI engineers ruggedized tactical edge AI runtimes, adversarial sensor perturbation defenses, DO-178C Level A verified mission assurance, and quantum-resistant mesh communications for aerospace and defense commands.',
     statCards: [
       {
         iconName: 'Cpu',

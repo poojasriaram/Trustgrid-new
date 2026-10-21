@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
@@ -23,7 +23,7 @@ export default function MethodologyEnginePage() {
         badgeTag="DIAGNOSTIC TO VALUE"
         title="Multi-Stage AI Execution Engine: From Diagnostic to"
         titleHighlight="Compounding Enterprise Value"
-        description="TrustGrid's proprietary methodology to systematically assess, architect, deploy, automate, and govern frontier AI systems with mathematical precision and deterministic ROI."
+        description="TRUSTGRID.AI's proprietary methodology to systematically assess, architect, deploy, automate, and govern frontier AI systems with mathematical precision and deterministic ROI."
         thesisHighlight="Deterministic Stage Gates • Lossless RoCEv2 Delivery • Continuous FinOps Optimization"
         image="/images/methodology-engine.jpg"
         primaryCta={{

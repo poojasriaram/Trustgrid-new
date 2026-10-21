@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -106,7 +106,7 @@ export function SolutionJourneySlider({ slides = [], solutionName = 'Enterprise 
             <div className="journey-callout-card solution-card">
               <div className="callout-header">
                 <CheckCircle2 size={15} className="text-blue-500" />
-                <span>TrustGrid Engineered Approach</span>
+                <span>TRUSTGRID.AI Engineered Approach</span>
               </div>
               <p>{current.solutionText}</p>
             </div>

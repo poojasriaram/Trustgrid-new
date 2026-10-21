@@ -1,4 +1,4 @@
-export interface TeamMember {
+﻿export interface TeamMember {
   name: string
   role: string
   category: 'leadership' | 'engineering' | 'advisory'
@@ -106,7 +106,7 @@ export const societalValueAddition = [
   {
     title: "The Trust Anchor",
     category: "Value to Human Safety",
-    description: "As autonomous agentic systems make high-stakes decisions, TrustGrid provides verifiable guardrails, explainability traces, and quantum-safe cryptographic envelopes."
+    description: "As autonomous agentic systems make high-stakes decisions, TRUSTGRID.AI provides verifiable guardrails, explainability traces, and quantum-safe cryptographic envelopes."
   },
   {
     title: "The Net Societal Outcome",
@@ -199,7 +199,7 @@ export const openInnovationInitiatives = [
     highlights: [
       "$50,000+ Prize Pools & Industry Grants",
       "Mentorship from Principal AI Architects",
-      "Fast-track hiring into TrustGrid Labs"
+      "Fast-track hiring into TRUSTGRID.AI Labs"
     ],
     linkText: "Sponsor or Join Next Hackathon",
     url: "/book-ai-diagnostic#diagnostic-form-section",

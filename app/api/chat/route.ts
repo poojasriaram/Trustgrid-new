@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import {
   getOrCreateSession,
   saveSession,
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       session.consultationIntentDetected = true
     }
 
-    // 5. Retrieve grounded knowledge from TrustGrid corpus
+    // 5. Retrieve grounded knowledge from TRUSTGRID.AI corpus
     const retrieval = retrieveKnowledge(resolvedTurn, 3)
 
     // 6. Record user message in memory

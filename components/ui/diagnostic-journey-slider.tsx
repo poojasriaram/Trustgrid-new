@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -228,7 +228,7 @@ export function DiagnosticJourneySlider({ steps = defaultDiagnosticSteps }: { st
             <div className="diag-examine-box">
               <div className="box-flag">
                 <Search size={14} className="text-cyan-400" />
-                <span>What TrustGrid Evaluates</span>
+                <span>What TRUSTGRID.AI Evaluates</span>
               </div>
               <ul className="examine-list">
                 {current.whatWeExamine.map((item, i) => (

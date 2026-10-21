@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -40,7 +40,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     duration: '2–4 Weeks',
     bestFor: 'Enterprises needing clear technical & financial evaluation before large capital deployment.',
     whenToUse: 'When leadership requires an objective architectural audit of GPU clusters, agent readiness, inference latency, security gaps, and token spend.',
-    whoIsInvolved: ['CIO / CTO / CISO', 'Infrastructure Director', 'Lead AI Architects', 'TrustGrid Principal Fellows'],
+    whoIsInvolved: ['CIO / CTO / CISO', 'Infrastructure Director', 'Lead AI Architects', 'TRUSTGRID.AI Principal Fellows'],
     howTrustgridWorks: 'On-site technical interviews, passive cluster telemetry analysis, threat modeling, and unit economic benchmarking with zero disruption to active systems.',
     deliverables: [
       'Comprehensive AI Infrastructure & Compute Yield Audit',
@@ -59,7 +59,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     duration: '6–12 Weeks',
     bestFor: 'Deploying a high-stakes production AI system or agent fleet with rapid time-to-value.',
     whenToUse: 'When an organization has a high-value bottleneck (e.g., inference latency, multi-agent workflow, network packet drops) requiring senior engineering execution.',
-    whoIsInvolved: ['Product Owners', 'SRE / DevOps Leads', 'AI Platform Engineers', 'TrustGrid Co-Engineering Squad'],
+    whoIsInvolved: ['Product Owners', 'SRE / DevOps Leads', 'AI Platform Engineers', 'TRUSTGRID.AI Co-Engineering Squad'],
     howTrustgridWorks: 'Dedicated sprint pods working alongside your internal team with daily standups, automated testing, and milestone-gated code deliveries.',
     deliverables: [
       'Hardened Production AI Capability Deployed on Enterprise Infrastructure',
@@ -78,7 +78,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     duration: '3–12 Months',
     bestFor: 'Building long-term internal AI factory capability while delivering complex multi-agent platforms.',
     whenToUse: 'When enterprises want to upskill their internal workforce while architecting proprietary AI systems without permanent agency dependence.',
-    whoIsInvolved: ['VP of Engineering', 'Enterprise Architects', 'Cross-Functional Staff', 'TrustGrid Senior Systems Leads'],
+    whoIsInvolved: ['VP of Engineering', 'Enterprise Architects', 'Cross-Functional Staff', 'TRUSTGRID.AI Senior Systems Leads'],
     howTrustgridWorks: 'Embedded principal architects and systems engineers pairing directly with your engineering leads to transfer deep operational and architectural IP.',
     deliverables: [
       'Internal Enterprise AI Factory & Agent Operating Hub',
@@ -97,7 +97,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     duration: 'Multi-Year SLA',
     bestFor: 'Sovereign private AI data centers, high-density compute facilities, and air-gapped agent operations.',
     whenToUse: 'When enterprises require end-to-end design, construction, optimization, and 24/7 managed operations for high-density compute and security.',
-    whoIsInvolved: ['Executive Committee', 'Data Center Facilities Team', 'SOC / NOC Directors', 'TrustGrid Managed Operations Pod'],
+    whoIsInvolved: ['Executive Committee', 'Data Center Facilities Team', 'SOC / NOC Directors', 'TRUSTGRID.AI Managed Operations Pod'],
     howTrustgridWorks: 'Full-lifecycle delivery from facility thermal engineering and accelerator topology to 24/7 proactive predictive maintenance and threat monitoring.',
     deliverables: [
       'Turnkey High-Density Liquid-Cooled AI Factory (30–100kW/rack)',
@@ -191,7 +191,7 @@ export function EngagementModelsSlider({ models = defaultEngagementModels }: { m
             <div className="eng-detail-callout how-box">
               <div className="callout-head">
                 <Layers size={15} className="text-cyan-400" />
-                <span>How TrustGrid Works With You</span>
+                <span>How TRUSTGRID.AI Works With You</span>
               </div>
               <p>{current.howTrustgridWorks}</p>
             </div>

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -103,7 +103,7 @@ export function FullSpectrumArchitecture() {
           From raw silicon to <span>compounding business value.</span>
         </h2>
         <p>
-          TrustGrid integrates every layer of enterprise AI into a coherent, vertically verified architecture. Each tier directly powers the next — connecting hardware efficiency to autonomous operational outcomes.
+          TRUSTGRID.AI integrates every layer of enterprise AI into a coherent, vertically verified architecture. Each tier directly powers the next — connecting hardware efficiency to autonomous operational outcomes.
         </p>
       </div>
 

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -1084,7 +1084,7 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-4xl">
-              Modern AI success depends on purpose-engineered compute efficiency. TrustGrid transforms raw GPU hardware into hyper-optimized AI Factories through kernel-level CUDA tuning, NCCL collective synchronization, and enterprise model serving stacks.
+              Modern AI success depends on purpose-engineered compute efficiency. TRUSTGRID.AI transforms raw GPU hardware into hyper-optimized AI Factories through kernel-level CUDA tuning, NCCL collective synchronization, and enterprise model serving stacks.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -2399,7 +2399,7 @@ export default function AIInfraEngineeringPage() {
               Lifecycle Metrics &amp; OpEx Benchmarks
             </h2>
             <p className="text-base text-slate-600 mt-2">
-              Verifiable engineering benchmarks contrasting typical unoptimized industry baselines with TrustGrid engineered targets.
+              Verifiable engineering benchmarks contrasting typical unoptimized industry baselines with TRUSTGRID.AI engineered targets.
             </p>
           </div>
 
@@ -2438,7 +2438,7 @@ export default function AIInfraEngineeringPage() {
                         <th className="pb-3 px-4">Metric Category</th>
                         <th className="pb-3 px-4">Metric</th>
                         <th className="pb-3 px-4">Baseline (Typical)</th>
-                        <th className="pb-3 px-4 text-blue-600">TrustGrid Optimized Target</th>
+                        <th className="pb-3 px-4 text-blue-600">TRUSTGRID.AI Optimized Target</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700 text-xs sm:text-sm">
@@ -2460,7 +2460,7 @@ export default function AIInfraEngineeringPage() {
                         <th className="pb-3 px-4">Domain</th>
                         <th className="pb-3 px-4">Metric</th>
                         <th className="pb-3 px-4">Baseline (Typical)</th>
-                        <th className="pb-3 px-4 text-blue-600">TrustGrid Optimized Target</th>
+                        <th className="pb-3 px-4 text-blue-600">TRUSTGRID.AI Optimized Target</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700 text-xs sm:text-sm">
@@ -2482,7 +2482,7 @@ export default function AIInfraEngineeringPage() {
                         <th className="pb-3 px-4">Category</th>
                         <th className="pb-3 px-4">Economic Metric</th>
                         <th className="pb-3 px-4">Baseline</th>
-                        <th className="pb-3 px-4 text-emerald-600">TrustGrid Optimized Target</th>
+                        <th className="pb-3 px-4 text-emerald-600">TRUSTGRID.AI Optimized Target</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700 text-xs sm:text-sm">
@@ -2503,7 +2503,7 @@ export default function AIInfraEngineeringPage() {
                         <th className="pb-3 px-4">Category</th>
                         <th className="pb-3 px-4">Operational Metric</th>
                         <th className="pb-3 px-4">Baseline</th>
-                        <th className="pb-3 px-4 text-blue-600">TrustGrid Optimized Target</th>
+                        <th className="pb-3 px-4 text-blue-600">TRUSTGRID.AI Optimized Target</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700 text-xs sm:text-sm">
@@ -2523,7 +2523,7 @@ export default function AIInfraEngineeringPage() {
                         <th className="pb-3 px-4">Category</th>
                         <th className="pb-3 px-4">Metric</th>
                         <th className="pb-3 px-4">Baseline</th>
-                        <th className="pb-3 px-4 text-purple-600">TrustGrid Target</th>
+                        <th className="pb-3 px-4 text-purple-600">TRUSTGRID.AI Target</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 text-slate-700 text-xs sm:text-sm">

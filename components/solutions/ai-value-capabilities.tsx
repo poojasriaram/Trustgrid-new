@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -1157,7 +1157,7 @@ export function AIValueCapabilities() {
             Audited Value Metrics &amp; P&amp;L Benchmarks
           </h2>
           <p className="text-base text-slate-600 mt-2">
-            Verifiable economic benchmarks achieved across TrustGrid enterprise value engineering deployments.
+            Verifiable economic benchmarks achieved across TRUSTGRID.AI enterprise value engineering deployments.
           </p>
         </div>
 

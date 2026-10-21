@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import {
@@ -272,7 +272,7 @@ export function Diagram1C_NetworkAssessmentFramework() {
     <div className="tg-diagram-container">
       <div className="tg-diagram-header">
         <span className="tg-diagram-badge">TECHNICAL FRAMEWORK 1.3</span>
-        <h4 className="tg-diagram-title">The TRUSTGRID 4-Tier Network Assessment Framework</h4>
+        <h4 className="tg-diagram-title">The TRUSTGRID.AI 4-Tier Network Assessment Framework</h4>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-5 bg-slate-950 rounded-xl border border-slate-800">
@@ -296,7 +296,7 @@ export function Diagram1C_NetworkAssessmentFramework() {
       </div>
 
       <p className="tg-diagram-caption">
-        <strong>Figure 1.3:</strong> The TRUSTGRID 4-Tier AI Network Assessment Framework. Diagnostic audits evaluate each tier sequentially from physical transceivers to NCCL collective communication runtime parameters.
+        <strong>Figure 1.3:</strong> The TRUSTGRID.AI 4-Tier AI Network Assessment Framework. Diagnostic audits evaluate each tier sequentially from physical transceivers to NCCL collective communication runtime parameters.
       </p>
     </div>
   )
@@ -1069,7 +1069,7 @@ export function Diagram5C_ReadinessScorecard() {
       </div>
 
       <p className="tg-diagram-caption">
-        <strong>Figure 5.3:</strong> Extract from the TRUSTGRID 20-Point AI Network Readiness Audit Scorecard. Passing these criteria certifies that an AI cluster is mathematically primed for sustained, zero-downtime training operations.
+        <strong>Figure 5.3:</strong> Extract from the TRUSTGRID.AI 20-Point AI Network Readiness Audit Scorecard. Passing these criteria certifies that an AI cluster is mathematically primed for sustained, zero-downtime training operations.
       </p>
     </div>
   )

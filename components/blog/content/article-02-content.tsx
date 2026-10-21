@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import {
@@ -130,7 +130,7 @@ export function Article02Content() {
 
       {/* SECTION 6 */}
       <section id="the-trustgrid-decision-framework" className="tg-article-section">
-        <h2>The TRUSTGRID Fabric Selection Decision Framework</h2>
+        <h2>The TRUSTGRID.AI Fabric Selection Decision Framework</h2>
         <p>
           Based on empirical evaluations across dozens of production AI installations, TRUSTGRID.AI applies a structured decision framework for fabric selection:
         </p>

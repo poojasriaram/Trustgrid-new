@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TRUSTGRID.AI - Enterprise Google Sheets Lead Integration Service
  * Manages row ingestion for LinkedIn and Enterprise leads.
  *
@@ -13,7 +13,7 @@
  * - Created At
  *
  * Architecture:
- * - Dispatches via TrustGrid Google Apps Script Webhook (Sheet 1)
+ * - Dispatches via TRUSTGRID.AI Google Apps Script Webhook (Sheet 1)
  * - Supports direct Google Sheets API v4 with Service Account credentials if provided.
  * - Credentials and service account keys NEVER exposed to frontend.
  */
@@ -70,7 +70,7 @@ export async function appendLeadToGoogleSheets(
     }
   }
 
-  // 2. Dispatch to TrustGrid Google Apps Script Webhook (Sheet 1)
+  // 2. Dispatch to TRUSTGRID.AI Google Apps Script Webhook (Sheet 1)
   const defaultWebhookUrl =
     'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 

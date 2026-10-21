@@ -1,4 +1,4 @@
-// TRUSTGRID.AI COMPREHENSIVE & COMPLETE SITE MAP v14.0
+﻿// TRUSTGRID.AI COMPREHENSIVE & COMPLETE SITE MAP v14.0
 // Final Expert Content Model — 5 Levels Deep
 // Structure: L1 Group > L2 Solution Area > L3 Engineering Area > L4 Offering > L5 Sub-Offering / Deliverables / Tech Stack
 
@@ -591,7 +591,7 @@ export const siteMapV14: {
                     'AI NOC Incident Response Playbooks',
                     'Continuous Kaizen Unit-Cost Reduction Log'
                   ],
-                  techStack: ['TrustGrid AI NOC', 'AIOps Event Correlator', 'Kaizen Tracker']
+                  techStack: ['TRUSTGRID.AI AI NOC', 'AIOps Event Correlator', 'Kaizen Tracker']
                 }
               ]
             },
@@ -856,7 +856,7 @@ export const siteMapV14: {
                     'Digital Twin Network Emulation Environment',
                     'Kanban Network Change Governance Board'
                   ],
-                  techStack: ['TrustGrid AI NOC', 'gNMI / OpenConfig Telemetry', 'Batfish Network Emulation']
+                  techStack: ['TRUSTGRID.AI AI NOC', 'gNMI / OpenConfig Telemetry', 'Batfish Network Emulation']
                 },
                 {
                   id: 'g3-3c-ea1-o2',
@@ -1062,7 +1062,7 @@ export const siteMapV14: {
                     'Integrated AI SOC / AI NOC Telemetry Correlation Dashboard',
                     'SPC Threat Rate Statistical Process Control Charts'
                   ],
-                  techStack: ['TrustGrid AI SOC', 'Wazuh / Elastic SIEM for AI', 'Cortex XSOAR / Tines Automation']
+                  techStack: ['TRUSTGRID.AI AI SOC', 'Wazuh / Elastic SIEM for AI', 'Cortex XSOAR / Tines Automation']
                 }
               ]
             }
@@ -1105,7 +1105,7 @@ export const siteMapV14: {
                     'Immutable Causal Decision Graph Architecture',
                     'Regulator & Auditor Explanation Portal'
                   ],
-                  techStack: ['SHAP', 'Captum', 'LIME', 'Alibi Explain', 'TrustGrid Decision Ledger']
+                  techStack: ['SHAP', 'Captum', 'LIME', 'Alibi Explain', 'TRUSTGRID.AI Decision Ledger']
                 },
                 {
                   id: 'g5-5a-ea1-o2',
@@ -1287,7 +1287,7 @@ export const siteMapV14: {
                     'Executive AI Portfolio Real-Time Value Dashboard',
                     'Quarterly Benefits Realization Audit Protocols'
                   ],
-                  techStack: ['TrustGrid VRO Dashboard', 'Balanced Scorecard BI Tools', 'Hoshin Deployment Engines']
+                  techStack: ['TRUSTGRID.AI VRO Dashboard', 'Balanced Scorecard BI Tools', 'Hoshin Deployment Engines']
                 }
               ]
             },

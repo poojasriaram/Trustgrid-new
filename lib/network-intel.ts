@@ -1,4 +1,4 @@
-import { getDatabase } from '@/lib/db'
+﻿import { getDatabase } from '@/lib/db'
 
 /**
  * ============================================================================
@@ -293,7 +293,7 @@ export async function resolveGeoAndNetwork(
       longitude: -122.4194,
       timezone: 'America/Los_Angeles',
       isp: 'Local Development Environment',
-      organization: 'TrustGrid Internal Research',
+      organization: 'TRUSTGRID.AI Internal Research',
       asn: 'AS-LOCAL',
       isDatacenterOrProxy: false,
       connectionType: 'Corporate'

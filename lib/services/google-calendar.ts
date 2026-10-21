@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TRUSTGRID.AI — Enterprise Google Calendar & Session Booking Service
  * Server-side scheduling engine with Google Calendar API v3 integration,
  * FreeBusy slot collision detection, automated invitation dispatch,
@@ -409,7 +409,7 @@ CONFIDENTIALITY: Mutual NDA standards apply.`
         attendees: [
           { email: email.trim(), displayName: name.trim(), responseStatus: 'accepted' },
           { email: 'bv@trustflow.in', displayName: 'BV (TrustFlow Lead)' },
-          { email: 'poojasri.aram@gmail.com', displayName: 'Poojasri (TrustGrid Leadership)' },
+          { email: 'poojasri.aram@gmail.com', displayName: 'Poojasri (TRUSTGRID.AI Leadership)' },
           { email: 'connect@trustgrid.ai', displayName: 'TRUSTGRID.AI Systems Lead' }
         ],
         conferenceData: {

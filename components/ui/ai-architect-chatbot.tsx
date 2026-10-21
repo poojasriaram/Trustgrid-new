@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -109,7 +109,7 @@ export function AIArchitectChatbot() {
         suggestedFollowUps: [
           'What is AI infrastructure?',
           'What are the main GPU challenges?',
-          'How can TrustGrid solve them?'
+          'How can TRUSTGRID.AI solve them?'
         ]
       }
     ])
@@ -173,7 +173,7 @@ export function AIArchitectChatbot() {
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         suggestedFollowUps: [
           'What is AI infrastructure?',
-          'How does TrustGrid optimize GPU clusters?',
+          'How does TRUSTGRID.AI optimize GPU clusters?',
           'What are agentic digital workers?'
         ]
       }
@@ -454,7 +454,7 @@ export function AIArchitectChatbot() {
           }}
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-          aria-label="Open TrustGrid AI Architect Assistant"
+          aria-label="Open TRUSTGRID.AI AI Architect Assistant"
         >
           <div
             style={{
@@ -472,7 +472,7 @@ export function AIArchitectChatbot() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
             <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.02em', color: '#ffffff' }}>
-              TRUSTGRID AI
+              TRUSTGRID.AI AI
             </span>
             <span style={{ fontSize: '10px', color: '#93c5fd', fontWeight: 500 }}>
               Enterprise Architect

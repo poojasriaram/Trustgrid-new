@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import { CheckCircle2, XCircle, ShieldCheck, Zap, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -44,7 +44,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
               <th style={{ width: '44%' }}>
                 <div className="th-header-cell tg-highlight-cell">
                   <ShieldCheck size={16} className="text-cyan-400" />
-                  <span>TrustGrid Operating Company</span>
+                  <span>TRUSTGRID.AI Operating Company</span>
                 </div>
               </th>
             </tr>
@@ -124,11 +124,11 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
             <p>{currentMobile.typical}</p>
           </div>
 
-          {/* TrustGrid */}
+          {/* TRUSTGRID.AI */}
           <div className="mobile-tg-box">
             <div className="tg-label-row">
               <CheckCircle2 size={16} className="text-blue-500" />
-              <span>TrustGrid Operating Company:</span>
+              <span>TRUSTGRID.AI Operating Company:</span>
             </div>
             <p>{currentMobile.trustgrid}</p>
           </div>

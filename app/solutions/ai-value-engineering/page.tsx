@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -1103,7 +1103,7 @@ const heroSlides: HeroSlide[] = [
     headline: 'Proven Methodologies.',
     headlineAccent: 'Industrialized\nby AI.',
     subheadline: 'Value That Compounds — Year After Year.',
-    description: 'TrustGrid runs Lean, Six Sigma, TOC and TPM 4–10x faster through autonomous AI agent fleets — structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor annually.',
+    description: 'TRUSTGRID.AI runs Lean, Six Sigma, TOC and TPM 4–10x faster through autonomous AI agent fleets — structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor annually.',
     points: ['Finance-certified value claims only', 'Autonomous 24/7 agent execution', '≥1.3x annual compounding factor'],
     primaryCTA: { label: 'Book an AI Diagnostic', href: '#strategy-session-section' },
     secondaryCTA: { label: 'Explore AI-VE Models', href: '#models-section' },
@@ -1160,7 +1160,7 @@ const heroSlides: HeroSlide[] = [
     headline: 'Value Realized.',
     headlineAccent: 'Value Defended.\nValue Compounded.',
     subheadline: '≥1.3x Annual Compounding Factor — Audited.',
-    description: 'TrustGrid\'s Value Realization Office tracks, certifies, and guards every improvement wave. As bottlenecks elevate, autonomous agents re-map the next constraint and self-fund continuous expansion — building a permanent enterprise advantage.',
+    description: 'TRUSTGRID.AI\'s Value Realization Office tracks, certifies, and guards every improvement wave. As bottlenecks elevate, autonomous agents re-map the next constraint and self-fund continuous expansion — building a permanent enterprise advantage.',
     points: ['6-month permanence audit certificate', 'Shewhart SPC drift detection', 'Board-level compounding scorecard'],
     primaryCTA: { label: 'Explore Value Realization', href: '#governance-proof' },
     secondaryCTA: { label: 'See Maturity Model', href: '#maturity-arc' },
@@ -1455,14 +1455,14 @@ export default function AIValueEngineeringPage() {
                   transition: 'opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s'
                 }}
               >
-                {/* TrustGrid label card */}
+                {/* TRUSTGRID.AI label card */}
                 <div
                   className="rounded-2xl p-5 border backdrop-blur-md"
                   style={{ background: 'rgba(255,255,255,0.04)', borderColor: `${currentHero.accentSolid}30` }}
                 >
                   <div className="flex items-center gap-2.5 mb-3">
                     <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: currentHero.accentSolid }} />
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">TrustGrid AI-VE</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">TRUSTGRID.AI AI-VE</span>
                   </div>
                   <p className="text-xs text-white/50 leading-relaxed">
                     The only AI platform that industrializes proven operational methodologies with Finance-certified, compounding enterprise value.
@@ -2059,7 +2059,7 @@ export default function AIValueEngineeringPage() {
               The 70-year-old engineering discipline — re-engineered with AI at every step
             </h3>
             <p className="text-base text-slate-300 mt-3 leading-relaxed">
-              Classical Value Engineering follows a disciplined 8-stage Job Plan. TrustGrid executes it through autonomous agent fleets — turning it from a periodic consulting exercise into a permanent, living enterprise operating system.
+              Classical Value Engineering follows a disciplined 8-stage Job Plan. TRUSTGRID.AI executes it through autonomous agent fleets — turning it from a periodic consulting exercise into a permanent, living enterprise operating system.
             </p>
           </div>
 
@@ -2160,7 +2160,7 @@ export default function AIValueEngineeringPage() {
             </h3>
             <p className="text-base text-slate-600 mt-3 leading-relaxed">
               Classical Value Engineering begins by asking two foundational questions: <strong className="text-slate-900 font-semibold">&ldquo;What does it do?&rdquo;</strong> and <strong className="text-slate-900 font-semibold">&ldquo;What does that function cost?&rdquo;</strong>.
-              TrustGrid decomposes your enterprise into verb–noun functions — <span className="text-blue-700 font-semibold">Moves ore</span>, <span className="text-blue-700 font-semibold">Verifies identity</span>, <span className="text-blue-700 font-semibold">Inspects weld</span>, <span className="text-blue-700 font-semibold">Settles claim</span> — and prices each one against its target should-cost.
+              TRUSTGRID.AI decomposes your enterprise into verb–noun functions — <span className="text-blue-700 font-semibold">Moves ore</span>, <span className="text-blue-700 font-semibold">Verifies identity</span>, <span className="text-blue-700 font-semibold">Inspects weld</span>, <span className="text-blue-700 font-semibold">Settles claim</span> — and prices each one against its target should-cost.
             </p>
           </div>
 
@@ -2478,7 +2478,7 @@ export default function AIValueEngineeringPage() {
                 Edge Gateways &amp; Autonomous Industrial Fleets
               </h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                TrustGrid edge nodes operate on-premise within factory air-gaps, executing sub-5ms sensor-to-action control loops via TSN, OPC-UA, and ROS 2 without dependence on public cloud availability.
+                TRUSTGRID.AI edge nodes operate on-premise within factory air-gaps, executing sub-5ms sensor-to-action control loops via TSN, OPC-UA, and ROS 2 without dependence on public cloud availability.
               </p>
             </div>
             <a
@@ -2515,7 +2515,7 @@ export default function AIValueEngineeringPage() {
             {/* Standard Practice Benchmark Badge (No personal names) */}
             <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1 shrink-0 lg:max-w-xs">
               <div className="text-cyan-400 font-bold uppercase tracking-wider text-[11px]">
-                TRUSTGRID PRACTICE STANDARD
+                TRUSTGRID.AI PRACTICE STANDARD
               </div>
               <p className="font-semibold text-white">Industrial Engineering Standard</p>
               <p className="text-slate-400 text-[11px]">Autonomous Operations &amp; Value Realization Standard</p>
@@ -2632,7 +2632,7 @@ export default function AIValueEngineeringPage() {
                 DOWNTIME Waste Elimination Engine
               </h4>
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-4">
-                TrustGrid automates the identification and measurement of all eight classical Lean wastes across human and machine workflows:
+                TRUSTGRID.AI automates the identification and measurement of all eight classical Lean wastes across human and machine workflows:
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs font-mono">
                 <div className="p-2.5 rounded-lg bg-slate-900 border border-slate-800"><span className="text-cyan-400 font-bold block">D</span>Defects</div>
@@ -2744,7 +2744,7 @@ export default function AIValueEngineeringPage() {
                 </span>
                 <h4 className="text-xl font-extrabold text-white mb-3">The Measured Compounding Factor</h4>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Every year, TrustGrid calculates your enterprise Compounding Factor (target ≥1.3x). This audits whether the capability gained in wave 1 accelerated the velocity and reduced the cost of wave 2.
+                  Every year, TRUSTGRID.AI calculates your enterprise Compounding Factor (target ≥1.3x). This audits whether the capability gained in wave 1 accelerated the velocity and reduced the cost of wave 2.
                 </p>
               </div>
               <div className="pt-6 border-t border-slate-800 text-xs text-cyan-300 font-mono font-semibold">
@@ -2975,7 +2975,7 @@ export default function AIValueEngineeringPage() {
               Nothing Claimed That Finance Hasn&apos;t Certified. Nothing Certified Left Unguarded.
             </h2>
             <p className="text-base sm:text-lg text-slate-600 mt-3 leading-relaxed">
-              We eliminate disputed savings. TrustGrid establishes a 5-point governance standard that links operational telemetry directly to the general ledger.
+              We eliminate disputed savings. TRUSTGRID.AI establishes a 5-point governance standard that links operational telemetry directly to the general ledger.
             </p>
           </div>
 
@@ -3404,7 +3404,7 @@ export default function AIValueEngineeringPage() {
           {/* Differentiation Matrix */}
           <div className="max-w-4xl">
             <h3 className="text-xl font-extrabold text-slate-900 mb-6">
-              How TrustGrid Differs from Conventional Consultancies &amp; Tech Vendors
+              How TRUSTGRID.AI Differs from Conventional Consultancies &amp; Tech Vendors
             </h3>
             <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-xs">
               <table className="w-full text-left text-sm">
@@ -3412,7 +3412,7 @@ export default function AIValueEngineeringPage() {
                   <tr>
                     <th className="py-4 px-6" style={{ width: '25%' }}>Dimension</th>
                     <th className="py-4 px-6" style={{ width: '35%' }}>Conventional Vendors / Consultancies</th>
-                    <th className="py-4 px-6 text-blue-700" style={{ width: '40%' }}>TrustGrid AVE</th>
+                    <th className="py-4 px-6 text-blue-700" style={{ width: '40%' }}>TRUSTGRID.AI AVE</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 text-xs sm:text-sm">

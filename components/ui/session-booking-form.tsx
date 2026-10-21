@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useRef, useId } from 'react'
 import {
@@ -31,7 +31,7 @@ import {
 // Configured direct Google Calendar scheduling link
 export const GOOGLE_CALENDAR_SCHEDULING_URL = 'https://calendar.app.google/voXXRkbgVuuft3fz6'
 
-// Dynamically mapped from TrustGrid.AI verified Offerings list
+// Dynamically mapped from TRUSTGRID.AI.AI verified Offerings list
 export const OFFERINGS_SERVICES = [
   { id: 'ai-infra', label: 'AI Infrastructure & GPU Ops', groupTag: 'Compute & DC' },
   { id: 'ai-agents', label: 'Agentic Enterprise & Multi-Agent Systems', groupTag: 'Cognitive' },

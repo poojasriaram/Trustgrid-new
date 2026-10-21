@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ============================================================================
  * TRUSTGRID.AI — HIGH-RESOLUTION 95-COLUMN BEHAVIORAL TELEMETRY & ANALYTICS ENGINE
  * ============================================================================
@@ -766,7 +766,7 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
     }
   } catch (e) {}
 
-  // 2. Dispatch to TrustGrid Internal Relational Analytics Server Engine (/api/analytics/events)
+  // 2. Dispatch to TRUSTGRID.AI Internal Relational Analytics Server Engine (/api/analytics/events)
   try {
     const internalPayload = {
       event_name: payload.event_name,

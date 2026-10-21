@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import {
@@ -192,7 +192,7 @@ Eth1/4       0                  0                  0.8%  (IDLE)          Normal
 
       {/* SECTION 7 */}
       <section id="network-assessment-framework" className="tg-article-section">
-        <h2>The TRUSTGRID 4-Tier Network Assessment Framework</h2>
+        <h2>The TRUSTGRID.AI 4-Tier Network Assessment Framework</h2>
         <p>
           To help enterprise infrastructure teams systematically diagnose and eliminate network bottlenecks before they degrade training campaigns, TRUSTGRID.AI developed the <strong>4-Tier Network Assessment Framework</strong>:
         </p>

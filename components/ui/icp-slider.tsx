@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -50,7 +50,7 @@ export const defaultICPs: ICPPersona[] = [
       'Continuous Governance & EU AI Act / NIST Compliance'
     ],
     theirChallenge: 'Trapped between board demands for rapid AI adoption and operational realities of uncoordinated pilot sprawl, runaway token costs, and black-box regulatory risk.',
-    trustgridRelevance: 'TrustGrid delivers turnkey enterprise AI operating models, industrial Lean/TOC disciplines, and mathematical governance to turn experimental pilots into scalable, board-defensible enterprise assets.',
+    trustgridRelevance: 'TRUSTGRID.AI delivers turnkey enterprise AI operating models, industrial Lean/TOC disciplines, and mathematical governance to turn experimental pilots into scalable, board-defensible enterprise assets.',
     relevantSolutions: [
       { title: 'AI Value Engineering', slug: 'ai-value-engineering' },
       { title: 'Trusted AI Transformation', slug: 'trusted-ai-transformation' },
@@ -73,7 +73,7 @@ export const defaultICPs: ICPPersona[] = [
       'Low-Latency Inference Serving & Line-Rate Fabrics'
     ],
     theirChallenge: 'Engineering teams struggle with cluster thermal throttling, distributed inter-node network latency, model fragmentation, and fragile multi-agent orchestration DAGs.',
-    trustgridRelevance: 'TrustGrid delivers hardware-to-code systems engineering: 30–100kW direct-to-chip liquid cooling, lossless InfiniBand/RoCEv2 fabrics, kernel micro-tuning (vLLM/TensorRT-LLM), and robust Model Context Protocol (MCP) multi-agent runtimes.',
+    trustgridRelevance: 'TRUSTGRID.AI delivers hardware-to-code systems engineering: 30–100kW direct-to-chip liquid cooling, lossless InfiniBand/RoCEv2 fabrics, kernel micro-tuning (vLLM/TensorRT-LLM), and robust Model Context Protocol (MCP) multi-agent runtimes.',
     relevantSolutions: [
       { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' },
       { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' },
@@ -96,7 +96,7 @@ export const defaultICPs: ICPPersona[] = [
       'Threat Detection, 24/7 AI SOC & Post-Quantum Cryptography (PQC / CBOM)'
     ],
     theirChallenge: 'Autonomous agents introduce novel attack surfaces across tool integrations while harvest-now-decrypt-later quantum campaigns threaten existing enterprise encryption foundations.',
-    trustgridRelevance: 'TrustGrid engineers runtime prompt firewalls, behavioral tool sandboxing, automated CBOM inventory, 24/7 Managed AI SOC monitoring, and L1–L7 post-quantum cryptographic transitions compliant with NIST FIPS 203/204/205.',
+    trustgridRelevance: 'TRUSTGRID.AI engineers runtime prompt firewalls, behavioral tool sandboxing, automated CBOM inventory, 24/7 Managed AI SOC monitoring, and L1–L7 post-quantum cryptographic transitions compliant with NIST FIPS 203/204/205.',
     relevantSolutions: [
       { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' },
       { title: 'Trusted AI Governance', slug: 'trusted-ai-transformation' }
@@ -118,7 +118,7 @@ export const defaultICPs: ICPPersona[] = [
       'AI Operations, Persistent Memory & Deterministic Task Execution'
     ],
     theirChallenge: 'Simple chatbot wrappers fail in production when executing multi-step business logic due to hallucination compounding, context drift, and unmonitored tool failures.',
-    trustgridRelevance: 'TrustGrid architects governed multi-agent cognitive swarms with deterministic reasoning DAGs, automated fallback circuits, Model Context Protocol tooling, and industrial LLMOps pipelines with continuous evaluation.',
+    trustgridRelevance: 'TRUSTGRID.AI architects governed multi-agent cognitive swarms with deterministic reasoning DAGs, automated fallback circuits, Model Context Protocol tooling, and industrial LLMOps pipelines with continuous evaluation.',
     relevantSolutions: [
       { title: 'Agentic Enterprise Factory', slug: 'ai-agentic-factory' },
       { title: 'Trusted AI Transformation', slug: 'trusted-ai-transformation' }
@@ -140,7 +140,7 @@ export const defaultICPs: ICPPersona[] = [
       'Predictive Facilities Maintenance & 24/7 AI NOC Telemetry'
     ],
     theirChallenge: 'Legacy air-cooled facilities hit immediate power and thermal walls with modern accelerator clusters (NVIDIA Blackwell, HGX, AMD MI300X), stranding capital and stalling growth.',
-    trustgridRelevance: 'TrustGrid delivers turnkey facility thermal engineering, liquid cooling retrofits, power distribution design, and continuous AI NOC telemetry to safely operate up to 100kW per rack.',
+    trustgridRelevance: 'TRUSTGRID.AI delivers turnkey facility thermal engineering, liquid cooling retrofits, power distribution design, and continuous AI NOC telemetry to safely operate up to 100kW per rack.',
     relevantSolutions: [
       { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' },
       { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' }
@@ -162,7 +162,7 @@ export const defaultICPs: ICPPersona[] = [
       'Value Realization Office (VRO) Governance & P&L Proof'
     ],
     theirChallenge: 'Substantial capital allocated to AI initiatives with zero transparency into cost-per-task, ballooning cloud inference bills, and unverified top-line revenue attribution.',
-    trustgridRelevance: 'TrustGrid embeds Theory of Constraints (TOC) value stream mapping, AI FinOps governance, and the Value Realization Office (VRO) to guarantee measurable financial yield.',
+    trustgridRelevance: 'TRUSTGRID.AI embeds Theory of Constraints (TOC) value stream mapping, AI FinOps governance, and the Value Realization Office (VRO) to guarantee measurable financial yield.',
     relevantSolutions: [
       { title: 'AI Value Engineering', slug: 'ai-value-engineering' },
       { title: 'Agentic Enterprise Factory', slug: 'ai-agentic-factory' }
@@ -265,18 +265,18 @@ export function ICPSlider({ personas = defaultICPs }: { personas?: ICPPersona[] 
             </div>
           </div>
 
-          {/* Right Column: TrustGrid Relevance, Relevant Solutions & Outcome */}
+          {/* Right Column: TRUSTGRID.AI Relevance, Relevant Solutions & Outcome */}
           <div className="icp-right-col">
             <div className="icp-relevance-box">
               <div className="box-flag">
                 <Layers size={14} className="text-blue-500" />
-                <span>How TrustGrid Engineers the Resolution</span>
+                <span>How TRUSTGRID.AI Engineers the Resolution</span>
               </div>
               <p>{current.trustgridRelevance}</p>
             </div>
 
             <div className="icp-solutions-stack">
-              <span className="solutions-label">Directly Aligned TrustGrid Offerings:</span>
+              <span className="solutions-label">Directly Aligned TRUSTGRID.AI Offerings:</span>
               <div className="solutions-pills-row">
                 {current.relevantSolutions.map((sol, i) => (
                   <Link key={i} href={`/solutions/${sol.slug}`} className="solution-pill-link">

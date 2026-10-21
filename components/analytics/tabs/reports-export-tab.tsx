@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, { useState } from 'react'
 import {
@@ -126,7 +126,7 @@ export function ReportsExportTab({ dataset }: Props) {
             Executive Reports & RFC 4180 CSV Export
           </h2>
           <p className="text-xs text-slate-400 mt-1">
-            Export compliant, audit-ready data extracts from the TrustGrid Relational Analytics Engine.
+            Export compliant, audit-ready data extracts from the TRUSTGRID.AI Relational Analytics Engine.
           </p>
         </div>
 
@@ -162,7 +162,7 @@ export function ReportsExportTab({ dataset }: Props) {
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Real-time bidirectional synchronization between TrustGrid SQLite engine and your Google Sheets.
+                Real-time bidirectional synchronization between TRUSTGRID.AI SQLite engine and your Google Sheets.
               </p>
             </div>
           </div>

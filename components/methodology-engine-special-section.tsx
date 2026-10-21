@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -57,7 +57,7 @@ export function MethodologyEngineSpecialSection() {
           The AI-Driven Methodology Engine: <span>From Diagnostics to Compounding Value</span>
         </h2>
         <p className="engine-subtitle">
-          TrustGrid's Proprietary Approach to Implementing, Automating, and Sustaining Operational Excellence Through Agentic AI.
+          TRUSTGRID.AI's Proprietary Approach to Implementing, Automating, and Sustaining Operational Excellence Through Agentic AI.
         </p>
       </div>
 
@@ -66,7 +66,7 @@ export function MethodologyEngineSpecialSection() {
         <div className="conviction-header">
           <div className="conviction-badge">
             <Sparkles size={16} />
-            <span>THE TRUSTGRID DIFFERENTIATOR: WHY THIS IS UNIQUE IN THE MARKET</span>
+            <span>THE TRUSTGRID.AI DIFFERENTIATOR: WHY THIS IS UNIQUE IN THE MARKET</span>
           </div>
           <h3>{coreConviction.title}</h3>
         </div>
@@ -96,7 +96,7 @@ export function MethodologyEngineSpecialSection() {
       <div className="engine-diagram-box">
         <div className="diagram-top-label">
           <Workflow size={16} />
-          <span>TRUSTGRID AI-DRIVEN METHODOLOGY IMPLEMENTATION ENGINE</span>
+          <span>TRUSTGRID.AI AI-DRIVEN METHODOLOGY IMPLEMENTATION ENGINE</span>
         </div>
 
         <div className="diagram-flow-grid">
@@ -143,7 +143,7 @@ export function MethodologyEngineSpecialSection() {
           onClick={() => setActiveTab('comparison')}
         >
           <BarChart3 size={16} />
-          <span>Consulting vs. TrustGrid Matrix</span>
+          <span>Consulting vs. TRUSTGRID.AI Matrix</span>
         </button>
         <button
           className={`engine-tab-btn ${activeTab === 'industries' ? 'active' : ''}`}
@@ -323,7 +323,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                   </pre>
                 </div>
                 <p className="formula-caption">
-                  The compounding factor is what makes TrustGrid categorically different. Traditional operational excellence delivers diminishing returns over time. AI-driven operational excellence delivers accelerating returns as AI agents learn, expand, and compound.
+                  The compounding factor is what makes TRUSTGRID.AI categorically different. Traditional operational excellence delivers diminishing returns over time. AI-driven operational excellence delivers accelerating returns as AI agents learn, expand, and compound.
                 </p>
               </div>
             )}
@@ -347,11 +347,11 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
         </div>
       )}
 
-      {/* TAB 2: CONSULTING VS TRUSTGRID COMPARISON MATRIX */}
+      {/* TAB 2: CONSULTING VS TRUSTGRID.AI COMPARISON MATRIX */}
       {activeTab === 'comparison' && (
         <div className="engine-comparison-wrapper">
           <div className="comp-matrix-intro">
-            <h3>Traditional Consulting vs. TrustGrid AI-Driven Approach</h3>
+            <h3>Traditional Consulting vs. TRUSTGRID.AI AI-Driven Approach</h3>
             <p>Why AI-driven methodology delivery represents a permanent, self-improving new category.</p>
           </div>
           <div className="table-responsive">
@@ -360,7 +360,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                 <tr>
                   <th style={{ width: '22%' }}>Dimension</th>
                   <th style={{ width: '38%' }}>Traditional Consulting</th>
-                  <th style={{ width: '40%' }}>TrustGrid AI-Driven Engine</th>
+                  <th style={{ width: '40%' }}>TRUSTGRID.AI AI-Driven Engine</th>
                 </tr>
               </thead>
               <tbody>
@@ -562,10 +562,10 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
         </div>
       )}
 
-      {/* THE TRUSTGRID PROMISE & MULTI-YEAR COMPOUNDING MILESTONES */}
+      {/* THE TRUSTGRID.AI PROMISE & MULTI-YEAR COMPOUNDING MILESTONES */}
       <div className="trustgrid-promise-section">
         <div className="promise-header">
-          <span className="section-badge">THE TRUSTGRID PROMISE</span>
+          <span className="section-badge">THE TRUSTGRID.AI PROMISE</span>
           <h3>{trustgridPromise.headline}</h3>
           <p className="promise-lead-bold">{trustgridPromise.subheadline}</p>
         </div>
