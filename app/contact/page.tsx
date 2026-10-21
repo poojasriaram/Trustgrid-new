@@ -137,8 +137,16 @@ export default function ContactPage() {
                 <h3>{office.city}</h3>
                 <p className="office-region">{office.region}</p>
                 <div className="office-address">
-                  <MapPin size={15} />
-                  <span>{office.address}</span>
+                  <MapPin size={15} style={{ flexShrink: 0, marginTop: '3px' }} />
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(office.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="View on Google Maps"
+                    style={{ color: '#334155', textDecoration: 'none', transition: 'color 0.2s' }}
+                  >
+                    <span>{office.address}</span>
+                  </a>
                 </div>
                 <div className="office-contacts">
                   {office.contactPerson && (
