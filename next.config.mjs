@@ -195,8 +195,13 @@ const nextConfig = {
       },
       {
         source: '/rfp',
-        destination: '/request-proposal',
+        destination: '/practice-areas#engagement-models',
         permanent: true,
+      },
+      {
+        source: '/request-proposal',
+        destination: '/practice-areas#engagement-models',
+        permanent: false,
       },
       {
         source: '/analytics',

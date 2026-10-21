@@ -1,4 +1,4 @@
-﻿export interface PracticeArea {
+export interface PracticeArea {
   slug: string
   title: string
   shortTitle: string
@@ -1595,7 +1595,7 @@ export const engagementModelCards: EngagementModelCard[] = [
     teamProfile: ['Embedded Systems Engineers', 'Distributed ML Engineers', 'Security & Guardrail Specialists'],
     expectedOutcome: 'Measurable production milestone achieved in weeks with verified P99 latency and human-in-the-loop governance.',
     ctaText: 'Request Value Sprint Proposal',
-    ctaHref: '/request-proposal?model=sprint'
+    ctaHref: '/contact?subject=Value+Sprint+Proposal'
   },
   {
     id: 'co-engineering',
@@ -1613,7 +1613,7 @@ export const engagementModelCards: EngagementModelCard[] = [
     teamProfile: ['Principal Solutions Architects', 'Data Engineering Leads', 'Client Engineering Staff'],
     expectedOutcome: 'Self-sustaining internal engineering capability with compounding organizational autonomy and 100% intellectual property ownership.',
     ctaText: 'Explore Co-Engineering',
-    ctaHref: '/request-proposal?model=co-engineering'
+    ctaHref: '/contact?subject=Co-Engineering+Partnership'
   },
   {
     id: 'turnkey',
@@ -1631,7 +1631,7 @@ export const engagementModelCards: EngagementModelCard[] = [
     teamProfile: ['Data Center Engineering Leads', '24/7 Site Reliability Engineers', 'Turnkey Project Director'],
     expectedOutcome: 'Zero-downtime, world-class enterprise AI infrastructure with full intellectual property and asset transfer to the client.',
     ctaText: 'Initiate Turnkey DBOT Scope',
-    ctaHref: '/request-proposal?model=turnkey'
+    ctaHref: '/contact?subject=Turnkey+DBOT+Scope'
   }
 ]
 

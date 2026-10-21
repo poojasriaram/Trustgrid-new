@@ -1,3 +1,5 @@
-import BookDiagnosticPage from '../book-ai-diagnostic/page'
+import { redirect } from 'next/navigation'
 
-export default BookDiagnosticPage
+export default function RequestProposalPage() {
+  redirect('/practice-areas#engagement-models')
+}

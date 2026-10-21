@@ -508,7 +508,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                   <span>Book Architecture Diagnostic</span>
                 </Link>
                 <Link
-                  href="/request-proposal"
+                  href="/contact?subject=Custom+Proposal+Request"
                   className="button button-outline w-full text-center justify-center text-xs"
                 >
                   <span>Request Custom Proposal (SOW)</span>

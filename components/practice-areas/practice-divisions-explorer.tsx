@@ -67,14 +67,14 @@ export const practiceDivisionsData: PracticeDivision[] = [
     badge: 'OUTCOME-BASED DELIVERY',
     headerTitle: 'Outcome-Based Engagement Models & FDE Delivery',
     tagline: 'Commercially accountable delivery models tied directly to verified business impact and permanent capability transfer.',
-    ctaText: 'Request Outcome Proposal',
-    ctaHref: '/request-proposal',
+    ctaText: 'Explore Engagement Models',
+    ctaHref: '/practice-areas#engagement-models',
     icon: Boxes,
     items: [
       {
         category: 'OUTCOME PROOF',
         label: '5-Stage Outcome Proof Framework',
-        href: '/request-proposal?model=proof-framework',
+        href: '/practice-areas#engagement-models',
         desc: 'Deterministic progression where clients only commit to subsequent phases upon verified milestone delivery.',
         icon: CheckCircle2,
         bullets: [
@@ -98,7 +98,7 @@ export const practiceDivisionsData: PracticeDivision[] = [
       {
         category: 'TURNKEY LIFECYCLE',
         label: 'Turnkey DBOT (Design, Build, Operate, Transfer)',
-        href: '/request-proposal?model=turnkey',
+        href: '/practice-areas#engagement-models',
         desc: 'Full-lifecycle delivery with paired engineering transfer & 100% intellectual property sovereignty.',
         icon: Workflow,
         bullets: [
@@ -422,7 +422,7 @@ export const practiceDivisionsData: PracticeDivision[] = [
       {
         category: 'PROVEN FRAMEWORK',
         label: '5-Stage Outcome Proof Framework',
-        href: '/request-proposal?model=proof-framework',
+        href: '/practice-areas#engagement-models',
         desc: 'Milestone-based technical and commercial progression linking fees directly to audited operational outcomes.',
         icon: CheckCircle2,
         bullets: [

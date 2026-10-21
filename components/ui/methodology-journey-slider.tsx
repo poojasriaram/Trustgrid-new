@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -316,7 +316,7 @@ export function MethodologyJourneySlider() {
                   <span>Initiate {current.name} Stage</span>
                   <ArrowUpRight size={15} />
                 </Link>
-                <Link href="/request-proposal" className="button button-ghost button-sm">
+                <Link href="/contact?subject=Custom+Proposal+Request" className="button button-ghost button-sm">
                   <span>Request Custom Proposal</span>
                 </Link>
               </div>

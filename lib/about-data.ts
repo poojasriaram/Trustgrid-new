@@ -142,7 +142,7 @@ export const teamMembers: TeamMember[] = [
   // Leadership & Product
   { name: "Shaji Namath", role: "Managing Partner - GCC Practice", category: "leadership", badge: "Product Leadership", initials: "SN" },
   { name: "Pranav PR", role: "Director & Chief Operating Officer", category: "leadership", badge: "Director", initials: "PR" },
-  { name: "Balaji Venkatraman", role: "Director Growth & Head FDE Practice", category: "leadership", badge: "Growth & Acceleration", initials: "BV" },
+  { name: "Balaji Venkatraman", role: "Director & Growth & Acceleration", category: "leadership", badge: "Growth & Acceleration", initials: "BV" },
   { name: "Kumar V", role: "Global Head - AI Infra & Cybersecurity Practice", category: "leadership", badge: "AI Cybersecurity & FDE Cybersecurity", initials: "KV" },
   { name: "Lavanya Seshadri", role: "Head - FDE Practice (AJPC)", category: "leadership", badge: "AI Value Engineering", initials: "LS" },
   { name: "Vignesh KS", role: "Product Lead (FinTech & Escrow Platforms)", category: "leadership", badge: "Product Lead", initials: "VK" },

@@ -273,7 +273,7 @@ export function BusinessOutcomeSlider({ pillars = defaultOutcomePillars }: { pil
                 <span>Evaluate {current.title} Posture</span>
                 <ArrowUpRight size={15} />
               </Link>
-              <Link href="/request-proposal" className="button button-ghost button-sm">
+              <Link href="/contact?subject=Custom+Blueprint+Request" className="button button-ghost button-sm">
                 <span>Request Custom Blueprint</span>
               </Link>
 

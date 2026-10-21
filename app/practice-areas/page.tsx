@@ -4,6 +4,7 @@ import './practice-areas.css'
 import {
   ArrowRight,
   ArrowUpRight,
+  ArrowDown,
   Sparkles,
   Layers,
   Cpu,
@@ -177,6 +178,10 @@ export default function PracticeAreasPage() {
             <Link href="#primary-categories" className="button button-primary">
               <span>Explore Practice Categories</span>
               <ArrowRight size={15} />
+            </Link>
+            <Link href="#engagement-models" className="button button-outline" style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#ffffff' }}>
+              <span>View Engagement Models</span>
+              <ArrowDown size={14} />
             </Link>
             <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-outline">
               <span>Schedule Architecture Diagnostic</span>

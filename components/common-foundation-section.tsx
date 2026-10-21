@@ -73,7 +73,7 @@ const foundationPillars: FoundationPillar[] = [
     title: 'Turnkey Engagement Models',
     description: 'Predictable, milestone-backed delivery frameworks tailored for rapid proof-of-value to full-scale DBOT operations.',
     icon: Workflow,
-    href: '/request-proposal',
+    href: '/practice-areas#engagement-models',
     ctaText: 'Explore Delivery Frameworks',
     items: [
       'Phase 0: 2–4 Wk AI Diagnostic Assessment',

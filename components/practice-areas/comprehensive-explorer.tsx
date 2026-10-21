@@ -579,7 +579,7 @@ export function ComprehensivePracticeExplorer() {
 
             <div className="tg-banner-right">
               <Link
-                href="/request-proposal?model=sprint"
+                href="/contact?subject=Practice+Scope+Request"
                 className="button button-primary"
               >
                 <span>Request Practice Scope</span>

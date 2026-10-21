@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -69,7 +69,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     ],
     expectedOutcome: 'Measurable production milestone achieved in 90 days with verifiable performance and human-in-the-loop governance.',
     ctaText: 'Request Value Sprint',
-    ctaLink: '/request-proposal?model=sprint'
+    ctaLink: '/contact?subject=Value+Sprint+Proposal'
   },
   {
     id: 'co-engineering',
@@ -88,7 +88,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     ],
     expectedOutcome: 'Self-sustaining internal engineering capability with compounding organizational autonomy and intellectual property ownership.',
     ctaText: 'Explore Co-Engineering',
-    ctaLink: '/request-proposal?model=co-engineering'
+    ctaLink: '/contact?subject=Co-Engineering+Partnership'
   },
   {
     id: 'turnkey',
@@ -107,7 +107,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
     ],
     expectedOutcome: 'Mission-critical enterprise infrastructure operating at peak accelerator utilization with zero unplanned downtime and sovereign compliance.',
     ctaText: 'Discuss Turnkey Operations',
-    ctaLink: '/request-proposal?model=turnkey'
+    ctaLink: '/contact?subject=Turnkey+Operations'
   }
 ]
 
