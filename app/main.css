@@ -13926,8 +13926,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-agentic,
 .isi-mega-cybersecurity,
 .isi-mega-value,
-.isi-mega-industries,
-.isi-mega-practice-areas {
+.isi-mega-industries {
   width: min(1040px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
   left: 0;
@@ -13935,6 +13934,51 @@ h1, h2, h3, h4, h5, h6 {
   margin-left: auto;
   margin-right: auto;
   transform: none;
+}
+
+.isi-mega-practice-areas {
+  width: min(1080px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: none;
+}
+
+.isi-mega-practice-areas .isi-mega-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+  padding: 12px 14px;
+}
+
+.isi-mega-practice-areas .tg-sidebar-domain-switch {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn {
+  padding: 6px 9px;
+  border-radius: 7px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateX(1.5px);
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
 }
 
 .isi-mega-networking {
