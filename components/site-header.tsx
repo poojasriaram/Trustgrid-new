@@ -731,309 +731,65 @@ const aboutMenuItems = [
 ]
 
 // 8. Consolidated Practice Areas Menu Data (Core Practices, Industries, Outcomes, Engagement Models)
-const practiceCoreEngineering = [
+const practiceAreasMenuItems = [
   {
+    category: 'CORE PRACTICE',
     label: 'AI Infrastructure & Data Center',
     href: '/solutions/ai-infra-engineering',
-    desc: '30–100kW+ GPU racks, DLC liquid cooling & turnkey DBOT',
+    desc: '30–100kW+ GPU racks, DLC liquid cooling & cluster fabric',
     icon: Cpu
   },
   {
+    category: 'CORE PRACTICE',
     label: 'Agentic Enterprise',
     href: '/solutions/ai-agentic-factory',
-    desc: 'Deterministic multi-agent swarms, ReAct & enterprise MCP',
+    desc: 'Deterministic multi-agent swarms, cognitive DAGs & AgentOps',
     icon: Bot
   },
   {
+    category: 'CORE PRACTICE',
     label: 'AI Networking & Cybersecurity',
     href: '/solutions/ai-networking-cybersecurity',
-    desc: 'Zero-loss 400G/800G RoCEv2, InfiniBand & quantum defense',
+    desc: 'Zero-loss RoCEv2, InfiniBand, post-quantum crypto & SOC',
     icon: Network
   },
   {
+    category: 'CORE PRACTICE',
     label: 'Trusted AI & Governance',
     href: '/practice-areas/ai-governance-risk-compliance',
-    desc: 'EU AI Act, NIST AI RMF, guardrails & continuous assurance',
+    desc: 'EU AI Act, NIST AI RMF, explainability & continuous safety',
     icon: ShieldCheck
   },
   {
+    category: 'CORE PRACTICE',
     label: 'AI Value Engineering',
     href: '/solutions/ai-value-engineering',
-    desc: '80+ operational methods, Lean TOC & unit economic yield',
-    icon: TrendingUp
-  }
-]
-
-const practiceIndustriesList = [
-  {
-    label: 'Banking & Financial Services',
-    href: '/industries/banking-financial-services',
-    desc: 'Sub-millisecond trading, underwriting agent fleets & AML',
+    desc: '80+ operational methods, Lean TOC & FinOps unit economics',
     icon: TrendingUp
   },
   {
-    label: 'Insurance',
-    href: '/industries/insurance',
-    desc: 'Autonomous claims triage, actuarial copilot & fraud defense',
-    icon: ShieldCheck
-  },
-  {
-    label: 'Healthcare & Life Sciences',
-    href: '/industries/healthcare-life-sciences',
-    desc: 'Sovereign clinical AI clusters & molecular agent discovery',
-    icon: Activity
-  },
-  {
-    label: 'Manufacturing',
-    href: '/industries/manufacturing-discrete',
-    desc: 'Shop-floor vision QC, predictive robotics & discrete OEE',
-    icon: Cpu
-  },
-  {
-    label: 'Energy & Utilities',
-    href: '/industries/energy-utilities',
-    desc: 'Autonomous grid outage prevention & smart asset dispatch',
-    icon: Zap
-  },
-  {
-    label: 'Telecommunications',
-    href: '/industries/telecommunications',
-    desc: 'AIOps network telemetry, zero-touch provisioning & 5G core',
-    icon: Network
-  },
-  {
-    label: 'Retail & Consumer Goods',
-    href: '/industries/retail-consumer-goods',
-    desc: 'Demand forecasting, dynamic pricing & omnichannel agent fleets',
-    icon: Layers
-  },
-  {
-    label: 'Supply Chain & Logistics',
-    href: '/industries/supply-chain-logistics',
-    desc: 'Autonomous freight routing, port logistics & inventory optimization',
-    icon: Boxes
-  },
-  {
-    label: 'Government & Public Sector',
-    href: '/industries/government-public-sector',
-    desc: 'Air-gapped sovereign LLMs, citizen services & public infrastructure',
+    category: '70 SECTORS',
+    label: 'Industries & Verticals',
+    href: '/industries',
+    desc: 'Domain-specific blueprints across Banking, Health, Energy & more',
     icon: Building2
   },
   {
-    label: 'Technology & Software',
-    href: '/industries/technology-software',
-    desc: 'AI developer platforms, automated code review & AgentOps',
-    icon: Server
-  },
-  {
-    label: 'Aerospace & Defense',
-    href: '/industries/aerospace-defense',
-    desc: 'Tactical mission edge, DO-178C Level A & sensor fusion',
-    icon: Lock
-  },
-  {
-    label: 'Process Manufacturing & Other',
-    href: '/industries/process-manufacturing',
-    desc: 'Chemical batch yield tuning & 70 specialized industry verticals',
-    icon: Factory
-  }
-]
-
-const practiceOutcomesList = [
-  {
-    label: 'AI Infrastructure Cost Optimization',
-    href: '/practice-areas/ai-finops-economic-optimization',
-    desc: '35–60% token spend reduction & GPU cost governance',
-    icon: SlidersHorizontal
-  },
-  {
-    label: 'GPU Utilization & Performance Improvement',
-    href: '/practice-areas/ai-infrastructure-high-density-compute',
-    desc: 'Up to 92% sustained MFU across RoCEv2/InfiniBand clusters',
-    icon: Cpu
-  },
-  {
-    label: 'Faster AI Production Deployment',
-    href: '/practice-areas/productionization-deployment-engineering',
-    desc: '4–8 week prototype-to-production deployment cycles',
-    icon: Workflow
-  },
-  {
-    label: 'Autonomous Operations & Productivity',
-    href: '/practice-areas/agentic-ai-multi-agent-orchestration',
-    desc: '>95% autonomous task execution with SLA-backed safety',
-    icon: Bot
-  },
-  {
-    label: 'AI Security, Governance & Compliance',
-    href: '/practice-areas/ai-governance-risk-compliance',
-    desc: '100% EU AI Act & NIST compliance with automated CBOM',
-    icon: Lock
-  },
-  {
-    label: 'Measurable ROI & Value Realization',
-    href: '/practice-areas#industry-outcomes',
-    desc: 'Balance-sheet certified value compounding at ≥1.3x/yr',
+    category: 'VERIFIED IMPACT',
+    label: 'Business Outcomes & ROI',
+    href: '/case-studies',
+    desc: '35–60% token spend reduction, MFU gains & proven case studies',
     icon: BarChart3
-  }
-]
-
-const practiceEngagementModelsList = [
-  {
-    label: 'Executive AI Diagnostic',
-    href: '/book-ai-diagnostic#diagnostic-form-section',
-    desc: '2–4 wk deep-dive architectural audit & ROI roadmap',
-    icon: Sparkles
   },
   {
-    label: 'Value Realization Sprints',
-    href: '/request-proposal?model=sprint',
-    desc: '4–8 wk rapid production milestones & microservices',
-    icon: Zap
-  },
-  {
-    label: 'Strategic Co-Engineering Partnership',
-    href: '/request-proposal?model=co-engineering',
-    desc: '3–12 mo paired engineering transfer & proprietary IP',
-    icon: Users
-  },
-  {
-    label: 'Turnkey AI Factory',
-    href: '/request-proposal?model=turnkey',
-    desc: 'Full-spectrum Design, Build, Operate & Transfer (DBOT)',
-    icon: Building2
-  },
-  {
-    label: 'Managed AI Operations',
-    href: '/practice-areas/managed-ai-operations',
-    desc: '24/7 follow-the-sun NOC/SOC & 99.99% uptime SLAs',
-    icon: Activity
-  }
-]
-
-// 8b. Practice Areas Menu Data (Functional, Technology, Cross-Cutting)
-const practiceMenuFunctional = [
-  {
-    label: 'Forward Deployment Engineering (FDE)',
-    href: '/practice-areas/forward-deployment-engineering',
-    desc: 'Embedded systems squads bridging prototype-to-production',
-    icon: Layers
-  },
-  {
-    label: 'AI Value Engineering',
-    href: '/practice-areas/ai-value-engineering',
-    desc: '80+ operational methodologies and unit economic modeling',
-    icon: TrendingUp
-  },
-  {
-    label: 'Value Assurance Services',
-    href: '/practice-areas/value-assurance-services',
-    desc: 'Independent architectural review and algorithmic risk audit',
-    icon: ShieldCheck
-  },
-  {
-    label: 'AI FinOps & Optimization',
-    href: '/practice-areas/ai-finops-economic-optimization',
-    desc: 'Token cost control, prompt caching & GPU cluster efficiency',
-    icon: SlidersHorizontal
-  },
-  {
-    label: 'AI Governance & Compliance',
-    href: '/practice-areas/ai-governance-risk-compliance',
-    desc: 'EU AI Act, NIST AI RMF & automated guardrail enclaves',
-    icon: Lock
-  }
-]
-
-const practiceMenuTechnology = [
-  {
-    label: 'AI Infra & High-Density Compute',
-    href: '/practice-areas/ai-infrastructure-high-density-compute',
-    desc: '30–100kW+ GPU racks & direct-to-chip liquid cooling',
-    icon: Cpu
-  },
-  {
-    label: 'Agentic AI & Orchestration',
-    href: '/practice-areas/agentic-ai-multi-agent-orchestration',
-    desc: 'Deterministic multi-agent swarms with MCP integration',
-    icon: Bot
-  },
-  {
-    label: 'AI-Native Networking',
-    href: '/practice-areas/ai-native-networking-systems-integration',
-    desc: 'Zero-loss 400G/800G RoCEv2 & InfiniBand fabrics',
-    icon: Network
-  },
-  {
-    label: 'Enterprise LLM & RAG',
-    href: '/practice-areas/enterprise-llm-rag-context-engineering',
-    desc: 'Hybrid search, GraphRAG & context compression',
-    icon: Sparkles
-  },
-  {
-    label: 'AI Cyber & Quantum Defense',
-    href: '/practice-areas/ai-cybersecurity-quantum-safe-defense',
-    desc: 'Adversarial red-teaming & post-quantum cryptography',
-    icon: ShieldCheck
-  },
-  {
-    label: 'Data Engineering & Pipelines',
-    href: '/practice-areas/data-engineering-realtime-pipelines',
-    desc: 'Streaming Kafka/Flink & Apache Iceberg lakehouses',
-    icon: Server
-  },
-  {
-    label: 'AI SRE & Reliability',
-    href: '/practice-areas/ai-sre-observability-production-reliability',
-    desc: '99.99% availability, automated failover & drift tracking',
-    icon: Activity
-  }
-]
-
-const practiceMenuCrossCutting = [
-  {
-    label: 'Enterprise AI Architecture',
-    href: '/practice-areas/enterprise-ai-architecture',
-    desc: 'Modular target architectures & multi-model abstraction',
+    category: 'DELIVERY SUITE',
+    label: 'Engagement Models & DBOT',
+    href: '/request-proposal',
+    desc: 'Diagnostics, rapid value sprints & turnkey DBOT accountability',
     icon: Boxes
-  },
-  {
-    label: 'Productionization & Deployment',
-    href: '/practice-areas/productionization-deployment-engineering',
-    desc: 'Containerized inference microservices with canary CI/CD',
-    icon: Workflow
-  },
-  {
-    label: 'Legacy & API Integration',
-    href: '/practice-areas/legacy-system-api-integration',
-    desc: 'Secure MCP adapters connecting AI to SAP & Oracle',
-    icon: Cable
-  },
-  {
-    label: 'AI Evaluation & Benchmarking',
-    href: '/practice-areas/ai-evaluation-continuous-improvement',
-    desc: 'Automated CI/CD test harnesses & golden datasets',
-    icon: Target
-  },
-  {
-    label: 'Security Engineering & Governance',
-    href: '/practice-areas/security-engineering-governance',
-    desc: 'Zero-trust IAM, real-time PII redaction & secrets vault',
-    icon: Lock
-  },
-  {
-    label: 'Managed AI Operations',
-    href: '/practice-areas/managed-ai-operations',
-    desc: '24/7 follow-the-sun NOC, retraining & SLA guarantees',
-    icon: Activity
-  },
-  {
-    label: 'Knowledge Transfer & Upskilling',
-    href: '/practice-areas/knowledge-transfer-capability-building',
-    desc: 'Turnkey DBOT capability transfer & team autonomy',
-    icon: Users
   }
 ]
+
 
 const methodologyCategories = [
   {
@@ -1799,17 +1555,17 @@ export function SiteHeader() {
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      ENTERPRISE AI PORTFOLIO
+                      ENTERPRISE PRACTICES
                     </span>
                     <h3 className="isi-sidebar-title">Practice Areas</h3>
                     <p className="isi-sidebar-desc">
-                      Full-spectrum enterprise AI engineering: core technical practices, vertical blueprints across 70 industries, verified business outcomes, and structured DBOT engagement models.
+                      Full-spectrum enterprise AI engineering practices, vertical industry blueprints, and delivery models.
                     </p>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>5 Core • 12+ Verticals • 5 Models</span>
+                      <span>19 Practices &amp; Capabilities</span>
                     </div>
                     <Link
                       href="/practice-areas"
@@ -1817,201 +1573,39 @@ export function SiteHeader() {
                       style={{ background: '#2563eb', color: '#ffffff' }}
                       onClick={closeAll}
                     >
-                      <span>Explore Practice Directory</span>
+                      <span>View All Practice Areas</span>
                       <ArrowUpRight size={13} />
-                    </Link>
-                    <Link
-                      href="/industries#industries-list"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore 70 Industries</span>
-                      <ArrowRight size={13} />
                     </Link>
                   </div>
                 </div>
 
-                {/* Right Structured 4-Column Content Area */}
-                <div className="tg-practice-4col-grid">
-                  {/* Col 1: Core Engineering Practices */}
-                  <div className="tg-practice-col">
-                    <div className="tg-practice-col-header">
-                      <div className="tg-practice-col-left">
-                        <Cpu size={13} className="text-blue-600" />
-                        <span className="tg-practice-col-title">Core Practices</span>
-                      </div>
-                      <span className="tg-practice-col-badge">5 PRACTICES</span>
-                    </div>
-                    <div className="tg-practice-col-stack">
-                      {practiceCoreEngineering.map((item, idx) => {
-                        const ItemIcon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="tg-compact-menu-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="tg-compact-icon-box">
-                              <ItemIcon size={12} />
-                            </div>
-                            <div className="tg-compact-card-body">
-                              <div className="tg-compact-card-head">
-                                <span className="tg-compact-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="tg-compact-arrow" />
-                              </div>
-                              <p className="tg-compact-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                    <div className="tg-practice-col-footer">
+                {/* Right Structured Grid (2 columns, 8 items) */}
+                <div className="isi-mega-content columns-2">
+                  {practiceAreasMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    return (
                       <Link
-                        href="/practice-areas"
-                        className="tg-practice-col-footer-link"
-                        onClick={closeAll}
+                        key={idx}
+                        href={item.href}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, item.href)}
                       >
-                        <span>View All 19 Practices →</span>
-                        <ArrowRight size={11} />
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
+                        </div>
+                        <div className="isi-card-body">
+                          <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
+                            {item.category}
+                          </span>
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
+                        </div>
                       </Link>
-                    </div>
-                  </div>
-
-                  {/* Col 2: Industries */}
-                  <div className="tg-practice-col">
-                    <div className="tg-practice-col-header">
-                      <div className="tg-practice-col-left">
-                        <Building2 size={13} className="text-cyan-600" />
-                        <span className="tg-practice-col-title">Industries</span>
-                      </div>
-                      <span className="tg-practice-col-badge">12 VERTICALS</span>
-                    </div>
-                    <div className="tg-practice-col-stack tg-practice-col-scrollable">
-                      {practiceIndustriesList.map((item, idx) => {
-                        const ItemIcon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="tg-compact-menu-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="tg-compact-icon-box">
-                              <ItemIcon size={12} />
-                            </div>
-                            <div className="tg-compact-card-body">
-                              <div className="tg-compact-card-head">
-                                <span className="tg-compact-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="tg-compact-arrow" />
-                              </div>
-                              <p className="tg-compact-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                    <div className="tg-practice-col-footer">
-                      <Link
-                        href="/industries#industries-list"
-                        className="tg-practice-col-footer-link"
-                        onClick={closeAll}
-                      >
-                        <span>Explore All 70 Sectors Directory →</span>
-                        <ArrowRight size={11} />
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Col 3: Business Outcomes */}
-                  <div className="tg-practice-col">
-                    <div className="tg-practice-col-header">
-                      <div className="tg-practice-col-left">
-                        <TrendingUp size={13} className="text-emerald-600" />
-                        <span className="tg-practice-col-title">Business Outcomes</span>
-                      </div>
-                      <span className="tg-practice-col-badge">6 OUTCOMES</span>
-                    </div>
-                    <div className="tg-practice-col-stack">
-                      {practiceOutcomesList.map((item, idx) => {
-                        const ItemIcon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="tg-compact-menu-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="tg-compact-icon-box">
-                              <ItemIcon size={12} />
-                            </div>
-                            <div className="tg-compact-card-body">
-                              <div className="tg-compact-card-head">
-                                <span className="tg-compact-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="tg-compact-arrow" />
-                              </div>
-                              <p className="tg-compact-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                    <div className="tg-practice-col-footer">
-                      <Link
-                        href="/case-studies"
-                        className="tg-practice-col-footer-link"
-                        onClick={closeAll}
-                      >
-                        <span>View Case Studies &amp; Sector Impact →</span>
-                        <ArrowRight size={11} />
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Col 4: Engagement Models */}
-                  <div className="tg-practice-col">
-                    <div className="tg-practice-col-header">
-                      <div className="tg-practice-col-left">
-                        <Boxes size={13} className="text-indigo-600" />
-                        <span className="tg-practice-col-title">Engagement Models</span>
-                      </div>
-                      <span className="tg-practice-col-badge">5 MODELS</span>
-                    </div>
-                    <div className="tg-practice-col-stack">
-                      {practiceEngagementModelsList.map((item, idx) => {
-                        const ItemIcon = item.icon
-                        return (
-                          <Link
-                            key={idx}
-                            href={item.href}
-                            className="tg-compact-menu-card"
-                            onClick={(e) => handleNavClick(e, item.href)}
-                          >
-                            <div className="tg-compact-icon-box">
-                              <ItemIcon size={12} />
-                            </div>
-                            <div className="tg-compact-card-body">
-                              <div className="tg-compact-card-head">
-                                <span className="tg-compact-card-title">{item.label}</span>
-                                <ArrowRight size={10} className="tg-compact-arrow" />
-                              </div>
-                              <p className="tg-compact-card-desc">{item.desc}</p>
-                            </div>
-                          </Link>
-                        )
-                      })}
-                    </div>
-                    <div className="tg-practice-col-footer">
-                      <Link
-                        href="/request-proposal"
-                        className="tg-practice-col-footer-link"
-                        onClick={closeAll}
-                      >
-                        <span>Compare Models &amp; Request Proposal →</span>
-                        <ArrowRight size={11} />
-                      </Link>
-                    </div>
-                  </div>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -2019,14 +1613,14 @@ export function SiteHeader() {
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Enterprise AI Engineering: 19 practices, 70 industry verticals, verified outcomes, and DBOT delivery.</span>
+                  <span>Enterprise AI systems: engineering practices, vertical solutions &amp; turnkey DBOT delivery</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic#diagnostic-form-section"
+                  href="/practice-areas"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Book AI Architecture Diagnostic</span>
+                  <span>Explore Practice Areas Directory</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -2419,7 +2013,7 @@ export function SiteHeader() {
               )}
             </div>
 
-            {/* Mobile Practice Areas Accordion (Consolidated: Core Practices, Industries, Outcomes, Engagement Models) */}
+            {/* Mobile Practice Areas Accordion */}
             <div className="mobile-accordion">
               <button
                 className="mobile-accordion-btn"
@@ -2430,69 +2024,20 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'practice-areas' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-2" onClick={closeAll}>
-                    <span>★ Practice Areas Directory Overview →</span>
+                  <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
+                    <span>★ View All Practice Areas Overview →</span>
                   </Link>
-
-                  {/* Section A: Core Engineering Practices */}
-                  <div style={{ marginTop: '6px', marginBottom: '4px' }}>
-                    <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block px-3 py-1 bg-blue-50/60 rounded">
-                      Core Engineering Practices (5)
-                    </span>
-                    {practiceCoreEngineering.map((item, i) => (
-                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <Link href="/practice-areas" className="mobile-sublink text-blue-600 font-medium" onClick={closeAll}>
-                      <span className="text-xs">View All 19 Practices &amp; Capabilities →</span>
+                  {practiceAreasMenuItems.map((item, i) => (
+                    <Link
+                      key={i}
+                      href={item.href}
+                      className="mobile-sublink"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                    >
+                      <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
+                      <span>{item.label}</span>
                     </Link>
-                  </div>
-
-                  {/* Section B: Industries */}
-                  <div style={{ marginTop: '10px', marginBottom: '4px' }}>
-                    <span className="text-[10px] font-mono font-bold text-cyan-600 uppercase tracking-wider block px-3 py-1 bg-cyan-50/60 rounded">
-                      Industries (12 Verticals)
-                    </span>
-                    {practiceIndustriesList.map((item, i) => (
-                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <Link href="/industries#industries-list" className="mobile-sublink text-cyan-700 font-medium" onClick={closeAll}>
-                      <span className="text-xs">Explore All 70 Sectors Directory →</span>
-                    </Link>
-                  </div>
-
-                  {/* Section C: Business Outcomes */}
-                  <div style={{ marginTop: '10px', marginBottom: '4px' }}>
-                    <span className="text-[10px] font-mono font-bold text-emerald-600 uppercase tracking-wider block px-3 py-1 bg-emerald-50/60 rounded">
-                      Business Outcomes (6)
-                    </span>
-                    {practiceOutcomesList.map((item, i) => (
-                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <Link href="/case-studies" className="mobile-sublink text-emerald-700 font-medium" onClick={closeAll}>
-                      <span className="text-xs">View Case Studies &amp; Sector Impact →</span>
-                    </Link>
-                  </div>
-
-                  {/* Section D: Engagement Models */}
-                  <div style={{ marginTop: '10px', marginBottom: '4px' }}>
-                    <span className="text-[10px] font-mono font-bold text-indigo-600 uppercase tracking-wider block px-3 py-1 bg-indigo-50/60 rounded">
-                      Engagement Models (5)
-                    </span>
-                    {practiceEngagementModelsList.map((item, i) => (
-                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <Link href="/request-proposal" className="mobile-sublink text-indigo-700 font-medium" onClick={closeAll}>
-                      <span className="text-xs">Compare Models &amp; Request Proposal →</span>
-                    </Link>
-                  </div>
+                  ))}
                 </div>
               )}
             </div>
