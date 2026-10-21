@@ -1999,12 +1999,12 @@ export function SiteHeader() {
                       PRACTICE ARCHITECTURE
                     </span>
                     <h3 className="isi-sidebar-title">Practice Areas</h3>
-                    <p className="isi-sidebar-desc">
+                    <p className="isi-sidebar-desc" style={{ fontSize: '11px', lineHeight: 1.35 }}>
                       5 enterprise pillars: from silicon engineering to functional workflows &amp; outcome models.
                     </p>
 
                     {/* Left Sidebar 5 Menus Switch */}
-                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Practice Areas" style={{ marginTop: '8px' }}>
+                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Practice Areas" style={{ marginTop: '4px' }}>
                       {practiceAreasFiveSections.map((sec) => {
                         const SecIcon = sec.icon
                         const isActive = desktopPracticeTab === sec.id
@@ -2022,17 +2022,17 @@ export function SiteHeader() {
                                 className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
                                 style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
                               >
-                                <SecIcon size={14} />
+                                <SecIcon size={13} />
                               </div>
                               <div className="tg-tab-text">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                  <span style={{ fontSize: '10px', fontWeight: 800, color: isActive ? '#2563eb' : '#94a3b8' }}>{sec.num}.</span>
-                                  <span className="tg-tab-title" style={{ fontSize: '12px' }}>{sec.title}</span>
+                                  <span style={{ fontSize: '9.5px', fontWeight: 800, color: isActive ? '#2563eb' : '#94a3b8' }}>{sec.num}.</span>
+                                  <span className="tg-tab-title" style={{ fontSize: '11.5px' }}>{sec.title}</span>
                                 </div>
-                                <span className="tg-tab-sub" style={{ fontSize: '9.5px' }}>{sec.sub}</span>
+                                <span className="tg-tab-sub" style={{ fontSize: '9px' }}>{sec.sub}</span>
                               </div>
                             </div>
-                            <ChevronRight size={13} className="tg-tab-chevron" />
+                            <ChevronRight size={12} className="tg-tab-chevron" />
                           </button>
                         )
                       })}
@@ -2065,21 +2065,21 @@ export function SiteHeader() {
                       {/* Active Section Header Bar */}
                       <div
                         style={{
-                          padding: '8px 16px',
+                          padding: '6px 14px',
                           borderBottom: '1px solid #f1f5f9',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'space-between',
-                          gap: '12px',
+                          gap: '10px',
                           background: '#fafafa'
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '9px', minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
                           <div
                             style={{
-                              width: '26px',
-                              height: '26px',
-                              borderRadius: '6px',
+                              width: '24px',
+                              height: '24px',
+                              borderRadius: '5px',
                               background: 'rgba(37, 99, 235, 0.1)',
                               color: '#2563eb',
                               display: 'flex',
@@ -2088,18 +2088,18 @@ export function SiteHeader() {
                               flexShrink: 0
                             }}
                           >
-                            <ActiveIcon size={14} />
+                            <ActiveIcon size={13} />
                           </div>
                           <div style={{ minWidth: 0 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                              <h4 style={{ margin: 0, fontSize: '13px', fontWeight: 700, color: '#0f172a' }}>
+                              <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
                                 {activeSection.headerTitle}
                               </h4>
-                              <span style={{ fontSize: '9.5px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 6px', borderRadius: '4px' }}>
+                              <span style={{ fontSize: '9px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 5px', borderRadius: '4px' }}>
                                 {activeSection.badge}
                               </span>
                             </div>
-                            <p style={{ margin: '1px 0 0', fontSize: '11px', color: '#64748b', lineHeight: 1.3 }}>
+                            <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
                               {activeSection.tagline}
                             </p>
                           </div>
@@ -2108,18 +2108,18 @@ export function SiteHeader() {
                         <Link
                           href={activeSection.ctaHref}
                           className="isi-footer-action"
-                          style={{ fontSize: '11px', padding: '4px 10px', flexShrink: 0 }}
+                          style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
                           onClick={closeAll}
                         >
                           <span>{activeSection.ctaText}</span>
-                          <ArrowRight size={12} />
+                          <ArrowRight size={11} />
                         </Link>
                       </div>
 
                       {/* 3 Categorized Columns */}
                       <div
                         style={{
-                          padding: '12px 16px',
+                          padding: '8px 12px',
                           overflowY: 'auto',
                           flex: 1,
                           display: 'flex'
@@ -2132,7 +2132,7 @@ export function SiteHeader() {
                               <div key={cIdx} className="tg-category-col">
                                 <div className="tg-category-col-header">
                                   <div className="tg-category-col-left">
-                                    <CatIcon size={13} className="text-blue-600" />
+                                    <CatIcon size={12} className="text-blue-600" />
                                     <span className="tg-category-col-title">{cat.title}</span>
                                   </div>
                                   <span className="tg-category-col-badge">{cat.badge}</span>
@@ -2150,10 +2150,10 @@ export function SiteHeader() {
                                         onClick={(e) => handleNavClick(e, item.href)}
                                       >
                                         <div className="tg-compact-icon-box">
-                                          <ItemIcon size={14} />
+                                          <ItemIcon size={13} />
                                         </div>
                                         <div className="tg-compact-card-body">
-                                          <span className="text-[9px] font-mono font-bold text-blue-600 uppercase tracking-wider block leading-tight">
+                                          <span className="text-[8.5px] font-mono font-bold text-blue-600 uppercase tracking-wider block leading-tight">
                                             {item.category}
                                           </span>
                                           <div className="tg-compact-card-head">
