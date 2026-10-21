@@ -15,8 +15,8 @@ export function SiteFooter() {
           </p>
           <div style={{ marginTop: '12px', fontSize: '13px', color: '#cbd5e1' }}>
             <div style={{ marginBottom: '4px' }}>
-              <span style={{ color: '#94a3b8' }}>Global Inquiries: </span>
-              <a href="mailto:connect@trustgrid.ai" style={{ color: '#60a5fa', textDecoration: 'none' }}>connect@trustgrid.ai</a>
+              <span style={{ color: '#94a3b8' }}>US Office: </span>
+              <a href="mailto:Murali@trustgrid.ai" style={{ color: '#60a5fa', textDecoration: 'none' }}>Murali@trustgrid.ai</a>
             </div>
             <div>
               <span style={{ color: '#94a3b8' }}>Support & Operations: </span>
@@ -63,11 +63,12 @@ export function SiteFooter() {
         <div className="footer-links-col">
           <h4>Methodology & Insights</h4>
           <ul>
+            <li><Link href="/practice-areas" style={{ color: '#38bdf8', fontWeight: 700 }}>Practice Areas Directory</Link></li>
             <li><Link href="/blog" style={{ color: '#60a5fa', fontWeight: 600 }}>Blog & Engineering Insights</Link></li>
             <li><Link href="/methodology-engine">AI Methodology Engine</Link></li>
             <li><Link href="/sitemap" style={{ color: '#60a5fa', fontWeight: 600 }}>Site Map v14.0 (5-Levels)</Link></li>
             <li><Link href="/insights">AI Insights & Papers</Link></li>
-            <li><Link href="/case-studies">Enterprise Case Studies</Link></li>
+            <li><Link href="/case-studies">Enterprise Case Studies & Outcomes</Link></li>
             <li>
               <a
                 href="https://crowd-safety-predictor.vercel.app/"
@@ -104,6 +105,7 @@ export function SiteFooter() {
         <p>© 2026 TRUSTGRID.AI. All rights reserved.</p>
         <div className="footer-bottom-links">
           <Link href="/">Home</Link>
+          <Link href="/practice-areas">Practice Areas</Link>
           <Link href="/sitemap">Site Map v14.0</Link>
           <Link href="/solutions/ai-infra-engineering">Solutions</Link>
           <Link href="/industries">Industries</Link>

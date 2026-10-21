@@ -140,7 +140,7 @@ export const insightsArticles: InsightArticle[] = [
       'Autonomous AI NOC telemetry for automated link degradation self-healing'
     ],
     slug: 'ai-native-networking-architecture',
-    internalLink: '/solutions/ai-networking'
+    internalLink: '/solutions/ai-networking-cybersecurity'
   },
   {
     id: 'ai-infrastructure-networking-convergence',
@@ -170,7 +170,7 @@ export const insightsArticles: InsightArticle[] = [
       'Hardware-enforced Model Context Protocol (MCP) data plane isolation'
     ],
     slug: 'ai-native-enterprise-networking',
-    internalLink: '/solutions/ai-networking'
+    internalLink: '/solutions/ai-networking-cybersecurity'
   },
   {
     id: 'case-study-gpu-performance-engineering',

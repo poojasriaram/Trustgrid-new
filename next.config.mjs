@@ -173,6 +173,41 @@ const nextConfig = {
         destination: '/solutions/trusted-ai-transformation',
         permanent: true,
       },
+      {
+        source: '/solutions/enterprise-ai-factory',
+        destination: '/solutions/ai-agentic-factory',
+        permanent: true,
+      },
+      {
+        source: '/solutions/ai-cybersecurity',
+        destination: '/solutions/ai-networking-cybersecurity',
+        permanent: true,
+      },
+      {
+        source: '/talk-to-architect',
+        destination: '/talk-to-ai-architect',
+        permanent: true,
+      },
+      {
+        source: '/diagnostics',
+        destination: '/book-ai-diagnostic',
+        permanent: true,
+      },
+      {
+        source: '/rfp',
+        destination: '/request-proposal',
+        permanent: true,
+      },
+      {
+        source: '/analytics',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/use-cases/autonomous-fleet-ops',
+        destination: '/use-cases',
+        permanent: true,
+      },
     ]
   },
 }

@@ -6,7 +6,8 @@ import {
   MapPin,
   MessageCircle,
   Clock,
-  Globe2
+  Globe2,
+  User
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -34,7 +35,7 @@ export default function ContactPage() {
                   Connect with TRUSTGRID.AI <span style={{ color: '#1d5cff' }}>Engineering &amp; Systems Leads.</span>
                 </h1>
                 <p className="diagnostic-hero-lead" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.55 }}>
-                  Reach out to our principal architecture leads, GPU compute engineers, and strategic enterprise advisors across our US, Singapore, and India R&amp;D laboratories.
+                  Reach out to our principal architecture leads, GPU compute engineers, and strategic enterprise advisors across our US, Canada, Australia, Japan, Singapore, and India offices.
                 </p>
               </div>
 
@@ -45,14 +46,19 @@ export default function ContactPage() {
                     <Mail size={16} />
                   </div>
                   <div>
-                    <strong>Global Direct Email</strong>
+                    <strong>Direct Enterprise Channels</strong>
                     <p style={{ margin: '3px 0 2px' }}>
-                      <a href="mailto:connect@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
-                        connect@trustgrid.ai
+                      California (Silicon Valley): <a href="mailto:lavanya@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
+                        lavanya@trustgrid.ai
+                      </a> • <a href="https://wa.me/16507724145?text=Hi%20TrustGrid%20California%20team" target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', fontWeight: 600, textDecoration: 'none' }}>+1 650 772 4145 (WhatsApp)</a>
+                    </p>
+                    <p style={{ margin: '3px 0 2px' }}>
+                      US Executive (Americas / NY): <a href="mailto:Murali@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
+                        Murali@trustgrid.ai
                       </a>
                     </p>
-                    <p style={{ fontSize: '12px', color: '#64748b' }}>
-                      India Operations: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a>
+                    <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0' }}>
+                      Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a> • India: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a>
                     </p>
                   </div>
                 </div>
@@ -62,8 +68,8 @@ export default function ContactPage() {
                     <Building2 size={16} />
                   </div>
                   <div>
-                    <strong>Executive HQ &amp; R&amp;D Labs</strong>
-                    <p>Tampa, Florida (USA Americas HQ) • Singapore (APAC Hub) • Bengaluru &amp; Mumbai (India R&amp;D Labs)</p>
+                    <strong>Global Hubs &amp; Systems Labs</strong>
+                    <p>San Mateo / Mountain View &amp; New York • Tampa (USA) • Toronto (Canada) • Melbourne (Australia) • Osaka (Japan) • Singapore • Bengaluru &amp; Mumbai (India)</p>
                   </div>
                 </div>
 
@@ -72,10 +78,20 @@ export default function ContactPage() {
                     <MessageCircle size={16} />
                   </div>
                   <div>
-                    <strong>Direct WhatsApp Advisory Line</strong>
-                    <p>Connect with senior architects for rapid technical and infrastructure consultation.</p>
-                    <div style={{ marginTop: '8px' }}>
-                      <WhatsAppCTA inline label="Chat on WhatsApp" />
+                    <strong>Direct WhatsApp Advisory Lines</strong>
+                    <p>Connect with senior architects for rapid technical and infrastructure consultation (All lines are WhatsApp-enabled).</p>
+                    <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                      <a
+                        href="https://wa.me/16507724145?text=Hi%20TrustGrid%20USA%20team"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="button button-sm"
+                        style={{ background: '#10b981', color: '#ffffff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 600 }}
+                      >
+                        <MessageCircle size={14} />
+                        <span>US WhatsApp: +1 650 772 4145</span>
+                      </a>
+                      <WhatsAppCTA inline label="Global WhatsApp" />
                     </div>
                   </div>
                 </div>
@@ -111,7 +127,7 @@ export default function ContactPage() {
 
           <div className="presence-header">
             <h2>Our Global Operations &amp; R&amp;D Presence</h2>
-            <p>Direct contact details, physical office addresses, and telephone lines across the US, Singapore, and India.</p>
+            <p>Direct contact details, physical office addresses, and dedicated WhatsApp communication channels across our international hubs.</p>
           </div>
 
           <div className="offices-grid">
@@ -125,12 +141,35 @@ export default function ContactPage() {
                   <span>{office.address}</span>
                 </div>
                 <div className="office-contacts">
+                  {office.contactPerson && (
+                    <div className="contact-row">
+                      <User size={14} />
+                      <span style={{ fontWeight: 600, color: '#0f172a' }}>Contact: {office.contactPerson}</span>
+                    </div>
+                  )}
                   {office.phone && (
                     <div className="contact-row">
                       <Phone size={14} />
-                      <a href={`tel:${office.phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                        {office.phone}
-                      </a>
+                      {office.whatsappUrl ? (
+                        <a
+                          href={office.whatsappUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <span>{office.phone}</span>
+                          <span style={{ fontSize: '10px', background: '#dcfce7', color: '#15803d', padding: '1px 5px', borderRadius: '4px' }}>WhatsApp</span>
+                        </a>
+                      ) : (
+                        <a href={`tel:${office.phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                          {office.phone}
+                        </a>
+                      )}
+                    </div>
+                  )}
+                  {office.note && (
+                    <div className="contact-row" style={{ fontSize: '11px', color: '#64748b', fontStyle: 'italic' }}>
+                      <span>{office.note}</span>
                     </div>
                   )}
                   <div className="contact-row">

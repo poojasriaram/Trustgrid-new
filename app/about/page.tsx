@@ -23,7 +23,8 @@ import {
   MapPin,
   ExternalLink,
   Code2,
-  GraduationCap
+  GraduationCap,
+  User
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -429,15 +430,42 @@ export default function AboutPage() {
                 <span>{office.address}</span>
               </div>
               <div className="office-contacts">
+                {office.contactPerson && (
+                  <div className="contact-row">
+                    <User size={14} />
+                    <span style={{ fontWeight: 600, color: '#0f172a' }}>Contact: {office.contactPerson}</span>
+                  </div>
+                )}
                 {office.phone && (
                   <div className="contact-row">
                     <Phone size={14} />
-                    <span>{office.phone}</span>
+                    {office.whatsappUrl ? (
+                      <a
+                        href={office.whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#059669', textDecoration: 'none', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <span>{office.phone}</span>
+                        <span style={{ fontSize: '10px', background: '#dcfce7', color: '#15803d', padding: '1px 5px', borderRadius: '4px' }}>WhatsApp</span>
+                      </a>
+                    ) : (
+                      <a href={`tel:${office.phone.replace(/\s+/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                        {office.phone}
+                      </a>
+                    )}
+                  </div>
+                )}
+                {office.note && (
+                  <div className="contact-row" style={{ fontSize: '11px', color: '#64748b', fontStyle: 'italic' }}>
+                    <span>{office.note}</span>
                   </div>
                 )}
                 <div className="contact-row">
                   <Mail size={14} />
-                  <span>{office.email}</span>
+                  <a href={`mailto:${office.email}`} style={{ color: '#1d5cff', textDecoration: 'none' }}>
+                    {office.email}
+                  </a>
                 </div>
               </div>
             </div>

@@ -13920,7 +13920,8 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-agentic,
 .isi-mega-cybersecurity,
 .isi-mega-value,
-.isi-mega-industries {
+.isi-mega-industries,
+.isi-mega-practice-areas {
   width: min(1040px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
   left: 0;

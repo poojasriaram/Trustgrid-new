@@ -730,6 +730,130 @@ const aboutMenuItems = [
   }
 ]
 
+// 8. Practice Areas Menu Data (Functional, Technology, Cross-Cutting)
+const practiceMenuFunctional = [
+  {
+    label: 'Forward Deployment Engineering (FDE)',
+    href: '/practice-areas/forward-deployment-engineering',
+    desc: 'Embedded systems squads bridging prototype-to-production',
+    icon: Layers
+  },
+  {
+    label: 'AI Value Engineering',
+    href: '/practice-areas/ai-value-engineering',
+    desc: '80+ operational methodologies and unit economic modeling',
+    icon: TrendingUp
+  },
+  {
+    label: 'Value Assurance Services',
+    href: '/practice-areas/value-assurance-services',
+    desc: 'Independent architectural review and algorithmic risk audit',
+    icon: ShieldCheck
+  },
+  {
+    label: 'AI FinOps & Optimization',
+    href: '/practice-areas/ai-finops-economic-optimization',
+    desc: 'Token cost control, prompt caching & GPU cluster efficiency',
+    icon: SlidersHorizontal
+  },
+  {
+    label: 'AI Governance & Compliance',
+    href: '/practice-areas/ai-governance-risk-compliance',
+    desc: 'EU AI Act, NIST AI RMF & automated guardrail enclaves',
+    icon: Lock
+  }
+]
+
+const practiceMenuTechnology = [
+  {
+    label: 'AI Infra & High-Density Compute',
+    href: '/practice-areas/ai-infrastructure-high-density-compute',
+    desc: '30–100kW+ GPU racks & direct-to-chip liquid cooling',
+    icon: Cpu
+  },
+  {
+    label: 'Agentic AI & Orchestration',
+    href: '/practice-areas/agentic-ai-multi-agent-orchestration',
+    desc: 'Deterministic multi-agent swarms with MCP integration',
+    icon: Bot
+  },
+  {
+    label: 'AI-Native Networking',
+    href: '/practice-areas/ai-native-networking-systems-integration',
+    desc: 'Zero-loss 400G/800G RoCEv2 & InfiniBand fabrics',
+    icon: Network
+  },
+  {
+    label: 'Enterprise LLM & RAG',
+    href: '/practice-areas/enterprise-llm-rag-context-engineering',
+    desc: 'Hybrid search, GraphRAG & context compression',
+    icon: Sparkles
+  },
+  {
+    label: 'AI Cyber & Quantum Defense',
+    href: '/practice-areas/ai-cybersecurity-quantum-safe-defense',
+    desc: 'Adversarial red-teaming & post-quantum cryptography',
+    icon: ShieldCheck
+  },
+  {
+    label: 'Data Engineering & Pipelines',
+    href: '/practice-areas/data-engineering-realtime-pipelines',
+    desc: 'Streaming Kafka/Flink & Apache Iceberg lakehouses',
+    icon: Server
+  },
+  {
+    label: 'AI SRE & Reliability',
+    href: '/practice-areas/ai-sre-observability-production-reliability',
+    desc: '99.99% availability, automated failover & drift tracking',
+    icon: Activity
+  }
+]
+
+const practiceMenuCrossCutting = [
+  {
+    label: 'Enterprise AI Architecture',
+    href: '/practice-areas/enterprise-ai-architecture',
+    desc: 'Modular target architectures & multi-model abstraction',
+    icon: Boxes
+  },
+  {
+    label: 'Productionization & Deployment',
+    href: '/practice-areas/productionization-deployment-engineering',
+    desc: 'Containerized inference microservices with canary CI/CD',
+    icon: Workflow
+  },
+  {
+    label: 'Legacy & API Integration',
+    href: '/practice-areas/legacy-system-api-integration',
+    desc: 'Secure MCP adapters connecting AI to SAP & Oracle',
+    icon: Cable
+  },
+  {
+    label: 'AI Evaluation & Benchmarking',
+    href: '/practice-areas/ai-evaluation-continuous-improvement',
+    desc: 'Automated CI/CD test harnesses & golden datasets',
+    icon: Target
+  },
+  {
+    label: 'Security Engineering & Governance',
+    href: '/practice-areas/security-engineering-governance',
+    desc: 'Zero-trust IAM, real-time PII redaction & secrets vault',
+    icon: Lock
+  },
+  {
+    label: 'Managed AI Operations',
+    href: '/practice-areas/managed-ai-operations',
+    desc: '24/7 follow-the-sun NOC, retraining & SLA guarantees',
+    icon: Activity
+  },
+  {
+    label: 'Knowledge Transfer & Upskilling',
+    href: '/practice-areas/knowledge-transfer-capability-building',
+    desc: 'Turnkey DBOT capability transfer & team autonomy',
+    icon: Users
+  }
+]
+
 const methodologyCategories = [
   {
     title: 'AI Engineering',
@@ -1610,6 +1734,191 @@ export function SiteHeader() {
           )}
         </div>
 
+        {/* PRACTICE AREAS */}
+        <div
+          className="nav-dropdown-wrapper"
+          onMouseEnter={() => handleMouseEnter('practice-areas')}
+          onMouseLeave={handleMouseLeave}
+        >
+          <button
+            className={`nav-menu-trigger ${activeMenu === 'practice-areas' ? 'active' : ''}`}
+            onClick={() => toggleMenu('practice-areas')}
+            aria-expanded={activeMenu === 'practice-areas'}
+          >
+            <span>Practice Areas</span>
+            <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'practice-areas' ? 'rotate-180' : ''}`} />
+          </button>
+
+          {activeMenu === 'practice-areas' && (
+            <div className="isi-mega-panel isi-mega-practice-areas">
+              <div className="isi-mega-layout">
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      ENTERPRISE AI PRACTICES
+                    </span>
+                    <h3 className="isi-sidebar-title">Practice Areas</h3>
+                    <p className="isi-sidebar-desc">
+                      Full-spectrum enterprise AI engineering: functional practices, technology practices, and cross-cutting capabilities.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Sparkles size={12} className="text-blue-600" />
+                      <span>19 Practices &amp; Capabilities</span>
+                    </div>
+                    <Link
+                      href="/practice-areas"
+                      className="isi-sidebar-action"
+                      style={{ background: '#2563eb', color: '#ffffff' }}
+                      onClick={closeAll}
+                    >
+                      <span>Explore Practice Directory</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right Structured 3-Column Content Area */}
+                <div className="tg-thematic-columns-3" style={{ padding: '16px', flex: 1 }}>
+                  {/* Col 1: Functional Practices */}
+                  <div className="tg-category-col">
+                    <div className="tg-category-col-header">
+                      <div className="tg-category-col-left">
+                        <Layers size={13} className="text-blue-600" />
+                        <span className="tg-category-col-title">Functional Practices</span>
+                      </div>
+                      <span className="tg-category-col-badge">5 Practices</span>
+                    </div>
+                    <div className="tg-category-items-stack">
+                      {practiceMenuFunctional.map((item, idx) => {
+                        const ItemIcon = item.icon
+                        return (
+                          <Link
+                            key={idx}
+                            href={item.href}
+                            className="tg-compact-menu-card"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                          >
+                            <div className="tg-compact-icon-box">
+                              <ItemIcon size={13} />
+                            </div>
+                            <div className="tg-compact-card-body">
+                              <div className="tg-compact-card-head">
+                                <span className="tg-compact-card-title">{item.label}</span>
+                                <ArrowRight size={11} className="tg-compact-arrow" />
+                              </div>
+                              <p className="tg-compact-card-desc">{item.desc}</p>
+                            </div>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Col 2: Technology Practices */}
+                  <div className="tg-category-col">
+                    <div className="tg-category-col-header">
+                      <div className="tg-category-col-left">
+                        <Cpu size={13} className="text-cyan-600" />
+                        <span className="tg-category-col-title">Technology Practices</span>
+                      </div>
+                      <span className="tg-category-col-badge">7 Practices</span>
+                    </div>
+                    <div className="tg-category-items-stack">
+                      {practiceMenuTechnology.map((item, idx) => {
+                        const ItemIcon = item.icon
+                        return (
+                          <Link
+                            key={idx}
+                            href={item.href}
+                            className="tg-compact-menu-card"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                          >
+                            <div className="tg-compact-icon-box">
+                              <ItemIcon size={13} />
+                            </div>
+                            <div className="tg-compact-card-body">
+                              <div className="tg-compact-card-head">
+                                <span className="tg-compact-card-title">{item.label}</span>
+                                <ArrowRight size={11} className="tg-compact-arrow" />
+                              </div>
+                              <p className="tg-compact-card-desc">{item.desc}</p>
+                            </div>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Col 3: Cross-Cutting Capabilities */}
+                  <div className="tg-category-col">
+                    <div className="tg-category-col-header">
+                      <div className="tg-category-col-left">
+                        <Workflow size={13} className="text-indigo-600" />
+                        <span className="tg-category-col-title">Cross-Cutting Capabilities</span>
+                      </div>
+                      <span className="tg-category-col-badge">7 Capabilities</span>
+                    </div>
+                    <div className="tg-category-items-stack">
+                      {practiceMenuCrossCutting.map((item, idx) => {
+                        const ItemIcon = item.icon
+                        return (
+                          <Link
+                            key={idx}
+                            href={item.href}
+                            className="tg-compact-menu-card"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                          >
+                            <div className="tg-compact-icon-box">
+                              <ItemIcon size={13} />
+                            </div>
+                            <div className="tg-compact-card-body">
+                              <div className="tg-compact-card-head">
+                                <span className="tg-compact-card-title">{item.label}</span>
+                                <ArrowRight size={11} className="tg-compact-arrow" />
+                              </div>
+                              <p className="tg-compact-card-desc">{item.desc}</p>
+                            </div>
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mega-Menu Footer */}
+              <div className="isi-mega-footer">
+                <div className="isi-footer-badge">
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Turnkey DBOT delivery: Design, Build, Operate &amp; Transfer</span>
+                </div>
+                <Link
+                  href="/practice-areas"
+                  className="isi-footer-action"
+                  onClick={closeAll}
+                >
+                  <span>Explore Practice Areas Directory</span>
+                  <ArrowUpRight size={13} />
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* OUTCOMES LINK */}
+        <Link href="/case-studies" className="nav-link" onClick={closeAll}>
+          Outcomes
+        </Link>
+
+        {/* ENGAGEMENT MODELS LINK */}
+        <Link href="/request-proposal" className="nav-link" onClick={closeAll}>
+          Engagement Models
+        </Link>
+
         {/* 8. ABOUT US */}
         <div
           className="nav-dropdown-wrapper"
@@ -2028,6 +2337,64 @@ export function SiteHeader() {
                 </div>
               )}
             </div>
+
+            {/* Mobile Practice Areas Accordion */}
+            <div className="mobile-accordion">
+              <button
+                className="mobile-accordion-btn"
+                onClick={() => toggleMobileSection('practice-areas')}
+              >
+                <span>Practice Areas</span>
+                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'practice-areas' ? 'rotate-180' : ''}`} />
+              </button>
+              {mobileSection === 'practice-areas' && (
+                <div className="mobile-accordion-body">
+                  <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-2" onClick={closeAll}>
+                    <span>★ Practice Areas Directory Overview →</span>
+                  </Link>
+                  <div style={{ marginTop: '6px', marginBottom: '4px' }}>
+                    <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block px-3 py-1 bg-blue-50/60 rounded">
+                      Functional Practices (5)
+                    </span>
+                    {practiceMenuFunctional.map((item, i) => (
+                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '10px', marginBottom: '4px' }}>
+                    <span className="text-[10px] font-mono font-bold text-cyan-600 uppercase tracking-wider block px-3 py-1 bg-cyan-50/60 rounded">
+                      Technology Practices (7)
+                    </span>
+                    {practiceMenuTechnology.map((item, i) => (
+                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '10px', marginBottom: '4px' }}>
+                    <span className="text-[10px] font-mono font-bold text-indigo-600 uppercase tracking-wider block px-3 py-1 bg-indigo-50/60 rounded">
+                      Cross-Cutting Capabilities (7)
+                    </span>
+                    {practiceMenuCrossCutting.map((item, i) => (
+                      <Link key={i} href={item.href} className="mobile-sublink" onClick={(e) => handleNavClick(e, item.href)}>
+                        <span>{item.label}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Outcomes Link */}
+            <Link href="/case-studies" className="mobile-nav-link" onClick={closeAll}>
+              Outcomes
+            </Link>
+
+            {/* Mobile Engagement Models Link */}
+            <Link href="/request-proposal" className="mobile-nav-link" onClick={closeAll}>
+              Engagement Models
+            </Link>
 
             {/* Mobile About Us Accordion */}
             <div className="mobile-accordion">

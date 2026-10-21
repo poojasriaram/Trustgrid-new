@@ -80,6 +80,8 @@ export interface TrustGridFormData {
   selectedSolutions?: string[] | string
   ctaSource?: string
   leadSource?: string
+  page_source?: string
+  pageUrl?: string
   chatIntent?: string
   metadata?: TrackingMetadata
 }

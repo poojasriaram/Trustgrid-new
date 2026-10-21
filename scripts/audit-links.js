@@ -49,11 +49,39 @@ solutionSlugs.forEach(s => {
   pageRoutes.add('/solutions/' + s);
 });
 
+// Add Practice Area slugs
+const practiceSlugs = [
+  'forward-deployment-engineering',
+  'ai-value-engineering',
+  'value-assurance-services',
+  'ai-finops-economic-optimization',
+  'ai-governance-risk-compliance',
+  'ai-infrastructure-high-density-compute',
+  'agentic-ai-multi-agent-orchestration',
+  'ai-native-networking-systems-integration',
+  'enterprise-llm-rag-context-engineering',
+  'ai-cybersecurity-quantum-safe-defense',
+  'data-engineering-realtime-pipelines',
+  'ai-sre-observability-production-reliability',
+  'enterprise-ai-architecture',
+  'productionization-deployment-engineering',
+  'legacy-system-api-integration',
+  'ai-evaluation-continuous-improvement',
+  'security-engineering-governance',
+  'managed-ai-operations',
+  'knowledge-transfer-capability-building'
+];
+
+practiceSlugs.forEach(s => {
+  pageRoutes.add('/practice-areas/' + s);
+});
+pageRoutes.add('/practice-areas');
+
 // Crawl all code files
 function scanDir(dir) {
   let files = [];
   for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
-    if (item.name === 'node_modules' || item.name === '.next' || item.name === '.git' || item.name === 'scratch' || item.name === 'dist') continue;
+    if (item.name === 'node_modules' || item.name === '.next' || item.name === '.git' || item.name === 'scratch' || item.name === 'dist' || item.name === 'out') continue;
     const full = path.join(dir, item.name);
     if (item.isDirectory()) {
       files.push(...scanDir(full));

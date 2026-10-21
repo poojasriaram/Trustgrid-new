@@ -20,6 +20,9 @@ export interface OfficeLocation {
   address: string
   phone?: string
   email: string
+  contactPerson?: string
+  note?: string
+  whatsappUrl?: string
 }
 
 export interface CaseStudy {
@@ -262,12 +265,62 @@ export const caseStudiesList: CaseStudy[] = [
 
 export const officeLocations: OfficeLocation[] = [
   {
+    city: "San Mateo / Mountain View, California",
+    region: "United States (West Coast AI Center)",
+    tag: "Silicon Valley Office",
+    address: "Suite 21, 400 Concar Dr, San Mateo, CA 94402, United States",
+    contactPerson: "Lavanya Seshadri",
+    phone: "+1 650 772 4145",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20California%20team%2C%20I%20would%20like%20to%20connect%20with%20Lavanya",
+    email: "lavanya@trustgrid.ai"
+  },
+  {
+    city: "New York, New York",
+    region: "United States (East Coast AI Center)",
+    tag: "New York Office",
+    address: "33 Irving Pl, New York, NY 10003, United States",
+    contactPerson: "Murali",
+    note: "(Only WhatsApp)",
+    email: "Murali@trustgrid.ai"
+  },
+  {
     city: "Tampa, Florida",
     region: "United States (Americas HQ)",
-    tag: "US Executive Office",
+    tag: "US Americas Headquarters",
     address: "501 E Kennedy Blvd Suite 1400, Tampa, FL 33602, United States (Mailing: 400 N Ashley Dr, Suite 1900, Tampa, FL 33602, USA)",
-    phone: "+91 9513288612",
+    contactPerson: "Murali",
+    phone: "+1 650 772 4145",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20USA%20team",
+    email: "Murali@trustgrid.ai"
+  },
+  {
+    city: "Toronto, Ontario",
+    region: "Canada (North America Hub)",
+    tag: "Canada Office",
+    address: "1050 King St W, Toronto, Ontario M6K 0A5, Canada",
+    contactPerson: "Ravindar Pal Singh",
+    note: "(Only WhatsApp)",
     email: "connect@trustgrid.ai"
+  },
+  {
+    city: "Melbourne, Victoria",
+    region: "Australia (ANZ Regional Office)",
+    tag: "Australia Operations",
+    address: "120 Spencer St, Melbourne VIC 3000, Australia",
+    contactPerson: "Sabriram RK",
+    note: "(Only WhatsApp)",
+    email: "connect@trustgrid.ai"
+  },
+  {
+    city: "Osaka",
+    region: "Japan (East Asia Hub)",
+    tag: "Japan Center",
+    address: "〒530-0002 Osaka, Kita Ward, Sonezakishinchi, 1 Chome−13−22 WeWork 御堂筋フロンティア, Japan",
+    contactPerson: "Hemalata Niyogi",
+    note: "(Only WhatsApp)",
+    email: "Hemalata@trustgrid.ai"
   },
   {
     city: "Singapore",
@@ -275,6 +328,8 @@ export const officeLocations: OfficeLocation[] = [
     tag: "APAC Operations",
     address: "5 Temasek Boulevard, 17th Floor, Singapore 038985",
     phone: "+65 6050 5235",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/6560505235?text=Hi%20TrustGrid%20Singapore%20team",
     email: "connect@trustgrid.ai"
   },
   {
@@ -283,6 +338,8 @@ export const officeLocations: OfficeLocation[] = [
     tag: "India Headquarters",
     address: "TRUSTGRID.AI INNOVATION PVT LTD, Suite : 32 , 235, BINNAMANGALA, 2nd Floor, 13th Cross Road, Indira Nagar 2nd Stage, Hoysala Nagar, Bengaluru – 560038 , India",
     phone: "+91 9513088612",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/919513088612?text=Hi%20TrustGrid%20India%20team",
     email: "cs@trustgrid.in"
   },
   {
@@ -291,6 +348,8 @@ export const officeLocations: OfficeLocation[] = [
     tag: "Mumbai Office",
     address: "WeWork, Raheja Platinum, Road, off Andheri - Kurla Road, Sag Baug, Marol, Andheri East, Mumbai, Maharashtra 400059",
     phone: "+91 9513088612",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/919513088612?text=Hi%20TrustGrid%20Mumbai%20team",
     email: "cs@trustgrid.in"
   },
   {
@@ -299,6 +358,8 @@ export const officeLocations: OfficeLocation[] = [
     tag: "AI Systems Engineering Lab",
     address: "WeWork, 13th floor, Tin Factory, Salarpuria Magnificia, 78, Old Madras Rd, next to KR Puram, Mahadevapura, Bengaluru, Karnataka 560016",
     phone: "+91 9513088612",
+    note: "(Only WhatsApp)",
+    whatsappUrl: "https://wa.me/919513088612?text=Hi%20TrustGrid%20Lab%20team",
     email: "cs@trustgrid.in"
   }
 ]

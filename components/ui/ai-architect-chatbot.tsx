@@ -17,534 +17,679 @@ import {
   Lock,
   TrendingUp,
   Workflow,
-  Phone,
   ChevronRight,
   Minimize2,
   Maximize2,
   RefreshCw,
-  Loader2
+  Loader2,
+  Copy,
+  Check,
+  Square,
+  RotateCcw
 } from 'lucide-react'
-import { solutions } from '@/lib/solutions'
-import { submitTrustGridForm, validateEmail } from '@/lib/form-submission'
-import { trackChatbotEvent, trackCTA } from '@/lib/analytics'
+import { submitTrustGridForm } from '@/lib/form-submission'
+import { trackChatbotEvent } from '@/lib/analytics'
 
-interface ChatMessage {
+export interface ChatMessage {
   id: string
   sender: 'bot' | 'user'
   text: string
   timestamp: string
-  quickActions?: { label: string; action: string }[]
   offeringTag?: string
   pageLink?: { label: string; href: string }
-  followUpQuestion?: string
+  suggestedFollowUps?: string[]
   isLeadPrompt?: boolean
+  cta?: { label: string; href: string }
 }
 
-const trustgridKnowledge = [
-  {
-    keywords: ['strategy session', 'strategy', 'executive briefing', 'architect session', 'consultation', 'talk to architect', 'speak with architect', 'meeting', 'book session', 'calendar'],
-    offering: 'Executive Strategy Session',
-    response: 'An Executive Strategy Session is a focused 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap. You can schedule immediately on our live Google Calendar or request an executive agenda.',
-    followUpQuestion: 'Would you like to schedule a dedicated 45-minute Strategy Session with our principal engineering team?',
-    pageLink: { label: 'Book Executive Strategy Session (45-Min)', href: '/book-ai-diagnostic?type=strategy-session#diagnostic-form-section' }
-  },
-  {
-    keywords: ['infra', 'infrastructure', 'gpu', 'data center', 'datacenter', 'liquid cooling', 'blackwell', 'h100', 'h200', 'cluster', 'pue', 'compute', 'utilization', 'substation', 'subsea'],
-    offering: 'AI Infrastructure & AI Data Center Engineering',
-    response: 'TRUSTGRID.AI engineers high-density AI Factories (30–100kW/rack) with direct-to-chip liquid cooling, kernel-level accelerator tuning, and low-latency inference serving. We eliminate the 30–50% compute waste common in GPU clusters and slash inference TCO by 30–60%.',
-    followUpQuestion: 'What cluster scale or rack density (kW/rack) are you planning or currently operating?',
-    pageLink: { label: 'Explore AI Infrastructure Architecture', href: '/solutions/ai-infra-engineering' }
-  },
-  {
-    keywords: ['agent', 'agentic', 'multi-agent', 'langgraph', 'crewai', 'autogen', 'mcp', 'autonomous', 'digital worker', 'workflow', 'swarm', 'agentops'],
-    offering: 'Agentic Enterprise',
-    response: 'TRUSTGRID.AI architects production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics (episodic/semantic), tool sandboxing via Model Context Protocol (MCP), and enterprise AgentOps telemetry with >95% SLA-enforced task accuracy.',
-    followUpQuestion: 'Are you deploying autonomous agent swarms in internal operations or customer-facing workflows?',
-    pageLink: { label: 'Explore Agentic Enterprise Solutions', href: '/solutions/ai-agentic-factory' }
-  },
-  {
-    keywords: ['network', 'networking', 'infiniband', 'roce', 'rocev2', 'bandwidth', 'latency', 'dragonfly', 'packet drop', 'nccl', 'rccl', 'noc', 'spine-leaf'],
-    offering: 'AI-Native Networking',
-    response: 'TRUSTGRID.AI designs ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, NCCL/RCCL collective tuning, and autonomous AI NOC telemetry.',
-    followUpQuestion: 'Are you currently encountering packet drops or tail latency spikes in your GPU distributed training fabric?',
-    pageLink: { label: 'Explore AI Networking & Cybersecurity', href: '/solutions/ai-networking-cybersecurity' }
-  },
-  {
-    keywords: ['security', 'cybersecurity', 'quantum', 'pqc', 'cbom', 'guardrail', 'prompt injection', 'jailbreak', 'soc', 'zero-trust', 'ml-kem', 'ml-dsa'],
-    offering: 'AI Cybersecurity & Quantum-Safe Networking',
-    response: 'TRUSTGRID.AI provides comprehensive security protecting autonomous agents with zero-trust permissions and real-time prompt firewalls, while migrating enterprise infrastructure to NIST Post-Quantum Cryptography standards (ML-KEM/ML-DSA) with automated Cryptographic Bill of Materials (CBOM).',
-    followUpQuestion: 'Has your security team established a Cryptographic Bill of Materials (CBOM) for post-quantum readiness?',
-    pageLink: { label: 'Explore AI Networking & Cybersecurity', href: '/solutions/ai-networking-cybersecurity' }
-  },
-  {
-    keywords: ['trust', 'trusted', 'explainability', 'shap', 'lime', 'eu ai act', 'nist', 'governance', 'compliance', 'audit', 'iso 42001', 'black box', 'hallucination'],
-    offering: 'Trusted AI Engineering',
-    response: 'TRUSTGRID.AI turns non-deterministic AI into mathematically explainable, auditable enterprise systems using SHAP/LIME explainability, continuous Statistical Process Control (SPC), and immutable cryptographic audit logging compliant with the EU AI Act and NIST AI RMF.',
-    followUpQuestion: 'Which regulatory framework is your primary compliance target (e.g., EU AI Act, NIST AI RMF, ISO 42001)?',
-    pageLink: { label: 'Explore Trusted AI Framework', href: '/solutions/trusted-ai-transformation' }
-  },
-  {
-    keywords: ['value', 'roi', 'finops', 'cost', 'economics', 'token', 'p&l', 'business case', 'lean', 'toc', 'theory of constraints', 'dmaic'],
-    offering: 'AI Value Engineering & Acceleration',
-    response: 'TRUSTGRID.AI combines industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) with granular AI FinOps unit economics to prioritize high-yield initiatives and deliver 3–10x verified ROI in 90-day sprints.',
-    followUpQuestion: 'Are you looking to optimize token inference costs, reduce GPU idle time, or establish unit economics?',
-    pageLink: { label: 'Explore AI Value Engineering', href: '/solutions/ai-value-engineering' }
-  },
-  {
-    keywords: ['diagnostic', 'assessment', 'audit', 'evaluate', 'benchmark', 'readiness'],
-    offering: 'Executive AI Diagnostic',
-    response: 'The TRUSTGRID.AI Executive Diagnostic is a structured 2–4 week technical and financial evaluation conducted by senior AI architects. We evaluate compute economics, multi-agent readiness, lossless networking, and quantum security to build a sequenced 90-day production roadmap.',
-    followUpQuestion: 'Would you like to start the Executive Diagnostic scoping form for your organization?',
-    pageLink: { label: 'Book an AI Diagnostic', href: '/book-ai-diagnostic#diagnostic-form-section' }
-  },
-  {
-    keywords: ['contact', 'email', 'phone', 'whatsapp', 'reach out', 'call', 'office', 'headquarters', 'inquiry', 'message'],
-    offering: 'Direct Contact & Advisory',
-    response: 'You can connect directly with TRUSTGRID.AI through our official Contact page, book an Executive Strategy Session, or chat immediately with our advisory team on WhatsApp.',
-    followUpQuestion: 'Would you prefer a direct callback from an architect or a WhatsApp conversation?',
-    pageLink: { label: 'Go to Contact Page', href: '/contact' }
-  },
-  {
-    keywords: ['methodology', 'oee', 'tpm', 'smed', 'fmea', 'spc', 'kaizen', 'six sigma', 'hoshin kanri', 'poka-yoke'],
-    offering: 'Methodology Engine',
-    response: 'TRUSTGRID.AI’s AI-Driven Methodology Engine applies proven industrial engineering frameworks (Lean, TOC, DMAIC, OEE, TPM, SMED, FMEA, SPC, Hoshin Kanri, Poka-Yoke) to optimize GPU compute throughput, prevent agent mistakes, and guarantee predictable P&L returns.',
-    followUpQuestion: 'Which operational methodology are you looking to adapt for your AI workflows?',
-    pageLink: { label: 'Explore Methodology Engine', href: '/methodology-engine' }
-  },
-  {
-    keywords: ['industry', 'industries', 'banking', 'healthcare', 'defense', 'manufacturing', 'aerospace', 'energy', 'telecom'],
-    offering: 'Regulated Industries',
-    response: 'TRUSTGRID.AI delivers specialized pre-calibrated architectures across 20+ regulated global verticals including Banking & Sovereign Finance, Healthcare & Clinical AI, Aerospace & Defense, Industrial Manufacturing, Telecommunications, and Energy.',
-    followUpQuestion: 'Which industry vertical is your organization operating in?',
-    pageLink: { label: 'View Industry Architectures', href: '/industries' }
-  },
-  {
-    keywords: ['pricing', 'cost', 'quote', 'proposal', 'hire', 'engagement', 'consult'],
-    offering: 'Engagement & Advisory',
-    response: 'TRUSTGRID.AI engagements range from Fixed-Scope AI Diagnostics (2–4 weeks) and 90-Day Rapid Value Sprints (12 weeks) to Turnkey Design & Build (16–32 weeks) and Enterprise Operating Partnerships. Would you like to connect with a principal architect to discuss your scope?',
-    followUpQuestion: 'Would you like to schedule an Executive Strategy Session or submit an initial project scope?',
-    pageLink: { label: 'Talk to an AI Architect', href: '/talk-to-ai-architect#session-booking-section' }
-  }
+const STARTING_PROMPTS = [
+  'Design an enterprise AI infrastructure architecture.',
+  'How can I improve GPU utilization and reduce inference costs?',
+  'Explore AI agents for enterprise operations.',
+  'Evaluate AI networking bottlenecks.',
+  'Build an AI security and governance strategy.',
+  'Identify AI opportunities for my industry.'
 ]
+
+const WELCOME_MESSAGE =
+  'Welcome to TRUSTGRID.AI. I can help you explore enterprise AI infrastructure, agentic systems, AI networking, cybersecurity, trusted AI, and measurable AI business value. Tell me what you are trying to achieve, and we can work through it together.'
 
 export function AIArchitectChatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isMinimized, setIsMinimized] = useState(false)
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'msg-init',
-      sender: 'bot',
-      text: 'Hello, I am the TRUSTGRID.AI Architect Assistant. How can I assist you with evaluating, architecting, or scaling your enterprise AI infrastructure, autonomous agent fleets, or quantum-safe networks?',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      quickActions: [
-        { label: 'Book an AI Diagnostic', action: 'diagnostic' },
-        { label: 'Talk to an AI Architect', action: 'connect_architect' },
-        { label: 'Explore Solutions', action: 'solutions' },
-        { label: 'AI Infrastructure', action: 'infra' },
-        { label: 'Agentic Enterprise', action: 'agentic' },
-        { label: 'Contact Us', action: 'contact' }
-      ]
-    }
-  ])
+  const [isMaximized, setIsMaximized] = useState(false)
+  const [conversationId, setConversationId] = useState<string>('')
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [inputVal, setInputVal] = useState('')
-  const [isTyping, setIsTyping] = useState(false)
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [hasUnread, setHasUnread] = useState(false)
 
-  // Conversational Lead Capture State
+  // Conversational Lead Drawer
   const [leadMode, setLeadMode] = useState(false)
-  const [leadStep, setLeadStep] = useState<'name' | 'email' | 'company' | 'phone' | 'done'>('name')
   const [leadData, setLeadData] = useState({
     name: '',
     email: '',
     company: '',
     phone: '',
-    requirement: '',
-    offering: ''
+    requirement: ''
   })
   const [leadSubmitting, setLeadSubmitting] = useState(false)
-  const [hasUnread, setHasUnread] = useState(false)
+  const [leadSuccess, setLeadSuccess] = useState(false)
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const chatSessionIdRef = useRef<string>('')
+  const abortControllerRef = useRef<AbortController | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
+  // Restore or initialize session from sessionStorage
   useEffect(() => {
-    chatSessionIdRef.current = `CHAT-${Date.now().toString(36)}-${Math.random().toString(36).substring(2, 6)}`
+    let storedId = ''
+    try {
+      storedId = sessionStorage.getItem('tg_conversation_id') || ''
+    } catch {
+      // Ignore storage access restrictions
+    }
+
+    if (!storedId) {
+      storedId = `tg_conv_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`
+      try {
+        sessionStorage.setItem('tg_conversation_id', storedId)
+      } catch {}
+    }
+
+    setConversationId(storedId)
+
+    // Initial Welcome Message
+    setMessages([
+      {
+        id: 'msg_welcome',
+        sender: 'bot',
+        text: WELCOME_MESSAGE,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        suggestedFollowUps: [
+          'What is AI infrastructure?',
+          'What are the main GPU challenges?',
+          'How can TrustGrid solve them?'
+        ]
+      }
+    ])
   }, [])
 
+  // Auto-scroll on new messages
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !isMinimized) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [messages, isOpen, isMinimized, isGenerating])
+
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen && !isMinimized) {
+      setTimeout(() => inputRef.current?.focus(), 150)
       setHasUnread(false)
     }
-  }, [messages, isOpen])
+  }, [isOpen, isMinimized])
 
   const toggleChat = () => {
     const nextState = !isOpen
     setIsOpen(nextState)
     if (nextState) {
-      trackChatbotEvent('open', { chatSessionId: chatSessionIdRef.current })
+      trackChatbotEvent('open', { chatSessionId: conversationId })
       setHasUnread(false)
     } else {
-      trackChatbotEvent('close', { chatSessionId: chatSessionIdRef.current })
+      trackChatbotEvent('close', { chatSessionId: conversationId })
     }
   }
 
-  const handleSendMessage = (textToSend?: string) => {
-    const text = (textToSend || inputVal).trim()
-    if (!text) return
+  const handleCopy = (id: string, text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(null), 2000)
+    })
+  }
+
+  const handleStopGeneration = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+      abortControllerRef.current = null
+    }
+    setIsGenerating(false)
+  }
+
+  const handleClearContext = async () => {
+    handleStopGeneration()
+    const nextId = `tg_conv_${Date.now().toString(36)}_${Math.random().toString(36).substring(2, 7)}`
+    setConversationId(nextId)
+    try {
+      sessionStorage.setItem('tg_conversation_id', nextId)
+      await fetch(`/api/chat?conversationId=${conversationId}`, { method: 'DELETE' })
+    } catch {}
+
+    setMessages([
+      {
+        id: `msg_welcome_${Date.now()}`,
+        sender: 'bot',
+        text: WELCOME_MESSAGE,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        suggestedFollowUps: [
+          'What is AI infrastructure?',
+          'How does TrustGrid optimize GPU clusters?',
+          'What are agentic digital workers?'
+        ]
+      }
+    ])
+    setLeadMode(false)
+    setLeadSuccess(false)
+  }
+
+  const handleSendMessage = async (customText?: string) => {
+    const textToSend = (customText || inputVal).trim()
+    if (!textToSend || isGenerating) return
 
     const userMsg: ChatMessage = {
-      id: `usr-${Date.now()}`,
+      id: `usr_${Date.now()}`,
       sender: 'user',
-      text,
+      text: textToSend,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
 
-    setMessages((prev) => [...prev, userMsg])
+    setMessages(prev => [...prev, userMsg])
     setInputVal('')
-    setIsTyping(true)
+    setIsGenerating(true)
 
     trackChatbotEvent('message_sent', {
-      chatSessionId: chatSessionIdRef.current,
-      elementText: text
+      chatSessionId: conversationId,
+      elementText: textToSend
     })
 
-    // Process Bot Response after realistic architect thinking delay
-    setTimeout(() => {
-      processBotResponse(text)
-      setIsTyping(false)
-    }, 550)
-  }
-
-  const processBotResponse = (userInput: string) => {
-    const lower = userInput.toLowerCase()
-
-    // 1. High Intent Detection Check
-    const highIntentKeywords = ['pricing', 'cost', 'quote', 'hire', 'talk to architect', 'contact', 'book', 'strategy', 'diagnostic', 'assessment', 'demo', 'proposal', 'implement', 'schedule']
-    const isHighIntent = highIntentKeywords.some((k) => lower.includes(k))
-
-    if (isHighIntent) {
-      trackChatbotEvent('intent_detected', {
-        chatSessionId: chatSessionIdRef.current,
-        chatIntent: 'HIGH_INTENT_LEAD_QUALIFICATION',
-        elementText: userInput
-      })
-    }
-
-    // 2. Search TrustGrid Knowledge Base
-    let bestMatch = trustgridKnowledge.find((item) =>
-      item.keywords.some((k) => lower.includes(k))
-    )
-
-    let responseText = ''
-    let offeringTag = bestMatch?.offering
-    let pageLink = bestMatch?.pageLink
-    let followUpQuestion = bestMatch?.followUpQuestion
-
-    if (bestMatch) {
-      responseText = bestMatch.response
-    } else {
-      responseText =
-        'TRUSTGRID.AI is a specialized full-stack AI engineering operating company. We architect high-density GPU infrastructure, autonomous multi-agent fleets, lossless AI networking, quantum-safe cybersecurity, trusted explainability, and AI value engineering.'
-      followUpQuestion = 'Which layer of your AI stack is your current priority: compute infrastructure, multi-agent workflows, networking, or security?'
-      pageLink = { label: 'Explore All Enterprise Offerings', href: '/#offerings' }
-    }
-
-    // 3. Propose Lead Connection for High-Intent or Offering Questions
-    if (isHighIntent || bestMatch) {
-      setLeadData((prev) => ({
-        ...prev,
-        requirement: userInput,
-        offering: offeringTag || prev.offering || 'Enterprise AI Engineering'
-      }))
-    }
-
-    const botMsg: ChatMessage = {
-      id: `bot-${Date.now()}`,
+    const botMsgId = `bot_${Date.now()}`
+    const placeholderBotMsg: ChatMessage = {
+      id: botMsgId,
       sender: 'bot',
-      text: responseText,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      offeringTag,
-      pageLink,
-      followUpQuestion,
-      quickActions: [
-        { label: 'Book an AI Diagnostic', action: 'diagnostic' },
-        { label: 'Talk to an AI Architect', action: 'connect_architect' },
-        { label: 'Explore Solutions', action: 'solutions' },
-        { label: 'Contact Us', action: 'contact' }
-      ]
+      text: '',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
 
-    setMessages((prev) => [...prev, botMsg])
-  }
+    setMessages(prev => [...prev, placeholderBotMsg])
 
-  const handleQuickAction = (action: string) => {
-    if (action === 'book_strategy' || action === 'schedule_calendar') {
-      window.location.href = '/talk-to-ai-architect#session-booking-section'
-    } else if (action === 'contact') {
-      window.location.href = '/contact#contact-form-section'
-    } else if (action === 'diagnostic') {
-      handleSendMessage('I would like to book an executive AI Diagnostic assessment.')
-      startLeadFlow('AI Diagnostic')
-    } else if (action === 'connect_architect') {
-      window.location.href = '/talk-to-ai-architect#session-booking-section'
-    } else if (action === 'solutions') {
-      handleSendMessage('Tell me about the 6 TRUSTGRID.AI solution groups.')
-    } else if (action === 'infra') {
-      handleSendMessage('Tell me about AI Infrastructure and GPU data center engineering.')
-    } else if (action === 'agentic') {
-      handleSendMessage('Tell me about Agentic Enterprise and multi-agent systems.')
-    } else if (action === 'cybersecurity') {
-      handleSendMessage('Tell me about AI Cybersecurity and Post-Quantum Cryptography.')
+    const abortController = new AbortController()
+    abortControllerRef.current = abortController
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: textToSend,
+          conversationId,
+          stream: true
+        }),
+        signal: abortController.signal
+      })
+
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`)
+      }
+
+      // Check for streaming response
+      const contentType = response.headers.get('content-type') || ''
+      if (contentType.includes('text/event-stream') && response.body) {
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let accumulatedText = ''
+
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+
+          const chunk = decoder.decode(value, { stream: true })
+          const lines = chunk.split('\n')
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6))
+                if (data.type === 'delta') {
+                  accumulatedText += data.content
+                  setMessages(prev =>
+                    prev.map(m =>
+                      m.id === botMsgId ? { ...m, text: accumulatedText } : m
+                    )
+                  )
+                } else if (data.type === 'done') {
+                  setMessages(prev =>
+                    prev.map(m =>
+                      m.id === botMsgId
+                        ? {
+                            ...m,
+                            text: accumulatedText || m.text,
+                            offeringTag: data.offeringTag,
+                            pageLink: data.pageLink,
+                            suggestedFollowUps: data.suggestedFollowUps,
+                            isLeadPrompt: data.isLeadPrompt,
+                            cta: data.cta
+                          }
+                        : m
+                    )
+                  )
+                  if (data.isLeadPrompt) {
+                    setLeadData(prev => ({
+                      ...prev,
+                      requirement: `Conversation Topic: ${data.offeringTag || 'General Enterprise Consultation'}`
+                    }))
+                  }
+                }
+              } catch {}
+            }
+          }
+        }
+      } else {
+        // Fallback JSON handling
+        const data = await response.json()
+        setMessages(prev =>
+          prev.map(m =>
+            m.id === botMsgId
+              ? {
+                  ...m,
+                  text: data.message.text,
+                  offeringTag: data.offeringTag,
+                  pageLink: data.pageLink,
+                  suggestedFollowUps: data.suggestedFollowUps,
+                  isLeadPrompt: data.isLeadPrompt,
+                  cta: data.cta
+                }
+              : m
+          )
+        )
+      }
+    } catch (err: any) {
+      if (err.name === 'AbortError') {
+        // Stopped by user
+      } else {
+        console.error('[Chatbot Error]', err)
+        setMessages(prev =>
+          prev.map(m =>
+            m.id === botMsgId
+              ? {
+                  ...m,
+                  text: 'I encountered a brief connection issue. You can retry your question or speak directly with an AI Architect.'
+                }
+              : m
+          )
+        )
+      }
+    } finally {
+      setIsGenerating(false)
+      abortControllerRef.current = null
     }
   }
 
-  const startLeadFlow = (intent: string) => {
-    setLeadMode(true)
-    setLeadStep('name')
-    trackChatbotEvent('lead_flow_started', {
-      chatSessionId: chatSessionIdRef.current,
-      chatIntent: intent
-    })
+  const handleRetry = () => {
+    const lastUserMsg = [...messages].reverse().find(m => m.sender === 'user')
+    if (lastUserMsg) {
+      handleSendMessage(lastUserMsg.text)
+    }
   }
 
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!leadData.name || !leadData.name.trim()) {
-      alert('Please enter your name')
-      return
-    }
-
-    if (!leadData.email || !validateEmail(leadData.email)) {
-      alert('Please enter a valid email address')
-      return
-    }
-
-    if (!leadData.phone || !leadData.phone.trim()) {
-      alert('Please enter your mobile number')
-      return
-    }
-
-    if (!leadData.company || !leadData.company.trim()) {
-      alert('Please enter your company name')
-      return
-    }
-
     setLeadSubmitting(true)
-
-    const res = await submitTrustGridForm({
-      formId: 'form_chat_lead',
-      formName: 'Chatbot Lead Capture',
-      form_type: 'CHATBOT',
-      name: leadData.name.trim(),
-      email: leadData.email.trim(),
-      company: leadData.company.trim(),
-      mobile: leadData.phone.trim(),
-      phone: leadData.phone.trim(),
-      message: `Chatbot Inquiry: ${leadData.requirement || 'Requested consultation via AI Architect Chatbot'}`,
-      selectedSolutions: [leadData.offering || 'Enterprise AI Architecture'],
-      chatIntent: 'AI Architect Chatbot Lead',
-      ctaSource: 'chatbot_modal'
-    })
-
-    setLeadSubmitting(false)
-
-    if (res.success) {
-      setLeadStep('done')
-      const confirmationMsg: ChatMessage = {
-        id: `bot-lead-conf-${Date.now()}`,
-        sender: 'bot',
-        text: `Thank you, ${leadData.name || 'there'}. Your consultation request has been registered (Ref: ${res.submissionId}). A senior TRUSTGRID.AI architect will review your specifications for ${leadData.company || 'your organization'} and reach out shortly.`,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      }
-      setMessages((prev) => [...prev, confirmationMsg])
-      trackChatbotEvent('lead_flow_submitted', {
-        chatSessionId: chatSessionIdRef.current,
-        elementId: res.submissionId
+    try {
+      const res = await submitTrustGridForm({
+        name: leadData.name,
+        email: leadData.email,
+        company: leadData.company,
+        phone: leadData.phone,
+        form_type: 'CHATBOT',
+        formName: 'Conversational Assistant Lead Capture',
+        requirement: leadData.requirement || 'Requested consultation via AI Architect Chatbot',
+        page_source: typeof window !== 'undefined' ? window.location.pathname : '/chatbot'
       })
+
+      if (res.success) {
+        setLeadSuccess(true)
+        setTimeout(() => {
+          setLeadMode(false)
+          setLeadSuccess(false)
+        }, 3500)
+      }
+    } catch (err) {
+      console.error('[Lead Submit Error]', err)
+    } finally {
+      setLeadSubmitting(false)
     }
+  }
+
+  // Format inline text with markdown style bold & code
+  const renderFormattedText = (text: string) => {
+    const lines = text.split('\n')
+    return lines.map((line, lIdx) => {
+      if (line.startsWith('### ')) {
+        return (
+          <h5 key={lIdx} style={{ fontWeight: 700, fontSize: '11.5px', color: '#1d5cff', margin: '8px 0 3px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            {line.slice(4)}
+          </h5>
+        )
+      }
+      if (line.startsWith('## ')) {
+        return (
+          <h4 key={lIdx} style={{ fontWeight: 700, fontSize: '13px', color: '#09142e', margin: '10px 0 4px' }}>
+            {line.slice(3)}
+          </h4>
+        )
+      }
+      if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+        const item = line.trim().slice(2)
+        return (
+          <div key={lIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', margin: '3px 0', fontSize: '12.5px', lineHeight: 1.45 }}>
+            <span style={{ color: '#1d5cff', marginTop: '3px' }}>•</span>
+            <div>{formatInline(item)}</div>
+          </div>
+        )
+      }
+      if (/^\d+\.\s/.test(line.trim())) {
+        const match = line.trim().match(/^(\d+\.)\s(.*)/)
+        return (
+          <div key={lIdx} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', margin: '4px 0', fontSize: '12.5px', lineHeight: 1.45 }}>
+            <span style={{ fontWeight: 700, color: '#1d5cff' }}>{match ? match[1] : '1.'}</span>
+            <div>{formatInline(match ? match[2] : line)}</div>
+          </div>
+        )
+      }
+      if (!line.trim()) {
+        return <div key={lIdx} style={{ height: '6px' }} />
+      }
+      return (
+        <div key={lIdx} style={{ margin: '3px 0', fontSize: '12.5px', lineHeight: 1.45 }}>
+          {formatInline(line)}
+        </div>
+      )
+    })
+  }
+
+  const formatInline = (str: string) => {
+    const parts = str.split(/(\*\*[^*]+\*\*|`[^`]+`)/g)
+    return parts.map((part, i) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return (
+          <strong key={i} style={{ fontWeight: 700, color: '#09142e' }}>
+            {part.slice(2, -2)}
+          </strong>
+        )
+      }
+      if (part.startsWith('`') && part.endsWith('`')) {
+        return (
+          <code key={i} style={{ padding: '1px 5px', background: '#f1f5f9', borderRadius: '4px', fontSize: '11px', color: '#1d5cff', fontFamily: 'monospace' }}>
+            {part.slice(1, -1)}
+          </code>
+        )
+      }
+      return part
+    })
   }
 
   return (
     <>
-      {/* FLOATING LAUNCHER BUTTON (Right Side, Above Quick Inquiry) */}
-      <div className="chatbot-launcher-container" style={{ position: 'fixed', bottom: '76px', right: '24px', zIndex: 9997 }}>
-        {!isOpen && (
-          <button
-            onClick={toggleChat}
-            className="chatbot-launcher-btn tg-btn-shine"
-            aria-label="Talk to an AI Architect"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '12px 20px',
-              background: 'linear-gradient(135deg, #07143d 0%, #1d5cff 100%)',
-              color: '#ffffff',
-              border: '1px solid rgba(255,255,255,0.2)',
-              borderRadius: '999px',
-              boxShadow: '0 8px 30px rgba(7, 20, 61, 0.35)',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '13.5px',
-              transition: 'all 0.25s ease'
-            }}
-          >
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Bot size={19} />
-              <span
-                style={{
-                  position: 'absolute',
-                  top: '-2px',
-                  right: '-2px',
-                  width: '8px',
-                  height: '8px',
-                  backgroundColor: '#22c55e',
-                  borderRadius: '50%',
-                  boxShadow: '0 0 8px #22c55e'
-                }}
-              />
-            </div>
-            <span>Talk to an AI Architect</span>
-          </button>
-        )}
-      </div>
-
-      {/* CHATBOT DRAWER / MODAL */}
-      {isOpen && (
-        <div
-          className={`chatbot-modal ${isMinimized ? 'minimized' : ''}`}
+      {/* FLOATING TRIGGER LAUNCHER */}
+      {!isOpen && (
+        <button
+          onClick={toggleChat}
           style={{
             position: 'fixed',
             bottom: '24px',
             right: '24px',
-            width: isMinimized ? '320px' : 'clamp(320px, 92vw, 420px)',
-            height: isMinimized ? '56px' : 'clamp(480px, 80vh, 620px)',
+            zIndex: 9999,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '12px 18px',
+            background: 'linear-gradient(135deg, #09142e 0%, #0d214d 100%)',
+            color: '#ffffff',
+            border: '1px solid rgba(29, 92, 255, 0.4)',
+            borderRadius: '999px',
+            boxShadow: '0 8px 30px rgba(9, 20, 46, 0.35)',
+            cursor: 'pointer',
+            transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: 'scale(1)'
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
+          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+          aria-label="Open TrustGrid AI Architect Assistant"
+        >
+          <div
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              background: '#1d5cff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 0 12px rgba(29, 92, 255, 0.6)'
+            }}
+          >
+            <Bot size={18} className="text-white" />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+            <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.02em', color: '#ffffff' }}>
+              TRUSTGRID AI
+            </span>
+            <span style={{ fontSize: '10px', color: '#93c5fd', fontWeight: 500 }}>
+              Enterprise Architect
+            </span>
+          </div>
+          <Sparkles size={14} className="text-blue-400 animate-pulse" />
+        </button>
+      )}
+
+      {/* CHAT WINDOW CONTAINER */}
+      {isOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            bottom: isMinimized ? '24px' : '20px',
+            right: '20px',
+            width: isMaximized ? 'min(92vw, 680px)' : 'min(92vw, 440px)',
+            height: isMinimized ? 'auto' : isMaximized ? '82vh' : '620px',
+            maxHeight: '90vh',
+            zIndex: 9999,
             background: '#ffffff',
             borderRadius: '16px',
-            boxShadow: '0 20px 50px rgba(7, 20, 61, 0.35)',
-            border: '1px solid var(--border)',
+            boxShadow: '0 20px 50px rgba(9, 20, 46, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8)',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            zIndex: 99999,
-            transition: 'height 0.25s ease, width 0.25s ease'
+            fontFamily: 'inherit',
+            transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
         >
           {/* HEADER */}
           <div
             style={{
               padding: '14px 18px',
-              background: 'linear-gradient(135deg, #050d24 0%, #0d1e52 100%)',
+              background: 'linear-gradient(135deg, #09142e 0%, #0d214d 100%)',
               color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderBottom: '1px solid rgba(255,255,255,0.1)'
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+              flexShrink: 0
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div
                 style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
-                  background: 'rgba(29, 92, 255, 0.3)',
-                  border: '1px solid rgba(29, 92, 255, 0.5)',
+                  width: '34px',
+                  height: '34px',
+                  borderRadius: '50%',
+                  background: '#1d5cff',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#60a5fa'
+                  justifyContent: 'center'
                 }}
               >
-                <Bot size={18} />
+                <Bot size={18} className="text-white" />
               </div>
               <div>
-                <div style={{ fontSize: '13.5px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span>TrustGrid AI Architect</span>
-                  <span style={{ fontSize: '9px', background: '#1d5cff', padding: '1px 6px', borderRadius: '4px' }}>LIVE</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <h3 style={{ fontSize: '13.5px', fontWeight: 700, margin: 0, color: '#ffffff' }}>
+                    TRUSTGRID.AI Assistant
+                  </h3>
+                  <span
+                    style={{
+                      width: '7px',
+                      height: '7px',
+                      borderRadius: '50%',
+                      background: '#10b981',
+                      display: 'inline-block'
+                    }}
+                  />
                 </div>
-                <div style={{ fontSize: '11px', color: '#94a3b8' }}>
-                  Enterprise Engineering Assistant
-                </div>
+                <p style={{ fontSize: '10.5px', color: '#93c5fd', margin: 0 }}>
+                  Context-Aware Enterprise Systems Architect
+                </p>
               </div>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              {/* Reset Context */}
+              <button
+                onClick={handleClearContext}
+                title="Start New Conversation (Reset Context)"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  padding: '4px',
+                  cursor: 'pointer',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <RotateCcw size={14} />
+              </button>
+
+              {/* Minimize */}
               <button
                 onClick={() => setIsMinimized(!isMinimized)}
-                style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
-                aria-label="Minimize"
+                title={isMinimized ? 'Expand' : 'Minimize'}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  padding: '4px',
+                  cursor: 'pointer',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
               >
-                {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
+                <Minimize2 size={14} />
               </button>
+
+              {/* Maximize */}
+              {!isMinimized && (
+                <button
+                  onClick={() => setIsMaximized(!isMaximized)}
+                  title={isMaximized ? 'Restore Size' : 'Maximize'}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#94a3b8',
+                    padding: '4px',
+                    cursor: 'pointer',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Maximize2 size={14} />
+                </button>
+              )}
+
+              {/* Close */}
               <button
                 onClick={toggleChat}
-                style={{ background: 'transparent', border: 'none', color: '#94a3b8', cursor: 'pointer', padding: '4px' }}
-                aria-label="Close"
+                title="Close"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#94a3b8',
+                  padding: '4px',
+                  cursor: 'pointer',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
               >
-                <X size={18} />
+                <X size={16} />
               </button>
             </div>
           </div>
 
           {!isMinimized && (
             <>
-              {/* MESSAGES CONTAINER */}
+              {/* MESSAGES SCROLL AREA */}
               <div
                 style={{
                   flex: 1,
-                  padding: '16px',
                   overflowY: 'auto',
+                  padding: '16px',
                   background: '#f8fafc',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px'
+                  gap: '14px'
                 }}
               >
-                {messages.map((msg) => (
+                {messages.map((msg, index) => (
                   <div
                     key={msg.id}
                     style={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: msg.sender === 'user' ? 'flex-end' : 'flex-start',
-                      maxWidth: '100%'
+                      width: '100%'
                     }}
                   >
                     <div
                       style={{
-                        maxWidth: '88%',
-                        padding: '12px 15px',
+                        maxWidth: '90%',
+                        padding: '12px 16px',
                         borderRadius: msg.sender === 'user' ? '14px 14px 2px 14px' : '14px 14px 14px 2px',
                         background: msg.sender === 'user' ? '#1d5cff' : '#ffffff',
                         color: msg.sender === 'user' ? '#ffffff' : '#09142e',
                         border: msg.sender === 'user' ? 'none' : '1px solid #e2e8f0',
-                        fontSize: '13px',
-                        lineHeight: 1.5,
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                        position: 'relative'
                       }}
                     >
+                      {/* Offering Category Tag */}
                       {msg.offeringTag && (
-                        <div style={{ fontSize: '10px', fontWeight: 700, color: '#1d5cff', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div
+                          style={{
+                            fontSize: '9.5px',
+                            fontWeight: 700,
+                            color: msg.sender === 'user' ? '#e0e7ff' : '#1d5cff',
+                            marginBottom: '6px',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.06em'
+                          }}
+                        >
                           {msg.offeringTag}
                         </div>
                       )}
-                      <div>{msg.text}</div>
 
-                      {msg.followUpQuestion && (
-                        <div style={{
-                          marginTop: '8px',
-                          paddingTop: '8px',
-                          borderTop: '1px dashed #cbd5e1',
-                          fontSize: '12px',
-                          fontWeight: 600,
-                          color: msg.sender === 'user' ? '#e0e7ff' : '#1d5cff'
-                        }}>
-                          💡 {msg.followUpQuestion}
-                        </div>
-                      )}
+                      {/* Content */}
+                      <div>
+                        {msg.sender === 'user' ? (
+                          <div style={{ fontSize: '13px', lineHeight: 1.45 }}>{msg.text}</div>
+                        ) : (
+                          renderFormattedText(msg.text)
+                        )}
+                      </div>
 
+                      {/* Clickable Reference Link */}
                       {msg.pageLink && (
                         <div style={{ marginTop: '10px' }}>
                           <Link
@@ -552,52 +697,124 @@ export function AIArchitectChatbot() {
                             style={{
                               display: 'inline-flex',
                               alignItems: 'center',
-                              gap: '5px',
+                              gap: '6px',
                               padding: '5px 10px',
-                              background: msg.sender === 'user' ? 'rgba(255,255,255,0.2)' : '#eff6ff',
-                              color: msg.sender === 'user' ? '#ffffff' : '#1d5cff',
-                              border: msg.sender === 'user' ? '1px solid rgba(255,255,255,0.3)' : '1px solid #bfdbfe',
+                              background: '#eff6ff',
+                              color: '#1d5cff',
+                              border: '1px solid #bfdbfe',
+                              borderRadius: '6px',
+                              fontSize: '11px',
+                              fontWeight: 600,
+                              textDecoration: 'none',
+                              transition: 'all 0.15s ease'
+                            }}
+                          >
+                            <span>{msg.pageLink.label}</span>
+                            <ArrowUpRight size={12} />
+                          </Link>
+                        </div>
+                      )}
+
+                      {/* Contextual CTA Button */}
+                      {msg.cta && (
+                        <div style={{ marginTop: '10px' }}>
+                          <Link
+                            href={msg.cta.href}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              padding: '7px 12px',
+                              background: '#1d5cff',
+                              color: '#ffffff',
                               borderRadius: '6px',
                               fontSize: '11.5px',
                               fontWeight: 600,
                               textDecoration: 'none'
                             }}
                           >
-                            <span>{msg.pageLink.label}</span>
+                            <span>{msg.cta.label}</span>
                             <ArrowUpRight size={13} />
                           </Link>
                         </div>
                       )}
                     </div>
 
-                    <span style={{ fontSize: '10px', color: '#94a3b8', marginTop: '3px', padding: '0 4px' }}>
-                      {msg.timestamp}
-                    </span>
+                    {/* Metadata & Message Actions Bar */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginTop: '4px',
+                        padding: '0 4px',
+                        fontSize: '10px',
+                        color: '#94a3b8'
+                      }}
+                    >
+                      <span>{msg.timestamp}</span>
+                      {msg.sender === 'bot' && msg.text && (
+                        <button
+                          onClick={() => handleCopy(msg.id, msg.text)}
+                          title="Copy response"
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            color: '#94a3b8',
+                            cursor: 'pointer',
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '2px',
+                            padding: '2px 4px'
+                          }}
+                        >
+                          {copiedId === msg.id ? <Check size={11} className="text-green-600" /> : <Copy size={11} />}
+                          <span>{copiedId === msg.id ? 'Copied' : 'Copy'}</span>
+                        </button>
+                      )}
+                    </div>
 
-                    {/* QUICK ACTION BUTTONS */}
-                    {msg.quickActions && msg.sender === 'bot' && (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginTop: '8px' }}>
-                        {msg.quickActions.map((qa, i) => (
+                    {/* Suggested Follow-Ups (only under the last assistant message) */}
+                    {index === messages.length - 1 && msg.suggestedFollowUps && !isGenerating && (
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          gap: '6px',
+                          marginTop: '8px',
+                          maxWidth: '95%'
+                        }}
+                      >
+                        {msg.suggestedFollowUps.map((prompt, pIdx) => (
                           <button
-                            key={i}
-                            onClick={() => handleQuickAction(qa.action)}
+                            key={pIdx}
+                            onClick={() => handleSendMessage(prompt)}
                             style={{
                               padding: '5px 10px',
                               background: '#ffffff',
                               border: '1px solid #cbd5e1',
                               borderRadius: '999px',
                               fontSize: '11px',
-                              fontWeight: 600,
+                              fontWeight: 500,
                               color: '#1e293b',
                               cursor: 'pointer',
                               display: 'inline-flex',
                               alignItems: 'center',
                               gap: '4px',
+                              textAlign: 'left',
                               transition: 'all 0.15s ease'
                             }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.borderColor = '#1d5cff'
+                              e.currentTarget.style.color = '#1d5cff'
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.borderColor = '#cbd5e1'
+                              e.currentTarget.style.color = '#1e293b'
+                            }}
                           >
-                            <span>{qa.label}</span>
-                            <ChevronRight size={11} className="opacity-50" />
+                            <span>{prompt}</span>
+                            <ChevronRight size={11} className="opacity-40" />
                           </button>
                         ))}
                       </div>
@@ -605,22 +822,98 @@ export function AIArchitectChatbot() {
                   </div>
                 ))}
 
-                {isTyping && (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', background: '#ffffff', borderRadius: '12px', width: 'fit-content', border: '1px solid #e2e8f0' }}>
+                {/* Starting Prompt Pills (Only displayed at initial state) */}
+                {messages.length === 1 && !isGenerating && (
+                  <div style={{ marginTop: '4px' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                      Suggested Starting Inquiries:
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {STARTING_PROMPTS.map((prompt, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSendMessage(prompt)}
+                          style={{
+                            padding: '8px 12px',
+                            background: '#ffffff',
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '8px',
+                            fontSize: '12px',
+                            fontWeight: 500,
+                            color: '#334155',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            textAlign: 'left',
+                            transition: 'all 0.15s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = '#1d5cff'
+                            e.currentTarget.style.background = '#f0f7ff'
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = '#e2e8f0'
+                            e.currentTarget.style.background = '#ffffff'
+                          }}
+                        >
+                          <span>{prompt}</span>
+                          <ChevronRight size={13} className="text-slate-400" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Generating indicator */}
+                {isGenerating && (
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      padding: '8px 12px',
+                      background: '#ffffff',
+                      borderRadius: '8px',
+                      width: 'fit-content',
+                      border: '1px solid #e2e8f0'
+                    }}
+                  >
                     <Loader2 size={13} className="animate-spin text-blue-600" />
-                    <span style={{ fontSize: '12px', color: '#64748b' }}>AI Architect analyzing...</span>
+                    <span style={{ fontSize: '12px', color: '#64748b' }}>
+                      Synthesizing architectural reasoning...
+                    </span>
+                    <button
+                      onClick={handleStopGeneration}
+                      style={{
+                        marginLeft: '8px',
+                        background: '#f1f5f9',
+                        border: 'none',
+                        borderRadius: '4px',
+                        padding: '2px 6px',
+                        fontSize: '11px',
+                        color: '#64748b',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '3px'
+                      }}
+                    >
+                      <Square size={9} />
+                      <span>Stop</span>
+                    </button>
                   </div>
                 )}
 
                 <div ref={messagesEndRef} />
               </div>
 
-              {/* CONVERSATIONAL LEAD CAPTURE INLINE MODAL */}
-              {leadMode && leadStep !== 'done' && (
+              {/* CONTEXTUAL CONSULTATION LEAD DRAWER */}
+              {leadMode && (
                 <div style={{ background: '#ffffff', borderTop: '1px solid #e2e8f0', padding: '14px 16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
                     <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.06em' }}>
-                      CONNECT WITH A SENIOR ARCHITECT
+                      DISCUSS WITH A PRINCIPAL AI ARCHITECT
                     </span>
                     <button
                       onClick={() => setLeadMode(false)}
@@ -630,81 +923,87 @@ export function AIArchitectChatbot() {
                     </button>
                   </div>
 
-                  <form onSubmit={handleLeadSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                      <input
-                        type="text"
-                        placeholder="Enter your name"
-                        value={leadData.name}
-                        onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
-                        required
-                        style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
-                      />
-                      <input
-                        type="email"
-                        placeholder="Enter your email"
-                        value={leadData.email}
-                        onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
-                        required
-                        style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
-                      />
+                  {leadSuccess ? (
+                    <div style={{ padding: '12px', background: '#ecfdf5', borderRadius: '8px', color: '#065f46', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <CheckCircle2 size={16} className="text-emerald-600" />
+                      <span>Your briefing request has been received. An AI Architect will reach out within 24 hours.</span>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
-                      <input
-                        type="tel"
-                        placeholder="Enter your mobile number"
-                        value={leadData.phone}
-                        onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
-                        required
-                        style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Enter your company name"
-                        value={leadData.company}
-                        onChange={(e) => setLeadData({ ...leadData, company: e.target.value })}
-                        required
-                        style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={leadSubmitting}
-                      style={{
-                        padding: '8px',
-                        background: '#1d5cff',
-                        color: '#ffffff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        fontSize: '12px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '6px'
-                      }}
-                    >
-                      {leadSubmitting ? (
-                        <>
-                          <Loader2 size={13} className="animate-spin" />
-                          <span>Submitting...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Submit Request</span>
-                          <Send size={13} />
-                        </>
-                      )}
-                    </button>
-                  </form>
+                  ) : (
+                    <form onSubmit={handleLeadSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          value={leadData.name}
+                          onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
+                          required
+                          style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                        />
+                        <input
+                          type="email"
+                          placeholder="Corporate Email"
+                          value={leadData.email}
+                          onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
+                          required
+                          style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                        />
+                      </div>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                        <input
+                          type="text"
+                          placeholder="Company Name"
+                          value={leadData.company}
+                          onChange={(e) => setLeadData({ ...leadData, company: e.target.value })}
+                          required
+                          style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                        />
+                        <input
+                          type="tel"
+                          placeholder="Phone Number (Optional)"
+                          value={leadData.phone}
+                          onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                          style={{ padding: '8px 10px', fontSize: '12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        disabled={leadSubmitting}
+                        style={{
+                          padding: '8px',
+                          background: '#1d5cff',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontSize: '12px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '6px'
+                        }}
+                      >
+                        {leadSubmitting ? (
+                          <>
+                            <Loader2 size={13} className="animate-spin" />
+                            <span>Scheduling Briefing...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Request Architecture Strategy Briefing</span>
+                            <Send size={13} />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  )}
                 </div>
               )}
 
               {/* INPUT BAR */}
               <div
                 style={{
-                  padding: '10px 14px',
+                  padding: '12px 14px',
                   background: '#ffffff',
                   borderTop: '1px solid #e2e8f0',
                   display: 'flex',
@@ -713,8 +1012,9 @@ export function AIArchitectChatbot() {
                 }}
               >
                 <input
+                  ref={inputRef}
                   type="text"
-                  placeholder="Ask about AI infra, agents, network, or book diagnostic..."
+                  placeholder="Ask a technical or architectural question..."
                   value={inputVal}
                   onChange={(e) => setInputVal(e.target.value)}
                   onKeyDown={(e) => {
@@ -723,6 +1023,7 @@ export function AIArchitectChatbot() {
                       handleSendMessage()
                     }
                   }}
+                  disabled={isGenerating}
                   style={{
                     flex: 1,
                     padding: '9px 12px',
@@ -734,21 +1035,21 @@ export function AIArchitectChatbot() {
                 />
                 <button
                   onClick={() => handleSendMessage()}
-                  disabled={!inputVal.trim() || isTyping}
+                  disabled={!inputVal.trim() || isGenerating}
                   style={{
                     width: '36px',
                     height: '36px',
                     borderRadius: '8px',
-                    background: inputVal.trim() ? '#1d5cff' : '#e2e8f0',
+                    background: inputVal.trim() && !isGenerating ? '#1d5cff' : '#e2e8f0',
                     color: '#ffffff',
                     border: 'none',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    cursor: inputVal.trim() ? 'pointer' : 'default',
+                    cursor: inputVal.trim() && !isGenerating ? 'pointer' : 'default',
                     transition: 'background 0.2s ease'
                   }}
-                  aria-label="Send"
+                  aria-label="Send Message"
                 >
                   <Send size={15} />
                 </button>

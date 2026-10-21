@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next'
 import { solutions } from '@/lib/solutions'
+import { allPracticeAreas } from '@/lib/practice-areas-data'
 
 export const dynamic = 'force-static'
 
@@ -48,6 +49,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.85,
+    },
+    {
+      url: `${BASE_URL}/practice-areas`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
     },
     {
       url: `${BASE_URL}/methodology-engine`,
@@ -173,5 +180,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }))
 
-  return [...staticRoutes, ...solutionRoutes]
+  // Add all 19 Practice Areas dynamic routes
+  const practiceRoutes: MetadataRoute.Sitemap = allPracticeAreas.map((practice) => ({
+    url: `${BASE_URL}/practice-areas/${practice.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }))
+
+  return [...staticRoutes, ...solutionRoutes, ...practiceRoutes]
 }

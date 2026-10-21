@@ -425,17 +425,17 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
     uniqueVisitors: baseVisitors,
     avgSessionTime: 142,
     repeatVisitors: baseRepeat,
-    mostActivePage: '/solutions/enterprise-ai-factory',
+    mostActivePage: '/solutions/ai-agentic-factory',
     topPages: [
-      { page: '/solutions/enterprise-ai-factory', visits: Math.round(12450 * multiplier), uniqueIps: Math.round(7890 * multiplier), share: 25.5 },
+      { page: '/solutions/ai-agentic-factory', visits: Math.round(12450 * multiplier), uniqueIps: Math.round(7890 * multiplier), share: 25.5 },
       { page: '/book-ai-diagnostic#diagnostic-form-section', visits: Math.round(9820 * multiplier), uniqueIps: Math.round(6240 * multiplier), share: 20.1 },
       { page: '/ai-readiness-assessment', visits: Math.round(7420 * multiplier), uniqueIps: Math.round(5120 * multiplier), share: 15.2 },
       { page: '/methodology-engine', visits: Math.round(6180 * multiplier), uniqueIps: Math.round(4320 * multiplier), share: 12.6 },
-      { page: '/use-cases/autonomous-fleet-ops', visits: Math.round(4890 * multiplier), uniqueIps: Math.round(3410 * multiplier), share: 10.0 }
+      { page: '/use-cases', visits: Math.round(4890 * multiplier), uniqueIps: Math.round(3410 * multiplier), share: 10.0 }
     ],
     topPagesByDwell: [
       { page: '/methodology-engine', avgSec: 218, maxSec: 890 },
-      { page: '/solutions/enterprise-ai-factory', avgSec: 184, maxSec: 740 },
+      { page: '/solutions/ai-agentic-factory', avgSec: 184, maxSec: 740 },
       { page: '/book-ai-diagnostic#diagnostic-form-section', avgSec: 165, maxSec: 620 },
       { page: '/ai-readiness-assessment', avgSec: 148, maxSec: 580 },
       { page: '/case-studies', avgSec: 135, maxSec: 490 }
@@ -448,11 +448,11 @@ export function buildProcessedAnalyticsFromState(options: FilterOptions = {}): D
       { visitorId: 'tg_usr_3f908e', location: 'Singapore, Central, SG', totalVisits: Math.round(18 * multiplier), lastActive: '3 hours ago' }
     ],
     masterPageMetrics: [
-      { url: '/solutions/enterprise-ai-factory', totalVisits: Math.round(12450 * multiplier), uniqueUsers: Math.round(7890 * multiplier), avgTime: 184, maxTime: 740 },
+      { url: '/solutions/ai-agentic-factory', totalVisits: Math.round(12450 * multiplier), uniqueUsers: Math.round(7890 * multiplier), avgTime: 184, maxTime: 740 },
       { url: '/book-ai-diagnostic#diagnostic-form-section', totalVisits: Math.round(9820 * multiplier), uniqueUsers: Math.round(6240 * multiplier), avgTime: 165, maxTime: 620 },
       { url: '/ai-readiness-assessment', totalVisits: Math.round(7420 * multiplier), uniqueUsers: Math.round(5120 * multiplier), avgTime: 148, maxTime: 580 },
       { url: '/methodology-engine', totalVisits: Math.round(6180 * multiplier), uniqueUsers: Math.round(4320 * multiplier), avgTime: 218, maxTime: 890 },
-      { url: '/use-cases/autonomous-fleet-ops', totalVisits: Math.round(4890 * multiplier), uniqueUsers: Math.round(3410 * multiplier), avgTime: 124, maxTime: 510 },
+      { url: '/use-cases', totalVisits: Math.round(4890 * multiplier), uniqueUsers: Math.round(3410 * multiplier), avgTime: 124, maxTime: 510 },
       { url: '/request-proposal', totalVisits: Math.round(3750 * multiplier), uniqueUsers: Math.round(2810 * multiplier), avgTime: 155, maxTime: 640 },
       { url: '/talk-to-ai-architect', totalVisits: Math.round(2980 * multiplier), uniqueUsers: Math.round(2190 * multiplier), avgTime: 172, maxTime: 590 },
       { url: '/about', totalVisits: Math.round(2840 * multiplier), uniqueUsers: Math.round(2280 * multiplier), avgTime: 92, maxTime: 380 }

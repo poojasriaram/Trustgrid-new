@@ -163,12 +163,23 @@ async function runTests() {
   const lead11 = normalizeLead({
     name: 'Lisa Ray',
     email: 'lisa@innovate.co',
+    utm_source: 'twitter',
+    referrer: 'https://t.co/xyz123'
+  });
+  assert(lead11.channelAttribution === 'Community',
+    'TEST 11: Community attribution detection',
+    `Channel: ${lead11.channelAttribution}`
+  );
+
+  const lead11b = normalizeLead({
+    name: 'Lisa Ray',
+    email: 'lisa@innovate.co',
     utm_source: 'linkedin',
     referrer: 'https://www.linkedin.com/feed/'
   });
-  assert(lead11.channelAttribution === 'Community',
-    'TEST 11: Community/LinkedIn attribution detection',
-    `Channel: ${lead11.channelAttribution}`
+  assert(lead11b.channelAttribution === 'LinkedIn',
+    'TEST 11b: LinkedIn attribution detection',
+    `Channel: ${lead11b.channelAttribution}`
   );
 
   // TEST 12: Direct Lead
