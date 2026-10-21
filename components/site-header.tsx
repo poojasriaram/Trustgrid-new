@@ -730,93 +730,113 @@ const aboutMenuItems = [
   }
 ]
 
-// 8. Consolidated Practice Areas Menu Data (12 Structured Items for 3-Column Grid)
+// 8. Consolidated Practice Areas Menu Data (Engineering, Functional, Industry, and Engagement Models)
 const practiceAreasMenuItems = [
+  // Pillar 1: Engineering Practices (Deep Technical Domains)
   {
-    category: 'CORE PRACTICE',
-    label: 'AI Infrastructure & Data Center',
+    pillar: 'engineering',
+    category: 'ENGINEERING PRACTICES',
+    label: 'AI Infrastructure & High-Density DC',
     href: '/solutions/ai-infra-engineering',
     desc: '30–100kW+ GPU facilities, DLC liquid cooling & turnkey DBOT',
     icon: Cpu
   },
   {
-    category: 'CORE PRACTICE',
-    label: 'Agentic Enterprise',
+    pillar: 'engineering',
+    category: 'ENGINEERING PRACTICES',
+    label: 'Agentic Enterprise & Orchestration',
     href: '/solutions/ai-agentic-factory',
-    desc: 'Deterministic multi-agent swarms, cognitive DAGs & AgentOps',
+    desc: 'Deterministic reasoning DAGs, memory fabrics & MCP integration',
     icon: Bot
   },
   {
-    category: 'CORE PRACTICE',
-    label: 'AI Networking & Cybersecurity',
+    pillar: 'engineering',
+    category: 'ENGINEERING PRACTICES',
+    label: 'AI Networking & Systems Integration',
     href: '/solutions/ai-networking-cybersecurity',
-    desc: 'Zero-loss RoCEv2/InfiniBand fabrics & quantum-safe zero-trust',
+    desc: 'Zero-loss RoCEv2/InfiniBand, API orchestration & ERP bridges',
     icon: Network
   },
   {
-    category: 'CORE PRACTICE',
-    label: 'Trusted AI & Governance',
-    href: '/practice-areas/ai-governance-risk-compliance',
-    desc: 'EU AI Act, NIST AI RMF, guardrails & continuous compliance',
+    pillar: 'engineering',
+    category: 'ENGINEERING PRACTICES',
+    label: 'AI Cybersecurity & Quantum Defense',
+    href: '/practice-areas/ai-cybersecurity-quantum-safe-defense',
+    desc: 'Zero-trust permissions, prompt armor & NIST PQC migration',
     icon: ShieldCheck
   },
+
+  // Pillar 2: Functional Practices (Business Capabilities Delivered)
   {
-    category: 'CORE PRACTICE',
-    label: 'AI Value Engineering',
-    href: '/solutions/ai-value-engineering',
-    desc: '80+ operational methods, Lean TOC & unit economic yield',
-    icon: TrendingUp
-  },
-  {
-    category: 'FORWARD DEPLOYMENT',
-    label: 'Forward Deployment Engineering',
+    pillar: 'functional',
+    category: 'FUNCTIONAL PRACTICES',
+    label: 'Forward Deployment Engineering (FDE)',
     href: '/practice-areas/forward-deployment-engineering',
     desc: 'Embedded elite systems squads bridging prototype to production',
     icon: Layers
   },
   {
-    category: 'SYSTEM ARCHITECTURE',
-    label: 'Enterprise LLM & RAG Systems',
-    href: '/practice-areas/enterprise-llm-rag-context-engineering',
-    desc: 'Hybrid context engineering, GraphRAG & sovereign clusters',
-    icon: Sparkles
+    pillar: 'functional',
+    category: 'FUNCTIONAL PRACTICES',
+    label: 'AI Value Engineering & FinOps',
+    href: '/solutions/ai-value-engineering',
+    desc: 'Lean thinking, Theory of Constraints & CFO-visible unit economics',
+    icon: TrendingUp
   },
   {
-    category: 'OPERATIONAL RELIABILITY',
-    label: 'AI SRE & Managed Operations',
-    href: '/practice-areas/managed-ai-operations',
-    desc: '24/7 follow-the-sun NOC/SOC, model retraining & 99.99% SLAs',
-    icon: Activity
+    pillar: 'functional',
+    category: 'FUNCTIONAL PRACTICES',
+    label: 'Value Assurance Services',
+    href: '/practice-areas/value-assurance-services',
+    desc: 'SHAP/LIME explainability, continuous SPC & EU AI Act compliance',
+    icon: CheckCircle2
+  },
+
+  // Pillar 3: Industry Practices (Vertical Blueprints)
+  {
+    pillar: 'industry',
+    category: 'INDUSTRY PRACTICES',
+    label: 'Ports, Logistics & Mass Transit Rail',
+    href: '/industries/supply-chain-logistics',
+    desc: 'Autonomous gantry cranes, rail edge CV, AGVs & TOS integration',
+    icon: Boxes
   },
   {
-    category: 'DATA INFRASTRUCTURE',
-    label: 'Real-Time Data Pipelines',
-    href: '/practice-areas/data-engineering-realtime-pipelines',
-    desc: 'Streaming Kafka, Flink & Apache Iceberg enterprise lakehouses',
-    icon: Server
+    pillar: 'industry',
+    category: 'INDUSTRY PRACTICES',
+    label: 'Energy, Utilities & Smart Infrastructure',
+    href: '/industries/energy-utilities',
+    desc: 'Autonomous grid balancing, leak detection & cyber-physical security',
+    icon: Zap
   },
   {
-    category: '70 SECTORS',
-    label: 'Vertical Industry Blueprints',
-    href: '/industries',
-    desc: 'Specialized AI blueprints across Banking, Health, Energy & more',
+    pillar: 'industry',
+    category: 'INDUSTRY PRACTICES',
+    label: 'Telecom & High-Tech Manufacturing',
+    href: '/industries/telecommunications',
+    desc: 'MEC edge nodes, SMT computer vision QC, FPY/OEE & 5G core',
     icon: Building2
   },
+
+  // Pillar 4: Engagement Models (Certified Outcome-Based Framework)
   {
-    category: 'VERIFIED IMPACT',
-    label: 'Business Outcomes & ROI',
-    href: '/case-studies',
-    desc: '35–60% token spend reduction, MFU gains & verified ROI',
-    icon: BarChart3
+    pillar: 'engagement',
+    category: 'ENGAGEMENT MODELS',
+    label: '5-Stage Outcome Proof Framework',
+    href: '/request-proposal?model=proof-framework',
+    desc: 'PoC, PoV, PoP, PoCI, PoCV — paid only on verified business impact',
+    icon: CheckCircle2
   },
   {
-    category: 'DELIVERY MODELS',
-    label: 'Engagement Models & DBOT',
-    href: '/request-proposal',
-    desc: 'Executive diagnostics, value sprints & turnkey DBOT accountability',
-    icon: Boxes
+    pillar: 'engagement',
+    category: 'ENGAGEMENT MODELS',
+    label: 'Turnkey DBOT & Co-Engineering',
+    href: '/request-proposal?model=turnkey',
+    desc: 'Design, Build, Operate, Transfer with paired engineering transfer',
+    icon: Workflow
   }
 ]
+
 
 
 const methodologyCategories = [
@@ -984,6 +1004,7 @@ export function SiteHeader() {
   const [mobileDomainNetOpen, setMobileDomainNetOpen] = useState(true)
   const [mobileDomainCyberOpen, setMobileDomainCyberOpen] = useState(true)
   const [desktopActiveDomain, setDesktopActiveDomain] = useState<'networking' | 'cybersecurity'>('networking')
+  const [desktopPracticePillar, setDesktopPracticePillar] = useState<'all' | 'engineering' | 'functional' | 'industry' | 'engagement'>('all')
   const [mobileOpenGroups, setMobileOpenGroups] = useState<Record<string, boolean>>({
     'datacenter-cloud-fabric': true,
     'threat-detection-defense': true
@@ -1054,6 +1075,7 @@ export function SiteHeader() {
     }
     setActiveMenu(null)
     setOpen(false)
+    setDesktopPracticePillar('all')
   }
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -1560,7 +1582,7 @@ export function SiteHeader() {
           )}
         </div>
 
-        {/* PRACTICE AREAS (CONSOLIDATED: CORE PRACTICES, INDUSTRIES, OUTCOMES, ENGAGEMENT MODELS) */}
+        {/* PRACTICE AREAS (ENGINEERING PRACTICES, FUNCTIONAL PRACTICES, INDUSTRY PRACTICES, ENGAGEMENT MODELS) */}
         <div
           className="nav-dropdown-wrapper"
           onMouseEnter={() => handleMouseEnter('practice-areas')}
@@ -1578,27 +1600,105 @@ export function SiteHeader() {
           {activeMenu === 'practice-areas' && (
             <div className="isi-mega-panel isi-mega-practice-areas">
               <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
+                {/* Left Category Sidebar: 4 Pillars */}
                 <div className="isi-mega-sidebar">
                   <div className="isi-sidebar-top">
                     <span className="isi-sidebar-badge">
                       <span className="pulse-dot" />
-                      ENTERPRISE PRACTICES &amp; BLUEPRINTS
+                      ENTERPRISE ARCHITECTURE
                     </span>
                     <h3 className="isi-sidebar-title">Practice Areas</h3>
                     <p className="isi-sidebar-desc">
-                      Full-spectrum enterprise AI engineering: core practices, vertical industry blueprints, verified business outcomes, and structured DBOT delivery models.
+                      Full-spectrum enterprise AI engineering: engineering practices, functional capabilities, vertical blueprints, and outcome-based models.
                     </p>
-                    <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(37, 99, 235, 0.05)', borderRadius: '6px', borderLeft: '3px solid #2563eb' }}>
-                      <p style={{ margin: 0, fontSize: '11px', color: '#475569', lineHeight: 1.45 }}>
-                        From silicon infrastructure to autonomous agent fleets and vertical blueprints, deliver production AI systems with architectural certainty.
-                      </p>
+
+                    {/* Left Sidebar Practice Pillars Switch */}
+                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Practice Areas Pillars" style={{ marginTop: '12px' }}>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopPracticePillar === 'engineering'}
+                        className={`tg-domain-tab-btn ${desktopPracticePillar === 'engineering' ? 'active-networking' : ''}`}
+                        onClick={() => setDesktopPracticePillar(desktopPracticePillar === 'engineering' ? 'all' : 'engineering')}
+                        onMouseEnter={() => setDesktopPracticePillar('engineering')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box tg-icon-net">
+                            <Cpu size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">Engineering Practices</span>
+                            <span className="tg-tab-sub">Compute, Agents, Net &amp; Cyber</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
+
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopPracticePillar === 'functional'}
+                        className={`tg-domain-tab-btn ${desktopPracticePillar === 'functional' ? 'active-networking' : ''}`}
+                        onClick={() => setDesktopPracticePillar(desktopPracticePillar === 'functional' ? 'all' : 'functional')}
+                        onMouseEnter={() => setDesktopPracticePillar('functional')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box" style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#059669' }}>
+                            <Layers size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">Functional Practices</span>
+                            <span className="tg-tab-sub">FDE, Value &amp; Assurance</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
+
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopPracticePillar === 'industry'}
+                        className={`tg-domain-tab-btn ${desktopPracticePillar === 'industry' ? 'active-networking' : ''}`}
+                        onClick={() => setDesktopPracticePillar(desktopPracticePillar === 'industry' ? 'all' : 'industry')}
+                        onMouseEnter={() => setDesktopPracticePillar('industry')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box tg-icon-cyber">
+                            <Building2 size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">Industry Practices</span>
+                            <span className="tg-tab-sub">Vertical Domain Blueprints</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
+
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={desktopPracticePillar === 'engagement'}
+                        className={`tg-domain-tab-btn ${desktopPracticePillar === 'engagement' ? 'active-networking' : ''}`}
+                        onClick={() => setDesktopPracticePillar(desktopPracticePillar === 'engagement' ? 'all' : 'engagement')}
+                        onMouseEnter={() => setDesktopPracticePillar('engagement')}
+                      >
+                        <div className="tg-domain-tab-left">
+                          <div className="tg-tab-icon-box" style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#d97706' }}>
+                            <Boxes size={14} />
+                          </div>
+                          <div className="tg-tab-text">
+                            <span className="tg-tab-title">Engagement Models</span>
+                            <span className="tg-tab-sub">5-Stage Proof &amp; Turnkey DBOT</span>
+                          </div>
+                        </div>
+                        <ChevronRight size={13} className="tg-tab-chevron" />
+                      </button>
                     </div>
                   </div>
                   <div className="isi-sidebar-bottom">
                     <div className="isi-sidebar-metric-chip">
                       <Sparkles size={12} className="text-blue-600" />
-                      <span>19 Practices • 70 Verticals • 5 Models</span>
+                      <span>3 Practice Pillars • 12 Disciplines • 5 Models</span>
                     </div>
                     <Link
                       href="/practice-areas"
@@ -1620,33 +1720,83 @@ export function SiteHeader() {
                   </div>
                 </div>
 
-                {/* Right Structured Grid (3 columns, 12 items) */}
-                <div className="isi-mega-content columns-3">
-                  {practiceAreasMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, item.href)}
-                      >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
-                            {item.category}
-                          </span>
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
+                {/* Right Structured Grid Area */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                  {/* Quick Toggle Filter Pills Row */}
+                  <div className="tg-domain-pills-row" style={{ padding: '12px 16px 8px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                    <button
+                      type="button"
+                      className={`tg-quick-pill ${desktopPracticePillar === 'all' ? 'active-pill' : ''}`}
+                      onClick={() => setDesktopPracticePillar('all')}
+                    >
+                      <Sparkles size={11} />
+                      <span>All 12 Disciplines</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`tg-quick-pill ${desktopPracticePillar === 'engineering' ? 'active-pill' : ''}`}
+                      onClick={() => setDesktopPracticePillar('engineering')}
+                    >
+                      <Cpu size={11} />
+                      <span>Engineering Practices</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`tg-quick-pill ${desktopPracticePillar === 'functional' ? 'active-pill' : ''}`}
+                      onClick={() => setDesktopPracticePillar('functional')}
+                    >
+                      <Layers size={11} />
+                      <span>Functional Practices</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`tg-quick-pill ${desktopPracticePillar === 'industry' ? 'active-pill' : ''}`}
+                      onClick={() => setDesktopPracticePillar('industry')}
+                    >
+                      <Building2 size={11} />
+                      <span>Industry Practices</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`tg-quick-pill ${desktopPracticePillar === 'engagement' ? 'active-pill' : ''}`}
+                      onClick={() => setDesktopPracticePillar('engagement')}
+                    >
+                      <Boxes size={11} />
+                      <span>Engagement Models</span>
+                    </button>
+                  </div>
+
+                  {/* 3 Columns matching 12 items */}
+                  <div className="isi-mega-content columns-3" style={{ padding: '12px 16px 16px' }}>
+                    {(desktopPracticePillar === 'all'
+                      ? practiceAreasMenuItems
+                      : practiceAreasMenuItems.filter((item) => item.pillar === desktopPracticePillar)
+                    ).map((item, idx) => {
+                      const Icon = item.icon
+                      return (
+                        <Link
+                          key={idx}
+                          href={item.href}
+                          className="isi-menu-card"
+                          onClick={(e) => handleNavClick(e, item.href)}
+                        >
+                          <div className="isi-card-icon">
+                            <Icon size={16} />
                           </div>
-                          <p className="isi-card-desc">{item.desc}</p>
-                        </div>
-                      </Link>
-                    )
-                  })}
+                          <div className="isi-card-body">
+                            <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
+                              {item.category}
+                            </span>
+                            <div className="isi-card-heading">
+                              <span className="isi-card-title">{item.label}</span>
+                              <ArrowRight size={13} className="isi-card-arrow" />
+                            </div>
+                            <p className="isi-card-desc">{item.desc}</p>
+                          </div>
+                        </Link>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
 
@@ -1654,7 +1804,7 @@ export function SiteHeader() {
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Enterprise AI systems: engineering practices, vertical solutions &amp; turnkey DBOT delivery</span>
+                  <span>Enterprise AI systems: engineering practices, functional capabilities &amp; turnkey DBOT delivery</span>
                 </div>
                 <Link
                   href="/practice-areas"
@@ -1764,7 +1914,7 @@ export function SiteHeader() {
 
         {/* WHATSAPP ADVISORY CTA (Icon Only) */}
         <a
-          href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20AI%20requirement."
+          href="https://wa.me/919513088612?text=Hi%20TrustGrid%20team%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20AI%20requirement."
           target="_blank"
           rel="noopener noreferrer"
           className="nav-whatsapp-cta"
@@ -2068,17 +2218,31 @@ export function SiteHeader() {
                   <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
                     <span>★ View All Practice Areas Overview →</span>
                   </Link>
-                  {practiceAreasMenuItems.map((item, i) => (
-                    <Link
-                      key={i}
-                      href={item.href}
-                      className="mobile-sublink"
-                      onClick={(e) => handleNavClick(e, item.href)}
-                    >
-                      <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
+                  {[
+                    { key: 'engineering', title: 'Engineering Practices' },
+                    { key: 'functional', title: 'Functional Practices' },
+                    { key: 'industry', title: 'Industry Practices' },
+                    { key: 'engagement', title: 'Engagement Models' }
+                  ].map((group) => {
+                    const groupItems = practiceAreasMenuItems.filter((item) => item.pillar === group.key)
+                    return (
+                      <div key={group.key} style={{ marginTop: '8px', marginBottom: '8px' }}>
+                        <div style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '4px 8px', background: 'rgba(29, 92, 255, 0.06)', borderRadius: '4px', margin: '4px 0' }}>
+                          {group.title}
+                        </div>
+                        {groupItems.map((item, i) => (
+                          <Link
+                            key={i}
+                            href={item.href}
+                            className="mobile-sublink"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                          >
+                            <span>{item.label}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </div>
@@ -2113,7 +2277,7 @@ export function SiteHeader() {
 
             <div className="mobile-cta-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <a
-                href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20AI%20requirement."
+                href="https://wa.me/919513088612?text=Hi%20TrustGrid%20team%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20AI%20requirement."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="button button-ghost button-full"

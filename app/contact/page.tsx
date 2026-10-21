@@ -50,7 +50,7 @@ export default function ContactPage() {
                     <p style={{ margin: '3px 0 2px' }}>
                       California (Silicon Valley): <a href="mailto:lavanya@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
                         lavanya@trustgrid.ai
-                      </a> • <a href="https://wa.me/16507724145?text=Hi%20TrustGrid%20California%20team" target="_blank" rel="noopener noreferrer" style={{ color: '#10b981', fontWeight: 600, textDecoration: 'none' }}>+1 650 772 4145 (WhatsApp)</a>
+                      </a> • <a href="tel:+16507724145" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+1 650 772 4145</a>
                     </p>
                     <p style={{ margin: '3px 0 2px' }}>
                       US Executive (Americas / NY): <a href="mailto:Murali@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
@@ -58,7 +58,7 @@ export default function ContactPage() {
                       </a>
                     </p>
                     <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0' }}>
-                      Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a> • India: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a>
+                      India: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a> • Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a>
                     </p>
                   </div>
                 </div>
@@ -69,7 +69,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>Global Hubs &amp; Systems Labs</strong>
-                    <p>San Mateo / Mountain View &amp; New York • Tampa (USA) • Toronto (Canada) • Melbourne (Australia) • Osaka (Japan) • Singapore • Bengaluru &amp; Mumbai (India)</p>
+                    <p>Bengaluru &amp; Mumbai (India) • San Mateo / Mountain View &amp; New York • Tampa (USA) • Melbourne (Australia) • Osaka (Japan) • Toronto (Canada) • Singapore</p>
                   </div>
                 </div>
 
@@ -79,17 +79,17 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <strong>Direct WhatsApp Advisory Lines</strong>
-                    <p>Connect with senior architects for rapid technical and infrastructure consultation (All lines are WhatsApp-enabled).</p>
+                    <p>Connect with senior architects for rapid technical and infrastructure consultation.</p>
                     <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                       <a
-                        href="https://wa.me/16507724145?text=Hi%20TrustGrid%20USA%20team"
+                        href="https://wa.me/919513088612?text=Hi%20TrustGrid%20India%20team"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="button button-sm"
                         style={{ background: '#10b981', color: '#ffffff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 600 }}
                       >
                         <MessageCircle size={14} />
-                        <span>US WhatsApp: +1 650 772 4145</span>
+                        <span>India WhatsApp: +91 95130 88612</span>
                       </a>
                       <WhatsAppCTA inline label="Global WhatsApp" />
                     </div>

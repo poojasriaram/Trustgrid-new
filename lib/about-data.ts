@@ -264,67 +264,7 @@ export const caseStudiesList: CaseStudy[] = [
 ]
 
 export const officeLocations: OfficeLocation[] = [
-  {
-    city: "San Mateo / Mountain View, California",
-    region: "United States (West Coast AI Center)",
-    tag: "Silicon Valley Office",
-    address: "Suite 21, 400 Concar Dr, San Mateo, CA 94402, United States",
-    contactPerson: "Lavanya Seshadri",
-    phone: "+1 650 772 4145",
-    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20California%20team%2C%20I%20would%20like%20to%20connect%20with%20Lavanya",
-    email: "lavanya@trustgrid.ai"
-  },
-  {
-    city: "New York, New York",
-    region: "United States (East Coast AI Center)",
-    tag: "New York Office",
-    address: "33 Irving Pl, New York, NY 10003, United States",
-    contactPerson: "Murali",
-    email: "Murali@trustgrid.ai"
-  },
-  {
-    city: "Tampa, Florida",
-    region: "United States (Americas HQ)",
-    tag: "US Americas Headquarters",
-    address: "501 E Kennedy Blvd Suite 1400, Tampa, FL 33602, United States (Mailing: 400 N Ashley Dr, Suite 1900, Tampa, FL 33602, USA)",
-    contactPerson: "Murali",
-    phone: "+1 650 772 4145",
-    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20USA%20team",
-    email: "Murali@trustgrid.ai"
-  },
-  {
-    city: "Toronto, Ontario",
-    region: "Canada (North America Hub)",
-    tag: "Canada Office",
-    address: "1050 King St W, Toronto, Ontario M6K 0A5, Canada",
-    contactPerson: "Ravindar Pal Singh",
-    email: "connect@trustgrid.ai"
-  },
-  {
-    city: "Melbourne, Victoria",
-    region: "Australia (ANZ Regional Office)",
-    tag: "Australia Operations",
-    address: "120 Spencer St, Melbourne VIC 3000, Australia",
-    contactPerson: "Sabriram RK",
-    email: "connect@trustgrid.ai"
-  },
-  {
-    city: "Osaka",
-    region: "Japan (East Asia Hub)",
-    tag: "Japan Center",
-    address: "〒530-0002 Osaka, Kita Ward, Sonezakishinchi, 1 Chome−13−22 WeWork 御堂筋フロンティア, Japan",
-    contactPerson: "Hemalata Niyogi",
-    email: "Hemalata@trustgrid.ai"
-  },
-  {
-    city: "Singapore",
-    region: "Asia-Pacific (APAC HQ)",
-    tag: "APAC Operations",
-    address: "5 Temasek Boulevard, 17th Floor, Singapore 038985",
-    phone: "+65 6050 5235",
-    whatsappUrl: "https://wa.me/6560505235?text=Hi%20TrustGrid%20Singapore%20team",
-    email: "connect@trustgrid.ai"
-  },
+  // 1. India Offices (Global R&D Headquarters & Labs)
   {
     city: "Bengaluru (Indiranagar HQ)",
     region: "India (Global R&D Center)",
@@ -351,6 +291,75 @@ export const officeLocations: OfficeLocation[] = [
     phone: "+91 9513088612",
     whatsappUrl: "https://wa.me/919513088612?text=Hi%20TrustGrid%20Lab%20team",
     email: "cs@trustgrid.in"
+  },
+
+  // 2. US Offices (West Coast, East Coast & Americas HQ - No WhatsApp)
+  {
+    city: "San Mateo / Mountain View, California",
+    region: "United States (West Coast AI Center)",
+    tag: "Silicon Valley Office",
+    address: "Suite 21, 400 Concar Dr, San Mateo, CA 94402, United States",
+    contactPerson: "harpita@trustgrid.ai",
+    phone: "+1 650 772 4145",
+    email: "lavanya@trustgrid.ai"
+  },
+  {
+    city: "New York, New York",
+    region: "United States (East Coast AI Center)",
+    tag: "New York Office",
+    address: "33 Irving Pl, New York, NY 10003, United States",
+    contactPerson: "Murali",
+    email: "Murali@trustgrid.ai"
+  },
+  {
+    city: "Tampa, Florida",
+    region: "United States (Americas HQ)",
+    tag: "US Americas Headquarters",
+    address: "501 E Kennedy Blvd Suite 1400, Tampa, FL 33602, United States (Mailing: 400 N Ashley Dr, Suite 1900, Tampa, FL 33602, USA)",
+    contactPerson: "Murali",
+    phone: "+1 650 772 4145",
+    email: "Murali@trustgrid.ai"
+  },
+
+  // 3. Australia Office
+  {
+    city: "Melbourne, Victoria",
+    region: "Australia (ANZ Regional Office)",
+    tag: "Australia Operations",
+    address: "120 Spencer St, Melbourne VIC 3000, Australia",
+    contactPerson: "Sabriram RK",
+    email: "connect@trustgrid.ai"
+  },
+
+  // 4. Japan Office
+  {
+    city: "Osaka",
+    region: "Japan (East Asia Hub)",
+    tag: "Japan Center",
+    address: "〒530-0002 Osaka, Kita Ward, Sonezakishinchi, 1 Chome−13−22 WeWork 御堂筋フロンティア, Japan",
+    contactPerson: "Hemalata Niyogi",
+    email: "Hemalata@trustgrid.ai"
+  },
+
+  // 5. Canada Office
+  {
+    city: "Toronto, Ontario",
+    region: "Canada (North America Hub)",
+    tag: "Canada Office",
+    address: "1050 King St W, Toronto, Ontario M6K 0A5, Canada",
+    contactPerson: "Ravindar Pal Singh",
+    email: "connect@trustgrid.ai"
+  },
+
+  // 6. Asia-Pacific (APAC HQ)
+  {
+    city: "Singapore",
+    region: "Asia-Pacific (APAC HQ)",
+    tag: "APAC Operations",
+    address: "5 Temasek Boulevard, 17th Floor, Singapore 038985",
+    phone: "+65 6050 5235",
+    whatsappUrl: "https://wa.me/6560505235?text=Hi%20TrustGrid%20Singapore%20team",
+    email: "connect@trustgrid.ai"
   }
 ]
 
