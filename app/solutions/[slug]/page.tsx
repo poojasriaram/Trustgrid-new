@@ -1,5 +1,5 @@
-﻿import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
@@ -168,7 +168,7 @@ export default async function SolutionDetailPage({
 }) {
   const { slug } = await params
   const solution = getSolution(slug)
-  if (!solution) notFound()
+  if (!solution) permanentRedirect('/solutions/ai-infra-engineering')
 
   const currentIndex = solutions.findIndex((s) => s.slug === solution.slug)
   const nextSolution = solutions[(currentIndex + 1) % solutions.length]

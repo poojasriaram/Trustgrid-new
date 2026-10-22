@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import '../practice-areas.css'
 import {
@@ -34,6 +34,92 @@ import {
 } from '@/lib/comprehensive-practice-areas'
 import { ComprehensiveDetailView } from '@/components/practice-areas/comprehensive-detail-view'
 
+// Comprehensive Alias and Routing Redirection Map
+const PRACTICE_ROUTE_ALIASES: Record<string, string> = {
+  // Practice Area Slugs to canonical
+  'enterprise-ai-governance-grc': '/practice-areas/ai-governance-risk-compliance',
+  'compute-data-center': '/practice-areas/ai-infrastructure-high-density-compute',
+  'lossless-datacenter-fabric': '/practice-areas/ai-native-networking-systems-integration',
+  'distributed-agent-swarms': '/practice-areas/agentic-ai-multi-agent-orchestration',
+  'air-gapped-edge-ai': '/practice-areas/ai-cybersecurity-quantum-safe-defense',
+  'agentic-threat-detection': '/practice-areas/security-engineering-governance',
+  'legal-contracts-regulatory-compliance': '/practice-areas/regulatory-change-monitoring',
+  'customer-operations-service-excellence': '/practice-areas/workforce-co-pilots',
+  'supply-chain-logistics-intelligence': '/practice-areas/supplier-risk-resilience-intelligence',
+  'finance-accounting-treasury-automation': '/practice-areas/spend-telemetry-chargeback',
+  'enterprise-knowledge-semantic-fabric': '/practice-areas/enterprise-llm-rag-context-engineering',
+  'esg-sustainability-intelligence': '/practice-areas/carbon-accounting-mrv-agents',
+  'sales-engineering-deal-intelligence': '/practice-areas/sales-productivity-deal-acceleration',
+  'revenue-operations-growth-ai': '/practice-areas/pipeline-intelligence-deal-scoring',
+  'ai-data-center-compute-factory': '/practice-areas/ai-infrastructure-high-density-compute',
+  'lossless-ai-networking-fabrics': '/practice-areas/ai-native-networking-systems-integration',
+  'high-density-power-facilities': '/practice-areas/ai-infrastructure-high-density-compute',
+  'agentic-workflow-orchestration': '/practice-areas/agentic-ai-multi-agent-orchestration',
+  'ai-native-cybersecurity-defense-mesh': '/practice-areas/security-engineering-governance',
+  'edge-ai-sovereign-air-gapped': '/practice-areas/ai-cybersecurity-quantum-safe-defense',
+
+  // Industry Verticals requested under /practice-areas/
+  'banking-financial-services-bfsi': '/industries/banking-financial-services',
+  'banking-financial-services': '/industries/banking-financial-services',
+  'public-sector-defense-civic': '/industries/government-public-sector',
+  'government-public-sector': '/industries/government-public-sector',
+  'healthcare-life-sciences': '/industries/healthcare-life-sciences',
+  'life-sciences-pharma': '/industries/healthcare-life-sciences',
+  'energy-utilities-smart-infrastructure': '/industries/energy-utilities',
+  'energy-utilities': '/industries/energy-utilities',
+  'manufacturing-industrial': '/industries/manufacturing-discrete',
+  'manufacturing-discrete': '/industries/manufacturing-discrete',
+  'process-manufacturing': '/industries/process-manufacturing',
+  'retail-ecommerce-consumer-goods': '/industries/retail-consumer-goods',
+  'retail-consumer-goods': '/industries/retail-consumer-goods',
+  'telecommunications-media': '/industries/telecommunications',
+  'telecommunications': '/industries/telecommunications',
+  'technology-software': '/industries/technology-software',
+  'aerospace-defense': '/industries/aerospace-defense',
+  'supply-chain-logistics': '/industries/supply-chain-logistics',
+  'insurance': '/industries/insurance',
+
+  // Solutions requested under /practice-areas/
+  'ai-infra-engineering': '/solutions/ai-infra-engineering',
+  'ai-agentic-factory': '/solutions/ai-agentic-factory',
+  'ai-networking-cybersecurity': '/solutions/ai-networking-cybersecurity',
+  'trusted-ai-transformation': '/solutions/trusted-ai-transformation',
+  'ai-value-engineering': '/practice-areas/ai-value-engineering'
+}
+
+function findFuzzyPracticeAreaSlug(slug: string): string {
+  if (PRACTICE_ROUTE_ALIASES[slug]) {
+    return PRACTICE_ROUTE_ALIASES[slug]
+  }
+
+  const cleanTokens = slug
+    .toLowerCase()
+    .split(/[-_]+/)
+    .filter(t => t.length > 2 && !['and', 'the', 'for', 'with', 'ai'].includes(t))
+
+  let bestSlug = ''
+  let maxScore = 0
+
+  for (const pa of allPracticeAreas) {
+    const paTokens = pa.slug.split(/[-_]+/)
+    let score = 0
+    for (const token of cleanTokens) {
+      if (paTokens.includes(token)) score += 3
+      else if (pa.slug.includes(token) || pa.title.toLowerCase().includes(token)) score += 1
+    }
+    if (score > maxScore) {
+      maxScore = score
+      bestSlug = `/practice-areas/${pa.slug}`
+    }
+  }
+
+  if (maxScore > 0 && bestSlug) {
+    return bestSlug
+  }
+
+  return '/practice-areas'
+}
+
 interface PageProps {
   params: Promise<{
     slug: string
@@ -43,7 +129,8 @@ interface PageProps {
 export async function generateStaticParams() {
   const legacySlugs = getAllPracticeSlugs()
   const compSlugs = getAllComprehensivePracticeSlugs()
-  const allSlugs = Array.from(new Set([...legacySlugs, ...compSlugs]))
+  const aliasSlugs = Object.keys(PRACTICE_ROUTE_ALIASES)
+  const allSlugs = Array.from(new Set([...legacySlugs, ...compSlugs, ...aliasSlugs]))
   return allSlugs.map((slug) => ({
     slug
   }))
@@ -52,8 +139,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
 
+  const targetRoute = PRACTICE_ROUTE_ALIASES[slug]
+  const effectiveSlug = targetRoute ? targetRoute.replace(/^\/practice-areas\//, '').replace(/^\/industries\//, '').replace(/^\/solutions\//, '') : slug
+
   // Check comprehensive practice areas first
-  const comp = getComprehensivePracticeBySlug(slug)
+  const comp = getComprehensivePracticeBySlug(effectiveSlug)
   if (comp) {
     const area = comp.area
     const parentTitle = comp.type === 'cross' ? comp.practice.title : comp.industry.title
@@ -80,11 +170,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Fallback to legacy practice areas
-  const practice = getPracticeBySlug(slug)
+  const practice = getPracticeBySlug(effectiveSlug)
 
   if (!practice) {
     return {
-      title: 'Practice Area Not Found | TRUSTGRID.AI'
+      title: 'Enterprise Practice Areas | TRUSTGRID.AI',
+      description: 'Autonomous Systems Architecture, High-Density AI Infrastructure, and Zero-Trust Cybersecurity Engineering.'
     }
   }
 
@@ -112,17 +203,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PracticeDetailPage({ params }: PageProps) {
   const { slug } = await params
 
-  // Render comprehensive practice area if matched
+  // 1. Direct Alias Redirection
+  if (PRACTICE_ROUTE_ALIASES[slug]) {
+    permanentRedirect(PRACTICE_ROUTE_ALIASES[slug])
+  }
+
+  // 2. Render comprehensive practice area if matched
   const comp = getComprehensivePracticeBySlug(slug)
   if (comp) {
     return <ComprehensiveDetailView data={comp} />
   }
 
+  // 3. Render core practice area if matched
   const practice = getPracticeBySlug(slug)
-
-  if (!practice) {
-    notFound()
-  }
+  if (practice) {
 
   const sectorOutcomes = getIndustryOutcomesForPractice(slug)
 
@@ -602,4 +696,10 @@ export default async function PracticeDetailPage({ params }: PageProps) {
       </section>
     </article>
   )
+  }
+
+  // 4. Never 404: Resolve to best matching practice or directory
+  const fallbackTarget = findFuzzyPracticeAreaSlug(slug)
+  permanentRedirect(fallbackTarget)
 }
+

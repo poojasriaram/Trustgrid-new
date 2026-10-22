@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, permanentRedirect } from 'next/navigation'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import {
@@ -23,24 +23,54 @@ import { industriesData } from '@/lib/industries-data'
 import { IndustryVerticalLayout } from '@/components/enterprise/industry-vertical-layout'
 import { TrustGridForm } from '@/components/ui/trustgrid-form'
 
+const INDUSTRY_ALIASES: Record<string, string> = {
+  'banking-financial-services-bfsi': 'banking-financial-services',
+  'bfsi': 'banking-financial-services',
+  'banking': 'banking-financial-services',
+  'financial-services': 'banking-financial-services',
+  'capital-markets': 'banking-financial-services',
+  'public-sector-defense-civic': 'government-public-sector',
+  'civic-defense': 'government-public-sector',
+  'defense': 'aerospace-defense',
+  'life-sciences-pharma': 'healthcare-life-sciences',
+  'pharma': 'healthcare-life-sciences',
+  'healthcare': 'healthcare-life-sciences',
+  'energy-utilities-smart-infrastructure': 'energy-utilities',
+  'energy': 'energy-utilities',
+  'manufacturing-industrial': 'manufacturing-discrete',
+  'manufacturing': 'manufacturing-discrete',
+  'industrial': 'manufacturing-discrete',
+  'retail-ecommerce-consumer-goods': 'retail-consumer-goods',
+  'retail': 'retail-consumer-goods',
+  'ecommerce': 'retail-consumer-goods',
+  'telecommunications-media': 'telecommunications',
+  'telecom': 'telecommunications',
+  'technology': 'technology-software',
+  'software': 'technology-software',
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
-  return industriesData.map((ind) => ({
-    slug: ind.slug
+  const baseSlugs = industriesData.map((ind) => ind.slug)
+  const aliasSlugs = Object.keys(INDUSTRY_ALIASES)
+  const allSlugs = Array.from(new Set([...baseSlugs, ...aliasSlugs]))
+  return allSlugs.map((slug) => ({
+    slug
   }))
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const industry = industriesData.find((ind) => ind.slug === slug)
+  const effectiveSlug = INDUSTRY_ALIASES[slug] || slug
+  const industry = industriesData.find((ind) => ind.slug === effectiveSlug)
 
   if (!industry) {
     return {
-      title: 'Industry Not Found | TRUSTGRID.AI',
-      description: 'The requested industry blueprint could not be found.'
+      title: 'Industry Sector Directory | TRUSTGRID.AI',
+      description: 'Enterprise AI Architecture & Operational Blueprints across all major market verticals.'
     }
   }
 
@@ -56,10 +86,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function IndustryDetailPage({ params }: PageProps) {
   const { slug } = await params
+
+  if (INDUSTRY_ALIASES[slug]) {
+    permanentRedirect(`/industries/${INDUSTRY_ALIASES[slug]}`)
+  }
+
   const industry = industriesData.find((ind) => ind.slug === slug)
 
   if (!industry) {
-    notFound()
+    permanentRedirect('/industries')
   }
 
   // Find index for next/prev navigation
