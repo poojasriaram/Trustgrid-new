@@ -69,17 +69,17 @@ if (fs.existsSync('dist')) {
 fs.cpSync('out', 'dist', { recursive: true });
 console.log('  ✓ Synchronized out/ -> dist/');
 
-// 2. Package TGV3-20-10-2026.tar
-const tarName = 'TGV3-20-10-2026.tar';
-const tarXName = 'TGVX3-20-10-2026.tar';
+// 2. Package TGVX3-23-10-2026.tar
+const tarName = 'TGVX3-23-10-2026.tar';
+const tarAltName = 'TGV3-23-10-2026.tar';
 
 if (fs.existsSync(tarName)) fs.unlinkSync(tarName);
-if (fs.existsSync(tarXName)) fs.unlinkSync(tarXName);
+if (fs.existsSync(tarAltName)) fs.unlinkSync(tarAltName);
 
 execSync(`tar -cf ${tarName} dist`);
-fs.copyFileSync(tarName, tarXName);
+fs.copyFileSync(tarName, tarAltName);
 
 const stat = fs.statSync(tarName);
 console.log(`  ✓ Created ${tarName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
-console.log(`  ✓ Created ${tarXName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
+console.log(`  ✓ Created ${tarAltName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
 console.log('✅ All production deliverables successfully generated and verified!');

@@ -7,6 +7,33 @@
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  width: 100%;
+}
+
+.container,
+.pa-container {
+  width: 100% !important;
+  max-width: 1280px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+@media (min-width: 640px) {
+  .container,
+  .pa-container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container,
+  .pa-container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
 }
 
 /* Hero Section */
@@ -2139,4 +2166,54 @@
   max-width: 440px;
   margin: 0;
 }
+
+/* Practice Area Detail Page Hero & Breadcrumbs */
+.pa-detail-hero {
+  position: relative;
+  padding: 32px 0 48px;
+  background: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.25), transparent 70%),
+              radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.12), transparent 50%),
+              #020617;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pa-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  font-family: var(--font-mono, monospace);
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+.pa-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(30, 58, 138, 0.35);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #93c5fd;
+}
+
+.pa-pill-tech {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: rgba(14, 165, 233, 0.35);
+  color: #38bdf8;
+}
+
+.pa-pill-cross {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: rgba(168, 85, 247, 0.35);
+  color: #c084fc;
+}
+
 

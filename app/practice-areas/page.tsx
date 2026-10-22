@@ -37,6 +37,8 @@ import {
 import { PracticeAreasDirectory } from '@/components/practice-areas/practice-directory'
 import { PracticeDivisionsExplorer } from '@/components/practice-areas/practice-divisions-explorer'
 import { ComprehensivePracticeExplorer } from '@/components/practice-areas/comprehensive-explorer'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
   title: 'Enterprise AI Engineering Practice Areas | TRUSTGRID.AI',
@@ -125,7 +127,11 @@ export default function PracticeAreasPage() {
   }
 
   return (
-    <div className="practice-areas-page">
+    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#020617] text-slate-100">
+      <SiteHeader />
+
+      <main className="flex-1">
+        <div className="practice-areas-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -134,7 +140,7 @@ export default function PracticeAreasPage() {
       {/* 1. HERO SECTION */}
       <section className="pa-hero-section">
         <div className="pa-hero-glow" aria-hidden="true" />
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="pa-hero-badge">
             <span className="pulse-dot" />
             <span>FULL-SPECTRUM SYSTEMS INTEGRATION &amp; PRACTICE AREAS</span>
@@ -886,6 +892,10 @@ export default function PracticeAreasPage() {
           </div>
         </div>
       </section>
+        </div>
+      </main>
+
+      <SiteFooter />
     </div>
   )
 }

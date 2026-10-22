@@ -33,6 +33,8 @@ import {
   getAllComprehensivePracticeSlugs
 } from '@/lib/comprehensive-practice-areas'
 import { ComprehensiveDetailView } from '@/components/practice-areas/comprehensive-detail-view'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
 
 // Comprehensive Alias and Routing Redirection Map
 const PRACTICE_ROUTE_ALIASES: Record<string, string> = {
@@ -249,7 +251,11 @@ export default async function PracticeDetailPage({ params }: PageProps) {
   const isCross = practice.category === 'cross-cutting'
 
   return (
-    <article className="practice-detail-page">
+    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#020617] text-slate-100">
+      <SiteHeader />
+
+      <main className="flex-1 relative pt-20">
+        <article className="practice-detail-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -257,7 +263,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
 
       {/* Breadcrumb Header */}
       <section className="pa-detail-hero">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="pa-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-white transition-colors">
               Home
@@ -308,7 +314,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
       </section>
 
       {/* Main Content Layout */}
-      <div className="container py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Body Column (8 cols) */}
           <div className="lg:col-span-8 space-y-16">
@@ -667,7 +673,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
 
       {/* Consultation Booking Section */}
       <section className="py-20 bg-slate-950 border-t border-slate-800" id="consultation-booking">
-        <div className="container max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto px-4 text-center">
           <span className="badge badge-primary mb-3">Direct Engagement</span>
           <h2 className="text-3xl font-bold text-white">
             Schedule a {practice.shortTitle} Diagnostic
@@ -694,7 +700,11 @@ export default async function PracticeDetailPage({ params }: PageProps) {
           </div>
         </div>
       </section>
-    </article>
+        </article>
+      </main>
+
+      <SiteFooter />
+    </div>
   )
   }
 

@@ -29,6 +29,8 @@ import {
   SubVertical,
   IndustryPracticeArea
 } from '@/lib/comprehensive-practice-areas'
+import { SiteHeader } from '@/components/site-header'
+import { SiteFooter } from '@/components/site-footer'
 
 export interface ComprehensiveDetailViewProps {
   data:
@@ -62,7 +64,11 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
   }
 
   return (
-    <article className="practice-detail-page">
+    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#020617] text-slate-100">
+      <SiteHeader />
+
+      <main className="flex-1 relative pt-20">
+        <article className="practice-detail-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -70,7 +76,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
 
       {/* 1. BREADCRUMBS & HERO SECTION */}
       <section className="pa-detail-hero">
-        <div className="container">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="pa-breadcrumbs" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-white transition-colors">
               Home
@@ -158,7 +164,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
       </section>
 
       {/* MAIN 8-POINT ARCHITECTURE CONTENT */}
-      <div className="container py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Body Column (8 cols) */}
           <div className="lg:col-span-8 space-y-12">
@@ -499,6 +505,10 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
           </aside>
         </div>
       </div>
-    </article>
+        </article>
+      </main>
+
+      <SiteFooter />
+    </div>
   )
 }
