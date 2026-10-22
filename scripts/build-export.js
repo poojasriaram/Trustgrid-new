@@ -76,10 +76,12 @@ const tarAltName = 'TGV3-23-10-2026.tar';
 if (fs.existsSync(tarName)) fs.unlinkSync(tarName);
 if (fs.existsSync(tarAltName)) fs.unlinkSync(tarAltName);
 
-execSync(`tar -cf ${tarName} dist`);
+execSync(`tar -C dist -cf ${tarName} .`);
 fs.copyFileSync(tarName, tarAltName);
+fs.copyFileSync(tarName, 'TGVX3-22-10-2026.tar');
 
 const stat = fs.statSync(tarName);
 console.log(`  ✓ Created ${tarName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
 console.log(`  ✓ Created ${tarAltName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
+console.log(`  ✓ Created TGVX3-22-10-2026.tar (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
 console.log('✅ All production deliverables successfully generated and verified!');
