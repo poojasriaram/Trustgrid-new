@@ -1,4 +1,4 @@
-﻿import {
+import {
   Layers,
   Building2,
   Cpu,
@@ -193,7 +193,7 @@ export const strategicClustersData: StrategicCluster[] = [
       {
         title: 'Network Operations (NetOps)',
         desc: '400G/800G lossless fabrics, RoCEv2 / InfiniBand, DCI, IX peering & cloud on-ramps.',
-        href: '/solutions/ai-networking#lossless-fabrics',
+        href: '/solutions/ai-networking-cybersecurity#lossless-fabrics',
         icon: Network
       },
       {
@@ -271,13 +271,13 @@ export const strategicClustersData: StrategicCluster[] = [
       {
         title: 'Sovereign & Regulated Deployment Packages',
         desc: 'In-country sovereign AI compliance, air-gapped security & regulatory hosting packages.',
-        href: '/solutions/ai-cybersecurity-quantum-safe#air-gapped-sovereign',
+        href: '/solutions/ai-networking-cybersecurity#air-gapped-sovereign',
         icon: ShieldCheck
       },
       {
         title: 'Interconnection & Ecosystem Services',
         desc: 'Direct cross-connects, peering fabrics, multi-tenant exchange & low-latency carrier meshes.',
-        href: '/solutions/ai-networking#dci-interconnect',
+        href: '/solutions/ai-networking-cybersecurity#dci-interconnect',
         icon: Network
       },
       {
@@ -343,7 +343,7 @@ export const strategicClustersData: StrategicCluster[] = [
       {
         title: 'AI Security, Compliance & Sovereignty',
         desc: 'Post-Quantum Cryptography (PQC), ISO 27001, Tier III/IV certifications & national governance.',
-        href: '/solutions/ai-cybersecurity-quantum-safe#regulatory-compliance',
+        href: '/solutions/ai-networking-cybersecurity#regulatory-compliance',
         icon: ShieldCheck
       },
       {
@@ -361,7 +361,7 @@ export const strategicClustersData: StrategicCluster[] = [
       {
         title: 'Regulatory & Data Sovereignty Policy',
         desc: 'Advisory on sovereign data boundary mandates, EU AI Act conformity & national AI security.',
-        href: '/solutions/ai-cybersecurity-quantum-safe#pqc-cbom',
+        href: '/solutions/ai-networking-cybersecurity#pqc-cbom',
         icon: Globe2
       },
       {

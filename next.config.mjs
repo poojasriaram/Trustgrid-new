@@ -213,6 +213,101 @@ const nextConfig = {
         destination: '/use-cases',
         permanent: true,
       },
+      {
+        source: '/practice-areas/compute-data-center',
+        destination: '/practice-areas/ai-infrastructure-high-density-compute',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/lossless-datacenter-fabric',
+        destination: '/practice-areas/ai-native-networking-systems-integration',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/distributed-agent-swarms',
+        destination: '/practice-areas/agentic-ai-multi-agent-orchestration',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/air-gapped-edge-ai',
+        destination: '/practice-areas/ai-cybersecurity-quantum-safe-defense',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/agentic-threat-detection',
+        destination: '/practice-areas/security-engineering-governance',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/enterprise-ai-governance-grc',
+        destination: '/practice-areas/ai-governance-risk-compliance',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/legal-contracts-regulatory-compliance',
+        destination: '/practice-areas/regulatory-change-monitoring',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/customer-operations-service-excellence',
+        destination: '/practice-areas/workforce-co-pilots',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/supply-chain-logistics-intelligence',
+        destination: '/practice-areas/supplier-risk-resilience-intelligence',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/finance-accounting-treasury-automation',
+        destination: '/practice-areas/spend-telemetry-chargeback',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/enterprise-knowledge-semantic-fabric',
+        destination: '/practice-areas/enterprise-llm-rag-context-engineering',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/banking-financial-services-bfsi',
+        destination: '/industries/banking-financial-services',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/public-sector-defense-civic',
+        destination: '/industries/government-public-sector',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/healthcare-life-sciences',
+        destination: '/industries/healthcare-life-sciences',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/life-sciences-pharma',
+        destination: '/industries/healthcare-life-sciences',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/energy-utilities-smart-infrastructure',
+        destination: '/industries/energy-utilities',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/manufacturing-industrial',
+        destination: '/industries/manufacturing-discrete',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/retail-ecommerce-consumer-goods',
+        destination: '/industries/retail-consumer-goods',
+        permanent: true,
+      },
+      {
+        source: '/practice-areas/telecommunications-media',
+        destination: '/industries/telecommunications',
+        permanent: true,
+      },
     ]
   },
 }

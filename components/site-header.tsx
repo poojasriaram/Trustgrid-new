@@ -761,21 +761,21 @@ const practiceAreasFiveSections = [
           {
             category: 'HARDWARE ACCELERATION',
             label: 'AI Data Center & Compute Factory',
-            href: '/practice-areas/compute-data-center',
+            href: '/practice-areas/ai-infrastructure-high-density-compute',
             desc: 'GPU clusters, ASIC accelerators, high-density power distribution, and liquid cooling architectures.',
             icon: Cpu
           },
           {
             category: 'LOSSLESS FABRIC',
             label: 'Lossless AI Networking & Fabrics',
-            href: '/practice-areas/lossless-datacenter-fabric',
+            href: '/practice-areas/ai-native-networking-systems-integration',
             desc: 'Ultra-low latency RoCEv2, InfiniBand, adaptive routing, and telemetry for zero-drop AI workloads.',
             icon: Activity
           },
           {
             category: 'POWER & THERMAL',
             label: 'High-Density Power & Facilities',
-            href: '/practice-areas/compute-data-center',
+            href: '/practice-areas/ai-infrastructure-high-density-compute',
             desc: 'Megawatt-scale power distribution, thermal envelope modeling, and liquid immersion cooling systems.',
             icon: Zap
           }
@@ -789,14 +789,14 @@ const practiceAreasFiveSections = [
           {
             category: 'AGENT FLEETS',
             label: 'Distributed Agent Swarms & Mesh',
-            href: '/practice-areas/distributed-agent-swarms',
+            href: '/practice-areas/agentic-ai-multi-agent-orchestration',
             desc: 'Production-grade multi-agent swarms, deterministic execution, and distributed semantic memory.',
             icon: Network
           },
           {
             category: 'WORKFLOW ENGINE',
             label: 'Agentic Workflow Orchestration',
-            href: '/practice-areas/distributed-agent-swarms',
+            href: '/practice-areas/agentic-ai-multi-agent-orchestration',
             desc: 'Deterministic multi-agent DAGs, tool-calling validation, and self-correcting feedback loops.',
             icon: Workflow
           },
@@ -817,14 +817,14 @@ const practiceAreasFiveSections = [
           {
             category: 'SOVEREIGN AI',
             label: 'Edge AI, Sovereign & Air-Gapped',
-            href: '/practice-areas/air-gapped-edge-ai',
+            href: '/practice-areas/ai-cybersecurity-quantum-safe-defense',
             desc: 'Air-gapped, zero-trust edge compute with on-device quantization and local compliance enforcement.',
             icon: Server
           },
           {
             category: 'CYBER DEFENSE',
             label: 'AI-Native Cybersecurity & Defense Mesh',
-            href: '/practice-areas/agentic-threat-detection',
+            href: '/practice-areas/security-engineering-governance',
             desc: 'Self-healing cyber mesh, autonomous threat neutralization, and post-quantum cryptographic resilience.',
             icon: ShieldCheck
           },
@@ -860,21 +860,21 @@ const practiceAreasFiveSections = [
           {
             category: 'GOVERNANCE & RISK',
             label: 'Enterprise AI Governance & GRC',
-            href: '/practice-areas/enterprise-ai-governance-grc',
+            href: '/practice-areas/ai-governance-risk-compliance',
             desc: 'EU AI Act compliance, algorithmic auditability, bias monitoring, and safety guardrail frameworks.',
             icon: ShieldAlert
           },
           {
             category: 'LEGAL & CONTRACTS',
             label: 'Legal & Regulatory Compliance',
-            href: '/practice-areas/legal-contracts-regulatory-compliance',
+            href: '/practice-areas/regulatory-change-monitoring',
             desc: 'Automated contract redlining, regulatory change tracking, and corporate governance automation.',
             icon: FileText
           },
           {
             category: 'SUSTAINABILITY & ESG',
             label: 'ESG & Sustainability Intelligence',
-            href: '/practice-areas/enterprise-ai-governance-grc',
+            href: '/practice-areas/carbon-accounting-mrv-agents',
             desc: 'Automated Scope 1-3 carbon accounting, audit trail generation, and ESG disclosure intelligence.',
             icon: Leaf
           }
@@ -888,21 +888,21 @@ const practiceAreasFiveSections = [
           {
             category: 'CUSTOMER OPERATIONS',
             label: 'Customer Operations & Service Excellence',
-            href: '/practice-areas/customer-operations-service-excellence',
+            href: '/practice-areas/workforce-co-pilots',
             desc: 'Omnichannel autonomous support swarms, contact center orchestration, and sentiment triage.',
             icon: Users
           },
           {
             category: 'REVENUE OPERATIONS',
             label: 'Revenue Operations & Growth AI',
-            href: '/practice-areas/customer-operations-service-excellence',
+            href: '/practice-areas/pipeline-intelligence-deal-scoring',
             desc: 'Predictive pipeline progression, churn mitigation swarms, and pricing elasticity models.',
             icon: TrendingUp
           },
           {
             category: 'SALES ACCELERATION',
             label: 'Sales Engineering & Deal Intelligence',
-            href: '/practice-areas/customer-operations-service-excellence',
+            href: '/practice-areas/sales-productivity-deal-acceleration',
             desc: 'Autonomous RFP parsing, dynamic proposal generation, and competitive battlecard synthesis.',
             icon: Target
           }
@@ -916,21 +916,21 @@ const practiceAreasFiveSections = [
           {
             category: 'SUPPLY & SOURCING',
             label: 'Supply Chain & Logistics Intelligence',
-            href: '/practice-areas/supply-chain-logistics-intelligence',
+            href: '/practice-areas/supplier-risk-resilience-intelligence',
             desc: 'Predictive inventory allocation, supplier risk intelligence, and automated freight optimization.',
             icon: Workflow
           },
           {
             category: 'FINANCE & TREASURY',
             label: 'Finance, Accounting & Treasury Automation',
-            href: '/practice-areas/finance-accounting-treasury-automation',
+            href: '/practice-areas/spend-telemetry-chargeback',
             desc: 'Continuous close, automated reconciliation, algorithmic cash flow forecasting, and anomaly detection.',
             icon: BarChart3
           },
           {
             category: 'SEMANTIC KNOWLEDGE',
             label: 'Enterprise Knowledge & Semantic Fabric',
-            href: '/practice-areas/enterprise-knowledge-semantic-fabric',
+            href: '/practice-areas/enterprise-llm-rag-context-engineering',
             desc: 'Enterprise semantic layer, knowledge graphs, and hybrid retrieval-augmented generation.',
             icon: Layers
           }
@@ -959,21 +959,21 @@ const practiceAreasFiveSections = [
           {
             category: 'FINANCIAL SERVICES',
             label: 'Banking, Financial Services & Insurance (BFSI)',
-            href: '/practice-areas/banking-financial-services-bfsi',
+            href: '/industries/banking-financial-services',
             desc: 'Algorithmic underwriting, real-time AML fraud graph defense, and Basel IV capital compliance.',
             icon: Building2
           },
           {
             category: 'CAPITAL MARKETS',
             label: 'Capital Markets & Asset Management',
-            href: '/practice-areas/banking-financial-services-bfsi',
+            href: '/industries/banking-financial-services',
             desc: 'Algorithmic execution, quantitative risk modeling, and automated SEC regulatory filings.',
             icon: BarChart3
           },
           {
             category: 'CIVIC & DEFENSE',
             label: 'Public Sector, Defense & Civic AI',
-            href: '/practice-areas/public-sector-defense-civic',
+            href: '/industries/government-public-sector',
             desc: 'FedRAMP High architectures, mission-critical workflow defense, and citizen service automation.',
             icon: ShieldCheck
           }
@@ -987,21 +987,21 @@ const practiceAreasFiveSections = [
           {
             category: 'HEALTH SYSTEMS',
             label: 'Healthcare & Health Systems',
-            href: '/practice-areas/healthcare-life-sciences',
+            href: '/industries/healthcare-life-sciences',
             desc: 'HIPAA-compliant clinical documentation, bedside triage, and diagnostic assistant workflows.',
             icon: Activity
           },
           {
             category: 'PHARMA & BIOTECH',
             label: 'Life Sciences & Drug Discovery',
-            href: '/practice-areas/life-sciences-pharma',
+            href: '/industries/healthcare-life-sciences',
             desc: 'Target identification, molecular simulation, and automated clinical trial protocol design.',
             icon: Compass
           },
           {
             category: 'ENERGY & UTILITIES',
             label: 'Energy, Utilities & Smart Infrastructure',
-            href: '/practice-areas/energy-utilities-smart-infrastructure',
+            href: '/industries/energy-utilities',
             desc: 'Smart grid load balancing, renewables yield forecasting, and predictive transformer maintenance.',
             icon: Leaf
           }
@@ -1015,21 +1015,21 @@ const practiceAreasFiveSections = [
           {
             category: 'MANUFACTURING',
             label: 'Manufacturing & Industrial AI',
-            href: '/practice-areas/manufacturing-industrial',
+            href: '/industries/manufacturing-discrete',
             desc: 'Predictive maintenance, digital twins, computer vision defect inspection, and shopfloor OEE.',
             icon: Factory
           },
           {
             category: 'COMMERCE & CPG',
             label: 'Retail, E-Commerce & Consumer Goods',
-            href: '/practice-areas/retail-ecommerce-consumer-goods',
+            href: '/industries/retail-consumer-goods',
             desc: 'Dynamic localized pricing engines, visual shelf merchandising, and hyper-personalized discovery.',
             icon: Boxes
           },
           {
             category: 'TELECOM & CLOUD',
             label: 'Telecommunications, Media & Cloud',
-            href: '/practice-areas/telecommunications-media',
+            href: '/industries/telecommunications',
             desc: '5G/6G autonomous RAN slice optimization, optical fiber anomaly triage, and automated CDN cache.',
             icon: Satellite
           }
@@ -1058,7 +1058,7 @@ const practiceAreasFiveSections = [
           {
             category: 'OUTCOME PROOF',
             label: '5-Stage Outcome Proof Framework',
-            href: '/practice-areas#engagement-models',
+            href: '/practice-areas/ai-value-engineering',
             desc: 'Deterministic progression from validation to enterprise scale, with fees tied to milestones.',
             icon: CheckCircle2
           },
