@@ -466,6 +466,14 @@ const aiCybersecurityMenuItems = cybersecurityCategories
 // 5. Unified AI Value Engineering & Common Foundation Menu Items (12 Consolidated Capabilities)
 const aiValueMenuItems = [
   {
+    category: 'DELIVERY PRACTICE',
+    id: 'ai-value-engineering-practice',
+    href: '/practice-areas/ai-value-engineering',
+    label: 'AI Value Engineering Practice',
+    desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families',
+    icon: TrendingUp
+  },
+  {
     category: 'ENGAGEMENT MODELS',
     id: 'engagement-models',
     href: '/practice-areas#engagement-models',
@@ -1131,97 +1139,97 @@ const practiceAreasFiveSections = [
   {
     id: 'value' as const,
     num: '5',
-    title: 'Value Engineering',
-    shortLabel: 'Value Engineering',
-    sub: '80+ Methods · Unit Economics · SAVE Plan',
-    badge: 'OPERATIONAL RIGOR & ROI',
-    headerTitle: 'AI Value Engineering & Operational Methodologies',
-    tagline: 'Uniting 80+ operational methodologies, token unit economics, and SAVE International job plans.',
-    ctaText: 'Explore Value Blueprint →',
-    ctaHref: '/solutions/ai-value-engineering',
+    title: 'AI Value Engineering',
+    shortLabel: 'AI Value Engineering',
+    sub: '5 Stages · 4 Engineers · 5 Proofs · Forward Deployed Pods',
+    badge: 'SECTION 4 · DIVISION 1',
+    headerTitle: 'Division 1 · Delivery Practice: AI Value Engineering',
+    tagline: 'Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI.',
+    ctaText: 'Explore AI Value Engineering Practice →',
+    ctaHref: '/practice-areas/ai-value-engineering',
     icon: TrendingUp,
     categories: [
       {
-        title: 'Methodology Engines',
-        badge: '80+ FRAMEWORKS',
-        icon: Sparkles,
+        title: '5 Stages & 5 Gates',
+        badge: 'VALUE LIFECYCLE',
+        icon: Workflow,
         items: [
           {
-            category: 'METHODOLOGY ENGINE',
-            label: 'AI-Driven Methodology Engine (80+ Methods)',
-            href: '/methodology-engine',
-            desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ automated by deterministic agent workflows.',
-            icon: Sparkles
-          },
-          {
-            category: 'BOTTLENECK TRIAGE',
-            label: 'Theory of Constraints (TOC)',
-            href: '/methodology-engine#diagnostic',
-            desc: 'Identifying and resolving compute and memory bottlenecks using Drum-Buffer-Rope scheduling.',
-            icon: TrendingUp
-          },
-          {
-            category: 'GLOBAL STANDARD',
-            label: '70-Year AI-VE Job Plan (8 Stages)',
-            href: '/solutions/ai-value-engineering#job-plan-stages',
-            desc: 'The SAVE International value engineering methodology modernized for AI across 8 disciplined stages.',
-            icon: FileText
-          }
-        ]
-      },
-      {
-        title: 'Unit Economics & FinOps',
-        badge: 'COST ARCHITECTURE',
-        icon: BarChart3,
-        items: [
-          {
-            category: 'FINANCIAL ARCHITECTURE',
-            label: 'AI Economics & Unit Cost-to-Serve',
-            href: '/solutions/ai-value-engineering#ledger-economics',
-            desc: 'Decomposing inference token economics, GPU amortized costs, and enterprise P&L impact.',
-            icon: BarChart3
-          },
-          {
-            category: 'CONTINUOUS COST GOVERNANCE',
-            label: 'AI FinOps & Cloud Compute Governance',
-            href: '/solutions/ai-value-engineering#operating-system',
-            desc: 'Dynamic model routing, spot instance orchestration, and token wastage reduction.',
-            icon: SlidersHorizontal
-          },
-          {
-            category: 'BALANCE SHEET ROI',
-            label: 'Balance Sheet P&L Attribution',
-            href: '/solutions/ai-value-engineering',
-            desc: 'Direct mathematical linkage from GPU compute efficiency to audited net EBITDA and cash flow.',
-            icon: Trophy
-          }
-        ]
-      },
-      {
-        title: 'Diagnostics & Assurance',
-        badge: 'VERIFIED IMPACT',
-        icon: Target,
-        items: [
-          {
-            category: 'PROCESS OPTIMIZATION',
-            label: 'Lean & Six Sigma AI Automation (DMAIC)',
-            href: '/methodology-engine#categories',
-            desc: 'Automated root-cause analysis, defect reduction, and statistical process control with agents.',
+            category: 'DISCOVER & DESIGN',
+            label: 'Stage 01–02: Value Discovery & Framing',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'P&L value pool sizing, binding constraints, frozen baselines & pre-registered thresholds.',
             icon: Target
           },
           {
-            category: 'READINESS BENCHMARK',
-            label: 'Executive AI Readiness Diagnostic',
-            href: '/methodology-engine#diagnostic',
-            desc: 'Comprehensive maturity benchmark across compute infrastructure, governance, and operational ROI.',
+            category: 'DEPLOY & PERFORM',
+            label: 'Stage 03–04: Delivery & Repeatable Realization',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Thinnest end-to-end production path, unaided operator lift, and 3 consecutive Finance-signed cycles.',
             icon: CheckCircle2
           },
           {
-            category: 'OUTCOME EVIDENCE',
-            label: 'Verified Case Studies & Outcomes',
-            href: '/case-studies',
-            desc: 'Documented P&L impact across Tier-1 financial institutions, healthcare networks, and manufacturers.',
+            category: 'PROVE & ACCELERATE',
+            label: 'Stage 05: Value Assurance & Acceleration',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Audit-ready assurance dossier, 3 acceleration levers (reusable assets, parallel stages, one owner).',
+            icon: ShieldCheck
+          }
+        ]
+      },
+      {
+        title: 'Technologies in Scope',
+        badge: '7 TECH FAMILIES',
+        icon: Cpu,
+        items: [
+          {
+            category: 'INTELLIGENCE & CONSORTIA',
+            label: 'Agentic AI, Copilots & Blockchain / DLT',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'Judgement-heavy workflows, dispute elimination, reconciliation audit trails, and multi-agent systems.',
+            icon: Bot
+          },
+          {
+            category: 'PHYSICAL & SENSORS',
+            label: 'Robotics, IoT, Edge & Physical AI',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'Sensor fleets, signal chains, autonomous mobile robots (AMR), adaptive unstructured automation & safety cases.',
+            icon: Activity
+          },
+          {
+            category: 'DATA & WORKFLOWS',
+            label: 'RPA, Workflows & Data Platform',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'FTE hours in repetitive work, data freshness SLAs, pipeline cost efficiency, and enterprise semantic graphs.',
+            icon: Layers
+          }
+        ]
+      },
+      {
+        title: 'Proofs & Delivery Pod',
+        badge: 'OPERATING MODEL',
+        icon: Boxes,
+        items: [
+          {
+            category: 'PROOF STANDARD',
+            label: 'The Five Proofs (PoC → PoComp)',
+            href: '/practice-areas/ai-value-engineering#proofs',
+            desc: 'PoC, PoV, PoP, PoRV (recurring value), and PoComp (compounding curves) across the Focal Matrix.',
             icon: Award
+          },
+          {
+            category: 'FORWARD-DEPLOYED POD',
+            label: 'Pod Architecture (4 Ours, 3 Theirs)',
+            href: '/practice-areas/ai-value-engineering#pod',
+            desc: 'FDE Lead, Domain Engineer, AI Agentic Engineer, AI Operational Engineer paired with client leadership.',
+            icon: Users
+          },
+          {
+            category: 'ENGAGEMENT MODELS',
+            label: 'Outcome-Based Engagement Models',
+            href: '/practice-areas/ai-value-engineering#engagement-models',
+            desc: '6 shapes: Diagnostic, Sprint, Proof Engagement, Deployment & Banking, Embedded Value Engineering, Rescue.',
+            icon: Boxes
           }
         ]
       }
@@ -1563,68 +1571,35 @@ export function SiteHeader() {
           {activeMenu === 'practice-areas' && (
             <div className="isi-mega-panel isi-mega-practice-areas">
               <div className="isi-mega-layout">
-                {/* Left Side Bar: 5 Practice Menus */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      PRACTICE ARCHITECTURE
-                    </span>
-                    <h3 className="isi-sidebar-title">Practice Areas</h3>
-                    <p className="isi-sidebar-desc" style={{ fontSize: '11px', lineHeight: 1.35 }}>
-                      5 enterprise pillars: from silicon engineering to functional workflows &amp; outcome models.
-                    </p>
-
-                    {/* Left Sidebar 5 Menus Switch */}
-                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Practice Areas" style={{ marginTop: '4px' }}>
-                      {practiceAreasFiveSections.map((sec) => {
-                        const SecIcon = sec.icon
-                        const isActive = desktopPracticeTab === sec.id
-                        return (
-                          <button
-                            key={sec.id}
-                            type="button"
-                            role="tab"
-                            className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
-                            onClick={() => setDesktopPracticeTab(sec.id)}
-                            onMouseEnter={() => setDesktopPracticeTab(sec.id)}
-                          >
-                            <div className="tg-domain-tab-left">
-                              <div
-                                className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
-                                style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
-                              >
-                                <SecIcon size={13} />
-                              </div>
-                              <div className="tg-tab-text">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                  <span style={{ fontSize: '9.5px', fontWeight: 800, color: isActive ? '#2563eb' : '#94a3b8' }}>{sec.num}.</span>
-                                  <span className="tg-tab-title" style={{ fontSize: '11.5px' }}>{sec.title}</span>
-                                </div>
-                                <span className="tg-tab-sub" style={{ fontSize: '9px' }}>{sec.sub}</span>
-                              </div>
+                {/* Left Side Bar: Clean Main Menu Only */}
+                <div className="isi-mega-sidebar tg-clean-sidebar">
+                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Practice Areas">
+                    {practiceAreasFiveSections.map((sec) => {
+                      const SecIcon = sec.icon
+                      const isActive = desktopPracticeTab === sec.id
+                      return (
+                        <button
+                          key={sec.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
+                          onClick={() => setDesktopPracticeTab(sec.id)}
+                          onMouseEnter={() => setDesktopPracticeTab(sec.id)}
+                        >
+                          <div className="tg-domain-tab-left">
+                            <div
+                              className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
+                              style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                            >
+                              <SecIcon size={14} />
                             </div>
-                            <ChevronRight size={12} className="tg-tab-chevron" />
-                          </button>
-                        )
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>8 Verticals • 15 Horizontals • 148 Practices</span>
-                    </div>
-                    <Link
-                      href="/practice-areas"
-                      className="isi-sidebar-action"
-                      style={{ background: '#2563eb', color: '#ffffff' }}
-                      onClick={closeAll}
-                    >
-                      <span>Explore Practice Directory</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
+                            <span className="tg-tab-title">{sec.title}</span>
+                          </div>
+                          <ChevronRight size={12} className="tg-tab-chevron" />
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
 

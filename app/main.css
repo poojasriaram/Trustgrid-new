@@ -13947,38 +13947,62 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .isi-mega-practice-areas .isi-mega-sidebar {
-  width: 245px;
+  width: 230px;
   flex-shrink: 0;
-  padding: 10px 12px;
+  padding: 12px 10px;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
 }
 
 .isi-mega-practice-areas .tg-sidebar-domain-switch {
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  margin-top: 5px;
+  gap: 5px;
+  margin-top: 0;
 }
 
 .isi-mega-practice-areas .tg-domain-tab-btn {
-  padding: 4px 7px;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  background: transparent;
   cursor: pointer;
   text-align: left;
   transition: all 0.15s ease;
 }
 
 .isi-mega-practice-areas .tg-domain-tab-btn:hover {
-  background: #f8fafc;
-  border-color: #cbd5e1;
+  background: #ffffff;
+  border-color: #e2e8f0;
   transform: translateX(1.5px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .isi-mega-practice-areas .tg-domain-tab-btn.active-networking {
-  background: #eff6ff;
-  border-color: #93c5fd;
-  box-shadow: 0 1px 4px rgba(37, 99, 235, 0.12);
+  background: #ffffff;
+  border-color: #bfdbfe;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
+}
+
+.isi-mega-practice-areas .tg-domain-tab-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.isi-mega-practice-areas .tg-tab-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.25;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking .tg-tab-title {
+  color: #1d4ed8;
+  font-weight: 700;
 }
 
 .isi-mega-practice-areas .isi-sidebar-bottom {

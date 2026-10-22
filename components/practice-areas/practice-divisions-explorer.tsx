@@ -30,7 +30,8 @@ import {
   ChevronRight,
   HeartPulse,
   Activity,
-  DollarSign
+  DollarSign,
+  Award
 } from 'lucide-react'
 
 export interface PracticeDivisionItem {
@@ -409,86 +410,86 @@ export const practiceDivisionsData: PracticeDivision[] = [
   {
     id: 'value-engineering',
     num: '5',
-    title: 'Value Engineering',
-    shortLabel: 'Value Engineering',
-    sub: '80+ Methods · FinOps & Unit Economics',
-    badge: 'FINANCIAL ACCOUNTABILITY',
-    headerTitle: 'Value Engineering Framework & Financial Accountability',
-    tagline: 'Transforming opaque AI compute spend into transparent, compounding balance sheet returns via 80+ operational methods.',
-    ctaText: 'Explore Value Engineering Blueprint',
-    ctaHref: '/solutions/ai-value-engineering',
+    title: 'AI Value Engineering',
+    shortLabel: 'AI Value Engineering',
+    sub: '5 Stages · 4 Engineers · 5 Proofs · Forward Deployed Pods',
+    badge: 'SECTION 4 · DIVISION 1',
+    headerTitle: 'Division 1 · Delivery Practice: AI Value Engineering',
+    tagline: 'Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI. Five stages, four engineers, five proofs, one number Finance signs.',
+    ctaText: 'Explore AI Value Engineering Practice',
+    ctaHref: '/practice-areas/ai-value-engineering',
     icon: TrendingUp,
     items: [
       {
-        category: 'PROVEN FRAMEWORK',
-        label: '5-Stage Outcome Proof Framework',
-        href: '/practice-areas#engagement-models',
-        desc: 'Milestone-based technical and commercial progression linking fees directly to audited operational outcomes.',
-        icon: CheckCircle2,
+        category: 'VALUE LIFECYCLE',
+        label: '5-Stage Value Lifecycle & Stage Gates',
+        href: '/practice-areas/ai-value-engineering#lifecycle',
+        desc: 'Deterministic stage progression from Value Discovery and Framing to Production Delivery, Repeatable Realization and Value Assurance.',
+        icon: Workflow,
         bullets: [
-          'PoC: Technical feasibility sandbox validating core model viability',
-          'PoV: Metric verification measuring baseline throughput & latency',
-          'PoP to PoCV: Scale hardening, canary cutover & compounding ROI'
+          'Stage 01 Discover & Stage 02 Design: P&L value pool sizing, binding constraints & frozen baselines',
+          'Stage 03 Deploy & Stage 04 Perform: Thinnest production path, unaided operator lift & 3 signed cycles',
+          'Stage 05 Prove: Complete versioned assurance dossier, control mapping & capability certification'
         ]
       },
       {
-        category: 'BLACK-BOX ELIMINATION',
-        label: 'Value Assurance & Deterministic Auditing',
-        href: '/practice-areas/value-assurance-services',
-        desc: 'Eliminating black-box risks with formal robustness testing, explainability, and regulatory audits.',
-        icon: ShieldCheck,
+        category: 'SCOPE & TECHNOLOGIES',
+        label: '7 Technology Families in Scope',
+        href: '/practice-areas/ai-value-engineering#technologies',
+        desc: 'The proof standard does not change with technology: agentic AI, blockchain/DLT, IoT & edge, robotics/AMR, RPA, physical AI, and data pipelines.',
+        icon: Cpu,
         bullets: [
-          'SHAP / LIME mathematical explainability for mission-critical inference',
-          'Continuous Statistical Process Control (SPC) & automated drift triage',
-          'Immutable cryptographic audit trails aligned with EU AI Act & ISO 42001'
+          'Agentic AI, DLT & IoT: Judgement-heavy workflows, dispute elimination & asset uptime sensor fleets',
+          'Robotics, AMR & Physical AI: Space between machines, unstructured automation & signed safety cases',
+          'Data & Platform Engineering: Freshness, quality, lineage, and pipeline cost optimization'
         ]
       },
       {
-        category: 'FINANCIAL GOVERNANCE',
-        label: 'AI FinOps Command & Spend Telemetry',
-        href: '/solutions/ai-value-engineering#finops',
-        desc: 'Granular token cost allocation, hardware utilization tuning, and CFO-ready investment reporting.',
-        icon: BarChart3,
+        category: 'EVIDENCE STANDARD',
+        label: 'The Five Proofs (PoC → PoComp)',
+        href: '/practice-areas/ai-value-engineering#proofs',
+        desc: 'Deterministic escalation: Proof of Concept, Proof of Value, Proof of Performance, Proof of Recurring Value, and Proof of Compounding.',
+        icon: Award,
         bullets: [
-          'Real-time token spend telemetry & departmental chargeback models',
-          'Model cost attribution per task, prompt context & API gateway',
-          'Direct mapping of GPU CapEx/OpEx to EBITDA velocity and working capital'
+          'PoC & PoV: Task accuracy on real samples and locked baseline lift against controls',
+          'PoP & PoRV: Production standards (p95/p99 latency) and 3 consecutive Finance-signed cycles',
+          'PoComp: Marginal cost decline, named asset reuse and empirical cost curve validation'
         ]
       },
       {
-        category: 'OPERATIONAL METHOD',
-        label: 'Lean Thinking & DOWNTIME Waste Elimination',
-        href: '/solutions/ai-value-engineering#waste-governance',
-        desc: 'Applying classic Lean Thinking to eliminate 8 deadly wastes across enterprise AI pipelines.',
-        icon: SlidersHorizontal,
+        category: 'FORWARD-DEPLOYED POD',
+        label: 'Pod Architecture: 4 Ours, 3 Theirs',
+        href: '/practice-areas/ai-value-engineering#pod',
+        desc: 'Forward-deployed pod with ≤4 elite engineers embedded in client environment paired with 3 client-side decision roles.',
+        icon: Users,
         bullets: [
-          'Eliminating Defect, Overproduction, Waiting & Non-utilized talent in AI',
-          'Removing Transport, Inventory, Motion & Excess compute processing waste',
-          '40–70% drop in cost-to-serve via caching, quantization & routing'
+          'TrustGrid Pod: FDE Lead, Domain Engineer, AI Agentic Engineer, AI Operational Engineer',
+          'Client Leadership: Client Product Lead, Client Project Lead, Functional Process Lead',
+          'Disciplined Delivery: P&L accountability and code reviews held in the same afternoon'
         ]
       },
       {
-        category: 'BOTTLENECK TRIAGE',
-        label: 'Theory of Constraints & Throughput Accounting',
-        href: '/methodology-engine#diagnostic',
-        desc: 'Systematic identification and exploitation of GPU cluster, memory, and queue bottlenecks.',
-        icon: TrendingUp,
+        category: 'ENGAGEMENT MODELS',
+        label: '6 Accountable Engagement Shapes',
+        href: '/practice-areas/ai-value-engineering#engagement-models',
+        desc: 'Flexible models mapped to enterprise readiness without speculative commitments: Diagnostic, Sprint, Proof, Deployment, Embedded, and Rescue.',
+        icon: Boxes,
         bullets: [
-          'Identify and exploit GPU cluster utilization bottlenecks (30–50% idle drop)',
-          'Drum-Buffer-Rope scheduling for inference queues and model dispatch',
-          'Throughput accounting connecting GPU utilization directly to cash generation'
+          'Value Diagnostic (3–5 wk) & Value Sprint (4–6 wk): Board decision & pre-capital de-risking',
+          'Proof Engagement (10–14 wk) & Deployment & Banking (2–4 quarters): Feasibility & adoption risk',
+          'Embedded VE (Quarterly cycles) & Value Assurance / Rescue (6–12 wk): Compounding & audit readiness'
         ]
       },
       {
-        category: 'GLOBAL STANDARD',
-        label: '70-Year AI-VE Job Plan & Audited Outcomes',
-        href: '/solutions/ai-value-engineering#job-plan-stages',
-        desc: 'The SAVE International 70-year standard re-engineered with AI and operational automation.',
-        icon: FileText,
+        category: 'METHODOLOGY ENGINE',
+        label: 'Deterministic Industrial Tooling & Interfaces',
+        href: 'https://trustgrid-ai-nine.vercel.app/methodology-engine',
+        desc: 'Operates on the methodology engine, uniting VSM, TOC, FMEA, Poka-Yoke, SMED, FinOps, and DMAIC with Divisions 2 & 3.',
+        icon: Sparkles,
         bullets: [
-          '8 Disciplined Stages: Information, Function, Creative, Evaluation, Dev, Pres, Impl, Audit',
-          'Automated method recommendation selecting from 80+ operational frameworks',
-          'Post-implementation attestation verifying audited balance sheet outcomes'
+          'Named industrial methods applied deliberately rather than improvised',
+          'Interfaces with Division 2 (Horizontal Functions) and Division 3 (Industry Verticals)',
+          'Complete IP handover: Models, pipelines, runbooks, evidence dossier & cost models'
         ]
       }
     ]
@@ -506,18 +507,8 @@ export function PracticeDivisionsExplorer() {
     <div className="tg-divisions-explorer-wrapper">
       <div className="tg-divisions-layout">
         {/* Left Side Bar Menu: The 5 Menus */}
-        <aside className="tg-divisions-sidebar" aria-label="Practice Areas Divisions">
-          <div className="tg-divisions-sidebar-header">
-            <span className="tg-divisions-badge">
-              <span className="pulse-dot" />
-              PRACTICE ARCHITECTURE
-            </span>
-            <h3 className="tg-divisions-sidebar-title">Practice Areas</h3>
-            <p className="tg-divisions-sidebar-desc">
-              5 strategic pillars: from silicon engineering to functional capabilities &amp; outcome models.
-            </p>
-          </div>
-
+        {/* Left Side Bar Menu: Clean Main Menu Only */}
+        <aside className="tg-divisions-sidebar tg-clean-divisions-sidebar" aria-label="Practice Areas Divisions">
           <nav className="tg-divisions-nav" role="tablist">
             {practiceDivisionsData.map((division) => {
               const DivIcon = division.icon
@@ -535,33 +526,13 @@ export function PracticeDivisionsExplorer() {
                     <div className="tg-divisions-icon-box">
                       <DivIcon size={16} />
                     </div>
-                    <div className="tg-divisions-nav-text">
-                      <div className="tg-divisions-nav-title-row">
-                        <span className="tg-divisions-num">{division.num}.</span>
-                        <span className="tg-divisions-title">{division.title}</span>
-                      </div>
-                      <span className="tg-divisions-sub">{division.sub}</span>
-                    </div>
+                    <span className="tg-divisions-title">{division.title}</span>
                   </div>
                   <ChevronRight size={14} className="tg-divisions-nav-chevron" />
                 </button>
               )
             })}
           </nav>
-
-          <div className="tg-divisions-sidebar-footer">
-            <div className="tg-divisions-metric-chip">
-              <Sparkles size={13} className="text-blue-400" />
-              <span>5 Practice Pillars • 30+ Disciplines</span>
-            </div>
-            <Link
-              href="/book-ai-diagnostic#diagnostic-form-section"
-              className="tg-divisions-sidebar-cta"
-            >
-              <span>Schedule Architecture Diagnostic</span>
-              <ArrowUpRight size={13} />
-            </Link>
-          </div>
         </aside>
 
         {/* Right Side Content Panel */}
