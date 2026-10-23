@@ -123,7 +123,7 @@ export default function IndustriesPage() {
                 <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">
                   Browse by Industry Vertical & Category
                 </h2>
-                <p className="text-xs text-slate-500 mt-1">
+                <p className="text-xs text-slate-600 mt-1">
                   Select a category or specific vertical to explore verified metrics, ICPs, and engineered architectures.
                 </p>
               </div>
@@ -193,7 +193,7 @@ export default function IndustriesPage() {
                   <div className="relative z-10 max-w-3xl mx-auto">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-400 text-xs font-semibold tracking-wider uppercase mb-3">
                       <span>{ind.badge}</span>
-                      <span className="text-slate-500">•</span>
+                      <span className="text-slate-300">•</span>
                       <span className="text-slate-300">{ind.category}</span>
                     </div>
 
@@ -205,7 +205,7 @@ export default function IndustriesPage() {
                       {ind.heroSubtitle || ind.summary}
                     </p>
 
-                    <div className="mt-4 text-xs font-mono text-slate-400 flex items-center justify-center gap-2">
+                    <div className="mt-4 text-xs font-mono text-slate-200 flex items-center justify-center gap-2">
                       <span className="text-blue-400 font-semibold">Strategic Focus:</span>
                       <span>{ind.tagline}</span>
                     </div>
@@ -222,7 +222,7 @@ export default function IndustriesPage() {
                           Verified Sector Performance Indicators
                         </h3>
                       </div>
-                      <span className="text-[11px] font-mono text-slate-400">4 Proven Benchmarks</span>
+                      <span className="text-[11px] font-mono text-slate-600">4 Proven Benchmarks</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -244,7 +244,7 @@ export default function IndustriesPage() {
                             <div className="text-xs font-bold text-slate-800 mb-1 leading-snug">
                               {stat.label}
                             </div>
-                            <p className="text-[11px] text-slate-500 leading-relaxed">
+                            <p className="text-[11px] text-slate-600 leading-relaxed">
                               {stat.context}
                             </p>
                           </div>
@@ -266,7 +266,7 @@ export default function IndustriesPage() {
                         </div>
 
                         <div className="space-y-2 mb-4">
-                          <span className="text-[11px] font-mono text-slate-500 uppercase font-semibold block">
+                          <span className="text-[11px] font-mono text-slate-600 uppercase font-semibold block">
                             Key Decision Makers:
                           </span>
                           <div className="flex flex-wrap gap-1">
@@ -282,7 +282,7 @@ export default function IndustriesPage() {
                         </div>
 
                         <div className="space-y-1.5 mb-3">
-                          <span className="text-[11px] font-mono text-slate-500 uppercase font-semibold block">
+                          <span className="text-[11px] font-mono text-slate-600 uppercase font-semibold block">
                             Target Organizations:
                           </span>
                           <ul className="space-y-1">
@@ -297,7 +297,7 @@ export default function IndustriesPage() {
                       </div>
 
                       <div className="pt-3 border-t border-slate-200">
-                        <span className="text-[10px] font-mono text-slate-400 block uppercase">Operational Complexity:</span>
+                        <span className="text-[10px] font-mono text-slate-600 block uppercase font-medium">Operational Complexity:</span>
                         <p className="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
                           {ind.icp?.scaleComplexity || 'Mission-critical enterprise scale.'}
                         </p>
@@ -383,7 +383,7 @@ export default function IndustriesPage() {
                   {/* CARD FOOTER CTAS */}
                   <div className="flex items-center justify-between flex-wrap gap-3 pt-4 border-t border-slate-100">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono text-slate-500">
+                      <span className="text-xs font-mono text-slate-600">
                         Blueprint: <span className="font-semibold text-slate-800">{ind.slug}</span>
                       </span>
                     </div>

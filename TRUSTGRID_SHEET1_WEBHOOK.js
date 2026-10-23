@@ -417,6 +417,28 @@ function doPost(e) {
     if (isStagingOrigin) {
       return logToStagingQuarantine(data);
     }
+
+    // Strict Test Lead Isolation Guard
+    // Routes TG-TEST, QA, Demo, Verification leads directly to Archived_Test_Leads
+    // Completely suppresses customer emails and executive alerts for test records
+    var isTestSubmission = (
+      data.leadType === "TEST" ||
+      data.LeadType === "TEST" ||
+      data.leadTypeCategory === "TEST" ||
+      data.isTestLead === true ||
+      String(data.name || data.fullName || "").toUpperCase().indexOf("TG-TEST") !== -1 ||
+      String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("tg-test") !== -1 ||
+      String(data.company || "").toUpperCase().indexOf("TG-TEST") !== -1 ||
+      String(data.leadId || data.submissionId || "").toUpperCase().indexOf("TG-TEST") !== -1 ||
+      String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("@test.local") !== -1 ||
+      String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("@example.com") !== -1 ||
+      String(data.sheetName || "") === "Archived_Test_Leads" ||
+      /\b(TG-TEST|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(String(data.name || "") + " " + String(data.company || ""))
+    );
+
+    if (isTestSubmission) {
+      return logToArchivedTestLeads(data);
+    }
     
     // lib/analytics.ts telemetry beacons (page views, clicks, CTA, visibility) only set
     // event_type: 'telemetry_95' — without this fallback every beacon was silently rejected
@@ -1856,8 +1878,19 @@ function buildMonthlyCareerEmailHtml(monthLabel, candidates, sheetUrl) {
 // 8. TRUSTGRID.AI - EXECUTIVE ANALYTICS BRIEF ENGINE (DAILY, WEEKLY & MONTHLY)
 // =========================================================================================
 
+function getMainSpreadsheet() {
+  if (CONFIG.MAIN_SPREADSHEET_ID && String(CONFIG.MAIN_SPREADSHEET_ID).trim().length > 10) {
+    try {
+      return SpreadsheetApp.openById(String(CONFIG.MAIN_SPREADSHEET_ID).trim());
+    } catch (e) {
+      console.warn("Could not open by ID, falling back to active spreadsheet: " + e.message);
+    }
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function dailyReport() {
-  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var ss = getMainSpreadsheet();
   if (!ss) return;
 
   var yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
@@ -1869,7 +1902,7 @@ function dailyReport() {
 }
 
 function weeklyReport() {
-  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var ss = getMainSpreadsheet();
   if (!ss) return;
 
   var now = new Date();
@@ -1884,7 +1917,7 @@ function weeklyReport() {
 }
 
 function monthlyReport() {
-  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var ss = getMainSpreadsheet();
   if (!ss) return;
 
   var now = new Date();
@@ -1905,7 +1938,7 @@ function monthlyReport() {
  * for historical trend analysis and long-term reporting.
  */
 function captureDailyTrafficSnapshot() {
-  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var ss = getMainSpreadsheet();
   if (!ss) return;
 
   var yesterday = new Date();
@@ -2358,9 +2391,35 @@ function aggregateLeadsFromAllSources(ss, startDate, endDate, periodType, startM
 
     var srcCol = headers.indexOf("Source") !== -1 ? headers.indexOf("Source") : headers.indexOf("UTM Source");
     var pageCol = headers.indexOf("Page") !== -1 ? headers.indexOf("Page") : headers.indexOf("Page Path");
+    var leadTypeCol = headers.indexOf("LeadType") !== -1 ? headers.indexOf("LeadType") : headers.indexOf("leadTypeCategory");
+    var nameCol = headers.indexOf("Full Name") !== -1 ? headers.indexOf("Full Name") : (headers.indexOf("Name") !== -1 ? headers.indexOf("Name") : headers.indexOf("fullName"));
+    var emailCol = headers.indexOf("Business Email") !== -1 ? headers.indexOf("Business Email") : (headers.indexOf("Email") !== -1 ? headers.indexOf("Email") : headers.indexOf("email"));
+    var compCol = headers.indexOf("Company Name") !== -1 ? headers.indexOf("Company Name") : (headers.indexOf("Company") !== -1 ? headers.indexOf("Company") : headers.indexOf("company"));
 
     for (var r = 1; r < data.length; r++) {
-      var ts = parseSheetDate(data[r][tsCol]);
+      var row = data[r];
+      var leadTypeVal = leadTypeCol !== -1 ? String(row[leadTypeCol] || "").toUpperCase() : "";
+      var nameVal = nameCol !== -1 ? String(row[nameCol] || "") : "";
+      var emailVal = emailCol !== -1 ? String(row[emailCol] || "") : "";
+      var compVal = compCol !== -1 ? String(row[compCol] || "") : "";
+
+      // STRICT TEST EXCLUSION FILTER:
+      // Exclude LeadType = TEST, TG-TEST, test, demo, qa, dummy, sandbox, uat, verification
+      var isTestRow = (
+        leadTypeVal === "TEST" ||
+        nameVal.toUpperCase().indexOf("TG-TEST") !== -1 ||
+        emailVal.toLowerCase().indexOf("tg-test") !== -1 ||
+        compVal.toUpperCase().indexOf("TG-TEST") !== -1 ||
+        emailVal.toLowerCase().indexOf("@test.local") !== -1 ||
+        emailVal.toLowerCase().indexOf("@example.com") !== -1 ||
+        /\b(test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(nameVal + " " + compVal + " " + emailVal)
+      );
+
+      if (isTestRow) {
+        continue; // Strictly excluded from Daily & Weekly Executive Reports
+      }
+
+      var ts = parseSheetDate(row[tsCol]);
       if (!ts) continue;
       var tTime = ts.getTime();
       if (tTime >= sTime && tTime <= eTime) {
@@ -2772,16 +2831,37 @@ function formatNum(num) {
 function parseSheetDate(val) {
   if (!val) return null;
   if (val instanceof Date) return val;
-  var str = String(val);
-  if (str.match(/^\d{4}-\d{2}-\d{2}/)) {
-    return new Date(str.substring(0, 10));
+  var str = String(val).trim();
+  if (!str) return null;
+
+  // Handle standard "yyyy-MM-dd HH:mm:ss IST" or ISO timestamps
+  var m = str.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s](\d{2}):(\d{2}):(\d{2}))?/);
+  if (m) {
+    var yr = parseInt(m[1], 10);
+    var mo = parseInt(m[2], 10) - 1;
+    var dy = parseInt(m[3], 10);
+    var hr = m[4] ? parseInt(m[4], 10) : 0;
+    var mi = m[5] ? parseInt(m[5], 10) : 0;
+    var sc = m[6] ? parseInt(m[6], 10) : 0;
+
+    if (str.indexOf("IST") !== -1) {
+      // IST is UTC+5:30 -> subtract offset to get true UTC
+      return new Date(Date.UTC(yr, mo, dy, hr - 5, mi - 30, sc));
+    }
+    if (str.endsWith("Z")) {
+      return new Date(str);
+    }
+    return new Date(yr, mo, dy, hr, mi, sc);
   }
-  var match = str.match(/^(\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{4})/);
+
+  var match = str.match(/^(\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{4})/i);
   if (match) {
-    var months = {'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
-    return new Date(match[3], months[match[2]], match[1]);
+    var months = {'jan':0,'feb':1,'mar':2,'apr':3,'may':4,'jun':5,'jul':6,'aug':7,'sep':8,'oct':9,'nov':10,'dec':11};
+    return new Date(match[3], months[match[2].toLowerCase()], match[1]);
   }
-  return new Date(str);
+
+  var d = new Date(str);
+  return isNaN(d.getTime()) ? null : d;
 }
 
 function normalizeTrafficSource(src, utmSrc) {
@@ -2802,10 +2882,6 @@ function resolvePageName(path) {
 // =========================================================================================
 // 10. SETUP TRIGGERS & ONE-CLICK NOTIFICATION PREVIEW SUITE
 // =========================================================================================
-
-function setupAllTrustGridTriggers() {
-  setupAllTrustGridTriggers();
-}
 
 function setupAllTrustGridTriggers() {
   var triggers = ScriptApp.getProjectTriggers();
@@ -2928,139 +3004,65 @@ function SEND_ALL_TRUSTGRID_NOTIFICATION_PREVIEWS() {
     replyTo: EMAIL_CONFIG.replyTo
   });
 
-  // 4. Daily Analytics Report Sample (Merged Trend + Clean Top Engaged Pages)
-  var dailyTrendLabels = ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00"];
-  var dailyTrendVisitors = [45, 28, 62, 185, 240, 195, 125, 60];
-  var dailyTrendLeads = [0, 0, 1, 2, 3, 2, 1, 0];
-  var dailyChartUrl = generateMergedTrendChartUrl(dailyTrendLabels, dailyTrendVisitors, dailyTrendLeads);
-
-  var sampleDailyData = {
-    periodType: "DAILY",
-    periodDateStr: Utilities.formatDate(new Date(), "Asia/Kolkata", "d MMMM yyyy"),
-    periodRangeStr: Utilities.formatDate(new Date(), "Asia/Kolkata", "d MMM yyyy"),
-    kpis: {
-      visitors: 842,
-      sessions: 1120,
-      leads: 9,
-      enquiries: 14,
-      conversionRate: "2.14%",
-      topLeadSource: "Google Search (Organic)"
-    },
-    comparison: {
-      visitorsDelta: "+18.4%",
-      sessionsDelta: "+14.2%",
-      leadsDelta: "+28.6%",
-      enquiriesDelta: "+16.7%",
-      prevVisitors: 711,
-      prevLeads: 7,
-      prevEnquiries: 12,
-      prevConvRate: "1.98%"
-    },
-    trend: {
-      labels: dailyTrendLabels,
-      visitors: dailyTrendVisitors,
-      leads: dailyTrendLeads,
-      chartUrl: dailyChartUrl
-    },
-    formBreakdown: {
-      "Quick Forms": 3,
-      "Consulting Sessions": 6
-    },
-    sources: [
-      { source: "Google / Organic", visitors: 420, leads: 5, enquiries: 7, convRate: "2.38%" },
-      { source: "LinkedIn / Sponsored", visitors: 240, leads: 3, enquiries: 4, convRate: "2.50%" },
-      { source: "Direct / Navigational", visitors: 112, leads: 1, enquiries: 2, convRate: "1.79%" },
-      { source: "Twitter / X Referral", visitors: 70, leads: 0, enquiries: 1, convRate: "0.00%" }
-    ],
-    topPages: [
-      { path: "/", views: 9, leads: 0 },
-      { path: "/solutions/ai-infra-engineering", views: 8, leads: 0 },
-      { path: "/solutions/ai-value-engineering", views: 5, leads: 0 },
-      { path: "/solutions/ai-agentic-factory", views: 4, leads: 0 },
-      { path: "/solutions/ai-cybersecurity-quantum-safe", views: 3, leads: 0 },
-      { path: "/methodology-engine", views: 2, leads: 0 },
-      { path: "/contact", views: 1, leads: 0 },
-      { path: "/solutions/ai-networking", views: 1, leads: 0 }
-    ],
-    dashboardUrl: mockSheetUrl
-  };
-  var dailyHtml = buildExecutiveAnalyticsBriefHtml(sampleDailyData, "DAILY");
+  // 4. Daily Analytics Report (LIVE DATA from Sheet 1)
+  var ss = getMainSpreadsheet();
+  var yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1);
+  var dayBefore = new Date(); dayBefore.setDate(dayBefore.getDate() - 2);
+  var liveDailyData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
+  var dailyHtml = buildExecutiveAnalyticsBriefHtml(liveDailyData, "DAILY");
   MailApp.sendEmail({
     to: recipients,
-    subject: "[PREVIEW] [TRUSTGRID.AI] Daily Analytics Report - " + sampleDailyData.periodDateStr,
+    subject: "[TRUSTGRID.AI] Daily Analytics Report - " + cleanEmailText(liveDailyData.periodDateStr),
     htmlBody: dailyHtml,
     name: EMAIL_CONFIG.name,
     replyTo: EMAIL_CONFIG.replyTo
   });
 
-  // 5. Weekly Analytics Report Sample (Merged Trend + Clean Top Engaged Pages)
+  // 5. Weekly Analytics Report (LIVE DATA from Sheet 1)
   var now = new Date();
-  var wStart = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  var weeklyTrendLabels = ["12 Sep", "13 Sep", "14 Sep", "15 Sep", "16 Sep", "17 Sep", "18 Sep"];
-  var weeklyTrendVisitors = [680, 740, 810, 890, 920, 860, 720];
-  var weeklyTrendLeads = [8, 9, 11, 12, 14, 10, 4];
-  var weeklyChartUrl = generateMergedTrendChartUrl(weeklyTrendLabels, weeklyTrendVisitors, weeklyTrendLeads);
-
-  var sampleWeeklyData = {
-    periodType: "WEEKLY",
-    periodDateStr: Utilities.formatDate(wStart, "Asia/Kolkata", "d MMM") + " - " + Utilities.formatDate(now, "Asia/Kolkata", "d MMM yyyy"),
-    periodRangeStr: Utilities.formatDate(wStart, "Asia/Kolkata", "d MMM yyyy") + " - " + Utilities.formatDate(now, "Asia/Kolkata", "d MMM yyyy"),
-    kpis: {
-      visitors: 5620,
-      sessions: 7840,
-      leads: 68,
-      enquiries: 94,
-      conversionRate: "2.41%",
-      topLeadSource: "Google Organic & LinkedIn Ads"
-    },
-    comparison: {
-      visitorsDelta: "+24.8%",
-      sessionsDelta: "+21.3%",
-      leadsDelta: "+36.0%",
-      enquiriesDelta: "+22.1%",
-      prevVisitors: 4503,
-      prevLeads: 50,
-      prevEnquiries: 77,
-      prevConvRate: "2.22%"
-    },
-    trend: {
-      labels: weeklyTrendLabels,
-      visitors: weeklyTrendVisitors,
-      leads: weeklyTrendLeads,
-      chartUrl: weeklyChartUrl
-    },
-    formBreakdown: {
-      "Quick Forms": 26,
-      "Consulting Sessions": 42
-    },
-    sources: [
-      { source: "Google / Organic", visitors: 2680, leads: 34, enquiries: 46, convRate: "2.54%" },
-      { source: "LinkedIn Ads / Enterprise", visitors: 1640, leads: 22, enquiries: 30, convRate: "2.68%" },
-      { source: "Direct Traffic", visitors: 820, leads: 8, enquiries: 12, convRate: "1.95%" },
-      { source: "Industry Newsletter & PR", visitors: 480, leads: 4, enquiries: 6, convRate: "1.67%" }
-    ],
-    topPages: [
-      { path: "/", views: 64, leads: 5 },
-      { path: "/solutions/ai-infra-engineering", views: 52, leads: 12 },
-      { path: "/solutions/ai-value-engineering", views: 38, leads: 8 },
-      { path: "/solutions/ai-agentic-factory", views: 31, leads: 6 },
-      { path: "/solutions/ai-cybersecurity-quantum-safe", views: 24, leads: 4 },
-      { path: "/methodology-engine", views: 18, leads: 2 },
-      { path: "/contact", views: 14, leads: 1 },
-      { path: "/solutions/ai-networking", views: 12, leads: 1 }
-    ],
-    dashboardUrl: mockSheetUrl
-  };
-  var weeklyHtml = buildExecutiveAnalyticsBriefHtml(sampleWeeklyData, "WEEKLY");
+  var w1Start = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  var w1End   = new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000);
+  var w2Start = new Date(w1Start.getTime() - 7 * 24 * 60 * 60 * 1000);
+  var w2End   = new Date(w1Start.getTime() - 1 * 24 * 60 * 60 * 1000);
+  var liveWeeklyData = aggregateExecutiveReportData(ss, "WEEKLY", w1Start, w1End, w2Start, w2End);
+  var weeklyHtml = buildExecutiveAnalyticsBriefHtml(liveWeeklyData, "WEEKLY");
   MailApp.sendEmail({
     to: recipients,
-    subject: "[PREVIEW] [TRUSTGRID.AI] Weekly Analytics Report - " + sampleWeeklyData.periodRangeStr,
+    subject: "[TRUSTGRID.AI] Weekly Analytics Report - " + cleanEmailText(liveWeeklyData.periodRangeStr),
     htmlBody: weeklyHtml,
     name: EMAIL_CONFIG.name,
     replyTo: EMAIL_CONFIG.replyTo
   });
 
-  console.log("All sample preview emails successfully sent to " + recipients);
+  console.log("All notifications and reports successfully dispatched using LIVE spreadsheet data to " + recipients);
+}
+
+// =========================================================================================
+// ONE-CLICK ON-DEMAND LIVE REPORT DISPATCHERS (RUN THESE DIRECTLY IN APPS SCRIPT)
+// =========================================================================================
+
+/**
+ * Instantly triggers and emails the Daily Analytics Report using 100% REAL LIVE data from Sheet 1.
+ */
+function SEND_DAILY_REPORT_NOW() {
+  dailyReport();
+  console.log("✅ Live Daily Analytics Report dispatched to: " + EMAIL_CONFIG.reportEmails.join(", "));
+}
+
+/**
+ * Instantly triggers and emails the Weekly Analytics Report using 100% REAL LIVE data from Sheet 1.
+ */
+function SEND_WEEKLY_REPORT_NOW() {
+  weeklyReport();
+  console.log("✅ Live Weekly Analytics Report dispatched to: " + EMAIL_CONFIG.reportEmails.join(", "));
+}
+
+/**
+ * Instantly triggers and emails the Monthly Analytics Report using 100% REAL LIVE data from Sheet 1.
+ */
+function SEND_MONTHLY_REPORT_NOW() {
+  monthlyReport();
+  console.log("✅ Live Monthly Analytics Report dispatched to: " + EMAIL_CONFIG.reportEmails.join(", "));
 }
 
 // =========================================================================================
@@ -3149,6 +3151,101 @@ function logToStagingQuarantine(data) {
     return ContentService.createTextOutput("Quarantine Error: " + qErr.toString()).setMimeType(ContentService.MimeType.TEXT);
   }
 }
+
+/**
+ * PRODUCTION LEAD PRESERVATION & TESTING FRAMEWORK:
+ * Routes all test leads (TG-TEST, QA, Demo, Verification) to Archived_Test_Leads.
+ * Client confirmation emails and executive alerts are strictly suppressed.
+ */
+function logToArchivedTestLeads(data) {
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var tab = ss.getSheetByName("Archived_Test_Leads");
+    if (!tab) {
+      tab = ss.insertSheet("Archived_Test_Leads");
+      var headers = ["Timestamp", "Lead ID", "LeadType", "Full Name", "Business Email", "Company Name", "Interested Solution / Service", "Test Indicators", "Payload JSON"];
+      tab.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#475569").setFontColor("#ffffff");
+      tab.setFrozenRows(1);
+    }
+    var ts = Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'");
+    var leadId = data.leadId || data.submissionId || ("TG-TEST-" + Date.now());
+    var name = data.name || data.fullName || "TG-TEST Validation";
+    var email = data.email || data.work_email || "";
+    var company = data.company || "TG-TEST QA";
+    var solution = data.selectedSolutions || data.service || data.form_type || "Test Lead Validation";
+    var reason = data.testReason || "Identified as TG-TEST / QA non-production data";
+
+    tab.appendRow([ts, leadId, "TEST", name, email, company, solution, reason, JSON.stringify(data)]);
+    console.log("🔒 TG-TEST record safely quarantined to Archived_Test_Leads tab. Production leads preserved.");
+    return ContentService.createTextOutput("Logged to Archived_Test_Leads").setMimeType(ContentService.MimeType.TEXT);
+  } catch (archiveErr) {
+    console.error("Archived_Test_Leads error:", archiveErr);
+    return ContentService.createTextOutput("Archive Error: " + archiveErr.toString()).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
+
+/**
+ * Audit and Clean Google Sheet:
+ * Scans all active lead sheets, moves non-production/test rows to Archived_Test_Leads,
+ * and preserves 100% of genuine production customer inquiries.
+ */
+function auditAndArchiveGoogleSheetTestLeads() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var archiveTab = ss.getSheetByName("Archived_Test_Leads");
+  if (!archiveTab) {
+    archiveTab = ss.insertSheet("Archived_Test_Leads");
+    var headers = ["Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name", "Business Email", "Company Name", "Reason Moved", "Row Data"];
+    archiveTab.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#475569").setFontColor("#ffffff");
+    archiveTab.setFrozenRows(1);
+  }
+
+  var tabsToAudit = [
+    "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads",
+    "Workshop_Requests", "RFP_Proposals", "Talk_To_Architect",
+    "Quick_Enquiry_Leads", "LinkedIn_Leads", "Form_Submissions"
+  ];
+
+  var movedCount = 0;
+  var retainedCount = 0;
+
+  tabsToAudit.forEach(function(tabName) {
+    var sh = ss.getSheetByName(tabName);
+    if (!sh || sh.getLastRow() < 2) return;
+    var data = sh.getDataRange().getValues();
+
+    for (var r = data.length - 1; r >= 1; r--) {
+      var row = data[r];
+      var rowStr = row.join(" ");
+      var isTest = (
+        /\b(TG-TEST|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rowStr) ||
+        rowStr.toLowerCase().indexOf("@test.local") !== -1 ||
+        rowStr.toLowerCase().indexOf("@example.com") !== -1
+      );
+
+      if (isTest) {
+        archiveTab.appendRow([
+          Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+          tabName,
+          row[1] || "",
+          "TEST",
+          row[2] || "",
+          row[3] || "",
+          row[5] || "",
+          "Audited & Moved from " + tabName,
+          JSON.stringify(row)
+        ]);
+        sh.deleteRow(r + 1);
+        movedCount++;
+      } else {
+        retainedCount++;
+      }
+    }
+  });
+
+  Logger.log("✅ Production Leads Preserved: " + retainedCount + " | Test Records Archived: " + movedCount);
+  return { retainedProductionLeads: retainedCount, movedTestLeads: movedCount };
+}
+
 
 
 

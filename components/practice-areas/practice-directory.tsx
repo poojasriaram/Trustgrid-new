@@ -105,7 +105,7 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
 
       {/* Results Count & Active Status */}
       <div className="pa-results-meta">
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-slate-300">
           Showing <strong className="text-white">{filteredPractices.length}</strong> of{' '}
           {practices.length} practices
           {query && ` matching "${query}"`}
@@ -133,7 +133,7 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
                   <h3 className="text-lg font-bold text-white mt-2 group-hover:text-blue-400 transition-colors">
                     <Link href={`/practice-areas/${practice.slug}`}>{practice.title}</Link>
                   </h3>
-                  <p className="text-slate-400 text-xs mt-2 line-clamp-2 leading-relaxed">
+                  <p className="text-slate-300 text-xs mt-2 line-clamp-2 leading-relaxed">
                     {practice.tagline}
                   </p>
                 </div>

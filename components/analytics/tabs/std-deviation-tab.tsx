@@ -23,25 +23,25 @@ export function StdDeviationTab({ data }: Props) {
       {/* Top Statistical Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Mean Engagement Score (μ)</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Mean Engagement Score (μ)</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.meanScore} / 100</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">Baseline user score</span>
         </div>
 
         <div className="rounded-xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-purple-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Standard Deviation (σ)</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Standard Deviation (σ)</span>
           <div className="mt-2 text-2xl font-bold text-white">±{data.standardDeviation}</div>
           <span className="text-[11px] text-purple-400 mt-1 block">Score volatility indicator</span>
         </div>
 
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Variance (σ²)</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Variance (σ²)</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.variance}</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">Spread across audience</span>
         </div>
 
         <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 to-amber-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Statistical Outliers</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Statistical Outliers</span>
           <div className="mt-2 text-2xl font-bold text-white flex items-center gap-1.5">
             <Zap className="h-5 w-5 text-amber-400" />
             {data.anomaliesDetected.length} Detected
@@ -57,7 +57,7 @@ export function StdDeviationTab({ data }: Props) {
             <BarChart2 className="h-4 w-4 text-cyan-400" />
             <h3 className="text-sm font-semibold text-slate-200">Engagement Score Normal Distribution Curve</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Bell Distribution Simulation</span>
+          <span className="text-xs text-slate-300 font-mono">Bell Distribution Simulation</span>
         </div>
 
         <div className="mt-6 flex items-end justify-between gap-3 h-48 pt-4 px-4">
@@ -81,7 +81,7 @@ export function StdDeviationTab({ data }: Props) {
                     title={`${d.range}: ${d.count.toLocaleString()} sessions (${d.percentage}%)`}
                   />
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono text-center truncate max-w-[90px]">
+                <span className="text-[10px] text-slate-300 font-mono text-center truncate max-w-[90px]">
                   {d.range.split(' ')[0]}
                 </span>
               </div>
@@ -97,13 +97,13 @@ export function StdDeviationTab({ data }: Props) {
             <AlertTriangle className="h-4 w-4 text-amber-400" />
             <h3 className="text-sm font-semibold text-slate-200">Anomalous Telemetry Spikes (Z-Score &gt; 2.0)</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Real-time Anomaly Detection</span>
+          <span className="text-xs text-slate-300 font-mono">Real-time Anomaly Detection</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-sans">
+              <tr className="border-b border-slate-800 text-slate-300 font-sans">
                 <th className="pb-2">Anomaly ID</th>
                 <th className="pb-2">Metric Tracked</th>
                 <th className="pb-2 text-right">Observed Value</th>
@@ -130,7 +130,7 @@ export function StdDeviationTab({ data }: Props) {
                       {anom.severity}
                     </span>
                   </td>
-                  <td className="py-2.5 text-right text-slate-400 font-sans">{anom.timestamp}</td>
+                  <td className="py-2.5 text-right text-slate-300 font-sans">{anom.timestamp}</td>
                 </tr>
               ))}
             </tbody>

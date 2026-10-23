@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
@@ -40,7 +40,7 @@ export default function PrivacyPolicyPage() {
               This Privacy Notice describes how <strong>TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED</strong> (“TRUSTGRID.AI”, “we”, “us” or “our”) collects, uses, protects, and handles personal data in connection with our website and generative AI enterprise platforms.
             </p>
 
-            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-400 border-t border-slate-800/80 pt-4">
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-300 border-t border-slate-800/80 pt-4">
               <div className="flex items-center gap-1.5">
                 <Calendar className="w-4 h-4 text-cyan-400" />
                 <span><strong>Effective Date:</strong> 5 October 2026</span>
@@ -58,31 +58,31 @@ export default function PrivacyPolicyPage() {
         </section>
 
         {/* CONTENT SECTION */}
-        <section className="py-12 md:py-16 bg-slate-950 text-slate-300">
+        <section className="py-12 md:py-16 bg-slate-50 text-slate-700">
           <div className="container mx-auto max-w-4xl px-4 sm:px-6">
             {/* MAIN BODY OF PRIVACY NOTICE */}
-            <article className="space-y-10 leading-relaxed text-slate-300">
+            <article className="space-y-10 leading-relaxed text-slate-700">
                 
                 {/* PREAMBLE */}
-                <div id="company-entity" className="space-y-4 rounded-2xl border border-slate-800 bg-slate-900/40 p-6 md:p-8">
-                  <div className="text-sm font-semibold text-cyan-400 uppercase tracking-wider font-mono">
+                <div id="company-entity" className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6 md:p-8 shadow-xs">
+                  <div className="text-sm font-semibold text-blue-600 uppercase tracking-wider font-mono">
                     TRUSTGRID.AI — Official Notice
                   </div>
-                  <div className="text-xs text-slate-400">
+                  <div className="text-xs text-slate-500">
                     <p><strong>Effective Date:</strong> 5 October 2026</p>
                     <p><strong>Last Updated:</strong> 5 October 2026</p>
                   </div>
                   <p>
                     This Privacy Notice is issued by <strong>TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED</strong> (CIN: U72900KA2021PTC144782), a company incorporated under the Companies Act, 2013, having its registered office at:
                   </p>
-                  <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/20 p-4 text-sm text-cyan-200">
+                  <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-sm text-slate-800">
                     <strong>235, 2nd &amp; 3rd Floor, 13th Cross Rd, Indiranagar, Bengaluru, Karnataka 560038, India</strong>
                   </div>
                   <p>
                     (hereinafter “TRUSTGRID.AI”, “we”, “us” or “our”).
                   </p>
                   <p>
-                    This Notice describes the personal data we process in connection with our website at <a href="https://trustgrid.ai/" className="text-cyan-400 hover:underline">https://trustgrid.ai/</a> and our generative AI-powered Software-as-a-Service platforms and related services, including Global Warranty Chain Management (AI + Blockchain/NFTs), Global Supply Chain Financing (AI + Blockchain + IoT), AI-Powered Accounting and Auditing Co-Pilot, Gen AI Industrial Optimisation, Gen AI + AI Ops solutions (including for Manufacturing, Customer Experience, Knowledge Process Outsourcing and Lean Sigma), Enterprise Smart Agents, and associated AI engineering and video workflow tools (collectively, the “Services”).
+                    This Notice describes the personal data we process in connection with our website at <a href="https://trustgrid.ai/" className="text-blue-600 hover:underline">https://trustgrid.ai/</a> and our generative AI-powered Software-as-a-Service platforms and related services, including Global Warranty Chain Management (AI + Blockchain/NFTs), Global Supply Chain Financing (AI + Blockchain + IoT), AI-Powered Accounting and Auditing Co-Pilot, Gen AI Industrial Optimisation, Gen AI + AI Ops solutions (including for Manufacturing, Customer Experience, Knowledge Process Outsourcing and Lean Sigma), Enterprise Smart Agents, and associated AI engineering and video workflow tools (collectively, the “Services”).
                   </p>
                   <p>
                     We process personal data in accordance with applicable law, including the Digital Personal Data Protection Act, 2023 (India) (“DPDP Act”), the Digital Personal Data Protection Rules, 2025, the General Data Protection Regulation (EU) 2016/679 (“GDPR”), the California Consumer Privacy Act of 2018 as amended by the California Privacy Rights Act of 2020 (“CCPA/CPRA”), and other applicable data protection legislation, to the extent applicable.
@@ -91,7 +91,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 1 */}
                 <section id="section-1" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     1. Data Controller and Contact
                   </h2>
                   <p>
@@ -100,9 +100,9 @@ export default function PrivacyPolicyPage() {
                   <p>
                     For any queries regarding this Notice or to exercise applicable rights, contact:
                   </p>
-                  <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-5 space-y-2 text-sm">
+                  <div className="rounded-xl border border-slate-200 bg-white p-5 space-y-2 text-sm shadow-xs">
                     <p>
-                      <strong>Email:</strong> <a href="mailto:compliance@trustgrid.ai" className="text-cyan-400 hover:underline">compliance@trustgrid.ai</a>
+                      <strong>Email:</strong> <a href="mailto:compliance@trustgrid.ai" className="text-blue-600 hover:underline">compliance@trustgrid.ai</a>
                     </p>
                     <p>
                       <strong>Postal address:</strong> 235, 2nd &amp; 3rd Floor, 13th Cross Rd, Indiranagar, Bengaluru, Karnataka 560038, India
@@ -112,13 +112,13 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 2 */}
                 <section id="section-2" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     2. Categories of Personal Data Processed
                   </h2>
                   <p>
                     We may process the following categories of personal data:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>Identity and contact data, such as name, email address, telephone number, company name and job title.</li>
                     <li>Account and transactional data, such as login credentials and billing information processed through third-party payment processors.</li>
                     <li>Communications data, including correspondence, support requests, enquiries and feedback.</li>
@@ -126,20 +126,20 @@ export default function PrivacyPolicyPage() {
                     <li>Service-related data uploaded or inputted by customers into the Platforms, which may include personal data of third parties.</li>
                     <li>In limited cases, sensitive or special-category personal data only where expressly provided by the data principal and processed on a lawful basis under applicable law.</li>
                   </ul>
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-slate-500 text-sm">
                     We do not intentionally collect personal data of children under 18 years of age.
                   </p>
                 </section>
 
                 {/* SECTION 3 */}
                 <section id="section-3" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     3. Purposes of Processing and Lawful Bases
                   </h2>
                   <p>
                     We process personal data for purposes including:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>Providing, maintaining and supporting the Services.</li>
                     <li>Account administration, billing and customer support.</li>
                     <li>Improving Services, product performance and user experience.</li>
@@ -153,14 +153,14 @@ export default function PrivacyPolicyPage() {
                   <p>
                     Where applicable, processing may rely on performance of a contract, consent, legitimate uses/interests, compliance with legal obligations, or another lawful basis recognised by applicable law.
                   </p>
-                  <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/20 p-4 text-sm text-cyan-200">
+                  <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4 text-sm text-slate-800">
                     Customer data uploaded to the Services is processed according to the documented instructions of the relevant customer where TRUSTGRID.AI acts as a processor and is not used to train our foundational generative AI models unless the customer provides explicit opt-in consent.
                   </div>
                 </section>
 
                 {/* SECTION 4 */}
                 <section id="section-4" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     4. Disclosure of Personal Data
                   </h2>
                   <p>
@@ -169,21 +169,21 @@ export default function PrivacyPolicyPage() {
                   <p>
                     We may disclose personal data:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>To processors and sub-processors providing hosting, analytics, payment, communication, security and related services under appropriate contractual protections.</li>
                     <li>To professional advisers, auditors and consultants subject to confidentiality obligations.</li>
                     <li>Where required by law, regulation, court order or valid legal process.</li>
                     <li>In connection with a merger, acquisition, financing, restructuring or sale of assets, subject to appropriate safeguards.</li>
                     <li>With the data principal’s consent or as otherwise permitted by applicable law.</li>
                   </ul>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-500">
                     A current list of material sub-processors may be made available upon reasonable request, subject to confidentiality and security considerations.
                   </p>
                 </section>
 
                 {/* SECTION 5 */}
                 <section id="section-5" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     5. International Transfers
                   </h2>
                   <p>
@@ -199,13 +199,13 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 6 */}
                 <section id="section-6" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     6. Data Security
                   </h2>
                   <p>
                     We implement reasonable and appropriate technical and organisational measures designed to protect personal data, including, where appropriate:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>Encryption in transit and at rest.</li>
                     <li>Access controls and authentication mechanisms.</li>
                     <li>Multi-factor authentication where supported.</li>
@@ -214,15 +214,15 @@ export default function PrivacyPolicyPage() {
                     <li>Measures designed to prevent unauthorised access, disclosure, alteration or destruction.</li>
                   </ul>
 
-                  <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-950/20 p-5 space-y-2">
-                    <h3 className="text-base font-semibold text-amber-300 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-400" />
+                  <div className="mt-4 rounded-xl border border-amber-300 bg-amber-50/70 p-5 space-y-2">
+                    <h3 className="text-base font-semibold text-amber-900 flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4 text-amber-600" />
                       Disclaimer on Absolute Security
                     </h3>
-                    <p className="text-sm text-amber-100/90 leading-relaxed">
+                    <p className="text-sm text-amber-900/90 leading-relaxed">
                       No method of transmission over the Internet or method of electronic storage is completely secure.
                     </p>
-                    <p className="text-sm text-amber-100/90 leading-relaxed">
+                    <p className="text-sm text-amber-900/90 leading-relaxed">
                       While TRUSTGRID.AI takes reasonable measures to protect personal data, we do not warrant or guarantee absolute security against every possible threat, including sophisticated cyber-attacks, zero-day vulnerabilities, failures of third-party infrastructure, telecommunications failures, or other events beyond our reasonable control.
                     </p>
                   </div>
@@ -230,7 +230,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 7 */}
                 <section id="section-7" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     7. Retention
                   </h2>
                   <p>
@@ -243,13 +243,13 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 8 */}
                 <section id="section-8" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     8. Data Principal Rights
                   </h2>
                   <p>
                     Subject to applicable law, individuals may have rights including:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>Access to personal data.</li>
                     <li>Correction and completion of inaccurate or incomplete data.</li>
                     <li>Erasure/deletion where legally applicable.</li>
@@ -260,16 +260,16 @@ export default function PrivacyPolicyPage() {
                     <li>The right to lodge a complaint with a competent supervisory authority or the Data Protection Board of India, where applicable.</li>
                   </ul>
                   <p>
-                    Requests may be submitted to <a href="mailto:compliance@trustgrid.ai" className="text-cyan-400 font-semibold hover:underline">compliance@trustgrid.ai</a>.
+                    Requests may be submitted to <a href="mailto:compliance@trustgrid.ai" className="text-blue-600 font-semibold hover:underline">compliance@trustgrid.ai</a>.
                   </p>
-                  <p className="text-sm text-slate-400">
+                  <p className="text-sm text-slate-500">
                     We may verify the identity and authority of a requester and may refuse or limit requests where permitted by applicable law, including requests that are manifestly unfounded, excessive or repetitive.
                   </p>
                 </section>
 
                 {/* SECTION 9 */}
                 <section id="section-9" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     9. Cookies and Similar Technologies
                   </h2>
                   <p>
@@ -285,7 +285,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 10 */}
                 <section id="section-10" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     10. Children's Data
                   </h2>
                   <p>
@@ -298,7 +298,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 11 */}
                 <section id="section-11" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     11. Personal Data Breach
                   </h2>
                   <p>
@@ -314,12 +314,12 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 12 */}
                 <section id="section-12" className="space-y-6">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     12. AI-Specific Disclaimers and Safe Harbours
                   </h2>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.1 AI-Generated Outputs
                     </h3>
                     <p>
@@ -334,7 +334,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.2 No Guarantee of Accuracy
                     </h3>
                     <p>
@@ -343,7 +343,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.3 Customer-Provided Data
                     </h3>
                     <p>
@@ -358,7 +358,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.4 Model-Training Safe Harbour
                     </h3>
                     <p>
@@ -370,7 +370,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.5 Blockchain, NFT and IoT Disclaimer
                     </h3>
                     <p>
@@ -388,7 +388,7 @@ export default function PrivacyPolicyPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-slate-100">
+                    <h3 className="text-lg font-semibold text-slate-900">
                       12.6 “As Is” and “As Available”
                     </h3>
                     <p>
@@ -405,7 +405,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 13 */}
                 <section id="section-13" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     13. Third-Party Services, Links and Content
                   </h2>
                   <p>
@@ -421,13 +421,13 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 14 */}
                 <section id="section-14" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     14. Limitation of Liability and General Disclaimers
                   </h2>
                   <p>
                     To the fullest extent permitted by applicable law:
                   </p>
-                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-300">
+                  <ul className="list-disc list-outside pl-6 space-y-2 text-slate-700">
                     <li>
                       TRUSTGRID.AI, its directors, officers, employees, agents and affiliates shall not be liable for indirect, incidental, special, consequential, punitive or exemplary damages arising from or relating to this Notice or the processing of personal data.
                     </li>
@@ -451,7 +451,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 15 */}
                 <section id="section-15" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     15. Changes to this Notice
                   </h2>
                   <p>
@@ -467,7 +467,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 16 */}
                 <section id="section-16" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     16. Governing Law and Jurisdiction
                   </h2>
                   <p>
@@ -480,7 +480,7 @@ export default function PrivacyPolicyPage() {
 
                 {/* SECTION 17 */}
                 <section id="section-17" className="space-y-4">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white border-b border-slate-800 pb-3">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 border-b border-slate-200 pb-3">
                     17. Severability and Related Documents
                   </h2>
                   <p>
@@ -492,19 +492,19 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 {/* CONTACT */}
-                <section id="contact" className="space-y-4 rounded-2xl border border-cyan-500/20 bg-slate-900/60 p-6 md:p-8">
-                  <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                    <Mail className="w-5 h-5 text-cyan-400" />
+                <section id="contact" className="space-y-4 rounded-2xl border border-blue-200 bg-white p-6 md:p-8 shadow-xs">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                    <Mail className="w-5 h-5 text-blue-600" />
                     Contact
                   </h2>
                   <p>
                     For privacy questions, rights requests or complaints:
                   </p>
-                  <div className="space-y-1.5 text-slate-200">
-                    <p className="font-semibold text-white">TRUSTGRID.AI</p>
+                  <div className="space-y-1.5 text-slate-700">
+                    <p className="font-semibold text-slate-900">TRUSTGRID.AI</p>
                     <p>
                       <strong>Email:</strong>{' '}
-                      <a href="mailto:compliance@trustgrid.ai" className="text-cyan-400 hover:underline">
+                      <a href="mailto:compliance@trustgrid.ai" className="text-blue-600 hover:underline">
                         compliance@trustgrid.ai
                       </a>
                     </p>
@@ -515,23 +515,23 @@ export default function PrivacyPolicyPage() {
                 </section>
 
                 {/* LEGAL REVIEW NOTE */}
-                <div className="rounded-xl border border-slate-800 bg-slate-950 p-5 text-xs text-slate-500 leading-relaxed">
+                <div className="rounded-xl border border-slate-200 bg-slate-100 p-5 text-xs text-slate-600 leading-relaxed">
                   <p>
                     <strong>Legal review note:</strong> This notice is based on the supplied TRUSTGRID.AI draft and has been updated with the address provided in this request. It should be reviewed by qualified privacy counsel before publication, particularly for the exact applicability and implementation of the DPDP Act/Rules, GDPR, CCPA/CPRA, sector-specific requirements, retention schedules, cookie/consent implementation, processor/sub-processor arrangements, and any contractual liability caps.
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-slate-800 flex justify-between items-center">
+                <div className="pt-6 border-t border-slate-200 flex justify-between items-center">
                   <Link
                     href="/"
-                    className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400 hover:text-cyan-400 transition-colors"
+                    className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-600 hover:text-blue-600 transition-colors"
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Return to Homepage
                   </Link>
                   <a
                     href="#main-content"
-                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                    className="text-xs text-slate-500 hover:text-slate-800 transition-colors"
                   >
                     Back to top ↑
                   </a>

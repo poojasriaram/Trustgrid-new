@@ -432,7 +432,7 @@ export function ComprehensivePracticeExplorer() {
               >
                 <span className="font-mono text-blue-400 text-[10px] mr-1">{sub.code}</span>
                 <span>{sub.title}</span>
-                <span className="text-[10px] text-slate-400 ml-1.5">({sub.practiceAreas.length})</span>
+                <span className="text-[10px] text-slate-300 ml-1.5">({sub.practiceAreas.length})</span>
               </button>
             ))}
           </div>
@@ -704,18 +704,18 @@ export function ComprehensivePracticeExplorer() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-3">
                 <div className="tg-modal-subbox">
                   <span className="tg-subbox-label">3. KPIs Banked (Financial &amp; Operational Metrics)</span>
-                  <p className="text-emerald-400 font-medium text-sm mt-1">{activeModalData.kpisBanked}</p>
+                  <p className="text-emerald-700 font-semibold text-sm mt-1">{activeModalData.kpisBanked}</p>
                 </div>
                 <div className="tg-modal-subbox">
                   <span className="tg-subbox-label">4. Time to Value (Reference Delivery Velocity)</span>
-                  <p className="text-blue-400 font-mono font-bold text-base mt-1">{activeModalData.timeToValue}</p>
+                  <p className="text-blue-600 font-mono font-bold text-base mt-1">{activeModalData.timeToValue}</p>
                 </div>
               </div>
 
               {/* 5. Value Assurance */}
               <div className="tg-modal-section">
                 <h5 className="tg-modal-section-title">5. Value Assurance &amp; Regulatory Defensibility</h5>
-                <div className="bg-slate-900/80 border border-slate-800 rounded p-3 text-xs font-mono text-slate-300">
+                <div className="bg-slate-50 border border-slate-200 rounded p-3 text-xs font-mono text-slate-700">
                   {activeModalData.valueAssurance}
                 </div>
               </div>
@@ -724,7 +724,7 @@ export function ComprehensivePracticeExplorer() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-3">
                 <div className="tg-modal-subbox">
                   <span className="tg-subbox-label">6. Target Stakeholder / Executive Buyer</span>
-                  <p className="text-white font-semibold text-sm mt-1">{activeModalData.targetStakeholder}</p>
+                  <p className="text-slate-900 font-semibold text-sm mt-1">{activeModalData.targetStakeholder}</p>
                 </div>
                 <div className="tg-modal-subbox">
                   <span className="tg-subbox-label">7. Related Cross-Domain Linkages</span>

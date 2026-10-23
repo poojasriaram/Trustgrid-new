@@ -27,7 +27,7 @@ export function TechProfileTab({ data }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Desktop Dominance</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Desktop Dominance</span>
             <Laptop className="h-4 w-4 text-indigo-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">86.2%</div>
@@ -36,7 +36,7 @@ export function TechProfileTab({ data }: Props) {
 
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Top Operating System</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Top Operating System</span>
             <Monitor className="h-4 w-4 text-cyan-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">macOS (37.7%)</div>
@@ -45,7 +45,7 @@ export function TechProfileTab({ data }: Props) {
 
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Dark Theme Adoption</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Dark Theme Adoption</span>
             <Moon className="h-4 w-4 text-emerald-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">78.5%</div>
@@ -54,7 +54,7 @@ export function TechProfileTab({ data }: Props) {
 
         <div className="rounded-xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-purple-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Top Screen Display</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Top Screen Display</span>
             <Maximize2 className="h-4 w-4 text-purple-400" />
           </div>
           <div className="mt-2 text-xl font-bold text-white">1920×1080 FHD</div>
@@ -71,7 +71,7 @@ export function TechProfileTab({ data }: Props) {
               <Laptop className="h-4 w-4 text-indigo-400" />
               <h3 className="text-sm font-semibold text-slate-200">Operating System Footprint</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">Ranked by Volume</span>
+            <span className="text-xs text-slate-300 font-mono">Ranked by Volume</span>
           </div>
 
           <div className="mt-4 space-y-3.5">
@@ -104,7 +104,7 @@ export function TechProfileTab({ data }: Props) {
               <Globe className="h-4 w-4 text-cyan-400" />
               <h3 className="text-sm font-semibold text-slate-200">Browser Distribution</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">Chromium & WebKit</span>
+            <span className="text-xs text-slate-300 font-mono">Chromium & WebKit</span>
           </div>
 
           <div className="mt-4 space-y-3.5">

@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import Link from 'next/link'
 import {
   ArrowUpRight,
@@ -159,7 +159,7 @@ export default function PartnersPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+              <p className="text-[11px] text-slate-600 border-t border-slate-100 pt-3">
                 Dynamic routing, fine-tuning &amp; model distillation interoperability.
               </p>
             </div>
@@ -180,7 +180,7 @@ export default function PartnersPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+              <p className="text-[11px] text-slate-600 border-t border-slate-100 pt-3">
                 Air-gapped enclaves &amp; multi-cloud confidential compute topologies.
               </p>
             </div>
@@ -201,7 +201,7 @@ export default function PartnersPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+              <p className="text-[11px] text-slate-600 border-t border-slate-100 pt-3">
                 Distributed data-parallel DAGs &amp; dynamic KV cache optimization.
               </p>
             </div>
@@ -222,7 +222,7 @@ export default function PartnersPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+              <p className="text-[11px] text-slate-600 border-t border-slate-100 pt-3">
                 K8s device plugins, DRA scheduling &amp; Slurm co-orchestration.
               </p>
             </div>
@@ -243,7 +243,7 @@ export default function PartnersPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-[11px] text-slate-500 border-t border-slate-100 pt-3">
+              <p className="text-[11px] text-slate-600 border-t border-slate-100 pt-3">
                 Hardware-level kernel tuning, FP8 precision &amp; RoCEv2 AllReduce.
               </p>
             </div>

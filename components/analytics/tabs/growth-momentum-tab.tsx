@@ -23,7 +23,7 @@ export function GrowthMomentumTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Growth Trajectory</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Growth Trajectory</span>
           <div className="mt-2 text-2xl font-bold text-white flex items-center gap-2">
             <ArrowUpRight className="h-6 w-6 text-emerald-400" />
             +{data.overallGrowthPct}%
@@ -31,7 +31,7 @@ export function GrowthMomentumTab({ data }: Props) {
           <span className="text-[11px] text-emerald-400 mt-1 block">Week-over-week velocity</span>
         </div>
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Current Velocity Tier</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Current Velocity Tier</span>
           <div className="mt-2 text-2xl font-bold text-white flex items-center gap-2">
             <Zap className="h-5 w-5 text-indigo-400" />
             {data.currentVelocity} Surge
@@ -39,7 +39,7 @@ export function GrowthMomentumTab({ data }: Props) {
           <span className="text-[11px] text-indigo-400 mt-1 block">High pipeline expansion</span>
         </div>
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Cumulative Telemetry Volume</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Cumulative Telemetry Volume</span>
           <div className="mt-2 text-2xl font-bold text-white">
             {data.timeSeries[data.timeSeries.length - 1]?.cumulative.toLocaleString() || '39,410'}
           </div>
@@ -63,7 +63,7 @@ export function GrowthMomentumTab({ data }: Props) {
                 className={`px-3 py-1 rounded capitalize transition-all ${
                   granularity === g
                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-semibold'
-                    : 'text-slate-400 hover:text-white'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 {g}
@@ -80,7 +80,7 @@ export function GrowthMomentumTab({ data }: Props) {
 
             return (
               <div key={idx} className="flex-1 flex flex-col items-center gap-1.5 group">
-                <div className="text-[10px] font-mono text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="text-[10px] font-mono text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity">
                   {item.sessions.toLocaleString()}
                 </div>
                 <div className="w-full flex items-end justify-center h-36">
@@ -90,7 +90,7 @@ export function GrowthMomentumTab({ data }: Props) {
                     title={`Date: ${item.date}\nSessions: ${item.sessions.toLocaleString()}\nUnique: ${item.uniqueVisitors.toLocaleString()}\nLeads: ${item.leads}`}
                   />
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono">{item.date}</span>
+                <span className="text-[10px] text-slate-300 font-mono">{item.date}</span>
                 <span
                   className={`text-[9px] font-mono flex items-center ${
                     isPositive ? 'text-emerald-400' : 'text-rose-400'
@@ -109,13 +109,13 @@ export function GrowthMomentumTab({ data }: Props) {
       <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl backdrop-blur-md">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <h3 className="text-sm font-semibold text-slate-200">Temporal Trajectory Telemetry</h3>
-          <span className="text-xs text-slate-400 font-mono">Continuous Tracking</span>
+          <span className="text-xs text-slate-300 font-mono">Continuous Tracking</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-sans">
+              <tr className="border-b border-slate-800 text-slate-300 font-sans">
                 <th className="pb-2">Date / Period</th>
                 <th className="pb-2 text-right">Sessions</th>
                 <th className="pb-2 text-right">Cumulative Sessions</th>

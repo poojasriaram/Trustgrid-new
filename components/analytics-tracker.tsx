@@ -45,6 +45,11 @@ function AnalyticsInner() {
     if (lastTrackedUrlRef.current !== currentUrl) {
       lastTrackedUrlRef.current = currentUrl
       trackPageView(pathname, typeof document !== 'undefined' ? document.title : '')
+      if (typeof window !== 'undefined' && (window as any).clarity) {
+        try {
+          (window as any).clarity('set', 'page', pathname)
+        } catch (e) {}
+      }
     }
   }, [pathname, searchParams])
 

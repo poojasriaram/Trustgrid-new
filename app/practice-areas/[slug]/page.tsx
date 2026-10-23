@@ -387,7 +387,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                         <span className="pa-phase-badge">Phase {idx + 1}</span>
                         <h4 className="text-sm font-bold text-white">{ph.name}</h4>
                       </div>
-                      <p className="text-slate-400 text-xs leading-relaxed">{ph.detail}</p>
+                      <p className="text-slate-300 text-xs leading-relaxed">{ph.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -440,7 +440,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                     <span className="text-lg font-bold text-white block mb-1">
                       {kpi.metric}
                     </span>
-                    <p className="text-slate-400 text-xs leading-relaxed">
+                    <p className="text-slate-300 text-xs leading-relaxed">
                       {kpi.description}
                     </p>
                   </div>
@@ -538,7 +538,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                       <h4 className="text-sm font-bold text-white">{opt.model}</h4>
                       <span className="pa-timeline-badge">{opt.duration}</span>
                     </div>
-                    <p className="text-slate-400 text-xs">{opt.focus}</p>
+                    <p className="text-slate-300 text-xs">{opt.focus}</p>
                   </div>
                 ))}
               </div>
@@ -597,7 +597,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
               <h3 className="text-base font-bold text-white mb-2">
                 Initiate Practice Engagement
               </h3>
-              <p className="text-slate-400 text-xs mb-4 leading-relaxed">
+              <p className="text-slate-300 text-xs mb-4 leading-relaxed">
                 Connect directly with our {practice.shortTitle} lead architect to evaluate your technical constraints.
               </p>
               <div className="space-y-3">
@@ -618,7 +618,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
 
             {/* Technologies & Applicable Standards */}
             <div className="pa-sidebar-box">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block mb-3">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-300 font-bold block mb-3">
                 Technologies &amp; Applicable Standards
               </span>
               <div className="flex flex-wrap gap-1.5">
@@ -632,7 +632,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
 
             {/* Target Industries */}
             <div className="pa-sidebar-box">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block mb-3">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-300 font-bold block mb-3">
                 Applicable Industries
               </span>
               <div className="space-y-2">
@@ -643,7 +643,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                     className="flex items-center justify-between text-xs text-slate-300 hover:text-blue-400 py-1.5 border-b border-slate-800 last:border-0 transition-colors"
                   >
                     <span>{ind.name}</span>
-                    <ArrowUpRight size={13} className="text-slate-500" />
+                    <ArrowUpRight size={13} className="text-slate-300" />
                   </Link>
                 ))}
               </div>
@@ -651,7 +651,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
 
             {/* Related Practices */}
             <div className="pa-sidebar-box">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block mb-3">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-slate-300 font-bold block mb-3">
                 Related Practice Areas
               </span>
               <div className="space-y-2">
@@ -662,7 +662,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
                     className="flex items-center justify-between text-xs text-slate-300 hover:text-cyan-400 py-1.5 border-b border-slate-800 last:border-0 transition-colors"
                   >
                     <span>{rp.title}</span>
-                    <ArrowRight size={13} className="text-slate-500" />
+                    <ArrowRight size={13} className="text-slate-300" />
                   </Link>
                 ))}
               </div>
@@ -678,7 +678,7 @@ export default async function PracticeDetailPage({ params }: PageProps) {
           <h2 className="text-3xl font-bold text-white">
             Schedule a {practice.shortTitle} Diagnostic
           </h2>
-          <p className="text-slate-400 text-sm max-w-xl mx-auto mt-2 leading-relaxed">
+          <p className="text-slate-300 text-sm max-w-xl mx-auto mt-2 leading-relaxed">
             Our systems engineers assess your workload topology, identify throughput or governance bottlenecks, and map out a fixed-duration proof of execution.
           </p>
 

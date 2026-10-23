@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -107,7 +107,7 @@ export function IndustryVerticalLayout({
             {industry.heroSubtitle || industry.summary}
           </p>
 
-          <div className="mt-4 text-xs sm:text-sm font-mono text-slate-400 max-w-2xl mx-auto flex items-center justify-center gap-2 flex-wrap">
+          <div className="mt-4 text-xs sm:text-sm font-mono text-slate-200 max-w-2xl mx-auto flex items-center justify-center gap-2 flex-wrap">
             <span className="text-blue-400 font-semibold">Strategic Thesis:</span>
             <span>{industry.tagline}</span>
           </div>
@@ -160,7 +160,7 @@ export function IndustryVerticalLayout({
                     <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       <IconComponent size={20} />
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 font-bold uppercase tracking-wider">
+                    <span className="text-[10px] font-mono text-slate-600 font-bold uppercase tracking-wider">
                       Metric 0{sIdx + 1}
                     </span>
                   </div>
@@ -597,7 +597,7 @@ export function IndustryVerticalLayout({
                 <div className="text-3xl font-extrabold text-white font-mono my-2 tracking-tight">
                   {out.value}
                 </div>
-                <span className="text-[11px] text-slate-400 leading-snug">
+                <span className="text-[11px] text-slate-300 leading-snug">
                   {out.context}
                 </span>
               </div>
@@ -703,7 +703,7 @@ export function IndustryVerticalLayout({
               >
                 <ArrowLeft size={16} className="text-blue-600" />
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 block uppercase">
+                  <span className="text-[10px] font-mono text-slate-600 block uppercase font-semibold">
                     Previous Vertical
                   </span>
                   <span className="text-xs font-bold text-slate-900">{prevIndustry.name}</span>
@@ -721,7 +721,7 @@ export function IndustryVerticalLayout({
                 className="flex items-center gap-3 p-3 px-4 rounded-xl border border-slate-200 bg-white hover:border-blue-300 transition-all text-right w-full sm:w-auto justify-end"
               >
                 <div>
-                  <span className="text-[10px] font-mono text-slate-400 block uppercase">
+                  <span className="text-[10px] font-mono text-slate-600 block uppercase font-semibold">
                     Next Vertical
                   </span>
                   <span className="text-xs font-bold text-slate-900">{nextIndustry.name}</span>

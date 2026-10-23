@@ -26,19 +26,19 @@ export function SankeyFlowTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Navigation Multi-Touch Paths</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Navigation Multi-Touch Paths</span>
           <div className="mt-2 text-2xl font-bold text-white">5-Step Sequential Journey</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">Source → Entry → Page → CTA → Lead</span>
         </div>
 
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Top Navigation Sequence</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Top Navigation Sequence</span>
           <div className="mt-2 text-sm font-bold text-white truncate">Google Ads → AI Factory → Diagnostic</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">2,450 completed journeys</span>
         </div>
 
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Graph Transition Links</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Graph Transition Links</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.links.length} Tracked Bridges</div>
           <span className="text-[11px] text-emerald-400 mt-1 block">Continuous path reconstruction</span>
         </div>
@@ -51,7 +51,7 @@ export function SankeyFlowTab({ data }: Props) {
             <GitFork className="h-4 w-4 text-cyan-400" />
             <h3 className="text-sm font-semibold text-slate-200">Visitor Journey Navigation Flow (Sankey Graph)</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">5 Progression Stages</span>
+          <span className="text-xs text-slate-300 font-mono">5 Progression Stages</span>
         </div>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-5 gap-4">
@@ -154,13 +154,13 @@ export function SankeyFlowTab({ data }: Props) {
             <Compass className="h-4 w-4 text-emerald-400" />
             <h3 className="text-sm font-semibold text-slate-200">High-Converting Visitor Paths</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Ranked by Volume</span>
+          <span className="text-xs text-slate-300 font-mono">Ranked by Volume</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-sans">
+              <tr className="border-b border-slate-800 text-slate-300 font-sans">
                 <th className="pb-2">Path Trajectory Sequence</th>
                 <th className="pb-2 text-right">Volume</th>
                 <th className="pb-2 text-right">Drop-off Rate</th>
@@ -174,7 +174,7 @@ export function SankeyFlowTab({ data }: Props) {
                     <span>{p.path}</span>
                   </td>
                   <td className="py-3 text-right text-emerald-400 font-bold">{p.count.toLocaleString()}</td>
-                  <td className="py-3 text-right text-slate-400">{p.dropRate}%</td>
+                  <td className="py-3 text-right text-slate-300">{p.dropRate}%</td>
                 </tr>
               ))}
             </tbody>

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -118,9 +118,9 @@ export function AgenticFactoryCapabilities() {
                 <div>
                   <span className="text-[10px] font-bold text-cyan-400 block mb-1 uppercase tracking-wider">{node.badge}</span>
                   <div className="text-xs font-black text-white mb-1">{node.title}</div>
-                  <div className="text-[10px] text-slate-400 leading-snug">{node.desc}</div>
+                  <div className="text-[10px] text-slate-300 leading-snug">{node.desc}</div>
                 </div>
-                <div className="mt-2 text-[10px] font-mono text-slate-500 font-semibold">Stage {node.step}</div>
+                <div className="mt-2 text-[10px] font-mono text-slate-300 font-semibold">Stage {node.step}</div>
               </div>
             ))}
           </div>

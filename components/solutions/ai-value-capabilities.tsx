@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -269,7 +269,7 @@ export function AIValueCapabilities() {
 
               {/* Handbook Ratio Equation */}
               <div className="p-4 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-center">
-                <span className="text-[10px] text-slate-400 uppercase tracking-widest block mb-2">Value Engineering Ratio</span>
+                <span className="text-[10px] text-slate-300 uppercase tracking-widest block mb-2">Value Engineering Ratio</span>
                 <div className="text-xs sm:text-sm font-bold text-cyan-400 pb-1 border-b border-slate-700 inline-block px-3">
                   DECISIONS VALUE × ACCURACY × SPEED
                 </div>
@@ -294,7 +294,7 @@ export function AIValueCapabilities() {
                 &ldquo;Do not use an LLM if a rule will do. Do not use a large model where a small model passes MSA.&rdquo;
               </blockquote>
 
-              <p className="text-[11px] text-slate-400 mb-4 leading-relaxed">
+              <p className="text-[11px] text-slate-300 mb-4 leading-relaxed">
                 Every operational event terminates at the cheapest sufficient intelligence tier, while ambiguous, high-variance, or higher-risk cases escalate upward.
               </p>
 
@@ -393,7 +393,7 @@ export function AIValueCapabilities() {
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-blue-400 font-mono">L1 — SHADOW</span>
-                    <span className="text-[10px] text-slate-400">Observe Only</span>
+                    <span className="text-[10px] text-slate-300">Observe Only</span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-0.5">Recommend + log only; zero automated physical actions.</p>
                 </div>
@@ -401,7 +401,7 @@ export function AIValueCapabilities() {
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-cyan-400 font-mono">L2 — COPILOT</span>
-                    <span className="text-[10px] text-slate-400">Operator Gated</span>
+                    <span className="text-[10px] text-slate-300">Operator Gated</span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-0.5">One-tap accept / reject by line operator or technician.</p>
                 </div>
@@ -409,7 +409,7 @@ export function AIValueCapabilities() {
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-indigo-400 font-mono">L3 — BOUNDED</span>
-                    <span className="text-[10px] text-slate-400">Low-Risk Rules</span>
+                    <span className="text-[10px] text-slate-300">Low-Risk Rules</span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-0.5">Validated low-risk automated adjustments within strict safety envelopes.</p>
                 </div>
@@ -417,7 +417,7 @@ export function AIValueCapabilities() {
                 <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700">
                   <div className="flex items-center justify-between text-xs font-bold">
                     <span className="text-purple-400 font-mono">L4 — ASSISTANT</span>
-                    <span className="text-[10px] text-slate-400">Evidence Packet</span>
+                    <span className="text-[10px] text-slate-300">Evidence Packet</span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-0.5">Comprehensive evidence packet compiled + human confirmation before execution.</p>
                 </div>
@@ -432,7 +432,7 @@ export function AIValueCapabilities() {
               </div>
             </div>
 
-            <span className="text-[10px] text-slate-400 font-mono block mt-4 pt-3 border-t border-slate-800">
+            <span className="text-[10px] text-slate-300 font-mono block mt-4 pt-3 border-t border-slate-800">
               *L5 represents managed, bounded autonomy—never unrestricted execution.
             </span>
           </div>
@@ -507,11 +507,11 @@ export function AIValueCapabilities() {
                 <div className="text-indigo-300">3. AUTOMATE (Governed Execution)</div>
                 <div className="text-emerald-300">4. REALISE VALUE (Book ROI)</div>
                 <div className="text-purple-300 font-bold">5. RE-MAP CONSTRAINT (Locate next bottleneck)</div>
-                <div className="text-slate-400">↺ REPEAT (Exponential Compounding)</div>
+                <div className="text-slate-300">↺ REPEAT (Exponential Compounding)</div>
               </div>
             </div>
 
-            <p className="text-[11px] text-slate-400 pt-3 border-t border-slate-800">
+            <p className="text-[11px] text-slate-300 pt-3 border-t border-slate-800">
               The objective is a continuously self-evolving operational improvement engine where capacity freed in cycle $N$ directly funds telemetry in cycle $N+1$.
             </p>
           </div>
@@ -789,25 +789,25 @@ export function AIValueCapabilities() {
             <div className="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700">
               <span className="text-xs font-mono font-bold text-rose-400 block mb-1">BAND 0</span>
               <strong className="text-white block mb-0.5">Hard Safety Interlocks</strong>
-              <p className="text-[11px] text-slate-400">Strict regulatory, chemical, and physical safety limits. Zero AI overrides permitted.</p>
+              <p className="text-[11px] text-slate-300">Strict regulatory, chemical, and physical safety limits. Zero AI overrides permitted.</p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700">
               <span className="text-xs font-mono font-bold text-cyan-400 block mb-1">BAND 1–2</span>
               <strong className="text-white block mb-0.5">Routine Reversible Actions</strong>
-              <p className="text-[11px] text-slate-400">Automated micro-adjustments, dynamic alerts, and reversible WIP routing.</p>
+              <p className="text-[11px] text-slate-300">Automated micro-adjustments, dynamic alerts, and reversible WIP routing.</p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700">
               <span className="text-xs font-mono font-bold text-indigo-400 block mb-1">BAND 3</span>
               <strong className="text-white block mb-0.5">Medium-Risk Confirmation</strong>
-              <p className="text-[11px] text-slate-400">Requires line supervisor confirmation with packaged evidence dossier.</p>
+              <p className="text-[11px] text-slate-300">Requires line supervisor confirmation with packaged evidence dossier.</p>
             </div>
 
             <div className="p-3.5 rounded-xl bg-slate-800/90 border border-slate-700">
               <span className="text-xs font-mono font-bold text-purple-400 block mb-1">BAND 4–5</span>
               <strong className="text-white block mb-0.5">Executive &amp; Manager Sign-off</strong>
-              <p className="text-[11px] text-slate-400">High-consequence decisions, line shutdowns, and contractual dispatch changes.</p>
+              <p className="text-[11px] text-slate-300">High-consequence decisions, line shutdowns, and contractual dispatch changes.</p>
             </div>
           </div>
         </div>

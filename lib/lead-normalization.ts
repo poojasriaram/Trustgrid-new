@@ -1,4 +1,4 @@
-﻿/**
+/**
  * TRUSTGRID.AI - Central Lead Normalization & Attribution Engine
  * Handles Lead ID generation, classification, channel attribution, and structured formatting.
  */
@@ -114,6 +114,9 @@ export interface NormalizedLead {
   channelAttribution: ChannelAttribution
   timestampIso: string
   timestampFormatted: string
+  productionOrTest: 'PRODUCTION' | 'TEST'
+  isTestLead: boolean
+  testReason?: string
   jiraSummary: string
   jiraDescription: string
   rawPayload: Record<string, any>
@@ -289,9 +292,34 @@ export function derivePageName(pageUrl?: string): string {
  * Normalize complete lead record from any form/chatbot input
  */
 export function normalizeLead(input: RawLeadInput): NormalizedLead {
-  const leadId = input.submissionId && input.submissionId.startsWith('TG-')
+  const name = (input.name || 'Enterprise Inquiry').trim()
+  const email = (input.email || '').trim()
+  const phone = (input.mobile || input.phone || '').trim()
+  const company = (input.currentPreviousCompany || input.company || 'Enterprise Organization').trim()
+  const requirement = (input.requirement || input.message || `Inquiry submitted via ${input.formName || 'Website'}`).trim()
+  const message = (input.message || input.requirement || '').trim()
+
+  // Evaluate Lead Classification: PRODUCTION vs TEST
+  const testAudit = detectTestLead({
+    name,
+    email,
+    company,
+    message: `${requirement} ${message}`,
+    phone,
+    formType: input.form_type || input.formType,
+    submissionId: input.submissionId
+  })
+
+  const isTestLead = testAudit.isTestLead || input.form_type === 'TEST' || (input as any).isTest === true
+  const productionOrTest: 'PRODUCTION' | 'TEST' = isTestLead ? 'TEST' : 'PRODUCTION'
+
+  let leadId = input.submissionId && input.submissionId.startsWith('TG-')
     ? input.submissionId
-    : generateLeadId()
+    : generateLeadId(isTestLead ? 'TG-TEST' : 'TG')
+
+  if (isTestLead && !leadId.startsWith('TG-TEST')) {
+    leadId = leadId.replace(/^TG-/, 'TG-TEST-')
+  }
 
   const siteOrigin = 'TG'
   const { type: leadType, isSales: isSalesLead, label: leadTypeLabel } = classifyLeadType(input)
@@ -315,14 +343,8 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
     ? input.challenges.join(', ')
     : input.challenges || ''
 
-  const name = (input.name || 'Enterprise Inquiry').trim()
-  const email = (input.email || '').trim()
-  const phone = (input.mobile || input.phone || '').trim()
-  const company = (input.currentPreviousCompany || input.company || 'Enterprise Organization').trim()
   const jobTitle = (input.designation || input.role || (leadType === 'CAREER' ? 'Applicant' : 'Executive / Lead')).trim()
   const industry = (input.industry || 'Cross-Industry').trim()
-  const requirement = (input.requirement || input.message || `Inquiry submitted via ${input.formName || 'Website'}`).trim()
-  const message = (input.message || input.requirement || '').trim()
 
   const now = new Date()
   const timestampIso = now.toISOString()
@@ -336,9 +358,12 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
     timeZone: 'Asia/Kolkata'
   }).format(now) + ' IST'
 
-  // Build Parent Jira Issue Summary: [TG] [TG-YYYYMMDD-XXXX] <Lead Type> – <Company Name or Solution>
+  // Build Parent Jira Issue Summary:
+  // Production: [TG] [TG-YYYYMMDD-XXXX] <Lead Type> – <Company Name or Solution>
+  // Test: [TG-TEST] [TG-TEST-YYYYMMDD-XXXX] <Lead Type> – <Company Name or Solution>
   const companyDisplay = company && company !== 'Enterprise Organization' ? company : solutionsStr || 'Enterprise AI'
-  const jiraSummary = `[TG] [${leadId}] ${leadTypeLabel} – ${companyDisplay}`
+  const prefix = isTestLead ? '[TG-TEST]' : '[TG]'
+  const jiraSummary = `${prefix} [${leadId}] ${leadTypeLabel} – ${companyDisplay}`
 
   // Build Structured Clean Jira Description
   const jiraDescription = `=========================================
@@ -347,6 +372,9 @@ SITE ORIGIN: TG (TRUSTGRID.AI)
 
 Lead ID:
 ${leadId}
+
+Lead Classification:
+${productionOrTest} (${isTestLead ? 'Test & QA Record' : 'Live Production Lead'})
 
 Lead Type:
 ${leadTypeLabel}
@@ -429,8 +457,86 @@ ${timestampFormatted}`
     channelAttribution,
     timestampIso,
     timestampFormatted,
+    productionOrTest,
+    isTestLead,
+    testReason: isTestLead ? testAudit.reason : undefined,
     jiraSummary,
     jiraDescription,
-    rawPayload: { ...input, leadId, siteOrigin: 'TG' }
+    rawPayload: { ...input, leadId, siteOrigin: 'TG', productionOrTest }
+  }
+}
+
+export interface TestLeadResult {
+  isTestLead: boolean
+  matchedIndicators: string[]
+  reason: string
+}
+
+/**
+ * Detects whether a lead is a test / QA lead based on standard indicators
+ * Indicators: TG-TEST, test, demo, sample, qa, dummy, automation, internal, sandbox, uat, verification
+ */
+export function detectTestLead(lead: {
+  name?: string
+  email?: string
+  company?: string
+  message?: string
+  phone?: string
+  formType?: string
+  submissionId?: string
+}): TestLeadResult {
+  const indicators = [
+    'tg-test',
+    'test',
+    'demo',
+    'sample',
+    'qa',
+    'dummy',
+    'automation',
+    'internal',
+    'sandbox',
+    'uat',
+    'verification'
+  ]
+  const matchedIndicators: string[] = []
+
+  const check = (text?: string, fieldName?: string) => {
+    if (!text) return
+    const lower = text.toLowerCase()
+    for (const ind of indicators) {
+      const regex = new RegExp(`(^|[^a-zA-Z0-9])${ind}([^a-zA-Z0-9]|$)`, 'i')
+      if (regex.test(lower) || lower.includes(`${ind}@`) || lower.includes(`@${ind}.`) || lower.includes(`+${ind}@`)) {
+        matchedIndicators.push(`${fieldName}: contains indicator '${ind}'`)
+      }
+    }
+  }
+
+  check(lead.name, 'Name')
+  check(lead.email, 'Email')
+  check(lead.company, 'Company')
+  check(lead.message, 'Message')
+  check(lead.submissionId, 'Submission ID')
+  check(lead.formType, 'Form Type')
+
+  if (lead.email) {
+    const emailLower = lead.email.toLowerCase()
+    if (
+      emailLower.endsWith('@example.com') ||
+      emailLower.endsWith('@example.in') ||
+      emailLower.endsWith('@test.com') ||
+      emailLower.endsWith('@test.local') ||
+      emailLower.endsWith('@mailinator.com') ||
+      emailLower.endsWith('@dummy.com') ||
+      emailLower.includes('-test.com')
+    ) {
+      matchedIndicators.push('Email: test/disposable domain')
+    }
+  }
+
+  const isTestLead = matchedIndicators.length > 0
+  return {
+    isTestLead,
+    matchedIndicators,
+    reason: isTestLead ? matchedIndicators.join('; ') : 'Production lead (no test patterns detected)'
   }
 }

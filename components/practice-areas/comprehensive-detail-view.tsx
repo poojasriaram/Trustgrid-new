@@ -98,7 +98,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
               <span className={`pa-category-pill ${isCross ? 'pa-pill-cross' : 'pa-pill-tech'}`}>
                 {categoryBadge}
               </span>
-              <span className="text-xs font-mono font-bold text-slate-400 bg-slate-900/80 px-2.5 py-1 rounded border border-slate-800">
+              <span className="text-xs font-mono font-bold text-slate-300 bg-slate-900/80 px-2.5 py-1 rounded border border-slate-800">
                 Code {area.code}
               </span>
               {!isCross && (
@@ -125,25 +125,25 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
             <div className="flex flex-wrap items-center gap-3 mt-6 pt-6 border-t border-slate-800/80">
               <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
                 <Clock size={13} className="text-blue-400" />
-                <span className="text-slate-400">Time to Value:</span>
+                <span className="text-slate-300">Time to Value:</span>
                 <strong className="text-white font-mono">{area.timeToValue}</strong>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
                 <UserCheck size={13} className="text-cyan-400" />
-                <span className="text-slate-400">Target Stakeholder:</span>
+                <span className="text-slate-300">Target Stakeholder:</span>
                 <strong className="text-white">{stakeholder}</strong>
               </div>
               {!isCross && (
                 <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
                   <Activity size={13} className="text-emerald-400" />
-                  <span className="text-slate-400">Pool Size:</span>
+                  <span className="text-slate-300">Pool Size:</span>
                   <strong className="text-white font-mono">{data.industry.poolSize}</strong>
                 </div>
               )}
               {isCross && (
                 <div className="flex items-center gap-1.5 text-xs text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
                   <ShieldCheck size={13} className="text-indigo-400" />
-                  <span className="text-slate-400">Budget:</span>
+                  <span className="text-slate-300">Budget:</span>
                   <strong className="text-white">{data.practice.budget}</strong>
                 </div>
               )}
@@ -178,7 +178,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <p className="text-slate-200 text-sm leading-relaxed">
                   {area.overview || `Targeted enterprise automation addressing operational bottlenecks in ${subTitle}. Engineered for direct integration into production environments with deterministic controls.`}
                 </p>
-                <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs text-slate-400">
+                <div className="mt-4 pt-4 border-t border-slate-800/80 flex flex-wrap items-center justify-between text-xs text-slate-300">
                   <span>Parent Industry / Function: <strong className="text-white">{parentTitle}</strong></span>
                   <span>Sub-Domain: <strong className="text-cyan-400">{subTitle}</strong></span>
                 </div>
@@ -191,7 +191,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <span className="pa-heading-bar" />
                 2. Solution Acceleration &amp; Engineering Capability
               </h2>
-              <p className="text-slate-400 text-xs mt-2">
+              <p className="text-slate-300 text-xs mt-2">
                 Reusable AI engineering assets, connectors, and model libraries deployed by Forward Deployed Engineers (FDEs) — and the permanent capability the client retains post-engagement.
               </p>
 
@@ -236,7 +236,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <span className="pa-heading-bar" />
                 3. Measurable KPIs Banked
               </h2>
-              <p className="text-slate-400 text-xs mt-2">
+              <p className="text-slate-300 text-xs mt-2">
                 Performance indicators measured, validated, and signed off against a verified financial baseline.
               </p>
 
@@ -271,12 +271,12 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                     <span className="text-2xl font-bold font-mono text-white">
                       {area.timeToValue}
                     </span>
-                    <span className="text-xs text-slate-400 block mt-0.5">
+                    <span className="text-xs text-slate-300 block mt-0.5">
                       Kickoff to first Finance-signed benefit entry at reference-client pace
                     </span>
                   </div>
                 </div>
-                <div className="text-xs text-slate-400 bg-slate-950 px-3 py-2 rounded border border-slate-800">
+                <div className="text-xs text-slate-300 bg-slate-950 px-3 py-2 rounded border border-slate-800">
                   Assumes week 1 data access &amp; named client owner
                 </div>
               </div>
@@ -288,7 +288,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <span className="pa-heading-bar" />
                 5. Value Assurance &amp; Regulatory Stack
               </h2>
-              <p className="text-slate-400 text-xs mt-2">
+              <p className="text-slate-300 text-xs mt-2">
                 Standards, regulatory requirements, controls, governance, and audit evidence making the solution mathematically defensible.
               </p>
 
@@ -316,7 +316,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <span className="pa-heading-bar" />
                 6. Related Practices &amp; Attachment Architecture
               </h2>
-              <p className="text-slate-400 text-xs mt-2">
+              <p className="text-slate-300 text-xs mt-2">
                 {isCross
                   ? 'Vertical industries into which this horizontal practice frequently attaches.'
                   : 'Horizontal cross-industry capabilities that accelerate and govern this vertical practice.'}
@@ -326,7 +326,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                 <div className="flex flex-wrap gap-2">
                   {isCross ? (
                     <div className="space-y-3 w-full">
-                      <span className="text-xs text-slate-400 block font-mono">
+                      <span className="text-xs text-slate-300 block font-mono">
                         Attach Profile: <strong className="text-white">{data.practice.attachVerticals.join(', ')}</strong>
                       </span>
                       <div className="flex flex-wrap gap-2">
@@ -364,7 +364,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
               </h2>
               <div className="mt-4 p-5 rounded-xl bg-slate-900/60 border border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-slate-400 font-bold block mb-1">
+                  <span className="text-[10px] font-mono uppercase text-slate-300 font-bold block mb-1">
                     Primary Executive Buyer
                   </span>
                   <div className="text-sm font-bold text-white flex items-center gap-2">
@@ -373,7 +373,7 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
                   </div>
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono uppercase text-slate-400 font-bold block mb-1">
+                  <span className="text-[10px] font-mono uppercase text-slate-300 font-bold block mb-1">
                     Budget / P&amp;L Alignment
                   </span>
                   <div className="text-sm font-semibold text-slate-200">
@@ -422,24 +422,24 @@ export function ComprehensiveDetailView({ data }: ComprehensiveDetailViewProps) 
               </h3>
               <div className="space-y-3 text-xs">
                 <div className="flex justify-between py-1.5 border-b border-slate-800">
-                  <span className="text-slate-400">Code:</span>
+                  <span className="text-slate-300">Code:</span>
                   <span className="font-mono font-bold text-white">{area.code}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-800">
-                  <span className="text-slate-400">Category:</span>
+                  <span className="text-slate-300">Category:</span>
                   <span className="text-slate-200">{isCross ? 'Cross-Industry' : 'Industry Vertical'}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-800">
-                  <span className="text-slate-400">Time to Value:</span>
+                  <span className="text-slate-300">Time to Value:</span>
                   <span className="font-mono text-emerald-400 font-semibold">{area.timeToValue}</span>
                 </div>
                 <div className="flex justify-between py-1.5 border-b border-slate-800">
-                  <span className="text-slate-400">Buyer:</span>
+                  <span className="text-slate-300">Buyer:</span>
                   <span className="text-slate-200 truncate max-w-[180px]">{stakeholder}</span>
                 </div>
                 {!isCross && (
                   <div className="flex justify-between py-1.5 border-b border-slate-800">
-                    <span className="text-slate-400">Sector Pool:</span>
+                    <span className="text-slate-300">Sector Pool:</span>
                     <span className="font-mono text-white">{data.industry.poolSize}</span>
                   </div>
                 )}

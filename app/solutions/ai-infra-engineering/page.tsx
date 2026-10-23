@@ -489,11 +489,11 @@ export default function AIInfraEngineeringPage() {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-6">
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-300 mb-6">
             <Link href="/" className="hover:text-cyan-400 transition-colors">Home</Link>
-            <ChevronRight size={12} className="text-slate-600" />
+            <ChevronRight size={12} className="text-slate-500" />
             <Link href="/#offerings" className="hover:text-cyan-400 transition-colors">Solutions</Link>
-            <ChevronRight size={12} className="text-slate-600" />
+            <ChevronRight size={12} className="text-slate-500" />
             <span className="text-cyan-400 font-semibold">AI Infrastructure & Data Center Engineering</span>
           </div>
 
@@ -539,7 +539,7 @@ export default function AIInfraEngineeringPage() {
               </a>
               <a
                 href="#lifecycle"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-400 hover:text-cyan-300 font-semibold text-sm transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-300 hover:text-cyan-300 font-semibold text-sm transition-colors"
               >
                 <span>7-Stage Lifecycle</span>
                 <ChevronDown size={16} />
@@ -553,43 +553,43 @@ export default function AIInfraEngineeringPage() {
               <BorderBeam size={120} duration={7} colorFrom="#38bdf8" colorTo="#3b82f6" />
               <span className="text-xl sm:text-2xl font-extrabold text-cyan-400 block mb-0.5 tracking-tight">50–500+ MW</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Campus Scale</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">Hyperscale ready</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Hyperscale ready</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-emerald-500/40 transition-all overflow-hidden group">
               <span className="text-xl sm:text-2xl font-extrabold text-emerald-400 block mb-0.5 tracking-tight">PUE &lt;1.15</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Target Efficiency</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">Liquid-cooled target</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Liquid-cooled target</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-blue-500/40 transition-all overflow-hidden group">
               <span className="text-xl sm:text-2xl font-extrabold text-blue-400 block mb-0.5 tracking-tight">30–120 kW+</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Rack Density</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">High-density GPU racks</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">High-density GPU racks</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-indigo-500/40 transition-all overflow-hidden group">
               <span className="text-xl sm:text-2xl font-extrabold text-indigo-400 block mb-0.5 tracking-tight">400G / 800G</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">AI Networking</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">InfiniBand / RoCEv2</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">InfiniBand / RoCEv2</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-purple-500/40 transition-all overflow-hidden group">
               <span className="text-xl sm:text-2xl font-extrabold text-purple-400 block mb-0.5 tracking-tight">Liquid Cooling</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Direct &amp; Immersion</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">CDU &amp; cold-plate loops</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">CDU &amp; cold-plate loops</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-amber-500/40 transition-all overflow-hidden group">
               <span className="text-xl sm:text-2xl font-extrabold text-amber-400 block mb-0.5 tracking-tight">AI-DCIM</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">&amp; AIOps Telemetry</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">Self-healing operations</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Self-healing operations</span>
             </div>
 
             <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-teal-500/40 transition-all overflow-hidden group col-span-2 sm:col-span-1">
               <span className="text-xl sm:text-2xl font-extrabold text-teal-400 block mb-0.5 tracking-tight">100% RE</span>
               <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Green PPAs</span>
-              <span className="text-[10px] text-slate-400 mt-0.5 block">Solar, wind &amp; BESS</span>
+              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Solar, wind &amp; BESS</span>
             </div>
           </div>
         </div>
@@ -638,7 +638,7 @@ export default function AIInfraEngineeringPage() {
                       }`}>
                         {stage.step}
                       </span>
-                      <StageIcon size={14} className={isSelected ? 'text-blue-600' : 'text-slate-400'} />
+                      <StageIcon size={14} className={isSelected ? 'text-blue-600' : 'text-slate-600'} />
                     </div>
                     <span className={`text-xs font-bold block truncate ${isSelected ? 'text-blue-950 font-extrabold' : 'text-slate-800'}`}>
                       {stage.title}
@@ -690,7 +690,7 @@ export default function AIInfraEngineeringPage() {
                     </p>
 
                     <div className="space-y-2.5">
-                      <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
+                      <span className="text-xs font-bold text-slate-300 uppercase tracking-wider block mb-2">
                         Core Offering Components &amp; Gate Deliverables:
                       </span>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
@@ -861,7 +861,7 @@ export default function AIInfraEngineeringPage() {
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>NVIDIA H100/H200:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -871,7 +871,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>NVIDIA Blackwell:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -881,7 +881,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AMD Instinct:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -891,7 +891,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Custom ASICs:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -916,7 +916,7 @@ export default function AIInfraEngineeringPage() {
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Rack Density:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -926,7 +926,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Busbar / Busway:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -936,7 +936,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Dual PDU:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -946,7 +946,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Floor Loading:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -971,7 +971,7 @@ export default function AIInfraEngineeringPage() {
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Speed:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -981,7 +981,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Fabric:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -991,7 +991,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Congestion:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1001,7 +1001,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Spine-Leaf:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1026,7 +1026,7 @@ export default function AIInfraEngineeringPage() {
               <div className="space-y-3 pt-4 border-t border-slate-100 flex-1 flex flex-col justify-start">
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AI-DCIM:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1036,7 +1036,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>AIOps:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1046,7 +1046,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Digital Twin:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1056,7 +1056,7 @@ export default function AIInfraEngineeringPage() {
 
                 <div className="grid grid-cols-[124px_1fr] gap-2.5 items-start text-xs leading-relaxed">
                   <div className="font-bold text-slate-900 flex items-start gap-1.5">
-                    <span className="text-slate-400 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
+                    <span className="text-slate-600 font-bold shrink-0 text-sm leading-none mt-0.5">•</span>
                     <span>Self-Healing:</span>
                   </div>
                   <div className="text-slate-600 font-normal">
@@ -1589,7 +1589,7 @@ export default function AIInfraEngineeringPage() {
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     slsViewMode === 'stepper'
                       ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-slate-300 hover:text-white'
                   }`}
                 >
                   Interactive Stepper
@@ -1600,7 +1600,7 @@ export default function AIInfraEngineeringPage() {
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     slsViewMode === 'all'
                       ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-slate-400 hover:text-white'
+                      : 'text-slate-300 hover:text-white'
                   }`}
                 >
                   View All 10 Gates
@@ -1623,14 +1623,14 @@ export default function AIInfraEngineeringPage() {
                     className={`shrink-0 px-3.5 py-2 rounded-xl text-left transition-all border ${
                       isActive && slsViewMode === 'stepper'
                         ? 'bg-indigo-600/30 border-indigo-400 text-white shadow-lg shadow-indigo-950'
-                        : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                        : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
                         isActive && slsViewMode === 'stepper'
                           ? 'bg-indigo-500 text-white'
-                          : 'bg-slate-800 text-slate-400'
+                          : 'bg-slate-800 text-slate-300'
                       }`}>
                         {gate.step}
                       </span>
@@ -1684,7 +1684,7 @@ export default function AIInfraEngineeringPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {/* Deliverables */}
                   <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                       <FileText size={14} className="text-indigo-400" />
                       <span>Deliverables</span>
                     </div>
@@ -1695,7 +1695,7 @@ export default function AIInfraEngineeringPage() {
 
                   {/* Commercial Model */}
                   <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                       <DollarSign size={14} className="text-emerald-400" />
                       <span>Commercial Model</span>
                     </div>
@@ -1706,7 +1706,7 @@ export default function AIInfraEngineeringPage() {
 
                   {/* KPIs */}
                   <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                       <Target size={14} className="text-cyan-400" />
                       <span>KPIs</span>
                     </div>
@@ -1717,7 +1717,7 @@ export default function AIInfraEngineeringPage() {
 
                   {/* Key Risks */}
                   <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-1.5">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
                       <AlertCircle size={14} className="text-rose-400" />
                       <span>Key Risks &amp; Mitigations</span>
                     </div>
@@ -1738,7 +1738,7 @@ export default function AIInfraEngineeringPage() {
                     ← Previous Gate
                   </button>
 
-                  <div className="text-xs text-slate-400 font-mono">
+                  <div className="text-xs text-slate-300 font-mono">
                     Gate {activeSLSStage + 1} of {slsStageGates.length}
                   </div>
 
@@ -1792,19 +1792,19 @@ export default function AIInfraEngineeringPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs">
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Deliverables</span>
+                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Deliverables</span>
                         <p className="text-slate-300 text-[11px] font-mono leading-tight">{gate.deliverables}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Commercial Model</span>
+                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Commercial Model</span>
                         <p className="text-slate-300 text-[11px] leading-tight">{gate.commercialModel}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">KPIs</span>
+                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">KPIs</span>
                         <p className="text-slate-300 text-[11px] leading-tight">{gate.kpis}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-400 block mb-1">Key Risks</span>
+                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Key Risks</span>
                         <p className="text-slate-300 text-[11px] leading-tight">{gate.keyRisks}</p>
                       </div>
                     </div>
@@ -2560,11 +2560,11 @@ export default function AIInfraEngineeringPage() {
                   <span className="text-xs text-cyan-400 font-semibold block mb-4">Director — Hyperscale &amp; AI Infrastructure</span>
                   <div className="space-y-2 text-xs text-slate-300">
                     <div className="flex items-center gap-2">
-                      <Mail size={14} className="text-slate-400" />
+                      <Mail size={14} className="text-cyan-400" />
                       <a href="mailto:bv@trustgrid.ai" className="hover:text-cyan-300 transition-colors">bv@trustgrid.ai</a>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Phone size={14} className="text-slate-400" />
+                      <Phone size={14} className="text-cyan-400" />
                       <a href="tel:+919513088612" className="hover:text-cyan-300 transition-colors">+91 9513088612</a>
                     </div>
                   </div>
@@ -2577,11 +2577,11 @@ export default function AIInfraEngineeringPage() {
                   <span className="text-xs text-cyan-400 font-semibold block mb-4">Director — AI Transformation &amp; Acceleration</span>
                   <div className="space-y-2 text-xs text-slate-300">
                     <div className="flex items-center gap-2">
-                      <Mail size={14} className="text-slate-400" />
+                      <Mail size={14} className="text-cyan-400" />
                       <a href="mailto:shaji@trustgrid.ai" className="hover:text-cyan-300 transition-colors">shaji@trustgrid.ai</a>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Phone size={14} className="text-slate-400" />
+                      <Phone size={14} className="text-cyan-400" />
                       <a href="tel:+919513088612" className="hover:text-cyan-300 transition-colors">+91 9513088612</a>
                     </div>
                   </div>
@@ -2657,7 +2657,7 @@ export default function AIInfraEngineeringPage() {
                   <p className="text-sm font-semibold text-white m-0">
                     Need an immediate 45-minute AI Infrastructure Strategy Session?
                   </p>
-                  <p className="text-xs text-slate-400 m-0">
+                  <p className="text-xs text-slate-300 m-0">
                     Lock a direct slot on our live Google Calendar with principal AI data center architects.
                   </p>
                 </div>

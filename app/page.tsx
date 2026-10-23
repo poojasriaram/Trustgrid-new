@@ -374,7 +374,7 @@ export default function HomePage() {
                   <div className="w-8 h-8 rounded-lg bg-blue-50/80 border border-blue-100 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                     <ItemIcon size={16} />
                   </div>
-                  <span className="text-[10px] font-mono font-bold text-slate-400">0{i + 1}</span>
+                  <span className="text-[10px] font-mono font-bold text-slate-600">0{i + 1}</span>
                 </div>
                 <div>
                   <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight block mb-1">
@@ -383,7 +383,7 @@ export default function HomePage() {
                   <span className="text-xs font-bold text-slate-800 block mb-1">
                     {item.label}
                   </span>
-                  <span className="text-[11px] text-slate-500 font-normal leading-relaxed block">
+                  <span className="text-[11px] text-slate-600 font-normal leading-relaxed block">
                     {item.desc}
                   </span>
                 </div>

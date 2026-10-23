@@ -161,7 +161,7 @@ export default function BlogLandingPage() {
             ) : (
               /* Accessible Empty State */
               <div className="tg-empty-state" role="status" aria-live="polite">
-                <RotateCcw size={36} className="text-slate-400 mx-auto mb-3" />
+                <RotateCcw size={36} className="text-slate-600 dark:text-slate-300 mx-auto mb-3" />
                 <h3 className="tg-empty-title">No Engineering Articles Found</h3>
                 <p className="tg-empty-desc">
                   No articles matched your current search query or category filter. Try refining your keywords or clearing the filter.

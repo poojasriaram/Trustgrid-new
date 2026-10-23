@@ -22,7 +22,7 @@ export function IdentityLinkerTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-rose-500/30 bg-gradient-to-b from-rose-500/10 to-rose-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Unmasked Leads</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Unmasked Leads</span>
           <div className="mt-2 text-2xl font-bold text-white flex items-center gap-2">
             <UserCheck className="h-6 w-6 text-rose-400" />
             {data.totalIdentified} Identified Targets
@@ -31,13 +31,13 @@ export function IdentityLinkerTab({ data }: Props) {
         </div>
 
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Resolution Rate</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Resolution Rate</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.unmaskRatePct}%</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">Telemetry linked to form submissions</span>
         </div>
 
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Privacy & PII Masking</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Privacy & PII Masking</span>
           <div className="mt-2 text-2xl font-bold text-emerald-400 flex items-center gap-2">
             <Lock className="h-5 w-5" /> Active Masking
           </div>
@@ -54,7 +54,7 @@ export function IdentityLinkerTab({ data }: Props) {
               Identity Linker — Multi-Touch Intent Attribution
             </h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Visitor → Session → Action → Match</span>
+          <span className="text-xs text-slate-300 font-mono">Visitor → Session → Action → Match</span>
         </div>
 
         <div className="mt-4 space-y-3">
@@ -83,7 +83,7 @@ export function IdentityLinkerTab({ data }: Props) {
 
                 <div className="flex items-center gap-3 text-xs font-mono">
                   <span className="text-amber-400 font-bold">Intent: {rec.intentScore}/100</span>
-                  <span className="text-slate-400">{rec.lastActive}</span>
+                  <span className="text-slate-300">{rec.lastActive}</span>
                 </div>
               </div>
 

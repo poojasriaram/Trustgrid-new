@@ -89,11 +89,22 @@ The database in Sheet 1 (`Live_Traffic_Events`) captures the exact 95 granular a
 4. In the Apps Script toolbar function dropdown:
    - Select **`initializeMasterTelemetrySheet`** and click **Run** (Creates the 95-column `Live_Traffic_Events` table with cyber styling).
    - Select **`initializeAllDatabaseTables`** and click **Run** (Pre-creates all dedicated form tables).
+   - Select **`setupAllTrustGridTriggers`** and click **Run** (Schedules automated Daily 8:30 AM IST report, Weekly Monday 8:30 AM IST report, and 23:50 IST snapshots).
+   - **One-Click Live Report Dispatchers**: Select **`SEND_DAILY_REPORT_NOW`** or **`SEND_WEEKLY_REPORT_NOW`** and click **Run** to generate and email live reports instantly pulling from your actual website data.
 5. Click **Deploy $\rightarrow$ Manage Deployments $\rightarrow$ New Version** to ensure the live Web App URL receives data.
 
 ---
 
-### 2️⃣ Sheet 2 Configuration (Behavioral Analytics Hub)
+### 2️⃣ Staging & Vercel QA Configuration (Isolated Sheet)
+- **Staging Spreadsheet**: [`TRUSTGRID.AI - Staging & Vercel QA`](https://docs.google.com/spreadsheets/d/1vc6sAUAH1Id7-mPEuwRtX7MaZ45uFdGAm9ppRYrAcOo/edit) (`1vc6sAUAH1Id7-mPEuwRtX7MaZ45uFdGAm9ppRYrAcOo`)
+- **Staging Webhook Script**: [`TRUSTGRID_STAGING_SHEET1_WEBHOOK.js`](file:///c:/Users/srimp/Downloads/TRUSTGRID.NEW/TRUSTGRID_STAGING_SHEET1_WEBHOOK.js)
+- **Live Staging Webhook URL**: `https://script.google.com/macros/s/AKfycbybp6YMsPeTshbmWSJVhW1K-yaInEoHVIheg9dHisYsv8apkUcOhL1KKR-7s5E9ZubIKQ/exec`
+- **Deployment ID**: `AKfycbybp6YMsPeTshbmWSJVhW1K-yaInEoHVIheg9dHisYsv8apkUcOhL1KKR-7s5E9ZubIKQ`
+- **Status**: Active & Verified. All preview/localhost submissions are 100% quarantined away from the Production master sheet.
+
+---
+
+### 3️⃣ Sheet 2 Configuration (Behavioral Analytics Hub)
 1. Open your **Sheet 2 Spreadsheet** (`1jC53QN1qiuiRFLzdneA46TECBztER5btTo7qGphb5TM`).
 2. Go to **Extensions $\rightarrow$ Apps Script**.
 3. Paste [`google-apps-script/Behavioral_Analytics_Engine.gs`](file:///c:/Users/srimp/Downloads/TRUSTGRID.NEW/google-apps-script/Behavioral_Analytics_Engine.gs) and [`TRUSTGRID_SHEET2_ANALYTICS.js`](file:///c:/Users/srimp/Downloads/TRUSTGRID.NEW/TRUSTGRID_SHEET2_ANALYTICS.js).

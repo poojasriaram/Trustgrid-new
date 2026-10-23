@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import {
@@ -136,7 +136,7 @@ S_tensor = Tensor size in bytes (frequently 2 GB to 16 GB per exchange)`}</code>
 
         <div className="tg-terminal-block">
           <div className="tg-terminal-header">
-            <Terminal size={14} className="text-slate-400" />
+            <Terminal size={14} className="text-slate-300" />
             <span>Switch Diagnostic Console — Hash Collision on Uplink Eth1/1</span>
           </div>
           <pre><code>{`# switch-leaf-04# show interface counters priority-flow-control

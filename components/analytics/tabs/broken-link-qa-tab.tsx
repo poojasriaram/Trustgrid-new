@@ -21,7 +21,7 @@ export function BrokenLinkQaTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Website Health Score</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Website Health Score</span>
           <div className="mt-2 text-2xl font-bold text-emerald-400 flex items-center gap-2">
             <CheckCircle2 className="h-6 w-6" /> 100% Operational
           </div>
@@ -29,19 +29,19 @@ export function BrokenLinkQaTab({ data }: Props) {
         </div>
 
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Monitored Routes</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Monitored Routes</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.totalChecked} Endpoints</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">Core navigation routes verified</span>
         </div>
 
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Mean Server Latency</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Mean Server Latency</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.avgLatencyMs}ms</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">High-velocity response time</span>
         </div>
 
         <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 to-amber-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Active Audit Mode</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Active Audit Mode</span>
           <div className="mt-2 text-2xl font-bold text-white">Passive QA</div>
           <span className="text-[11px] text-amber-400 mt-1 block">Reporting only — no DOM mutation</span>
         </div>
@@ -56,13 +56,13 @@ export function BrokenLinkQaTab({ data }: Props) {
               Automated Route Health & Endpoint Audit
             </h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Status 200 OK • Non-intrusive</span>
+          <span className="text-xs text-slate-300 font-mono">Status 200 OK • Non-intrusive</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-sans">
+              <tr className="border-b border-slate-800 text-slate-300 font-sans">
                 <th className="pb-2">Endpoint URL</th>
                 <th className="pb-2 text-center">HTTP Status</th>
                 <th className="pb-2 text-center">Diagnostic Status</th>
@@ -96,7 +96,7 @@ export function BrokenLinkQaTab({ data }: Props) {
                     </span>
                   </td>
                   <td className="py-3 text-right text-cyan-300 font-bold">{route.latencyMs}ms</td>
-                  <td className="py-3 text-right text-slate-400 font-sans">{route.lastChecked}</td>
+                  <td className="py-3 text-right text-slate-300 font-sans">{route.lastChecked}</td>
                 </tr>
               ))}
             </tbody>

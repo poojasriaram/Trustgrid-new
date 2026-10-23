@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -122,41 +122,16 @@ export function ICPMatrix() {
   const Icon = current.icon
 
   return (
-    <div className="icp-matrix-container animated-card reveal-up" style={{
-      background: '#ffffff',
-      border: '1px solid var(--border)',
-      borderRadius: 'var(--radius-lg)',
-      padding: 'clamp(20px, 4vw, 36px)',
-      boxShadow: 'var(--shadow-md)'
-    }}>
+    <div className="icp-matrix-container animated-card reveal-up">
       {/* TABS HEADER */}
-      <div className="icp-tabs-bar" style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '8px',
-        borderBottom: '1px solid var(--border-light)',
-        paddingBottom: '16px',
-        marginBottom: '24px'
-      }}>
+      <div className="icp-tabs-bar" role="tablist" aria-label="Executive Persona Tabs">
         {icpSegments.map((segment) => (
           <button
             key={segment.id}
+            role="tab"
+            aria-selected={activeTab === segment.id}
             onClick={() => setActiveTab(segment.id)}
             className={`icp-tab-btn ${activeTab === segment.id ? 'active' : ''}`}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '8px 16px',
-              borderRadius: '999px',
-              fontSize: '13px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              border: activeTab === segment.id ? '1px solid #1d5cff' : '1px solid #e2e8f0',
-              background: activeTab === segment.id ? '#1d5cff' : '#f8fafc',
-              color: activeTab === segment.id ? '#ffffff' : '#334155',
-              transition: 'all 0.2s ease'
-            }}
           >
             <span>{segment.role}</span>
           </button>
@@ -164,83 +139,60 @@ export function ICPMatrix() {
       </div>
 
       {/* ACTIVE SEGMENT DETAILS */}
-      <div className="icp-details-grid" style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '24px',
-        alignItems: 'center'
-      }}>
+      <div className="icp-details-grid">
         {/* LEFT COLUMN: PROBLEM & SOLUTION */}
-        <div>
+        <div className="icp-details-left">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
             <div style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '6px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               background: '#eff6ff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#1d5cff'
+              color: '#1d5cff',
+              flexShrink: 0
             }}>
-              <Icon size={16} />
+              <Icon size={18} />
             </div>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.06em' }}>
-              {current.role} PERSPECTIVE
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.06em' }}>
+              {current.role.toUpperCase()} PERSPECTIVE
             </span>
           </div>
 
-          <h3 style={{ fontSize: '20px', fontWeight: 700, color: 'var(--foreground)', margin: '0 0 16px' }}>
+          <h3 className="icp-matrix-title">
             {current.title}
           </h3>
 
-          <div style={{
-            background: '#fef2f2',
-            border: '1px solid #fee2e2',
-            borderRadius: '8px',
-            padding: '12px 16px',
-            marginBottom: '14px'
-          }}>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: '#991b1b', marginBottom: '4px' }}>
-              CRITICAL BOTTLENECK
+          <div className="icp-matrix-bottleneck-box">
+            <div style={{ fontSize: '11px', fontWeight: 700, color: '#991b1b', marginBottom: '4px', letterSpacing: '0.05em' }}>
+              CRITICAL ENTERPRISE BOTTLENECK
             </div>
-            <p style={{ fontSize: '13px', color: '#7f1d1d', margin: 0, lineHeight: 1.45 }}>
+            <p style={{ fontSize: '13.5px', color: '#7f1d1d', margin: 0, lineHeight: 1.5 }}>
               {current.challenge}
             </p>
           </div>
 
-          <div style={{
-            background: '#f0fdf4',
-            border: '1px solid #dcfce7',
-            borderRadius: '8px',
-            padding: '12px 16px'
-          }}>
-            <div style={{ fontSize: '11px', fontWeight: 700, color: '#166534', marginBottom: '4px' }}>
-              TRUSTGRID.AI ENGINEERED SOLUTION
+          <div className="icp-matrix-solution-box">
+            <div style={{ fontSize: '11px', fontWeight: 700, color: '#166534', marginBottom: '4px', letterSpacing: '0.05em' }}>
+              TRUSTGRID.AI ENGINEERED RESOLUTION
             </div>
-            <p style={{ fontSize: '13px', color: '#14532d', margin: 0, lineHeight: 1.45 }}>
+            <p style={{ fontSize: '13.5px', color: '#14532d', margin: 0, lineHeight: 1.5 }}>
               {current.solution}
             </p>
           </div>
         </div>
 
         {/* RIGHT COLUMN: OUTCOMES & CTA */}
-        <div style={{
-          background: '#f8fafc',
-          border: '1px solid var(--border)',
-          borderRadius: '12px',
-          padding: '24px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between'
-        }}>
+        <div className="icp-details-right">
           <div>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', letterSpacing: '0.06em' }}>
-              EXPECTED BUSINESS & TECHNICAL OUTCOMES
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', letterSpacing: '0.06em', display: 'block' }}>
+              EXPECTED BUSINESS &amp; TECHNICAL OUTCOMES
             </span>
             <ul style={{ listStyle: 'none', padding: 0, margin: '14px 0 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {current.keyOutcomes.map((outcome, idx) => (
-                <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#1e293b' }}>
+                <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '13.5px', color: '#1e293b', lineHeight: 1.45 }}>
                   <CheckCircle2 size={16} className="text-blue-600 shrink-0 mt-0.5" />
                   <span>{outcome}</span>
                 </li>
@@ -248,11 +200,10 @@ export function ICPMatrix() {
             </ul>
           </div>
 
-          <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+          <div className="icp-matrix-cta-row">
             <Link
               href={current.ctaHref}
-              className="button button-primary button-sm"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+              className="button button-primary button-sm icp-matrix-primary-cta"
             >
               <span>{current.ctaText}</span>
               <ArrowUpRight size={14} />
@@ -260,10 +211,10 @@ export function ICPMatrix() {
 
             <Link
               href={`/solutions/${current.offeringSlug}`}
-              style={{ fontSize: '12px', fontWeight: 600, color: '#1d5cff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}
+              className="icp-matrix-secondary-link"
             >
               <span>Explore Offering Blueprint</span>
-              <ChevronRight size={13} />
+              <ChevronRight size={14} />
             </Link>
           </div>
         </div>

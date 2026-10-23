@@ -267,7 +267,7 @@ export function OfferingSlider({ offerings }: OfferingSliderProps) {
                           <span><strong>Impact:</strong> {offering.metric}</span>
                         </div>
                         <div className="duration-pill">
-                          <Clock size={13} className="text-slate-400" />
+                          <Clock size={13} className="text-slate-600" />
                           <span><strong>Timeframe:</strong> {offering.duration}</span>
                         </div>
                       </div>

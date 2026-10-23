@@ -34,17 +34,17 @@ export function GeoMapTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Countries</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Countries</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.totalCountries} Nations</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">Global enterprise distribution</span>
         </div>
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Top Geo Region</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Top Geo Region</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.topGeoRegion}</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">North American dominance</span>
         </div>
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">IP Privacy Protection</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">IP Privacy Protection</span>
           <div className="mt-2 text-2xl font-bold text-emerald-400 flex items-center gap-1.5">
             <ShieldCheck className="h-6 w-6" /> Anonymized
           </div>
@@ -59,7 +59,7 @@ export function GeoMapTab({ data }: Props) {
             <Globe className="h-4 w-4 text-cyan-400" />
             <h3 className="text-sm font-semibold text-slate-200">Global Visitor Geographic Map</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Live Telemetry Nodes</span>
+          <span className="text-xs text-slate-300 font-mono">Live Telemetry Nodes</span>
         </div>
 
         <div className="relative mt-4 h-72 w-full rounded-lg bg-slate-950/80 border border-slate-800/80 overflow-hidden flex items-center justify-center">
@@ -118,7 +118,7 @@ export function GeoMapTab({ data }: Props) {
             </div>
           ))}
 
-          <div className="absolute bottom-3 left-3 flex items-center gap-3 text-[11px] font-mono text-slate-400 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
+          <div className="absolute bottom-3 left-3 flex items-center gap-3 text-[11px] font-mono text-slate-300 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800">
             <span className="flex items-center gap-1.5 text-cyan-400">
               <span className="h-2 w-2 rounded-full bg-cyan-400" /> North America
             </span>
@@ -138,7 +138,7 @@ export function GeoMapTab({ data }: Props) {
         <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl backdrop-blur-md">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <h3 className="text-sm font-semibold text-slate-200">Country Traffic Distribution</h3>
-            <span className="text-xs text-slate-400 font-mono">Ranked by Volume</span>
+            <span className="text-xs text-slate-300 font-mono">Ranked by Volume</span>
           </div>
 
           <div className="mt-4 space-y-3">
@@ -174,13 +174,13 @@ export function GeoMapTab({ data }: Props) {
               <Building className="h-4 w-4 text-emerald-400" />
               <h3 className="text-sm font-semibold text-slate-200">Enterprise City Clusters</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">Engagement & Leads</span>
+            <span className="text-xs text-slate-300 font-mono">Engagement & Leads</span>
           </div>
 
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-left text-xs font-mono">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-sans">
+                <tr className="border-b border-slate-800 text-slate-300 font-sans">
                   <th className="pb-2">City</th>
                   <th className="pb-2">Country</th>
                   <th className="pb-2 text-right">Visitors</th>
@@ -195,7 +195,7 @@ export function GeoMapTab({ data }: Props) {
                       <MapPin className="h-3 w-3 text-cyan-400 shrink-0" />
                       {city.city}
                     </td>
-                    <td className="py-2.5 text-slate-400 font-sans">{city.country}</td>
+                    <td className="py-2.5 text-slate-300 font-sans">{city.country}</td>
                     <td className="py-2.5 text-right text-slate-200 font-bold">{city.visitors.toLocaleString()}</td>
                     <td className="py-2.5 text-right text-emerald-400">{city.engagementScore}/100</td>
                     <td className="py-2.5 text-right text-cyan-300 font-bold">{city.leads}</td>

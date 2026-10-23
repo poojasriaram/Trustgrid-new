@@ -32,7 +32,7 @@ export function DailyHeatmapTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-rose-500/30 bg-gradient-to-b from-rose-500/10 to-rose-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Peak Velocity Hour</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Peak Velocity Hour</span>
           <div className="mt-2 text-2xl font-bold text-white flex items-center gap-2">
             <Flame className="h-6 w-6 text-rose-400" />
             {data.peakHour.day} @ {data.peakHour.hour}:00
@@ -42,12 +42,12 @@ export function DailyHeatmapTab({ data }: Props) {
           </span>
         </div>
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Heatmap Resolution</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Heatmap Resolution</span>
           <div className="mt-2 text-2xl font-bold text-white">168 Temporal Cells</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">7 Days × 24 Hour Windows</span>
         </div>
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Analyzed Inbound</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Analyzed Inbound</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.totalHourlyEvents.toLocaleString()}</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">Hourly density mapped</span>
         </div>
@@ -61,7 +61,7 @@ export function DailyHeatmapTab({ data }: Props) {
             <h3 className="text-sm font-semibold text-slate-200">Day × Hour Activity Matrix</h3>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+          <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
             <span>Low</span>
             <span className="h-3 w-3 rounded bg-emerald-950/60 border border-emerald-800/40" />
             <span className="h-3 w-3 rounded bg-amber-900/50 border border-amber-700/40" />

@@ -18,7 +18,7 @@ export function BlogBreadcrumbs({ items }: BlogBreadcrumbsProps) {
       <ol className="tg-breadcrumbs-list">
         <li className="tg-breadcrumbs-item">
           <Link href="/" className="tg-breadcrumb-link">
-            <Home size={13} className="text-slate-400" />
+            <Home size={13} className="text-slate-600" />
             <span>Home</span>
           </Link>
         </li>

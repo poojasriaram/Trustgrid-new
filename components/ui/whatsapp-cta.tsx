@@ -100,7 +100,7 @@ export function WhatsAppCTA({
 
   return (
     <div
-      className="whatsapp-floating-container"
+      className="whatsapp-floating-container hidden md:flex"
       style={{
         position: 'fixed',
         top: isTop ? '82px' : 'auto',

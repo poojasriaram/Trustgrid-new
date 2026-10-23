@@ -51,7 +51,8 @@ import {
   Activity,
   Scale,
   Clock,
-  AlertCircle
+  AlertCircle,
+  Search
 } from 'lucide-react'
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
@@ -2813,6 +2814,7 @@ const solutionGroups = [
 export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [mobileSearchQuery, setMobileSearchQuery] = useState('')
   const [activeMenu, setActiveMenu] = useState<string | null>(null)
   const [mobileSection, setMobileSection] = useState<string | null>(null)
   const [mobileDomainNetOpen, setMobileDomainNetOpen] = useState(true)
@@ -2828,7 +2830,10 @@ export function SiteHeader() {
     'delivery-frameworks': true,
     'cognitive-architecture-swarms': true,
     'company-leadership': true,
-    'practice-engineering': true
+    'practice-sec-engineering': true,
+    'practice-sec-functional': false,
+    'practice-sec-industry': false,
+    'practice-sec-engagement': false
   })
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
@@ -2840,6 +2845,26 @@ export function SiteHeader() {
       [groupId]: !prev[groupId]
     }))
   }
+
+  // Synchronize mobile drawer state with document class and body scroll locking
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (open) {
+        document.documentElement.classList.add('mobile-nav-open')
+        document.body.style.overflow = 'hidden'
+      } else {
+        document.documentElement.classList.remove('mobile-nav-open')
+        document.body.style.overflow = ''
+      }
+      window.dispatchEvent(new CustomEvent('tg:mobile-menu-toggle', { detail: { open } }))
+    }
+    return () => {
+      if (typeof document !== 'undefined') {
+        document.documentElement.classList.remove('mobile-nav-open')
+        document.body.style.overflow = ''
+      }
+    }
+  }, [open])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -2900,6 +2925,7 @@ export function SiteHeader() {
     }
     setActiveMenu(null)
     setOpen(false)
+    setMobileSearchQuery('')
   }
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -3564,7 +3590,7 @@ export function SiteHeader() {
             onClick={() => toggleMenu('networking-cybersecurity')}
             aria-expanded={activeMenu === 'networking-cybersecurity'}
           >
-            <span>AI Network and Cybersecurity</span>
+            <span>AI Network & Cybersecurity</span>
             <ChevronDown size={14} className={`chevron-icon ${activeMenu === 'networking-cybersecurity' ? 'rotate-180' : ''}`} />
           </button>
 
@@ -3777,168 +3803,75 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'about' && (
-            <div className="isi-mega-panel isi-mega-about isi-mega-practice-areas tg-tabbed-mega">
+            <div className="isi-mega-panel isi-mega-about">
               <div className="isi-mega-layout">
-                {/* Left Side Bar: Clean Main Menu Only */}
-                <div className="isi-mega-sidebar tg-clean-sidebar">
-                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="About Us">
-                    {aboutThreeSections.map((sec) => {
-                      const SecIcon = sec.icon
-                      const isActive = desktopAboutTab === sec.id
-                      return (
-                        <button
-                          key={sec.id}
-                          type="button"
-                          role="tab"
-                          aria-selected={isActive}
-                          className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
-                          onClick={() => setDesktopAboutTab(sec.id)}
-                          onMouseEnter={() => setDesktopAboutTab(sec.id)}
-                        >
-                          <div className="tg-domain-tab-left">
-                            <div
-                              className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
-                              style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
-                            >
-                              <SecIcon size={14} />
-                            </div>
-                            <span className="tg-tab-title">{sec.title}</span>
-                          </div>
-                          <ChevronRight size={12} className="tg-tab-chevron" />
-                        </button>
-                      )
-                    })}
+                {/* Left Category Introduction */}
+                <div className="isi-mega-sidebar">
+                  <div className="isi-sidebar-top">
+                    <span className="isi-sidebar-badge">
+                      <span className="pulse-dot" />
+                      COMPANY & TALENT
+                    </span>
+                    <h3 className="isi-sidebar-title">About TRUSTGRID.AI</h3>
+                    <p className="isi-sidebar-desc">
+                      Full-Spectrum AI Engineering Company for the Global AI Economy with executive offices in US, Singapore & India.
+                    </p>
+                  </div>
+                  <div className="isi-sidebar-bottom">
+                    <div className="isi-sidebar-metric-chip">
+                      <Building2 size={12} className="text-blue-600" />
+                      <span>Global R&D & Delivery Labs</span>
+                    </div>
+                    <Link
+                      href="/about"
+                      className="isi-sidebar-action"
+                      onClick={closeAll}
+                    >
+                      <span>Explore Company Profile</span>
+                      <ArrowUpRight size={13} />
+                    </Link>
                   </div>
                 </div>
 
-                {/* Right Structured Submenus Content Area */}
-                {(() => {
-                  const activeSection = aboutThreeSections.find((s) => s.id === desktopAboutTab) || aboutThreeSections[0]
-                  const ActiveIcon = activeSection.icon
-                  return (
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', minWidth: 0 }}>
-                      {/* Active Section Header Bar */}
-                      <div
-                        style={{
-                          padding: '6px 14px',
-                          borderBottom: '1px solid #f1f5f9',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          gap: '10px',
-                          background: '#fafafa'
-                        }}
+                {/* Right Structured Grid (2 columns, 6 items) */}
+                <div className="isi-mega-content columns-3" style={{ padding: '10px 14px' }}>
+                  {aboutMenuItems.map((item, idx) => {
+                    const Icon = item.icon
+                    return (
+                      <Link
+                        key={idx}
+                        href={item.href}
+                        className="isi-menu-card"
+                        onClick={(e) => handleNavClick(e, item.href)}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
-                          <div
-                            style={{
-                              width: '24px',
-                              height: '24px',
-                              borderRadius: '5px',
-                              background: 'rgba(37, 99, 235, 0.1)',
-                              color: '#2563eb',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              flexShrink: 0
-                            }}
-                          >
-                            <ActiveIcon size={13} />
-                          </div>
-                          <div style={{ minWidth: 0 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                              <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
-                                {activeSection.headerTitle}
-                              </h4>
-                              <span style={{ fontSize: '9px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 5px', borderRadius: '4px' }}>
-                                {activeSection.badge}
-                              </span>
-                            </div>
-                            <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
-                              {activeSection.tagline}
-                            </p>
-                          </div>
+                        <div className="isi-card-icon">
+                          <Icon size={16} />
                         </div>
-
-                        <Link
-                          href={activeSection.ctaHref}
-                          className="isi-footer-action"
-                          style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
-                          onClick={closeAll}
-                        >
-                          <span>{activeSection.ctaText}</span>
-                          <ArrowRight size={11} />
-                        </Link>
-                      </div>
-
-                      {/* 3 Categorized Columns */}
-                      <div
-                        style={{
-                          padding: '8px 12px',
-                          overflowY: 'auto',
-                          flex: 1,
-                          display: 'flex'
-                        }}
-                      >
-                        <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
-                          {activeSection.categories.map((cat, cIdx) => {
-                            const CatIcon = cat.icon
-                            return (
-                              <div key={cIdx} className="tg-category-col">
-                                <div className="tg-category-col-header">
-                                  <div className="tg-category-col-left">
-                                    <CatIcon size={12} className="text-blue-600" />
-                                    <span className="tg-category-col-title">{cat.title}</span>
-                                  </div>
-                                  <span className="tg-category-col-badge">{cat.badge}</span>
-                                </div>
-
-                                <div className="tg-category-items-stack">
-                                  {cat.items.map((item, iIdx) => {
-                                    const ItemIcon = item.icon
-                                    return (
-                                      <Link
-                                        key={iIdx}
-                                        href={item.href}
-                                        className="tg-compact-menu-card"
-                                        title={item.label}
-                                        onClick={(e) => handleNavClick(e, item.href)}
-                                      >
-                                        <div className="tg-compact-icon-box">
-                                          <ItemIcon size={13} />
-                                        </div>
-                                        <div className="tg-compact-card-body">
-                                          <div className="tg-compact-card-head">
-                                            <span className="tg-compact-card-title">{item.label}</span>
-                                            <ArrowRight size={11} className="tg-compact-arrow" />
-                                          </div>
-                                        </div>
-                                      </Link>
-                                    )
-                                  })}
-                                </div>
-                              </div>
-                            )
-                          })}
+                        <div className="isi-card-body">
+                          <div className="isi-card-heading">
+                            <span className="isi-card-title">{item.label}</span>
+                            <ArrowRight size={13} className="isi-card-arrow" />
+                          </div>
+                          <p className="isi-card-desc">{item.desc}</p>
                         </div>
-                      </div>
-                    </div>
-                  )
-                })()}
+                      </Link>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* Mega-Menu Footer */}
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
-                  <Sparkles size={13} className="text-blue-600" />
-                  <span>Full-Spectrum AI Engineering Company with executive offices in US, Singapore &amp; India</span>
+                  <Users size={13} className="text-blue-600" />
+                  <span>World-class AI architects, systems leads, and advisory board</span>
                 </div>
                 <Link
-                  href="/about"
+                  href="/contact"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Explore Company Profile</span>
+                  <span>Contact Leadership</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -4000,82 +3933,271 @@ export function SiteHeader() {
       {open && (
         <div className="mobile-drawer">
           <div className="mobile-drawer-content">
-            <Link href="/" className="mobile-nav-link" onClick={closeAll}>
-              Home
-            </Link>
-
-
-            {/* Mobile Practice Areas Accordion */}
-            <div className="mobile-accordion">
-              <button
-                className="mobile-accordion-btn"
-                onClick={() => toggleMobileSection('practice-areas')}
-              >
-                <span>Practice Areas</span>
-                <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'practice-areas' ? 'rotate-180' : ''}`} />
-              </button>
-              {mobileSection === 'practice-areas' && (
-                <div className="mobile-accordion-body">
-                  <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
-                    <span>★ View All Practice Areas Overview →</span>
-                  </Link>
-                  {practiceAreasFiveSections.map((sec) => {
-                    const SecIcon = sec.icon
-                    const isDivOpen = !!mobileOpenGroups[`sec-${sec.id}`]
-                    return (
-                      <div key={sec.id} className="mobile-group-wrapper">
-                        <button
-                          type="button"
-                          className="mobile-group-accordion-btn"
-                          onClick={() => toggleMobileGroup(`sec-${sec.id}`)}
-                          aria-expanded={isDivOpen}
-                        >
-                          <div className="flex items-center gap-2 min-w-0">
-                            <SecIcon size={12} className="text-blue-600 shrink-0" />
-                            <span className="truncate">{sec.num}. {sec.title}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <span className="mobile-group-count">{sec.categories.reduce((acc, c) => acc + c.items.length, 0)}</span>
-                            <ChevronDown size={12} className={`chevron-icon transition-transform ${isDivOpen ? 'rotate-180' : ''}`} />
-                          </div>
-                        </button>
-
-                        {isDivOpen && (
-                          <div className="mobile-group-body">
-                            {sec.categories.map((cat, cIdx) => (
-                              <div key={cIdx} style={{ margin: '4px 0 8px' }}>
-                                <div style={{ fontSize: '10px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em', padding: '3px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                  <span>{cat.title}</span>
-                                  <span style={{ fontSize: '8px', fontWeight: 600, color: '#94a3b8' }}>{cat.badge}</span>
-                                </div>
-                                {cat.items.map((item, i) => {
-                                  const ItemIcon = item.icon
-                                  return (
-                                    <Link
-                                      key={i}
-                                      href={item.href}
-                                      className="mobile-cap-card"
-                                      onClick={(e) => handleNavClick(e, item.href)}
-                                    >
-                                      <div className="mobile-cap-icon">
-                                        <ItemIcon size={12} />
-                                      </div>
-                                      <div className="mobile-cap-info">
-                                        <span className="mobile-cap-title">{item.label}</span>
-                                      </div>
-                                    </Link>
-                                  )
-                                })}
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
+            {/* 1. Mobile Search Bar */}
+            <div className="mobile-search-box">
+              <Search size={16} className="text-blue-600 shrink-0" />
+              <input
+                type="text"
+                value={mobileSearchQuery}
+                onChange={(e) => setMobileSearchQuery(e.target.value)}
+                placeholder="Search practices, solutions, personas, industries..."
+                className="mobile-search-input"
+                aria-label="Search mobile navigation"
+              />
+              {mobileSearchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setMobileSearchQuery('')}
+                  className="mobile-search-clear-btn"
+                  aria-label="Clear search"
+                >
+                  <X size={14} />
+                </button>
               )}
             </div>
+
+            {/* DYNAMIC SEARCH RESULTS (When typing) */}
+            {mobileSearchQuery.trim() !== '' ? (
+              <div className="mobile-search-results-panel">
+                {(() => {
+                  const query = mobileSearchQuery.toLowerCase()
+                  const searchCatalog = [
+                    // Practice Areas
+                    { label: 'Engineering Practices', category: 'PRACTICE AREAS', desc: 'Silicon, high-density compute, lossless fabrics & agent swarms', href: '/practice-areas#primary-categories', icon: Cpu },
+                    { label: 'Functional Practices', category: 'PRACTICE AREAS', desc: '15 horizontal disciplines: GRC, RevOps, supply chain & finance', href: '/practice-areas#primary-categories', icon: Workflow },
+                    { label: 'Industry Practices', category: 'PRACTICE AREAS', desc: '8 specialized industry practices delivering deterministic solutions', href: '/practice-areas#primary-categories', icon: Building2 },
+                    { label: 'Engagement Models', category: 'PRACTICE AREAS', desc: '5-Stage proof, DBOT delivery, gain-share & capacity pods', href: '/practice-areas#engagement-models', icon: Boxes },
+                    { label: 'AI Data Center & Compute Factory', category: 'PRACTICE', desc: 'GPU clusters, ASIC accelerators, power distribution & liquid cooling', href: '/practice-areas/ai-infrastructure-high-density-compute', icon: Cpu },
+                    { label: 'Lossless AI Networking & Fabrics', category: 'PRACTICE', desc: 'Ultra-low latency RoCEv2, InfiniBand & telemetry for zero-drop workloads', href: '/practice-areas/ai-native-networking-systems-integration', icon: Activity },
+                    { label: 'Distributed Agent Swarms & Mesh', category: 'PRACTICE', desc: 'Production-grade multi-agent swarms with deterministic execution', href: '/practice-areas/agentic-ai-multi-agent-orchestration', icon: Network },
+                    { label: 'Sovereign & Air-Gapped Edge AI', category: 'PRACTICE', desc: 'Zero-trust edge compute with on-device quantization and security', href: '/practice-areas/ai-cybersecurity-quantum-safe-defense', icon: Server },
+                    // Solutions
+                    { label: 'AI Value Engineering', category: 'SOLUTIONS', desc: 'Bridging silicon compute, token FinOps, TOC & Lean Six Sigma', href: '/solutions/ai-value-engineering', icon: TrendingUp },
+                    { label: 'AI Agentic Enterprise', category: 'SOLUTIONS', desc: 'Multi-agent swarms, deterministic DAGs, persistent memory & MCP', href: '/solutions/ai-agentic-factory', icon: Bot },
+                    { label: 'AI Infrastructure Engineering', category: 'SOLUTIONS', desc: '30–100kW liquid-cooled AI factories, GPU cluster tuning & DCIM', href: '/solutions/ai-infra-engineering', icon: Cpu },
+                    { label: 'AI Network & Cybersecurity', category: 'SOLUTIONS', desc: 'Lossless RoCEv2/InfiniBand fabrics & L1–L7 quantum-safe defense', href: '/solutions/ai-networking-cybersecurity', icon: ShieldCheck },
+                    // Personas
+                    { label: 'Chief Information Officer (CIO)', category: 'PERSONAS', desc: 'Infrastructure modernization, hybrid clouds, FinOps & governance', href: '/book-ai-diagnostic?role=cio#diagnostic-form-section', icon: Users },
+                    { label: 'Chief Technology Officer (CTO)', category: 'PERSONAS', desc: 'AI architecture, platform engineering, kernel tuning & Blackwell scale', href: '/book-ai-diagnostic?role=cto#diagnostic-form-section', icon: Cpu },
+                    { label: 'Chief Information Security Officer (CISO)', category: 'PERSONAS', desc: 'Agent security, zero trust IAM, prompt firewalls & PQC / CBOM', href: '/book-ai-diagnostic?role=ciso#diagnostic-form-section', icon: Lock },
+                    { label: 'Head of AI / ML & Platform Engineering', category: 'PERSONAS', desc: 'Model performance, multi-agent swarms, LLMOps & evaluation', href: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section', icon: Bot },
+                    { label: 'Data Center & Infrastructure Director', category: 'PERSONAS', desc: '30–100kW high-density facilities, liquid cooling & PUE tuning', href: '/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section', icon: Layers },
+                    { label: 'Chief Financial Officer (CFO)', category: 'PERSONAS', desc: 'Inference cost-per-token ledger, GPU FinOps & 90-day ROI proof', href: '/book-ai-diagnostic?role=cfo#diagnostic-form-section', icon: TrendingUp },
+                    // Regulated Industries
+                    { label: 'Banking & Financial Services (BFSI)', category: 'INDUSTRIES', desc: 'High-frequency trading, underwriting agent fleets & AML defense', href: '/industries/banking-financial-services', icon: TrendingUp },
+                    { label: 'Healthcare & Life Sciences', category: 'INDUSTRIES', desc: 'Sovereign clinical AI clusters, molecular agent discovery & HIPAA', href: '/industries/healthcare-life-sciences', icon: Activity },
+                    { label: 'Manufacturing & Industrial AI', category: 'INDUSTRIES', desc: 'Shop-floor vision QC, predictive robotics maintenance & OEE yield', href: '/industries/manufacturing-discrete', icon: Factory },
+                    { label: 'Aerospace, Defense & GovTech', category: 'INDUSTRIES', desc: 'Air-gapped tactical AI, DO-178C Level A & FedRAMP High', href: '/industries/aerospace-defense', icon: Lock },
+                    { label: 'Energy, Utilities & Smart Grid', category: 'INDUSTRIES', desc: 'Grid load balancing, renewables yield forecasting & transformer ops', href: '/industries/energy-utilities', icon: Leaf },
+                    { label: 'Retail, E-Commerce & Consumer Goods', category: 'INDUSTRIES', desc: 'Dynamic localized pricing engines & shelf merchandising vision', href: '/industries/retail-consumer-goods', icon: Boxes },
+                    { label: 'Telecommunications & Cloud', category: 'INDUSTRIES', desc: '5G/6G autonomous RAN slice optimization & optical transport', href: '/industries/telecommunications', icon: Satellite },
+                    // Assessments & Contact
+                    { label: 'Executive AI Diagnostic', category: 'ASSESSMENT', desc: 'Rapid 72-hour technical and financial evaluation of your AI stack', href: '/book-ai-diagnostic#diagnostic-form-section', icon: ArrowUpRight },
+                    { label: 'Talk to an AI Architect', category: 'CONSULTATION', desc: '45-minute live technical session with senior AI systems leads', href: '/talk-to-ai-architect', icon: Sparkles },
+                    { label: 'Methodology Engine (80+ Methods)', category: 'METHODS', desc: 'Lean, TOC, SMED, FMEA, TRIZ automated by governed agent swarms', href: '/methodology-engine', icon: Boxes },
+                    { label: 'Production Case Studies', category: 'EVIDENCE', desc: 'Verified P&L impact, GPU yield gains & latency reduction', href: '/case-studies', icon: FileText },
+                    { label: 'Contact Enterprise Advisory', category: 'CONTACT', desc: 'Direct engagement with global offices in US, Singapore & India', href: '/contact', icon: Phone }
+                  ]
+
+                  const matches = searchCatalog.filter(
+                    item =>
+                      item.label.toLowerCase().includes(query) ||
+                      item.desc.toLowerCase().includes(query) ||
+                      item.category.toLowerCase().includes(query)
+                  )
+
+                  if (matches.length === 0) {
+                    return (
+                      <div className="mobile-search-empty">
+                        <AlertCircle size={20} className="text-slate-400 mb-1" />
+                        <span className="font-semibold text-slate-800 text-sm">No matches found for &quot;{mobileSearchQuery}&quot;</span>
+                        <p className="text-xs text-slate-600 mt-1">Try searching for &quot;Infra&quot;, &quot;Agentic&quot;, &quot;BFSI&quot;, &quot;CIO&quot;, or &quot;Diagnostic&quot;</p>
+                      </div>
+                    )
+                  }
+
+                  return (
+                    <div className="mobile-search-results-list">
+                      <div className="text-[11px] font-bold text-slate-600 uppercase tracking-wider px-2 py-1">
+                        Found {matches.length} matching destinations:
+                      </div>
+                      {matches.map((item, idx) => {
+                        const ItemIcon = item.icon
+                        return (
+                          <Link
+                            key={idx}
+                            href={item.href}
+                            className="mobile-search-result-card"
+                            onClick={(e) => handleNavClick(e, item.href)}
+                          >
+                            <div className="mobile-search-icon-box">
+                              <ItemIcon size={14} />
+                            </div>
+                            <div className="mobile-search-info">
+                              <div className="flex items-center gap-1.5 flex-wrap">
+                                <span className="mobile-search-title">{item.label}</span>
+                                <span className="mobile-search-category-pill">{item.category}</span>
+                              </div>
+                              <p className="mobile-search-desc">{item.desc}</p>
+                            </div>
+                            <ArrowRight size={13} className="text-blue-600 shrink-0 ml-auto" />
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  )
+                })()}
+              </div>
+            ) : (
+              <>
+                <Link href="/" className="mobile-nav-link" onClick={closeAll}>
+                  Home
+                </Link>
+
+                {/* 2. Practice Areas Accordion (Exact 4 Sections: Engineering, Functional, Industry, Engagement Models) */}
+                <div className="mobile-accordion">
+                  <button
+                    className="mobile-accordion-btn"
+                    onClick={() => toggleMobileSection('practice-areas')}
+                    aria-expanded={mobileSection === 'practice-areas'}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Cpu size={15} className="text-blue-600 shrink-0" />
+                      <span>Practice Areas</span>
+                    </div>
+                    <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'practice-areas' ? 'rotate-180' : ''}`} />
+                  </button>
+                  {mobileSection === 'practice-areas' && (
+                    <div className="mobile-accordion-body">
+                      <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
+                        <span>★ View All Practice Areas Overview →</span>
+                      </Link>
+
+                      {/* Exactly 4 Structured Divisions */}
+                      {practiceAreasFiveSections
+                        .filter(sec => ['engineering', 'functional', 'industry', 'engagement'].includes(sec.id))
+                        .map((sec) => {
+                          const SecIcon = sec.icon
+                          const isSecOpen = !!mobileOpenGroups[`practice-sec-${sec.id}`]
+                          return (
+                            <div key={sec.id} className="mobile-group-wrapper">
+                              <button
+                                type="button"
+                                className="mobile-group-accordion-btn"
+                                onClick={() => toggleMobileGroup(`practice-sec-${sec.id}`)}
+                                aria-expanded={isSecOpen}
+                              >
+                                <div className="flex items-center gap-2 min-w-0">
+                                  <SecIcon size={13} className="text-blue-600 shrink-0" />
+                                  <span className="truncate font-semibold">{sec.title}</span>
+                                </div>
+                                <div className="flex items-center gap-1.5 shrink-0">
+                                  <span className="mobile-group-count">{sec.categories.reduce((acc, c) => acc + c.items.length, 0)}</span>
+                                  <ChevronDown size={12} className={`chevron-icon transition-transform ${isSecOpen ? 'rotate-180' : ''}`} />
+                                </div>
+                              </button>
+
+                              {isSecOpen && (
+                                <div className="mobile-group-body">
+                                  {sec.categories.map((cat, cIdx) => (
+                                    <div key={cIdx} className="mb-2">
+                                      <div className="text-[10.5px] font-bold text-slate-700 uppercase tracking-wider py-1 px-1.5 flex items-center justify-between">
+                                        <span>{cat.title}</span>
+                                        <span className="text-[9px] font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200/60">{cat.badge}</span>
+                                      </div>
+                                      {cat.items.map((item, i) => {
+                                        const ItemIcon = item.icon
+                                        return (
+                                          <Link
+                                            key={i}
+                                            href={item.href}
+                                            className="mobile-cap-card"
+                                            onClick={(e) => handleNavClick(e, item.href)}
+                                          >
+                                            <div className="mobile-cap-icon">
+                                              <ItemIcon size={13} />
+                                            </div>
+                                            <div className="mobile-cap-info">
+                                              <span className="mobile-cap-title">{item.label}</span>
+                                              {item.desc && <p className="mobile-cap-desc">{item.desc}</p>}
+                                            </div>
+                                          </Link>
+                                        )
+                                      })}
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          )
+                        })}
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Executive Personas Accordion (Item 4 in User Request) */}
+                <div className="mobile-accordion">
+                  <button
+                    className="mobile-accordion-btn"
+                    onClick={() => toggleMobileSection('personas')}
+                    aria-expanded={mobileSection === 'personas'}
+                  >
+                    <div className="flex items-center gap-2">
+                      <Users size={15} className="text-blue-600 shrink-0" />
+                      <span>Executive Personas</span>
+                    </div>
+                    <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'personas' ? 'rotate-180' : ''}`} />
+                  </button>
+                  {mobileSection === 'personas' && (
+                    <div className="mobile-accordion-body">
+                      <div className="text-[10px] font-bold text-slate-600 uppercase tracking-wider px-1 py-1">
+                        Tailored Architectural Perspectives
+                      </div>
+                      <Link href="/book-ai-diagnostic?role=cio#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><Users size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Chief Information Officer (CIO)</span>
+                          <p className="mobile-cap-desc">Infrastructure Modernization &amp; AI Operating Model</p>
+                        </div>
+                      </Link>
+                      <Link href="/book-ai-diagnostic?role=cto#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><Cpu size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Chief Technology Officer (CTO)</span>
+                          <p className="mobile-cap-desc">AI Architecture &amp; Platform Engineering (vLLM / Blackwell)</p>
+                        </div>
+                      </Link>
+                      <Link href="/book-ai-diagnostic?role=ciso#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><Lock size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Chief Information Security Officer (CISO)</span>
+                          <p className="mobile-cap-desc">Agent Security, Zero Trust IAM &amp; Quantum-Safe Cryptography</p>
+                        </div>
+                      </Link>
+                      <Link href="/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><Bot size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Head of AI / ML &amp; Platform Engineering</span>
+                          <p className="mobile-cap-desc">Model Performance, Multi-Agent Swarms &amp; LLMOps</p>
+                        </div>
+                      </Link>
+                      <Link href="/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><Layers size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Data Center &amp; Infrastructure Director</span>
+                          <p className="mobile-cap-desc">30–100kW High-Density Facilities, Liquid Cooling &amp; PUE</p>
+                        </div>
+                      </Link>
+                      <Link href="/book-ai-diagnostic?role=cfo#diagnostic-form-section" className="mobile-cap-card" onClick={closeAll}>
+                        <div className="mobile-cap-icon"><TrendingUp size={13} /></div>
+                        <div className="mobile-cap-info">
+                          <span className="mobile-cap-title">Chief Financial Officer (CFO)</span>
+                          <p className="mobile-cap-desc">Unit Economics, Inference Cost-Per-Token &amp; Defensible ROI</p>
+                        </div>
+                      </Link>
+                    </div>
+                  )}
+                </div>
 
             {/* Mobile AI Value Engineering Accordion */}
             <div className="mobile-accordion">
@@ -4229,7 +4351,7 @@ export function SiteHeader() {
                 className="mobile-accordion-btn"
                 onClick={() => toggleMobileSection('networking-cybersecurity')}
               >
-                <span>AI Network and Cybersecurity</span>
+                <span>AI Network & Cybersecurity</span>
                 <ChevronDown size={16} className={`chevron-icon ${mobileSection === 'networking-cybersecurity' ? 'rotate-180' : ''}`} />
               </button>
               {mobileSection === 'networking-cybersecurity' && (
@@ -4389,58 +4511,21 @@ export function SiteHeader() {
                   <Link href="/about" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
                     <span>About TRUSTGRID.AI Overview →</span>
                   </Link>
-
-                  <div className="space-y-1.5 pt-1">
-                    {aboutThematicGroups.map((group) => {
-                      const GroupIcon = group.icon
-                      const isOpen = !!mobileOpenGroups[group.id]
-                      return (
-                        <div key={group.id} className="mobile-group-wrapper">
-                          <button
-                            type="button"
-                            className="mobile-group-accordion-btn"
-                            onClick={() => toggleMobileGroup(group.id)}
-                            aria-expanded={isOpen}
-                          >
-                            <div className="flex items-center gap-2 min-w-0">
-                              <GroupIcon size={12} className="text-blue-600 shrink-0" />
-                              <span className="truncate">{group.title}</span>
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              <span className="mobile-group-count">{group.items.length}</span>
-                              <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-                            </div>
-                          </button>
-
-                          {isOpen && (
-                            <div className="mobile-group-body">
-                              {group.items.map((item) => {
-                                const ItemIcon = item.icon
-                                return (
-                                  <Link
-                                    key={item.id}
-                                    href={item.href}
-                                    className="mobile-cap-card"
-                                    onClick={(e) => handleNavClick(e, item.href)}
-                                  >
-                                    <div className="mobile-cap-icon mobile-cap-icon-blue">
-                                      <ItemIcon size={12} />
-                                    </div>
-                                    <div className="mobile-cap-info">
-                                      <span className="mobile-cap-title">{item.label}</span>
-                                    </div>
-                                  </Link>
-                                )
-                              })}
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
-                  </div>
+                  {aboutMenuItems.map((item, i) => (
+                    <Link
+                      key={i}
+                      href={item.href}
+                      className="mobile-sublink"
+                      onClick={(e) => handleNavClick(e, item.href)}
+                    >
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
+            </>
+          )}
 
             <div className="mobile-cta-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>

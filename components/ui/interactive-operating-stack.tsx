@@ -111,7 +111,7 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
 
                 <div className="stack-card-inner">
                   <div className="stack-layer-badge">
-                    <Icon size={16} className={isSelected ? 'text-blue-500' : 'text-slate-400'} />
+                    <Icon size={16} className={isSelected ? 'text-blue-500' : 'text-slate-600 dark:text-slate-300'} />
                   </div>
 
                   <div className="stack-layer-info">

@@ -26,7 +26,7 @@ export function Article03Content() {
 
         <div className="tg-terminal-block">
           <div className="tg-terminal-header">
-            <Terminal size={14} className="text-slate-400" />
+            <Terminal size={14} className="text-slate-300" />
             <span>PyTorch Distributed / NCCL Error Log — Node 38, Rank 304</span>
           </div>
           <pre><code>{`[rank 304] NCCL WARN: Call to connect returned Connection refused

@@ -134,7 +134,7 @@ export default function NotFound() {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-xl font-bold text-white">Flagship Engineering Solutions</h2>
-                <p className="text-xs text-slate-400">Core turnkey operational platforms</p>
+                <p className="text-xs text-slate-300">Core turnkey operational platforms</p>
               </div>
               <Link
                 href="/solutions/ai-infra-engineering"
@@ -166,7 +166,7 @@ export default function NotFound() {
                       <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
                         {sol.title}
                       </h3>
-                      <p className="text-xs text-slate-400 leading-relaxed">
+                      <p className="text-xs text-slate-300 leading-relaxed">
                         {sol.desc}
                       </p>
                     </div>
@@ -207,9 +207,9 @@ export default function NotFound() {
                       <span className="text-xs font-semibold text-slate-200 group-hover:text-cyan-300 block">
                         {pa.title}
                       </span>
-                      <span className="text-[10px] text-slate-400">{pa.category}</span>
+                      <span className="text-[10px] text-slate-300">{pa.category}</span>
                     </div>
-                    <ArrowRight size={14} className="text-slate-400 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight size={14} className="text-slate-300 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
                   </Link>
                 ))}
               </div>
@@ -239,7 +239,7 @@ export default function NotFound() {
                     <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-300">
                       {ind.title}
                     </span>
-                    <ArrowRight size={14} className="text-slate-400 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight size={14} className="text-slate-300 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
                   </Link>
                 ))}
               </div>
@@ -252,7 +252,7 @@ export default function NotFound() {
               <h4 className="text-base font-bold text-white mb-1">
                 Need an architectural feasibility review or custom engagement?
               </h4>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-300">
                 Our forward-deployed systems engineers evaluate workloads within 72 hours.
               </p>
             </div>

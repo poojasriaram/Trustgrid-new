@@ -23,22 +23,22 @@ export function AdIntelligenceTab({ data }: Props) {
       {/* Top Banner KPI Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <div className="rounded-xl border border-blue-500/30 bg-gradient-to-b from-blue-500/10 to-blue-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Top Channel</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Top Channel</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.topPerformingChannel}</div>
           <span className="text-[11px] text-blue-400 mt-1 block">Highest inbound volume</span>
         </div>
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Blended Conversion Rate</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Blended Conversion Rate</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.overallConvRate}%</div>
           <span className="text-[11px] text-emerald-400 mt-1 block">Visit-to-qualified lead</span>
         </div>
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Tracked Channels</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Tracked Channels</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.channelSummary.length} Channels</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">Full multi-touch attribution</span>
         </div>
         <div className="rounded-xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-purple-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Active Ad Campaigns</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Active Ad Campaigns</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.campaigns.length} Campaigns</div>
           <span className="text-[11px] text-purple-400 mt-1 block">Continuous telemetry tracking</span>
         </div>
@@ -51,7 +51,7 @@ export function AdIntelligenceTab({ data }: Props) {
             <Megaphone className="h-4 w-4 text-cyan-400" />
             <h3 className="text-sm font-semibold text-slate-200">Acquisition Performance by Marketing Channel</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">Visits • Leads • Conv %</span>
+          <span className="text-xs text-slate-300 font-mono">Visits • Leads • Conv %</span>
         </div>
 
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -108,13 +108,13 @@ export function AdIntelligenceTab({ data }: Props) {
             <Target className="h-4 w-4 text-emerald-400" />
             <h3 className="text-sm font-semibold text-slate-200">Ad & Campaign Inbound Attribution</h3>
           </div>
-          <span className="text-xs text-slate-400 font-mono">UTM Source / Medium / Campaign</span>
+          <span className="text-xs text-slate-300 font-mono">UTM Source / Medium / Campaign</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-medium">
+              <tr className="border-b border-slate-800 text-slate-300 font-medium">
                 <th className="pb-2">Campaign Name</th>
                 <th className="pb-2">UTM Source / Medium</th>
                 <th className="pb-2">Landing Page</th>
@@ -135,7 +135,7 @@ export function AdIntelligenceTab({ data }: Props) {
                       {c.source} / {c.medium}
                     </span>
                   </td>
-                  <td className="py-3 text-slate-400 truncate max-w-[200px]" title={c.landingPage}>
+                  <td className="py-3 text-slate-300 truncate max-w-[200px]" title={c.landingPage}>
                     {c.landingPage}
                   </td>
                   <td className="py-3 text-right text-slate-200 font-bold">{c.visits.toLocaleString()}</td>

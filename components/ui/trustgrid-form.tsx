@@ -343,6 +343,13 @@ export function TrustGridForm({
       const generatedId = result.submissionId || `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-0001`
       setRefId(generatedId)
       setSubmitted(true)
+      if (typeof window !== 'undefined' && (window as any).clarity) {
+        try {
+          (window as any).clarity('identify', email.trim(), '', '', name.trim())
+          (window as any).clarity('set', 'lead_submitted', formType)
+          if (company.trim()) (window as any).clarity('set', 'company', company.trim())
+        } catch (e) {}
+      }
       if (onSuccess) onSuccess(generatedId)
     } else {
       setErrorMessage(result.message || 'Unable to submit request. Please try again.')
@@ -1178,8 +1185,8 @@ export function TrustGridForm({
       </button>
 
       {/* CONFIDENTIALITY FOOTNOTE */}
-      <p style={{ margin: 0, fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-        <Lock size={12} className="text-slate-400" />
+      <p style={{ margin: 0, fontSize: '11.5px', color: '#475569', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+        <Lock size={12} className="text-slate-600" />
         <span>Enterprise confidentiality guaranteed under mutual NDA standards.</span>
       </p>
     </form>

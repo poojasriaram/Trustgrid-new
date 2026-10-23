@@ -7,6 +7,7 @@ import { appendLeadToGoogleSheets } from '@/lib/services/google-sheets'
 import { createLinkedInJiraLead } from '@/lib/services/jira'
 import { sendWhatsAppLeadAlert } from '@/lib/services/whatsapp'
 import { sendTelegramLeadAlert } from '@/lib/services/telegram'
+import { sendCustomerResponseEmail } from '@/lib/services/lead-response-email'
 
 // In-memory lead repository for runtime monitoring, deduplication, and retry management
 export interface StoredLeadRecord {
@@ -26,8 +27,12 @@ export function getLeadsStore(): Map<string, StoredLeadRecord> {
 
 /**
  * Determine canonical Google Sheet Tab Name for general site forms
+ * Routes all test leads directly to Archived_Test_Leads
  */
-function deriveSheetTabName(leadType: string): string {
+function deriveSheetTabName(leadType: string, isTestLead: boolean = false): string {
+  if (isTestLead) {
+    return 'Archived_Test_Leads'
+  }
   switch (leadType) {
     case 'AI_DIAGNOSTIC':
     case 'AI_READINESS':
@@ -82,7 +87,7 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
     return 'Failed'
   }
 
-  const sheetName = deriveSheetTabName(lead.leadType)
+  const sheetName = deriveSheetTabName(lead.leadType, lead.isTestLead)
 
   const payload = {
     ...lead.rawPayload,
@@ -92,6 +97,10 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
     lead_id: lead.leadId,
     submissionId: lead.leadId,
     leadId: lead.leadId,
+    leadTypeCategory: lead.productionOrTest,
+    LeadType: lead.productionOrTest,
+    isTestLead: lead.isTestLead,
+    testReason: lead.testReason || '',
     form_type: lead.leadType,
     form_id: lead.formId,
     formId: lead.formId,
@@ -111,7 +120,7 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
     industry: lead.industry,
     requirement: lead.requirement,
     message: lead.message,
-    subject: `[TG] ${lead.leadTypeLabel} - ${lead.company}`,
+    subject: lead.isTestLead ? `[TG-TEST] ${lead.leadTypeLabel} - ${lead.company}` : `[TG] ${lead.leadTypeLabel} - ${lead.company}`,
     selectedSolutions: lead.interestedSolution,
     solutions: lead.interestedSolution ? [lead.interestedSolution] : [],
     challenges: lead.challenges,
@@ -389,6 +398,16 @@ export async function POST(req: NextRequest) {
       }).catch((err) => console.warn('[Telegram Alert Notice]', err))
     }
 
+    // Dispatch Customer Response Email & Booking Options
+    // Only real production leads receive customer emails + 4 booking tracks + 3 meeting slots
+    // Test leads are strictly bypassed
+    let emailResult: any = null
+    try {
+      emailResult = await sendCustomerResponseEmail(normalized)
+    } catch (emailErr) {
+      console.warn('[Central Lead API] Response email error:', emailErr)
+    }
+
     // Store Record in In-Memory System Store
     leadsStore.set(normalized.leadId, {
       leadId: normalized.leadId,
@@ -404,12 +423,15 @@ export async function POST(req: NextRequest) {
       message: 'Your request has been submitted successfully.',
       leadId: normalized.leadId,
       leadType: normalized.leadType,
+      leadTypeCategory: normalized.productionOrTest,
+      isTestLead: normalized.isTestLead,
       isSalesLead: normalized.isSalesLead,
       channelAttribution: normalized.channelAttribution,
       jiraStatus: jiraResult.status,
       issueKey: jiraResult.issueKey || null,
       issueUrl: jiraResult.issueUrl || null,
-      subtasks: jiraResult.subtasks || []
+      subtasks: jiraResult.subtasks || [],
+      emailStatus: emailResult?.deliveryStatus || (normalized.isTestLead ? 'Skipped_Test_Lead' : 'Pending')
     })
   } catch (error: any) {
     console.error('[Central Lead API Error]', error)

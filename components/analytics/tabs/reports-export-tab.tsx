@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import {
@@ -125,7 +125,7 @@ export function ReportsExportTab({ dataset }: Props) {
             <FileSpreadsheet className="h-5 w-5 text-cyan-400" />
             Executive Reports & RFC 4180 CSV Export
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-300 mt-1">
             Export compliant, audit-ready data extracts from the TRUSTGRID.AI Relational Analytics Engine.
           </p>
         </div>
@@ -161,7 +161,7 @@ export function ReportsExportTab({ dataset }: Props) {
                   Dual-Sheet Architecture Active
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 Real-time bidirectional synchronization between TRUSTGRID.AI SQLite engine and your Google Sheets.
               </p>
             </div>
@@ -184,7 +184,7 @@ export function ReportsExportTab({ dataset }: Props) {
             <div>
               <span className="font-semibold block">{syncResult.message}</span>
               <span className="text-[11px] text-emerald-300/80 font-mono mt-0.5 block">
-                Synced: {syncResult.synced?.sessions || 0} Sessions • {syncResult.synced?.traffic || 0} Attribution touches • {syncResult.synced?.geo || 0} Geo points • {syncResult.synced?.security || 0} Security events
+                Synced: {syncResult.synced?.sessions || 0} Sessions  {syncResult.synced?.traffic || 0} Attribution touches  {syncResult.synced?.geo || 0} Geo points  {syncResult.synced?.security || 0} Security events
               </span>
             </div>
           </div>
@@ -213,7 +213,7 @@ export function ReportsExportTab({ dataset }: Props) {
                   Raw Ingestion
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2 font-mono truncate">
+              <p className="text-[11px] text-slate-300 mt-2 font-mono truncate">
                 ID: {sheet1Id}
               </p>
               <div className="flex flex-wrap gap-1.5 mt-2.5">
@@ -255,21 +255,21 @@ export function ReportsExportTab({ dataset }: Props) {
                   20 Executive Tabs
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2 font-mono truncate">
+              <p className="text-[11px] text-slate-300 mt-2 font-mono truncate">
                 ID: {sheet2Id}
               </p>
               <div className="flex flex-wrap gap-1.5 mt-2.5">
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-850 text-slate-300 border border-slate-700/60">
-                  🕹️ Sessions Intelligence
+                  ??? Sessions Intelligence
                 </span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-850 text-slate-300 border border-slate-700/60">
-                  🎯 Traffic Attribution
+                  ?? Traffic Attribution
                 </span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-850 text-slate-300 border border-slate-700/60">
-                  🛡️ Network Security
+                  ??? Network Security
                 </span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-850 text-slate-300 border border-slate-700/60">
-                  🌐 Geo & Timezone
+                  ?? Geo & Timezone
                 </span>
               </div>
             </div>
@@ -308,7 +308,7 @@ export function ReportsExportTab({ dataset }: Props) {
                   </span>
                 </div>
                 <h3 className="text-sm font-semibold text-slate-100">{rep.title}</h3>
-                <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">{rep.desc}</p>
+                <p className="text-xs text-slate-300 mt-1.5 leading-relaxed">{rep.desc}</p>
               </div>
 
               <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center justify-between">
@@ -331,12 +331,12 @@ export function ReportsExportTab({ dataset }: Props) {
       <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl backdrop-blur-md">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
           <h3 className="text-sm font-semibold text-slate-200">Export Period Benchmark & Summary</h3>
-          <span className="text-xs font-mono text-slate-400">Database Engine: SQLite WAL Mode</span>
+          <span className="text-xs font-mono text-slate-300">Database Engine: SQLite WAL Mode</span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Total Active Sessions</span>
+            <span className="text-[11px] text-slate-300 block">Total Active Sessions</span>
             <span className="text-lg font-bold text-white font-mono mt-1 block">
               {dataset.missionControl.sessions.toLocaleString()}
             </span>
@@ -344,7 +344,7 @@ export function ReportsExportTab({ dataset }: Props) {
           </div>
 
           <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Unique Visitors</span>
+            <span className="text-[11px] text-slate-300 block">Unique Visitors</span>
             <span className="text-lg font-bold text-white font-mono mt-1 block">
               {dataset.missionControl.uniqueVisitors.toLocaleString()}
             </span>
@@ -352,7 +352,7 @@ export function ReportsExportTab({ dataset }: Props) {
           </div>
 
           <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Average Session Duration</span>
+            <span className="text-[11px] text-slate-300 block">Average Session Duration</span>
             <span className="text-lg font-bold text-white font-mono mt-1 block">
               {dataset.missionControl.avgSessionDuration}s
             </span>
@@ -360,7 +360,7 @@ export function ReportsExportTab({ dataset }: Props) {
           </div>
 
           <div className="p-3 rounded-lg bg-slate-950/60 border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Bounce Rate</span>
+            <span className="text-[11px] text-slate-300 block">Bounce Rate</span>
             <span className="text-lg font-bold text-white font-mono mt-1 block">
               {(100 - dataset.missionControl.retentionRate).toFixed(1)}%
             </span>

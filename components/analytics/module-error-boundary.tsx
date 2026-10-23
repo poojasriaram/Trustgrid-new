@@ -45,7 +45,7 @@ export class ModuleErrorBoundary extends Component<Props, State> {
               <h4 className="font-semibold text-red-300">
                 Unable to load {this.props.moduleTitle}
               </h4>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 An isolated error occurred while rendering this analytics dataset. Other dashboard modules remain fully functional.
               </p>
               <button

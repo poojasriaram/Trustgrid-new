@@ -160,14 +160,22 @@ export async function createJiraLead(
       },
       duedate: calculateDueDate(24),
       priority: {
-        name: 'High'
+        name: lead.isTestLead ? 'Medium' : 'High'
       },
-      labels: [
-        'TG',
-        'SITE_TG',
-        lead.leadType,
-        lead.channelAttribution.replace(/[\s\/]+/g, '_')
-      ]
+      labels: lead.isTestLead
+        ? [
+            'TG',
+            'TG-TEST',
+            'TEST_LEAD',
+            lead.leadType
+          ]
+        : [
+            'TG',
+            'SITE_TG',
+            'PRODUCTION_LEAD',
+            lead.leadType,
+            lead.channelAttribution.replace(/[\s\/]+/g, '_')
+          ]
     }
 
     // Map custom fields on DealFlow (DFX)
@@ -214,6 +222,11 @@ export async function createJiraLead(
     const createdSubtasks: Array<{ key: string; name: string }> = []
 
     // 2. Create the 7 Workflow FollowUp Tasks
+    const subtaskPrefix = lead.isTestLead ? '[TG-TEST]' : '[TG]'
+    const subtaskLabels = lead.isTestLead
+      ? ['TG', 'TG-TEST', 'TEST_FOLLOWUP', lead.leadType]
+      : ['TG', 'LEAD_FOLLOWUP', 'PRODUCTION_FOLLOWUP', lead.leadType]
+
     for (const step of workflow) {
       try {
         const subtaskPayload = {
@@ -224,16 +237,16 @@ export async function createJiraLead(
             parent: {
               key: parentKey
             },
-            summary: `[TG] [${lead.leadId}] ${step.name}`,
-            description: `Site Origin: TG (TRUSTGRID.AI)\nTask: ${step.description || step.name}\n\nLead Reference: ${lead.leadId}\nContact: ${lead.name} (${lead.email} | ${lead.phone})\nCompany: ${lead.company}\nSolution: ${lead.interestedSolution}`,
+            summary: `${subtaskPrefix} [${lead.leadId}] ${step.name}`,
+            description: `Site Origin: TG (TRUSTGRID.AI)\nClassification: ${lead.productionOrTest} (${lead.isTestLead ? 'Test/QA Lead' : 'Live Production Lead'})\nTask: ${step.description || step.name}\n\nLead Reference: ${lead.leadId}\nContact: ${lead.name} (${lead.email} | ${lead.phone})\nCompany: ${lead.company}\nSolution: ${lead.interestedSolution}`,
             issuetype: {
               name: config.subtaskIssueType
             },
             duedate: calculateDueDate(step.dueHours),
             priority: {
-              name: step.priority
+              name: lead.isTestLead ? 'Low' : step.priority
             },
-            labels: ['TG', 'LEAD_FOLLOWUP', lead.leadType]
+            labels: subtaskLabels
           }
         }
 
@@ -277,5 +290,64 @@ export async function createJiraLead(
     }
     processedLeadsCache.set(lead.leadId, errorResult)
     return errorResult
+  }
+}
+
+export interface JiraSearchResultItem {
+  id: string
+  key: string
+  summary: string
+  status: string
+  created: string
+  priority: string
+  assignee: string
+  url: string
+}
+
+/**
+ * Searches Jira Cloud issues using the Jira REST API v3 /rest/api/3/search/jql
+ */
+export async function searchJiraIssues(
+  jql: string = 'project=DFX ORDER BY created DESC',
+  maxResults: number = 50
+): Promise<JiraSearchResultItem[]> {
+  const config = getJiraConfig()
+  if (!config.isConfigured) return []
+
+  const authHeader = `Basic ${Buffer.from(`${config.email}:${config.apiToken}`).toString('base64')}`
+  const encodedJql = encodeURIComponent(jql)
+  const url = `${config.baseUrl}/rest/api/3/search/jql?jql=${encodedJql}&maxResults=${maxResults}&fields=summary,status,created,assignee,priority`
+
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': authHeader,
+        'Accept': 'application/json'
+      },
+      signal: AbortSignal.timeout(10000)
+    })
+
+    if (!res.ok) {
+      console.warn(`[Jira Service] Search returned status ${res.status}`)
+      return []
+    }
+
+    const data = await res.json()
+    if (!data.issues || !Array.isArray(data.issues)) return []
+
+    return data.issues.map((i: any) => ({
+      id: i.id,
+      key: i.key,
+      summary: i.fields?.summary || '',
+      status: i.fields?.status?.name || 'Unknown',
+      created: i.fields?.created || '',
+      priority: i.fields?.priority?.name || 'Medium',
+      assignee: i.fields?.assignee?.displayName || 'Unassigned',
+      url: `${config.baseUrl}/browse/${i.key}`
+    }))
+  } catch (err) {
+    console.warn('[Jira Service] searchJiraIssues error:', err)
+    return []
   }
 }

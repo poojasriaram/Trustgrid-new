@@ -108,20 +108,20 @@ export default async function IndustryDetailPage({ params }: PageProps) {
 
       <main className="main-content">
         {/* BREADCRUMB STRIP */}
-        <div className="bg-slate-900 border-b border-slate-800 text-xs py-3 px-4 md:px-8">
+        <div className="bg-slate-50 border-b border-slate-200 text-xs py-3 px-4 md:px-8">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="flex items-center gap-2 text-slate-400">
-              <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
+            <div className="flex items-center gap-2 text-slate-600">
+              <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
               <ChevronRight size={12} className="text-slate-600" />
-              <Link href="/industries" className="hover:text-blue-400 transition-colors">Industries</Link>
+              <Link href="/industries" className="hover:text-blue-600 transition-colors">Industries</Link>
               <ChevronRight size={12} className="text-slate-600" />
-              <span className="text-slate-400">{industry.category}</span>
+              <span className="text-slate-600">{industry.category}</span>
               <ChevronRight size={12} className="text-slate-600" />
-              <span className="text-white font-medium">{industry.name}</span>
+              <span className="text-slate-900 font-semibold">{industry.name}</span>
             </div>
             <Link
               href="/industries"
-              className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300 transition-colors font-medium"
+              className="inline-flex items-center gap-1.5 text-blue-600 hover:text-blue-700 transition-colors font-medium"
             >
               <ArrowLeft size={13} />
               <span>Back to Sector Directory</span>
@@ -181,16 +181,16 @@ export default async function IndustryDetailPage({ params }: PageProps) {
         />
 
         {/* DIRECT EMBEDDED DIAGNOSTIC EVALUATION FORM */}
-        <section className="section py-14 bg-slate-900 border-t border-slate-800 text-white" id="diagnostic-form-section">
+        <section className="section py-14 bg-slate-50 border-t border-slate-200 text-slate-900" id="diagnostic-form-section">
           <div className="max-w-4xl mx-auto px-4">
             <div className="text-center mb-10">
-              <span className="section-badge bg-blue-900/60 text-blue-300 border-blue-700 font-semibold uppercase text-xs tracking-wider px-3 py-1 rounded-full border">
+              <span className="section-badge bg-blue-50 text-blue-700 border-blue-200 font-semibold uppercase text-xs tracking-wider px-3 py-1 rounded-full border">
                 CONFIDENTIAL ARCHITECTURAL INTAKE
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-3">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3">
                 Request a {industry.name} Systems Diagnostic
               </h2>
-              <p className="text-sm text-slate-300 mt-2 max-w-xl mx-auto">
+              <p className="text-sm text-slate-600 mt-2 max-w-xl mx-auto">
                 Submit your current compute constraints and compliance requirements. Our principal architects will prepare a tailored engineering briefing within 24 hours.
               </p>
             </div>

@@ -62,7 +62,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
   return (
     <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-xl backdrop-blur-md">
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-800/80">
-        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-400">
+        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
           <Filter className="h-4 w-4 text-cyan-400" />
           <span>Executive Intelligence Filters</span>
           {hasActiveFilters && (
@@ -73,7 +73,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
         {hasActiveFilters && (
           <button
             onClick={onReset}
-            className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-400 hover:text-cyan-300 hover:bg-slate-800/70 rounded-md transition-colors"
+            className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-800/70 rounded-md transition-colors"
           >
             <RotateCcw className="h-3 w-3" />
             Reset All Filters
@@ -84,7 +84,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-3">
         {/* Date Range Dropdown */}
         <div className="relative">
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label className="block text-[11px] font-medium text-slate-300 mb-1 flex items-center gap-1">
             <Calendar className="h-3 w-3 text-cyan-400" />
             Date Range
           </label>
@@ -106,7 +106,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
 
         {/* Traffic Source Dropdown */}
         <div className="relative">
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label className="block text-[11px] font-medium text-slate-300 mb-1 flex items-center gap-1">
             <Search className="h-3 w-3 text-indigo-400" />
             Acquisition Source
           </label>
@@ -128,7 +128,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
 
         {/* Device & Hardware */}
         <div className="relative">
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label className="block text-[11px] font-medium text-slate-300 mb-1 flex items-center gap-1">
             <Monitor className="h-3 w-3 text-emerald-400" />
             Hardware & Platform
           </label>
@@ -150,7 +150,7 @@ export function GlobalFilters({ filters, onFilterChange, onReset }: GlobalFilter
 
         {/* Visitor Segment */}
         <div className="relative">
-          <label className="block text-[11px] font-medium text-slate-400 mb-1 flex items-center gap-1">
+          <label className="block text-[11px] font-medium text-slate-300 mb-1 flex items-center gap-1">
             <Users className="h-3 w-3 text-amber-400" />
             Visitor Intent Segment
           </label>

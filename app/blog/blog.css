@@ -95,7 +95,7 @@
   padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 13px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-family: var(--font-mono, monospace);
 }
 
@@ -233,7 +233,7 @@
   align-items: center;
   gap: 8px;
   font-size: 12.5px;
-  color: #64748b;
+  color: #475569;
   margin-bottom: 12px;
 }
 
@@ -244,7 +244,7 @@
 }
 
 .tg-meta-dot {
-  color: #cbd5e1;
+  color: #94a3b8;
 }
 
 .tg-featured-title {
@@ -333,7 +333,7 @@
 
 .tg-author-role {
   font-size: 11px;
-  color: #64748b;
+  color: #475569;
 }
 
 .tg-featured-cta-btn {
@@ -368,7 +368,7 @@
 .tg-search-icon {
   position: absolute;
   left: 14px;
-  color: #94a3b8;
+  color: #64748b;
   pointer-events: none;
 }
 
@@ -398,7 +398,7 @@
   padding: 6px;
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: #64748b;
   cursor: pointer;
   border-radius: 6px;
   display: flex;
@@ -793,7 +793,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: #64748b;
+  color: #475569;
   text-decoration: none;
   transition: color 0.18s ease;
 }
@@ -803,7 +803,7 @@
 }
 
 .tg-breadcrumb-sep {
-  color: #cbd5e1;
+  color: #64748b;
 }
 
 .tg-breadcrumb-current {
@@ -878,7 +878,7 @@
   align-items: center;
   gap: 16px;
   font-size: 12.5px;
-  color: #64748b;
+  color: #475569;
   font-family: var(--font-mono, monospace);
 }
 
@@ -899,7 +899,7 @@
 
 .tg-article-caption {
   font-size: 13px;
-  color: #64748b;
+  color: #475569;
   margin-top: 10px;
   text-align: center;
   font-style: italic;
@@ -1126,7 +1126,7 @@
   border-bottom: 1px solid #1e293b;
   font-family: var(--font-mono, monospace);
   font-size: 11px;
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .tg-code-block pre, .tg-terminal-block pre {
@@ -1257,7 +1257,7 @@
 .tg-diagram-caption {
   font-size: 12.5px;
   line-height: 1.55;
-  color: #64748b;
+  color: #475569;
   margin-top: 10px;
   padding-left: 4px;
 }
@@ -1373,7 +1373,7 @@
 
 .tg-faq-desc {
   font-size: 14px;
-  color: #64748b;
+  color: #475569;
   margin: 0;
 }
 
@@ -1415,7 +1415,7 @@
 }
 
 .tg-faq-chevron {
-  color: #64748b;
+  color: #475569;
   transition: transform 0.2s ease;
   flex-shrink: 0;
   margin-left: 12px;
@@ -1501,7 +1501,7 @@
 }
 
 .tg-reference-link-icon {
-  color: #94a3b8;
+  color: #64748b;
   transition: color 0.16s ease;
 }
 
@@ -1525,7 +1525,7 @@
 .tg-reference-desc {
   font-size: 12.5px;
   line-height: 1.5;
-  color: #64748b;
+  color: #475569;
   margin: 0;
   flex: 1;
 }
@@ -1644,7 +1644,7 @@
 
 .tg-cta-sla-chip {
   font-size: 11.5px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-family: var(--font-mono, monospace);
 }
 

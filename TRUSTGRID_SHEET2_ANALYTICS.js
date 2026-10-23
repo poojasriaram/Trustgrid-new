@@ -833,12 +833,22 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
     setColWidths(sh, 1, [20, 200, 160, 40, 200, 160, 40, 200, 160, 40, 200]);
 
     // Flatten every lead tab into { tab, head, row } so stats can be computed generically,
-    // since each per-form sheet has a different column layout.
+    // Strictly filter out test leads (TG-TEST, QA, Demo, Verification) to report production leads only.
     var allRows = [];
     (leadTabs || []).forEach(function (t) {
         var head = (t.data && t.data[0]) || [];
         var rows = (t.data && t.data.length > 1) ? t.data.slice(1) : [];
-        rows.forEach(function (r) { allRows.push({ tab: t.name, head: head, row: r }); });
+        rows.forEach(function (r) {
+            var rStr = r.join(" ");
+            var isTest = (
+                /\b(TG-TEST|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rStr) ||
+                rStr.toLowerCase().indexOf("@test.local") !== -1 ||
+                rStr.toLowerCase().indexOf("@example.com") !== -1
+            );
+            if (!isTest) {
+                allRows.push({ tab: t.name, head: head, row: r });
+            }
+        });
     });
 
     var formsRows = (formsData && formsData.length > 1) ? formsData.slice(1) : [];

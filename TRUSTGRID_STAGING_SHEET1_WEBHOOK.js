@@ -24,13 +24,18 @@
  *    - Who has access: "Anyone"
  * 7. Click Deploy, Authorize, and Copy the Web App URL.
  * 8. Add to your .env.local and Vercel Environment Variables:
- *    NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL=<Your_Copied_URL>
+ *    NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL=https://script.google.com/macros/s/AKfycbybp6YMsPeTshbmWSJVhW1K-yaInEoHVIheg9dHisYsv8apkUcOhL1KKR-7s5E9ZubIKQ/exec
+ * 
+ * ACTIVE DEPLOYMENT DETAILS:
+ * - Deployment ID: AKfycbybp6YMsPeTshbmWSJVhW1K-yaInEoHVIheg9dHisYsv8apkUcOhL1KKR-7s5E9ZubIKQ
+ * - Web App URL: https://script.google.com/macros/s/AKfycbybp6YMsPeTshbmWSJVhW1K-yaInEoHVIheg9dHisYsv8apkUcOhL1KKR-7s5E9ZubIKQ/exec
+ * - Staging Spreadsheet ID: 1vc6sAUAH1Id7-mPEuwRtX7MaZ45uFdGAm9ppRYrAcOo
  * =========================================================================================
  */
 
 const STAGING_CONFIG = {
-  // If blank, automatically binds to the sheet where this Apps Script is attached
-  SPREADSHEET_ID: "", 
+  // Staging Spreadsheet ID (TRUSTGRID.AI - Staging & Vercel QA)
+  SPREADSHEET_ID: "1vc6sAUAH1Id7-mPEuwRtX7MaZ45uFdGAm9ppRYrAcOo", 
 
   ENVIRONMENT_NAME: "STAGING (Vercel & Localhost)",
   AUTHORIZED_ORIGINS: ["vercel.app", "localhost", "127.0.0.1", "preview"],

@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
@@ -434,74 +434,33 @@ export function AIArchitectChatbot() {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '12px 18px',
-            background: 'linear-gradient(135deg, #09142e 0%, #0d214d 100%)',
-            color: '#ffffff',
-            border: '1px solid rgba(29, 92, 255, 0.4)',
-            borderRadius: '999px',
-            boxShadow: '0 8px 30px rgba(9, 20, 46, 0.35)',
-            cursor: 'pointer',
-            transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-            transform: 'scale(1)'
-          }}
+          className="ai-architect-chatbot-launcher"
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           aria-label="Open TRUSTGRID.AI AI Architect Assistant"
         >
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: '#1d5cff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 12px rgba(29, 92, 255, 0.6)'
-            }}
-          >
+          <div className="ai-architect-chatbot-avatar">
             <Bot size={18} className="text-white" />
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
-            <span style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.02em', color: '#ffffff' }}>
+          <div className="ai-architect-chatbot-text-col">
+            <span className="ai-architect-chatbot-title">
               TRUSTGRID.AI AI
             </span>
-            <span style={{ fontSize: '10px', color: '#93c5fd', fontWeight: 500 }}>
+            <span className="ai-architect-chatbot-subtitle">
               Enterprise Architect
             </span>
           </div>
-          <Sparkles size={14} className="text-blue-400 animate-pulse" />
+          <Sparkles size={14} className="text-blue-400 animate-pulse ml-1" />
         </button>
       )}
 
       {/* CHAT WINDOW CONTAINER */}
       {isOpen && (
         <div
-          style={{
-            position: 'fixed',
-            bottom: isMinimized ? '24px' : '20px',
-            right: '20px',
-            width: isMaximized ? 'min(92vw, 680px)' : 'min(92vw, 440px)',
-            height: isMinimized ? 'auto' : isMaximized ? '82vh' : '620px',
-            maxHeight: '90vh',
-            zIndex: 9999,
-            background: '#ffffff',
-            borderRadius: '16px',
-            boxShadow: '0 20px 50px rgba(9, 20, 46, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8)',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-            fontFamily: 'inherit',
-            transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}
+          className={`ai-architect-chatbot-window ${isMinimized ? 'minimized' : ''} ${isMaximized ? 'maximized' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="TRUSTGRID.AI AI Architect Assistant"
         >
           {/* HEADER */}
           <div
@@ -814,7 +773,7 @@ export function AIArchitectChatbot() {
                             }}
                           >
                             <span>{prompt}</span>
-                            <ChevronRight size={11} className="opacity-40" />
+                            <ChevronRight size={11} className="text-slate-600" />
                           </button>
                         ))}
                       </div>
@@ -825,7 +784,7 @@ export function AIArchitectChatbot() {
                 {/* Starting Prompt Pills (Only displayed at initial state) */}
                 {messages.length === 1 && !isGenerating && (
                   <div style={{ marginTop: '4px' }}>
-                    <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 700, color: '#334155', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                       Suggested Starting Inquiries:
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -858,7 +817,7 @@ export function AIArchitectChatbot() {
                           }}
                         >
                           <span>{prompt}</span>
-                          <ChevronRight size={13} className="text-slate-400" />
+                          <ChevronRight size={13} className="text-slate-600" />
                         </button>
                       ))}
                     </div>
@@ -1001,16 +960,7 @@ export function AIArchitectChatbot() {
               )}
 
               {/* INPUT BAR */}
-              <div
-                style={{
-                  padding: '12px 14px',
-                  background: '#ffffff',
-                  borderTop: '1px solid #e2e8f0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}
-              >
+              <div className="ai-architect-chatbot-input-bar">
                 <input
                   ref={inputRef}
                   type="text"
@@ -1024,34 +974,15 @@ export function AIArchitectChatbot() {
                     }
                   }}
                   disabled={isGenerating}
-                  style={{
-                    flex: 1,
-                    padding: '9px 12px',
-                    border: '1px solid #cbd5e1',
-                    borderRadius: '8px',
-                    fontSize: '12.5px',
-                    outline: 'none'
-                  }}
+                  className="ai-architect-chatbot-input"
                 />
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={!inputVal.trim() || isGenerating}
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '8px',
-                    background: inputVal.trim() && !isGenerating ? '#1d5cff' : '#e2e8f0',
-                    color: '#ffffff',
-                    border: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: inputVal.trim() && !isGenerating ? 'pointer' : 'default',
-                    transition: 'background 0.2s ease'
-                  }}
+                  className="ai-architect-chatbot-send-btn"
                   aria-label="Send Message"
                 >
-                  <Send size={15} />
+                  <Send size={16} />
                 </button>
               </div>
             </>

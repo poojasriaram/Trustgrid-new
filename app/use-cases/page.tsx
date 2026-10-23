@@ -219,21 +219,21 @@ export default function UseCasesPage() {
                       </span>
                       Operational Problem
                     </span>
-                    <span className="text-slate-400 px-1 font-bold">→</span>
+                    <span className="text-slate-600 px-1 font-bold">→</span>
                     <span className="flex items-center gap-1.5 whitespace-nowrap text-amber-900 font-bold">
                       <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px] font-bold">
                         2
                       </span>
                       Methodology Selection
                     </span>
-                    <span className="text-slate-400 px-1 font-bold">→</span>
+                    <span className="text-slate-600 px-1 font-bold">→</span>
                     <span className="flex items-center gap-1.5 whitespace-nowrap text-cyan-900 font-bold">
                       <span className="w-4 h-4 rounded-full bg-cyan-100 text-cyan-800 flex items-center justify-center text-[10px] font-bold">
                         3
                       </span>
                       AI Architecture
                     </span>
-                    <span className="text-slate-400 px-1 font-bold">→</span>
+                    <span className="text-slate-600 px-1 font-bold">→</span>
                     <span className="flex items-center gap-1.5 whitespace-nowrap text-emerald-900 font-bold">
                       <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">
                         4

@@ -91,7 +91,7 @@ export function PrivacyConsentBanner() {
                 SOC2 / GDPR
               </span>
             </h2>
-            <p className="text-slate-400 leading-relaxed text-[11px]">
+            <p className="text-slate-200 leading-relaxed text-[11px]">
               TRUSTGRID.AI records privacy-preserving session telemetry and network intelligence to optimize enterprise latency, prevent infrastructure abuse, and evaluate commercial intent. We never sell personal data or track exact physical coordinates. Read our{' '}
               <Link href="/privacy-policy" className="text-cyan-400 hover:text-cyan-300 underline font-medium">
                 Privacy Notice
@@ -103,7 +103,7 @@ export function PrivacyConsentBanner() {
                 <div className="flex items-center justify-between py-1">
                   <div>
                     <span className="font-semibold text-slate-200">Strictly Necessary</span>
-                    <p className="text-[10px] text-slate-500">Security tokens, rate limiting & infrastructure safety</p>
+                    <p className="text-[10px] text-slate-300">Security tokens, rate limiting & infrastructure safety</p>
                   </div>
                   <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-900/50">
                     Always Active
@@ -113,7 +113,7 @@ export function PrivacyConsentBanner() {
                 <div className="flex items-center justify-between py-1">
                   <div>
                     <span className="font-semibold text-slate-200">Performance & Analytics</span>
-                    <p className="text-[10px] text-slate-500">Session flow, dwell time & approximate regional traffic</p>
+                    <p className="text-[10px] text-slate-300">Session flow, dwell time & approximate regional traffic</p>
                   </div>
                   <button
                     type="button"
@@ -129,7 +129,7 @@ export function PrivacyConsentBanner() {
                 <div className="flex items-center justify-between py-1">
                   <div>
                     <span className="font-semibold text-slate-200">Campaign Attribution</span>
-                    <p className="text-[10px] text-slate-500">UTM tracking & B2B lead attribution</p>
+                    <p className="text-[10px] text-slate-300">UTM tracking & B2B lead attribution</p>
                   </div>
                   <button
                     type="button"
@@ -162,7 +162,7 @@ export function PrivacyConsentBanner() {
                   </button>
                   <button
                     onClick={() => setShowPreferences(true)}
-                    className="px-2.5 py-1.5 rounded-lg hover:bg-slate-800/80 text-slate-400 hover:text-slate-200 transition-colors text-xs flex items-center gap-1 ml-auto"
+                    className="px-2.5 py-1.5 rounded-lg hover:bg-slate-800/80 text-slate-300 hover:text-white transition-colors text-xs flex items-center gap-1 ml-auto"
                   >
                     <SlidersHorizontal className="h-3 w-3" />
                     Customize

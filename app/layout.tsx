@@ -62,17 +62,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`bg-background ${plusJakartaSans.variable} ${ibmPlexMono.variable}`}>
       <head>
-        {/* Microsoft Clarity Tracking (Project ID: z2125pmmtz) — Production Only Guard */}
+        {/* Microsoft Clarity Tracking (Project ID: z2125pmmtz) */}
         <Script id="microsoft-clarity" strategy="afterInteractive">
           {`
             (function(c,l,a,r,i,t,y){
-                var host = (typeof window !== 'undefined' && window.location.hostname) || '';
-                var isProd = host === 'trustgrid.ai' || host === 'www.trustgrid.ai' || host === 'trustgrid.in' || host === 'www.trustgrid.in';
-                if (!isProd) {
-                  // Completely exclude localhost, preview, testing and development traffic from Microsoft Clarity production data
-                  console.log('[Clarity] Tracking inactive for non-production host: ' + host);
-                  return;
-                }
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                 t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                 y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);

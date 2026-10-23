@@ -30,7 +30,7 @@ export function VisitorRatioTab({ data }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">New Visitors</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">New Visitors</span>
             <UserPlus className="h-4 w-4 text-cyan-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">{data.newVisitors.toLocaleString()}</div>
@@ -39,7 +39,7 @@ export function VisitorRatioTab({ data }: Props) {
 
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Returning Visitors</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Returning Visitors</span>
             <UserCheck className="h-4 w-4 text-indigo-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">{data.returningVisitors.toLocaleString()}</div>
@@ -48,7 +48,7 @@ export function VisitorRatioTab({ data }: Props) {
 
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Acquisition Ratio</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Acquisition Ratio</span>
             <PieChart className="h-4 w-4 text-emerald-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">1.6 : 1.0</div>
@@ -57,7 +57,7 @@ export function VisitorRatioTab({ data }: Props) {
 
         <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 to-amber-950/20 p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Audience Quality</span>
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Audience Quality</span>
             <Users className="h-4 w-4 text-amber-400" />
           </div>
           <div className="mt-2 text-2xl font-bold text-white">Enterprise Tier</div>
@@ -98,7 +98,7 @@ export function VisitorRatioTab({ data }: Props) {
             </svg>
             <div className="absolute text-center">
               <span className="text-2xl font-bold text-white">{total.toLocaleString()}</span>
-              <span className="block text-[10px] uppercase tracking-wider text-slate-400">Total Audience</span>
+              <span className="block text-[10px] uppercase tracking-wider text-slate-300">Total Audience</span>
             </div>
           </div>
 
@@ -106,14 +106,14 @@ export function VisitorRatioTab({ data }: Props) {
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-cyan-400" />
               <div>
-                <span className="text-slate-400 block text-[10px]">NEW VISITORS</span>
+                <span className="text-slate-300 block text-[10px]">NEW VISITORS</span>
                 <span className="text-white font-bold font-mono">{data.newVisitorPct}%</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <span className="h-3 w-3 rounded-full bg-indigo-500" />
               <div>
-                <span className="text-slate-400 block text-[10px]">REPEAT VISITORS</span>
+                <span className="text-slate-300 block text-[10px]">REPEAT VISITORS</span>
                 <span className="text-white font-bold font-mono">{data.returningVisitorPct}%</span>
               </div>
             </div>
@@ -125,7 +125,7 @@ export function VisitorRatioTab({ data }: Props) {
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 className="text-sm font-semibold text-slate-200">New vs. Returning Trajectory</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Daily acquisition momentum against loyalty growth</p>
+              <p className="text-xs text-slate-300 mt-0.5">Daily acquisition momentum against loyalty growth</p>
             </div>
             <div className="flex items-center gap-3 text-xs font-mono">
               <span className="flex items-center gap-1.5 text-cyan-400">
@@ -156,7 +156,7 @@ export function VisitorRatioTab({ data }: Props) {
                       title={`Returning: ${t.returningUsers.toLocaleString()}`}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 font-mono mt-1">{t.date}</span>
+                  <span className="text-[10px] text-slate-300 font-mono mt-1">{t.date}</span>
                 </div>
               )
             })}

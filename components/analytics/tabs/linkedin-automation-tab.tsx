@@ -508,7 +508,7 @@ export function LinkedInAutomationTab() {
                   Company Page API
                 </span>
               </div>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 Automated publishing and dealflow engine for the official{' '}
                 <strong className="text-slate-200">TRUSTGRID.AI</strong> LinkedIn Organization Page.
               </p>
@@ -561,10 +561,10 @@ export function LinkedInAutomationTab() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
           {/* Item 1: Status */}
           <div className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-1">
-            <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Status</span>
+            <span className="text-[11px] font-mono text-slate-300 uppercase tracking-wider">Status</span>
             <div className="flex items-center gap-2">
               {isLoadingStatus ? (
-                <span className="text-xs text-slate-400 font-mono">Checking...</span>
+                <span className="text-xs text-slate-300 font-mono">Checking...</span>
               ) : status?.connected ? (
                 <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse shadow-sm shadow-emerald-400/50" />
@@ -584,7 +584,7 @@ export function LinkedInAutomationTab() {
 
           {/* Item 2: LinkedIn Page */}
           <div className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-1">
-            <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">LinkedIn Page</span>
+            <span className="text-[11px] font-mono text-slate-300 uppercase tracking-wider">LinkedIn Page</span>
             <div className="flex items-center gap-2">
               <Building2 className="h-4 w-4 text-cyan-400" />
               <span className="text-sm font-bold text-white tracking-tight">TRUSTGRID.AI</span>
@@ -592,7 +592,7 @@ export function LinkedInAutomationTab() {
                 href="https://www.linkedin.com/company/trustgridai/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-slate-400 hover:text-cyan-400 transition-colors ml-auto"
+                className="text-slate-300 hover:text-cyan-400 transition-colors ml-auto"
                 title="View LinkedIn Page"
               >
                 <ExternalLink className="h-3.5 w-3.5" />
@@ -603,7 +603,7 @@ export function LinkedInAutomationTab() {
 
           {/* Item 3: Organization ID */}
           <div className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-1">
-            <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Organization ID</span>
+            <span className="text-[11px] font-mono text-slate-300 uppercase tracking-wider">Organization ID</span>
             <div className="flex items-center gap-1.5">
               <span className="text-xs font-mono font-bold text-cyan-300">
                 {status?.organizationIdMasked || 'Configured in env'}
@@ -616,7 +616,7 @@ export function LinkedInAutomationTab() {
 
           {/* Item 4: Role / Org Access */}
           <div className="rounded-xl border border-slate-800/80 bg-slate-900/40 p-4 space-y-1">
-            <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider">Org Permission</span>
+            <span className="text-[11px] font-mono text-slate-300 uppercase tracking-wider">Org Permission</span>
             <div className="flex items-center gap-1.5">
               {status?.connected ? (
                 <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1">
@@ -651,9 +651,9 @@ export function LinkedInAutomationTab() {
           <div>
             <h3 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
               <span>Create Post</span>
-              <span className="text-xs font-normal text-slate-400 font-mono">• Publisher: TRUSTGRID.AI Page</span>
+              <span className="text-xs font-normal text-slate-300 font-mono">• Publisher: TRUSTGRID.AI Page</span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               Compose updates to publish as the official TRUSTGRID.AI Organization. Personal profile posting is strictly disabled.
             </p>
           </div>
@@ -695,7 +695,7 @@ export function LinkedInAutomationTab() {
             </div>
             <button
               onClick={() => setPublishFeedback(null)}
-              className="ml-auto text-slate-400 hover:text-white"
+              className="ml-auto text-slate-300 hover:text-white"
             >
               ×
             </button>
@@ -708,7 +708,7 @@ export function LinkedInAutomationTab() {
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                 <span>LinkedIn Post</span>
               </label>
-              <span className={`text-[11px] font-mono ${postText.length > 2900 ? 'text-amber-400 font-bold' : 'text-slate-400'}`}>
+              <span className={`text-[11px] font-mono ${postText.length > 2900 ? 'text-amber-400 font-bold' : 'text-slate-300'}`}>
                 {postText.length} / 3,000 characters
               </span>
             </div>
@@ -773,7 +773,7 @@ export function LinkedInAutomationTab() {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="p-1 rounded-md text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-colors cursor-pointer"
+                  className="p-1 rounded-md text-slate-300 hover:text-rose-400 hover:bg-rose-950/30 transition-colors cursor-pointer"
                   title="Remove image"
                 >
                   <X className="h-4 w-4" />
@@ -803,7 +803,7 @@ export function LinkedInAutomationTab() {
                   <Calendar className="h-3.5 w-3.5 text-cyan-400" />
                   <span>Automated Scheduling</span>
                 </span>
-                <p className="text-[11px] text-slate-400">Publish automatically at a future timestamp</p>
+                <p className="text-[11px] text-slate-300">Publish automatically at a future timestamp</p>
               </div>
             </div>
 
@@ -849,7 +849,7 @@ export function LinkedInAutomationTab() {
               </div>
               <div>
                 <h4 className="text-base font-bold text-white tracking-tight">Confirm Publication</h4>
-                <p className="text-xs text-slate-400 font-mono">Target: TRUSTGRID.AI LinkedIn Page</p>
+                <p className="text-xs text-slate-300 font-mono">Target: TRUSTGRID.AI LinkedIn Page</p>
               </div>
             </div>
 
@@ -857,7 +857,7 @@ export function LinkedInAutomationTab() {
               <p className="text-sm font-semibold text-slate-200">
                 Publish this post as TRUSTGRID.AI?
               </p>
-              <p className="text-xs text-slate-400 line-clamp-3 italic">
+              <p className="text-xs text-slate-300 line-clamp-3 italic">
                 "{postText}"
               </p>
               <div className="pt-2 border-t border-slate-800/80 text-[11px] text-cyan-400 font-mono">
@@ -895,7 +895,7 @@ export function LinkedInAutomationTab() {
               <CheckCheck className="h-5 w-5 text-cyan-400" />
               <span>LinkedIn Integration Test Screen</span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               Step-by-step verification runner that validates credentials, permissions, and live publishing.
             </p>
           </div>
@@ -923,7 +923,7 @@ export function LinkedInAutomationTab() {
                   ? 'border-rose-500/30 bg-rose-950/20 text-rose-200'
                   : step.status === 'running'
                   ? 'border-cyan-500/40 bg-cyan-950/30 text-cyan-200'
-                  : 'border-slate-800 bg-slate-900/40 text-slate-400'
+                  : 'border-slate-800 bg-slate-900/40 text-slate-300'
               }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -936,7 +936,7 @@ export function LinkedInAutomationTab() {
                         ? 'bg-rose-500 text-white'
                         : step.status === 'running'
                         ? 'bg-cyan-500 text-slate-950 animate-pulse'
-                        : 'bg-slate-800 text-slate-400'
+                        : 'bg-slate-800 text-slate-300'
                     }`}
                   >
                     {step.step}
@@ -952,7 +952,7 @@ export function LinkedInAutomationTab() {
                             ? 'text-emerald-400'
                             : step.status === 'failed'
                             ? 'text-rose-400'
-                            : 'text-slate-400'
+                            : 'text-slate-300'
                         }`}
                       >
                         {step.message}
@@ -997,17 +997,17 @@ export function LinkedInAutomationTab() {
         <div className="flex items-center justify-between pb-3 border-b border-slate-800/80">
           <div>
             <h3 className="text-lg font-bold text-white tracking-tight">Post History</h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               Audit log of all manual and scheduled organization posts.
             </p>
           </div>
-          <span className="text-xs font-mono text-slate-400">
+          <span className="text-xs font-mono text-slate-300">
             {posts.length} {posts.length === 1 ? 'Record' : 'Records'}
           </span>
         </div>
 
         {isLoadingPosts ? (
-          <div className="py-8 text-center text-xs text-slate-400 font-mono">
+          <div className="py-8 text-center text-xs text-slate-300 font-mono">
             Loading post records...
           </div>
         ) : posts.length === 0 ? (
@@ -1018,7 +1018,7 @@ export function LinkedInAutomationTab() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-[11px] font-mono text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-slate-800 text-[11px] font-mono text-slate-300 uppercase tracking-wider">
                   <th className="py-3 px-3">Date</th>
                   <th className="py-3 px-3">Post Preview</th>
                   <th className="py-3 px-3">Status</th>
@@ -1030,7 +1030,7 @@ export function LinkedInAutomationTab() {
               <tbody className="divide-y divide-slate-800/60 font-mono">
                 {posts.map(p => (
                   <tr key={p.id} className="hover:bg-slate-900/40 transition-colors">
-                    <td className="py-3 px-3 text-slate-400 whitespace-nowrap">
+                    <td className="py-3 px-3 text-slate-300 whitespace-nowrap">
                       {new Date(p.createdAt).toLocaleDateString()}
                     </td>
                     <td className="py-3 px-3 font-sans text-slate-200 max-w-xs truncate" title={p.text}>
@@ -1051,7 +1051,7 @@ export function LinkedInAutomationTab() {
                         {p.status}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-slate-400 max-w-[160px] truncate">
+                    <td className="py-3 px-3 text-slate-300 max-w-[160px] truncate">
                       {p.linkedinPostId ? (
                         <a
                           href={
@@ -1073,7 +1073,7 @@ export function LinkedInAutomationTab() {
                         <span>—</span>
                       )}
                     </td>
-                    <td className="py-3 px-3 text-slate-400 whitespace-nowrap">
+                    <td className="py-3 px-3 text-slate-300 whitespace-nowrap">
                       {p.publishedAt ? new Date(p.publishedAt).toLocaleString() : '—'}
                     </td>
                     <td className="py-3 px-3 text-right whitespace-nowrap">

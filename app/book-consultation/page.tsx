@@ -231,6 +231,13 @@ function BookConsultationContent() {
       }).then(sendTelemetryEvent)
 
       setSubmitted(true)
+      if (typeof window !== 'undefined' && (window as any).clarity) {
+        try {
+          (window as any).clarity('identify', businessEmail.trim(), '', '', fullName.trim())
+          (window as any).clarity('set', 'consultation_booked', meetingType)
+          if (companyName.trim()) (window as any).clarity('set', 'company', companyName.trim())
+        } catch (e) {}
+      }
     } catch (err: any) {
       console.error('Booking submission error:', err)
       // Even if network webhook encounters an issue, show calendar confirmation so user never loses their slot
@@ -310,7 +317,7 @@ function BookConsultationContent() {
 
                   {/* Select Meeting Format */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
                       Meeting Type
                     </label>
                     <div className="space-y-2">
@@ -328,16 +335,16 @@ function BookConsultationContent() {
                             <span>{m.title}</span>
                             <span className="px-2 py-0.5 rounded bg-white/10 text-blue-300 font-mono text-[11px]">{m.duration}</span>
                           </div>
-                          <p className="text-[11.5px] text-slate-400 mt-1 leading-normal">{m.desc}</p>
+                          <p className="text-[11.5px] text-slate-300 mt-1 leading-normal">{m.desc}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-6 border-t border-white/10 text-xs text-slate-400 flex items-center justify-between mt-6">
+                <div className="pt-6 border-t border-white/10 text-xs text-slate-300 flex items-center justify-between mt-6">
                   <span>Confidentiality &bull; Strict NDA Protected</span>
-                  <Lock size={14} className="text-slate-400" />
+                  <Lock size={14} className="text-slate-300" />
                 </div>
               </div>
 
@@ -483,7 +490,7 @@ function BookConsultationContent() {
                         <CalendarIcon size={16} className="text-blue-600" />
                         <span>2. Select Time Slot</span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-xs text-slate-500 font-normal">
+                      <div className="flex items-center gap-1.5 text-xs text-slate-600 font-normal">
                         <Clock size={12} />
                         <select
                           value={selectedTimezone}
@@ -567,7 +574,7 @@ function BookConsultationContent() {
                         </>
                       )}
                     </button>
-                    <p className="text-center text-[11px] text-slate-500 mt-2">
+                    <p className="text-center text-[11px] text-slate-600 mt-2">
                       Automatic Google Calendar invite &bull; Real-time slot locking &bull; Zero spam guarantee
                     </p>
                   </div>
@@ -590,23 +597,23 @@ function BookConsultationContent() {
 
               <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 text-left mb-8 space-y-2 text-xs text-slate-700">
                 <div className="flex justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-slate-500">Session Format:</span>
+                  <span className="text-slate-600">Session Format:</span>
                   <span className="font-bold text-slate-900">{meetingType}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-slate-500">Scheduled Date &amp; Time:</span>
+                  <span className="text-slate-600">Scheduled Date &amp; Time:</span>
                   <span className="font-bold text-blue-600">{selectedDate} at {selectedSlot}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-slate-500">Timezone:</span>
+                  <span className="text-slate-600">Timezone:</span>
                   <span className="font-bold text-slate-900">{selectedTimezone}</span>
                 </div>
                 <div className="flex justify-between border-b border-slate-200/60 pb-2">
-                  <span className="text-slate-500">Company:</span>
+                  <span className="text-slate-600">Company:</span>
                   <span className="font-bold text-slate-900">{companyName}</span>
                 </div>
                 <div className="flex justify-between pt-1">
-                  <span className="text-slate-500">Focus Area:</span>
+                  <span className="text-slate-600">Focus Area:</span>
                   <span className="font-bold text-slate-900">{areaOfInterest}</span>
                 </div>
               </div>

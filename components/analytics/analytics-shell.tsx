@@ -158,7 +158,7 @@ export function AnalyticsShell({
         <div className="flex items-center gap-3">
           <button
             onClick={() => setMobileNavOpen(!mobileNavOpen)}
-            className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
             aria-label="Toggle Navigation"
           >
             {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -224,7 +224,7 @@ export function AnalyticsShell({
           </div>
 
           {/* Last Updated Timestamp */}
-          <div className="hidden xl:flex items-center gap-1.5 text-xs font-mono text-slate-400 bg-slate-900/80 px-2.5 py-1.5 rounded-lg border border-slate-800">
+          <div className="hidden xl:flex items-center gap-1.5 text-xs font-mono text-slate-300 bg-slate-900/80 px-2.5 py-1.5 rounded-lg border border-slate-800">
             <Clock className="h-3.5 w-3.5 text-cyan-400" />
             <span>{dataset.timestamp}</span>
           </div>
@@ -251,7 +251,7 @@ export function AnalyticsShell({
 
           <Link
             href="/"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-white hover:bg-slate-800/60 transition-colors"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 transition-colors"
             title="Return to Public Site"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
@@ -278,7 +278,7 @@ export function AnalyticsShell({
             {NAVIGATION_GROUPS.map((group, gIdx) => (
               <div key={gIdx} className="space-y-1">
                 {group.name && (
-                  <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                  <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-slate-300">
                     {group.name}
                   </div>
                 )}
@@ -293,7 +293,7 @@ export function AnalyticsShell({
                       className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                         isActive
                           ? 'bg-gradient-to-r from-cyan-500/20 to-indigo-500/10 text-cyan-200 border border-cyan-500/40 shadow-sm font-semibold'
-                          : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                          : 'text-slate-300 hover:text-slate-200 hover:bg-slate-900/60'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 truncate">
@@ -309,7 +309,7 @@ export function AnalyticsShell({
                           className={`text-[9px] font-mono font-bold px-1.5 py-0.2 rounded ${
                             isActive
                               ? 'bg-cyan-400 text-slate-950'
-                              : 'bg-slate-800 text-slate-400'
+                              : 'bg-slate-800 text-slate-300'
                           }`}
                         >
                           {item.badge}
@@ -323,7 +323,7 @@ export function AnalyticsShell({
           </nav>
 
           <div className="pt-4 border-t border-slate-800/80 px-2 text-[11px] text-slate-500 font-mono space-y-1">
-            <div className="flex items-center gap-1 text-slate-400">
+            <div className="flex items-center gap-1 text-slate-300">
               <Lock className="h-3 w-3 text-emerald-400" />
               <span>Internal Intelligence Only</span>
             </div>
@@ -343,7 +343,7 @@ export function AnalyticsShell({
                 </span>
                 <button
                   onClick={() => setMobileNavOpen(false)}
-                  className="p-1 rounded text-slate-400 hover:text-white"
+                  className="p-1 rounded text-slate-300 hover:text-white"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -353,7 +353,7 @@ export function AnalyticsShell({
                 {NAVIGATION_GROUPS.map((group, gIdx) => (
                   <div key={gIdx} className="space-y-1">
                     {group.name && (
-                      <div className="px-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                      <div className="px-2 text-[10px] font-bold uppercase tracking-widest text-slate-300">
                         {group.name}
                       </div>
                     )}
@@ -370,7 +370,7 @@ export function AnalyticsShell({
                           className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-left ${
                             isActive
                               ? 'bg-cyan-500/20 text-cyan-200 border border-cyan-500/40 font-semibold'
-                              : 'text-slate-400 hover:bg-slate-900'
+                              : 'text-slate-300 hover:bg-slate-900'
                           }`}
                         >
                           <Icon className="h-4 w-4 shrink-0 text-cyan-400" />
@@ -391,7 +391,7 @@ export function AnalyticsShell({
           {/* Active Tab Heading */}
           <div className="flex flex-wrap items-center justify-between gap-3 pb-2">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
                 <span>ISI ANALYTICS</span>
                 <ChevronRight className="h-3 w-3 text-slate-600" />
                 <span className="text-cyan-400 font-semibold">{currentTabLabel}</span>

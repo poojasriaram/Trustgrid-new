@@ -22,19 +22,19 @@ export function ParetoTab({ data }: Props) {
       {/* Top Banner KPI */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="rounded-xl border border-rose-500/30 bg-gradient-to-b from-rose-500/10 to-rose-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">80/20 Rule Identified</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">80/20 Rule Identified</span>
           <div className="mt-2 text-2xl font-bold text-white">
             {data.top20Count} Solutions Drive 80%
           </div>
           <span className="text-[11px] text-rose-400 mt-1 block">High solution concentration</span>
         </div>
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">80% Cumulative Threshold</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">80% Cumulative Threshold</span>
           <div className="mt-2 text-2xl font-bold text-white">Item #5 Cut-Off</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">83.4% Cumulative Volume</span>
         </div>
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Analyzed Traffic</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Analyzed Traffic</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.totalVisits.toLocaleString()}</div>
           <span className="text-[11px] text-emerald-400 mt-1 block">100% telemetry factored</span>
         </div>
@@ -92,7 +92,7 @@ export function ParetoTab({ data }: Props) {
                   />
 
                   {/* Label */}
-                  <span className="text-[10px] font-mono text-slate-400 truncate max-w-[70px] mt-2" title={item.item}>
+                  <span className="text-[10px] font-mono text-slate-300 truncate max-w-[70px] mt-2" title={item.item}>
                     {item.item.replace('/solutions/', '').replace('/use-cases/', '').replace('/', '') || 'home'}
                   </span>
                 </div>
@@ -106,13 +106,13 @@ export function ParetoTab({ data }: Props) {
       <div className="rounded-xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-xl backdrop-blur-md">
         <div className="flex items-center justify-between border-b border-slate-800 pb-3">
           <h3 className="text-sm font-semibold text-slate-200">Solution Contribution Breakdown</h3>
-          <span className="text-xs text-slate-400 font-mono">Ranked by Contribution</span>
+          <span className="text-xs text-slate-300 font-mono">Ranked by Contribution</span>
         </div>
 
         <div className="mt-4 overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
             <thead>
-              <tr className="border-b border-slate-800 text-slate-400 font-sans">
+              <tr className="border-b border-slate-800 text-slate-300 font-sans">
                 <th className="pb-2">Solution / Page Path</th>
                 <th className="pb-2 text-right">Visits</th>
                 <th className="pb-2 text-right">Share %</th>

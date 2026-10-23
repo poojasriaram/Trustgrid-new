@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -113,27 +113,27 @@ export function FullSpectrumArchitecture() {
           <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-bold">1</span>
           Infrastructure
         </span>
-        <span className="text-slate-400 font-bold">→</span>
+        <span className="text-slate-600 font-bold">→</span>
         <span className="text-cyan-900 font-bold flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-5 h-5 rounded-full bg-cyan-100 text-cyan-800 flex items-center justify-center text-[10px] font-bold">2</span>
           Intelligence
         </span>
-        <span className="text-slate-400 font-bold">→</span>
+        <span className="text-slate-600 font-bold">→</span>
         <span className="text-indigo-900 font-bold flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-800 flex items-center justify-center text-[10px] font-bold">3</span>
           Agents
         </span>
-        <span className="text-slate-400 font-bold">→</span>
+        <span className="text-slate-600 font-bold">→</span>
         <span className="text-emerald-900 font-bold flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-bold">4</span>
           Operations
         </span>
-        <span className="text-slate-400 font-bold">→</span>
+        <span className="text-slate-600 font-bold">→</span>
         <span className="text-amber-900 font-bold flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-5 h-5 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px] font-bold">5</span>
           Governance
         </span>
-        <span className="text-slate-400 font-bold">→</span>
+        <span className="text-slate-600 font-bold">→</span>
         <span className="text-rose-900 font-bold flex items-center gap-1.5 whitespace-nowrap">
           <span className="w-5 h-5 rounded-full bg-rose-100 text-rose-800 flex items-center justify-center text-[10px] font-bold">6</span>
           Business Value

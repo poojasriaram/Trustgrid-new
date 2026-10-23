@@ -250,7 +250,7 @@ export function IndustryShowcaseSlider() {
             <div className="industry-nav-bar">
               <div className="industry-counter" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span className="text-cyan-400 font-semibold">{current.name.split(' ')[0]}</span>
-                <span className="text-xs text-slate-400 font-mono font-bold">
+                <span className="text-xs text-slate-200 font-mono font-bold">
                   ({String(activeIdx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')})
                 </span>
               </div>

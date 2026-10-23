@@ -1383,7 +1383,7 @@ export default function AIValueEngineeringPage() {
                   >
                     {currentHero.tag}
                   </span>
-                  <span className="text-white/40 text-xs font-medium tracking-wider">{currentHero.eyebrow}</span>
+                  <span className="text-slate-200 text-xs font-medium tracking-wider">{currentHero.eyebrow}</span>
                 </div>
 
                 {/* Headline — ISI-style large split */}
@@ -1405,7 +1405,7 @@ export default function AIValueEngineeringPage() {
                 </p>
 
                 {/* Description */}
-                <p className="text-white/55 text-base sm:text-[17px] leading-relaxed mb-8 max-w-xl">
+                <p className="text-slate-200 text-base sm:text-[17px] leading-relaxed mb-8 max-w-xl">
                   {currentHero.description}
                 </p>
 
@@ -1418,7 +1418,7 @@ export default function AIValueEngineeringPage() {
                       >
                         <Check size={9} style={{ color: currentHero.accentSolid }} />
                       </span>
-                      <span className="text-sm text-white/70 font-medium">{pt}</span>
+                      <span className="text-sm text-slate-100 font-medium">{pt}</span>
                     </li>
                   ))}
                 </ul>
@@ -1462,9 +1462,9 @@ export default function AIValueEngineeringPage() {
                 >
                   <div className="flex items-center gap-2.5 mb-3">
                     <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: currentHero.accentSolid }} />
-                    <span className="text-[10px] font-bold tracking-widest uppercase text-white/40">TRUSTGRID.AI AI-VE</span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-slate-300">TRUSTGRID.AI AI-VE</span>
                   </div>
-                  <p className="text-xs text-white/50 leading-relaxed">
+                  <p className="text-xs text-slate-200 leading-relaxed">
                     The only AI platform that industrializes proven operational methodologies with Finance-certified, compounding enterprise value.
                   </p>
                 </div>
@@ -1483,14 +1483,14 @@ export default function AIValueEngineeringPage() {
                     <span className="text-3xl font-black tracking-tight flex-shrink-0" style={{ color: m.color }}>
                       {m.value}
                     </span>
-                    <span className="text-sm font-semibold text-white/70">{m.label}</span>
+                    <span className="text-sm font-semibold text-slate-100">{m.label}</span>
                   </div>
                 ))}
 
                 {/* Decorative bottom tag */}
                 <div className="rounded-xl p-3 flex items-center gap-2 border border-white/10 bg-white/[0.025]">
-                  <Lock size={12} className="text-white/30" />
-                  <span className="text-[10px] text-white/35 font-medium tracking-wide">Nothing claimed that Finance hasn't certified</span>
+                  <Lock size={12} className="text-slate-300" />
+                  <span className="text-[10px] text-slate-200 font-medium tracking-wide">Nothing claimed that Finance hasn't certified</span>
                 </div>
               </div>
             </div>
@@ -1521,13 +1521,13 @@ export default function AIValueEngineeringPage() {
                     />
                     <span
                       className="text-[10px] font-black tracking-widest transition-colors"
-                      style={{ color: idx === heroIndex ? currentHero.accentSolid : 'rgba(255,255,255,0.25)' }}
+                      style={{ color: idx === heroIndex ? currentHero.accentSolid : 'rgba(255,255,255,0.45)' }}
                     >
                       {String(idx + 1).padStart(2, '0')}
                     </span>
                     <span
                       className="text-xs font-semibold tracking-wide whitespace-nowrap transition-colors hidden sm:block"
-                      style={{ color: idx === heroIndex ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.3)' }}
+                      style={{ color: idx === heroIndex ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.7)' }}
                     >
                       {slide.tag.split(' / ')[1]}
                     </span>
@@ -1540,20 +1540,20 @@ export default function AIValueEngineeringPage() {
 
               {/* Prev / Next + Counter */}
               <div className="flex items-center gap-1 pl-4">
-                <span className="text-xs font-mono text-white/30 mr-3 hidden sm:block">
+                <span className="text-xs font-mono text-slate-200 mr-3 hidden sm:block">
                   {String(heroIndex + 1).padStart(2, '0')}&nbsp;/&nbsp;{String(heroSlides.length).padStart(2, '0')}
                 </span>
                 <button
                   onClick={heroPrev}
                   aria-label="Previous slide"
-                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white/70 hover:text-white flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white hover:text-white flex items-center justify-center transition-all"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   onClick={heroNext}
                   aria-label="Next slide"
-                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white/70 hover:text-white flex items-center justify-center transition-all"
+                  className="w-9 h-9 rounded-full border border-white/15 bg-white/8 hover:bg-white/15 text-white hover:text-white flex items-center justify-center transition-all"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -1621,7 +1621,7 @@ export default function AIValueEngineeringPage() {
                       <span className="text-xl font-black font-mono text-cyan-400 group-hover:text-blue-400 transition-colors">
                         {model.number}
                       </span>
-                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                      <span className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
                         {model.tag}
                       </span>
                     </div>
@@ -1633,7 +1633,7 @@ export default function AIValueEngineeringPage() {
                     <h3 className="text-base font-extrabold text-white tracking-tight mb-2.5 group-hover:text-cyan-300 transition-colors">
                       {model.name}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
                       {model.description}
                     </p>
                   </div>
@@ -1740,7 +1740,7 @@ export default function AIValueEngineeringPage() {
               <span className="text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase">
                 FORMAL CANONICAL DEFINITION
               </span>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-300 font-mono">
                 Standard Standard v4.2
               </span>
             </div>
@@ -1802,7 +1802,7 @@ export default function AIValueEngineeringPage() {
                 className={`p-3 rounded-xl border text-left transition-all ${
                   activeEngineStep === i
                     ? 'bg-blue-600/30 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                    : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                    : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
                 }`}
               >
                 <span className="text-xs font-mono font-bold block mb-1 text-cyan-400">{stg.step}</span>
@@ -1821,7 +1821,7 @@ export default function AIValueEngineeringPage() {
                     STAGE {currentEngineData.step}
                   </span>
                   <span className="text-slate-600">|</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-300">
                     {currentEngineData.name} Phase
                   </span>
                 </div>
@@ -1978,7 +1978,7 @@ export default function AIValueEngineeringPage() {
                       <span className="text-3xl font-black font-mono text-cyan-400">
                         {item.letter}
                       </span>
-                      <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
+                      <span className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-wider bg-slate-900 px-2 py-0.5 rounded border border-slate-800">
                         {item.badge}
                       </span>
                     </div>
@@ -1988,13 +1988,13 @@ export default function AIValueEngineeringPage() {
                     <p className="text-xs text-cyan-300 font-semibold mb-3">
                       {item.subtitle}
                     </p>
-                    <p className="text-xs text-slate-400 leading-relaxed mb-4">
+                    <p className="text-xs text-slate-300 leading-relaxed mb-4">
                       {item.focus}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-300">
-                    <strong className="text-slate-400 block font-mono text-[10px] uppercase">Engineered Focus:</strong>
+                    <strong className="text-slate-300 block font-mono text-[10px] uppercase">Engineered Focus:</strong>
                     <span className="line-clamp-2">{item.engineeredOutcome}</span>
                   </div>
                 </div>
@@ -2016,7 +2016,7 @@ export default function AIValueEngineeringPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-800/80 text-xs sm:text-sm">
               <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block mb-1">
                   Operational Reality Observed
                 </span>
                 <p className="text-slate-300 leading-relaxed">{currentSpinData.operationalReality}</p>
@@ -2074,7 +2074,7 @@ export default function AIValueEngineeringPage() {
                   className={`p-3 rounded-xl border text-left transition-all ${
                     isSelected
                       ? 'bg-blue-600/30 border-blue-400 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]'
-                      : 'bg-slate-900/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                      : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
                   }`}
                 >
                   <span className="text-xs font-mono font-bold block mb-1 text-cyan-400">{stage.number}</span>
@@ -2093,7 +2093,7 @@ export default function AIValueEngineeringPage() {
                     STAGE {currentStageData.number}
                   </span>
                   <span className="text-slate-600">|</span>
-                  <span className="text-xs font-mono uppercase tracking-wider text-slate-400">
+                  <span className="text-xs font-mono uppercase tracking-wider text-slate-300">
                     Continuous Value Loop
                   </span>
                 </div>
@@ -2106,11 +2106,11 @@ export default function AIValueEngineeringPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-800">
                   <div>
-                    <span className="text-xs font-bold uppercase text-slate-400 block mb-1">Classical Science Basis</span>
+                    <span className="text-xs font-bold uppercase text-slate-300 block mb-1">Classical Science Basis</span>
                     <p className="text-sm font-medium text-slate-200">{currentStageData.classicalBasis}</p>
                   </div>
                   <div>
-                    <span className="text-xs font-bold uppercase text-slate-400 block mb-1">AI Industrialization</span>
+                    <span className="text-xs font-bold uppercase text-slate-300 block mb-1">AI Industrialization</span>
                     <p className="text-sm font-medium text-slate-200">{currentStageData.aiIndustrialization}</p>
                   </div>
                 </div>
@@ -2518,7 +2518,7 @@ export default function AIValueEngineeringPage() {
                 TRUSTGRID.AI PRACTICE STANDARD
               </div>
               <p className="font-semibold text-white">Industrial Engineering Standard</p>
-              <p className="text-slate-400 text-[11px]">Autonomous Operations &amp; Value Realization Standard</p>
+              <p className="text-slate-300 text-[11px]">Autonomous Operations &amp; Value Realization Standard</p>
             </div>
           </div>
 
@@ -2539,11 +2539,11 @@ export default function AIValueEngineeringPage() {
                   <p className="text-[11px] text-cyan-300 font-semibold mb-2">
                     {step.discipline}
                   </p>
-                  <p className="text-[11px] text-slate-400 leading-relaxed mb-3">
+                  <p className="text-[11px] text-slate-300 leading-relaxed mb-3">
                     {step.action}
                   </p>
                 </div>
-                <div className="pt-2 border-t border-slate-800/80 text-[10px] text-slate-400">
+                <div className="pt-2 border-t border-slate-800/80 text-[10px] text-slate-300">
                   <strong className="text-slate-300 block">Deliverable:</strong>
                   <span>{step.deliverable}</span>
                 </div>
@@ -2575,7 +2575,7 @@ export default function AIValueEngineeringPage() {
                   className={`p-3 rounded-xl border text-left transition-all ${
                     activeTier === t.tier
                       ? 'bg-cyan-950/80 border-cyan-400 text-white shadow-[0_0_15px_rgba(6,182,212,0.25)]'
-                      : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                      : 'bg-slate-950/60 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700'
                   }`}
                 >
                   <span className="text-xs font-mono font-bold text-cyan-400 block mb-0.5">{t.tier}</span>
@@ -2599,14 +2599,14 @@ export default function AIValueEngineeringPage() {
                   </p>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-xs shrink-0">
-                  <span className="text-slate-400 uppercase tracking-wider block text-[10px] font-bold">Execution Latency</span>
+                  <span className="text-slate-300 uppercase tracking-wider block text-[10px] font-bold">Execution Latency</span>
                   <span className="text-cyan-400 font-mono font-extrabold text-sm block">{currentTier.latency}</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-800/80 text-xs">
                 <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                  <span className="text-slate-400 font-bold uppercase tracking-wider text-[10px] block mb-1">
+                  <span className="text-slate-300 font-bold uppercase tracking-wider text-[10px] block mb-1">
                     Activated Technology &amp; Protocols
                   </span>
                   <p className="text-slate-200 font-mono">{currentTier.technology}</p>
@@ -2661,21 +2661,21 @@ export default function AIValueEngineeringPage() {
                   <span className="px-2 py-0.5 rounded-md bg-emerald-950 text-emerald-400 font-mono font-bold text-[10px]">BAND 1</span>
                   <div>
                     <strong className="text-white block font-semibold">Autonomous Read &amp; Recommend</strong>
-                    <span className="text-slate-400">Low-risk telemetry gathering, anomaly flagging, and parameter suggestions.</span>
+                    <span className="text-slate-300">Low-risk telemetry gathering, anomaly flagging, and parameter suggestions.</span>
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-slate-900 border border-amber-500/30 flex items-start gap-3">
                   <span className="px-2 py-0.5 rounded-md bg-amber-950 text-amber-400 font-mono font-bold text-[10px]">BAND 2</span>
                   <div>
                     <strong className="text-white block font-semibold">Supervised Execution with Undo Window</strong>
-                    <span className="text-slate-400">Automated machine offsets, inventory routing with a 5-minute operator rollback latch.</span>
+                    <span className="text-slate-300">Automated machine offsets, inventory routing with a 5-minute operator rollback latch.</span>
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-slate-900 border border-rose-500/30 flex items-start gap-3">
                   <span className="px-2 py-0.5 rounded-md bg-rose-950 text-rose-400 font-mono font-bold text-[10px]">BAND 3</span>
                   <div>
                     <strong className="text-white block font-semibold">Mandatory Dual-Human Sign-Off</strong>
-                    <span className="text-slate-400">High-consequence actions: line halts, safety resets, general ledger writes.</span>
+                    <span className="text-slate-300">High-consequence actions: line halts, safety resets, general ledger writes.</span>
                   </div>
                 </div>
               </div>
@@ -2714,7 +2714,7 @@ export default function AIValueEngineeringPage() {
                     <span className="text-xs font-mono font-bold text-blue-600 uppercase tracking-widest">
                       CURRENCY {c.code}
                     </span>
-                    <span className="text-xs font-bold text-slate-400 font-mono">P&amp;L Accretive</span>
+                    <span className="text-xs font-bold text-slate-600 font-mono">P&amp;L Accretive</span>
                   </div>
                   <h4 className="text-xl font-extrabold text-slate-900 mb-2">{c.name}</h4>
                   <p className="text-xs font-semibold text-blue-700 mb-3 italic">&ldquo;{c.executiveQuestion}&rdquo;</p>
@@ -2725,7 +2725,7 @@ export default function AIValueEngineeringPage() {
 
                 <div className="pt-4 border-t border-slate-200 space-y-2">
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-slate-400 block">Verification Discipline</span>
+                    <span className="text-[10px] font-bold uppercase text-slate-600 block">Verification Discipline</span>
                     <p className="text-xs font-medium text-slate-700">{c.verificationDiscipline}</p>
                   </div>
                   <div>
@@ -2787,7 +2787,7 @@ export default function AIValueEngineeringPage() {
                   </span>
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">{item.name}</h3>
-                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">{item.focus}</p>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{item.focus}</p>
                     <div className="flex flex-wrap gap-2 mt-3">
                       {item.subcomponents.map((c) => (
                         <span
@@ -2911,8 +2911,8 @@ export default function AIValueEngineeringPage() {
                   <span className="text-xl font-bold font-mono text-blue-600">
                     HORIZON {currentMaturity.step} · {currentMaturity.horizon}
                   </span>
-                  <span className="text-slate-400">|</span>
-                  <span className="text-xs font-semibold text-slate-500">
+                  <span className="text-slate-600">|</span>
+                  <span className="text-xs font-semibold text-slate-700">
                     Typical Duration: {currentMaturity.duration}
                   </span>
                 </div>
@@ -3481,7 +3481,7 @@ export default function AIValueEngineeringPage() {
                   <p className="text-sm font-semibold text-white">
                     Need an immediate 45-minute architectural Strategy Session?
                   </p>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-300">
                     Lock a direct slot on our live Google Calendar with principal systems architects.
                   </p>
                 </div>
@@ -3711,7 +3711,7 @@ export default function AIValueEngineeringPage() {
               </form>
             )}
 
-            <div className="mt-8 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-400 flex items-center justify-center gap-2">
+            <div className="mt-8 pt-4 border-t border-slate-800/80 text-center text-xs text-slate-300 flex items-center justify-center gap-2">
               <Lock size={13} className="text-cyan-400" />
               <span>Enterprise confidentiality guaranteed. Disclosures handled under mutual NDA standards.</span>
             </div>

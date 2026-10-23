@@ -257,33 +257,33 @@ export default function AINetworkingCybersecurityPage() {
           <div className="mt-16 pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-cyan-400">&gt;96%</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Effective Bandwidth</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">Zero packet loss</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">Effective Bandwidth</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">Zero packet loss</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-blue-400">Sub-μs</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Tail Latency</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">Jitter eliminated</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">Tail Latency</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">Jitter eliminated</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-indigo-400">30–60%</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Latency Reduction</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">AI workload speedup</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">Latency Reduction</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">AI workload speedup</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-emerald-400">&lt;3 Min</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">MTTC Target</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">Sub-minute ambitions</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">MTTC Target</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">Sub-minute ambitions</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-purple-400">70–80%</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">Self-Healing</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">AIOps remediation</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">Self-Healing</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">AIOps remediation</div>
             </div>
             <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 backdrop-blur-sm">
               <div className="text-2xl font-black text-cyan-300">100%</div>
-              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-1">CBOM Coverage</div>
-              <div className="text-[11px] text-slate-500 mt-0.5">NIST PQC migration</div>
+              <div className="text-xs font-semibold text-slate-200 uppercase tracking-wider mt-1">CBOM Coverage</div>
+              <div className="text-[11px] text-slate-300 mt-0.5">NIST PQC migration</div>
             </div>
           </div>
         </div>
@@ -521,7 +521,7 @@ export default function AINetworkingCybersecurityPage() {
                           </div>
                           <div>
                             <h4 className="font-bold text-slate-900 text-base leading-snug">{item.label}</h4>
-                            <p className="text-xs text-slate-400 font-medium">{item.tagline}</p>
+                            <p className="text-xs text-slate-600 font-medium">{item.tagline}</p>
                           </div>
                         </div>
 
@@ -530,7 +530,7 @@ export default function AINetworkingCybersecurityPage() {
                         </p>
 
                         <div className="border-t border-slate-100 pt-3 space-y-1.5 mb-4">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block mb-1">
                             Core Capabilities
                           </span>
                           {item.capabilities.map((cap, cIdx) => (
@@ -607,7 +607,7 @@ export default function AINetworkingCybersecurityPage() {
                           </div>
                           <div>
                             <h4 className="font-bold text-slate-900 text-base leading-snug">{item.label}</h4>
-                            <p className="text-xs text-slate-400 font-medium">{item.tagline}</p>
+                            <p className="text-xs text-slate-600 font-medium">{item.tagline}</p>
                           </div>
                         </div>
 
@@ -616,7 +616,7 @@ export default function AINetworkingCybersecurityPage() {
                         </p>
 
                         <div className="border-t border-slate-100 pt-3 space-y-1.5 mb-4">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-1">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block mb-1">
                             Core Capabilities
                           </span>
                           {item.capabilities.map((cap, cIdx) => (
@@ -685,7 +685,7 @@ export default function AINetworkingCybersecurityPage() {
                 <div className="p-4 rounded-xl bg-blue-950/80 border border-blue-700/50 text-left w-full">
                   <div className="text-xs text-cyan-300 font-semibold">Cognitive WiFi Value Sprint</div>
                   <div className="text-lg font-bold text-white mt-0.5">4–8 Weeks Pilot</div>
-                  <div className="text-[11px] text-slate-400 mt-1">Rapid AI-RRM &amp; zero-trust access control stand-up.</div>
+                  <div className="text-[11px] text-slate-300 mt-1">Rapid AI-RRM &amp; zero-trust access control stand-up.</div>
                 </div>
                 <a
                   href="#intake-form"
@@ -755,7 +755,7 @@ export default function AINetworkingCybersecurityPage() {
                 </div>
 
                 <div className="py-6 border-b border-slate-800">
-                  <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-2">Stage Objective</h4>
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-2">Stage Objective</h4>
                   <p className="text-base sm:text-lg text-slate-200 font-medium">
                     {deliveryPhases[activePhaseIndex].objective}
                   </p>
@@ -763,7 +763,7 @@ export default function AINetworkingCybersecurityPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-6">
                   <div>
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center gap-2">
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-3 flex items-center gap-2">
                       <Workflow size={14} className="text-cyan-400" />
                       <span>Typical Engineering Activities</span>
                     </h4>
@@ -778,7 +778,7 @@ export default function AINetworkingCybersecurityPage() {
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center gap-2">
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 font-bold mb-3 flex items-center gap-2">
                       <CheckCircle2 size={14} className="text-emerald-400" />
                       <span>Key Outputs &amp; Deliverables</span>
                     </h4>
@@ -950,7 +950,7 @@ export default function AINetworkingCybersecurityPage() {
                     >
                       <div>
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-[11px] font-mono font-bold text-slate-400">
+                          <span className="text-[11px] font-mono font-bold text-slate-600">
                             Offering #{offering.id}
                           </span>
                           <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${phaseColors[offering.phase]}`}>
@@ -968,7 +968,7 @@ export default function AINetworkingCybersecurityPage() {
 
             {/* Capabilities Badges */}
             <div className="mt-8 pt-8 border-t border-slate-100">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-3">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-slate-600 font-bold mb-3">
                 Measurable Capabilities ({currentSector.capabilities.length})
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
@@ -983,7 +983,7 @@ export default function AINetworkingCybersecurityPage() {
 
             {/* Real-World Solutions & Use Cases */}
             <div className="mt-8 pt-8 border-t border-slate-100">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-slate-400 font-bold mb-3">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-slate-600 font-bold mb-3">
                 Solutions &amp; Use Cases
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -1079,11 +1079,11 @@ export default function AINetworkingCybersecurityPage() {
                       className={`p-3 rounded-xl text-left border transition-all ${
                         fabricType === fab.id
                           ? 'bg-blue-600/20 border-blue-500 text-white'
-                          : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                          : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white'
                       }`}
                     >
                       <div className="text-xs font-bold">{fab.label}</div>
-                      <div className="text-[10px] text-slate-400 mt-0.5">{fab.desc}</div>
+                      <div className="text-[10px] text-slate-300 mt-0.5">{fab.desc}</div>
                     </button>
                   ))}
                 </div>
@@ -1094,7 +1094,7 @@ export default function AINetworkingCybersecurityPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-xs font-bold text-slate-200">Post-Quantum Cryptography (PQC) &amp; CBOM</div>
-                    <div className="text-[11px] text-slate-400">NIST ML-KEM / ML-DSA hybrid migration with line-rate MACsec.</div>
+                    <div className="text-[11px] text-slate-300">NIST ML-KEM / ML-DSA hybrid migration with line-rate MACsec.</div>
                   </div>
                   <button
                     onClick={() => setPqcEnabled(!pqcEnabled)}
@@ -1118,24 +1118,24 @@ export default function AINetworkingCybersecurityPage() {
 
               <div className="space-y-4">
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                  <div className="text-[11px] uppercase tracking-wider text-slate-400">Total Non-Blocking Bandwidth</div>
+                  <div className="text-[11px] uppercase tracking-wider text-slate-300">Total Non-Blocking Bandwidth</div>
                   <div className="text-2xl font-black text-white mt-0.5">{calculatedResults.effectiveGbps} <span className="text-sm font-normal text-cyan-400">Gbps</span></div>
                   <div className="text-[11px] text-emerald-400 mt-0.5">&gt;96% effective yield guarantee</div>
                 </div>
 
                 <div className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800">
-                  <div className="text-[11px] uppercase tracking-wider text-slate-400">Job Completion Time (JCT) Acceleration</div>
+                  <div className="text-[11px] uppercase tracking-wider text-slate-300">Job Completion Time (JCT) Acceleration</div>
                   <div className="text-2xl font-black text-cyan-400 mt-0.5">+{calculatedResults.jctGain}% <span className="text-sm font-normal text-slate-300">faster throughput</span></div>
-                  <div className="text-[11px] text-slate-400 mt-0.5">Collective communication barrier wait eliminated</div>
+                  <div className="text-[11px] text-slate-300 mt-0.5">Collective communication barrier wait eliminated</div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                    <div className="text-[10px] uppercase tracking-wider text-slate-400">Silent Drop Alert</div>
+                    <div className="text-[10px] uppercase tracking-wider text-slate-300">Silent Drop Alert</div>
                     <div className="text-base font-bold text-white mt-0.5">{calculatedResults.silentDropTime}</div>
                   </div>
                   <div className="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
-                    <div className="text-[10px] uppercase tracking-wider text-slate-400">Threat Containment</div>
+                    <div className="text-[10px] uppercase tracking-wider text-slate-300">Threat Containment</div>
                     <div className="text-base font-bold text-purple-400 mt-0.5">{calculatedResults.mttc}</div>
                   </div>
                 </div>
@@ -1143,7 +1143,7 @@ export default function AINetworkingCybersecurityPage() {
                 <div className="p-3.5 rounded-xl bg-emerald-950/40 border border-emerald-800/40">
                   <div className="text-[11px] uppercase tracking-wider text-emerald-300">Annual Risk &amp; Idle-GPU Avoidance</div>
                   <div className="text-xl font-black text-emerald-400 mt-0.5">${calculatedResults.savings} <span className="text-xs font-normal text-slate-300">estimated value</span></div>
-                  <div className="text-[10px] text-slate-400 mt-0.5">Calculated based on training restart prevention and breach containment.</div>
+                  <div className="text-[10px] text-slate-300 mt-0.5">Calculated based on training restart prevention and breach containment.</div>
                 </div>
               </div>
 
@@ -1192,13 +1192,13 @@ export default function AINetworkingCybersecurityPage() {
                     <span className="text-xs font-mono font-bold text-blue-600 bg-blue-100/60 px-2.5 py-1 rounded">
                       Duration: {model.duration}
                     </span>
-                    <span className="text-xs font-semibold text-slate-400">Stage-Gated</span>
+                    <span className="text-xs font-semibold text-slate-600">Stage-Gated</span>
                   </div>
                   <h3 className="text-lg font-bold text-slate-900 mb-2">{model.title}</h3>
                   <p className="text-xs text-slate-600 mb-4 italic"><strong>Ideal for:</strong> {model.idealFor}</p>
 
                   <div className="space-y-2 border-t border-slate-200 pt-4 mb-4">
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Scope &amp; Activities</div>
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-slate-600">Scope &amp; Activities</div>
                     <ul className="text-xs text-slate-700 space-y-1.5">
                       {model.scope.slice(0, 4).map((sc, sIdx) => (
                         <li key={sIdx} className="flex items-start gap-2">
@@ -1240,7 +1240,7 @@ export default function AINetworkingCybersecurityPage() {
                 Specialized Track Summary
               </span>
               <h3 className="text-xl font-bold text-white mt-1">WiFi-Weighted Engagement Tracks</h3>
-              <p className="text-xs text-slate-400 mt-1">
+              <p className="text-xs text-slate-300 mt-1">
                 Fast-track pathways optimized for campus, enterprise, and industrial wireless modernization.
               </p>
             </div>
@@ -1248,7 +1248,7 @@ export default function AINetworkingCybersecurityPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-slate-800 text-slate-400">
+                  <tr className="border-b border-slate-800 text-slate-300">
                     <th className="py-2.5 pr-4 font-bold uppercase tracking-wider">Track</th>
                     <th className="py-2.5 px-4 font-bold uppercase tracking-wider">Duration</th>
                     <th className="py-2.5 px-4 font-bold uppercase tracking-wider">Engineering Focus</th>
@@ -1261,7 +1261,7 @@ export default function AINetworkingCybersecurityPage() {
                       <td className="py-3 pr-4 font-bold text-white">{trk.track}</td>
                       <td className="py-3 px-4 text-cyan-400 font-mono">{trk.duration}</td>
                       <td className="py-3 px-4">{trk.focus}</td>
-                      <td className="py-3 pl-4 text-slate-400">{trk.idealFor}</td>
+                      <td className="py-3 pl-4 text-slate-300">{trk.idealFor}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -1279,7 +1279,7 @@ export default function AINetworkingCybersecurityPage() {
               {entryPointGuidance.map((guide, gIdx) => (
                 <div key={gIdx} className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">If your situation is...</span>
+                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">If your situation is...</span>
                     <p className="text-xs font-semibold text-slate-800 mt-1 mb-3">{guide.situation}</p>
                   </div>
                   <div className="pt-3 border-t border-slate-200">
@@ -1370,7 +1370,7 @@ export default function AINetworkingCybersecurityPage() {
                 <div className="flex items-center justify-between mb-1">
                   <h4 className="text-sm font-bold text-slate-900">{term.term}</h4>
                   {term.fullName && (
-                    <span className="text-[10px] font-mono text-slate-400">{term.fullName}</span>
+                    <span className="text-[10px] font-mono text-slate-600">{term.fullName}</span>
                   )}
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed mt-2">{term.definition}</p>
@@ -1383,12 +1383,12 @@ export default function AINetworkingCybersecurityPage() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
               <div>
                 <h3 className="text-lg font-bold text-white">Full Acronym Directory ({filteredAcronyms.length} items)</h3>
-                <p className="text-xs text-slate-400">Search and filter across 34 engineering acronyms:</p>
+                <p className="text-xs text-slate-300">Search and filter across 34 engineering acronyms:</p>
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
                 <div className="relative">
-                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
                   <input
                     type="text"
                     placeholder="Search acronym..."
@@ -1417,7 +1417,7 @@ export default function AINetworkingCybersecurityPage() {
                     <span className="font-mono font-bold text-cyan-400 text-xs mr-2">{ac.acronym}</span>
                     <span className="text-[11px] text-slate-300">{ac.meaning}</span>
                   </div>
-                  <span className="text-[9px] uppercase font-bold text-slate-400 bg-slate-700 px-1.5 py-0.5 rounded shrink-0">
+                  <span className="text-[9px] uppercase font-bold text-slate-100 bg-slate-700 px-1.5 py-0.5 rounded shrink-0">
                     {ac.domain}
                   </span>
                 </div>
@@ -1450,20 +1450,20 @@ export default function AINetworkingCybersecurityPage() {
               <div className="space-y-4 mt-8">
                 <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
                   <div className="text-xs font-bold text-cyan-300">Phase 01: 2–4 Week Diagnostic Sprint</div>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-300 mt-1">
                     Delivers a board-ready posture report, passive INT telemetry analysis, RF spectrum study, and 90-day ROI realization roadmap.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
                   <div className="text-xs font-bold text-emerald-300">Confidentiality &amp; Security Standard</div>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-300 mt-1">
                     All telemetry ingestion, packet inspection, and CBOM discovery are executed under mutual enterprise NDA with strict data-residency controls.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-800 space-y-2 text-xs text-slate-400">
+              <div className="mt-8 pt-6 border-t border-slate-800 space-y-2 text-xs text-slate-300">
                 <div className="flex items-center gap-2">
                   <Mail size={14} className="text-cyan-400" />
                   <span>Direct Advisory: advisory@trustgrid.ai</span>

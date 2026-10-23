@@ -363,7 +363,7 @@ export default function AIValueEngineeringPracticePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Breadcrumb Navigation */}
-          <nav className="flex items-center gap-2 text-xs font-mono text-slate-400 mb-6" aria-label="Breadcrumb">
+          <nav className="flex items-center gap-2 text-xs font-mono text-slate-300 mb-6" aria-label="Breadcrumb">
             <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
             <ChevronRight size={12} className="text-slate-600" />
             <Link href="/practice-areas" className="hover:text-blue-400 transition-colors">Practice Areas</Link>
@@ -471,7 +471,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
             
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl">
               Every engagement runs the same five stages in the same order, whether it lasts six weeks or four quarters. 
               The stage names are the client&apos;s language, not ours. Each stage exits on a signature, not a consensus.
             </p>
@@ -493,11 +493,11 @@ export default function AIValueEngineeringPracticePage() {
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <span className={`font-mono text-xs font-extrabold px-2 py-0.5 rounded ${
-                          isSelected ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-400'
+                          isSelected ? 'bg-blue-600 text-white' : 'bg-slate-800 text-slate-300'
                         }`}>
                           STAGE {stage.num}
                         </span>
-                        <span className="text-[11px] font-mono text-slate-500">{stage.title}</span>
+                        <span className="text-[11px] font-mono text-slate-300">{stage.title}</span>
                       </div>
                       <h3 className="text-base font-bold text-white mb-2">{stage.subtitle}</h3>
                       <p className="text-xs text-slate-300 leading-relaxed mb-4">
@@ -549,14 +549,14 @@ export default function AIValueEngineeringPracticePage() {
               <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
                 Workstreams running through every stage
               </h3>
-              <p className="text-xs sm:text-sm text-slate-400 mb-5">
+              <p className="text-xs sm:text-sm text-slate-300 mb-5">
                 Four workstreams run in parallel, not in sequence. Serial phases are the largest single cause of elapsed time in enterprise technology programmes.
               </p>
 
               <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/60">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
+                    <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-300 font-mono text-[11px] uppercase tracking-wider">
                       <th className="py-3 px-4 font-bold text-white">Workstream</th>
                       <th className="py-3 px-4">01 Discover</th>
                       <th className="py-3 px-4">02 Design</th>
@@ -615,7 +615,7 @@ export default function AIValueEngineeringPracticePage() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs text-slate-400 font-mono">
+              <div className="p-3.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs text-slate-300 font-mono">
                 <span className="text-slate-200 font-semibold">Measurement standard:</span> Measured as cycle time against the last cycle — not against a benchmark we invented. If the second engagement in an account takes as long as the first, acceleration is not happening.
               </div>
             </div>
@@ -632,7 +632,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
               The proof standard does not change with the technology. Only the evidence does: a robotics proof is won on cycle time and interventions, a DLT proof on reconciliation exceptions, an RPA proof on what happens in month nine. A practice that can only price agents has nothing to say when the value is in a sensor fleet.
             </p>
 
@@ -640,7 +640,7 @@ export default function AIValueEngineeringPracticePage() {
             <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/60 mb-8">
               <table className="w-full text-left text-xs sm:text-sm border-collapse">
                 <thead>
-                  <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
+                  <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-300 font-mono text-[11px] uppercase tracking-wider">
                     <th className="py-3 px-4 font-bold text-white">Technology family</th>
                     <th className="py-3 px-4">Where the value is trapped</th>
                     <th className="py-3 px-4">The proof that decides it</th>
@@ -667,7 +667,7 @@ export default function AIValueEngineeringPracticePage() {
                         </td>
                         <td className="py-3.5 px-4 text-xs sm:text-sm leading-relaxed max-w-xs">{tech.valueTrapped}</td>
                         <td className="py-3.5 px-4 text-xs sm:text-sm leading-relaxed max-w-xs">{tech.proof}</td>
-                        <td className="py-3.5 px-4 text-xs font-mono text-slate-400">{tech.regime}</td>
+                        <td className="py-3.5 px-4 text-xs font-mono text-slate-300">{tech.regime}</td>
                       </tr>
                     )
                   })}
@@ -695,7 +695,7 @@ export default function AIValueEngineeringPracticePage() {
               <h3 className="text-base sm:text-lg font-bold text-white mb-2 font-mono">
                 The engineering toolkit
               </h3>
-              <p className="text-xs text-slate-400 mb-4">
+              <p className="text-xs text-slate-300 mb-4">
                 Named industrial methods, applied deliberately rather than improvised.
               </p>
 
@@ -715,7 +715,7 @@ export default function AIValueEngineeringPracticePage() {
                     <span className="text-[10px] font-mono font-bold text-blue-400 block mb-1">
                       {tool.stage}
                     </span>
-                    <span className="text-[11px] text-slate-400 block">{tool.desc}</span>
+                    <span className="text-[11px] text-slate-300 block">{tool.desc}</span>
                   </div>
                 ))}
               </div>
@@ -733,7 +733,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
               Conventional consulting runs a line: assess, recommend, build, hand over, close. Value appears in the business case at the start and in the status report at the end, and nobody is accountable for the gap. 
               The value cycle runs a loop instead — <span className="text-blue-400 font-medium">Discover → Design → Deploy → Perform → Prove</span>, then back to Discover with the assets and the evidence from the last lap.
             </p>
@@ -741,9 +741,9 @@ export default function AIValueEngineeringPracticePage() {
             <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/60 mb-6">
               <table className="w-full text-left text-xs sm:text-sm border-collapse">
                 <thead>
-                  <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
+                  <tr className="bg-slate-900/90 border-b border-slate-800 text-slate-300 font-mono text-[11px] uppercase tracking-wider">
                     <th className="py-3 px-4 font-bold text-white w-1/4">Dimension</th>
-                    <th className="py-3 px-4 text-slate-400 w-3/8">Conventional engagement</th>
+                    <th className="py-3 px-4 text-slate-300 w-3/8">Conventional engagement</th>
                     <th className="py-3 px-4 text-blue-400 font-bold w-3/8">The value cycle</th>
                   </tr>
                 </thead>
@@ -782,7 +782,7 @@ export default function AIValueEngineeringPracticePage() {
                   ].map((row, i) => (
                     <tr key={i} className="hover:bg-slate-900/40 transition-colors">
                       <td className="py-3.5 px-4 font-semibold text-white bg-slate-900/40">{row.dimension}</td>
-                      <td className="py-3.5 px-4 text-slate-400">{row.conventional}</td>
+                      <td className="py-3.5 px-4 text-slate-300">{row.conventional}</td>
                       <td className="py-3.5 px-4 font-medium text-blue-300 bg-blue-950/20">{row.cycle}</td>
                     </tr>
                   ))}
@@ -806,7 +806,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8">
+            <p className="text-slate-300 text-sm sm:text-base mb-8">
               A fifth engineer on our side means the scope is too large, or the pod has quietly become a project team.
             </p>
 
@@ -902,7 +902,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl">
               Six shapes, each entering the lifecycle at a different stage. Choosing the wrong one is the most common commercial error: a proof sold to a client who needs a decision, or a diagnostic sold to a client who has already decided.
             </p>
 
@@ -914,7 +914,7 @@ export default function AIValueEngineeringPracticePage() {
                       <span className="font-mono text-xs font-bold text-blue-400 bg-blue-950/60 border border-blue-900/40 px-2 py-0.5 rounded">
                         {model.stage}
                       </span>
-                      <span className="font-mono text-xs text-slate-400">{model.duration}</span>
+                      <span className="font-mono text-xs text-slate-300">{model.duration}</span>
                     </div>
                     <h3 className="text-base font-bold text-white mb-2">{model.title}</h3>
                     <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -948,7 +948,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
               The proofs are the practice&apos;s evidence standard and the engine&apos;s stage gates in practice. 
               They escalate: each answers a harder question, and each is a gate to the next. All five are required; none can be skipped by asserting the one below it.
             </p>
@@ -968,14 +968,14 @@ export default function AIValueEngineeringPracticePage() {
                     <p className="text-xs font-medium text-slate-200 mb-3 italic">
                       &ldquo;{proof.question}&rdquo;
                     </p>
-                    <p className="text-[11px] text-slate-400 leading-relaxed mb-4">
+                    <p className="text-[11px] text-slate-300 leading-relaxed mb-4">
                       <strong className="text-slate-300">Evidence:</strong> {proof.evidence}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-slate-800/80 space-y-1 text-[11px]">
                     <span className="font-mono text-blue-400 block">{proof.stage}</span>
-                    <span className="text-slate-400 block font-normal">{proof.licenses}</span>
+                    <span className="text-slate-300 block font-normal">{proof.licenses}</span>
                   </div>
                 </div>
               ))}
@@ -986,7 +986,7 @@ export default function AIValueEngineeringPracticePage() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold text-white">The Focal Value Creation Model</h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-300">
                     Operating model of the practice: Rows are value stages; columns are proofs.
                   </p>
                 </div>
@@ -994,7 +994,7 @@ export default function AIValueEngineeringPracticePage() {
                   <span className="flex items-center gap-1.5 text-emerald-400">
                     <span className="w-2.5 h-2.5 rounded bg-emerald-500/20 border border-emerald-500 inline-block" /> Evidence produced
                   </span>
-                  <span className="flex items-center gap-1.5 text-slate-400">
+                  <span className="flex items-center gap-1.5 text-slate-300">
                     <span className="w-2.5 h-2.5 rounded bg-slate-800 inline-block" /> Consumed or prepared
                   </span>
                 </div>
@@ -1003,7 +1003,7 @@ export default function AIValueEngineeringPracticePage() {
               <div className="overflow-x-auto border border-slate-800 rounded-xl bg-slate-900/60 mb-6">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="bg-slate-900 border-b border-slate-800 text-slate-400 font-mono text-[11px] uppercase tracking-wider">
+                    <tr className="bg-slate-900 border-b border-slate-800 text-slate-300 font-mono text-[11px] uppercase tracking-wider">
                       <th className="py-3 px-4 font-bold text-white">Value stage ↓ / Proof →</th>
                       <th className="py-3 px-4">Proof of Concept</th>
                       <th className="py-3 px-4">Proof of Value</th>
@@ -1037,7 +1037,7 @@ export default function AIValueEngineeringPracticePage() {
                 </table>
               </div>
 
-              <p className="text-xs text-slate-400 leading-relaxed italic">
+              <p className="text-xs text-slate-300 leading-relaxed italic">
                 <strong className="text-slate-300 not-italic">Why the model is shaped this way:</strong> PoC and PoV are produced in consecutive stages, which is why pilots feel fast and bank nothing. PoRV cannot be produced before month four, and PoComp cannot be produced inside the same cycle at all — it needs a second deployment to compare against. That is the structural reason compounding is rare: it is the only proof that cannot be manufactured within a single engagement.
               </p>
             </div>
@@ -1054,7 +1054,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
               The{' '}
               <Link
                 href="/methodology-engine"
@@ -1162,7 +1162,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl">
+            <p className="text-slate-300 text-sm sm:text-base mb-8 max-w-4xl">
               Transfer is not a closing slide. At the end of the fifth stage the client holds, demonstrably:
             </p>
 

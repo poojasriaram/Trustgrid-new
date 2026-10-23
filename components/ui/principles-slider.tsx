@@ -97,7 +97,7 @@ export function PrinciplesSlider({ principles }: PrinciplesSliderProps) {
                 className={`principle-tab-chip ${isActive ? 'active' : ''}`}
                 onClick={() => setCurrentIndex(idx)}
               >
-                <Icon size={13} className={isActive ? 'text-blue-500' : 'text-slate-400'} />
+                <Icon size={13} className={isActive ? 'text-blue-500' : 'text-slate-600'} />
                 <span className="chip-title">{item.title}</span>
               </button>
             )
@@ -166,7 +166,7 @@ export function PrinciplesSlider({ principles }: PrinciplesSliderProps) {
                     className={`principle-list-row ${isSelected ? 'row-selected' : ''}`}
                     onClick={() => setCurrentIndex(idx)}
                   >
-                    <Icon size={15} className={isSelected ? 'text-blue-500' : 'text-slate-400'} />
+                    <Icon size={15} className={isSelected ? 'text-blue-500' : 'text-slate-600'} />
                     <span className="row-title">{p.title}</span>
                   </div>
                 )

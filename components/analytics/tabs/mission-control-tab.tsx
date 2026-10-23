@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import {
@@ -35,11 +35,11 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
     { title: 'Unique Visitors', value: data.uniqueVisitors.toLocaleString(), subtitle: 'Distinct client identities', icon: Users, color: 'text-sky-400', bg: 'from-sky-500/10 to-sky-950/30', border: 'border-sky-500/30' },
     { title: 'Repeat Visitors', value: data.repeatVisitors.toLocaleString(), subtitle: `${data.retentionRate}% retention surge`, icon: Repeat, color: 'text-amber-400', bg: 'from-amber-500/10 to-amber-950/30', border: 'border-amber-500/30' },
     { title: 'Avg Session Duration', value: `${data.avgSessionDuration}s`, subtitle: 'Active dwell velocity', icon: Clock, color: 'text-emerald-400', bg: 'from-emerald-500/10 to-emerald-950/30', border: 'border-emerald-500/30' },
-    { title: 'Hot Leads Detected', value: data.hotLeads.toLocaleString(), subtitle: 'Score ≥ 80 qualified', icon: Flame, color: 'text-rose-400', bg: 'from-rose-500/10 to-rose-950/30', border: 'border-rose-500/30' },
+    { title: 'Hot Leads Detected', value: data.hotLeads.toLocaleString(), subtitle: 'Score = 80 qualified', icon: Flame, color: 'text-rose-400', bg: 'from-rose-500/10 to-rose-950/30', border: 'border-rose-500/30' },
     { title: 'Google Leads', value: data.googleLeads.toLocaleString(), subtitle: 'Inbound search acquisition', icon: Search, color: 'text-blue-400', bg: 'from-blue-500/10 to-blue-950/30', border: 'border-blue-500/30' },
     { title: 'Career Submissions', value: data.careerSubmissions.toLocaleString(), subtitle: 'Resume pipelines routed', icon: Briefcase, color: 'text-purple-400', bg: 'from-purple-500/10 to-purple-950/30', border: 'border-purple-500/30' },
     { title: 'Number of Chats', value: data.chatsCount.toLocaleString(), subtitle: 'AI Architect interactions', icon: MessageSquare, color: 'text-teal-400', bg: 'from-teal-500/10 to-teal-950/30', border: 'border-teal-500/30' },
-    { title: 'Development Records Purged', value: data.devRecordsPurged.toLocaleString(), subtitle: 'Localhost / dev sanitized', icon: ShieldCheck, color: 'text-slate-400', bg: 'from-slate-700/10 to-slate-900/30', border: 'border-slate-700/30' }
+    { title: 'Development Records Purged', value: data.devRecordsPurged.toLocaleString(), subtitle: 'Localhost / dev sanitized', icon: ShieldCheck, color: 'text-slate-300', bg: 'from-slate-700/10 to-slate-900/30', border: 'border-slate-700/30' }
   ]
 
   // Gauge calculations
@@ -62,7 +62,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
               className={`relative overflow-hidden rounded-xl border ${kpi.border} bg-gradient-to-b ${kpi.bg} p-4 shadow-lg backdrop-blur-md transition-all hover:scale-[1.02] hover:shadow-cyan-900/10`}
             >
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 truncate">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300 truncate">
                   {kpi.title}
                 </span>
                 <Icon className={`h-4 w-4 ${kpi.color} shrink-0`} />
@@ -70,7 +70,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
               <div className="mt-2.5 text-2xl font-bold tracking-tight text-white">
                 {kpi.value}
               </div>
-              <div className="mt-1 text-[11px] text-slate-400 truncate">
+              <div className="mt-1 text-[11px] text-slate-300 truncate">
                 {kpi.subtitle}
               </div>
             </div>
@@ -113,10 +113,10 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
               </svg>
               <div className="absolute text-center">
                 <span className="text-2xl font-bold text-white">{data.retentionRate}%</span>
-                <span className="block text-[10px] uppercase tracking-wider text-slate-400">Retention</span>
+                <span className="block text-[10px] uppercase tracking-wider text-slate-300">Retention</span>
               </div>
             </div>
-            <div className="mt-4 flex justify-between w-full text-xs text-slate-400 px-4">
+            <div className="mt-4 flex justify-between w-full text-xs text-slate-300 px-4">
               <span>Benchmark: 25%</span>
               <span className="text-emerald-400 font-medium">Surging (+13.5%)</span>
             </div>
@@ -156,10 +156,10 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
               </svg>
               <div className="absolute text-center">
                 <span className="text-2xl font-bold text-white">{data.avgSessionDuration}s</span>
-                <span className="block text-[10px] uppercase tracking-wider text-slate-400">Avg Dwell</span>
+                <span className="block text-[10px] uppercase tracking-wider text-slate-300">Avg Dwell</span>
               </div>
             </div>
-            <div className="mt-4 flex justify-between w-full text-xs text-slate-400 px-4">
+            <div className="mt-4 flex justify-between w-full text-xs text-slate-300 px-4">
               <span>Goal: 120s</span>
               <span className="text-emerald-400 font-medium">Exceeding SLA</span>
             </div>
@@ -181,7 +181,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
                 <div key={idx} className="space-y-1">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-300 font-medium">{src.name}</span>
-                    <span className="text-slate-400 font-mono">{src.percentage}% ({src.count.toLocaleString()})</span>
+                    <span className="text-slate-300 font-mono">{src.percentage}% ({src.count.toLocaleString()})</span>
                   </div>
                   <div className="h-1.5 w-full rounded-full bg-slate-800 overflow-hidden">
                     <div
@@ -203,7 +203,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div>
               <h3 className="text-sm font-semibold text-slate-200">7-Day Multi-Metric Telemetry Trend</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Visits, Sessions, and Distinct Visitors Trajectory</p>
+              <p className="text-xs text-slate-300 mt-0.5">Visits, Sessions, and Distinct Visitors Trajectory</p>
             </div>
             <div className="flex items-center gap-3 text-xs font-mono">
               <span className="flex items-center gap-1.5 text-indigo-400">
@@ -244,7 +244,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
                       title={`Visitors: ${t.visitors.toLocaleString()}`}
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 font-mono mt-1">{t.date}</span>
+                  <span className="text-[10px] text-slate-300 font-mono mt-1">{t.date}</span>
                 </div>
               )
             })}
@@ -264,7 +264,7 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
           </div>
 
           <div className="mt-3 text-xs text-emerald-500 space-y-2 leading-relaxed">
-            <p className="text-slate-400 text-[11px]">&gt; TRUSTGRID.AI DATA LINK ACTIVE</p>
+            <p className="text-slate-300 text-[11px]">&gt; TRUSTGRID.AI DATA LINK ACTIVE</p>
             <p>&gt; {data.globalTraffic.toLocaleString()} TELEMETRY LOGS COMPILED</p>
             <p>&gt; DEV SANITIZATION: {data.devRecordsPurged} LOCALHOST PURGED</p>
             <p>&gt; 16 INTELLIGENCE TABS OPERATIONAL</p>
@@ -303,13 +303,13 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
                       : 'OFFLINE'}
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-300 mt-0.5">
                   Serverless connection reuse &bull; Atomic counter aggregation &bull; Bounded TTL retention
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+            <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
               <Radio className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
               <span>Real-Time Stream Active</span>
             </div>
@@ -318,37 +318,37 @@ export function MissionControlTab({ data, redisAnalytics }: Props) {
           {/* Quick Redis Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Active Sessions (20m)</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Active Sessions (20m)</span>
               <span className="text-xl font-bold font-mono text-cyan-400 mt-1 block">
                 {redisAnalytics.overview.activeSessions}
               </span>
             </div>
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Live Pageviews</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Live Pageviews</span>
               <span className="text-xl font-bold font-mono text-indigo-400 mt-1 block">
                 {redisAnalytics.overview.totalPageViews.toLocaleString()}
               </span>
             </div>
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Total CTA Clicks</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Total CTA Clicks</span>
               <span className="text-xl font-bold font-mono text-emerald-400 mt-1 block">
                 {redisAnalytics.overview.totalCtaClicks.toLocaleString()}
               </span>
             </div>
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Form Conversions</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Form Conversions</span>
               <span className="text-xl font-bold font-mono text-rose-400 mt-1 block">
                 {redisAnalytics.overview.totalFormSuccess.toLocaleString()}
               </span>
             </div>
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Conversion Rate</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Conversion Rate</span>
               <span className="text-xl font-bold font-mono text-amber-400 mt-1 block">
                 {redisAnalytics.overview.conversionRatePercent}%
               </span>
             </div>
             <div className="p-3 rounded-lg border border-slate-800 bg-slate-900/60">
-              <span className="text-[10px] font-semibold uppercase text-slate-400 block">Unique Sessions</span>
+              <span className="text-[10px] font-semibold uppercase text-slate-300 block">Unique Sessions</span>
               <span className="text-xl font-bold font-mono text-sky-400 mt-1 block">
                 {redisAnalytics.overview.uniqueSessions.toLocaleString()}
               </span>

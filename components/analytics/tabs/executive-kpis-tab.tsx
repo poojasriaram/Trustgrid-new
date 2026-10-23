@@ -25,27 +25,27 @@ export function ExecutiveKpisTab({ data }: Props) {
       {/* KPI Cards Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
         <div className="rounded-xl border border-indigo-500/30 bg-gradient-to-b from-indigo-500/10 to-indigo-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Total Visits</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Total Visits</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.totalVisits.toLocaleString()}</div>
           <span className="text-[11px] text-indigo-400 mt-1 block">Full enterprise footprint</span>
         </div>
         <div className="rounded-xl border border-cyan-500/30 bg-gradient-to-b from-cyan-500/10 to-cyan-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Unique Visitors</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Unique Visitors</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.uniqueVisitors.toLocaleString()}</div>
           <span className="text-[11px] text-cyan-400 mt-1 block">Distinct client targets</span>
         </div>
         <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-b from-emerald-500/10 to-emerald-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Avg Session Time</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Avg Session Time</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.avgSessionTime}s</div>
           <span className="text-[11px] text-emerald-400 mt-1 block">Deep enterprise engagement</span>
         </div>
         <div className="rounded-xl border border-amber-500/30 bg-gradient-to-b from-amber-500/10 to-amber-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Repeat Visitors</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Repeat Visitors</span>
           <div className="mt-2 text-2xl font-bold text-white">{data.repeatVisitors.toLocaleString()}</div>
           <span className="text-[11px] text-amber-400 mt-1 block">Multi-session retention</span>
         </div>
         <div className="rounded-xl border border-purple-500/30 bg-gradient-to-b from-purple-500/10 to-purple-950/20 p-4">
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Most Active Page</span>
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-slate-300">Most Active Page</span>
           <div className="mt-2 text-sm font-bold text-white truncate" title={data.mostActivePage}>
             {data.mostActivePage}
           </div>
@@ -62,7 +62,7 @@ export function ExecutiveKpisTab({ data }: Props) {
               <Trophy className="h-4 w-4 text-amber-400" />
               <h3 className="text-sm font-semibold text-slate-200">Top Solutions & Pages (excl. Home)</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">Ranked by Visits</span>
+            <span className="text-xs text-slate-300 font-mono">Ranked by Visits</span>
           </div>
           <div className="mt-4 space-y-3.5">
             {data.topPages.map((p, idx) => {
@@ -94,7 +94,7 @@ export function ExecutiveKpisTab({ data }: Props) {
               <Clock className="h-4 w-4 text-emerald-400" />
               <h3 className="text-sm font-semibold text-slate-200">Top Pages by Dwell Time & Attention</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">Avg / Max Secs</span>
+            <span className="text-xs text-slate-300 font-mono">Avg / Max Secs</span>
           </div>
           <div className="mt-4 space-y-3.5">
             {data.topPagesByDwell.map((p, idx) => {
@@ -135,7 +135,7 @@ export function ExecutiveKpisTab({ data }: Props) {
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-medium">
+                <tr className="border-b border-slate-800 text-slate-300 font-medium">
                   <th className="pb-2">Location</th>
                   <th className="pb-2 text-right">Visits</th>
                   <th className="pb-2 text-right">Activity</th>
@@ -149,7 +149,7 @@ export function ExecutiveKpisTab({ data }: Props) {
                       <span className="truncate">{v.location}</span>
                     </td>
                     <td className="py-2.5 text-right font-mono font-bold text-white">{v.totalVisits}</td>
-                    <td className="py-2.5 text-right text-slate-400 font-mono text-[11px]">{v.lastActive}</td>
+                    <td className="py-2.5 text-right text-slate-300 font-mono text-[11px]">{v.lastActive}</td>
                   </tr>
                 ))}
               </tbody>
@@ -164,13 +164,13 @@ export function ExecutiveKpisTab({ data }: Props) {
               <FileText className="h-4 w-4 text-indigo-400" />
               <h3 className="text-sm font-semibold text-slate-200">Master Page Intelligence Matrix</h3>
             </div>
-            <span className="text-xs text-slate-400 font-mono">All High-Value URLs</span>
+            <span className="text-xs text-slate-300 font-mono">All High-Value URLs</span>
           </div>
 
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-800 text-slate-400 font-medium">
+                <tr className="border-b border-slate-800 text-slate-300 font-medium">
                   <th className="pb-2">Target URL</th>
                   <th className="pb-2 text-right">Total Visits</th>
                   <th className="pb-2 text-right">Unique Users</th>
@@ -187,7 +187,7 @@ export function ExecutiveKpisTab({ data }: Props) {
                     <td className="py-2.5 text-right text-white font-bold">{p.totalVisits.toLocaleString()}</td>
                     <td className="py-2.5 text-right text-indigo-400">{p.uniqueUsers.toLocaleString()}</td>
                     <td className="py-2.5 text-right text-emerald-400 font-medium">{p.avgTime}s</td>
-                    <td className="py-2.5 text-right text-slate-400">{p.maxTime}s</td>
+                    <td className="py-2.5 text-right text-slate-300">{p.maxTime}s</td>
                   </tr>
                 ))}
               </tbody>

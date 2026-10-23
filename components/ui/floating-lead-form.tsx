@@ -84,309 +84,199 @@ export function FloatingLeadForm() {
 
   return (
     <>
-      {/* FLOATING LAUNCHER PILL (Bottom Right Corner) */}
-      <div
-        className="floating-lead-container"
-        style={{
-          position: 'fixed',
-          bottom: '24px',
-          right: '24px',
-          zIndex: 9998
-        }}
-      >
+      {/* FLOATING LAUNCHER PILL (Docked Bottom Left to prevent collision with AI Chatbot on Bottom Right) */}
+      <div className="floating-lead-container">
         {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
             className="floating-lead-trigger tg-btn-shine"
             aria-label="Quick AI Inquiry"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '9px',
-              padding: '11px 18px',
-              background: 'linear-gradient(135deg, #091a48 0%, #0d2875 100%)',
-              color: '#ffffff',
-              border: '1px solid rgba(96, 165, 250, 0.35)',
-              borderRadius: '999px',
-              boxShadow: '0 8px 25px rgba(5, 15, 45, 0.4)',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '13px',
-              transition: 'all 0.25s ease'
-            }}
           >
-            <div
-              style={{
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                background: 'rgba(29, 92, 255, 0.4)',
-                border: '1px solid #60a5fa',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#93c5fd'
-              }}
-            >
+            <div className="floating-lead-icon-wrap">
               <Zap size={14} className="animate-pulse" />
             </div>
-            <span>Quick Inquiry</span>
+            <span className="floating-lead-label">Quick Inquiry</span>
           </button>
         )}
       </div>
 
-      {/* FLOATING INQUIRY MODAL / CARD */}
+      {/* FLOATING INQUIRY MODAL / BOTTOM SHEET */}
       {isOpen && (
-        <div
-          className="floating-lead-modal tg-card-interactive"
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            width: 'clamp(320px, 90vw, 380px)',
-            background: '#ffffff',
-            borderRadius: '16px',
-            boxShadow: '0 25px 60px rgba(7, 20, 61, 0.4)',
-            border: '1px solid #cbd5e1',
-            overflow: 'hidden',
-            zIndex: 99999,
-            animation: 'fadeIn 0.2s ease-out'
-          }}
-        >
-          {/* HEADER */}
+        <div className="floating-lead-backdrop-wrapper">
           <div
-            style={{
-              padding: '14px 18px',
-              background: 'linear-gradient(135deg, #050d24 0%, #0c2058 100%)',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              borderBottom: '1px solid rgba(255,255,255,0.1)'
-            }}
+            className="floating-lead-backdrop"
+            onClick={() => setIsOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            className="floating-lead-modal tg-card-interactive"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Quick Architecture Inquiry"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '6px',
-                  background: 'rgba(29, 92, 255, 0.3)',
-                  border: '1px solid rgba(96, 165, 250, 0.5)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#60a5fa'
-                }}
+            {/* HEADER */}
+            <div className="floating-lead-modal-header">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div className="floating-lead-header-icon">
+                  <Zap size={16} />
+                </div>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: '#ffffff' }}>
+                    Quick Architecture Inquiry
+                  </h4>
+                  <span style={{ fontSize: '11px', color: '#94a3b8' }}>
+                    Direct Senior Architect Callback
+                  </span>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsOpen(false)}
+                className="floating-lead-close-btn"
+                aria-label="Close"
               >
-                <Zap size={16} />
-              </div>
-              <div>
-                <h4 style={{ margin: 0, fontSize: '13.5px', fontWeight: 700, color: '#ffffff' }}>
-                  Quick Architecture Inquiry
-                </h4>
-                <span style={{ fontSize: '10.5px', color: '#94a3b8' }}>
-                  Direct Senior Architect Callback
-                </span>
-              </div>
+                <X size={20} />
+              </button>
             </div>
 
-            <button
-              onClick={() => setIsOpen(false)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                color: '#94a3b8',
-                cursor: 'pointer',
-                padding: '4px'
-              }}
-              aria-label="Close"
-            >
-              <X size={18} />
-            </button>
-          </div>
-
-          {/* BODY */}
-          <div style={{ padding: '16px 18px', background: '#ffffff' }}>
-            {submitted ? (
-              <div style={{ textAlign: 'center', padding: '16px 8px' }}>
-                <div
-                  style={{
-                    width: '46px',
-                    height: '46px',
-                    borderRadius: '50%',
-                    background: '#dcfce7',
-                    border: '1px solid #86efac',
-                    color: '#16a34a',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 12px'
-                  }}
-                >
-                  <CheckCircle2 size={24} />
-                </div>
-                <h4 style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a', margin: '0 0 4px' }}>
-                  Thank You
-                </h4>
-                <p style={{ fontSize: '12px', color: '#64748b', margin: '0 0 8px' }}>
-                  REF: <strong style={{ color: '#1d5cff' }}>{refId}</strong>
-                </p>
-                <p style={{ fontSize: '12.5px', color: '#475569', lineHeight: 1.4, margin: '0 0 16px' }}>
-                  Your request has been submitted successfully. Our team will get back to you soon.
-                </p>
-                <button
-                  type="button"
-                  onClick={handleReset}
-                  className="button button-primary button-sm"
-                  style={{ width: '100%', fontSize: '12px' }}
-                >
-                  Done
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {errorMessage && (
+            {/* BODY */}
+            <div className="floating-lead-modal-body">
+              {submitted ? (
+                <div style={{ textAlign: 'center', padding: '20px 8px' }}>
                   <div
                     style={{
-                      background: '#fef2f2',
-                      border: '1px solid #fecaca',
-                      borderRadius: '6px',
-                      padding: '6px 10px',
-                      color: '#991b1b',
-                      fontSize: '11.5px',
-                      fontWeight: 500
+                      width: '52px',
+                      height: '52px',
+                      borderRadius: '50%',
+                      background: '#dcfce7',
+                      border: '1px solid #86efac',
+                      color: '#16a34a',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 auto 14px'
                     }}
                   >
-                    {errorMessage}
+                    <CheckCircle2 size={28} />
                   </div>
-                )}
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Name <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      fontSize: '12.5px',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '6px',
-                      outline: 'none',
-                      color: '#0f172a'
-                    }}
-                  />
+                  <h4 style={{ fontSize: '18px', fontWeight: 700, color: '#0f172a', margin: '0 0 6px' }}>
+                    Thank You
+                  </h4>
+                  <p style={{ fontSize: '13px', color: '#64748b', margin: '0 0 8px' }}>
+                    REF: <strong style={{ color: '#1d5cff' }}>{refId}</strong>
+                  </p>
+                  <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.5, margin: '0 0 20px' }}>
+                    Your request has been submitted successfully. Our team will get back to you soon.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="button button-primary"
+                    style={{ width: '100%', minHeight: '44px', fontSize: '14px', fontWeight: 600 }}
+                  >
+                    Done
+                  </button>
                 </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Email <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      fontSize: '12.5px',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '6px',
-                      outline: 'none',
-                      color: '#0f172a'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#334155', marginBottom: '3px' }}>
-                    Mobile Number <span style={{ color: '#ef4444' }}>*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Enter your mobile number"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      fontSize: '12.5px',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '6px',
-                      outline: 'none',
-                      color: '#0f172a'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3px' }}>
-                    <label style={{ fontSize: '12px', fontWeight: 600, color: '#334155' }}>
-                      Company
-                    </label>
-                    <span style={{ fontSize: '10px', color: '#94a3b8' }}>Optional</span>
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Enter company name (optional)"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    style={{
-                      width: '100%',
-                      padding: '8px 10px',
-                      fontSize: '12.5px',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '6px',
-                      outline: 'none',
-                      color: '#0f172a'
-                    }}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="button button-primary"
-                  style={{
-                    width: '100%',
-                    padding: '10px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    marginTop: '4px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px',
-                    borderRadius: '8px'
-                  }}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 size={14} className="animate-spin" />
-                      <span>Submitting...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit Request</span>
-                      <Send size={13} />
-                    </>
+              ) : (
+                <form onSubmit={handleSubmit} className="floating-lead-form-fields">
+                  {errorMessage && (
+                    <div
+                      style={{
+                        background: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '8px',
+                        padding: '8px 12px',
+                        color: '#991b1b',
+                        fontSize: '12px',
+                        fontWeight: 500
+                      }}
+                    >
+                      {errorMessage}
+                    </div>
                   )}
-                </button>
 
-                <span style={{ fontSize: '10px', color: '#94a3b8', textAlign: 'center', marginTop: '2px' }}>
-                  🔒 Confidential & Protected under mutual NDA
-                </span>
-              </form>
-            )}
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                      Name <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Enter your name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="floating-lead-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                      Email <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your work email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="floating-lead-input"
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '12.5px', fontWeight: 600, color: '#334155', marginBottom: '4px' }}>
+                      Mobile Number <span style={{ color: '#ef4444' }}>*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Enter your mobile number"
+                      value={mobile}
+                      onChange={(e) => setMobile(e.target.value)}
+                      className="floating-lead-input"
+                    />
+                  </div>
+
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+                      <label style={{ fontSize: '12.5px', fontWeight: 600, color: '#334155' }}>
+                        Company
+                      </label>
+                      <span style={{ fontSize: '11px', color: '#94a3b8' }}>Optional</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Enter company name (optional)"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      className="floating-lead-input"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="button button-primary floating-lead-submit-btn"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Request</span>
+                        <Send size={15} />
+                      </>
+                    )}
+                  </button>
+
+                  <span style={{ fontSize: '11px', color: '#94a3b8', textAlign: 'center', marginTop: '4px' }}>
+                    🔒 Confidential & Protected under mutual NDA
+                  </span>
+                </form>
+              )}
+            </div>
           </div>
         </div>
       )}

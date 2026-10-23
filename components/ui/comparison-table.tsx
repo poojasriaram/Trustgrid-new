@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import { CheckCircle2, XCircle, ShieldCheck, Zap, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -60,7 +60,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
                 </td>
                 <td className="diff-typical">
                   <div className="diff-typical-content">
-                    <XCircle size={15} className="text-slate-400 shrink-0 mt-0.5" />
+                    <XCircle size={15} className="text-slate-600 dark:text-slate-300 shrink-0 mt-0.5" />
                     <span>{row.typical}</span>
                   </div>
                 </td>
@@ -118,7 +118,7 @@ export function ComparisonTable({ data }: ComparisonTableProps) {
           {/* Typical */}
           <div className="mobile-typical-box">
             <div className="typical-label-row">
-              <XCircle size={15} className="text-slate-400" />
+              <XCircle size={15} className="text-slate-600 dark:text-slate-300" />
               <span>Typical AI Vendors / Consultants:</span>
             </div>
             <p>{currentMobile.typical}</p>

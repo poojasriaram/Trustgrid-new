@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useRef, useId } from 'react'
 import {
@@ -798,7 +798,7 @@ export function SessionBookingForm({
             padding: '6px 10px'
           }}
         >
-          <Search size={14} className="text-slate-400 shrink-0" />
+          <Search size={14} className="text-slate-600 shrink-0" />
           <input
             type="text"
             placeholder="Search / filter practice areas..."
@@ -1058,8 +1058,8 @@ export function SessionBookingForm({
           )}
         </button>
 
-        <p style={{ margin: '4px 0 0', fontSize: '11.5px', color: '#64748b', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-          <Lock size={12} className="text-slate-400" />
+        <p style={{ margin: '4px 0 0', fontSize: '11.5px', color: '#475569', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+          <Lock size={12} className="text-slate-600" />
           <span>Enterprise Confidentiality Guaranteed under mutual NDA standards.</span>
         </p>
       </div>

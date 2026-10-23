@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import {
@@ -37,13 +37,13 @@ export function Diagram1A_TrafficPatterns() {
         <div className="flex flex-col bg-slate-900/80 p-5 rounded-lg border border-slate-800">
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
             <span className="text-xs font-mono font-bold text-amber-400">TRADITIONAL WEB ARCHITECTURE</span>
-            <span className="text-[11px] text-slate-400 font-mono">North-South Traffic</span>
+            <span className="text-[11px] text-slate-300 font-mono">North-South Traffic</span>
           </div>
 
           <div className="flex flex-col items-center gap-3 my-auto py-4">
             <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded text-center w-full max-w-[220px]">
               <span className="text-xs font-semibold text-slate-200">External Clients & APIs</span>
-              <span className="block text-[10px] text-slate-400">Asynchronous HTTP / REST</span>
+              <span className="block text-[10px] text-slate-300">Asynchronous HTTP / REST</span>
             </div>
 
             <div className="flex flex-col items-center">
@@ -56,7 +56,7 @@ export function Diagram1A_TrafficPatterns() {
 
             <div className="px-4 py-2 bg-slate-800 border border-slate-700 rounded text-center w-full max-w-[220px]">
               <span className="text-xs font-semibold text-slate-200">Load Balancers & Ingress</span>
-              <span className="block text-[10px] text-slate-400">ECMP Hash Balancing</span>
+              <span className="block text-[10px] text-slate-300">ECMP Hash Balancing</span>
             </div>
 
             <div className="w-0.5 h-4 bg-slate-700" />
@@ -74,7 +74,7 @@ export function Diagram1A_TrafficPatterns() {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400">
+          <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-300">
             <strong className="text-slate-300">System Dynamics:</strong> Stateless, jitter-tolerant. Slow packets only impact individual end users; adjacent pods continue unaffected.
           </div>
         </div>
@@ -91,7 +91,7 @@ export function Diagram1A_TrafficPatterns() {
               {[0, 1, 2, 3].map((gpu) => (
                 <div key={gpu} className="p-2 bg-blue-950/60 border border-blue-700/60 rounded text-center">
                   <span className="text-[11px] font-bold text-blue-300">GPU {gpu}</span>
-                  <span className="block text-[9px] text-slate-400">400G NIC</span>
+                  <span className="block text-[9px] text-slate-300">400G NIC</span>
                 </div>
               ))}
             </div>
@@ -104,7 +104,7 @@ export function Diagram1A_TrafficPatterns() {
                 </span>
               </div>
               <div className="text-[10px] font-mono text-rose-400 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-900/60 mt-1">
-                ⚠️ All 1,024 Nodes Bound by Synchronization Barrier
+                ?? All 1,024 Nodes Bound by Synchronization Barrier
               </div>
             </div>
 
@@ -112,13 +112,13 @@ export function Diagram1A_TrafficPatterns() {
               {[4, 5, 6, 7].map((gpu) => (
                 <div key={gpu} className="p-2 bg-blue-950/60 border border-blue-700/60 rounded text-center">
                   <span className="text-[11px] font-bold text-blue-300">GPU {gpu}</span>
-                  <span className="block text-[9px] text-slate-400">400G NIC</span>
+                  <span className="block text-[9px] text-slate-300">400G NIC</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-400">
+          <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-slate-300">
             <strong className="text-slate-300">System Dynamics:</strong> Tightly coupled, zero jitter tolerance. A microsecond delay on one link halts the entire cluster backward pass.
           </div>
         </div>
@@ -146,7 +146,7 @@ export function Diagram1B_TailLatencyBarrier() {
         <div className="space-y-3 font-mono text-xs">
           {/* GPU 0 - Fast */}
           <div className="flex items-center gap-3">
-            <span className="w-20 text-slate-400 font-semibold text-right">GPU 0 (Fast)</span>
+            <span className="w-20 text-slate-300 font-semibold text-right">GPU 0 (Fast)</span>
             <div className="flex-1 h-7 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
               <div className="w-[35%] bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
                 Compute Forward/Backward
@@ -155,14 +155,14 @@ export function Diagram1B_TailLatencyBarrier() {
                 AllReduce
               </div>
               <div className="flex-1 bg-rose-950/70 border-l border-rose-700/50 flex items-center justify-center text-[10px] text-rose-300 font-bold animate-pulse">
-                ⏳ IDLE SYNCHRONIZATION STALL (Waiting on Straggler)
+                ? IDLE SYNCHRONIZATION STALL (Waiting on Straggler)
               </div>
             </div>
           </div>
 
           {/* GPU 512 - Fast */}
           <div className="flex items-center gap-3">
-            <span className="w-20 text-slate-400 font-semibold text-right">GPU 512</span>
+            <span className="w-20 text-slate-300 font-semibold text-right">GPU 512</span>
             <div className="flex-1 h-7 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
               <div className="w-[35%] bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
                 Compute Forward/Backward
@@ -171,14 +171,14 @@ export function Diagram1B_TailLatencyBarrier() {
                 AllReduce
               </div>
               <div className="flex-1 bg-rose-950/70 border-l border-rose-700/50 flex items-center justify-center text-[10px] text-rose-300 font-bold">
-                ⏳ IDLE SYNCHRONIZATION STALL
+                ? IDLE SYNCHRONIZATION STALL
               </div>
             </div>
           </div>
 
           {/* GPU 1023 - Straggler Link */}
           <div className="flex items-center gap-3">
-            <span className="w-20 text-rose-400 font-bold text-right">GPU 1023 ⚠️</span>
+            <span className="w-20 text-rose-400 font-bold text-right">GPU 1023 ??</span>
             <div className="flex-1 h-7 bg-slate-900 rounded flex overflow-hidden border border-rose-900/60">
               <div className="w-[35%] bg-blue-600 flex items-center justify-center text-[10px] font-bold text-white">
                 Compute Forward/Backward
@@ -196,15 +196,15 @@ export function Diagram1B_TailLatencyBarrier() {
         {/* Metric Impact Callout */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-800 text-center">
           <div className="p-3 bg-slate-900 rounded border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Measured GPU Active FLOPs</span>
+            <span className="text-[11px] text-slate-300 block">Measured GPU Active FLOPs</span>
             <span className="text-xl font-bold text-rose-400 font-mono">38.2% MFU</span>
           </div>
           <div className="p-3 bg-slate-900 rounded border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Idle Barrier Overhead</span>
+            <span className="text-[11px] text-slate-300 block">Idle Barrier Overhead</span>
             <span className="text-xl font-bold text-amber-400 font-mono">41.8% Time Lost</span>
           </div>
           <div className="p-3 bg-slate-900 rounded border border-slate-800">
-            <span className="text-[11px] text-slate-400 block">Amortized Idle Compute Waste</span>
+            <span className="text-[11px] text-slate-300 block">Amortized Idle Compute Waste</span>
             <span className="text-xl font-bold text-slate-200 font-mono">~$14,200 / hr</span>
           </div>
         </div>
@@ -240,7 +240,7 @@ export function Diagram1C_NetworkAssessmentFramework() {
       items: [
         'Deterministic PFC headroom calculated against fiber RTT',
         'Sub-microsecond ECN marking thresholds (Kmin / Kmax)',
-        'Hardware PFC Watchdog timers (100–200μs recovery window)'
+        'Hardware PFC Watchdog timers (100-200us recovery window)'
       ],
       color: 'border-cyan-500'
     },
@@ -280,7 +280,7 @@ export function Diagram1C_NetworkAssessmentFramework() {
           <div key={idx} className={`p-4 bg-slate-900 rounded-lg border-l-4 ${t.color} border-slate-800 space-y-2`}>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-mono font-bold text-blue-400">{t.tier}</span>
-              <span className="text-[10px] text-slate-400 font-mono">{t.metric}</span>
+              <span className="text-[10px] text-slate-300 font-mono">{t.metric}</span>
             </div>
             <h5 className="text-sm font-bold text-slate-100">{t.title}</h5>
             <ul className="space-y-1.5 pt-1">
@@ -322,7 +322,7 @@ export function Diagram2A_ProtocolStack() {
         <div className="space-y-3 p-4 bg-slate-900 rounded-lg border border-slate-800">
           <div className="flex justify-between items-center pb-2 border-b border-slate-800">
             <span className="text-xs font-mono font-bold text-blue-400">NATIVE INFINIBAND (IBTA)</span>
-            <span className="text-[11px] text-slate-400 font-mono">Specialized HPC Fabric</span>
+            <span className="text-[11px] text-slate-300 font-mono">Specialized HPC Fabric</span>
           </div>
 
           <div className="space-y-1.5 text-center font-mono text-xs">
@@ -343,10 +343,10 @@ export function Diagram2A_ProtocolStack() {
             </div>
           </div>
 
-          <div className="text-[11px] text-slate-400 pt-2 space-y-1">
-            <p>• <strong>Control Plane:</strong> Centralized Subnet Manager (OpenSM)</p>
-            <p>• <strong>Flow Control:</strong> Hardware credit exchange (no packet drops)</p>
-            <p>• <strong>Switching Latency:</strong> ~130–180 ns (cut-through)</p>
+          <div className="text-[11px] text-slate-300 pt-2 space-y-1">
+            <p>Â <strong>Control Plane:</strong> Centralized Subnet Manager (OpenSM)</p>
+            <p>Â <strong>Flow Control:</strong> Hardware credit exchange (no packet drops)</p>
+            <p>Â <strong>Switching Latency:</strong> ~130-180 ns (cut-through)</p>
           </div>
         </div>
 
@@ -354,7 +354,7 @@ export function Diagram2A_ProtocolStack() {
         <div className="space-y-3 p-4 bg-slate-900 rounded-lg border border-slate-800">
           <div className="flex justify-between items-center pb-2 border-b border-slate-800">
             <span className="text-xs font-mono font-bold text-cyan-400">RoCEv2 OVER CONVERGED ETHERNET</span>
-            <span className="text-[11px] text-slate-400 font-mono">Standard IP/Ethernet Fabric</span>
+            <span className="text-[11px] text-slate-300 font-mono">Standard IP/Ethernet Fabric</span>
           </div>
 
           <div className="space-y-1.5 text-center font-mono text-xs">
@@ -375,10 +375,10 @@ export function Diagram2A_ProtocolStack() {
             </div>
           </div>
 
-          <div className="text-[11px] text-slate-400 pt-2 space-y-1">
-            <p>• <strong>Control Plane:</strong> Distributed BGP / EVPN routing</p>
-            <p>• <strong>Flow Control:</strong> Reactive PFC pause frames + DCQCN</p>
-            <p>• <strong>Switching Latency:</strong> ~400–600 ns (Ethernet ASIC cut-through)</p>
+          <div className="text-[11px] text-slate-300 pt-2 space-y-1">
+            <p>Â <strong>Control Plane:</strong> Distributed BGP / EVPN routing</p>
+            <p>Â <strong>Flow Control:</strong> Reactive PFC pause frames + DCQCN</p>
+            <p>Â <strong>Switching Latency:</strong> ~400-600 ns (Ethernet ASIC cut-through)</p>
           </div>
         </div>
       </div>
@@ -407,17 +407,17 @@ export function Diagram2B_CongestionControl() {
           <div className="p-3 bg-slate-950 rounded border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
             <div className="flex items-center justify-between text-[11px]">
               <span>[Sender Node]</span>
-              <span className="text-blue-400">⇄ Credit Accounting</span>
+              <span className="text-blue-400">? Credit Accounting</span>
               <span>[Switch Buffer]</span>
             </div>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-300">
               1. Switch periodically advertises free buffer credits to sender.<br />
               2. Sender only transmits if receiver has confirmed available buffer credits.<br />
               3. Buffer overflow is mathematically impossible; zero dropped packets by design.
             </p>
           </div>
           <span className="text-[11px] text-emerald-400 font-mono block">
-            ✓ Turnkey simplicity; zero packet drops; no heuristic parameter tuning.
+            ? Turnkey simplicity; zero packet drops; no heuristic parameter tuning.
           </span>
         </div>
 
@@ -426,17 +426,17 @@ export function Diagram2B_CongestionControl() {
           <div className="p-3 bg-slate-950 rounded border border-slate-800 text-xs font-mono text-slate-300 space-y-2">
             <div className="flex items-center justify-between text-[11px]">
               <span>[Receiver NIC]</span>
-              <span className="text-cyan-400">CNP Notification →</span>
+              <span className="text-cyan-400">CNP Notification ?</span>
               <span>[Sender Rate-Limiter]</span>
             </div>
-            <p className="text-[11px] text-slate-400">
+            <p className="text-[11px] text-slate-300">
               1. Switch buffer reaches ECN threshold (Kmin) and marks CE bits.<br />
               2. Receiver detects marked packets and returns Congestion Notification Packet (CNP).<br />
               3. Sender throttles transmission rate (DCQCN). If buffer fills, PFC pauses link.
             </p>
           </div>
           <span className="text-[11px] text-amber-400 font-mono block">
-            ⚠️ Requires careful tuning of 14+ parameters (Kmin, Kmax, Pmax, Alpha, Beta).
+            ?? Requires careful tuning of 14+ parameters (Kmin, Kmax, Pmax, Alpha, Beta).
           </span>
         </div>
       </div>
@@ -454,13 +454,13 @@ export function Diagram2B_CongestionControl() {
 export function Diagram2C_DecisionMatrix() {
   const comparisonData = [
     { dimension: 'Physical Layer', ib: 'Proprietary IB (400G NDR / 800G XDR)', roce: 'Standard 400G / 800G Ethernet' },
-    { dimension: 'Switching Latency', ib: '130–180 ns (Ultra-low cut-through)', roce: '400–600 ns (Broadcom Tomahawk / Cisco Silicon)' },
+    { dimension: 'Switching Latency', ib: '130-180 ns (Ultra-low cut-through)', roce: '400-600 ns (Broadcom Tomahawk / Cisco Silicon)' },
     { dimension: 'Congestion Management', ib: 'Hardware Credit-Based (Zero drops)', roce: 'PFC + DCQCN / ECN (Requires tuning)' },
     { dimension: 'Multi-Vendor Sourcing', ib: 'Single Vendor (NVIDIA)', roce: 'Multi-Vendor (Arista, Cisco, Celestica, Broadcom)' },
     { dimension: 'Routing & Scalability', ib: 'Subnet Manager (Up to ~40k nodes)', roce: 'BGP / EVPN IP Fabric (Hyperscale scale)' },
     { dimension: 'Network Ops Skillset', ib: 'Specialized HPC Network Engineering', roce: 'Standard Enterprise NetOps & SRE' },
     { dimension: 'Tuning Complexity', ib: 'Low / Plug-and-Play', roce: 'High (Buffer headroom, DCQCN parameters)' },
-    { dimension: 'Port Cost (CapEx)', ib: 'Premium ($$$)', roce: '15–30% Lower Port Hardware Cost ($$)' },
+    { dimension: 'Port Cost (CapEx)', ib: 'Premium ($$$)', roce: '15-30% Lower Port Hardware Cost ($$)' },
     { dimension: 'Lead Time & Supply', ib: 'Allocated / Single Vendor Supply Line', roce: 'Diversified Open Optical Supply Chain' },
     { dimension: 'Future Evolution', ib: 'Quantum-3 / XDR roadmap', roce: 'Ultra Ethernet Consortium (UEC 1.0)' }
   ]
@@ -475,7 +475,7 @@ export function Diagram2C_DecisionMatrix() {
       <div className="overflow-x-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
         <table className="w-full text-left text-xs font-mono text-slate-300">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400">
+            <tr className="border-b border-slate-800 text-slate-300">
               <th className="py-2.5 px-3">Dimension</th>
               <th className="py-2.5 px-3 text-blue-400">InfiniBand (NVIDIA Quantum)</th>
               <th className="py-2.5 px-3 text-cyan-400">RoCEv2 (Enterprise Ethernet)</th>
@@ -520,20 +520,20 @@ export function Diagram3A_GPUDirectPath() {
         <div className="p-4 bg-slate-900 rounded-lg border border-slate-800 space-y-3">
           <div className="flex justify-between items-center pb-2 border-b border-slate-800">
             <span className="text-xs font-mono font-bold text-rose-400">LEGACY HOST-RELAYED RDMA</span>
-            <span className="text-[10px] text-slate-400 font-mono">4 Copies • ~18μs Latency</span>
+            <span className="text-[10px] text-slate-300 font-mono">4 Copies Â ~18us Latency</span>
           </div>
 
           <div className="space-y-2 text-center font-mono text-xs">
             <div className="p-2 bg-slate-950 rounded border border-slate-800 text-slate-300">GPU High-Bandwidth Memory (HBM)</div>
-            <div className="text-[10px] text-rose-400">↓ 1. Device-to-Host CUDA Copy</div>
+            <div className="text-[10px] text-rose-400">? 1. Device-to-Host CUDA Copy</div>
             <div className="p-2 bg-slate-950 rounded border border-slate-800 text-amber-300">Host RAM Buffer (DRAM via CPU Socket)</div>
-            <div className="text-[10px] text-rose-400">↓ 2. CPU Cache Snooping & Interrupt</div>
+            <div className="text-[10px] text-rose-400">? 2. CPU Cache Snooping & Interrupt</div>
             <div className="p-2 bg-slate-950 rounded border border-slate-800 text-slate-300">PCIe Host Root Complex</div>
-            <div className="text-[10px] text-rose-400">↓ 3. Host-to-Device NIC DMA</div>
+            <div className="text-[10px] text-rose-400">? 3. Host-to-Device NIC DMA</div>
             <div className="p-2 bg-slate-950 rounded border border-slate-800 text-slate-300">400G Network Interface Card (NIC)</div>
           </div>
-          <span className="text-[10px] text-slate-400 font-mono block pt-1">
-            ❌ Consumes host memory bandwidth, triggers CPU context switches, introduces high latency jitter.
+          <span className="text-[10px] text-slate-300 font-mono block pt-1">
+            ? Consumes host memory bandwidth, triggers CPU context switches, introduces high latency jitter.
           </span>
         </div>
 
@@ -541,7 +541,7 @@ export function Diagram3A_GPUDirectPath() {
         <div className="p-4 bg-slate-900 rounded-lg border border-blue-900/60 space-y-3">
           <div className="flex justify-between items-center pb-2 border-b border-slate-800">
             <span className="text-xs font-mono font-bold text-emerald-400">GPUDIRECT RDMA ZERO-COPY</span>
-            <span className="text-[10px] text-emerald-400 font-mono">0 Copies • &lt;1.8μs Latency</span>
+            <span className="text-[10px] text-emerald-400 font-mono">0 Copies Â &lt;1.8us Latency</span>
           </div>
 
           <div className="space-y-2 text-center font-mono text-xs">
@@ -551,23 +551,23 @@ export function Diagram3A_GPUDirectPath() {
             <div className="py-2 flex items-center justify-center">
               <div className="flex flex-col items-center">
                 <span className="text-[10px] font-mono text-emerald-300 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800">
-                  ⚡ Direct BAR1 P2P PCIe DMA Bypass
+                  ? Direct BAR1 P2P PCIe DMA Bypass
                 </span>
-                <span className="text-[9px] text-slate-400 mt-0.5">CPU & Host DRAM Completely Bypassed</span>
+                <span className="text-[9px] text-slate-300 mt-0.5">CPU & Host DRAM Completely Bypassed</span>
               </div>
             </div>
             <div className="p-2.5 bg-blue-950 rounded border border-blue-700/60 text-blue-200 font-bold">
               Dedicated PCIe Gen5 Switch / Root
             </div>
             <div className="py-1">
-              <span className="text-[10px] text-emerald-400">↓ Line-Rate Hardware DMA</span>
+              <span className="text-[10px] text-emerald-400">? Line-Rate Hardware DMA</span>
             </div>
             <div className="p-2.5 bg-blue-950 rounded border border-blue-700/60 text-blue-200 font-bold">
               400G / 800G ConnectX NIC
             </div>
           </div>
           <span className="text-[10px] text-emerald-300 font-mono block pt-1">
-            ✓ Direct memory register access; 10x lower latency; zero CPU or host DRAM overhead.
+            ? Direct memory register access; 10x lower latency; zero CPU or host DRAM overhead.
           </span>
         </div>
       </div>
@@ -591,7 +591,7 @@ export function Diagram3B_RailOptimizedTopology() {
       </div>
 
       <div className="p-6 bg-slate-950 text-slate-100 rounded-xl border border-slate-800 space-y-4">
-        <div className="text-center pb-2 border-b border-slate-800 text-xs font-mono text-slate-400">
+        <div className="text-center pb-2 border-b border-slate-800 text-xs font-mono text-slate-300">
           8 Independent Rail Switching Planes (Each Plane Handles Single GPU Ordinal Across All Server Nodes)
         </div>
 
@@ -599,7 +599,7 @@ export function Diagram3B_RailOptimizedTopology() {
           {[0, 1, 2, 3, 4, 5, 6, 7].map((rail) => (
             <div key={rail} className="p-2.5 bg-slate-900 border border-slate-800 rounded">
               <span className="text-[10px] text-cyan-400 font-bold block">RAIL {rail}</span>
-              <span className="text-[9px] text-slate-400">Leaf Switch</span>
+              <span className="text-[9px] text-slate-300">Leaf Switch</span>
               <div className="mt-2 py-1 bg-slate-950 rounded text-[9px] text-blue-300 font-semibold border border-slate-850">
                 GPU {rail} of all nodes
               </div>
@@ -610,7 +610,7 @@ export function Diagram3B_RailOptimizedTopology() {
         <div className="py-2 flex items-center justify-center">
           <div className="px-4 py-2 bg-blue-950/40 border border-blue-800/60 rounded text-center max-w-xl">
             <span className="text-xs font-semibold text-blue-300">Intra-Node NVLink Mesh (900 GB/s per GPU)</span>
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-[11px] text-slate-300 mt-1">
               Tensor Parallelism (TP) executes entirely within node over NVLink. AllReduce across nodes for Data/Pipeline Parallelism operates strictly within isolated Rail planes.
             </p>
           </div>
@@ -618,19 +618,19 @@ export function Diagram3B_RailOptimizedTopology() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-center text-xs font-mono pt-2 border-t border-slate-800">
           <div className="p-2 bg-slate-900 rounded border border-slate-800">
-            <span className="text-slate-400 text-[10px] block">Spine Cable Reduction</span>
+            <span className="text-slate-300 text-[10px] block">Spine Cable Reduction</span>
             <span className="text-sm font-bold text-emerald-400">50% Fewer Cables</span>
           </div>
           <div className="p-2 bg-slate-900 rounded border border-slate-800">
-            <span className="text-slate-400 text-[10px] block">Spine Contention</span>
+            <span className="text-slate-300 text-[10px] block">Spine Contention</span>
             <span className="text-sm font-bold text-emerald-400">Zero Cross-Rail Overlap</span>
           </div>
           <div className="p-2 bg-slate-900 rounded border border-slate-800">
-            <span className="text-slate-400 text-[10px] block">Effective Bisection</span>
+            <span className="text-slate-300 text-[10px] block">Effective Bisection</span>
             <span className="text-sm font-bold text-cyan-400">Full Non-Blocking 1:1</span>
           </div>
           <div className="p-2 bg-slate-900 rounded border border-slate-800">
-            <span className="text-slate-400 text-[10px] block">Failure Containment</span>
+            <span className="text-slate-300 text-[10px] block">Failure Containment</span>
             <span className="text-sm font-bold text-emerald-400">Single Rail Isolated</span>
           </div>
         </div>
@@ -705,7 +705,7 @@ export function Diagram3C_TroubleshootingWorkflow() {
             <div className="p-2 bg-slate-950 rounded text-[10px] text-cyan-300 border border-slate-850 truncate">
               $ {s.cmd}
             </div>
-            <p className="text-[11px] text-slate-400 font-sans">{s.check}</p>
+            <p className="text-[11px] text-slate-300 font-sans">{s.check}</p>
           </div>
         ))}
       </div>
@@ -737,20 +737,20 @@ export function Diagram4A_ExecutionTrace() {
         <div className="space-y-2">
           <div className="flex justify-between items-center text-xs font-mono">
             <span className="text-emerald-400 font-bold">SCENARIO A: OPTIMAL COMPUTE-COMMUNICATION OVERLAP (64% MFU)</span>
-            <span className="text-slate-400 text-[11px]">Step Time: 284 ms</span>
+            <span className="text-slate-300 text-[11px]">Step Time: 284 ms</span>
           </div>
 
           <div className="space-y-1 font-mono text-[10px]">
             <div className="flex items-center gap-2">
-              <span className="w-24 text-slate-400 text-right">CUDA Compute:</span>
+              <span className="w-24 text-slate-300 text-right">CUDA Compute:</span>
               <div className="flex-1 h-6 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
                 <div className="w-[38%] bg-blue-600 flex items-center justify-center text-white font-bold">Forward Pass</div>
                 <div className="w-[58%] bg-indigo-600 flex items-center justify-center text-white font-bold">Backward Pass & Gradients</div>
-                <div className="w-[4%] bg-slate-800 flex items-center justify-center text-slate-400">Opt</div>
+                <div className="w-[4%] bg-slate-800 flex items-center justify-center text-slate-300">Opt</div>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-24 text-slate-400 text-right">NCCL Stream:</span>
+              <span className="w-24 text-slate-300 text-right">NCCL Stream:</span>
               <div className="flex-1 h-6 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
                 <div className="w-[40%] bg-slate-950" />
                 <div className="w-[55%] bg-cyan-600 flex items-center justify-center text-white font-bold">
@@ -766,23 +766,23 @@ export function Diagram4A_ExecutionTrace() {
         <div className="space-y-2 pt-3 border-t border-slate-850">
           <div className="flex justify-between items-center text-xs font-mono">
             <span className="text-rose-400 font-bold">SCENARIO B: UNTUNED FABRIC WITH COMMUNICATION BUBBLE (39% MFU)</span>
-            <span className="text-slate-400 text-[11px]">Step Time: 462 ms (+62% Slowdown)</span>
+            <span className="text-slate-300 text-[11px]">Step Time: 462 ms (+62% Slowdown)</span>
           </div>
 
           <div className="space-y-1 font-mono text-[10px]">
             <div className="flex items-center gap-2">
-              <span className="w-24 text-slate-400 text-right">CUDA Compute:</span>
+              <span className="w-24 text-slate-300 text-right">CUDA Compute:</span>
               <div className="flex-1 h-6 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
                 <div className="w-[24%] bg-blue-600 flex items-center justify-center text-white font-bold">Forward Pass</div>
                 <div className="w-[36%] bg-indigo-600 flex items-center justify-center text-white font-bold">Backward Pass</div>
                 <div className="w-[38%] bg-rose-950/80 border-l border-rose-700/50 flex items-center justify-center text-rose-300 font-bold animate-pulse">
-                  ⚠️ STALL BUBBLE (WAITING ON NETWORK)
+                  ?? STALL BUBBLE (WAITING ON NETWORK)
                 </div>
                 <div className="w-[2%] bg-slate-800" />
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-24 text-slate-400 text-right">NCCL Stream:</span>
+              <span className="w-24 text-slate-300 text-right">NCCL Stream:</span>
               <div className="flex-1 h-6 bg-slate-900 rounded flex overflow-hidden border border-slate-800">
                 <div className="w-[60%] bg-slate-950" />
                 <div className="w-[40%] bg-amber-600 flex items-center justify-center text-slate-950 font-bold">
@@ -842,7 +842,7 @@ export function Diagram4B_DiagnosticMatrix() {
       <div className="overflow-x-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
         <table className="w-full text-left text-xs font-mono text-slate-300">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400">
+            <tr className="border-b border-slate-800 text-slate-300">
               <th className="py-2 px-3 w-[25%]">Observed Symptom</th>
               <th className="py-2 px-3 w-[25%] text-amber-400">Probable Root Cause</th>
               <th className="py-2 px-3 w-[25%] text-cyan-400">Diagnostic Command</th>
@@ -894,8 +894,8 @@ export function Diagram4C_NcclPipeline() {
           <div key={idx} className="p-3 bg-slate-900 rounded-lg border border-slate-800 space-y-1.5 font-mono text-xs">
             <span className="text-cyan-400 font-bold text-[11px] block">{st.name}</span>
             <span className="text-slate-300 font-semibold text-[11px] block">{st.detail}</span>
-            <p className="text-[10px] text-slate-400 pt-1 border-t border-slate-800/80">
-              ✓ {st.check}
+            <p className="text-[10px] text-slate-300 pt-1 border-t border-slate-800/80">
+              ? {st.check}
             </p>
           </div>
         ))}
@@ -925,7 +925,7 @@ export function Diagram5A_ReadinessRadar() {
     {
       num: '02',
       title: 'Power & Thermal Density',
-      desc: 'Verify 40kW–100kW rack electrical distribution (415V 3-phase) and direct-to-chip liquid cooling (DLC) infrastructure.'
+      desc: 'Verify 40kW-100kW rack electrical distribution (415V 3-phase) and direct-to-chip liquid cooling (DLC) infrastructure.'
     },
     {
       num: '03',
@@ -957,10 +957,10 @@ export function Diagram5A_ReadinessRadar() {
             <div>
               <span className="text-xl font-mono font-bold text-blue-500 block mb-1">{p.num}</span>
               <h5 className="text-xs font-bold text-slate-100 uppercase tracking-wider">{p.title}</h5>
-              <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">{p.desc}</p>
+              <p className="text-[11px] text-slate-300 mt-2 leading-relaxed">{p.desc}</p>
             </div>
             <div className="pt-2 border-t border-slate-800 text-[10px] text-emerald-400 font-mono">
-              Ready-Gate G0–G4
+              Ready-Gate G0-G4
             </div>
           </div>
         ))}
@@ -978,7 +978,7 @@ export function Diagram5A_ReadinessRadar() {
  */
 export function Diagram5B_ScalingRoadmap() {
   const roadmap = [
-    { scale: '64 GPUs (8 Nodes)', fabric: 'Single-Tier Leaf Fabric', optics: 'Direct Attach Copper (DAC) / 400G QSFP112', switchRadix: '1–2 Top-of-Rack Switches' },
+    { scale: '64 GPUs (8 Nodes)', fabric: 'Single-Tier Leaf Fabric', optics: 'Direct Attach Copper (DAC) / 400G QSFP112', switchRadix: '1-2 Top-of-Rack Switches' },
     { scale: '512 GPUs (64 Nodes)', fabric: '2-Tier Rail-Optimized Spine-Leaf', optics: '400G / 800G Active Optical Cables (AOC)', switchRadix: '8 Leaf Rails + 4 Spine Switches' },
     { scale: '2,048 GPUs (256 Nodes)', fabric: '2-Tier Non-Blocking Clos (Full 1:1)', optics: '800G OSFP 2xFR4 / DR8 Single-Mode Optics', switchRadix: '32 Leaf Switches + 16 High-Radix Spines' },
     { scale: '16,384+ GPUs (2,048 Nodes)', fabric: '3-Tier Supercomputing AI Factory', optics: '800G / 1.6T Co-Packaged / LPO Optical Transceivers', switchRadix: 'Multi-Core SuperSpine Fabric' }
@@ -994,7 +994,7 @@ export function Diagram5B_ScalingRoadmap() {
       <div className="overflow-x-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
         <table className="w-full text-left text-xs font-mono text-slate-300">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400">
+            <tr className="border-b border-slate-800 text-slate-300">
               <th className="py-2.5 px-3">Cluster Size</th>
               <th className="py-2.5 px-3 text-blue-400">Fabric Architecture</th>
               <th className="py-2.5 px-3 text-cyan-400">Optics & Interconnect Type</th>
@@ -1027,10 +1027,10 @@ export function Diagram5B_ScalingRoadmap() {
 export function Diagram5C_ReadinessScorecard() {
   const criteria = [
     { id: 'R01', category: 'Physical & Facility', test: 'Rack Power Density & 415V 3-Phase Verification', passCriteria: '>= 45kW sustained load per rack under 100% burn-in' },
-    { id: 'R02', category: 'Physical & Facility', test: 'Direct-to-Chip Liquid Cooling Flow & Pressure', passCriteria: 'Flow rate >= 1.5 LPM/kW, supply temp <= 32°C, PUE < 1.12' },
+    { id: 'R02', category: 'Physical & Facility', test: 'Direct-to-Chip Liquid Cooling Flow & Pressure', passCriteria: 'Flow rate >= 1.5 LPM/kW, supply temp <= 32Â°C, PUE < 1.12' },
     { id: 'R03', category: 'Fabric & Optics', test: 'Optical Fiber Bit Error Rate (BER) Validation', passCriteria: 'Pre-FEC BER <= 10^-6, Post-FEC BER <= 10^-15 on all links' },
     { id: 'R04', category: 'Fabric & Optics', test: 'Non-Blocking Bisection Bandwidth Test', passCriteria: '1:1 Clos topology with zero oversubscription across rails' },
-    { id: 'R05', category: 'Congestion & Lossless', test: 'PFC Headroom Buffer & Watchdog Audit', passCriteria: 'Headroom sized for 2x RTT fiber flight time; watchdog <= 200μs' },
+    { id: 'R05', category: 'Congestion & Lossless', test: 'PFC Headroom Buffer & Watchdog Audit', passCriteria: 'Headroom sized for 2x RTT fiber flight time; watchdog <= 200us' },
     { id: 'R06', category: 'Congestion & Lossless', test: 'ECN / DCQCN Closed-Loop Calibration', passCriteria: 'Kmin threshold marks packets prior to buffer overflow' },
     { id: 'R07', category: 'GPU Host & NUMA', test: 'PCIe Gen5 BAR1 GPUDirect RDMA Mapping', passCriteria: 'Zero-copy direct transfer confirmed on all NIC-to-GPU pairs' },
     { id: 'R08', category: 'GPU Host & NUMA', test: 'NUMA Socket CPU Core Affinity Alignment', passCriteria: 'NIC, PCIe root, and GPU pinned to identical NUMA domain' },
@@ -1048,7 +1048,7 @@ export function Diagram5C_ReadinessScorecard() {
       <div className="overflow-x-auto p-4 bg-slate-950 rounded-xl border border-slate-800">
         <table className="w-full text-left text-xs font-mono text-slate-300">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400">
+            <tr className="border-b border-slate-800 text-slate-300">
               <th className="py-2 px-3 w-16">ID</th>
               <th className="py-2 px-3 w-40 text-blue-400">Audit Category</th>
               <th className="py-2 px-3 text-slate-200">Readiness Verification Test</th>
@@ -1058,7 +1058,7 @@ export function Diagram5C_ReadinessScorecard() {
           <tbody className="divide-y divide-slate-850">
             {criteria.map((c) => (
               <tr key={c.id} className="hover:bg-slate-900/60 transition-colors">
-                <td className="py-2 px-3 font-bold text-slate-400">{c.id}</td>
+                <td className="py-2 px-3 font-bold text-slate-300">{c.id}</td>
                 <td className="py-2 px-3 text-cyan-300">{c.category}</td>
                 <td className="py-2 px-3 font-semibold text-slate-200">{c.test}</td>
                 <td className="py-2 px-3 text-emerald-300">{c.passCriteria}</td>

@@ -209,7 +209,7 @@ export default function PracticeAreasPage() {
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     PRIMARY CATEGORY 1
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">8 Verticals · 34 Sub-Verticals</span>
+                  <span className="text-xs text-slate-300 font-mono">8 Verticals · 34 Sub-Verticals</span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
                   Industry Vertical Practices
@@ -266,7 +266,7 @@ export default function PracticeAreasPage() {
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
                     PRIMARY CATEGORY 2
                   </span>
-                  <span className="text-xs text-slate-400 font-mono">15 Horizontal Disciplines</span>
+                  <span className="text-xs text-slate-300 font-mono">15 Horizontal Disciplines</span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
                   Cross-Industry Practices
@@ -425,7 +425,7 @@ export default function PracticeAreasPage() {
             <h2 className="text-3xl font-bold text-white mt-2">
               Filter by Practice Domain
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto mt-2 text-sm">
+            <p className="text-slate-300 max-w-2xl mx-auto mt-2 text-sm">
               Quickly locate specialized technical capabilities, functional practices, and cross-cutting integration frameworks.
             </p>
           </div>
@@ -458,7 +458,7 @@ export default function PracticeAreasPage() {
                   <h3 className="text-xl font-bold text-white mt-2 group-hover:text-blue-400 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-400 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -477,7 +477,7 @@ export default function PracticeAreasPage() {
                   </ul>
 
                   <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-400 block mb-1">Target Outcome:</span>
+                    <span className="text-[11px] text-slate-300 block mb-1">Target Outcome:</span>
                     <span className="text-xs font-semibold text-emerald-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -524,7 +524,7 @@ export default function PracticeAreasPage() {
                   <h3 className="text-xl font-bold text-white mt-2 group-hover:text-cyan-400 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-400 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -543,7 +543,7 @@ export default function PracticeAreasPage() {
                   </ul>
 
                   <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-400 block mb-1">Performance Benchmark:</span>
+                    <span className="text-[11px] text-slate-300 block mb-1">Performance Benchmark:</span>
                     <span className="text-xs font-semibold text-cyan-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -590,7 +590,7 @@ export default function PracticeAreasPage() {
                   <h3 className="text-xl font-bold text-white mt-2 group-hover:text-indigo-400 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-400 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -609,7 +609,7 @@ export default function PracticeAreasPage() {
                   </ul>
 
                   <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-400 block mb-1">Autonomy Metric:</span>
+                    <span className="text-[11px] text-slate-300 block mb-1">Autonomy Metric:</span>
                     <span className="text-xs font-semibold text-indigo-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -704,7 +704,7 @@ export default function PracticeAreasPage() {
                 </div>
 
                 <div className="space-y-2 pt-4 border-t border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block font-semibold">
+                  <span className="text-[10px] font-mono text-slate-300 uppercase tracking-wider block font-semibold">
                     Primary Intersecting Practices:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -765,13 +765,13 @@ export default function PracticeAreasPage() {
                     {model.idealFor}
                   </p>
 
-                  <p className="text-slate-400 text-xs mb-4 leading-relaxed font-light">
+                  <p className="text-slate-300 text-xs mb-4 leading-relaxed font-light">
                     {model.keyFocus}
                   </p>
 
                   {/* Deliverables Checklist */}
                   <div className="space-y-2 mb-4">
-                    <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block font-semibold">
+                    <span className="text-[10px] font-mono text-slate-300 uppercase tracking-wider block font-semibold">
                       Core Engineering Deliverables:
                     </span>
                     {model.deliverables.map((del, dIdx) => (
@@ -827,7 +827,7 @@ export default function PracticeAreasPage() {
               <h3 className="text-2xl font-bold text-white mt-2">
                 Five-Stage Delivery Cadence
               </h3>
-              <p className="text-slate-400 text-xs mt-1">
+              <p className="text-slate-300 text-xs mt-1">
                 From initial zero-footprint diagnostic to full operational sovereignty under Turnkey DBOT.
               </p>
             </div>
@@ -842,7 +842,7 @@ export default function PracticeAreasPage() {
                   <h4 className="text-sm font-bold text-white mt-3 mb-2">
                     {stage.title}
                   </h4>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-4">
+                  <p className="text-slate-300 text-xs leading-relaxed mb-4">
                     {stage.description}
                   </p>
                   <div className="pa-pathway-outcome">
@@ -885,7 +885,7 @@ export default function PracticeAreasPage() {
             </Link>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-400">
+          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-300">
             <span>✓ Direct Access to Systems Architects</span>
             <span>✓ No-Obligation Architecture Review</span>
             <span>✓ US, Singapore &amp; India Labs</span>
