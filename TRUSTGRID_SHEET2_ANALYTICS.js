@@ -62,14 +62,18 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var eSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
     var ubSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
     
-        // TRUSTGRID.AI Dedicated Form Sheets
-    var inboundSheet = db.getSheetByName("Form_Inbound_Leads") || db.getSheetByName("Inbound Leads");
+        // TRUSTGRID.AI Dedicated Form Sheets (Full Sheet 1 Tab Resolution)
+    var inboundSheet = db.getSheetByName("Contact_Leads") || db.getSheetByName("Form_Inbound_Leads") || db.getSheetByName("Inbound Leads");
     var consultSheet = db.getSheetByName("Form_Consultation_Bookings") || db.getSheetByName("Consultation Bookings") || db.getSheetByName("Book for Consultation");
-    var expertSheet = db.getSheetByName("Form_Expert_Consulting") || db.getSheetByName("Talk to Expert") || db.getSheetByName("Expert Consulting");
-    var diagSheet = db.getSheetByName("Form_Diagnostic_Assessments") || db.getSheetByName("Diagnostic Forms") || db.getSheetByName("Profit Pool Diagnostics");
-    var partnerSheet = db.getSheetByName("Form_Partner_Applications") || db.getSheetByName("Partners") || db.getSheetByName("Partner Applications");
-    var careerSheet = db.getSheetByName("Form_Career_Applications") || db.getSheetByName("Job Applications") || db.getSheetByName("Career Applications");
-    var chatSheet = db.getSheetByName("Form_Chatbot_Conversations") || db.getSheetByName("Chatbot Leads") || db.getSheetByName("Chatbot");
+    var expertSheet = db.getSheetByName("Talk_To_Architect") || db.getSheetByName("Form_Expert_Consulting") || db.getSheetByName("Talk to Expert") || db.getSheetByName("Expert Consulting");
+    var diagSheet = db.getSheetByName("AI_Diagnostic_Leads") || db.getSheetByName("Form_Diagnostic_Assessments") || db.getSheetByName("AI_Readiness_Leads") || db.getSheetByName("Diagnostic Forms") || db.getSheetByName("Profit Pool Diagnostics");
+    var partnerSheet = db.getSheetByName("Partner_Applications") || db.getSheetByName("Form_Partner_Applications") || db.getSheetByName("Partners") || db.getSheetByName("Partner Applications");
+    var careerSheet = db.getSheetByName("Career_Applications") || db.getSheetByName("Form_Career_Applications") || db.getSheetByName("Job Applications") || db.getSheetByName("Career Applications");
+    var chatSheet = db.getSheetByName("Chatbot_Leads") || db.getSheetByName("Form_Chatbot_Conversations") || db.getSheetByName("Chatbot Leads") || db.getSheetByName("Chatbot");
+    var workshopSheet = db.getSheetByName("Workshop_Requests") || db.getSheetByName("Workshop Requests");
+    var rfpSheet = db.getSheetByName("RFP_Proposals") || db.getSheetByName("RFP Proposals");
+    var quickSheet = db.getSheetByName("Quick_Enquiry_Leads") || db.getSheetByName("Quick Enquiry Leads");
+    var linkedinSheet = db.getSheetByName("LinkedIn_Leads") || db.getSheetByName("LinkedIn Leads");
     var formsSheet = db.getSheetByName("Form_Submissions");
 
     var tDataRaw = normalizeTrafficHeaders((tSheet && tSheet.getLastRow() > 0) ? tSheet.getDataRange().getValues() : []);
@@ -82,6 +86,10 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var partnerData = (partnerSheet && partnerSheet.getLastRow() > 0) ? partnerSheet.getDataRange().getValues() : [];
     var careerData = (careerSheet && careerSheet.getLastRow() > 0) ? careerSheet.getDataRange().getValues() : [];
     var chatData = (chatSheet && chatSheet.getLastRow() > 0) ? chatSheet.getDataRange().getValues() : [];
+    var workshopData = (workshopSheet && workshopSheet.getLastRow() > 0) ? workshopSheet.getDataRange().getValues() : [];
+    var rfpData = (rfpSheet && rfpSheet.getLastRow() > 0) ? rfpSheet.getDataRange().getValues() : [];
+    var quickData = (quickSheet && quickSheet.getLastRow() > 0) ? quickSheet.getDataRange().getValues() : [];
+    var linkedinData = (linkedinSheet && linkedinSheet.getLastRow() > 0) ? linkedinSheet.getDataRange().getValues() : [];
     var formsData = (formsSheet && formsSheet.getLastRow() > 0) ? formsSheet.getDataRange().getValues() : [];
 
     // TrustGrid Dedicated Intelligence Datasets (From Sheet 1)
@@ -140,7 +148,11 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
         { name: "Profit Pool Diagnostics", data: diagData },
         { name: "Partner Applications", data: partnerData },
         { name: "Career Applications", data: careerData },
-        { name: "Chatbot Conversations", data: chatData }
+        { name: "Chatbot Conversations", data: chatData },
+        { name: "Workshop Requests", data: workshopData },
+        { name: "RFP Proposals", data: rfpData },
+        { name: "Quick Enquiry Leads", data: quickData },
+        { name: "LinkedIn Leads", data: linkedinData }
       ], formsData, tData);
     } catch (err) { console.error("Tab 16 Error: " + err.toString()); }
 
@@ -165,9 +177,9 @@ function filterLocalhostData(data) {
     for (var i = 1; i < data.length; i++) {
         var ip = ipCol > -1 ? String(data[i][ipCol]) : "";
         var page = pageCol > -1 ? String(data[i][pageCol]) : "";
-        var isLocal = (ip === "127.0.0.1" || ip === "::1" || ip.toLowerCase().indexOf("localhost") !== -1);
-        var isVercel = (page.toLowerCase().indexOf("vercel.app") !== -1 || page.toLowerCase().indexOf("localhost") !== -1);
-        if (!isLocal && !isVercel) {
+        var isLocal = (ip === "127.0.0.1" || ip === "::1" || ip.toLowerCase().indexOf("localhost") !== -1 || page.toLowerCase().indexOf("localhost") !== -1);
+        // Live production traffic from vercel.app is preserved 100%
+        if (!isLocal) {
             filtered.push(data[i]);
         }
     }
@@ -1415,7 +1427,108 @@ function onOpen() {
         .addItem('🎯 Rebuild Traffic Attribution', 'BUILD_TRAFFIC_ATTRIBUTION_ONLY')
         .addItem('🛡️ Rebuild Network Security Forensics', 'BUILD_NETWORK_SECURITY_ONLY')
         .addItem('🌐 Rebuild Geo & Timezone Matrix', 'BUILD_GEO_TIMEZONE_ONLY')
+        .addSeparator()
+        .addItem('🧹 Clean Sheet 1 Test Leads', 'CLEAN_SHEET1_TEST_LEADS')
+        .addItem('🧼 Remove Duplicates & Clean Fields (Sheet 1)', 'REMOVE_SHEET1_DUPLICATES')
         .addToUi();
+}
+
+function CLEAN_SHEET1_TEST_LEADS() {
+    var ui = SpreadsheetApp.getUi();
+    try {
+        var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+        var sheets = db.getSheets();
+        var archiveTab = db.getSheetByName("Archived_Test_Leads");
+        if (!archiveTab) {
+            archiveTab = db.insertSheet("Archived_Test_Leads");
+            archiveTab.getRange(1, 1, 1, 10).setValues([[
+                "Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name",
+                "Business Email", "Phone / Mobile", "Company Name", "Reason Moved", "Row Data JSON"
+            ]]).setFontWeight("bold").setBackground("#334155").setFontColor("#ffffff");
+        }
+        var totalMoved = 0;
+        var systemTabs = ["Archived_Test_Leads", "Live_Traffic_Events", "Visitor_Intelligence_95", "Sessions_Intelligence", "Traffic_Attribution", "Geo_Intelligence", "Network_Security_Log"];
+        for (var s = 0; s < sheets.length; s++) {
+            var sh = sheets[s];
+            var sName = sh.getName();
+            if (systemTabs.indexOf(sName) !== -1) continue;
+            var data = sh.getDataRange().getValues();
+            for (var r = data.length - 1; r >= 1; r--) {
+                var rowStr = data[r].join(" ").toLowerCase();
+                var isTest = (/\b(tg-test|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rowStr) || rowStr.indexOf("pooja test") !== -1 || rowStr.indexOf("@test.local") !== -1 || rowStr.indexOf("@example.com") !== -1);
+                if (isTest) {
+                    archiveTab.appendRow([
+                        Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+                        sName, String(data[r][0] || ""), "TEST", String(data[r][1] || ""), String(data[r][2] || ""),
+                        String(data[r][5] || ""), String(data[r][3] || ""), "Purged from Sheet 2 Menu", JSON.stringify(data[r])
+                    ]);
+                    sh.deleteRow(r + 1);
+                    totalMoved++;
+                }
+            }
+        }
+        ui.alert("✅ Completed! Moved " + totalMoved + " test rows to 'Archived_Test_Leads' in Sheet 1.");
+    } catch (e) {
+        ui.alert("❌ Error cleaning test leads: " + e.toString());
+    }
+}
+
+function REMOVE_SHEET1_DUPLICATES() {
+    var ui = SpreadsheetApp.getUi();
+    try {
+        var db = SpreadsheetApp.openById(DATA_SHEET_ID);
+        var sheets = db.getSheets();
+        var totalDupRows = 0;
+        var totalDupCols = 0;
+        var systemTabs = ["Live_Traffic_Events", "Visitor_Intelligence_95", "Sessions_Intelligence", "Traffic_Attribution", "Geo_Intelligence", "Network_Security_Log"];
+        for (var s = 0; s < sheets.length; s++) {
+            var sh = sheets[s];
+            var sName = sh.getName();
+            if (systemTabs.indexOf(sName) !== -1) continue;
+            var lastRow = sh.getLastRow();
+            var lastCol = sh.getLastColumn();
+            if (lastRow < 2 || lastCol < 1) continue;
+
+            // Remove duplicate columns
+            var headers = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+            var seenH = {};
+            for (var c = headers.length - 1; c >= 0; c--) {
+                var h = String(headers[c] || '').trim().toLowerCase();
+                if (!h) continue;
+                if (seenH[h]) {
+                    sh.deleteColumn(c + 1);
+                    totalDupCols++;
+                } else {
+                    seenH[h] = true;
+                }
+            }
+
+            // Remove duplicate rows
+            var data = sh.getDataRange().getValues();
+            var curHeaders = data[0].map(function(h) { return String(h || '').trim().toLowerCase(); });
+            var idCol = -1, emailCol = -1;
+            for (var h = 0; h < curHeaders.length; h++) {
+                if (idCol === -1 && (curHeaders[h].indexOf("submission id") !== -1 || curHeaders[h].indexOf("lead id") !== -1)) idCol = h;
+                if (emailCol === -1 && curHeaders[h].indexOf("email") !== -1) emailCol = h;
+            }
+            var seenKeys = {};
+            for (var r = data.length - 1; r >= 1; r--) {
+                var row = data[r];
+                var leadId = idCol > -1 ? String(row[idCol] || '').trim() : '';
+                var email = emailCol > -1 ? String(row[emailCol] || '').trim().toLowerCase() : '';
+                var key = leadId && leadId.length > 5 ? ("ID:" + leadId) : (email && email.indexOf("@") !== -1 ? ("EMAIL:" + email) : ("ROW:" + row.slice(0, 5).join("|")));
+                if (seenKeys[key]) {
+                    sh.deleteRow(r + 1);
+                    totalDupRows++;
+                } else {
+                    seenKeys[key] = true;
+                }
+            }
+        }
+        ui.alert("✅ Completed! Removed " + totalDupRows + " duplicate rows and " + totalDupCols + " duplicate columns in Sheet 1.");
+    } catch (e) {
+        ui.alert("❌ Error removing duplicates: " + e.toString());
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

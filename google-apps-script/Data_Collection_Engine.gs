@@ -1,11 +1,11 @@
 /**
  * =========================================================================================
- * TRUSTGRID.AI - APPS SCRIPT WEBHOOK & EXECUTIVE AUTOMATION ENGINE (V7 - ULTRA PRO)
+ * TRUSTGRID.AI - APPS SCRIPT WEBHOOK & ADVANCED INTELLIGENCE ENGINE (V8 - ENTERPRISE)
  * =========================================================================================
  * Production Webhook Receiver & Executive Automation Engine for TRUSTGRID.AI
  * 
- * Sender Identity: TrustGrid.AI Executive Analytics <poojasri.aram@gmail.com>
- * Organization: TRUSTGRID.AI (https://www.trustgrid.ai)
+ * Sender Identity: TrustGrid Executive Analytics <poojasri.aram@gmail.com>
+ * Organization: TRUSTGRID.AI
  * 
  * Features:
  * 1. Dedicated Ad Campaign & Inbound Routing: Isolates and routes Ad/Campaign leads seamlessly.
@@ -14,6 +14,7 @@
  * 4. Monthly Career Digest: Monthly scheduled forwarder of candidate applications & resumes.
  * 5. Advanced Analytics & Reporting: Daily & weekly automated digests with KPI cards and metrics.
  * 6. Strict Recipient Routing: Exclusively delivers to poojasri.aram@gmail.com, bv@trustflow.in & connect@trustgrid.ai.
+ * 7. Session, Traffic Attribution, Geo & Network Security Intelligence Ingestion.
  * =========================================================================================
  */
 
@@ -33,9 +34,10 @@ const CONFIG = {
 };
 
 const EMAIL_CONFIG = {
-  name: "TrustGrid.AI Executive Analytics",
-  companyName: "TRUSTGRID.AI",
-  website: "https://www.trustgrid.ai",
+  name: "TrustGrid Business Intelligence",
+  companyName: "TrustGrid.AI",
+  website: "https://trustgrid.ai", // Primary production domain
+  secondaryWebsite: "https://trustgrid.in", // Regional domain
   replyTo: "connect@trustgrid.ai",
   adminEmail: "poojasri.trustgrid@gmail.com",
   
@@ -63,9 +65,14 @@ const EMAIL_CONFIG = {
   // Recipients for Daily, Weekly & Monthly Analytics Reports
   reportEmails: [
     "poojasri.trustgrid@gmail.com",
-    "bv@trustflow.in",
-    "connect@trustgrid.ai"
-  ]
+    "bv@trustflow.in"
+  ],
+
+  // Same WhatsApp line used on the live site (components/ui/whatsapp-cta.tsx)
+  whatsappNumber: "9513088611",
+
+  // Self-serve booking slot offered to Consulting Sessions leads
+  consultingCalendarUrl: "https://calendar.app.google/ZZF7cW8GVX8r6Bwf6"
 };
 
 // =========================================================================================
@@ -103,206 +110,365 @@ var SCHEMA_95_HEADERS = [
 ];
 
 var TAB_CONFIGS = {
-  // Master 95-Column Live Behavioral Telemetry
+  // Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
   "Live_Traffic_Events": SCHEMA_95_HEADERS,
 
-  // Canonical Database Formats
+  // 1. Primary Inbound & Enterprise Contact Leads
   "Contact_Leads": [
-    "Submission ID","Name","Email","Company","Designation","Phone",
-    "Subject","Service Interest","Message","Source",
-    "UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content",
-    "Status","IP Location","IP Address","Variant","Timestamp"
+    "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
+    "Subject", "Service Interest", "Message", "Source",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
   ],
+
+  // 2. AI Diagnostic Assessments
   "AI_Diagnostic_Leads": [
-    "Submission ID","Full Name","Work Email","Company Name","Company Size","Primary AI Stack",
-    "Governance Priority","Timeline","Phone","Source",
-    "UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content",
-    "Status","IP Location","IP Address","Variant","Timestamp"
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Company Size", "Primary AI Stack",
+    "Governance Priority", "Timeline", "Phone", "Source",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
   ],
+
+  // 3. AI Readiness Assessments
   "AI_Readiness_Leads": [
-    "Submission ID","Full Name","Work Email","Company Name","Designation","Infrastructure Model",
-    "Key Challenges","Source","UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content",
-    "Status","IP Location","IP Address","Variant","Timestamp"
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Designation", "Infrastructure Model",
+    "Key Challenges", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
   ],
+
+  // 4. Executive Workshop Requests
   "Workshop_Requests": [
-    "Submission ID","Name","Work Email","Company","Team Size","Preferred Focus Area",
-    "Timeline","Message","Source","UTM Source","UTM Medium","UTM Campaign",
-    "Status","IP Location","IP Address","Timestamp"
+    "Submission ID", "Name", "Work Email", "Company", "Team Size", "Preferred Focus Area",
+    "Timeline", "Message", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 5. RFP & Enterprise Proposals
   "RFP_Proposals": [
-    "Submission ID","Name","Email","Organization","Project Scope","Estimated Budget","Target Deadline","Requirements",
-    "UTM Source","UTM Medium","UTM Campaign","Status","IP Location","IP Address","Timestamp"
+    "Submission ID", "Name", "Email", "Organization", "Project Scope", "Estimated Budget", "Target Deadline", "Requirements",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 6. Talk to AI Architect & Technical Inquiries
   "Talk_To_Architect": [
-    "Submission ID","Name","Work Email","Company","Phone","Architecture Query","Preferred Time",
-    "UTM Source","UTM Medium","UTM Campaign","Status","IP Location","IP Address","Timestamp"
+    "Submission ID", "Name", "Work Email", "Company", "Phone", "Architecture Query", "Preferred Time",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
   ],
-  "Chatbot_Leads": [
-    "Submission ID","Name","Email","Phone","Topic / Intent","Conversation Summary",
-    "UTM Source","UTM Medium","UTM Campaign","Status","IP Location","IP Address","Timestamp"
+
+  // 7. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
+  "Form_Consultation_Bookings": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Designation / Role", "Transformation Interest", "Annual Revenue", "Primary Challenge", "Target Timeline",
+    "Message / Scope", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Timestamp"
   ],
-  "Career_Applications": [
-    "Name","Email","Phone","Job Title / Role","Resume File Name","Resume Drive Link","Drive File ID","Cover Letter",
-    "Portfolio / GitHub","UTM Source","UTM Medium","UTM Campaign","Status","IP Location","IP Address","Timestamp"
+
+  // 8. Profit Pool Discovery Diagnostics (DiscoveryPage.tsx)
+  "Form_Diagnostic_Assessments": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Industry", "Current Revenue", "Primary Leakage Area", "Estimated Leakage",
+    "Diagnostic Score", "Answers Summary", "Message",
+    "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 9. Quick Diagnostics & General Inbound Leads
+  "Form_Inbound_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Interest / Solution", "Annual Revenue", "Timeline", "Primary Challenge",
+    "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 10. Partner Applications (Partners.tsx)
   "Partner_Applications": [
-    "Submission ID","Name","Work Email","Company","Partner Type","Region","Proposal",
-    "UTM Source","UTM Medium","UTM Campaign","Status","IP Location","IP Address","Timestamp"
+    "Submission ID", "Name", "Work Email", "Company", "Partner Type", "Region", "Proposal",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
   ],
-  "Newsletter_Subscribers": [
-    "Email","IP Location","IP Address","Source","UTM Source","UTM Campaign","Timestamp"
+  "Form_Partner_Applications": [
+    "Submission ID", "Name", "Work Email", "Phone", "Company Name",
+    "Partner Type", "Primary Region", "Value Proposition / Proposal",
+    "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Timestamp"
   ],
-  "Google_Ad_Leads": [
-    "Submission ID","Full Name","Work Email","Phone","Company Name","Requirement",
-    "UTM Source","UTM Medium","UTM Campaign","UTM Term","UTM Content",
-    "Status","IP Location","IP Address","Organization","Variant","Timestamp"
+
+  // 11. Career Applications (Career.tsx)
+  "Career_Applications": [
+    "Submission ID", "Name", "Email", "Phone", "Job Title / Role", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Letter",
+    "Portfolio / GitHub", "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
   ],
+  "Form_Career_Applications": [
+    "Submission ID", "Full Name", "Email", "Phone", "Role Applied",
+    "Experience Level", "Portfolio / LinkedIn", "Resume Drive Link", "Drive File ID",
+    "Cover Note / Message", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 12. Chatbot Virtual Assistant Inquiries (ChatBot.tsx)
+  "Chatbot_Leads": [
+    "Submission ID", "Name", "Email", "Phone", "Topic / Intent", "Conversation Summary",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+  "Form_Chatbot_Conversations": [
+    "Submission ID", "Name", "Email", "Phone", "Company",
+    "Topic / Intent", "Chat Summary", "Source",
+    "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 13. Floating Lead / Quick Enquiry Form
   "Quick_Enquiry_Leads": [
-    "Submission ID","Full Name","Work Email","Phone","Company Name",
-    "Requirement / Inquiry","Source","UTM Source","UTM Medium","UTM Campaign",
-    "Status","IP Location","IP Address","Variant","Timestamp"
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
   ],
+
+  // 14. LinkedIn Inbound Lead Channel
+  "LinkedIn_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Phone",
+    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 15. Newsletter Subscribers
+  "Newsletter_Subscribers": [
+    "Email", "IP Location", "IP Address", "Source", "UTM Source", "UTM Campaign", "Timestamp"
+  ],
+
+  // 16. Google Ad Leads
+  "Google_Ad_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name", "Requirement",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Organization", "Variant", "Timestamp"
+  ],
+
+  // 17. Consolidated Form Submissions Master Log
   "Form_Submissions": [
-    "Submission ID","Form Name","Name","Email","Company / Org","Role","Phone",
-    "Message / Details","Resume Drive Link","Drive File ID",
-    "UTM Source","UTM Campaign","IP Location","IP Address","Timestamp"
+    "Submission ID", "Form Name", "Name", "Email", "Company", "Role", "Phone",
+    "Message / Details", "Resume Drive Link", "Drive File ID",
+    "UTM Source", "UTM Campaign", "IP Location", "IP Address", "Timestamp"
   ],
+
+  // 18. PRODUCTION LEAD PRESERVATION & AUDIT ARCHIVE
+  "Archived_Test_Leads": [
+    "Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name",
+    "Business Email", "Phone / Mobile", "Company Name", "Reason Moved", "Row Data JSON"
+  ],
+
+  // 9. Page Views Telemetry
   "Page_Views": [
-    "Session ID","Visitor ID","Page Path","Page Title","Referrer","Traffic Source",
-    "UTM Source","UTM Medium","UTM Campaign","Device","Browser","OS","IP Location","Timestamp"
+    "Session ID", "Visitor ID", "Page Path", "Page Title", "Referrer", "Traffic Source",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Device", "Browser", "OS", "IP Location", "Timestamp"
   ],
+
+  // 10. Sessions Telemetry
   "Sessions": [
-    "Session ID","Visitor ID","Landing Page","Referrer","Traffic Source",
-    "UTM Source","UTM Campaign","Device","Browser","OS","Screen Size","IP Location","Timestamp"
+    "Session ID", "Visitor ID", "Landing Page", "Referrer", "Traffic Source",
+    "UTM Source", "UTM Campaign", "Device", "Browser", "OS", "Screen Size", "IP Location", "Timestamp"
   ],
+
+  // 11. CTA & Interaction Clicks
   "CTA_Clicks": [
-    "Session ID","Visitor ID","CTA Name","Destination URL","Section","Page Path","Device","Timestamp"
+    "Session ID", "Visitor ID", "CTA Name", "Destination URL", "Section", "Page Path", "Device", "Timestamp"
   ],
-  "Traffic_Analytics": [
-    "Session ID","Visitor ID","Page Path","Page Title","Referrer","Traffic Source",
-    "UTM Source","UTM Medium","UTM Campaign","Device","IP Location","IP Address","Timestamp"
+
+  // 12. Sessions Intelligence (Advanced Lifecycle, Bounces, Geo, Duration)
+  "Sessions_Intelligence": [
+    "Session ID", "User ID", "Start Time (UTC)", "Last Activity (UTC)", "Duration (Sec)",
+    "Pages Visited", "Entry Page", "Exit Page", "Traffic Channel", "Campaign",
+    "Country", "City", "Timezone", "Masked IP", "Bounce", "Converted", "User Type", "Timestamp"
   ],
-  "Engagement_Metrics": [
-    "Session ID","Visitor ID","Page URL","Duration (sec)","Scroll Depth (%)","Click Count",
-    "Engagement Score","CTA Clicked","Returning User","Is Hot Lead","Timestamp"
+
+  // 13. Traffic Attribution (Multi-touch, Channels, UTMs, Referrers)
+  "Traffic_Attribution": [
+    "Timestamp (UTC)", "Session ID", "User ID", "Channel", "Source", "Medium",
+    "Campaign", "Term", "Content", "Referrer Domain", "Landing Page", "Converted"
   ],
-  "User_Behavior_Library": masterMetrics
+
+  // 14. Geo Intelligence (Enriched Geographic & Network Mapping)
+  "Geo_Intelligence": [
+    "Timestamp (UTC)", "Masked IP", "Country", "Country Code", "Region", "City",
+    "Latitude", "Longitude", "Timezone", "ISP", "Organization", "ASN"
+  ],
+
+  // 15. Network Security Intelligence (Forensics, Severity, Threat Scans)
+  "Network_Security_Log": [
+    "Timestamp (UTC)", "Masked IP", "Threat Category", "Severity", "Description",
+    "Target Path", "Blocked", "Action Taken"
+  ]
 };
 
 // Aliases mapping incoming form sheetNames to canonical tab names
 var SHEET_NAME_ALIASES = {
-  // Master 95-Column Telemetry
-  "telemetry_95": "Live_Traffic_Events",
+  // TrustGrid Intelligence Dimensions
+  "sessions_intelligence": "Sessions_Intelligence",
+  "sessionsintelligence": "Sessions_Intelligence",
+  "session_intelligence": "Sessions_Intelligence",
+  "sessionsintel": "Sessions_Intelligence",
+  "traffic_attribution": "Traffic_Attribution",
+  "trafficattribution": "Traffic_Attribution",
+  "attribution": "Traffic_Attribution",
+  "geo_intelligence": "Geo_Intelligence",
+  "geointelligence": "Geo_Intelligence",
+  "geointel": "Geo_Intelligence",
+  "geo": "Geo_Intelligence",
+  "network_security_log": "Network_Security_Log",
+  "networksecuritylog": "Network_Security_Log",
+  "security_log": "Network_Security_Log",
+  "securitylog": "Network_Security_Log",
+  "security_events": "Network_Security_Log",
+  "securityevents": "Network_Security_Log",
+
+  // Master 95-Column Live Behavioral Telemetry
   "telemetry95": "Live_Traffic_Events",
+  "telemetry_95": "Live_Traffic_Events",
   "telemetry": "Live_Traffic_Events",
   "livetrafficevents": "Live_Traffic_Events",
   "live_traffic_events": "Live_Traffic_Events",
-  "livecontent": "Live_Traffic_Events",
-  "live_content": "Live_Traffic_Events",
+  "livetraffic": "Live_Traffic_Events",
   "mastertelemetry": "Live_Traffic_Events",
-  "master_telemetry": "Live_Traffic_Events",
 
-  // Contact & Inquiries
+  // Telemetry Routes
+  "pageview": "Page_Views",
+  "pageviews": "Page_Views",
+  "page_views": "Page_Views",
+  "page_view": "Page_Views",
+  "event": "CTA_Clicks",
+  "events": "CTA_Clicks",
+  "ctaclicks": "CTA_Clicks",
+  "cta_clicks": "CTA_Clicks",
+  "visitor": "Sessions",
+  "visitors": "Sessions",
+  "session": "Sessions",
+  "sessions": "Sessions",
+  "trafficanalytics": "Page_Views",
+
+  // 1. Inbound Leads / Contact Forms
+  "contact": "Contact_Leads",
   "contactleads": "Contact_Leads",
   "contact_leads": "Contact_Leads",
-  "contact": "Contact_Leads",
   "contactform": "Contact_Leads",
   "contact_form": "Contact_Leads",
   "leads": "Contact_Leads",
+  "lead": "Contact_Leads",
   "global_lead_form": "Contact_Leads",
+  "form": "Contact_Leads",
+  "forminboundleads": "Form_Inbound_Leads",
+  "form_inbound_leads": "Form_Inbound_Leads",
+  "inboundleads": "Form_Inbound_Leads",
+  "inbound_leads": "Form_Inbound_Leads",
+  "inbound": "Form_Inbound_Leads",
 
-  // AI Diagnostic
+  // 2. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
+  "bookforconsultation": "Form_Consultation_Bookings",
+  "book_for_consultation": "Form_Consultation_Bookings",
+  "bookforconsulting": "Form_Consultation_Bookings",
+  "book_for_consulting": "Form_Consultation_Bookings",
+  "consultation": "Form_Consultation_Bookings",
+  "consultationbookings": "Form_Consultation_Bookings",
+  "consultation_bookings": "Form_Consultation_Bookings",
+  "formconsultationbookings": "Form_Consultation_Bookings",
+  "form_consultation_bookings": "Form_Consultation_Bookings",
+  "demo": "Form_Consultation_Bookings",
+  "bookdemo": "Form_Consultation_Bookings",
+  "book_demo": "Form_Consultation_Bookings",
+  "strategysession": "Form_Consultation_Bookings",
+  "strategy_session": "Form_Consultation_Bookings",
+
+  // 3. Talk to AI Architect & Growth Experts (TalkToExpert.tsx)
+  "talktoarchitect": "Talk_To_Architect",
+  "talk_to_architect": "Talk_To_Architect",
+  "talktoexpert": "Talk_To_Architect",
+  "talk_to_expert": "Talk_To_Architect",
+  "expert": "Talk_To_Architect",
+  "expertconsulting": "Talk_To_Architect",
+  "expert_consulting": "Talk_To_Architect",
+  "formexpertconsulting": "Form_Expert_Consulting",
+  "form_expert_consulting": "Form_Expert_Consulting",
+
+  // 4. Profit Pool Discovery Diagnostics & Assessments (DiscoveryPage.tsx)
   "aidiagnosticleads": "AI_Diagnostic_Leads",
   "ai_diagnostic_leads": "AI_Diagnostic_Leads",
   "aidiagnostic": "AI_Diagnostic_Leads",
   "ai_diagnostic": "AI_Diagnostic_Leads",
   "diagnostic": "AI_Diagnostic_Leads",
+  "diagnostics": "AI_Diagnostic_Leads",
   "diagnostic_leads": "AI_Diagnostic_Leads",
+  "diagnosticforms": "Form_Diagnostic_Assessments",
+  "diagnostic_forms": "Form_Diagnostic_Assessments",
+  "formdiagnosticassessments": "Form_Diagnostic_Assessments",
+  "form_diagnostic_assessments": "Form_Diagnostic_Assessments",
+  "profitpooldiscovery": "Form_Diagnostic_Assessments",
+  "profit_pool_discovery": "Form_Diagnostic_Assessments",
+  "assessment": "Form_Diagnostic_Assessments",
 
-  // AI Readiness
+  // 5. AI Readiness Leads
   "aireadinessleads": "AI_Readiness_Leads",
   "ai_readiness_leads": "AI_Readiness_Leads",
   "aireadiness": "AI_Readiness_Leads",
   "readiness": "AI_Readiness_Leads",
 
-  // Workshops
+  // 6. Executive Workshops
   "workshoprequests": "Workshop_Requests",
   "workshop_requests": "Workshop_Requests",
   "workshops": "Workshop_Requests",
+  "workshop": "Workshop_Requests",
 
-  // RFP
+  // 7. RFP Proposals
   "rfpproposals": "RFP_Proposals",
   "rfp_proposals": "RFP_Proposals",
   "rfp": "RFP_Proposals",
-  "tenderrfq": "RFP_Proposals",
-  "tender_rfq": "RFP_Proposals",
 
-  // Talk to Architect
-  "talktoarchitect": "Talk_To_Architect",
-  "talk_to_architect": "Talk_To_Architect",
-  "architect": "Talk_To_Architect",
+  // 8. Partner Applications (Partners.tsx)
+  "partners": "Partner_Applications",
+  "partner": "Partner_Applications",
+  "partnerapplications": "Partner_Applications",
+  "partner_applications": "Partner_Applications",
+  "formpartnerapplications": "Form_Partner_Applications",
+  "form_partner_applications": "Form_Partner_Applications",
 
-  // Chatbot
-  "chatbotleads": "Chatbot_Leads",
-  "chatbot_leads": "Chatbot_Leads",
-  "chatbot": "Chatbot_Leads",
-
-  // Careers
+  // 9. Career Applications (Career.tsx)
+  "jobapplications": "Career_Applications",
+  "job_applications": "Career_Applications",
   "careerapplications": "Career_Applications",
   "career_applications": "Career_Applications",
   "careers": "Career_Applications",
   "career": "Career_Applications",
   "jobs": "Career_Applications",
+  "formcareerapplications": "Form_Career_Applications",
+  "form_career_applications": "Form_Career_Applications",
 
-  // Partners
-  "partnerapplications": "Partner_Applications",
-  "partner_applications": "Partner_Applications",
-  "partners": "Partner_Applications",
-  "partner": "Partner_Applications",
+  // 10. Chatbot Virtual Assistant (ChatBot.tsx)
+  "chatbot": "Chatbot_Leads",
+  "chatbotleads": "Chatbot_Leads",
+  "chatbot_leads": "Chatbot_Leads",
+  "chatbot_conversations": "Chatbot_Leads",
+  "formchatbotconversations": "Form_Chatbot_Conversations",
+  "form_chatbot_conversations": "Form_Chatbot_Conversations",
 
-  // Newsletter
-  "newslettersubscribers": "Newsletter_Subscribers",
-  "newsletter_subscribers": "Newsletter_Subscribers",
-  "newsletter": "Newsletter_Subscribers",
-  "subscribers": "Newsletter_Subscribers",
-
-  // Google Ads / Campaigns
-  "googleadleads": "Google_Ad_Leads",
-  "google_ad_leads": "Google_Ad_Leads",
-  "googleads": "Google_Ad_Leads",
-  "adcampaign": "Google_Ad_Leads",
-  "ad_campaign": "Google_Ad_Leads",
-  "campaigns": "Google_Ad_Leads",
-
-  // Quick Enquiry / Floating Form
+  // 11. Quick Enquiry & Floating Leads
   "quickenquiryleads": "Quick_Enquiry_Leads",
   "quick_enquiry_leads": "Quick_Enquiry_Leads",
-  "quickinquiryleads": "Quick_Enquiry_Leads",
-  "quick_inquiry_leads": "Quick_Enquiry_Leads",
-  "quickenquiry": "Quick_Enquiry_Leads",
-  "quick_enquiry": "Quick_Enquiry_Leads",
-  "quickinquiry": "Quick_Enquiry_Leads",
-  "quick_inquiry": "Quick_Enquiry_Leads",
   "floatinglead": "Quick_Enquiry_Leads",
   "floating_lead": "Quick_Enquiry_Leads",
-  "floatingleads": "Quick_Enquiry_Leads",
-  "floating_leads": "Quick_Enquiry_Leads",
-  "floatingform": "Quick_Enquiry_Leads",
-  "floating_form": "Quick_Enquiry_Leads",
-  "quicklead": "Quick_Enquiry_Leads",
-  "quick_lead": "Quick_Enquiry_Leads",
+  "quickdiagnostic": "Quick_Enquiry_Leads",
+  "quick_diagnostic": "Quick_Enquiry_Leads",
 
-  // Telemetry
-  "trafficanalytics": "Traffic_Analytics",
-  "traffic_analytics": "Traffic_Analytics",
-  "pageviews": "Page_Views",
-  "page_views": "Page_Views",
-  "sessions": "Sessions",
-  "ctaclicks": "CTA_Clicks",
-  "cta_clicks": "CTA_Clicks",
-  "engagementmetrics": "Engagement_Metrics",
-  "engagement_metrics": "Engagement_Metrics",
-  "userbehaviorlibrary": "User_Behavior_Library"
+  // 12. LinkedIn Leads
+  "linkedinleads": "LinkedIn_Leads",
+  "linkedin_leads": "LinkedIn_Leads",
+  "linkedin": "LinkedIn_Leads",
+
+  // 13. Consolidated Master Form Submissions
+  "formsubmissions": "Form_Submissions",
+  "form_submissions": "Form_Submissions",
+  "submissions": "Form_Submissions",
+
+  // 14. Archived Test Leads
+  "archivedtestleads": "Archived_Test_Leads",
+  "archived_test_leads": "Archived_Test_Leads",
+  "testleads": "Archived_Test_Leads",
+  "test_leads": "Archived_Test_Leads"
 };
 
 /**
@@ -369,7 +535,24 @@ function doPost(e) {
     } catch (parseErr) {
       return ContentService.createTextOutput("Error: Invalid JSON payload.").setMimeType(ContentService.MimeType.TEXT);
     }
-    
+
+    // TrustGrid High-Speed Intelligence Batch Synchronization Handler
+    if (data && (data.action === "sync_intelligence" || data.sync === true)) {
+      return handleIntelligenceSync(data);
+    }
+
+    // Strict Staging / Sandbox Isolation Guard (Local development only; live Vercel deployments are FULL PRODUCTION)
+    var pageRef = String(data.page_url || data.pageUrl || data.referrer || "");
+    var isStagingOrigin = (
+      data.environment === "staging_quarantine" ||
+      data.environment === "staging_isolated" ||
+      ((pageRef.indexOf("localhost:3000") !== -1 || pageRef.indexOf("127.0.0.1:3000") !== -1) && !data.isProdLead && data.leadType !== "PRODUCTION")
+    );
+
+    if (isStagingOrigin) {
+      return logToStagingQuarantine(data);
+    }
+
     // Strict Test Lead Isolation Guard
     // Routes TG-TEST, QA, Demo, Verification, and Pooja Test leads directly to Archived_Test_Leads
     // Completely suppresses customer emails and executive alerts for test records
@@ -403,8 +586,14 @@ function doPost(e) {
     if (isTestSubmission) {
       return logToArchivedTestLeads(data);
     }
-
-    var rawSheetName = data.sheetName || data.formType || data.type || "";
+    
+    // lib/analytics.ts telemetry beacons (page views, clicks, CTA, visibility) only set
+    // event_type: 'telemetry_95' — without this fallback every beacon was silently rejected
+    // here and NEVER reached Live_Traffic_Events, starving Sessions/Visitors of real data.
+    var rawSheetName = data.sheetName || data.formType || data.table || data.type || data.event_type || "";
+    if (data.fields && typeof data.fields === "object") {
+      Object.keys(data.fields).forEach(function(k) { if (data[k] === undefined) data[k] = data.fields[k]; });
+    }
     if (!rawSheetName) {
       return ContentService.createTextOutput("Error: Missing sheetName or formType parameter").setMimeType(ContentService.MimeType.TEXT);
     }
@@ -412,15 +601,24 @@ function doPost(e) {
     var norm = rawSheetName.toLowerCase().replace(/[\s\-_]/g, '');
     var canonicalName = SHEET_NAME_ALIASES[norm] || rawSheetName;
 
+    // Candidate profile-video link submission updates an existing Career_Applications row
+    // instead of writing to a sheet of its own — handled and returned before the generic flow.
+    if (canonicalName === "Career_Video_Submission") {
+      var videoResult = handleCareerVideoSubmission(data);
+      return ContentService.createTextOutput(videoResult.message).setMimeType(ContentService.MimeType.TEXT);
+    }
+
     var isAdLead = (canonicalName === "Google_Ad_Leads" || norm.indexOf("adcampaign") !== -1 || norm.indexOf("googlead") !== -1);
     var isCareerApp = (canonicalName === "Career_Applications" || norm.indexOf("career") !== -1 || norm.indexOf("job") !== -1);
 
     var LEAD_FORMS = [
-      "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads", "Workshop_Requests",
-      "RFP_Proposals", "Talk_To_Architect", "Chatbot_Leads", "Career_Applications",
-      "Partner_Applications", "Google_Ad_Leads", "Newsletter_Subscribers", "Quick_Enquiry_Leads",
-      "LinkedIn_Leads", "Form_Consultation_Bookings", "Form_Diagnostic_Assessments", "Form_Inbound_Leads",
-      "Form_Submissions", "Form_Partner_Applications", "Form_Career_Applications", "Form_Chatbot_Conversations"
+      "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads",
+      "Workshop_Requests", "RFP_Proposals", "Talk_To_Architect",
+      "Chatbot_Leads", "Partner_Applications", "Career_Applications",
+      "Quick_Enquiry_Leads", "LinkedIn_Leads", "Google_Ad_Leads",
+      "Form_Inbound_Leads", "Form_Consultation_Bookings", "Form_Expert_Consulting",
+      "Form_Diagnostic_Assessments", "Form_Partner_Applications", "Form_Career_Applications",
+      "Form_Chatbot_Conversations", "Form_Submissions"
     ];
 
     var isLeadForm = (LEAD_FORMS.indexOf(canonicalName) !== -1) || isCareerApp || isAdLead;
@@ -545,6 +743,42 @@ function doPost(e) {
         targetSheet.appendRow(newRow);
         rowSaved = true;
       }
+
+      // Auto-replicate to Sessions_Intelligence if companion record attached
+      if (data.session_record && typeof data.session_record === 'object') {
+        try {
+          var sTab = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
+          var sHead = sTab.getRange(1, 1, 1, Math.max(sTab.getLastColumn(), 1)).getValues()[0];
+          var sRow = sHead.map(function(h) { return resolveField(h, data.session_record); });
+          sTab.appendRow(sRow);
+        } catch (sErr) {
+          console.warn("Sessions_Intelligence append warning:", sErr.toString());
+        }
+      }
+
+      // Auto-replicate to Traffic_Attribution if companion record attached
+      if (data.attribution_record && typeof data.attribution_record === 'object') {
+        try {
+          var aTab = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
+          var aHead = aTab.getRange(1, 1, 1, Math.max(aTab.getLastColumn(), 1)).getValues()[0];
+          var aRow = aHead.map(function(h) { return resolveField(h, data.attribution_record); });
+          aTab.appendRow(aRow);
+        } catch (aErr) {
+          console.warn("Traffic_Attribution append warning:", aErr.toString());
+        }
+      }
+
+      // Auto-replicate to Network_Security_Log if security flag or threat attached
+      if (data.security_record && typeof data.security_record === 'object') {
+        try {
+          var secTab = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
+          var secHead = secTab.getRange(1, 1, 1, Math.max(secTab.getLastColumn(), 1)).getValues()[0];
+          var secRow = secHead.map(function(h) { return resolveField(h, data.security_record); });
+          secTab.appendRow(secRow);
+        } catch (secErr) {
+          console.warn("Network_Security_Log append warning:", secErr.toString());
+        }
+      }
     } catch (sheetErr) {
       console.warn("⚠️ Google Sheets service error: " + sheetErr.toString());
     }
@@ -558,6 +792,111 @@ function doPost(e) {
     console.error("doPost critical error:", err.toString());
     return ContentService.createTextOutput("Error: " + err.toString()).setMimeType(ContentService.MimeType.TEXT);
   }
+}
+
+/**
+ * High-Speed Batch Synchronization of Intelligence Tables from Next.js SQLite
+ */
+function handleIntelligenceSync(data) {
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var counts = { sessions: 0, traffic: 0, geo: 0, security: 0, events: 0 };
+
+    // 1. Sessions Intelligence
+    if (Array.isArray(data.sessions) && data.sessions.length > 0) {
+      var sSheet = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
+      var sHeaders = sSheet.getRange(1, 1, 1, Math.max(sSheet.getLastColumn(), 1)).getValues()[0];
+      var sRows = data.sessions.map(function(s) {
+        return sHeaders.map(function(h) { return resolveField(h, s); });
+      });
+      if (sRows.length > 0) {
+        sSheet.getRange(sSheet.getLastRow() + 1, 1, sRows.length, sHeaders.length).setValues(sRows);
+        counts.sessions = sRows.length;
+      }
+    }
+
+    // 2. Traffic Attribution
+    if (Array.isArray(data.traffic) && data.traffic.length > 0) {
+      var tSheet = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
+      var tHeaders = tSheet.getRange(1, 1, 1, Math.max(tSheet.getLastColumn(), 1)).getValues()[0];
+      var tRows = data.traffic.map(function(t) {
+        return tHeaders.map(function(h) { return resolveField(h, t); });
+      });
+      if (tRows.length > 0) {
+        tSheet.getRange(tSheet.getLastRow() + 1, 1, tRows.length, tHeaders.length).setValues(tRows);
+        counts.traffic = tRows.length;
+      }
+    }
+
+    // 3. Geo Intelligence
+    if (Array.isArray(data.geo) && data.geo.length > 0) {
+      var gSheet = getOrCreateConfiguredSheet(ss, "Geo_Intelligence");
+      var gHeaders = gSheet.getRange(1, 1, 1, Math.max(gSheet.getLastColumn(), 1)).getValues()[0];
+      var gRows = data.geo.map(function(g) {
+        return gHeaders.map(function(h) { return resolveField(h, g); });
+      });
+      if (gRows.length > 0) {
+        gSheet.getRange(gSheet.getLastRow() + 1, 1, gRows.length, gHeaders.length).setValues(gRows);
+        counts.geo = gRows.length;
+      }
+    }
+
+    // 4. Network Security Log
+    if (Array.isArray(data.security) && data.security.length > 0) {
+      var secSheet = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
+      var secHeaders = secSheet.getRange(1, 1, 1, Math.max(secSheet.getLastColumn(), 1)).getValues()[0];
+      var secRows = data.security.map(function(sec) {
+        return secHeaders.map(function(h) { return resolveField(h, sec); });
+      });
+      if (secRows.length > 0) {
+        secSheet.getRange(secSheet.getLastRow() + 1, 1, secRows.length, secHeaders.length).setValues(secRows);
+        counts.security = secRows.length;
+      }
+    }
+
+    // 5. Raw Events / Telemetry
+    if (Array.isArray(data.events) && data.events.length > 0) {
+      var evSheet = getOrCreateConfiguredSheet(ss, "Live_Traffic_Events");
+      var evHeaders = evSheet.getRange(1, 1, 1, Math.max(evSheet.getLastColumn(), 1)).getValues()[0];
+      var evRows = data.events.map(function(ev) {
+        return evHeaders.map(function(h) { return resolveField(h, ev); });
+      });
+      if (evRows.length > 0) {
+        evSheet.getRange(evSheet.getLastRow() + 1, 1, evRows.length, evHeaders.length).setValues(evRows);
+        counts.events = evRows.length;
+      }
+    }
+
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      message: "TrustGrid Intelligence synchronized successfully",
+      synced: counts
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (syncErr) {
+    console.error("handleIntelligenceSync error:", syncErr.toString());
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      message: syncErr.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+/**
+ * Helper to ensure a tab exists with frozen dark headers
+ */
+function getOrCreateConfiguredSheet(ss, tabName) {
+  var sheet = findSheetFlexible(ss, tabName);
+  if (!sheet) {
+    var createName = tabName.replace(/_/g, ' ');
+    sheet = ss.insertSheet(createName);
+    var headers = TAB_CONFIGS[tabName] || SCHEMA_95_HEADERS;
+    sheet.getRange(1, 1, 1, headers.length).setValues([headers])
+      .setFontWeight("bold")
+      .setBackground("#0f172a")
+      .setFontColor("#ffffff");
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
 }
 
 // =========================================================================================
@@ -696,7 +1035,7 @@ function getAttachmentBlobs(data, defaultName) {
 }
 
 function getOrCreateResumeFolder() {
-  var folderName = CONFIG.CAREER_RESUMES_FOLDER_NAME || "TrustGrid_Career_Resumes";
+  var folderName = CONFIG.CAREER_RESUMES_FOLDER_NAME || "ProfitMachines_Career_Resumes";
   var folders = DriveApp.getFoldersByName(folderName);
   if (folders.hasNext()) return folders.next();
   return DriveApp.createFolder(folderName);
@@ -808,7 +1147,7 @@ function sendLeadEmails(data, sheetName, spreadsheetUrl) {
 
   var skipUserConfirm = !userEmail || userEmail.indexOf("@") === -1;
 
-  // 1. User confirmation to booked email
+  // 1. User confirmation
   if (!skipUserConfirm && (quota > 0 || quota === -1)) {
     var userSend = sendEmailOnce({
       to: userEmail,
@@ -819,7 +1158,11 @@ function sendLeadEmails(data, sheetName, spreadsheetUrl) {
     });
     if (userSend.ok) {
       result.delivered++;
-      console.log("✅ Sent user confirmation via " + userSend.via + " to booked email: " + userEmail);
+      console.log("✅ Sent user confirmation via " + userSend.via + " to: " + userEmail);
+      // Career applicants get a second email asking for their profile video as the next step
+      if (sheetName === "Career_Applications") {
+        sendCareerVideoRequestEmail(userEmail, userName);
+      }
     } else {
       result.failed++;
       console.error("Failed to send user confirmation: " + userSend.error);
@@ -877,7 +1220,7 @@ function sendLeadEmails(data, sheetName, spreadsheetUrl) {
 }
 
 /**
- * Returns customized category labels, badges, recipient lists, and subject lines for TrustGrid.AI.
+ * Returns customized category labels, badges, recipient lists, and subject lines for TRUSTGRID.AI.
  */
 function getLeadCategoryMeta(sheetName, data) {
   var name = data.name || data.Name || data["Full Name"] || data.fullName || "";
@@ -896,8 +1239,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "AI Enterprise",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " - " + name : name || "New Enterprise Diagnostic"),
-        userSubject: "TrustGrid.AI - Consulting Session Confirmed",
-        userMessage: "Thank you for requesting an Executive AI Diagnostic session with TrustGrid.AI. Our Principal AI Architect is reviewing your requirements and will connect with your team shortly.",
+        userSubject: "TRUSTGRID.AI - Consulting Session Confirmed",
+        userMessage: "Thank you for requesting an Executive AI Diagnostic session with TRUSTGRID.AI. Our Principal AI Architect is reviewing your requirements and will connect with your team shortly.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -911,7 +1254,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Enterprise",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " (" + name + ")" : name || "New Readiness Audit"),
-        userSubject: "TrustGrid.AI - AI Readiness Audit Confirmation",
+        userSubject: "TRUSTGRID.AI - AI Readiness Audit Confirmation",
         userMessage: "We have received your AI Readiness assessment request. Our Solution Architects will analyze your tech stack and provide the governance roadmap.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -926,7 +1269,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Organization",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " - " + name : name || "New Workshop Booking"),
-        userSubject: "TrustGrid.AI - AI Governance Workshop Request Received",
+        userSubject: "TRUSTGRID.AI - AI Governance Workshop Request Received",
         userMessage: "Thank you for scheduling an AI Governance & Agentic Trust workshop. We will customize the curriculum for your engineering and compliance teams.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -941,8 +1284,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Enterprise Client",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company || name || "New Technical RFP"),
-        userSubject: "TrustGrid.AI - RFP Proposal Received",
-        userMessage: "Thank you for submitting your RFP to TrustGrid.AI. Our solutions engineering division is reviewing the scope of work and compliance specifications.",
+        userSubject: "TRUSTGRID.AI - RFP Proposal Received",
+        userMessage: "Thank you for submitting your RFP to TRUSTGRID.AI. Our solutions engineering division is reviewing the scope of work and compliance specifications.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -956,7 +1299,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Tech Team",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Consultation"),
-        userSubject: "TrustGrid.AI - Consultation Confirmed",
+        userSubject: "TRUSTGRID.AI - Consultation Confirmed",
         userMessage: "Your technical consultation request with a Senior AI Architect has been scheduled. We look forward to discussing your agentic architecture and guardrails.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -971,8 +1314,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: role || "Engineering Role",
         leadPhone: phone,
         internalSubject: "[TG Career Application] " + (name || "Applicant") + " - " + (role || "AI Engineer"),
-        userSubject: "TrustGrid.AI - Application Received",
-        userMessage: "Thank you for applying to join TrustGrid.AI. Our Talent Acquisition & Research team is reviewing your profile and credentials.",
+        userSubject: "TRUSTGRID.AI - Application Received",
+        userMessage: "Thank you for applying to join TRUSTGRID.AI. Our Talent Acquisition & Research team is reviewing your profile and credentials.",
         recipients: EMAIL_CONFIG.careerEmails
       };
 
@@ -986,8 +1329,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Partner Agency",
         leadPhone: phone,
         internalSubject: "[TG Partner Application] " + (company || name || "New Strategic Partner"),
-        userSubject: "TrustGrid.AI - Partnership Application Received",
-        userMessage: "Thank you for your interest in joining the TrustGrid.AI Partner Ecosystem. Our Strategic Alliances team will reach out to discuss onboarding.",
+        userSubject: "TRUSTGRID.AI - Partnership Application Received",
+        userMessage: "Thank you for your interest in joining the TRUSTGRID.AI Partner Ecosystem. Our Strategic Alliances team will reach out to discuss onboarding.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1001,8 +1344,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Business Prospect",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Campaign Lead"),
-        userSubject: "TrustGrid.AI - Consultation Request Received",
-        userMessage: "Thank you for expressing interest in TrustGrid.AI. An Enterprise AI Consultant will connect with you promptly.",
+        userSubject: "TRUSTGRID.AI - Consultation Request Received",
+        userMessage: "Thank you for expressing interest in TRUSTGRID.AI. An Enterprise AI Consultant will connect with you promptly.",
         recipients: EMAIL_CONFIG.adCampaignEmails
       };
 
@@ -1016,8 +1359,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Interactive Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Chatbot Lead] " + (name || "Visitor") + (company ? " (" + company + ")" : ""),
-        userSubject: "TrustGrid.AI - Thank You for Connecting",
-        userMessage: "Thank you for chatting with the TrustGrid virtual assistant. An AI Governance Advisor will follow up with your specific query.",
+        userSubject: "TRUSTGRID.AI - Thank You for Connecting",
+        userMessage: "Thank you for chatting with the TRUSTGRID.AI virtual assistant. An AI Governance Advisor will follow up with your specific query.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1031,8 +1374,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: "Industry Reader",
         leadPhone: "",
         internalSubject: "[TG Newsletter Subscriber] " + (data.email || "New Insights Reader"),
-        userSubject: "TrustGrid.AI - Welcome to Executive Insights",
-        userMessage: "Thank you for subscribing to TrustGrid.AI Executive Briefings. You will receive our latest research on AI agent safety, EU AI Act compliance, and LLM red teaming.",
+        userSubject: "TRUSTGRID.AI - Welcome to Executive Insights",
+        userMessage: "Thank you for subscribing to TRUSTGRID.AI Executive Briefings. You will receive our latest research on AI agent safety, EU AI Act compliance, and LLM red teaming.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1046,8 +1389,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Direct Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Quick Forms] " + (name ? name + (company ? " (" + company + ")" : "") : "New Quick Lead"),
-        userSubject: "TrustGrid.AI - Quick Enquiry Received",
-        userMessage: "Thank you for reaching out to TrustGrid.AI via our Quick Enquiry form. Our enterprise solutions advisor will follow up with you promptly.",
+        userSubject: "TRUSTGRID.AI - Quick Enquiry Received",
+        userMessage: "Thank you for reaching out to TRUSTGRID.AI via our Quick Enquiry form. Our enterprise solutions advisor will follow up with you promptly.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1062,8 +1405,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Direct Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Web Lead"),
-        userSubject: "TrustGrid.AI - Inquiry Received",
-        userMessage: "Thank you for reaching out to TrustGrid.AI. Our solutions team has received your inquiry and will respond within 24 hours.",
+        userSubject: "TRUSTGRID.AI - Inquiry Received",
+        userMessage: "Thank you for reaching out to TRUSTGRID.AI. Our solutions team has received your inquiry and will respond within 24 hours.",
         recipients: EMAIL_CONFIG.salesEmails
       };
   }
@@ -1154,7 +1497,7 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
   // Action Buttons
   var actionButtons = '<div style="margin-top:25px;">';
   if (email) {
-    actionButtons += '<a href="mailto:' + email + '?subject=Re: ' + encodeURIComponent(meta.categoryName + ' - TrustGrid.AI') + '" style="background:#6366f1;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Reply to Prospect</a>';
+    actionButtons += '<a href="mailto:' + email + '?subject=Re: ' + encodeURIComponent(meta.categoryName + ' - TRUSTGRID.AI') + '" style="background:#6366f1;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Reply to Prospect</a>';
   }
   if (phone) {
     actionButtons += '<a href="tel:' + phone + '" style="background:#0f172a;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Call ' + phone + '</a>';
@@ -1247,13 +1590,23 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
     '    <!-- FOOTER -->',
     '    <div style="background: #f8fafc; padding: 20px 25px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.5;">',
     '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. All rights reserved.<br>',
-    '      Direct Inquiries: <strong>webadmin.trustgrid.ai@gmail.com</strong><br>',
-    '      Confidential Notification &bull; Distributed to authorized TrustGrid team members only.',
+    '      Direct Inquiries: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong><br>',
+    '      Confidential Notification &bull; Distributed to authorized TRUSTGRID.AI team members only.',
     '    </div>',
     '  </div>',
     '</body>',
     '</html>'
   ].join('\n');
+}
+
+/**
+ * Normalizes a phone number to wa.me format, defaulting to India's country code for bare
+ * 10-digit mobile numbers (matches components/ui/whatsapp-cta.tsx's number format).
+ */
+function formatWhatsAppNumber(num) {
+  var digits = String(num || "").replace(/[^0-9]/g, "");
+  if (digits.length === 10) digits = "91" + digits;
+  return digits;
 }
 
 /**
@@ -1361,6 +1714,146 @@ function buildUserConfirmationHtml(name, categoryName, messageStr, data) {
   ].join('\n');
 }
 
+/**
+ * Builds the "next step" email asking a career applicant to record and submit a profile video.
+ */
+function buildCareerVideoRequestHtml(name) {
+  return [
+    '<!DOCTYPE html>',
+    '<html>',
+    '<head>',
+    '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">',
+    '  <meta charset="utf-8">',
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    '</head>',
+    '<body style="font-family: \'Segoe UI\', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; margin: 0; padding: 25px 15px;">',
+    '  <div style="max-width: 600px; margin: 0 auto; background: #111827; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid #1f2937;">',
+    '    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); padding: 35px 25px; text-align: center;">',
+    '      <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 0.05em;">TRUSTGRID.AI CAREERS</h1>',
+    '      <p style="color: #a5b4fc; margin: 8px 0 0 0; font-size: 13px; font-weight: 500;">Next Step: Candidate Profile Video</p>',
+    '    </div>',
+    '    <div style="padding: 35px 30px; color: #e5e7eb; line-height: 1.6;">',
+    '      <h2 style="font-size: 20px; color: #818cf8; font-weight: 700; margin: 0 0 15px 0;">Hi ' + escapeHtml(name) + ',</h2>',
+    '      <p style="font-size: 15px; color: #d1d5db; margin: 0 0 20px 0;">Thanks again for applying to TRUSTGRID.AI. As the next step in your application, please record a short profile video introducing yourself.</p>',
+    '      <div style="background: #1f2937; padding: 20px; border-radius: 10px; border: 1px solid #374151; margin: 25px 0;">',
+    '        <h3 style="color: #f3f4f6; font-size: 15px; margin: 0 0 12px 0; font-weight: 700;">How to record & submit</h3>',
+    '        <ul style="padding-left: 20px; margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.8;">',
+    '          <li>Record a <strong>15&ndash;20 minute</strong> video using your laptop camera &amp; mic, introducing yourself, your experience, and why you want to join TRUSTGRID.AI.</li>',
+    '          <li>Upload the video to <strong>Google Drive</strong> and set sharing to &ldquo;Anyone with the link &ndash; Viewer&rdquo;.</li>',
+    '          <li>Copy the shareable link and <strong>reply to this email</strong> with the link so our Talent team can review it and attach it to your application.</li>',
+    '        </ul>',
+    '      </div>',
+    '      <p style="font-size: 13px; color: #9ca3af; margin: 0;">Once received, your video link will be logged against your application in our tracking sheet.</p>',
+    '    </div>',
+    '    <div style="background: #0d1117; padding: 20px 25px; text-align: center; font-size: 12px; color: #6b7280; border-top: 1px solid #1f2937; line-height: 1.5;">',
+    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. All rights reserved.<br>',
+    '      Direct Talent Team Contact: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong>',
+    '    </div>',
+    '  </div>',
+    '</body>',
+    '</html>'
+  ].join('\n');
+}
+
+/**
+ * Sends the career-video follow-up email; skipped when the daily quota can't cover it.
+ */
+function sendCareerVideoRequestEmail(userEmail, userName) {
+  if (!userEmail || userEmail.indexOf("@") === -1) return;
+  if (getRemainingEmailQuota() === 0) return;
+  sendEmailOnce({
+    to: userEmail,
+    subject: "TRUSTGRID.AI Careers - Next Step: Submit Your 15-20 Min Profile Video",
+    htmlBody: buildCareerVideoRequestHtml(userName),
+    name: EMAIL_CONFIG.name,
+    replyTo: EMAIL_CONFIG.replyTo
+  });
+}
+
+/**
+ * Matches an incoming { email, videoDriveLink } payload to its Career_Applications row (most
+ * recent application for that email) and records the link — appends a new row if no match.
+ */
+function handleCareerVideoSubmission(data) {
+  var result = { message: "Error: Missing email or video link" };
+  var email = String(data.email || data.Email || data["Work Email"] || "").trim().toLowerCase();
+  var videoLink = data.videoDriveLink || data.videoLink || data["Profile Video Drive Link"] || "";
+  if (!email || !videoLink) return result;
+
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var sheet = findSheetFlexible(ss, "Career_Applications") || findSheetFlexible(ss, "Career Applications");
+    if (!sheet) { result.message = "Error: Career_Applications sheet not found"; return result; }
+
+    var lastCol = Math.max(sheet.getLastColumn(), 1);
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    var emailCol = headers.indexOf("Email");
+    var linkCol = headers.indexOf("Profile Video Drive Link");
+    var statusCol = headers.indexOf("Profile Video Status");
+    if (linkCol === -1 || statusCol === -1) {
+      result.message = "Error: Sheet missing Profile Video columns - run migrateAddCareerVideoColumns()";
+      return result;
+    }
+
+    var lastRow = sheet.getLastRow();
+    var matchedRow = -1;
+    if (emailCol !== -1 && lastRow > 1) {
+      var emailValues = sheet.getRange(2, emailCol + 1, lastRow - 1, 1).getValues();
+      for (var i = emailValues.length - 1; i >= 0; i--) {
+        if (String(emailValues[i][0] || "").trim().toLowerCase() === email) { matchedRow = i + 2; break; }
+      }
+    }
+
+    if (matchedRow !== -1) {
+      sheet.getRange(matchedRow, linkCol + 1).setValue(videoLink);
+      sheet.getRange(matchedRow, statusCol + 1).setValue("Received");
+    } else {
+      var newRow = headers.map(function (h) {
+        if (h === "Email") return email;
+        if (h === "Profile Video Drive Link") return videoLink;
+        if (h === "Profile Video Status") return "Received (No Matching Application)";
+        if (h === "Timestamp") return normalizeTimestamp(data.timestamp);
+        return "";
+      });
+      sheet.appendRow(newRow);
+    }
+
+    try {
+      MailApp.sendEmail({
+        to: uniqueEmails(EMAIL_CONFIG.careerEmails).join(","),
+        subject: "[TG Career Video] Profile video link received - " + email,
+        htmlBody: "<p>A candidate profile video link was submitted.</p><p><strong>Email:</strong> " + escapeHtml(email) + "</p><p><strong>Video Link:</strong> <a href=\"" + escapeHtml(videoLink) + "\">" + escapeHtml(videoLink) + "</a></p>",
+        name: EMAIL_CONFIG.name,
+        replyTo: EMAIL_CONFIG.replyTo
+      });
+    } catch (mailErr) {}
+
+    result.message = "Video link saved";
+    return result;
+  } catch (err) {
+    result.message = "Error: " + err.toString();
+    return result;
+  }
+}
+
+/**
+ * Backfills the Profile Video columns onto an already-created production Career_Applications tab.
+ */
+function migrateAddCareerVideoColumns() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var sheet = findSheetFlexible(ss, "Career_Applications") || findSheetFlexible(ss, "Career Applications");
+  if (!sheet) { console.error("Career_Applications sheet not found."); return; }
+
+  var lastCol = Math.max(sheet.getLastColumn(), 1);
+  var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  ["Profile Video Drive Link", "Profile Video Status"].forEach(function (col) {
+    if (headers.indexOf(col) === -1) {
+      sheet.getRange(1, sheet.getLastColumn() + 1).setValue(col).setFontWeight("bold").setBackground("#0f172a").setFontColor("#ffffff");
+    }
+  });
+  console.log("Career_Applications Profile Video columns verified/added.");
+}
+
 // =========================================================================================
 // 7. MONTHLY CAREER RESUME DIGEST & FORWARDING ENGINE
 // =========================================================================================
@@ -1447,7 +1940,7 @@ function forwardMonthlyCareerApplications() {
 
   var monthLabel = Utilities.formatDate(now, "Asia/Kolkata", "MMMM yyyy");
   var emailHtml = buildMonthlyCareerEmailHtml(monthLabel, candidates, ss.getUrl());
-  var subject = "[TrustGrid Careers] Monthly Resumes Digest - " + monthLabel + " (" + candidates.length + " Candidates)";
+  var subject = "[TRUSTGRID.AI Careers] Monthly Resumes Digest - " + monthLabel + " (" + candidates.length + " Candidates)";
   
   var quota = getRemainingEmailQuota();
   if (quota === 0) {
@@ -1587,7 +2080,76 @@ function monthlyReport() {
   var reportData = aggregateExecutiveReportData(ss, "MONTHLY", m1Start, m1End, m2Start, m2End);
   var monthLabel = Utilities.formatDate(m1End, "Asia/Kolkata", "MMMM yyyy");
   var emailHtml = buildExecutiveAnalyticsBriefHtml(reportData, "MONTHLY");
-  sendReportEmail("[TRUSTGRID.AI] Monthly Analytics Report - " + cleanEmailText(monthLabel), emailHtml);
+  sendReportEmail("[TRUSTGRID.AI] Monthly Executive Report - " + cleanEmailText(monthLabel), emailHtml);
+}
+
+/**
+ * Daily Traffic & Lead Snapshot Archiver
+ * Captures and logs consolidated daily performance row into 'Daily_Traffic_Snapshots' tab
+ * for historical trend analysis and long-term reporting.
+ */
+function captureDailyTrafficSnapshot() {
+  var ss = getMainSpreadsheet();
+  if (!ss) return;
+
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var dayBefore = new Date();
+  dayBefore.setDate(dayBefore.getDate() - 2);
+
+  var reportData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
+  var snapSheet = findSheetFlexible(ss, "Daily_Traffic_Snapshots");
+  var headers = [
+    "Date", "Date Str", "Total Visitors", "Total Sessions", "Total Leads",
+    "Total Enquiries", "Conversion Rate", "Top Lead Source", "Top 5 Pages (JSON)",
+    "Traffic Sources (JSON)", "Visitors Delta", "Leads Delta", "Recorded At IST"
+  ];
+
+  if (!snapSheet) {
+    snapSheet = ss.insertSheet("Daily_Traffic_Snapshots");
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  } else if (snapSheet.getLastRow() === 0) {
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  }
+
+  var dateKey = Utilities.formatDate(yesterday, "Asia/Kolkata", "yyyy-MM-dd");
+  var row = [
+    dateKey,
+    reportData.periodDateStr,
+    reportData.kpis.visitors || 0,
+    reportData.kpis.sessions || 0,
+    reportData.kpis.leads || 0,
+    reportData.kpis.enquiries || 0,
+    reportData.kpis.conversionRate || "0%",
+    reportData.kpis.topLeadSource || "Direct",
+    JSON.stringify((reportData.topPages || []).slice(0, 5)),
+    JSON.stringify(reportData.sources || []),
+    reportData.comparison.visitorsDelta || "0%",
+    reportData.comparison.leadsDelta || "0%",
+    Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'")
+  ];
+
+  var lastRow = snapSheet.getLastRow();
+  var dateCol = lastRow > 1 ? snapSheet.getRange(2, 1, lastRow - 1, 1).getValues().flat() : [];
+  var existingIdx = dateCol.indexOf(dateKey);
+
+  if (existingIdx !== -1) {
+    snapSheet.getRange(existingIdx + 2, 1, 1, row.length).setValues([row]);
+  } else {
+    snapSheet.appendRow(row);
+  }
+
+  console.log("Captured Daily Traffic Snapshot for: " + dateKey);
 }
 
 /**
@@ -1611,7 +2173,7 @@ function normalizeRoutePath(rawPathOrUrl) {
     str = str.substring(str.indexOf("/"));
   }
 
-  // Strip domain if present (e.g. http://trustgrid.ai/solutions/... or https://www.trustgrid.ai/...)
+  // Strip domain if present (e.g. http://profitmachines.com/solutions/... or https://profitmachines.com/...)
   str = str.replace(/^https?:\/\/[^\/]+/i, "");
   // Strip query parameters (?utm_source=... etc) and hash fragments (#...)
   str = str.split('?')[0].split('#')[0].trim();
@@ -1722,6 +2284,44 @@ function generateMergedTrendChartUrl(labels, seriesVisitors, seriesLeads) {
   return 'https://quickchart.io/chart?c=' + encodeURIComponent(JSON.stringify(chartConfig)) + '&w=580&h=250&bkg=white&devicePixelRatio=2';
 }
 
+/**
+ * Builds a QuickChart pie/doughnut/horizontalBar image URL from real, already-aggregated
+ * labels/values (never fabricated placeholders — caller must pass live counts).
+ */
+function generateBreakdownChartUrl(type, labels, values, title) {
+  var palette = ['#6366f1', '#059669', '#f59e0b', '#0ea5e9', '#ef4444', '#8b5cf6', '#14b8a6', '#f43f5e'];
+  var bg = labels.map(function (_, i) { return palette[i % palette.length]; });
+  var isBar = type === 'horizontalBar' || type === 'bar';
+  var chartConfig = {
+    type: type,
+    data: {
+      labels: labels,
+      datasets: [{
+        data: values,
+        backgroundColor: bg,
+        borderWidth: isBar ? 0 : 2,
+        borderColor: '#ffffff'
+      }]
+    },
+    options: {
+      responsive: true,
+      title: { display: !!title, text: title, fontColor: '#334155', fontSize: 12, fontStyle: 'bold' },
+      legend: {
+        display: !isBar,
+        position: 'right',
+        labels: { fontColor: '#334155', fontSize: 10, boxWidth: 10 }
+      }
+    }
+  };
+  if (isBar) {
+    chartConfig.options.scales = {
+      xAxes: [{ ticks: { fontColor: '#64748b', fontSize: 10, beginAtZero: true, precision: 0 }, gridLines: { color: 'rgba(226, 232, 240, 0.6)' } }],
+      yAxes: [{ ticks: { fontColor: '#0f172a', fontSize: 10 }, gridLines: { display: false } }]
+    };
+  }
+  return 'https://quickchart.io/chart?c=' + encodeURIComponent(JSON.stringify(chartConfig)) + '&w=340&h=230&bkg=white&devicePixelRatio=2';
+}
+
 function aggregateExecutiveReportData(ss, periodType, startDate, endDate, prevStartDate, prevEndDate) {
   var periodDateStr = (periodType === "DAILY")
     ? Utilities.formatDate(endDate, "Asia/Kolkata", "d MMMM yyyy")
@@ -1732,12 +2332,20 @@ function aggregateExecutiveReportData(ss, periodType, startDate, endDate, prevSt
   var trafficData = (trafficSheet && trafficSheet.getLastRow() > 1) ? trafficSheet.getDataRange().getValues() : [];
   
   var tHeaders = trafficData.length > 0 ? trafficData[0] : [];
-  var tsCol = tHeaders.indexOf("Timestamp");
-  if (tsCol === -1) tsCol = tHeaders.indexOf("timestamp");
-  var ipCol = tHeaders.indexOf("IP Address");
-  var pathCol = tHeaders.indexOf("Page Path") !== -1 ? tHeaders.indexOf("Page Path") : tHeaders.indexOf("Page URL");
-  var srcCol = tHeaders.indexOf("Traffic Source") !== -1 ? tHeaders.indexOf("Traffic Source") : tHeaders.indexOf("Source");
-  var sessCol = tHeaders.indexOf("Session ID");
+  // Live_Traffic_Events uses SCHEMA_95_HEADERS (snake_case); other legacy tabs use Title Case —
+  // check both so real data is actually read regardless of which sheet is live.
+  var findCol = function (headers, names) {
+    for (var n = 0; n < names.length; n++) {
+      var idx = headers.indexOf(names[n]);
+      if (idx !== -1) return idx;
+    }
+    return -1;
+  };
+  var tsCol = findCol(tHeaders, ["Timestamp", "timestamp"]);
+  var ipCol = findCol(tHeaders, ["IP Address", "ip_address"]);
+  var pathCol = findCol(tHeaders, ["Page Path", "Page URL", "page", "page_url"]);
+  var srcCol = findCol(tHeaders, ["Traffic Source", "Source", "traffic_source"]);
+  var sessCol = findCol(tHeaders, ["Session ID", "session_id"]);
 
   var curSessions = new Set();
   var curVisitors = new Set();
@@ -1774,14 +2382,16 @@ function aggregateExecutiveReportData(ss, periodType, startDate, endDate, prevSt
     var ts = parseSheetDate(row[tsCol]);
     if (!ts) continue;
     var ip = String(row[ipCol] || "").trim();
-    var sess = String(row[sessCol] || ip || ("SESS_" + i)).trim();
+    // Only count real captured Session ID values — no per-row fallback IDs, so Sessions
+    // reflects actual tracked sessions instead of a fabricated number that can mismatch Visitors.
+    var sess = (sessCol !== -1) ? String(row[sessCol] || "").trim() : "";
     var rawPath = (pathCol !== -1) ? String(row[pathCol] || "/") : "/";
     var cleanRoute = normalizeRoutePath(rawPath);
     var source = normalizeTrafficSource(row[srcCol]);
 
     var tTime = ts.getTime();
     if (tTime >= startMs && tTime <= endMs) {
-      curSessions.add(sess);
+      if (sess) curSessions.add(sess);
       if (ip) curVisitors.add(ip);
       
       if (!curPages[cleanRoute]) {
@@ -1803,7 +2413,7 @@ function aggregateExecutiveReportData(ss, periodType, startDate, endDate, prevSt
         }
       }
     } else if (tTime >= prevStartDate.getTime() && tTime <= new Date(prevEndDate.getTime() + 24*60*60*1000 - 1).getTime()) {
-      prevSessions.add(sess);
+      if (sess) prevSessions.add(sess);
       if (ip) prevVisitors.add(ip);
     }
   }
@@ -1932,9 +2542,35 @@ function aggregateLeadsFromAllSources(ss, startDate, endDate, periodType, startM
 
     var srcCol = headers.indexOf("Source") !== -1 ? headers.indexOf("Source") : headers.indexOf("UTM Source");
     var pageCol = headers.indexOf("Page") !== -1 ? headers.indexOf("Page") : headers.indexOf("Page Path");
+    var leadTypeCol = headers.indexOf("LeadType") !== -1 ? headers.indexOf("LeadType") : headers.indexOf("leadTypeCategory");
+    var nameCol = headers.indexOf("Full Name") !== -1 ? headers.indexOf("Full Name") : (headers.indexOf("Name") !== -1 ? headers.indexOf("Name") : headers.indexOf("fullName"));
+    var emailCol = headers.indexOf("Business Email") !== -1 ? headers.indexOf("Business Email") : (headers.indexOf("Email") !== -1 ? headers.indexOf("Email") : headers.indexOf("email"));
+    var compCol = headers.indexOf("Company Name") !== -1 ? headers.indexOf("Company Name") : (headers.indexOf("Company") !== -1 ? headers.indexOf("Company") : headers.indexOf("company"));
 
     for (var r = 1; r < data.length; r++) {
-      var ts = parseSheetDate(data[r][tsCol]);
+      var row = data[r];
+      var leadTypeVal = leadTypeCol !== -1 ? String(row[leadTypeCol] || "").toUpperCase() : "";
+      var nameVal = nameCol !== -1 ? String(row[nameCol] || "") : "";
+      var emailVal = emailCol !== -1 ? String(row[emailCol] || "") : "";
+      var compVal = compCol !== -1 ? String(row[compCol] || "") : "";
+
+      // STRICT TEST EXCLUSION FILTER:
+      // Exclude LeadType = TEST, TG-TEST, test, demo, qa, dummy, sandbox, uat, verification
+      var isTestRow = (
+        leadTypeVal === "TEST" ||
+        nameVal.toUpperCase().indexOf("TG-TEST") !== -1 ||
+        emailVal.toLowerCase().indexOf("tg-test") !== -1 ||
+        compVal.toUpperCase().indexOf("TG-TEST") !== -1 ||
+        emailVal.toLowerCase().indexOf("@test.local") !== -1 ||
+        emailVal.toLowerCase().indexOf("@example.com") !== -1 ||
+        /\b(test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(nameVal + " " + compVal + " " + emailVal)
+      );
+
+      if (isTestRow) {
+        continue; // Strictly excluded from Daily & Weekly Executive Reports
+      }
+
+      var ts = parseSheetDate(row[tsCol]);
       if (!ts) continue;
       var tTime = ts.getTime();
       if (tTime >= sTime && tTime <= eTime) {
@@ -2031,6 +2667,20 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     }).join('');
   }
 
+  // Chart images built strictly from the same live counts as the tables above (no synthetic data)
+  var formChartImg = "";
+  var formCounts = formKeys.map(function (fName) { return (data.formBreakdown && data.formBreakdown[fName]) ? data.formBreakdown[fName] : 0; });
+  if (formKeys.length > 0 && formCounts.some(function (v) { return v > 0; })) {
+    var formChartUrl = generateBreakdownChartUrl('pie', formKeys, formCounts, 'Form Performance Split');
+    formChartImg = '<div style="text-align:center;padding:12px 0 4px 0;"><img src="' + formChartUrl + '" alt="Form Performance Split" style="max-width:300px;width:100%;height:auto;" /></div>';
+  }
+
+  var sourceChartImg = "";
+  if ((data.sources || []).length > 0) {
+    var sourceChartUrl = generateBreakdownChartUrl('horizontalBar', data.sources.map(function (s) { return s.source; }), data.sources.map(function (s) { return s.visitors; }), 'Visitors by Acquisition Channel');
+    sourceChartImg = '<div style="text-align:center;padding:12px 0 4px 0;"><img src="' + sourceChartUrl + '" alt="Visitors by Acquisition Channel" style="max-width:100%;height:auto;" /></div>';
+  }
+
   return [
     '<!DOCTYPE html>',
     '<html>',
@@ -2097,6 +2747,7 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     '      <!-- FORM PERFORMANCE -->',
     '      <div style="margin-bottom: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">',
     '        <div style="background: #f8fafc; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">FORM PERFORMANCE</div>',
+    '        ' + formChartImg,
     '        <table width="100%" cellpadding="0" cellspacing="0">',
     '          <thead>',
     '            <tr style="background:#f1f5f9;font-size:11px;color:#64748b;">',
@@ -2111,6 +2762,7 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     '      <!-- ACQUISITION CHANNELS -->',
     '      <div style="margin-bottom: 20px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">',
     '        <div style="background: #f8fafc; padding: 10px 14px; border-bottom: 1px solid #e2e8f0; font-size: 11px; font-weight: 800; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em;">ACQUISITION CHANNELS</div>',
+    '        ' + sourceChartImg,
     '        <table width="100%" cellpadding="0" cellspacing="0">',
     '          <thead>',
     '            <tr style="background:#f1f5f9;font-size:11px;color:#64748b;">',
@@ -2130,7 +2782,7 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     '    </div>',
     '    <div style="background: #f8fafc; padding: 16px 20px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center;">',
     '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. Confidential Executive Analytics Report.<br>',
-    '      Direct Inquiries: <strong>webadmin.trustgrid.ai@gmail.com</strong>',
+    '      Direct Inquiries: <strong>poojasri.trustgrid@gmail.com</strong> | <strong>bv@trustflow.in</strong> | <strong>connect@trustgrid.ai</strong>',
     '    </div>',
     '  </div>',
     '</body>',
@@ -2320,7 +2972,7 @@ function resolveField(header, data) {
     "Traffic Source":         data.trafficSource || data.traffic_source || data.channel || data.utm_source || data.source || "Direct",
     "Traffic Channel":        data.traffic_source || data.channel || data.trafficSource || "Direct",
     "Channel":                data.channel || data.traffic_source || data.trafficSource || "Direct",
-    "Referrer":               data.referrer || data.referrer_url || "",
+    "Referrer":               data.referrer || data.referrer_url || documentReferrerFallback(data) || "",
     "Referrer Domain":        data.referrer_domain || data.referrerDomain || "",
     "Landing Page":           data.landing_page || data.landingPage || data.entry_page || "",
     "Entry Page":             data.entry_page || data.landing_page || data.landingPage || "",
@@ -2408,6 +3060,10 @@ function resolveField(header, data) {
   }
 
   return strVal;
+}
+
+function documentReferrerFallback(data) {
+  return data.referrer || data.referrer_url || "";
 }
 
 function normalizeTimestamp(ts) {
@@ -2501,14 +3157,14 @@ function setupAllTrustGridTriggers() {
   var triggers = ScriptApp.getProjectTriggers();
   triggers.forEach(function(t) { ScriptApp.deleteTrigger(t); });
 
-  // 1. Daily Snapshot at 23:50 IST (freezes daily numbers into Daily_Traffic_Snapshots)
+  // 1. Daily Snapshot at 23:50 IST (freezes daily numbers into Traffic_History)
   ScriptApp.newTrigger("captureDailyTrafficSnapshot")
     .timeBased()
     .everyDays(1)
     .atHour(23)
     .create();
 
-  // 2. Daily Report at 8:30 AM IST
+  // 2. Daily Executive Report at 8:30 AM IST
   ScriptApp.newTrigger("dailyReport")
     .timeBased()
     .everyDays(1)
@@ -2522,7 +3178,7 @@ function setupAllTrustGridTriggers() {
     .atHour(8)
     .create();
 
-  // 4. Monthly Report on 1st of month at 8:30 AM IST
+  // 4. Monthly Executive Report on 1st of month at 8:30 AM IST
   ScriptApp.newTrigger("monthlyReport")
     .timeBased()
     .onMonthDay(1)
@@ -2536,79 +3192,16 @@ function setupAllTrustGridTriggers() {
     .atHour(9)
     .create();
 
-  console.log("All TRUSTGRID.AI automation triggers successfully scheduled (Monday Weekly Report + 1st-of-month Monthly Report + Daily Snapshot).");
+  console.log("All TRUSTGRID automation triggers successfully scheduled (Monday Weekly Report + 1st-of-month Monthly Report + Daily Snapshot).");
 }
 
 /**
- * Captures daily traffic & lead performance snapshots into a dedicated tab (Daily_Traffic_Snapshots)
- * for historical trend analysis and long-term reporting.
- */
-function captureDailyTrafficSnapshot() {
-  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
-  if (!ss) return;
-
-  var yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  var dayBefore = new Date();
-  dayBefore.setDate(dayBefore.getDate() - 2);
-
-  var reportData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
-  var snapSheet = findSheetFlexible(ss, "Daily_Traffic_Snapshots");
-  var headers = [
-    "Date", "Date Str", "Total Visitors", "Total Sessions", "Total Leads",
-    "Total Enquiries", "Conversion Rate", "Top Lead Source", "Top 5 Pages (JSON)",
-    "Traffic Sources (JSON)", "Visitors Delta", "Leads Delta", "Recorded At IST"
-  ];
-
-  if (!snapSheet) {
-    snapSheet = ss.insertSheet("Daily_Traffic_Snapshots");
-    snapSheet.getRange(1, 1, 1, headers.length)
-             .setValues([headers])
-             .setFontWeight("bold")
-             .setBackground("#07143d")
-             .setFontColor("#38bdf8");
-    snapSheet.setFrozenRows(1);
-  } else if (snapSheet.getLastRow() === 0) {
-    snapSheet.getRange(1, 1, 1, headers.length)
-             .setValues([headers])
-             .setFontWeight("bold")
-             .setBackground("#07143d")
-             .setFontColor("#38bdf8");
-    snapSheet.setFrozenRows(1);
-  }
-
-  var dateKey = Utilities.formatDate(yesterday, "Asia/Kolkata", "yyyy-MM-dd");
-  var row = [
-    dateKey,
-    reportData.periodDateStr,
-    reportData.kpis.visitors || 0,
-    reportData.kpis.sessions || 0,
-    reportData.kpis.leads || 0,
-    reportData.kpis.enquiries || 0,
-    reportData.kpis.conversionRate || "0%",
-    reportData.kpis.topLeadSource || "Direct",
-    JSON.stringify((reportData.topPages || []).slice(0, 5)),
-    JSON.stringify(reportData.sources || []),
-    reportData.comparison.visitorsDelta || "0%",
-    reportData.comparison.leadsDelta || "0%",
-    Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'")
-  ];
-
-  var lastRow = snapSheet.getLastRow();
-  var dateCol = lastRow > 1 ? snapSheet.getRange(2, 1, lastRow - 1, 1).getValues().flat() : [];
-  var existingIdx = dateCol.indexOf(dateKey);
-
-  if (existingIdx !== -1) {
-    snapSheet.getRange(existingIdx + 2, 1, 1, row.length).setValues([row]);
-  } else {
-    snapSheet.appendRow(row);
-  }
-
-  console.log("Captured Daily Traffic Snapshot for: " + dateKey);
-}
-
-/**
- * Dispatches sample preview emails for each TrustGrid lead category directly to poojasri.aram@gmail.com and bv@trustflow.in.
+ * ⚠️ TEST-ONLY — MANUAL TRIGGER, NEVER SCHEDULED, NEVER TOUCHES REAL SHEET DATA.
+ * Sends hardcoded [PREVIEW]-prefixed sample emails so a human can visually check the HTML
+ * templates render correctly. It is NOT wired to setupAllTrustGridTriggers() and must never
+ * be added to a time-based trigger — run it only manually from the Apps Script editor.
+ * Real automated reports (dailyReport/weeklyReport/monthlyReport) always pull live data via
+ * aggregateExecutiveReportData() and never call this function.
  */
 function SEND_ALL_TRUSTGRID_NOTIFICATION_PREVIEWS() {
   var recipients = EMAIL_CONFIG.reportEmails.join(",");
@@ -2711,7 +3304,7 @@ function SEND_ALL_TRUSTGRID_NOTIFICATION_PREVIEWS() {
     replyTo: EMAIL_CONFIG.replyTo
   });
 
-  console.log("All preview notifications successfully dispatched using LIVE spreadsheet data to " + recipients);
+  console.log("All notifications and reports successfully dispatched using LIVE spreadsheet data to " + recipients);
 }
 
 // =========================================================================================
@@ -2798,7 +3391,35 @@ function initializeAllDatabaseTables() {
     }
   });
 
-  console.log("All 20 TrustGrid.AI database tabs initialized with enterprise styling.");
+  console.log("All 20 TRUSTGRID.AI database tabs initialized with enterprise styling.");
+}
+
+/**
+ * Quarantines any test / Vercel / localhost submission that accidentally hits the production webhook.
+ * Keeps production Contact_Leads pristine and suppresses executive alert emails.
+ */
+function logToStagingQuarantine(data) {
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var tab = ss.getSheetByName("Staging_Quarantine");
+    if (!tab) {
+      tab = ss.insertSheet("Staging_Quarantine");
+      var headers = ["Timestamp", "Origin", "Event / Form", "User / Name", "Email", "Data JSON"];
+      tab.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#f59e0b").setFontColor("#ffffff");
+      tab.setFrozenRows(1);
+    }
+    var ts = Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'");
+    var origin = data.page_url || data.pageUrl || data.referrer || "Vercel / Localhost QA";
+    var formType = data.form_type || data.sheetName || data.event_type || "Test Event";
+    var name = data.name || data.fullName || "";
+    var email = data.email || data.work_email || "";
+    tab.appendRow([ts, origin, formType, name, email, JSON.stringify(data)]);
+    console.log("⚠️ Staging / Vercel traffic routed to Staging_Quarantine to protect production metrics.");
+    return ContentService.createTextOutput("Quarantined to Staging").setMimeType(ContentService.MimeType.TEXT);
+  } catch (qErr) {
+    console.error("Quarantine error:", qErr);
+    return ContentService.createTextOutput("Quarantine Error: " + qErr.toString()).setMimeType(ContentService.MimeType.TEXT);
+  }
 }
 
 /**
@@ -2843,7 +3464,9 @@ function logToArchivedTestLeads(data) {
 }
 
 /**
- * PRODUCTION LEAD PRESERVATION & UNIVERSAL TEST LEAD CLEANER
+ * =========================================================================================
+ * 10. PRODUCTION LEAD PRESERVATION & UNIVERSAL TEST LEAD CLEANER
+ * =========================================================================================
  * Scans ALL active lead sheets across the entire Google Spreadsheet,
  * identifies non-production/test rows (TG-TEST, pooja test, test, demo, dummy, sample, qa, etc.),
  * safely moves them to Archived_Test_Leads tab, and permanently removes them from active tabs.
@@ -2972,6 +3595,156 @@ function auditAndArchiveGoogleSheetTestLeads() {
 }
 
 /**
+ * PRODUCTION LEAD DEDUPLICATION & FIELD CLEANER
+ * 1. Removes duplicate rows: Detects duplicate submissions by Lead ID, or by identical (Email + Tab/Form),
+ *    keeping the most complete and latest submission, deleting redundant duplicate rows.
+ * 2. Removes duplicate fields: Checks header rows (Row 1) for duplicate or redundant column names in any sheet,
+ *    and removes duplicate columns safely from right to left.
+ * 3. Returns a complete JSON audit report of removed duplicates.
+ */
+function removeDuplicateRecordsAndFields() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var allSheets = ss.getSheets();
+  var totalDuplicateRowsDeleted = 0;
+  var totalDuplicateColumnsDeleted = 0;
+  var reportTabs = [];
+
+  var systemTabs = [
+    "Live_Traffic_Events", "Visitor_Intelligence_95", "Hourly_Traffic_Rollup",
+    "Daily_Aggregates_Rollup", "Telemetry_Raw_Ingest", "Weekly_Executive_Report",
+    "Executive_KPI_Dashboard", "Intelligence_Sync_Log"
+  ];
+
+  for (var s = 0; s < allSheets.length; s++) {
+    var sh = allSheets[s];
+    var sheetName = sh.getName();
+    if (systemTabs.indexOf(sheetName) !== -1) continue;
+
+    var lastRow = sh.getLastRow();
+    var lastCol = sh.getLastColumn();
+    if (lastRow < 1 || lastCol < 1) continue;
+
+    var dupColsInTab = 0;
+    var dupRowsInTab = 0;
+
+    // --- STEP 1: REMOVE DUPLICATE COLUMNS / FIELDS ---
+    var headers = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+    var seenHeaders = {};
+    for (var c = headers.length - 1; c >= 0; c--) {
+      var hName = String(headers[c] || '').trim().toLowerCase();
+      if (!hName) continue;
+      if (seenHeaders[hName]) {
+        // Duplicate header found! Delete duplicate column
+        sh.deleteColumn(c + 1);
+        dupColsInTab++;
+        totalDuplicateColumnsDeleted++;
+      } else {
+        seenHeaders[hName] = true;
+      }
+    }
+
+    // Refresh dimensions after potential column deletion
+    lastRow = sh.getLastRow();
+    lastCol = sh.getLastColumn();
+    if (lastRow < 2 || lastCol < 1) continue;
+
+    // --- STEP 2: REMOVE DUPLICATE ROWS / DATA ---
+    var data = sh.getDataRange().getValues();
+    var curHeaders = data[0].map(function(h) { return String(h || '').trim().toLowerCase(); });
+    
+    // Find index of Lead ID / Submission ID and Email
+    var idCol = -1;
+    var emailCol = -1;
+    var phoneCol = -1;
+
+    for (var h = 0; h < curHeaders.length; h++) {
+      var colName = curHeaders[h];
+      if (idCol === -1 && (colName.indexOf("submission id") !== -1 || colName.indexOf("lead id") !== -1 || colName === "id")) {
+        idCol = h;
+      }
+      if (emailCol === -1 && (colName.indexOf("email") !== -1)) {
+        emailCol = h;
+      }
+      if (phoneCol === -1 && (colName.indexOf("phone") !== -1 || colName.indexOf("mobile") !== -1)) {
+        phoneCol = h;
+      }
+    }
+
+    var seenKeys = {};
+    // Scan from bottom to top so deleting rows does not shift indices
+    for (var r = data.length - 1; r >= 1; r--) {
+      var row = data[r];
+      var leadId = idCol > -1 ? String(row[idCol] || '').trim() : '';
+      var email = emailCol > -1 ? String(row[emailCol] || '').trim().toLowerCase() : '';
+      var phone = phoneCol > -1 ? String(row[phoneCol] || '').trim().replace(/[^\d]/g, '') : '';
+      
+      // Determine unique row fingerprint
+      var uniqueKey = "";
+      if (leadId && leadId.length > 5) {
+        uniqueKey = "ID:" + leadId;
+      } else if (email && email.indexOf("@") !== -1) {
+        uniqueKey = "EMAIL:" + email + (phone ? ":" + phone : "");
+      } else {
+        uniqueKey = "ROW:" + row.slice(0, Math.min(row.length, 6)).map(function(cell) { return String(cell || '').trim(); }).join("|");
+      }
+
+      if (seenKeys[uniqueKey]) {
+        // Duplicate row detected! Delete row
+        sh.deleteRow(r + 1);
+        dupRowsInTab++;
+        totalDuplicateRowsDeleted++;
+      } else {
+        seenKeys[uniqueKey] = true;
+      }
+    }
+
+    if (dupRowsInTab > 0 || dupColsInTab > 0) {
+      reportTabs.push({
+        tab: sheetName,
+        duplicateRowsDeleted: dupRowsInTab,
+        duplicateColumnsDeleted: dupColsInTab
+      });
+    }
+  }
+
+  var report = {
+    status: "success",
+    operation: "REMOVE_DUPLICATE_RECORDS_AND_FIELDS",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    totalDuplicateRowsDeleted: totalDuplicateRowsDeleted,
+    totalDuplicateColumnsDeleted: totalDuplicateColumnsDeleted,
+    tabBreakdown: reportTabs
+  };
+
+  Logger.log("🧹 Deduplication Completed: " + JSON.stringify(report));
+  return report;
+}
+
+/**
+ * Top-Level Runner for Deduplication:
+ * Select "REMOVE_DUPLICATES_NOW" in toolbar dropdown and click "Run".
+ */
+function REMOVE_DUPLICATES_NOW() {
+  return removeDuplicateRecordsAndFields();
+}
+
+/**
+ * Complete Full Maintenance:
+ * Cleans all test leads AND removes all duplicate records & fields in one pass.
+ */
+function RUN_COMPLETE_SHEET_MAINTENANCE_NOW() {
+  var cleanReport = auditAndArchiveGoogleSheetTestLeads();
+  var dedupReport = removeDuplicateRecordsAndFields();
+  return {
+    status: "success",
+    operation: "COMPLETE_SHEET_MAINTENANCE",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    testLeadPurge: cleanReport,
+    deduplication: dedupReport
+  };
+}
+
+/**
  * Top-Level Direct Runner for Google Apps Script IDE dropdown:
  * Select "CLEAN_ALL_TEST_LEADS_NOW" in the toolbar dropdown and click "Run".
  */
@@ -2981,14 +3754,28 @@ function CLEAN_ALL_TEST_LEADS_NOW() {
 
 /**
  * Web App GET Handler:
- * Trigger automated test lead cleanup via browser URL:
+ * Trigger automated test lead cleanup or deduplication via browser URL:
  * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=clean_test_leads
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=remove_duplicates
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=maintenance
  */
 function doGet(e) {
-  var action = (e && e.parameter && (e.parameter.action || e.parameter.clean)) || "";
+  var action = (e && e.parameter && (e.parameter.action || e.parameter.clean || e.parameter.op)) || "";
 
-  if (action === "clean_test_leads" || action === "clean" || action === "purge" || action === "true") {
+  if (action === "clean_test_leads" || action === "clean" || action === "purge") {
     var result = auditAndArchiveGoogleSheetTestLeads();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === "remove_duplicates" || action === "dedup" || action === "deduplicate") {
+    var result = removeDuplicateRecordsAndFields();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === "maintenance" || action === "full_cleanup" || action === "all") {
+    var result = RUN_COMPLETE_SHEET_MAINTENANCE_NOW();
     return ContentService.createTextOutput(JSON.stringify(result, null, 2))
                          .setMimeType(ContentService.MimeType.JSON);
   }
@@ -3000,12 +3787,16 @@ function doGet(e) {
     timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
     spreadsheetId: CONFIG.MAIN_SPREADSHEET_ID,
     availableActions: {
-      cleanTestLeads: "?action=clean_test_leads"
+      cleanTestLeads: "?action=clean_test_leads",
+      removeDuplicates: "?action=remove_duplicates",
+      fullMaintenance: "?action=maintenance"
     }
   };
 
   return ContentService.createTextOutput(JSON.stringify(status, null, 2))
                        .setMimeType(ContentService.MimeType.JSON);
 }
+
+
 
 

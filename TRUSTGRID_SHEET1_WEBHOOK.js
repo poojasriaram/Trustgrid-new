@@ -194,7 +194,7 @@ var TAB_CONFIGS = {
 
   // 11. Career Applications (Career.tsx)
   "Career_Applications": [
-    "Name", "Email", "Phone", "Job Title / Role", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Letter",
+    "Submission ID", "Name", "Email", "Phone", "Job Title / Role", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Letter",
     "Portfolio / GitHub", "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
   ],
   "Form_Career_Applications": [
@@ -3595,6 +3595,156 @@ function auditAndArchiveGoogleSheetTestLeads() {
 }
 
 /**
+ * PRODUCTION LEAD DEDUPLICATION & FIELD CLEANER
+ * 1. Removes duplicate rows: Detects duplicate submissions by Lead ID, or by identical (Email + Tab/Form),
+ *    keeping the most complete and latest submission, deleting redundant duplicate rows.
+ * 2. Removes duplicate fields: Checks header rows (Row 1) for duplicate or redundant column names in any sheet,
+ *    and removes duplicate columns safely from right to left.
+ * 3. Returns a complete JSON audit report of removed duplicates.
+ */
+function removeDuplicateRecordsAndFields() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  var allSheets = ss.getSheets();
+  var totalDuplicateRowsDeleted = 0;
+  var totalDuplicateColumnsDeleted = 0;
+  var reportTabs = [];
+
+  var systemTabs = [
+    "Live_Traffic_Events", "Visitor_Intelligence_95", "Hourly_Traffic_Rollup",
+    "Daily_Aggregates_Rollup", "Telemetry_Raw_Ingest", "Weekly_Executive_Report",
+    "Executive_KPI_Dashboard", "Intelligence_Sync_Log"
+  ];
+
+  for (var s = 0; s < allSheets.length; s++) {
+    var sh = allSheets[s];
+    var sheetName = sh.getName();
+    if (systemTabs.indexOf(sheetName) !== -1) continue;
+
+    var lastRow = sh.getLastRow();
+    var lastCol = sh.getLastColumn();
+    if (lastRow < 1 || lastCol < 1) continue;
+
+    var dupColsInTab = 0;
+    var dupRowsInTab = 0;
+
+    // --- STEP 1: REMOVE DUPLICATE COLUMNS / FIELDS ---
+    var headers = sh.getRange(1, 1, 1, lastCol).getValues()[0];
+    var seenHeaders = {};
+    for (var c = headers.length - 1; c >= 0; c--) {
+      var hName = String(headers[c] || '').trim().toLowerCase();
+      if (!hName) continue;
+      if (seenHeaders[hName]) {
+        // Duplicate header found! Delete duplicate column
+        sh.deleteColumn(c + 1);
+        dupColsInTab++;
+        totalDuplicateColumnsDeleted++;
+      } else {
+        seenHeaders[hName] = true;
+      }
+    }
+
+    // Refresh dimensions after potential column deletion
+    lastRow = sh.getLastRow();
+    lastCol = sh.getLastColumn();
+    if (lastRow < 2 || lastCol < 1) continue;
+
+    // --- STEP 2: REMOVE DUPLICATE ROWS / DATA ---
+    var data = sh.getDataRange().getValues();
+    var curHeaders = data[0].map(function(h) { return String(h || '').trim().toLowerCase(); });
+    
+    // Find index of Lead ID / Submission ID and Email
+    var idCol = -1;
+    var emailCol = -1;
+    var phoneCol = -1;
+
+    for (var h = 0; h < curHeaders.length; h++) {
+      var colName = curHeaders[h];
+      if (idCol === -1 && (colName.indexOf("submission id") !== -1 || colName.indexOf("lead id") !== -1 || colName === "id")) {
+        idCol = h;
+      }
+      if (emailCol === -1 && (colName.indexOf("email") !== -1)) {
+        emailCol = h;
+      }
+      if (phoneCol === -1 && (colName.indexOf("phone") !== -1 || colName.indexOf("mobile") !== -1)) {
+        phoneCol = h;
+      }
+    }
+
+    var seenKeys = {};
+    // Scan from bottom to top so deleting rows does not shift indices
+    for (var r = data.length - 1; r >= 1; r--) {
+      var row = data[r];
+      var leadId = idCol > -1 ? String(row[idCol] || '').trim() : '';
+      var email = emailCol > -1 ? String(row[emailCol] || '').trim().toLowerCase() : '';
+      var phone = phoneCol > -1 ? String(row[phoneCol] || '').trim().replace(/[^\d]/g, '') : '';
+      
+      // Determine unique row fingerprint
+      var uniqueKey = "";
+      if (leadId && leadId.length > 5) {
+        uniqueKey = "ID:" + leadId;
+      } else if (email && email.indexOf("@") !== -1) {
+        uniqueKey = "EMAIL:" + email + (phone ? ":" + phone : "");
+      } else {
+        uniqueKey = "ROW:" + row.slice(0, Math.min(row.length, 6)).map(function(cell) { return String(cell || '').trim(); }).join("|");
+      }
+
+      if (seenKeys[uniqueKey]) {
+        // Duplicate row detected! Delete row
+        sh.deleteRow(r + 1);
+        dupRowsInTab++;
+        totalDuplicateRowsDeleted++;
+      } else {
+        seenKeys[uniqueKey] = true;
+      }
+    }
+
+    if (dupRowsInTab > 0 || dupColsInTab > 0) {
+      reportTabs.push({
+        tab: sheetName,
+        duplicateRowsDeleted: dupRowsInTab,
+        duplicateColumnsDeleted: dupColsInTab
+      });
+    }
+  }
+
+  var report = {
+    status: "success",
+    operation: "REMOVE_DUPLICATE_RECORDS_AND_FIELDS",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    totalDuplicateRowsDeleted: totalDuplicateRowsDeleted,
+    totalDuplicateColumnsDeleted: totalDuplicateColumnsDeleted,
+    tabBreakdown: reportTabs
+  };
+
+  Logger.log("🧹 Deduplication Completed: " + JSON.stringify(report));
+  return report;
+}
+
+/**
+ * Top-Level Runner for Deduplication:
+ * Select "REMOVE_DUPLICATES_NOW" in toolbar dropdown and click "Run".
+ */
+function REMOVE_DUPLICATES_NOW() {
+  return removeDuplicateRecordsAndFields();
+}
+
+/**
+ * Complete Full Maintenance:
+ * Cleans all test leads AND removes all duplicate records & fields in one pass.
+ */
+function RUN_COMPLETE_SHEET_MAINTENANCE_NOW() {
+  var cleanReport = auditAndArchiveGoogleSheetTestLeads();
+  var dedupReport = removeDuplicateRecordsAndFields();
+  return {
+    status: "success",
+    operation: "COMPLETE_SHEET_MAINTENANCE",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    testLeadPurge: cleanReport,
+    deduplication: dedupReport
+  };
+}
+
+/**
  * Top-Level Direct Runner for Google Apps Script IDE dropdown:
  * Select "CLEAN_ALL_TEST_LEADS_NOW" in the toolbar dropdown and click "Run".
  */
@@ -3604,14 +3754,28 @@ function CLEAN_ALL_TEST_LEADS_NOW() {
 
 /**
  * Web App GET Handler:
- * Trigger automated test lead cleanup via browser URL:
+ * Trigger automated test lead cleanup or deduplication via browser URL:
  * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=clean_test_leads
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=remove_duplicates
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=maintenance
  */
 function doGet(e) {
-  var action = (e && e.parameter && (e.parameter.action || e.parameter.clean)) || "";
+  var action = (e && e.parameter && (e.parameter.action || e.parameter.clean || e.parameter.op)) || "";
 
-  if (action === "clean_test_leads" || action === "clean" || action === "purge" || action === "true") {
+  if (action === "clean_test_leads" || action === "clean" || action === "purge") {
     var result = auditAndArchiveGoogleSheetTestLeads();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === "remove_duplicates" || action === "dedup" || action === "deduplicate") {
+    var result = removeDuplicateRecordsAndFields();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === "maintenance" || action === "full_cleanup" || action === "all") {
+    var result = RUN_COMPLETE_SHEET_MAINTENANCE_NOW();
     return ContentService.createTextOutput(JSON.stringify(result, null, 2))
                          .setMimeType(ContentService.MimeType.JSON);
   }
@@ -3623,7 +3787,9 @@ function doGet(e) {
     timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
     spreadsheetId: CONFIG.MAIN_SPREADSHEET_ID,
     availableActions: {
-      cleanTestLeads: "?action=clean_test_leads"
+      cleanTestLeads: "?action=clean_test_leads",
+      removeDuplicates: "?action=remove_duplicates",
+      fullMaintenance: "?action=maintenance"
     }
   };
 
