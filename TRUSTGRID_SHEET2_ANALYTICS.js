@@ -15,7 +15,7 @@ var DATA_SHEET_ID = "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0";
 // 🔴 WEBSITE URL (For Automated QA Audits)
 var SITE_BASE_URL = "https://trustgrid.ai";
 
-// 🔴 DEVELOPMENT MODE: False ensures staging, vercel.app and localhost traffic is purged from production dashboards
+// 🔴 DEVELOPMENT MODE: False ensures localhost development traffic is purged from production dashboards (live vercel.app and production traffic is preserved 100%)
 var INCLUDE_LOCALHOST_IN_DEV = false;
 
 // ── SaaS Dark / Slate Enterprise Theme ──────────────────────────────────────────
