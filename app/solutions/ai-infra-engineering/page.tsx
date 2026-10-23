@@ -1083,37 +1083,37 @@ export default function AIInfraEngineeringPage() {
               </span>
             </div>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6 max-w-4xl">
+            <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mb-6 max-w-4xl">
               Modern AI success depends on purpose-engineered compute efficiency. TRUSTGRID.AI transforms raw GPU hardware into hyper-optimized AI Factories through kernel-level CUDA tuning, NCCL collective synchronization, and enterprise model serving stacks.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 hover:bg-slate-800 transition-colors">
                 <span className="text-[11px] font-bold text-cyan-400 uppercase tracking-wider block mb-1.5">Compute Orchestration</span>
                 <h5 className="font-bold text-white text-sm mb-1.5">Kubernetes &amp; Slurm AI Fabrics</h5>
-                <p className="text-xs text-slate-300 mb-2">Automated multi-tenant cluster scheduling, dynamic MIG partitioning, and auto-scaling GPU worker pools.</p>
-                <div className="text-[11px] text-cyan-300 font-mono">30–70% utilization boost</div>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed mb-2">Automated multi-tenant cluster scheduling, dynamic MIG partitioning, and auto-scaling GPU worker pools.</p>
+                <div className="text-[11px] text-cyan-300 font-mono font-medium">30–70% utilization boost</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 hover:bg-slate-800 transition-colors">
                 <span className="text-[11px] font-bold text-blue-400 uppercase tracking-wider block mb-1.5">Kernel Optimization</span>
                 <h5 className="font-bold text-white text-sm mb-1.5">NVIDIA CUDA &amp; NCCL Tuning</h5>
-                <p className="text-xs text-slate-300 mb-2">Custom CUDA kernels, FlashAttention-3 integration, and line-rate NCCL barrier tuning for zero-straggler training.</p>
-                <div className="text-[11px] text-blue-300 font-mono">&gt;90% theoretical peak FLOPS</div>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed mb-2">Custom CUDA kernels, FlashAttention-3 integration, and line-rate NCCL barrier tuning for zero-straggler training.</p>
+                <div className="text-[11px] text-blue-300 font-mono font-medium">&gt;90% theoretical peak FLOPS</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 hover:bg-slate-800 transition-colors">
                 <span className="text-[11px] font-bold text-indigo-400 uppercase tracking-wider block mb-1.5">Model Serving Engines</span>
                 <h5 className="font-bold text-white text-sm mb-1.5">TensorRT-LLM, vLLM &amp; Triton</h5>
-                <p className="text-xs text-slate-300 mb-2">Continuous batching, chunked prefill, speculative decoding, and dynamic multi-LoRA adapters served at line speed.</p>
-                <div className="text-[11px] text-indigo-300 font-mono">2–4x inference throughput</div>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed mb-2">Continuous batching, chunked prefill, speculative decoding, and dynamic multi-LoRA adapters served at line speed.</p>
+                <div className="text-[11px] text-indigo-300 font-mono font-medium">2–4x inference throughput</div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700 hover:bg-slate-800 transition-colors">
                 <span className="text-[11px] font-bold text-teal-400 uppercase tracking-wider block mb-1.5">Quantization &amp; Unit Cost</span>
                 <h5 className="font-bold text-white text-sm mb-1.5">FP8 / INT4 Precision Serving</h5>
-                <p className="text-xs text-slate-300 mb-2">Activation-aware weight quantization and KV-cache compression minimizing footprint per token produced.</p>
-                <div className="text-[11px] text-teal-300 font-mono">30–60% TCO cost reduction</div>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed mb-2">Activation-aware weight quantization and KV-cache compression minimizing footprint per token produced.</p>
+                <div className="text-[11px] text-teal-300 font-mono font-medium">30–60% TCO cost reduction</div>
               </div>
             </div>
           </div>
@@ -1262,23 +1262,23 @@ export default function AIInfraEngineeringPage() {
             </p>
           </div>
 
-          <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800">
+          <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-cyan-400 block mb-1">Real-Time Telemetry</span>
-                <p className="text-xs text-slate-300">Continuous ingestion of rack kW, CDU fluid temperatures, ambient wet-bulb, and optical transceiver BER.</p>
+              <div className="p-4 rounded-xl bg-slate-800/90 border border-slate-700/80 shadow-sm">
+                <span className="text-xs font-bold text-cyan-400 block mb-1.5">Real-Time Telemetry</span>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed">Continuous ingestion of rack kW, CDU fluid temperatures, ambient wet-bulb, and optical transceiver BER.</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-blue-400 block mb-1">Predictive Anomaly Detection</span>
-                <p className="text-xs text-slate-300">Machine learning models detecting capacitor wear, pump cavitation, and GPU thermal runaway 72 hours before failure.</p>
+              <div className="p-4 rounded-xl bg-slate-800/90 border border-slate-700/80 shadow-sm">
+                <span className="text-xs font-bold text-blue-400 block mb-1.5">Predictive Anomaly Detection</span>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed">Machine learning models detecting capacitor wear, pump cavitation, and GPU thermal runaway 72 hours before failure.</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-emerald-400 block mb-1">Self-Healing Remediation</span>
-                <p className="text-xs text-slate-300">Automated coolant flow redistribution, dynamic fan staging, and workload draining to healthy spare nodes.</p>
+              <div className="p-4 rounded-xl bg-slate-800/90 border border-slate-700/80 shadow-sm">
+                <span className="text-xs font-bold text-emerald-400 block mb-1.5">Self-Healing Remediation</span>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed">Automated coolant flow redistribution, dynamic fan staging, and workload draining to healthy spare nodes.</p>
               </div>
-              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
-                <span className="text-xs font-bold text-purple-400 block mb-1">Digital Twin Simulations</span>
-                <p className="text-xs text-slate-300">Live 3D thermodynamic digital twin predicting thermal hot-spots before deploying new high-density clusters.</p>
+              <div className="p-4 rounded-xl bg-slate-800/90 border border-slate-700/80 shadow-sm">
+                <span className="text-xs font-bold text-purple-400 block mb-1.5">Digital Twin Simulations</span>
+                <p className="text-xs text-slate-100 font-normal leading-relaxed">Live 3D thermodynamic digital twin predicting thermal hot-spots before deploying new high-density clusters.</p>
               </div>
             </div>
           </div>
@@ -1672,7 +1672,7 @@ export default function AIInfraEngineeringPage() {
                   </h5>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     {slsStageGates[activeSLSStage].activities.map((activity, i) => (
-                      <li key={i} className="text-xs text-slate-300 flex items-start gap-2.5 leading-relaxed">
+                      <li key={i} className="text-xs text-slate-100 flex items-start gap-2.5 leading-relaxed font-normal">
                         <CheckCircle2 size={14} className="text-indigo-400 shrink-0 mt-0.5" />
                         <span>{activity}</span>
                       </li>
@@ -1683,45 +1683,45 @@ export default function AIInfraEngineeringPage() {
                 {/* 4 Details Grid: Deliverables, Commercial Model, KPIs, Key Risks */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {/* Deliverables */}
-                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
                       <FileText size={14} className="text-indigo-400" />
                       <span>Deliverables</span>
                     </div>
-                    <p className="text-xs text-slate-200 leading-relaxed font-mono">
+                    <p className="text-xs text-slate-100 leading-relaxed font-mono">
                       {slsStageGates[activeSLSStage].deliverables}
                     </p>
                   </div>
 
                   {/* Commercial Model */}
-                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
                       <DollarSign size={14} className="text-emerald-400" />
                       <span>Commercial Model</span>
                     </div>
-                    <p className="text-xs text-slate-200 leading-relaxed">
+                    <p className="text-xs text-slate-100 leading-relaxed">
                       {slsStageGates[activeSLSStage].commercialModel}
                     </p>
                   </div>
 
                   {/* KPIs */}
-                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
                       <Target size={14} className="text-cyan-400" />
                       <span>KPIs</span>
                     </div>
-                    <p className="text-xs text-slate-200 leading-relaxed">
+                    <p className="text-xs text-slate-100 leading-relaxed">
                       {slsStageGates[activeSLSStage].kpis}
                     </p>
                   </div>
 
                   {/* Key Risks */}
-                  <div className="p-4 rounded-xl bg-slate-900/70 border border-slate-800">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
                       <AlertCircle size={14} className="text-rose-400" />
                       <span>Key Risks &amp; Mitigations</span>
                     </div>
-                    <p className="text-xs text-slate-200 leading-relaxed">
+                    <p className="text-xs text-slate-100 leading-relaxed">
                       {slsStageGates[activeSLSStage].keyRisks}
                     </p>
                   </div>
@@ -1951,40 +1951,40 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
                 <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block mb-1">SOURCE</span>
-                <h4 className="font-bold text-white text-sm mb-1">Power Sourcing &amp; Structuring</h4>
-                <ul className="text-xs text-slate-300 space-y-1">
+                <h4 className="font-bold text-white text-sm mb-1.5">Power Sourcing &amp; Structuring</h4>
+                <ul className="text-xs text-slate-100 space-y-1.5 font-normal">
                   <li>• Open-access captive &amp; group-captive</li>
                   <li>• Power-exchange tariff optimization</li>
                   <li>• Substation dedicated feeders &amp; HT links</li>
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
                 <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block mb-1">CONTRACT</span>
-                <h4 className="font-bold text-white text-sm mb-1">PPA Structuring &amp; Signing</h4>
-                <ul className="text-xs text-slate-300 space-y-1">
+                <h4 className="font-bold text-white text-sm mb-1.5">PPA Structuring &amp; Signing</h4>
+                <ul className="text-xs text-slate-100 space-y-1.5 font-normal">
                   <li>• Solar, wind and hybrid PPA negotiation</li>
                   <li>• Generator &amp; DISCOM counterparty terms</li>
                   <li>• Renewable Energy Certificates (RECs)</li>
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
                 <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block mb-1">GREEN</span>
-                <h4 className="font-bold text-white text-sm mb-1">Green Energy &amp; Storage</h4>
-                <ul className="text-xs text-slate-300 space-y-1">
+                <h4 className="font-bold text-white text-sm mb-1.5">Green Energy &amp; Storage</h4>
+                <ul className="text-xs text-slate-100 space-y-1.5 font-normal">
                   <li>• 100% renewable pathways &amp; net-zero</li>
                   <li>• Battery Energy Storage Systems (BESS)</li>
                   <li>• Sustainability-linked green financing</li>
                 </ul>
               </div>
 
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-xs">
+              <div className="p-4 rounded-xl bg-slate-800/80 border border-slate-700">
                 <span className="text-[10px] font-bold text-teal-400 uppercase tracking-wider block mb-1">MANAGE</span>
-                <h4 className="font-bold text-white text-sm mb-1">Energy Management &amp; Liaison</h4>
-                <ul className="text-xs text-slate-300 space-y-1">
+                <h4 className="font-bold text-white text-sm mb-1.5">Energy Management &amp; Liaison</h4>
+                <ul className="text-xs text-slate-100 space-y-1.5 font-normal">
                   <li>• ISO 50001 energy management audits</li>
                   <li>• Metering, billing &amp; demand-side response</li>
                   <li>• DISCOM, SLDC &amp; CERC/SERC liaison</li>

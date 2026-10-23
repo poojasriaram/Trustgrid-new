@@ -106,7 +106,8 @@ export function validateLeadSubmission(data: any): LeadValidationResult & { data
 
   const name = typeof data.name === 'string' ? data.name.trim() : ''
   const email = typeof data.email === 'string' ? data.email.trim() : ''
-  const phone = typeof data.phone === 'string' ? data.phone.trim() : (typeof data.mobile === 'string' ? data.mobile.trim() : '')
+  const rawPhoneVal = data.phone || data.mobile || data.phoneNumber || data.phone_number || data.mobileNumber || data.mobile_number || data.contactNumber || data.contact_number || data['Phone Number'] || data['Mobile'] || data['Contact Number'] || ''
+  const phone = typeof rawPhoneVal === 'string' ? rawPhoneVal.trim() : (rawPhoneVal ? String(rawPhoneVal).trim() : '')
   const company = typeof data.company === 'string' && data.company.trim() ? data.company.trim() : (typeof data.currentPreviousCompany === 'string' && data.currentPreviousCompany.trim() ? data.currentPreviousCompany.trim() : 'Enterprise Organization')
   const message = typeof data.message === 'string' ? data.message.trim() : (typeof data.requirement === 'string' ? data.requirement.trim() : '')
   const role = typeof data.role === 'string' ? data.role.trim() : (typeof data.designation === 'string' ? data.designation.trim() : '')

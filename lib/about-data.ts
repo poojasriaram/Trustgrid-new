@@ -170,8 +170,9 @@ export const teamMembers: TeamMember[] = [
   { name: "Soumya Sommiah", role: "Company Secretary & Advisor", category: "advisory", badge: "Corporate Governance", initials: "SS" },
   { name: "Soumya S", role: "Corporate Counsel", category: "advisory", badge: "Legal Counsel", initials: "SS" },
   { name: "Aswathi Nair", role: "Corporate Counsel", category: "advisory", badge: "Legal Counsel", initials: "AN" },
-  { name: "Sonu Priyadharshini", role: "Sr Manager - (Talent Acceleration & General Admin)", category: "advisory", badge: "Talent Mgmt & Acceleration", initials: "SP" },
-  { name: "To Be Hired", role: "HR Manager", category: "advisory", badge: "Talent Acquisition", initials: "TBH" },
+  { name: "Sonu Priyadharshini", role: "Sr Manager - Talent Acceleration", category: "advisory", badge: "Talent Acceleration", initials: "SP" },
+  { name: "Vanitha T", role: "Manager - General Admin", category: "advisory", badge: "General Admin", initials: "VT" },
+  { name: "Gagna Sindhu", role: "HR Operations Specialist", category: "advisory", badge: "HR Operations", initials: "GS" },
 
   // Engineering Talent & Global Network (Last Row)
   { name: "Poojasri", role: "AI/ML Engineer", category: "engineering", badge: "AI/ML Engineer", initials: "P" },

@@ -252,7 +252,7 @@ export default function AboutPage() {
             <div key={idx} className="member-card animated-card reveal-up">
               <div className="member-avatar-placeholder">
                 {member.initials ? (
-                  <span className="member-initials" style={{ fontWeight: 800, fontSize: '13px', letterSpacing: '0.02em' }}>
+                  <span className="member-initials" style={{ fontWeight: 800, fontSize: '13px', letterSpacing: '0.02em', color: '#1d4ed8' }}>
                     {member.initials}
                   </span>
                 ) : (

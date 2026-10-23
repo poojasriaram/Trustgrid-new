@@ -34,7 +34,7 @@ export default function ContactPage() {
                 <h1 style={{ fontSize: 'clamp(28px, 3.8vw, 42px)', fontWeight: 800, color: '#0f172a', lineHeight: 1.15, margin: '8px 0 14px' }}>
                   Connect with TRUSTGRID.AI <span style={{ color: '#1d5cff' }}>Engineering &amp; Systems Leads.</span>
                 </h1>
-                <p className="diagnostic-hero-lead" style={{ fontSize: '15px', color: '#475569', lineHeight: 1.55 }}>
+                <p className="diagnostic-hero-lead" style={{ fontSize: '15.5px', color: '#1e293b', lineHeight: 1.55 }}>
                   Reach out to our principal architecture leads, GPU compute engineers, and strategic enterprise advisors across our US, Canada, Australia, Japan, Singapore, and India offices.
                 </p>
               </div>
@@ -46,19 +46,19 @@ export default function ContactPage() {
                     <Mail size={16} />
                   </div>
                   <div>
-                    <strong>Direct Enterprise Channels</strong>
-                    <p style={{ margin: '3px 0 2px' }}>
+                    <strong style={{ color: '#09142e' }}>Direct Enterprise Channels</strong>
+                    <p style={{ margin: '3px 0 2px', color: '#1e293b' }}>
                       California (Silicon Valley): <a href="mailto:lavanya@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
                         lavanya@trustgrid.ai
-                      </a> • <a href="tel:+16507724145" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+1 650 772 4145</a>
+                      </a> • <a href="tel:+16507724145" style={{ color: '#09142e', textDecoration: 'none', fontWeight: 600 }}>+1 650 772 4145</a>
                     </p>
-                    <p style={{ margin: '3px 0 2px' }}>
+                    <p style={{ margin: '3px 0 2px', color: '#1e293b' }}>
                       US Executive (Americas / NY): <a href="mailto:Murali@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
                         Murali@trustgrid.ai
-                      </a> • <a href="tel:+16507724145" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+1 650 772 4145</a>
+                      </a> • <a href="tel:+16507724145" style={{ color: '#09142e', textDecoration: 'none', fontWeight: 600 }}>+1 650 772 4145</a>
                     </p>
-                    <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0' }}>
-                      India HQ (Bengaluru): <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>cs@trustgrid.in</a> • <a href="tel:+919513088612" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+91 95130 88612</a> • Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a>
+                    <p style={{ fontSize: '13px', color: '#334155', margin: '4px 0 0', lineHeight: 1.45 }}>
+                      India HQ (Bengaluru): <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>cs@trustgrid.in</a> • <a href="tel:+919513088612" style={{ color: '#09142e', textDecoration: 'none', fontWeight: 600 }}>+91 95130 88612</a> • Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>Hemalata@trustgrid.ai</a>
                     </p>
                   </div>
                 </div>

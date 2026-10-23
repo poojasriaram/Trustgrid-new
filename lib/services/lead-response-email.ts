@@ -211,8 +211,9 @@ export function buildLeadResponseEmailHtml(lead: NormalizedLead, slots: MeetingS
  * Strictly bypassed for any test / QA leads.
  */
 export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<LeadResponseEmailResult> {
-  // CRITICAL SAFETY CHECK: NEVER SEND TO TEST LEADS
-  if (lead.isTestLead || lead.productionOrTest === 'TEST') {
+  // CRITICAL SAFETY CHECK: NEVER SEND TO TEST LEADS UNLESS EXPLICIT TESTING BY AUTHORIZED TEAM (pooja test)
+  const isPoojaOrTeamTester = lead.name.toLowerCase().includes('pooja') || lead.email.toLowerCase().includes('pooja') || lead.email.toLowerCase().includes('trustgrid')
+  if ((lead.isTestLead || lead.productionOrTest === 'TEST') && !isPoojaOrTeamTester) {
     console.log(`[Lead Response Email] Quarantined test lead ${lead.leadId} (${lead.email}). Customer response email strictly bypassed.`)
     return {
       success: true,

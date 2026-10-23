@@ -93,6 +93,9 @@ export const COUNTRY_CODES = [
 export const AREAS_OF_INTEREST = OFFERINGS_SERVICES.map(s => s.label)
 
 interface SessionBookingFormProps {
+  title?: string
+  subtitle?: string
+  badge?: string
   initialArea?: string
   ctaSource?: string
   compact?: boolean
@@ -101,6 +104,9 @@ interface SessionBookingFormProps {
 }
 
 export function SessionBookingForm({
+  title = 'Book a Consultation & Architecture Session',
+  subtitle = 'Schedule a dedicated 45-minute architectural & strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.',
+  badge = 'DIRECT CONSULTATION & BOOKINGS',
   initialArea,
   ctaSource = 'session_booking_flow',
   compact = false,
@@ -467,17 +473,18 @@ export function SessionBookingForm({
             fontWeight: 700,
             letterSpacing: '0.04em',
             textTransform: 'uppercase',
-            marginBottom: '8px'
+            marginBottom: '8px',
+            border: '1px solid #dbeafe'
           }}
         >
           <Sparkles size={13} />
-          <span>DIRECT ARCHITECT CONSULTATION</span>
+          <span>{badge}</span>
         </div>
-        <h3 style={{ margin: '0 0 6px', fontSize: '21px', fontWeight: 800, color: '#0f172a' }}>
-          Book a Session with an AI Architect
+        <h3 style={{ margin: '0 0 6px', fontSize: '21px', fontWeight: 800, color: '#09142e', letterSpacing: '-0.01em' }}>
+          {title}
         </h3>
-        <p style={{ margin: 0, fontSize: '13.5px', color: '#64748b', lineHeight: 1.5 }}>
-          Schedule a dedicated 45-minute architectural &amp; strategic briefing with TRUSTGRID.AI principal systems engineers. We evaluate your compute economics, multi-agent readiness, lossless networking, and quantum security to outline a tangible roadmap.
+        <p style={{ margin: 0, fontSize: '14px', color: '#334155', lineHeight: 1.55 }}>
+          {subtitle}
         </p>
       </div>
 

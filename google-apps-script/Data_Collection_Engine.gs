@@ -2123,15 +2123,31 @@ function sendReportEmail(subject, htmlBody) {
 // 9. FIELD RESOLVER & UTILITIES
 // =========================================================================================
 
+function formatPhoneForSheet(rawPhone) {
+  if (rawPhone == null) return "";
+  var str = String(rawPhone).trim();
+  if (!str) return "";
+  if (str.charAt(0) === "'") return str;
+  // Prefix with single quote to prevent Google Sheets from interpreting '+' or spaces as formula parse errors
+  return "'" + str;
+}
+
 function resolveField(header, data) {
+  var rawPhone = data.phone || data.mobile || data.phoneNumber || data.phone_number || data.mobileNumber || data.mobile_number || data["Phone Number"] || data["Contact Number"] || data["Mobile Number"] || data["Mobile"] || "";
+  var safePhone = rawPhone ? formatPhoneForSheet(rawPhone) : "";
+
   var explicitMap = {
     "Name":                   data.name         || data.fullName    || data["Full Name"]    || data["FullName"] || "",
     "Full Name":              data.name         || data.fullName    || data["Full Name"]    || data["FullName"] || "",
     "Email":                  data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
     "Work Email":             data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
     "Corporate Email":        data.email        || data.workEmail   || data["Work Email"]   || data["Corporate Email"] || "",
-    "Phone":                  data.phone        || data.phoneNumber || data["Phone Number"] || data["Contact Number"] || "",
-    "Phone Number":           data.phone        || data.phoneNumber || data["Phone Number"] || data["Contact Number"] || "",
+    "Phone":                  safePhone,
+    "Phone Number":           safePhone,
+    "Mobile":                 safePhone,
+    "Mobile Number":          safePhone,
+    "Contact Number":         safePhone,
+    "Contact":                safePhone,
     "Company":                data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
     "Company Name":           data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
     "Company / Org":          data.company      || data.companyName || data["Company Name"] || data["organization"] || "",
@@ -2175,6 +2191,12 @@ function resolveField(header, data) {
   
   if (explicitMap.hasOwnProperty(header)) {
     var val = explicitMap[header];
+    if (typeof val === 'string' && val.length > 0) {
+      var fc = val.charAt(0);
+      if (fc === '+' || fc === '=' || fc === '@') {
+        val = "'" + val;
+      }
+    }
     return (val !== null && typeof val === 'object') ? JSON.stringify(val) : (val === undefined ? "" : val);
   }
   
@@ -2191,6 +2213,13 @@ function resolveField(header, data) {
   var value = data[slug];
   if (value === undefined) value = data[header];
   if (value === undefined) value = "";
+  
+  if (typeof value === 'string' && value.length > 0) {
+    var firstChar = value.charAt(0);
+    if (firstChar === '+' || firstChar === '=' || firstChar === '@') {
+      value = "'" + value;
+    }
+  }
   
   return (value !== null && typeof value === 'object') ? JSON.stringify(value) : value;
 }

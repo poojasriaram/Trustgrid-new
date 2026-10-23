@@ -40,6 +40,12 @@ export interface RawLeadInput {
   email: string
   phone?: string
   mobile?: string
+  phoneNumber?: string
+  phone_number?: string
+  mobileNumber?: string
+  mobile_number?: string
+  contactNumber?: string
+  contact_number?: string
   company?: string
   currentPreviousCompany?: string
   designation?: string
@@ -294,7 +300,22 @@ export function derivePageName(pageUrl?: string): string {
 export function normalizeLead(input: RawLeadInput): NormalizedLead {
   const name = (input.name || 'Enterprise Inquiry').trim()
   const email = (input.email || '').trim()
-  const phone = (input.mobile || input.phone || '').trim()
+  const rawPhone = (
+    input.phone ||
+    input.mobile ||
+    input.phoneNumber ||
+    input.phone_number ||
+    input.mobileNumber ||
+    input.mobile_number ||
+    input.contactNumber ||
+    input.contact_number ||
+    (input as any)['Phone Number'] ||
+    (input as any)['Contact Number'] ||
+    (input as any)['Mobile Number'] ||
+    (input as any)['Mobile'] ||
+    ''
+  ).toString().trim()
+  const phone = rawPhone
   const company = (input.currentPreviousCompany || input.company || 'Enterprise Organization').trim()
   const requirement = (input.requirement || input.message || `Inquiry submitted via ${input.formName || 'Website'}`).trim()
   const message = (input.message || input.requirement || '').trim()

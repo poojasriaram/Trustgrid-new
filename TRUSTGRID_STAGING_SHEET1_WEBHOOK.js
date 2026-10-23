@@ -136,13 +136,22 @@ function doGet(e) {
   }, 200);
 }
 
+function formatPhoneForSheet(rawPhone) {
+  if (rawPhone == null) return "";
+  var str = String(rawPhone).trim();
+  if (!str) return "";
+  if (str.charAt(0) === "'") return str;
+  return "'" + str;
+}
+
 /**
  * Record a Staging Lead or Consultation Booking
  */
 function recordStagingLead(sheet, p, dateStr, tabName) {
   var name = p.fullName || p.name || "Test User";
   var email = p.work_email || p.email || p.userEmail || "test@example.com";
-  var phone = p.phone || p.mobile || "";
+  var rawPhone = p.phone || p.mobile || p.phoneNumber || p.phone_number || "";
+  var phone = formatPhoneForSheet(rawPhone);
   var company = p.company || p.currentPreviousCompany || "";
   var role = p.role || p.designation || p.jobTitle || "";
   var companySize = p.companySize || "";
