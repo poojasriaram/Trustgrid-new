@@ -246,10 +246,36 @@ function getOrCreateTab(name) {
 
 function styleTitle(sh, text, c_span, bg) {
     if (!sh) return;
-    sh.getRange(1, 1, 1, Math.max(c_span, 1)).merge().setValue(text).setBackground(bg).setFontColor(C.w).setFontWeight("bold").setFontSize(16).setHorizontalAlignment("center").setVerticalAlignment("middle");
-    sh.setRowHeight(1, 55);
+    var span = Math.max(c_span || 10, 1);
+    
+    // Set dashboard canvas background from row 3 downwards (never overwriting Row 1 banner)
+    try {
+        sh.getRange(3, 1, 118, 26).setBackground(C.bg);
+    } catch (e) {}
+
+    // 🎯 Row 1 Master Banner: High-End Cyber Navy (#060e22) with Electric Cyan (#38bdf8) text
+    // High-contrast, executive aesthetic, NEVER white-on-white!
+    var titleBg = "#060e22"; // Cyber Navy
+    var titleTextColor = "#38bdf8"; // Electric Cyan (NOT white, highly visible)
+
+    sh.getRange(1, 1, 1, span)
+      .merge()
+      .setValue(text)
+      .setBackground(titleBg)
+      .setFontColor(titleTextColor)
+      .setFontWeight("bold")
+      .setFontSize(15)
+      .setHorizontalAlignment("center")
+      .setVerticalAlignment("middle");
+
+    sh.setRowHeight(1, 52);
     sh.setFrozenRows(2);
-    sh.getRange("A2").setValue("TRUSTGRID.AI ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString()).setBackground(C.bg).setFontColor(C.m).setFontSize(10).setFontStyle("italic");
+
+    sh.getRange("A2").setValue("TRUSTGRID.AI ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString())
+      .setBackground(C.bg)
+      .setFontColor(C.m)
+      .setFontSize(10)
+      .setFontStyle("italic");
 }
 
 function setColWidths(sh, startCol, widths) {
@@ -263,7 +289,7 @@ function setColWidths(sh, startCol, widths) {
 function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
     var sh = getOrCreateTab("🛰️ Mission Control");
     styleTitle(sh, "🛰️ TRUSTGRID.AI — CENTRAL COMMAND & MISSION CONTROL", 12, C.t);
-    sh.getRange("A1:Z100").setBackground(C.bg);
+    sh.getRange("A3:Z100").setBackground(C.bg);
     setColWidths(sh, 1, [20, 200, 200, 200, 200, 200, 20].concat(new Array(10).fill(100)));
 
     if (!tData || tData.length < 2) {
@@ -1010,7 +1036,7 @@ function buildLeadsConversionsIntelligence(leadTabs, formsData, tData) {
 function buildSessionIntelligenceTab(tData, sessData, db) {
     var sh = getOrCreateTab("🕹️ Sessions Intelligence");
     styleTitle(sh, "🕹️ TRUSTGRID.AI — ADVANCED SESSION LIFECYCLE & ENGAGEMENT INTELLIGENCE", 10, C.pu);
-    sh.getRange("A1:Z120").setBackground(C.bg);
+    sh.getRange("A3:Z120").setBackground(C.bg);
     setColWidths(sh, 1, [20, 180, 160, 140, 120, 120, 160, 160, 140, 140, 140]);
 
     var sessions = [];
@@ -1120,7 +1146,7 @@ function buildSessionIntelligenceTab(tData, sessData, db) {
 function buildTrafficAttributionTab(tData, attrData, db) {
     var sh = getOrCreateTab("🎯 Traffic Attribution");
     styleTitle(sh, "🎯 TRUSTGRID.AI — MULTI-TOUCH TRAFFIC & CAMPAIGN ATTRIBUTION", 10, C.c);
-    sh.getRange("A1:Z120").setBackground(C.bg);
+    sh.getRange("A3:Z120").setBackground(C.bg);
     setColWidths(sh, 1, [20, 180, 160, 160, 160, 140, 140, 140, 140]);
 
     var channels = {}, campaigns = {}, referrers = {};
@@ -1218,7 +1244,7 @@ function buildTrafficAttributionTab(tData, attrData, db) {
 function buildNetworkSecurityIntelligenceTab(tData, secData, db) {
     var sh = getOrCreateTab("🛡️ Network Security Intelligence");
     styleTitle(sh, "🛡️ TRUSTGRID.AI — IP PRIVACY & NETWORK FORENSICS INTELLIGENCE", 9, C.re);
-    sh.getRange("A1:Z120").setBackground(C.bg);
+    sh.getRange("A3:Z120").setBackground(C.bg);
     setColWidths(sh, 1, [20, 180, 160, 140, 140, 200, 140, 140, 140]);
 
     var subnets = {}, asns = {};
@@ -1297,7 +1323,7 @@ function buildNetworkSecurityIntelligenceTab(tData, secData, db) {
 function buildGeoTimezoneMatrixTab(tData, geoData, db) {
     var sh = getOrCreateTab("🌐 Geo & Timezone Matrix");
     styleTitle(sh, "🌐 TRUSTGRID.AI — GLOBAL VISITOR GEO & 24-HOUR ENGAGEMENT MATRIX", 9, C.g);
-    sh.getRange("A1:Z120").setBackground(C.bg);
+    sh.getRange("A3:Z120").setBackground(C.bg);
     setColWidths(sh, 1, [20, 140, 140, 140, 140, 160, 160, 140, 140]);
 
     var hourDistribution = new Array(24).fill(0);
@@ -1423,6 +1449,8 @@ function onOpen() {
         .createMenu('🛡️ TRUSTGRID INTELLIGENCE')
         .addItem('🔄 Pull Data & Refresh All 20 Dashboards', 'PULL_DATA_AND_BUILD_ALL_DASHBOARDS')
         .addSeparator()
+        .addItem('🎨 Fix All Heading Colors & Styles', 'FIX_ALL_HEADING_COLORS_NOW')
+        .addSeparator()
         .addItem('🕹️ Rebuild Sessions Intelligence', 'BUILD_SESSIONS_INTELLIGENCE_ONLY')
         .addItem('🎯 Rebuild Traffic Attribution', 'BUILD_TRAFFIC_ATTRIBUTION_ONLY')
         .addItem('🛡️ Rebuild Network Security Forensics', 'BUILD_NETWORK_SECURITY_ONLY')
@@ -1431,6 +1459,43 @@ function onOpen() {
         .addItem('🧹 Clean Sheet 1 Test Leads', 'CLEAN_SHEET1_TEST_LEADS')
         .addItem('🧼 Remove Duplicates & Clean Fields (Sheet 1)', 'REMOVE_SHEET1_DUPLICATES')
         .addToUi();
+}
+
+/**
+ * 🎨 INSTANT HEADING COLOR FIXER
+ * Scans all tabs in this spreadsheet and updates Row 1 heading text from white to
+ * high-contrast Electric Cyan (#38bdf8) with Cyber Navy (#060e22) background.
+ */
+function FIX_ALL_HEADING_COLORS_NOW() {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!ss) return;
+    var sheets = ss.getSheets();
+    var fixedCount = 0;
+
+    for (var i = 0; i < sheets.length; i++) {
+        var sh = sheets[i];
+        if (sh.getLastRow() >= 1) {
+            var val = String(sh.getRange(1, 1).getValue() || '');
+            if (val.indexOf("TRUSTGRID.AI") !== -1 || val.indexOf("—") !== -1 || val.indexOf("Dashboard") !== -1 || val.indexOf("Analysis") !== -1 || val.indexOf("Report") !== -1 || val.indexOf("Metrics") !== -1) {
+                var lastCol = Math.max(sh.getLastColumn(), 10);
+                sh.getRange(1, 1, 1, lastCol)
+                  .setBackground("#060e22")
+                  .setFontColor("#38bdf8")
+                  .setFontWeight("bold")
+                  .setFontSize(15)
+                  .setHorizontalAlignment("center")
+                  .setVerticalAlignment("middle");
+                sh.setRowHeight(1, 52);
+                fixedCount++;
+            }
+        }
+    }
+
+    try {
+        SpreadsheetApp.getUi().alert("✅ SUCCESS! Updated headings across " + fixedCount + " tabs.\n\nAll titles now feature Cyber Navy (#060e22) background with Electric Cyan (#38bdf8) bold text.");
+    } catch (e) {
+        Logger.log("Heading fix complete for " + fixedCount + " tabs.");
+    }
 }
 
 function CLEAN_SHEET1_TEST_LEADS() {
