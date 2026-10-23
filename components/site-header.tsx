@@ -48,7 +48,10 @@ import {
   Wifi,
   Radio,
   Server,
-  Activity
+  Activity,
+  Scale,
+  Clock,
+  AlertCircle
 } from 'lucide-react'
 import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
@@ -131,88 +134,12 @@ const aiInfraMenuItems = [
   }
 ]
 
-// 2. Agentic Enterprise Menu Items (12 Items)
-const agenticEnterpriseMenuItems = [
-  {
-    id: 'agent-architecture',
-    label: 'Autonomous Agent Architecture',
-    desc: 'Cognitive loops, ReAct, Tree-of-Thought & persistent memory',
-    icon: Bot
-  },
-  {
-    id: 'multi-agent-orchestration',
-    label: 'Multi-Agent Swarm Orchestration',
-    desc: 'LangGraph, AutoGen, CrewAI & deterministic consensus DAGs',
-    icon: Workflow
-  },
-  {
-    id: 'vertical-factories',
-    label: 'Vertical Enterprise Agent Factories',
-    desc: 'Pre-built autonomous agents for Finance, Supply Chain, SRE & HR',
-    icon: Layers
-  },
-  {
-    id: 'mcp-tool-integration',
-    label: 'Model Context Protocol & Tools',
-    desc: 'Standardized tool interfaces, ERP/CRM & database connectors',
-    icon: Cpu
-  },
-  {
-    id: 'agentops-governance',
-    label: 'Enterprise AgentOps & Telemetry',
-    desc: 'Distributed trace observability, token telemetry & failure triage',
-    icon: BarChart3
-  },
-  {
-    id: 'guardrails-safety',
-    label: 'Runtime Guardrails & Firewalls',
-    desc: 'Anti-injection shields, semantic boundary enforcement & safety',
-    icon: ShieldCheck
-  },
-  {
-    id: 'human-agent-teaming',
-    label: 'Human-in-the-Loop (HITL) Teaming',
-    desc: 'Dynamic confidence gates, approval workflows & workforce ops',
-    icon: Users
-  },
-  {
-    id: 'synthetic-eval-sprints',
-    label: 'Continuous Agent Evaluation',
-    desc: 'Synthetic benchmarking, automated red-teaming & regression suites',
-    icon: Target
-  },
-  {
-    id: 'edge-onprem-runtimes',
-    label: 'Sovereign & On-Prem Agent Runtimes',
-    desc: 'Air-gapped SLMs, local inference pods & zero-data-leakage',
-    icon: Building2
-  },
-  {
-    id: 'agentic-transformation',
-    label: '12–24 Wk Pilot to Factory Delivery',
-    desc: 'Organizational enablement, change management & DBOT delivery',
-    icon: Compass
-  },
-  {
-    id: 'fleet-metrics-roi',
-    label: 'Agent Fleet Yield & SLA Metrics',
-    desc: 'Task autonomy rate, cost-per-successful-task & cycle time reduction',
-    icon: TrendingUp
-  },
-  {
-    id: 'agentic-diagnostic',
-    label: 'Enterprise Agentic Diagnostic',
-    desc: 'Executive technical readiness audit, opportunity prioritization & roadmap',
-    icon: Sparkles
-  }
-]
-
-// 3. AI Networking & Cybersecurity Intelligence (Categorized Thematic Architecture)
 export interface SubmenuItem {
-  id: string
+  id?: string
   label: string
   desc: string
   tooltip?: string
+  category?: string
   icon: any
   href: string
 }
@@ -224,6 +151,123 @@ export interface ThematicGroup {
   icon: any
   items: SubmenuItem[]
 }
+
+// 2. Agentic Enterprise Thematic Groups (3 Equal-Width Columns, 12 Items Total)
+export const agenticEnterpriseThematicGroups: ThematicGroup[] = [
+  {
+    id: 'cognitive-architecture-swarms',
+    title: 'Cognitive Architecture & Swarms',
+    badge: 'ORCHESTRATION',
+    icon: Bot,
+    items: [
+      {
+        id: 'agent-architecture',
+        label: 'Autonomous Agent Architecture',
+        desc: 'Cognitive loops, ReAct, Tree-of-Thought & persistent memory',
+        icon: Bot,
+        href: '/solutions/ai-agentic-factory#agent-architecture'
+      },
+      {
+        id: 'multi-agent-orchestration',
+        label: 'Multi-Agent Swarm Orchestration',
+        desc: 'LangGraph, AutoGen, CrewAI & deterministic consensus DAGs',
+        icon: Workflow,
+        href: '/solutions/ai-agentic-factory#multi-agent-orchestration'
+      },
+      {
+        id: 'vertical-factories',
+        label: 'Vertical Enterprise Agent Factories',
+        desc: 'Pre-built autonomous agents for Finance, Supply Chain, SRE & HR',
+        icon: Layers,
+        href: '/solutions/ai-agentic-factory#vertical-factories'
+      },
+      {
+        id: 'mcp-tool-integration',
+        label: 'Model Context Protocol & Tools',
+        desc: 'Standardized tool interfaces, ERP/CRM & database connectors',
+        icon: Cpu,
+        href: '/solutions/ai-agentic-factory#mcp-tool-integration'
+      }
+    ]
+  },
+  {
+    id: 'agentops-safety-governance',
+    title: 'AgentOps, Safety & Teaming',
+    badge: 'GOVERNANCE',
+    icon: ShieldCheck,
+    items: [
+      {
+        id: 'agentops-governance',
+        label: 'Enterprise AgentOps & Telemetry',
+        desc: 'Distributed trace observability, token telemetry & failure triage',
+        icon: BarChart3,
+        href: '/solutions/ai-agentic-factory#agentops-governance'
+      },
+      {
+        id: 'guardrails-safety',
+        label: 'Runtime Guardrails & Firewalls',
+        desc: 'Anti-injection shields, semantic boundary enforcement & safety',
+        icon: ShieldCheck,
+        href: '/solutions/ai-agentic-factory#guardrails-safety'
+      },
+      {
+        id: 'human-agent-teaming',
+        label: 'Human-in-the-Loop (HITL) Teaming',
+        desc: 'Dynamic confidence gates, approval workflows & workforce ops',
+        icon: Users,
+        href: '/solutions/ai-agentic-factory#human-agent-teaming'
+      },
+      {
+        id: 'synthetic-eval-sprints',
+        label: 'Continuous Agent Evaluation',
+        desc: 'Synthetic benchmarking, automated red-teaming & regression suites',
+        icon: Target,
+        href: '/solutions/ai-agentic-factory#synthetic-eval-sprints'
+      }
+    ]
+  },
+  {
+    id: 'sovereign-yield-delivery',
+    title: 'Deployment, Yield & Readiness',
+    badge: 'PRODUCTION',
+    icon: TrendingUp,
+    items: [
+      {
+        id: 'edge-onprem-runtimes',
+        label: 'Sovereign & On-Prem Agent Runtimes',
+        desc: 'Air-gapped SLMs, local inference pods & zero-data-leakage',
+        icon: Building2,
+        href: '/solutions/ai-agentic-factory#edge-onprem-runtimes'
+      },
+      {
+        id: 'agentic-transformation',
+        label: '12–24 Wk Pilot to Factory Delivery',
+        desc: 'Organizational enablement, change management & DBOT delivery',
+        icon: Compass,
+        href: '/solutions/ai-agentic-factory#agentic-transformation'
+      },
+      {
+        id: 'fleet-metrics-roi',
+        label: 'Agent Fleet Yield & SLA Metrics',
+        desc: 'Task autonomy rate, cost-per-successful-task & cycle time reduction',
+        icon: TrendingUp,
+        href: '/solutions/ai-agentic-factory#fleet-metrics-roi'
+      },
+      {
+        id: 'agentic-diagnostic',
+        label: 'Enterprise Agentic Diagnostic',
+        desc: 'Executive technical readiness audit, opportunity prioritization & roadmap',
+        icon: Sparkles,
+        href: '/solutions/ai-agentic-factory#agentic-diagnostic'
+      }
+    ]
+  }
+]
+
+// Backward-compatible flat array
+export const agenticEnterpriseMenuItems = agenticEnterpriseThematicGroups.flatMap((g) => g.items)
+
+// 3. AI Networking & Cybersecurity Intelligence (Categorized Thematic Architecture)
 
 export const networkingThematicGroups: ThematicGroup[] = [
   {
@@ -463,113 +507,140 @@ const aiNetworkingCyberMenuItems = [...networkingCategories, ...cybersecurityCat
 const aiNetworkingMenuItems = networkingCategories
 const aiCybersecurityMenuItems = cybersecurityCategories
 
-// 5. Unified AI Value Engineering & Common Foundation Menu Items (12 Consolidated Capabilities)
-const aiValueMenuItems = [
+// 5. Unified AI Value Engineering & Common Foundation Menu Items (3 Equal-Width Columns, 13 Items Total)
+export const aiValueThematicGroups: ThematicGroup[] = [
   {
-    category: 'DELIVERY PRACTICE',
-    id: 'ai-value-engineering-practice',
-    href: '/practice-areas/ai-value-engineering',
-    label: 'AI Value Engineering Practice',
-    desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families',
-    icon: TrendingUp
+    id: 'delivery-frameworks',
+    title: 'Delivery Frameworks & Methods',
+    badge: 'FRAMEWORKS',
+    icon: TrendingUp,
+    items: [
+      {
+        category: 'DELIVERY PRACTICE',
+        id: 'ai-value-engineering-practice',
+        href: '/practice-areas/ai-value-engineering',
+        label: 'AI Value Engineering Practice',
+        desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families',
+        icon: TrendingUp
+      },
+      {
+        category: 'ENGAGEMENT MODELS',
+        id: 'engagement-models',
+        href: '/practice-areas#engagement-models',
+        label: 'Engagement Models & Turnkey DBOT',
+        desc: 'Diagnostic sprints, co-engineering, and turnkey DBOT delivery frameworks',
+        icon: Workflow
+      },
+      {
+        category: 'METHODOLOGY ENGINE',
+        id: 'methodology-engine',
+        href: '/methodology-engine',
+        label: 'AI-Driven Methodology Engine',
+        desc: 'Proprietary framework to assess, select, automate, and compound operational methods',
+        icon: Sparkles
+      },
+      {
+        category: 'OPERATIONAL TOOLBOX',
+        id: '80-methodologies',
+        href: '/solutions/ai-value-engineering#methodology-engine',
+        label: '80+ Operational Methodologies',
+        desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ industrialized by AI agents',
+        icon: Boxes
+      }
+    ]
   },
   {
-    category: 'ENGAGEMENT MODELS',
-    id: 'engagement-models',
-    href: '/practice-areas#engagement-models',
-    label: 'Engagement Models & Turnkey DBOT',
-    desc: 'Diagnostic sprints, co-engineering, and turnkey DBOT delivery frameworks',
-    icon: Workflow
+    id: 'financial-architecture',
+    title: 'Financial Architecture & FinOps',
+    badge: 'FINANCIAL ARCH',
+    icon: BarChart3,
+    items: [
+      {
+        category: 'FINANCIAL ARCHITECTURE',
+        id: 'unit-economics',
+        href: '/solutions/ai-value-engineering#ledger-economics',
+        label: 'AI Economics & Unit Economics',
+        desc: 'Cost-to-serve, inference unit economics & function-cost ledger decomposition',
+        icon: BarChart3
+      },
+      {
+        category: 'COST GOVERNANCE',
+        id: 'finops-governance',
+        href: '/solutions/ai-value-engineering#operating-system',
+        label: 'AI FinOps & Cost Governance',
+        desc: 'Continuous GPU token governance, infrastructure OpEx & budget attribution',
+        icon: SlidersHorizontal
+      },
+      {
+        category: 'VALUE REALIZATION',
+        id: 'value-currencies',
+        href: '/solutions/ai-value-engineering#value-currencies',
+        label: 'ROI, TCO & Value Realization',
+        desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & growth option P&L proof',
+        icon: TrendingUp
+      },
+      {
+        category: 'SYSTEM ARCHITECTURE',
+        id: 'system-architecture',
+        href: '/solutions/ai-value-engineering#five-layer-architecture',
+        label: 'System Architecture & Frameworks',
+        desc: '5-layer agent fleet architecture from sensory ingest to compounding OS',
+        icon: Layers
+      }
+    ]
   },
   {
-    category: 'METHODOLOGY ENGINE',
-    id: 'methodology-engine',
-    href: '/methodology-engine',
-    label: 'AI-Driven Methodology Engine',
-    desc: 'Proprietary framework to assess, select, automate, and compound operational methods',
-    icon: Sparkles
-  },
-  {
-    category: 'OPERATIONAL TOOLBOX',
-    id: '80-methodologies',
-    href: '/solutions/ai-value-engineering#methodology-engine',
-    label: '80+ Operational Methodologies',
-    desc: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ industrialized by AI agents',
-    icon: Boxes
-  },
-  {
-    category: 'FINANCIAL ARCHITECTURE',
-    id: 'unit-economics',
-    href: '/solutions/ai-value-engineering#ledger-economics',
-    label: 'AI Economics & Unit Economics',
-    desc: 'Cost-to-serve, inference unit economics & function-cost ledger decomposition',
-    icon: BarChart3
-  },
-  {
-    category: 'COST GOVERNANCE',
-    id: 'finops-governance',
-    href: '/solutions/ai-value-engineering#operating-system',
-    label: 'AI FinOps & Cost Governance',
-    desc: 'Continuous GPU token governance, infrastructure OpEx & budget attribution',
-    icon: SlidersHorizontal
-  },
-  {
-    category: 'VALUE REALIZATION',
-    id: 'value-currencies',
-    href: '/solutions/ai-value-engineering#value-currencies',
-    label: 'ROI, TCO & Value Realization',
-    desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & growth option P&L proof',
-    icon: TrendingUp
-  },
-  {
-    category: 'ENTERPRISE PROOF',
-    id: 'case-studies-metrics',
-    href: '/case-studies',
-    label: 'Case Studies & Performance Metrics',
-    desc: 'Production outcomes, GPU yield gains, latency & balance-sheet impact',
-    icon: FileText
-  },
-  {
-    category: 'TECHNOLOGY STACK',
-    id: 'tech-ecosystem',
-    href: '/partners',
-    label: 'Technology Ecosystem & Enablers',
-    desc: 'Hardware accelerators, silicon platforms, orchestration & partner network',
-    icon: Network
-  },
-  {
-    category: 'SYSTEM ARCHITECTURE',
-    id: 'system-architecture',
-    href: '/solutions/ai-value-engineering#five-layer-architecture',
-    label: 'System Architecture & Frameworks',
-    desc: '5-layer agent fleet architecture from sensory ingest to compounding OS',
-    icon: Layers
-  },
-  {
-    category: 'RISK & COMPLIANCE',
-    id: 'governance-risk',
-    href: '/solutions/ai-value-engineering#waste-governance',
-    label: 'Governance, Risk & Excellence',
-    desc: 'DOWNTIME waste elimination coupled with deterministic human risk bands',
-    icon: ShieldCheck
-  },
-  {
-    category: 'DELIVERY STANDARDS',
-    id: 'job-plan',
-    href: '/solutions/ai-value-engineering#job-plan-stages',
-    label: '70-Year AI-VE Job Plan (8 Stages)',
-    desc: 'SAVE International standard re-engineered with AI: Info to Audit',
-    icon: Zap
-  },
-  {
-    category: 'STRATEGIC EVALUATION',
-    id: 'diagnostic-assessment',
-    href: '/book-ai-diagnostic#diagnostic-form-section',
-    label: 'AI Diagnostic & Assessment',
-    desc: 'Executive technical & financial evaluation of enterprise AI readiness',
-    icon: ArrowUpRight
+    id: 'enterprise-proof-standards',
+    title: 'Enterprise Proof & Standards',
+    badge: 'ASSURANCE',
+    icon: ShieldCheck,
+    items: [
+      {
+        category: 'ENTERPRISE PROOF',
+        id: 'case-studies-metrics',
+        href: '/case-studies',
+        label: 'Case Studies & Performance Metrics',
+        desc: 'Production outcomes, GPU yield gains, latency & balance-sheet impact',
+        icon: FileText
+      },
+      {
+        category: 'TECHNOLOGY STACK',
+        id: 'tech-ecosystem',
+        href: '/partners',
+        label: 'Technology Ecosystem & Enablers',
+        desc: 'Hardware accelerators, silicon platforms, orchestration & partner network',
+        icon: Network
+      },
+      {
+        category: 'RISK & COMPLIANCE',
+        id: 'governance-risk',
+        href: '/solutions/ai-value-engineering#waste-governance',
+        label: 'Governance, Risk & Excellence',
+        desc: 'DOWNTIME waste elimination coupled with deterministic human risk bands',
+        icon: ShieldCheck
+      },
+      {
+        category: 'DELIVERY STANDARDS',
+        id: 'job-plan',
+        href: '/solutions/ai-value-engineering#job-plan-stages',
+        label: '70-Year AI-VE Job Plan (8 Stages)',
+        desc: 'SAVE International standard re-engineered with AI: Info to Audit',
+        icon: Zap
+      },
+      {
+        category: 'STRATEGIC EVALUATION',
+        id: 'diagnostic-assessment',
+        href: '/book-ai-diagnostic#diagnostic-form-section',
+        label: 'AI Diagnostic & Assessment',
+        desc: 'Executive technical & financial evaluation of enterprise AI readiness',
+        icon: ArrowUpRight
+      }
+    ]
   }
 ]
+
+// Backward-compatible flat array
+export const aiValueMenuItems = aiValueThematicGroups.flatMap((g) => g.items)
 
 // 6. Industries Mega Menu Data (3 Non-Negotiable Categories: 70 Industries, Methodologies, Use Cases)
 const industriesMegaCategories = [
@@ -698,45 +769,78 @@ const industriesMegaCategories = [
   }
 ]
 
-// 7. About Us Menu Items (6 Items)
-const aboutMenuItems = [
+// 7. About Us Thematic Groups (3 Equal-Width Columns, 6 Items Total)
+export const aboutThematicGroups: ThematicGroup[] = [
   {
-    label: 'About TRUSTGRID.AI',
-    href: '/about',
+    id: 'company-leadership',
+    title: 'Company & Leadership',
+    badge: 'LEADERSHIP',
     icon: Building2,
-    desc: 'Our mission, vision, and full-spectrum engineering verticals'
+    items: [
+      {
+        id: 'about-company',
+        label: 'About TRUSTGRID.AI',
+        href: '/about',
+        icon: Building2,
+        desc: 'Our mission, vision, and full-spectrum engineering verticals'
+      },
+      {
+        id: 'leadership-teams',
+        label: 'Leadership & Teams',
+        href: '/leadership',
+        icon: Users,
+        desc: 'World-class AI architects, systems leads, and advisory board'
+      }
+    ]
   },
   {
-    label: 'Leadership & Teams',
-    href: '/leadership',
-    icon: Users,
-    desc: 'World-class AI architects, systems leads, and advisory board'
-  },
-  {
-    label: 'Careers & Fellowships',
-    href: '/careers',
-    icon: Award,
-    desc: 'Frontier AI hackathons, research fellowships, and open roles'
-  },
-  {
-    label: 'Global Presence',
-    href: '/about#presence',
+    id: 'talent-presence',
+    title: 'Talent & Global Network',
+    badge: 'GLOBAL',
     icon: MapPin,
-    desc: 'Executive offices in US, Singapore, and India R&D labs'
+    items: [
+      {
+        id: 'careers-fellowships',
+        label: 'Careers & Fellowships',
+        href: '/careers',
+        icon: Award,
+        desc: 'Frontier AI hackathons, research fellowships, and open roles'
+      },
+      {
+        id: 'global-presence',
+        label: 'Global Presence',
+        href: '/about#presence',
+        icon: MapPin,
+        desc: 'Executive offices in US, Singapore, and India R&D labs'
+      }
+    ]
   },
   {
-    label: 'Case Studies',
-    href: '/case-studies',
+    id: 'proof-perspectives',
+    title: 'Proof & Thought Leadership',
+    badge: 'PUBLICATIONS',
     icon: FileText,
-    desc: 'Production outcomes across defense, banking, and enterprise AI'
-  },
-  {
-    label: 'Blog',
-    href: '/blog',
-    icon: BookOpen,
-    desc: 'Engineering insights on AI-native networking, infrastructure, distributed AI, and enterprise AI systems.'
+    items: [
+      {
+        id: 'case-studies-about',
+        label: 'Case Studies',
+        href: '/case-studies',
+        icon: FileText,
+        desc: 'Production outcomes across defense, banking, and enterprise AI'
+      },
+      {
+        id: 'blog-about',
+        label: 'Blog',
+        href: '/blog',
+        icon: BookOpen,
+        desc: 'Engineering insights on AI-native networking, infrastructure, distributed AI, and enterprise AI systems.'
+      }
+    ]
   }
 ]
+
+// Backward-compatible flat array
+export const aboutMenuItems = aboutThematicGroups.flatMap((g) => g.items)
 
 // 8. Consolidated Practice Areas: 5 Core Menus (Left Sidebar & Right Categorized Submenus)
 const practiceAreasFiveSections = [
@@ -1237,6 +1341,1317 @@ const practiceAreasFiveSections = [
   }
 ]
 
+// 9. AI Value Engineering 5 Tabbed Sections
+export const aiValueFiveSections = [
+  {
+    id: 'framework',
+    title: 'Delivery Frameworks',
+    shortLabel: 'Frameworks',
+    badge: '5-STAGE LIFECYCLE',
+    headerTitle: 'AI Value Engineering Practice & Delivery Pods',
+    tagline: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families.',
+    ctaText: 'Explore Practice Blueprint →',
+    ctaHref: '/practice-areas/ai-value-engineering',
+    icon: TrendingUp,
+    categories: [
+      {
+        title: '5 Stages & 5 Gates',
+        badge: 'VALUE LIFECYCLE',
+        icon: Workflow,
+        items: [
+          {
+            category: 'DISCOVER & DESIGN',
+            label: 'Stage 01–02: Value Discovery & Framing',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'P&L value pool sizing, binding constraints, frozen baselines & pre-registered thresholds.',
+            icon: Target
+          },
+          {
+            category: 'DEPLOY & PERFORM',
+            label: 'Stage 03–04: Delivery & Realization',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Thinnest end-to-end production path, unaided operator lift, and 3 consecutive Finance-signed cycles.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'PROVE & ACCELERATE',
+            label: 'Stage 05: Value Assurance',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Audit-ready assurance dossier, 3 acceleration levers (reusable assets, parallel stages, one owner).',
+            icon: ShieldCheck
+          },
+          {
+            category: 'DELIVERY PRACTICE',
+            label: 'AI Value Engineering Practice',
+            href: '/practice-areas/ai-value-engineering',
+            desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families.',
+            icon: TrendingUp
+          }
+        ]
+      },
+      {
+        title: 'Delivery Pods & DBOT',
+        badge: 'OPERATING MODEL',
+        icon: Boxes,
+        items: [
+          {
+            category: 'FORWARD-DEPLOYED POD',
+            label: 'Pod Architecture (4 Ours, 3 Theirs)',
+            href: '/practice-areas/ai-value-engineering#pod',
+            desc: 'FDE Lead, Domain Engineer, AI Agentic Engineer, AI Operational Engineer paired with client leadership.',
+            icon: Users
+          },
+          {
+            category: 'TURNKEY DELIVERY',
+            label: 'Turnkey DBOT Delivery Frameworks',
+            href: '/practice-areas#engagement-models',
+            desc: 'Design, Build, Operate, Transfer with verified SLA milestones and commercial risk alignment.',
+            icon: Boxes
+          },
+          {
+            category: 'COMMERCIAL ALIGNMENT',
+            label: 'Outcome-Based Engagement Models',
+            href: '/practice-areas/ai-value-engineering#engagement-models',
+            desc: 'Diagnostic sprints, shared-risk gain-share models & embedded value engineering.',
+            icon: Trophy
+          },
+          {
+            category: 'TALENT TRANSFER',
+            label: 'AI Capability & Team Bootcamps',
+            href: '/practice-areas/forward-deployment-engineering',
+            desc: 'Hands-on engineering bootcamps, architectural transfer, and production runbooks for internal squads.',
+            icon: Sparkles
+          }
+        ]
+      },
+      {
+        title: '7 Tech Families in Scope',
+        badge: 'FULL-SPECTRUM',
+        icon: Cpu,
+        items: [
+          {
+            category: 'INTELLIGENCE & CONSORTIA',
+            label: 'Agentic AI, Copilots & DLT',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'Judgement-heavy workflows, dispute elimination, reconciliation audit trails, and multi-agent systems.',
+            icon: Bot
+          },
+          {
+            category: 'PHYSICAL & SENSORS',
+            label: 'Robotics, IoT, Edge & Physical AI',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'Sensor fleets, signal chains, autonomous mobile robots (AMR), adaptive unstructured automation & safety cases.',
+            icon: Activity
+          },
+          {
+            category: 'DATA & WORKFLOWS',
+            label: 'RPA, Workflows & Data Platforms',
+            href: '/practice-areas/ai-value-engineering#technologies',
+            desc: 'FTE hours in repetitive work, data freshness SLAs, pipeline cost efficiency, and enterprise semantic graphs.',
+            icon: Layers
+          },
+          {
+            category: 'SYSTEM ARCHITECTURE',
+            label: '5-Layer AI-VE System Architecture',
+            href: '/solutions/ai-value-engineering#five-layer-architecture',
+            desc: '5-layer agent fleet architecture from sensory ingest to compounding OS.',
+            icon: Layers
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'financial',
+    title: 'Financial Architecture',
+    shortLabel: 'FinOps & Cost',
+    badge: 'CFO CONSENSUS',
+    headerTitle: 'Financial Architecture, Token FinOps & Unit Economics',
+    tagline: 'Cost-to-serve, inference unit economics, GPU budget attribution & verified CFO P&L impact.',
+    ctaText: 'Explore Financial Architecture →',
+    ctaHref: '/solutions/ai-value-engineering#ledger-economics',
+    icon: BarChart3,
+    categories: [
+      {
+        title: 'Unit Economics & Cost Ledger',
+        badge: 'UNIT ECONOMICS',
+        icon: BarChart3,
+        items: [
+          {
+            category: 'FINANCIAL ARCHITECTURE',
+            label: 'AI Economics & Unit Economics',
+            href: '/solutions/ai-value-engineering#ledger-economics',
+            desc: 'Cost-to-serve, inference unit economics & function-cost ledger decomposition.',
+            icon: BarChart3
+          },
+          {
+            category: 'COST-PER-TASK',
+            label: 'Cost-Per-Task & Inference Economics',
+            href: '/solutions/ai-value-engineering#ledger-economics',
+            desc: 'Per-transaction token burn, prompt caching savings, and amortized fine-tuning unit costs.',
+            icon: SlidersHorizontal
+          },
+          {
+            category: 'LEDGER DECOMPOSITION',
+            label: 'Function-Cost Ledger Decomposition',
+            href: '/solutions/ai-value-engineering#ledger-economics',
+            desc: 'Granular attribution of LLM reasoning, retrieval, validation, and storage overhead.',
+            icon: Layers
+          },
+          {
+            category: 'CAPITAL EFFICIENCY',
+            label: 'Working Capital & Margin Modeling',
+            href: '/solutions/ai-value-engineering#ledger-economics',
+            desc: 'Translating GPU utilization and token throughput into working capital and EBITDA gains.',
+            icon: TrendingUp
+          }
+        ]
+      },
+      {
+        title: 'AI FinOps & Cost Governance',
+        badge: 'OPEX CONTROL',
+        icon: SlidersHorizontal,
+        items: [
+          {
+            category: 'COST GOVERNANCE',
+            label: 'AI FinOps & Cost Governance',
+            href: '/solutions/ai-value-engineering#operating-system',
+            desc: 'Continuous GPU token governance, infrastructure OpEx & budget attribution.',
+            icon: SlidersHorizontal
+          },
+          {
+            category: 'TOKEN GOVERNANCE',
+            label: 'Continuous GPU Token Governance',
+            href: '/solutions/ai-value-engineering#operating-system',
+            desc: 'Automated spend caps, model fallback routing to cheaper SLMs, and prompt token minimization.',
+            icon: Cpu
+          },
+          {
+            category: 'OPEX ATTRIBUTION',
+            label: 'Infrastructure OpEx & Attribution',
+            href: '/solutions/ai-value-engineering#operating-system',
+            desc: 'Chargeback and showback by business unit, project, and autonomous agent pod.',
+            icon: BarChart3
+          },
+          {
+            category: 'REAL-TIME TELEMETRY',
+            label: 'Token Burn Telemetry & Alerting',
+            href: '/solutions/ai-value-engineering#operating-system',
+            desc: 'Sub-minute alert thresholds for anomalous token consumption and infinite agent loops.',
+            icon: Activity
+          }
+        ]
+      },
+      {
+        title: 'Value Realization & ROI',
+        badge: 'P&L CURRENCIES',
+        icon: TrendingUp,
+        items: [
+          {
+            category: 'VALUE REALIZATION',
+            label: 'ROI, TCO & Value Realization',
+            href: '/solutions/ai-value-engineering#value-currencies',
+            desc: 'Cost Down, Cash Out, Revenue Up, Risk Down & growth option P&L proof.',
+            icon: TrendingUp
+          },
+          {
+            category: 'P&L CURRENCIES',
+            label: 'Cost Down, Cash Out, Revenue Up',
+            href: '/solutions/ai-value-engineering#value-currencies',
+            desc: 'Four mathematical value currencies audited by CFO controllers before capital deployment.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'NPV & IRR PROJECTIONS',
+            label: 'CFO Consensus Canvas & NPV Models',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Transparent economic projections bridging technical AI engineers with the finance committee.',
+            icon: Scale
+          },
+          {
+            category: 'CAPITAL GATES',
+            label: 'Milestone-Gated Commitments',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Tranche release tied directly to verified operational KPIs and Finance sign-off.',
+            icon: Target
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'methodology',
+    title: 'Methodology Engine',
+    shortLabel: '80+ Methods',
+    badge: '80+ METHODS',
+    headerTitle: 'AI-Driven Methodology Engine & 80+ Industrial Methods',
+    tagline: 'Lean, Six Sigma, TOC, TPS, SMED, FMEA, and TRIZ industrialized by autonomous AI agents.',
+    ctaText: 'Explore Methodology Engine →',
+    ctaHref: '/methodology-engine',
+    icon: Sparkles,
+    categories: [
+      {
+        title: 'Theory of Constraints (TOC)',
+        badge: 'THROUGHPUT',
+        icon: SlidersHorizontal,
+        items: [
+          {
+            category: 'CONSTRAINT ELEVATION',
+            label: 'Critical Chain & Bottleneck Elevation',
+            href: '/methodology-engine',
+            desc: 'Locate the single constraint gating enterprise throughput and focus AI automation directly upon it.',
+            icon: Target
+          },
+          {
+            category: 'FIVE FOCUSING STEPS',
+            label: 'Five Focusing Steps Automation',
+            href: '/methodology-engine',
+            desc: 'Identify, Exploit, Subordinate, Elevate, and Prevent Inertia automated across enterprise systems.',
+            icon: Workflow
+          },
+          {
+            category: 'THROUGHPUT ACCOUNTING',
+            label: 'Throughput Accounting by AI Agents',
+            href: '/methodology-engine',
+            desc: 'T, I, OE financial modeling replacing traditional cost accounting distortion with cash velocity.',
+            icon: BarChart3
+          },
+          {
+            category: 'QUEUE OPTIMIZATION',
+            label: 'GPU Cluster Queue Optimization',
+            href: '/methodology-engine#diagnostic',
+            desc: 'Eliminating queue friction, batch stalling, and compute starvation with Drum-Buffer-Rope scheduling.',
+            icon: Cpu
+          }
+        ]
+      },
+      {
+        title: 'Lean & Six Sigma (DMAIC)',
+        badge: 'VARIATION & WASTE',
+        icon: Workflow,
+        items: [
+          {
+            category: 'WASTE ELIMINATION',
+            label: 'DOWNTIME Waste Elimination',
+            href: '/solutions/ai-value-engineering#waste-governance',
+            desc: 'Eliminating Defects, Overproduction, Waiting, Non-utilized talent, Transportation, Inventory, Motion, Extra-processing.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'STATISTICAL PROCESS CONTROL',
+            label: 'DMAIC & Continuous SPC',
+            href: '/methodology-engine',
+            desc: 'Define, Measure, Analyze, Improve, Control loops with automated statistical variance monitoring.',
+            icon: Activity
+          },
+          {
+            category: 'CYCLE TIME REDUCTION',
+            label: 'SMED & Value Stream Mapping',
+            href: '/methodology-engine',
+            desc: 'Single-minute exchange of dies applied to AI model swaps, pipeline context shifts, and operator handoffs.',
+            icon: Clock
+          },
+          {
+            category: 'DEFECT MITIGATION',
+            label: 'Shop-Floor Defect Mitigation',
+            href: '/methodology-engine#full-spectrum-architecture',
+            desc: 'Automated root-cause analysis, 5-Whys reasoning trees, and preventive action triggers.',
+            icon: AlertCircle
+          }
+        ]
+      },
+      {
+        title: 'Engineering Frameworks',
+        badge: 'ROBUST DESIGN',
+        icon: Boxes,
+        items: [
+          {
+            category: 'METHODOLOGY CATALOG',
+            label: '80+ Operational Methods Catalog',
+            href: '/solutions/ai-value-engineering#methodology-engine',
+            desc: 'Comprehensive library of industrial methods cataloged, prioritized, and executed by agent swarms.',
+            icon: Boxes
+          },
+          {
+            category: 'SYSTEMATIC INNOVATION',
+            label: 'TRIZ Systematic Innovation Engine',
+            href: '/methodology-engine',
+            desc: 'Algorithmic contradiction resolution and technical inventive principles applied to complex AI systems.',
+            icon: Sparkles
+          },
+          {
+            category: 'MISTAKE-PROOFING',
+            label: 'FMEA, Poka-Yoke & Jidoka',
+            href: '/methodology-engine#architecture',
+            desc: 'Failure Mode & Effects Analysis, mechanical error-proofing, and autonomous stop-on-defect mechanisms.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'ASSET PRODUCTIVITY',
+            label: 'TPM & OEE Asset Optimization',
+            href: '/methodology-engine#deployment',
+            desc: 'Total Productive Maintenance and Overall Equipment Effectiveness for GPU farms and data pipelines.',
+            icon: Target
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'assurance',
+    title: 'Enterprise Proofs',
+    shortLabel: 'Proofs & SAVE',
+    badge: 'SAVE STANDARDS',
+    headerTitle: 'Enterprise Proofs, SAVE Job Plan & Assurance Dossiers',
+    tagline: 'SAVE International standards re-engineered with AI: 70-year job plan from Information to Audit.',
+    ctaText: 'Explore Case Studies & Proofs →',
+    ctaHref: '/case-studies',
+    icon: ShieldCheck,
+    categories: [
+      {
+        title: '70-Year AI-VE Job Plan',
+        badge: 'SAVE STANDARD',
+        icon: Zap,
+        items: [
+          {
+            category: 'JOB PLAN STAGES',
+            label: '8-Stage Standard: Info to Audit',
+            href: '/solutions/ai-value-engineering#job-plan-stages',
+            desc: 'SAVE International standard re-engineered with AI: Information, Function Analysis, Creative, Evaluation, Development, Presentation, Implementation, Audit.',
+            icon: Zap
+          },
+          {
+            category: 'PRE-REGISTERED GATES',
+            label: 'Pre-Registered P&L Thresholds',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Pre-agreed performance metrics that prevent retroactive goalpost shifting and ensure objective evaluation.',
+            icon: Target
+          },
+          {
+            category: 'FINANCE-SIGNED PROOFS',
+            label: 'Finance-Signed Verification Dossier',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Formal proof package reviewed and attested by client financial controllers across 3 consecutive cycles.',
+            icon: FileText
+          },
+          {
+            category: 'CONTINUOUS ASSURANCE',
+            label: 'Continuous Value Assurance OS',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Always-on telemetry ensuring value gains do not decay over time due to drift or organizational inertia.',
+            icon: ShieldCheck
+          }
+        ]
+      },
+      {
+        title: 'The Five Proofs Framework',
+        badge: 'OUTCOME VERIFICATION',
+        icon: CheckCircle2,
+        items: [
+          {
+            category: 'PROOF MATRIX',
+            label: 'The Five Proofs (PoC → PoComp)',
+            href: '/practice-areas/ai-value-engineering#proofs',
+            desc: 'Proof of Concept, Value, Production, Recurring Value, and Compounding across enterprise operations.',
+            icon: Award
+          },
+          {
+            category: 'CASE STUDIES',
+            label: 'Case Studies & Performance Metrics',
+            href: '/case-studies',
+            desc: 'Production outcomes, GPU yield gains, latency & balance-sheet impact across Tier-1 institutions.',
+            icon: FileText
+          },
+          {
+            category: 'YIELD & LATENCY',
+            label: 'Balance Sheet Yield & Latency',
+            href: '/case-studies',
+            desc: 'Measured operational throughput expansion and sub-second decision cycle acceleration.',
+            icon: Activity
+          },
+          {
+            category: 'VERIFIABLE IMPACT',
+            label: '3–10x Verifiable ROI Dossiers',
+            href: '/case-studies',
+            desc: 'Detailed empirical dossiers documenting verified cost-down and revenue-up achievements.',
+            icon: TrendingUp
+          }
+        ]
+      },
+      {
+        title: 'Governance & Ecosystem',
+        badge: 'ENTERPRISE SCALE',
+        icon: ShieldCheck,
+        items: [
+          {
+            category: 'RISK & COMPLIANCE',
+            label: 'Governance & Human Risk Bands',
+            href: '/solutions/ai-value-engineering#waste-governance',
+            desc: 'DOWNTIME waste elimination coupled with deterministic human risk bands and regulatory guardrails.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'TECHNOLOGY STACK',
+            label: 'Technology Ecosystem & Enablers',
+            href: '/partners',
+            desc: 'Hardware accelerators, silicon platforms, orchestration engines & strategic partner network.',
+            icon: Network
+          },
+          {
+            category: 'SILICON ALLIANCES',
+            label: 'Accelerators & Silicon Alliances',
+            href: '/partners',
+            desc: 'Direct co-engineering with frontier GPU, NPU, and interconnect providers.',
+            icon: Cpu
+          },
+          {
+            category: 'SECURITY ASSURANCE',
+            label: 'Enterprise Security & Compliance',
+            href: '/solutions/ai-value-engineering#waste-governance',
+            desc: 'Air-gapped operation, cryptographic lineage, and continuous security compliance verification.',
+            icon: Lock
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'diagnostic',
+    title: 'Diagnostic & Advisory',
+    shortLabel: '72-Hr Audit',
+    badge: '72-HR EVALUATION',
+    headerTitle: 'Zero-Footprint AI Diagnostic & Value Discovery Audit',
+    tagline: 'Rapid 72-hour non-invasive diagnostic auditing compute waste, model latencies, and trapped value.',
+    ctaText: 'Book AI Value Diagnostic →',
+    ctaHref: '/book-ai-diagnostic#diagnostic-form-section',
+    icon: Activity,
+    categories: [
+      {
+        title: 'Zero-Footprint Diagnostic',
+        badge: 'RAPID AUDIT',
+        icon: Target,
+        items: [
+          {
+            category: 'RAPID DIAGNOSTIC',
+            label: '72-Hour Rapid Diagnostic Audit',
+            href: '/solutions/ai-value-engineering#diagnostic',
+            desc: 'Non-invasive telemetry audit analyzing GPU utilization, inference bottlenecks, and token waste.',
+            icon: Target
+          },
+          {
+            category: 'COMPUTE AUDIT',
+            label: 'Compute Waste & GPU Idle Audit',
+            href: '/book-ai-diagnostic#diagnostic-form-section',
+            desc: 'Pinpointing idle cycles, oversized context windows, and underutilized accelerator clusters.',
+            icon: Cpu
+          },
+          {
+            category: 'READINESS SCORING',
+            label: 'Enterprise AI Readiness Scoring',
+            href: '/ai-readiness-assessment',
+            desc: 'Empirical readiness index across data quality, systems architecture, governance, and talent.',
+            icon: Sparkles
+          },
+          {
+            category: 'BASELINE MEASUREMENT',
+            label: 'Baseline Measurement & VSM',
+            href: '/solutions/ai-value-engineering#diagnostic',
+            desc: 'Freezing operational baselines to establish indisputable pre/post performance benchmarks.',
+            icon: FileText
+          }
+        ]
+      },
+      {
+        title: 'Discovery & Canvases',
+        badge: 'OPPORTUNITY MAPPING',
+        icon: Scale,
+        items: [
+          {
+            category: 'VALUE STREAM',
+            label: 'P&L Value Stream Mapping',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Translating corporate strategic objectives into specific operational bottlenecks addressable by AI.',
+            icon: TrendingUp
+          },
+          {
+            category: 'FEASIBILITY MATRIX',
+            label: 'Technical Feasibility Matrix',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Filtering out high-risk research experiments in favor of mathematically solvable production problems.',
+            icon: Scale
+          },
+          {
+            category: 'CFO CANVAS',
+            label: 'CFO Consensus Canvas & NPV',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Constructing transparent financial models that bridge AI engineers and the finance committee.',
+            icon: BarChart3
+          },
+          {
+            category: 'CONSTRAINT IDENTIFICATION',
+            label: 'Operating Constraint Identification',
+            href: '/solutions/ai-value-engineering#value-discovery',
+            desc: 'Locating the exact point in the value chain where AI intervention produces maximum financial leverage.',
+            icon: SlidersHorizontal
+          }
+        ]
+      },
+      {
+        title: 'Commercial Models & Strategy',
+        badge: 'COMMERCIAL TERMS',
+        icon: Boxes,
+        items: [
+          {
+            category: 'SHARED RISK',
+            label: 'Shared-Risk & Gain-Share Models',
+            href: '/practice-areas#engagement-models',
+            desc: 'Commercial alignment where fees are directly tied to verified cost-reduction and revenue metrics.',
+            icon: Trophy
+          },
+          {
+            category: 'SPRINT ENGAGEMENTS',
+            label: 'Diagnostic Sprints & Proofs',
+            href: '/practice-areas/ai-value-engineering#engagement-models',
+            desc: 'Time-boxed 6-to-12 week sprint delivering verified PoV and deployment roadmap.',
+            icon: Clock
+          },
+          {
+            category: 'CAPACITY SQUADS',
+            label: 'Fixed Capacity Pods & Sprints',
+            href: '/practice-areas#engagement-models',
+            desc: 'Dedicated elite pod of forward deployed engineers integrated directly into client sprints.',
+            icon: Users
+          },
+          {
+            category: 'EXECUTIVE ADVISORY',
+            label: 'Executive Consultation Booking',
+            href: '/book-consultation',
+            desc: 'Direct strategy session with TrustGrid.AI Principal Systems Architects and FinOps Directors.',
+            icon: ArrowUpRight
+          }
+        ]
+      }
+    ]
+  }
+]
+
+// 10. AI Agentic Enterprise 3 Tabbed Sections
+export const agenticEnterpriseThreeSections = [
+  {
+    id: 'cognitive',
+    title: 'Cognitive Architecture',
+    shortLabel: 'Architecture',
+    badge: 'ORCHESTRATION',
+    headerTitle: 'Autonomous Agent Architecture & Multi-Agent Swarms',
+    tagline: 'Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs and persistent memory.',
+    ctaText: 'Explore Agentic Architecture →',
+    ctaHref: '/solutions/ai-agentic-factory#agent-architecture',
+    icon: Bot,
+    categories: [
+      {
+        title: 'Cognitive Loops & Memory',
+        badge: 'REASONING & STATE',
+        icon: Bot,
+        items: [
+          {
+            category: 'COGNITIVE ARCHITECTURE',
+            label: 'Autonomous Agent Architecture',
+            href: '/solutions/ai-agentic-factory#agent-architecture',
+            desc: 'Cognitive loops, ReAct, Tree-of-Thought & persistent memory.',
+            icon: Bot
+          },
+          {
+            category: 'STATE GRAPHS',
+            label: 'Persistent Memory & State Graphs',
+            href: '/solutions/ai-agentic-factory#agent-architecture',
+            desc: 'Cross-session memory persistence, vector store memory & state rollback.',
+            icon: Layers
+          },
+          {
+            category: 'REASONING ENGINES',
+            label: 'ReAct & Tree-of-Thought Workflows',
+            href: '/solutions/ai-agentic-factory#agent-architecture',
+            desc: 'Structured deliberation chains with dynamic backtracking and goal pruning.',
+            icon: Workflow
+          },
+          {
+            category: 'CONTEXT WINDOWS',
+            label: 'Dynamic Context & Compaction',
+            href: '/solutions/ai-agentic-factory#agent-architecture',
+            desc: 'Hierarchical context summarization reducing token cost and latency.',
+            icon: SlidersHorizontal
+          }
+        ]
+      },
+      {
+        title: 'Multi-Agent Swarms & DAGs',
+        badge: 'SWARM ORCHESTRATION',
+        icon: Workflow,
+        items: [
+          {
+            category: 'SWARM ORCHESTRATION',
+            label: 'Multi-Agent Swarm Orchestration',
+            href: '/solutions/ai-agentic-factory#multi-agent-orchestration',
+            desc: 'LangGraph, AutoGen, CrewAI & deterministic consensus DAGs.',
+            icon: Workflow
+          },
+          {
+            category: 'CONSENSUS PROTOCOLS',
+            label: 'Deterministic Consensus DAGs',
+            href: '/solutions/ai-agentic-factory#multi-agent-orchestration',
+            desc: 'Byzantine fault-tolerant agent voting, quorum validation & audit logs.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'INTER-AGENT BUS',
+            label: 'Agent Messaging & Event Bus',
+            href: '/solutions/ai-agentic-factory#multi-agent-orchestration',
+            desc: 'High-throughput async event streaming for hundreds of concurrent agents.',
+            icon: Network
+          },
+          {
+            category: 'TASK DECOMPOSITION',
+            label: 'Hierarchical Task Decomposition',
+            href: '/solutions/ai-agentic-factory#multi-agent-orchestration',
+            desc: 'Supervisor agent pattern decomposing broad enterprise goals into sub-tasks.',
+            icon: Target
+          }
+        ]
+      },
+      {
+        title: 'Tools & Enterprise Systems',
+        badge: 'MCP TOOLS',
+        icon: Cpu,
+        items: [
+          {
+            category: 'MCP INTEGRATION',
+            label: 'Model Context Protocol & Tools',
+            href: '/solutions/ai-agentic-factory#mcp-tool-integration',
+            desc: 'Standardized tool interfaces, ERP/CRM & database connectors.',
+            icon: Cpu
+          },
+          {
+            category: 'VERTICAL FACTORIES',
+            label: 'Vertical Enterprise Agent Factories',
+            href: '/solutions/ai-agentic-factory#vertical-factories',
+            desc: 'Pre-built autonomous agents for Finance, Supply Chain, SRE & HR.',
+            icon: Layers
+          },
+          {
+            category: 'DATABASE CONNECTORS',
+            label: 'Enterprise Data Connectors',
+            href: '/solutions/ai-agentic-factory#mcp-tool-integration',
+            desc: 'Secure sandboxed tool execution against SAP, Salesforce, Oracle & Postgres.',
+            icon: Boxes
+          },
+          {
+            category: 'SANDBOX EXECUTION',
+            label: 'Isolated Runtime Sandboxes',
+            href: '/solutions/ai-agentic-factory#mcp-tool-integration',
+            desc: 'gVisor and microVM sandboxes for deterministic code execution.',
+            icon: Lock
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'agentops',
+    title: 'AgentOps & Safety',
+    shortLabel: 'AgentOps',
+    badge: 'GOVERNANCE',
+    headerTitle: 'Enterprise AgentOps, Guardrails & Human-in-the-Loop',
+    tagline: 'Continuous telemetry, anti-injection firewalls, semantic boundaries & SLA governance.',
+    ctaText: 'Explore AgentOps Blueprint →',
+    ctaHref: '/solutions/ai-agentic-factory#agentops-governance',
+    icon: ShieldCheck,
+    categories: [
+      {
+        title: 'AgentOps Telemetry & Tracing',
+        badge: 'OBSERVABILITY',
+        icon: BarChart3,
+        items: [
+          {
+            category: 'TELEMETRY & TRACING',
+            label: 'Enterprise AgentOps & Telemetry',
+            href: '/solutions/ai-agentic-factory#agentops-governance',
+            desc: 'Distributed trace observability, token telemetry & failure triage.',
+            icon: BarChart3
+          },
+          {
+            category: 'DISTRIBUTED TRACING',
+            label: 'OpenTelemetry Trace Spans',
+            href: '/solutions/ai-agentic-factory#agentops-governance',
+            desc: 'End-to-end span tracking through multi-turn agent deliberation cycles.',
+            icon: Activity
+          },
+          {
+            category: 'FAILURE TRIAGE',
+            label: 'Loop & Hallucination Triage',
+            href: '/solutions/ai-agentic-factory#agentops-governance',
+            desc: 'Real-time detection of infinite reasoning cycles and drift.',
+            icon: AlertCircle
+          },
+          {
+            category: 'COST TELEMETRY',
+            label: 'Per-Task Token Cost Attribution',
+            href: '/solutions/ai-agentic-factory#agentops-governance',
+            desc: 'Granular token usage and inference latency tracking per agent workflow.',
+            icon: TrendingUp
+          }
+        ]
+      },
+      {
+        title: 'Runtime Guardrails & Firewalls',
+        badge: 'SAFETY SHIELDS',
+        icon: ShieldCheck,
+        items: [
+          {
+            category: 'RUNTIME GUARDRAILS',
+            label: 'Runtime Guardrails & Firewalls',
+            href: '/solutions/ai-agentic-factory#guardrails-safety',
+            desc: 'Anti-injection shields, semantic boundary enforcement & safety.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'INJECTION DEFENSE',
+            label: 'Anti-Prompt Injection Defense',
+            href: '/solutions/ai-agentic-factory#guardrails-safety',
+            desc: 'Dual-model input validation blocking adversarial jailbreaks and indirect injection.',
+            icon: Lock
+          },
+          {
+            category: 'SEMANTIC BOUNDARIES',
+            label: 'Semantic Boundary Enforcement',
+            href: '/solutions/ai-agentic-factory#guardrails-safety',
+            desc: 'Strict policy and scope boundary checks on every tool call and generated output.',
+            icon: Target
+          },
+          {
+            category: 'COMPLIANCE AUDITING',
+            label: 'Continuous Policy Auditing & Logs',
+            href: '/solutions/ai-agentic-factory#guardrails-safety',
+            desc: 'Immutable append-only audit trail for compliance verification and forensic review.',
+            icon: FileText
+          }
+        ]
+      },
+      {
+        title: 'HITL Teaming & Continuous Eval',
+        badge: 'HUMAN OVERSIGHT',
+        icon: Users,
+        items: [
+          {
+            category: 'HITL TEAMING',
+            label: 'Human-in-the-Loop (HITL) Teaming',
+            href: '/solutions/ai-agentic-factory#human-agent-teaming',
+            desc: 'Dynamic confidence gates, approval workflows & workforce ops.',
+            icon: Users
+          },
+          {
+            category: 'CONFIDENCE GATES',
+            label: 'Dynamic Confidence Escapes',
+            href: '/solutions/ai-agentic-factory#human-agent-teaming',
+            desc: 'Automated human routing whenever agent certainty falls below threshold.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'SYNTHETIC EVALS',
+            label: 'Continuous Agent Evaluation',
+            href: '/solutions/ai-agentic-factory#synthetic-eval-sprints',
+            desc: 'Synthetic benchmarking, automated red-teaming & regression suites.',
+            icon: Target
+          },
+          {
+            category: 'RED TEAMING',
+            label: 'Automated Adversarial Red-Teaming',
+            href: '/solutions/ai-agentic-factory#synthetic-eval-sprints',
+            desc: 'Continuous simulated stress tests exposing edge-case vulnerabilities.',
+            icon: Sparkles
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'production',
+    title: 'Production Fleets',
+    shortLabel: 'Fleets & Yield',
+    badge: 'PRODUCTION',
+    headerTitle: 'Sovereign Runtimes, Turnkey Delivery & Fleet SLAs',
+    tagline: 'Deploy governed agent fleets in air-gapped or hybrid environments with >95% task accuracy.',
+    ctaText: 'Explore Production Fleets →',
+    ctaHref: '/solutions/ai-agentic-factory#edge-onprem-runtimes',
+    icon: TrendingUp,
+    categories: [
+      {
+        title: 'Sovereign & On-Prem Runtimes',
+        badge: 'AIR-GAPPED RUNTIMES',
+        icon: Building2,
+        items: [
+          {
+            category: 'SOVEREIGN RUNTIMES',
+            label: 'Sovereign & On-Prem Agent Runtimes',
+            href: '/solutions/ai-agentic-factory#edge-onprem-runtimes',
+            desc: 'Air-gapped SLMs, local inference pods & zero-data-leakage.',
+            icon: Building2
+          },
+          {
+            category: 'LOCAL INFERENCE',
+            label: 'Local SLM Inference Pods',
+            href: '/solutions/ai-agentic-factory#edge-onprem-runtimes',
+            desc: 'Quantized 7B–70B model execution on local GPU clusters with zero external dependencies.',
+            icon: Cpu
+          },
+          {
+            category: 'ZERO LEAKAGE',
+            label: 'Zero-Data-Leakage Deployment',
+            href: '/solutions/ai-agentic-factory#edge-onprem-runtimes',
+            desc: 'Customer-hosted VPCs and air-gapped physical data centers.',
+            icon: Lock
+          },
+          {
+            category: 'EDGE CONTAINERS',
+            label: 'Containerized Edge Agents',
+            href: '/solutions/ai-agentic-factory#edge-onprem-runtimes',
+            desc: 'Lightweight autonomous agents compiled for edge servers and IoT gateways.',
+            icon: Layers
+          }
+        ]
+      },
+      {
+        title: 'Turnkey Factory Delivery',
+        badge: 'DBOT ROLLOUT',
+        icon: Compass,
+        items: [
+          {
+            category: 'TRANSFORMATION SPRINT',
+            label: '12–24 Wk Pilot to Factory Delivery',
+            href: '/solutions/ai-agentic-factory#agentic-transformation',
+            desc: 'Organizational enablement, change management & DBOT delivery.',
+            icon: Compass
+          },
+          {
+            category: 'ORGANIZATIONAL RUNBOOKS',
+            label: 'Enablement & Runbooks',
+            href: '/solutions/ai-agentic-factory#agentic-transformation',
+            desc: 'Standard operating procedures, prompt engineering libraries, and agent governance roles.',
+            icon: FileText
+          },
+          {
+            category: 'DBOT TRANSFER',
+            label: 'DBOT Capability Transfer',
+            href: '/solutions/ai-agentic-factory#agentic-transformation',
+            desc: 'We design, build, and operate, then transition complete ownership to internal teams.',
+            icon: Boxes
+          },
+          {
+            category: 'FORWARD PODS',
+            label: 'Forward Deployed Engineering Pods',
+            href: '/practice-areas/forward-deployment-engineering',
+            desc: 'Elite engineers embedded on-site to build and tune mission-critical agent workflows.',
+            icon: Users
+          }
+        ]
+      },
+      {
+        title: 'Fleet SLAs & Readiness',
+        badge: 'PERFORMANCE',
+        icon: TrendingUp,
+        items: [
+          {
+            category: 'FLEET METRICS',
+            label: 'Agent Fleet Yield & SLA Metrics',
+            href: '/solutions/ai-agentic-factory#fleet-metrics-roi',
+            desc: 'Task autonomy rate, cost-per-successful-task & cycle time reduction.',
+            icon: TrendingUp
+          },
+          {
+            category: 'TASK ACCURACY',
+            label: '>95% Task Accuracy with SLA',
+            href: '/solutions/ai-agentic-factory#fleet-metrics-roi',
+            desc: 'Deterministic multi-agent DAGs guaranteeing output fidelity and bounded error rates.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'DIAGNOSTIC AUDIT',
+            label: 'Enterprise Agentic Diagnostic',
+            href: '/solutions/ai-agentic-factory#agentic-diagnostic',
+            desc: 'Executive technical readiness audit, opportunity prioritization & roadmap.',
+            icon: Sparkles
+          },
+          {
+            category: 'CONSULTATION',
+            label: 'Talk to an AI Architect',
+            href: '/talk-to-ai-architect',
+            desc: 'Schedule a deep architectural review of your enterprise agent fleet strategy.',
+            icon: ArrowUpRight
+          }
+        ]
+      }
+    ]
+  }
+]
+
+// 11. About Us 3 Tabbed Sections
+export const aboutThreeSections = [
+  {
+    id: 'company',
+    title: 'Company & Leadership',
+    shortLabel: 'Company',
+    badge: 'LEADERSHIP',
+    headerTitle: 'TRUSTGRID.AI Global Organization & Leadership',
+    tagline: 'Full-Spectrum AI Engineering Company with executive offices in US, Singapore & India.',
+    ctaText: 'Explore Company Profile →',
+    ctaHref: '/about',
+    icon: Building2,
+    categories: [
+      {
+        title: 'Company & Systems Rigor',
+        badge: 'ENTERPRISE FOUNDATION',
+        icon: Building2,
+        items: [
+          {
+            category: 'ABOUT US',
+            label: 'About TRUSTGRID.AI',
+            href: '/about',
+            desc: 'Our mission, vision, and full-spectrum engineering verticals.',
+            icon: Building2
+          },
+          {
+            category: 'MISSION & VISION',
+            label: 'Mission, Vision & Principles',
+            href: '/about#mission',
+            desc: 'Deterministic AI systems engineering for the compounding enterprise.',
+            icon: Target
+          },
+          {
+            category: 'CORE ARCHITECTURE',
+            label: 'Full-Spectrum Architecture',
+            href: '/about#architecture',
+            desc: 'Integrated delivery from power & silicon to autonomous agents and value engineering.',
+            icon: Layers
+          },
+          {
+            category: 'NEWS & MEDIA',
+            label: 'Press & Media Announcements',
+            href: '/about#press',
+            desc: 'Latest company announcements, research releases, and milestone achievements.',
+            icon: FileText
+          }
+        ]
+      },
+      {
+        title: 'Leadership & Systems Leads',
+        badge: 'WORLD-CLASS ARCHITECTS',
+        icon: Users,
+        items: [
+          {
+            category: 'LEADERSHIP TEAM',
+            label: 'Leadership & Systems Leads',
+            href: '/leadership',
+            desc: 'World-class AI architects, systems leads, and advisory board.',
+            icon: Users
+          },
+          {
+            category: 'ADVISORY BOARD',
+            label: 'Board of Directors & Advisors',
+            href: '/leadership#advisory',
+            desc: 'Industry pioneers in hyperscale computing, semiconductor fabrics, and enterprise AI.',
+            icon: Award
+          },
+          {
+            category: 'FELLOWSHIPS',
+            label: 'Systems Engineering Fellowship',
+            href: '/careers#fellowship',
+            desc: 'Elite fellowship program training the next generation of frontier AI systems engineers.',
+            icon: Sparkles
+          },
+          {
+            category: 'EXECUTIVE SPEAKING',
+            label: 'Keynotes & Thought Leadership',
+            href: '/insights',
+            desc: 'Executive presentations at global AI infrastructure and enterprise summits.',
+            icon: Compass
+          }
+        ]
+      },
+      {
+        title: 'Strategic Alliances & Ecosystem',
+        badge: 'PARTNERSHIPS',
+        icon: Network,
+        items: [
+          {
+            category: 'PARTNER NETWORK',
+            label: 'Technology Ecosystem & Alliances',
+            href: '/partners',
+            desc: 'Strategic partnerships across silicon manufacturers, hyperscalers, and OEM systems.',
+            icon: Network
+          },
+          {
+            category: 'RESEARCH LABS',
+            label: 'Frontier AI Research Consortia',
+            href: '/about#research',
+            desc: 'Collaborative applied research in mathematical explainability and post-quantum security.',
+            icon: Cpu
+          },
+          {
+            category: 'CLIENT ALLIANCES',
+            label: 'Global Enterprise Customers',
+            href: '/case-studies',
+            desc: 'Co-engineering initiatives across defense, banking, healthcare, and manufacturing.',
+            icon: TrendingUp
+          },
+          {
+            category: 'CONTACT US',
+            label: 'Executive Briefing Center',
+            href: '/contact',
+            desc: 'Schedule a visit to our Silicon Valley, Singapore, or India engineering labs.',
+            icon: ArrowUpRight
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'global',
+    title: 'Global Hubs & Talent',
+    shortLabel: 'Global Hubs',
+    badge: 'GLOBAL PRESENCE',
+    headerTitle: 'Global R&D Hubs, Delivery Centers & Talent Network',
+    tagline: 'Distributed engineering delivery labs across North America, Asia-Pacific, and India.',
+    ctaText: 'Explore Careers & Hubs →',
+    ctaHref: '/careers',
+    icon: MapPin,
+    categories: [
+      {
+        title: 'Global Delivery Centers',
+        badge: 'ENGINEERING LABS',
+        icon: MapPin,
+        items: [
+          {
+            category: 'NORTH AMERICA',
+            label: 'Silicon Valley R&D Lab (US)',
+            href: '/about#locations',
+            desc: 'Systems architecture, advanced silicon co-engineering, and strategic headquarters.',
+            icon: Building2
+          },
+          {
+            category: 'ASIA-PACIFIC',
+            label: 'Singapore Asia-Pacific Hub',
+            href: '/about#locations',
+            desc: 'Regional delivery center, cross-border banking AI, and sovereign infrastructure operations.',
+            icon: Globe2
+          },
+          {
+            category: 'INDIA LABS',
+            label: 'India Systems Engineering Center',
+            href: '/about#locations',
+            desc: 'High-throughput software engineering, model training pipelines, and 24/7 SRE NOC/SOC.',
+            icon: MapPin
+          },
+          {
+            category: 'GLOBAL SRE',
+            label: 'Follow-the-Sun Operations',
+            href: '/practice-areas#engagement-models',
+            desc: 'Continuous worldwide engineering coverage and sub-15 minute incident escalation.',
+            icon: Clock
+          }
+        ]
+      },
+      {
+        title: 'Careers & Engineering Culture',
+        badge: 'CAREERS',
+        icon: Users,
+        items: [
+          {
+            category: 'OPEN ROLES',
+            label: 'Open Engineering Positions',
+            href: '/careers',
+            desc: 'Join our team of frontier AI architects, GPU systems engineers, and forward deployed leads.',
+            icon: Users
+          },
+          {
+            category: 'ENGINEERING CULTURE',
+            label: 'Culture of Systems Rigor',
+            href: '/careers#culture',
+            desc: 'Deterministic principles, first-principles problem solving, and zero operational fluff.',
+            icon: Trophy
+          },
+          {
+            category: 'TALENT BOOTCAMPS',
+            label: 'Internal Advancement & Mentorship',
+            href: '/careers#bootcamp',
+            desc: 'Continuous technical upskilling and direct apprenticeship with Principal Engineers.',
+            icon: Sparkles
+          },
+          {
+            category: 'BENEFITS & IMPACT',
+            label: 'Total Rewards & Relocation',
+            href: '/careers#benefits',
+            desc: 'Top-tier global compensation, equity participation, and worldwide mobility.',
+            icon: Award
+          }
+        ]
+      },
+      {
+        title: 'Client Deployments & Proof',
+        badge: 'CASE STUDIES',
+        icon: FileText,
+        items: [
+          {
+            category: 'PRODUCTION CASE STUDIES',
+            label: 'Enterprise Production Case Studies',
+            href: '/case-studies',
+            desc: 'Documented results in tier-1 banking, healthcare, manufacturing, and defense.',
+            icon: FileText
+          },
+          {
+            category: 'OUTCOME REVIEWS',
+            label: 'Verified P&L Impact Dossiers',
+            href: '/case-studies',
+            desc: 'Audited balance-sheet ROI, compute cost reduction, and throughput acceleration.',
+            icon: CheckCircle2
+          },
+          {
+            category: 'CLIENT VOICES',
+            label: 'Executive Testimonials & Reviews',
+            href: '/case-studies#testimonials',
+            desc: 'Perspectives from Fortune 500 CIOs, CTOs, and Heads of AI Infrastructure.',
+            icon: Sparkles
+          },
+          {
+            category: 'WHITE PAPERS',
+            label: 'Whitepapers & Benchmarks',
+            href: '/insights',
+            desc: 'In-depth benchmarks on RoCEv2 fabrics, token economics, and model quantization.',
+            icon: FileSpreadsheet
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'trust',
+    title: 'Trust & Governance',
+    shortLabel: 'Governance',
+    badge: 'SECURITY & TRUST',
+    headerTitle: 'Enterprise Trust, Security & Compliance Standards',
+    tagline: 'Formal mathematical explainability, SOC 2 compliance & post-quantum security.',
+    ctaText: 'Explore Trust & Security →',
+    ctaHref: '/privacy-policy',
+    icon: ShieldCheck,
+    categories: [
+      {
+        title: 'Certifications & Compliance',
+        badge: 'AUDIT CERTIFICATIONS',
+        icon: ShieldCheck,
+        items: [
+          {
+            category: 'SOC 2 COMPLIANCE',
+            label: 'SOC 2 Type II & ISO 27001',
+            href: '/privacy-policy#compliance',
+            desc: 'Independently audited operational security, availability, and confidentiality controls.',
+            icon: ShieldCheck
+          },
+          {
+            category: 'HEALTHCARE COMPLIANCE',
+            label: 'HIPAA & FDA 21 CFR Part 11',
+            href: '/privacy-policy#compliance',
+            desc: 'Protected health information (PHI) safeguards and validated clinical workflows.',
+            icon: Lock
+          },
+          {
+            category: 'GLOBAL DATA PRIVACY',
+            label: 'GDPR, CCPA & Sovereignty',
+            href: '/privacy-policy',
+            desc: 'Strict localized data processing guarantees and zero unauthorized cross-border transfer.',
+            icon: Globe2
+          },
+          {
+            category: 'NIST AI RMF',
+            label: 'NIST AI Risk Management Framework',
+            href: '/privacy-policy#framework',
+            desc: 'Governed lifecycle mapping, measurement, and management of AI systemic risk.',
+            icon: CheckCircle2
+          }
+        ]
+      },
+      {
+        title: 'Security Architecture',
+        badge: 'DEFENSE-IN-DEPTH',
+        icon: Lock,
+        items: [
+          {
+            category: 'POST-QUANTUM',
+            label: 'Post-Quantum Crypto & CBOM',
+            href: '/solutions/ai-networking-cybersecurity',
+            desc: 'Quantum-safe key exchange and Cryptographic Bill of Materials across all fabrics.',
+            icon: Lock
+          },
+          {
+            category: 'AIR-GAPPED RUNTIMES',
+            label: 'Air-Gapped Sovereign Deployment',
+            href: '/solutions/ai-infra-engineering',
+            desc: 'Complete physical isolation for defense, intelligence, and high-security enterprises.',
+            icon: Building2
+          },
+          {
+            category: 'ZERO DATA RETENTION',
+            label: 'Zero-Data-Retention Agreements',
+            href: '/privacy-policy',
+            desc: 'Contractually guaranteed zero logging of prompts, completions, and enterprise embeddings.',
+            icon: ShieldAlert
+          },
+          {
+            category: 'CONTINUOUS SOC',
+            label: '24/7 Autonomous SOC Defense',
+            href: '/solutions/ai-networking-cybersecurity',
+            desc: 'Sub-minute autonomous threat detection and behavioral isolation.',
+            icon: Activity
+          }
+        ]
+      },
+      {
+        title: 'Policies & Responsible AI',
+        badge: 'RESPONSIBLE AI',
+        icon: FileText,
+        items: [
+          {
+            category: 'LEGAL NOTICE',
+            label: 'Privacy Policy & Terms of Service',
+            href: '/privacy-policy',
+            desc: 'Comprehensive enterprise privacy notice, data usage rights, and terms of service.',
+            icon: FileText
+          },
+          {
+            category: 'RESPONSIBLE AI',
+            label: 'Responsible AI & Ethics Charter',
+            href: '/about#ethics',
+            desc: 'Deterministic safety boundaries, bias prevention, and transparency commitments.',
+            icon: Sparkles
+          },
+          {
+            category: 'SECURITY ADVISORIES',
+            label: 'Security Disclosures & Advisories',
+            href: '/contact',
+            desc: 'Vulnerability reporting protocols, bug bounty guidelines, and incident notices.',
+            icon: AlertCircle
+          },
+          {
+            category: 'TALK TO COUNSEL',
+            label: 'Contact Legal & Compliance',
+            href: '/contact',
+            desc: 'Direct consultation with our Data Protection Officer and Corporate Counsel.',
+            icon: ArrowUpRight
+          }
+        ]
+      }
+    ]
+  }
+]
+
+
 
 const methodologyCategories = [
   {
@@ -1404,9 +2819,16 @@ export function SiteHeader() {
   const [mobileDomainCyberOpen, setMobileDomainCyberOpen] = useState(true)
   const [desktopActiveDomain, setDesktopActiveDomain] = useState<'networking' | 'cybersecurity'>('networking')
   const [desktopPracticeTab, setDesktopPracticeTab] = useState<'engineering' | 'functional' | 'industry' | 'engagement' | 'value'>('engineering')
+  const [desktopValueTab, setDesktopValueTab] = useState<string>('framework')
+  const [desktopAgenticTab, setDesktopAgenticTab] = useState<string>('cognitive')
+  const [desktopAboutTab, setDesktopAboutTab] = useState<string>('company')
   const [mobileOpenGroups, setMobileOpenGroups] = useState<Record<string, boolean>>({
     'datacenter-cloud-fabric': true,
-    'threat-detection-defense': true
+    'threat-detection-defense': true,
+    'delivery-frameworks': true,
+    'cognitive-architecture-swarms': true,
+    'company-leadership': true,
+    'practice-engineering': true
   })
   const [scrolled, setScrolled] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
@@ -1437,7 +2859,10 @@ export function SiteHeader() {
       if (event.key === 'Escape') {
         setActiveMenu(null)
         setOpen(false)
-    setDesktopPracticeTab('engineering')
+        setDesktopPracticeTab('engineering')
+        setDesktopValueTab('framework')
+        setDesktopAgenticTab('cognitive')
+        setDesktopAboutTab('company')
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -1693,21 +3118,17 @@ export function SiteHeader() {
                                         key={iIdx}
                                         href={item.href}
                                         className="tg-compact-menu-card"
-                                        title={`${item.label} — ${item.desc}`}
+                                        title={item.label}
                                         onClick={(e) => handleNavClick(e, item.href)}
                                       >
                                         <div className="tg-compact-icon-box">
                                           <ItemIcon size={13} />
                                         </div>
                                         <div className="tg-compact-card-body">
-                                          <span className="text-[8.5px] font-mono font-bold text-blue-600 uppercase tracking-wider block leading-tight">
-                                            {item.category}
-                                          </span>
                                           <div className="tg-compact-card-head">
                                             <span className="tg-compact-card-title">{item.label}</span>
                                             <ArrowRight size={11} className="tg-compact-arrow" />
                                           </div>
-                                          <p className="tg-compact-card-desc">{item.desc}</p>
                                         </div>
                                       </Link>
                                     )
@@ -1758,86 +3179,161 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'value' && (
-            <div className="isi-mega-panel isi-mega-value">
+            <div className="isi-mega-panel isi-mega-value isi-mega-practice-areas tg-tabbed-mega">
               <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      ENTERPRISE VALUE & OPERATIONAL EXCELLENCE
-                    </span>
-                    <h3 className="isi-sidebar-title">AI Value Engineering</h3>
-                    <p className="isi-sidebar-desc">
-                      Connect enterprise AI strategy, proven operational methodologies, implementation frameworks, and financial accountability to measurable business outcomes.
-                    </p>
-                    <div style={{ marginTop: '8px', padding: '8px 10px', background: 'rgba(37, 99, 235, 0.05)', borderRadius: '6px', borderLeft: '3px solid #2563eb' }}>
-                      <p style={{ margin: 0, fontSize: '11px', color: '#475569', lineHeight: 1.45 }}>
-                        From methodology selection to implementation and value realization, establish a disciplined approach to enterprise AI performance.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>3–10x Verifiable ROI • 80+ Methods</span>
-                    </div>
-                    <Link
-                      href="/book-ai-diagnostic#diagnostic-form-section"
-                      className="isi-sidebar-action"
-                      style={{ background: '#2563eb', color: '#ffffff' }}
-                      onClick={closeAll}
-                    >
-                      <span>Book AI Value Diagnostic</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
-                    <Link
-                      href="/methodology-engine"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore Methodology Engine</span>
-                      <ArrowRight size={13} />
-                    </Link>
+                {/* Left Side Bar: Clean Main Menu Only */}
+                <div className="isi-mega-sidebar tg-clean-sidebar">
+                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="AI Value Engineering">
+                    {aiValueFiveSections.map((sec) => {
+                      const SecIcon = sec.icon
+                      const isActive = desktopValueTab === sec.id
+                      return (
+                        <button
+                          key={sec.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
+                          onClick={() => setDesktopValueTab(sec.id)}
+                          onMouseEnter={() => setDesktopValueTab(sec.id)}
+                        >
+                          <div className="tg-domain-tab-left">
+                            <div
+                              className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
+                              style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                            >
+                              <SecIcon size={14} />
+                            </div>
+                            <span className="tg-tab-title">{sec.title}</span>
+                          </div>
+                          <ChevronRight size={12} className="tg-tab-chevron" />
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
 
-                {/* Right Structured Grid (3 columns, 12 items) */}
-                <div className="isi-mega-content columns-3">
-                  {aiValueMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    const itemHref = item.href || `/solutions/ai-value-engineering#${item.id}`
-                    return (
-                      <Link
-                        key={idx}
-                        href={itemHref}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, itemHref)}
+                {/* Right Structured Submenus Content Area */}
+                {(() => {
+                  const activeSection = aiValueFiveSections.find((s) => s.id === desktopValueTab) || aiValueFiveSections[0]
+                  const ActiveIcon = activeSection.icon
+                  return (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', minWidth: 0 }}>
+                      {/* Active Section Header Bar */}
+                      <div
+                        style={{
+                          padding: '6px 14px',
+                          borderBottom: '1px solid #f1f5f9',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '10px',
+                          background: '#fafafa'
+                        }}
                       >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <span className="text-[10px] font-mono font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
-                            {item.category}
-                          </span>
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                          <div
+                            style={{
+                              width: '24px',
+                              height: '24px',
+                              borderRadius: '5px',
+                              background: 'rgba(37, 99, 235, 0.1)',
+                              color: '#2563eb',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}
+                          >
+                            <ActiveIcon size={13} />
                           </div>
-                          <p className="isi-card-desc">{item.desc}</p>
+                          <div style={{ minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
+                                {activeSection.headerTitle}
+                              </h4>
+                              <span style={{ fontSize: '9px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 5px', borderRadius: '4px' }}>
+                                {activeSection.badge}
+                              </span>
+                            </div>
+                            <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
+                              {activeSection.tagline}
+                            </p>
+                          </div>
                         </div>
-                      </Link>
-                    )
-                  })}
-                </div>
+
+                        <Link
+                          href={activeSection.ctaHref}
+                          className="isi-footer-action"
+                          style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
+                          onClick={closeAll}
+                        >
+                          <span>{activeSection.ctaText}</span>
+                          <ArrowRight size={11} />
+                        </Link>
+                      </div>
+
+                      {/* 3 Categorized Columns */}
+                      <div
+                        style={{
+                          padding: '8px 12px',
+                          overflowY: 'auto',
+                          flex: 1,
+                          display: 'flex'
+                        }}
+                      >
+                        <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
+                          {activeSection.categories.map((cat, cIdx) => {
+                            const CatIcon = cat.icon
+                            return (
+                              <div key={cIdx} className="tg-category-col">
+                                <div className="tg-category-col-header">
+                                  <div className="tg-category-col-left">
+                                    <CatIcon size={12} className="text-blue-600" />
+                                    <span className="tg-category-col-title">{cat.title}</span>
+                                  </div>
+                                  <span className="tg-category-col-badge">{cat.badge}</span>
+                                </div>
+
+                                <div className="tg-category-items-stack">
+                                  {cat.items.map((item, iIdx) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={iIdx}
+                                        href={item.href}
+                                        className="tg-compact-menu-card"
+                                        title={item.label}
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="tg-compact-icon-box">
+                                          <ItemIcon size={13} />
+                                        </div>
+                                        <div className="tg-compact-card-body">
+                                          <div className="tg-compact-card-head">
+                                            <span className="tg-compact-card-title">{item.label}</span>
+                                            <ArrowRight size={11} className="tg-compact-arrow" />
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })()}
               </div>
 
               {/* Mega-Menu Footer */}
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>From operational methodology to measurable enterprise AI value.</span>
+                  <span>From operational methodology to measurable enterprise AI value: 3–10x verifiable ROI</span>
                 </div>
                 <Link
                   href="/solutions/ai-value-engineering"
@@ -1868,76 +3364,168 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'agentic' && (
-            <div className="isi-mega-panel isi-mega-agentic">
+            <div className="isi-mega-panel isi-mega-agentic isi-mega-practice-areas tg-tabbed-mega">
               <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      AUTONOMOUS AGENTIC FACTORY
-                    </span>
-                    <h3 className="isi-sidebar-title">AI Agentic Enterprise</h3>
-                    <p className="isi-sidebar-desc">
-                      Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs and persistent memory.
-                    </p>
-                  </div>
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>&gt;95% Task Accuracy with SLA</span>
-                    </div>
-                    <Link
-                      href="/solutions/ai-agentic-factory"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore Blueprint</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
+                {/* Left Side Bar: Clean Main Menu Only */}
+                <div className="isi-mega-sidebar tg-clean-sidebar">
+                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="AI Agentic Enterprise">
+                    {agenticEnterpriseThreeSections.map((sec) => {
+                      const SecIcon = sec.icon
+                      const isActive = desktopAgenticTab === sec.id
+                      return (
+                        <button
+                          key={sec.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
+                          onClick={() => setDesktopAgenticTab(sec.id)}
+                          onMouseEnter={() => setDesktopAgenticTab(sec.id)}
+                        >
+                          <div className="tg-domain-tab-left">
+                            <div
+                              className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
+                              style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                            >
+                              <SecIcon size={14} />
+                            </div>
+                            <span className="tg-tab-title">{sec.title}</span>
+                          </div>
+                          <ChevronRight size={12} className="tg-tab-chevron" />
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
 
-                {/* Right Structured Grid (3 columns, 12 items) */}
-                <div className="isi-mega-content columns-3">
-                  {agenticEnterpriseMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    const itemHref = `/solutions/ai-agentic-factory#${item.id}`
-                    return (
-                      <Link
-                        key={idx}
-                        href={itemHref}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, itemHref)}
+                {/* Right Structured Submenus Content Area */}
+                {(() => {
+                  const activeSection = agenticEnterpriseThreeSections.find((s) => s.id === desktopAgenticTab) || agenticEnterpriseThreeSections[0]
+                  const ActiveIcon = activeSection.icon
+                  return (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', minWidth: 0 }}>
+                      {/* Active Section Header Bar */}
+                      <div
+                        style={{
+                          padding: '6px 14px',
+                          borderBottom: '1px solid #f1f5f9',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '10px',
+                          background: '#fafafa'
+                        }}
                       >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                          <div
+                            style={{
+                              width: '24px',
+                              height: '24px',
+                              borderRadius: '5px',
+                              background: 'rgba(37, 99, 235, 0.1)',
+                              color: '#2563eb',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}
+                          >
+                            <ActiveIcon size={13} />
                           </div>
-                          <p className="isi-card-desc">{item.desc}</p>
+                          <div style={{ minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
+                                {activeSection.headerTitle}
+                              </h4>
+                              <span style={{ fontSize: '9px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 5px', borderRadius: '4px' }}>
+                                {activeSection.badge}
+                              </span>
+                            </div>
+                            <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
+                              {activeSection.tagline}
+                            </p>
+                          </div>
                         </div>
-                      </Link>
-                    )
-                  })}
-                </div>
+
+                        <Link
+                          href={activeSection.ctaHref}
+                          className="isi-footer-action"
+                          style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
+                          onClick={closeAll}
+                        >
+                          <span>{activeSection.ctaText}</span>
+                          <ArrowRight size={11} />
+                        </Link>
+                      </div>
+
+                      {/* 3 Categorized Columns */}
+                      <div
+                        style={{
+                          padding: '8px 12px',
+                          overflowY: 'auto',
+                          flex: 1,
+                          display: 'flex'
+                        }}
+                      >
+                        <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
+                          {activeSection.categories.map((cat, cIdx) => {
+                            const CatIcon = cat.icon
+                            return (
+                              <div key={cIdx} className="tg-category-col">
+                                <div className="tg-category-col-header">
+                                  <div className="tg-category-col-left">
+                                    <CatIcon size={12} className="text-blue-600" />
+                                    <span className="tg-category-col-title">{cat.title}</span>
+                                  </div>
+                                  <span className="tg-category-col-badge">{cat.badge}</span>
+                                </div>
+
+                                <div className="tg-category-items-stack">
+                                  {cat.items.map((item, iIdx) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={iIdx}
+                                        href={item.href}
+                                        className="tg-compact-menu-card"
+                                        title={item.label}
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="tg-compact-icon-box">
+                                          <ItemIcon size={13} />
+                                        </div>
+                                        <div className="tg-compact-card-body">
+                                          <div className="tg-compact-card-head">
+                                            <span className="tg-compact-card-title">{item.label}</span>
+                                            <ArrowRight size={11} className="tg-compact-arrow" />
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })()}
               </div>
 
               {/* Mega-Menu Footer */}
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
                   <Sparkles size={13} className="text-blue-600" />
-                  <span>Governed AgentOps, continuous evaluation & multi-agent swarms</span>
+                  <span>Governed AgentOps, continuous evaluation &amp; multi-agent swarms with SLA guarantees</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section"
+                  href="/solutions/ai-agentic-factory"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Book AI Diagnostic Assessment</span>
+                  <span>Explore Agentic Factory Blueprint</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -1982,171 +3570,174 @@ export function SiteHeader() {
 
           {activeMenu === 'networking-cybersecurity' && (
             <div
-              className="isi-mega-panel isi-mega-networking tg-minimized-mega"
+              className="isi-mega-panel isi-mega-networking isi-mega-practice-areas tg-tabbed-mega"
               role="region"
               aria-label="AI Networking & Cybersecurity Mega Menu"
             >
               <div className="isi-mega-layout">
-                {/* Left Category Introduction & Interactive Domain Switcher */}
-                <div className="isi-mega-sidebar tg-menu-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      FULL-STACK FABRIC
-                    </span>
-                    <h3 className="isi-sidebar-title">AI Networking & Cyber</h3>
-                    <p className="isi-sidebar-desc">
-                      Converged high-speed AI networking fabric and autonomous AI cybersecurity.
-                    </p>
-
-                    {/* Domain Navigation Tabs */}
-                    <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Architecture Domains">
-                      <button
-                        type="button"
-                        role="tab"
-                        aria-selected={desktopActiveDomain === 'networking'}
-                        className={`tg-domain-tab-btn ${desktopActiveDomain === 'networking' ? 'active-networking' : ''}`}
-                        onClick={() => setDesktopActiveDomain('networking')}
-                        onMouseEnter={() => setDesktopActiveDomain('networking')}
-                      >
-                        <div className="tg-domain-tab-left">
-                          <div className="tg-tab-icon-box tg-icon-net">
-                            <Network size={14} />
-                          </div>
-                          <div className="tg-tab-text">
-                            <span className="tg-tab-title">AI Networking</span>
-                            <span className="tg-tab-sub">High-Performance Fabric</span>
-                          </div>
-                        </div>
-                        <ChevronRight size={13} className="tg-tab-chevron" />
-                      </button>
-
-                      <button
-                        type="button"
-                        role="tab"
-                        aria-selected={desktopActiveDomain === 'cybersecurity'}
-                        className={`tg-domain-tab-btn ${desktopActiveDomain === 'cybersecurity' ? 'active-cyber' : ''}`}
-                        onClick={() => setDesktopActiveDomain('cybersecurity')}
-                        onMouseEnter={() => setDesktopActiveDomain('cybersecurity')}
-                      >
-                        <div className="tg-domain-tab-left">
-                          <div className="tg-tab-icon-box tg-icon-cyber">
-                            <ShieldCheck size={14} />
-                          </div>
-                          <div className="tg-tab-text">
-                            <span className="tg-tab-title">AI Cybersecurity</span>
-                            <span className="tg-tab-sub">Autonomous Zero-Trust</span>
-                          </div>
-                        </div>
-                        <ChevronRight size={13} className="tg-tab-chevron" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Sparkles size={12} className="text-blue-600" />
-                      <span>Zero Loss · Sub-3m MTTC</span>
-                    </div>
-                    <Link
-                      href="/solutions/ai-networking-cybersecurity"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
+                {/* Left Side Bar: Clean Main Menu Only */}
+                <div className="isi-mega-sidebar tg-clean-sidebar">
+                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="Architecture Domains">
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={desktopActiveDomain === 'networking'}
+                      className={`tg-domain-tab-btn ${desktopActiveDomain === 'networking' ? 'active-networking' : ''}`}
+                      onClick={() => setDesktopActiveDomain('networking')}
+                      onMouseEnter={() => setDesktopActiveDomain('networking')}
                     >
-                      <span>Explore Master Solutions</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
+                      <div className="tg-domain-tab-left">
+                        <div
+                          className={`tg-tab-icon-box ${desktopActiveDomain === 'networking' ? 'tg-icon-net' : ''}`}
+                          style={desktopActiveDomain !== 'networking' ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                        >
+                          <Network size={14} />
+                        </div>
+                        <span className="tg-tab-title">AI Networking</span>
+                      </div>
+                      <ChevronRight size={12} className="tg-tab-chevron" />
+                    </button>
+
+                    <button
+                      type="button"
+                      role="tab"
+                      aria-selected={desktopActiveDomain === 'cybersecurity'}
+                      className={`tg-domain-tab-btn ${desktopActiveDomain === 'cybersecurity' ? 'active-networking' : ''}`}
+                      onClick={() => setDesktopActiveDomain('cybersecurity')}
+                      onMouseEnter={() => setDesktopActiveDomain('cybersecurity')}
+                    >
+                      <div className="tg-domain-tab-left">
+                        <div
+                          className={`tg-tab-icon-box ${desktopActiveDomain === 'cybersecurity' ? 'tg-icon-cyber' : ''}`}
+                          style={desktopActiveDomain !== 'cybersecurity' ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                        >
+                          <ShieldCheck size={14} />
+                        </div>
+                        <span className="tg-tab-title">AI Cybersecurity</span>
+                      </div>
+                      <ChevronRight size={12} className="tg-tab-chevron" />
+                    </button>
                   </div>
                 </div>
 
-                {/* Right Structured 3-Group Content Area */}
-                <div className="tg-minimized-content-area">
-                  {/* Domain Sub-header with quick toggle pills */}
-                  <div className="tg-content-header-bar">
-                    <div className="tg-content-header-info">
-                      <div className="flex items-center gap-2">
-                        {desktopActiveDomain === 'networking' ? (
-                          <>
-                            <Network size={15} className="text-blue-600" />
-                            <span className="tg-active-domain-heading">AI Networking Architecture</span>
-                          </>
-                        ) : (
-                          <>
-                            <ShieldCheck size={15} className="text-indigo-600" />
-                            <span className="tg-active-domain-heading">AI Cybersecurity Architecture</span>
-                          </>
-                        )}
+                {/* Right Structured Submenus Content Area */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', minWidth: 0 }}>
+                  {/* Active Section Header Bar */}
+                  <div
+                    style={{
+                      padding: '6px 14px',
+                      borderBottom: '1px solid #f1f5f9',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '10px',
+                      background: '#fafafa'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                      <div
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '5px',
+                          background: desktopActiveDomain === 'networking' ? 'rgba(37, 99, 235, 0.1)' : 'rgba(79, 70, 229, 0.1)',
+                          color: desktopActiveDomain === 'networking' ? '#2563eb' : '#4f46e5',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          flexShrink: 0
+                        }}
+                      >
+                        {desktopActiveDomain === 'networking' ? <Network size={13} /> : <ShieldCheck size={13} />}
                       </div>
-                      <span className="tg-active-domain-tagline">
-                        {desktopActiveDomain === 'networking'
-                          ? 'Ultra-low latency RoCEv2, WiFi 7, DWDM & space NTN fabric'
-                          : 'Zero-trust IAM, continuous UEBA, SOAR & EDR runtime defense'}
-                      </span>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
+                            {desktopActiveDomain === 'networking' ? 'AI Networking Architecture' : 'AI Cybersecurity Architecture'}
+                          </h4>
+                          <span
+                            style={{
+                              fontSize: '9px',
+                              fontWeight: 700,
+                              color: desktopActiveDomain === 'networking' ? '#2563eb' : '#4f46e5',
+                              background: desktopActiveDomain === 'networking' ? 'rgba(37, 99, 235, 0.08)' : 'rgba(79, 70, 229, 0.08)',
+                              padding: '1px 5px',
+                              borderRadius: '4px'
+                            }}
+                          >
+                            {desktopActiveDomain === 'networking' ? 'ROCEV2 & 800G FABRIC' : 'ZERO TRUST & AI-SOC'}
+                          </span>
+                        </div>
+                        <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
+                          {desktopActiveDomain === 'networking'
+                            ? 'Ultra-low latency RoCEv2, WiFi 7, DWDM & space NTN fabric'
+                            : 'Zero-trust IAM, continuous UEBA, SOAR & EDR runtime defense'}
+                        </p>
+                      </div>
                     </div>
 
-                    <div className="tg-domain-pills-row">
-                      <button
-                        type="button"
-                        className={`tg-quick-pill ${desktopActiveDomain === 'networking' ? 'active-pill' : ''}`}
-                        onClick={() => setDesktopActiveDomain('networking')}
-                      >
-                        <Network size={12} />
-                        <span>Networking</span>
-                      </button>
-                      <button
-                        type="button"
-                        className={`tg-quick-pill ${desktopActiveDomain === 'cybersecurity' ? 'active-pill-cyber' : ''}`}
-                        onClick={() => setDesktopActiveDomain('cybersecurity')}
-                      >
-                        <ShieldCheck size={12} />
-                        <span>Cybersecurity</span>
-                      </button>
-                    </div>
+                    <Link
+                      href="/solutions/ai-networking-cybersecurity"
+                      className="isi-footer-action"
+                      style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
+                      onClick={closeAll}
+                    >
+                      <span>Explore Solutions →</span>
+                      <ArrowRight size={11} />
+                    </Link>
                   </div>
 
                   {/* 3 Columns matching Group A, Group B, Group C */}
-                  <div className="tg-thematic-columns-3">
-                    {(desktopActiveDomain === 'networking' ? networkingThematicGroups : cybersecurityThematicGroups).map((group) => {
-                      const GroupIcon = group.icon
-                      const isCyber = desktopActiveDomain === 'cybersecurity'
-                      return (
-                        <div key={group.id} className="tg-category-col">
-                          <div className="tg-category-col-header">
-                            <div className="tg-category-col-left">
-                              <GroupIcon size={13} className={isCyber ? 'text-indigo-600' : 'text-blue-600'} />
-                              <span className="tg-category-col-title">{group.title}</span>
+                  <div
+                    style={{
+                      padding: '8px 12px',
+                      overflowY: 'auto',
+                      flex: 1,
+                      display: 'flex'
+                    }}
+                  >
+                    <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
+                      {(desktopActiveDomain === 'networking' ? networkingThematicGroups : cybersecurityThematicGroups).map((group) => {
+                        const GroupIcon = group.icon
+                        const isCyber = desktopActiveDomain === 'cybersecurity'
+                        return (
+                          <div key={group.id} className="tg-category-col">
+                            <div className="tg-category-col-header">
+                              <div className="tg-category-col-left">
+                                <GroupIcon size={12} className={isCyber ? 'text-indigo-600' : 'text-blue-600'} />
+                                <span className="tg-category-col-title">{group.title}</span>
+                              </div>
+                              <span className="tg-category-col-badge">{group.badge}</span>
                             </div>
-                            <span className="tg-category-col-badge">{group.badge}</span>
-                          </div>
 
-                          <div className="tg-category-items-stack">
-                            {group.items.map((item) => {
-                              const ItemIcon = item.icon
-                              return (
-                                <Link
-                                  key={item.id}
-                                  href={item.href}
-                                  className="tg-compact-menu-card"
-                                  title={item.tooltip || `${item.label} — ${item.desc}`}
-                                  onClick={(e) => handleNavClick(e, item.href)}
-                                >
-                                  <div className={`tg-compact-icon-box ${isCyber ? 'tg-box-cyber' : ''}`}>
-                                    <ItemIcon size={13} />
-                                  </div>
-                                  <div className="tg-compact-card-body">
-                                    <div className="tg-compact-card-head">
-                                      <span className="tg-compact-card-title">{item.label}</span>
-                                      <ArrowRight size={11} className="tg-compact-arrow" />
+                            <div className="tg-category-items-stack">
+                              {group.items.map((item) => {
+                                const ItemIcon = item.icon
+                                return (
+                                  <Link
+                                    key={item.id}
+                                    href={item.href}
+                                    className="tg-compact-menu-card"
+                                    title={item.tooltip || item.label}
+                                    onClick={(e) => handleNavClick(e, item.href)}
+                                  >
+                                    <div className={`tg-compact-icon-box ${isCyber ? 'tg-box-cyber' : ''}`}>
+                                      <ItemIcon size={13} />
                                     </div>
-                                    <p className="tg-compact-card-desc">{item.desc}</p>
-                                  </div>
-                                </Link>
-                              )
-                            })}
+                                    <div className="tg-compact-card-body">
+                                      <div className="tg-compact-card-head">
+                                        <span className="tg-compact-card-title">{item.label}</span>
+                                        <ArrowRight size={11} className="tg-compact-arrow" />
+                                      </div>
+                                    </div>
+                                  </Link>
+                                )
+                              })}
+                            </div>
                           </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2158,11 +3749,11 @@ export function SiteHeader() {
                   <span>One common nervous system: unified NOC/SOC intelligence from WiFi 7 to hyperscale</span>
                 </div>
                 <Link
-                  href="/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section"
+                  href="/solutions/ai-networking-cybersecurity"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Book AI Diagnostic Assessment</span>
+                  <span>Explore Master Solutions</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -2186,75 +3777,168 @@ export function SiteHeader() {
           </button>
 
           {activeMenu === 'about' && (
-            <div className="isi-mega-panel isi-mega-about">
+            <div className="isi-mega-panel isi-mega-about isi-mega-practice-areas tg-tabbed-mega">
               <div className="isi-mega-layout">
-                {/* Left Category Introduction */}
-                <div className="isi-mega-sidebar">
-                  <div className="isi-sidebar-top">
-                    <span className="isi-sidebar-badge">
-                      <span className="pulse-dot" />
-                      COMPANY & TALENT
-                    </span>
-                    <h3 className="isi-sidebar-title">About TRUSTGRID.AI</h3>
-                    <p className="isi-sidebar-desc">
-                      Full-Spectrum AI Engineering Company for the Global AI Economy with executive offices in US, Singapore & India.
-                    </p>
-                  </div>
-                  <div className="isi-sidebar-bottom">
-                    <div className="isi-sidebar-metric-chip">
-                      <Building2 size={12} className="text-blue-600" />
-                      <span>Global R&D & Delivery Labs</span>
-                    </div>
-                    <Link
-                      href="/about"
-                      className="isi-sidebar-action"
-                      onClick={closeAll}
-                    >
-                      <span>Explore Company Profile</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
+                {/* Left Side Bar: Clean Main Menu Only */}
+                <div className="isi-mega-sidebar tg-clean-sidebar">
+                  <div className="tg-sidebar-domain-switch" role="tablist" aria-label="About Us">
+                    {aboutThreeSections.map((sec) => {
+                      const SecIcon = sec.icon
+                      const isActive = desktopAboutTab === sec.id
+                      return (
+                        <button
+                          key={sec.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          className={`tg-domain-tab-btn ${isActive ? 'active-networking' : ''}`}
+                          onClick={() => setDesktopAboutTab(sec.id)}
+                          onMouseEnter={() => setDesktopAboutTab(sec.id)}
+                        >
+                          <div className="tg-domain-tab-left">
+                            <div
+                              className={`tg-tab-icon-box ${isActive ? 'tg-icon-net' : ''}`}
+                              style={!isActive ? { background: '#f1f5f9', color: '#64748b' } : undefined}
+                            >
+                              <SecIcon size={14} />
+                            </div>
+                            <span className="tg-tab-title">{sec.title}</span>
+                          </div>
+                          <ChevronRight size={12} className="tg-tab-chevron" />
+                        </button>
+                      )
+                    })}
                   </div>
                 </div>
 
-                {/* Right Structured Grid (2 columns, 6 items) */}
-                      <div className="isi-mega-content columns-3" style={{ padding: '10px 14px' }}>
-                  {aboutMenuItems.map((item, idx) => {
-                    const Icon = item.icon
-                    return (
-                      <Link
-                        key={idx}
-                        href={item.href}
-                        className="isi-menu-card"
-                        onClick={(e) => handleNavClick(e, item.href)}
+                {/* Right Structured Submenus Content Area */}
+                {(() => {
+                  const activeSection = aboutThreeSections.find((s) => s.id === desktopAboutTab) || aboutThreeSections[0]
+                  const ActiveIcon = activeSection.icon
+                  return (
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#ffffff', minWidth: 0 }}>
+                      {/* Active Section Header Bar */}
+                      <div
+                        style={{
+                          padding: '6px 14px',
+                          borderBottom: '1px solid #f1f5f9',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '10px',
+                          background: '#fafafa'
+                        }}
                       >
-                        <div className="isi-card-icon">
-                          <Icon size={16} />
-                        </div>
-                        <div className="isi-card-body">
-                          <div className="isi-card-heading">
-                            <span className="isi-card-title">{item.label}</span>
-                            <ArrowRight size={13} className="isi-card-arrow" />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: 0 }}>
+                          <div
+                            style={{
+                              width: '24px',
+                              height: '24px',
+                              borderRadius: '5px',
+                              background: 'rgba(37, 99, 235, 0.1)',
+                              color: '#2563eb',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}
+                          >
+                            <ActiveIcon size={13} />
                           </div>
-                          <p className="isi-card-desc">{item.desc}</p>
+                          <div style={{ minWidth: 0 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                              <h4 style={{ margin: 0, fontSize: '12.5px', fontWeight: 700, color: '#0f172a' }}>
+                                {activeSection.headerTitle}
+                              </h4>
+                              <span style={{ fontSize: '9px', fontWeight: 700, color: '#2563eb', background: 'rgba(37, 99, 235, 0.08)', padding: '1px 5px', borderRadius: '4px' }}>
+                                {activeSection.badge}
+                              </span>
+                            </div>
+                            <p style={{ margin: '1px 0 0', fontSize: '10.5px', color: '#64748b', lineHeight: 1.25 }}>
+                              {activeSection.tagline}
+                            </p>
+                          </div>
                         </div>
-                      </Link>
-                    )
-                  })}
-                </div>
+
+                        <Link
+                          href={activeSection.ctaHref}
+                          className="isi-footer-action"
+                          style={{ fontSize: '10.5px', padding: '3px 8px', flexShrink: 0 }}
+                          onClick={closeAll}
+                        >
+                          <span>{activeSection.ctaText}</span>
+                          <ArrowRight size={11} />
+                        </Link>
+                      </div>
+
+                      {/* 3 Categorized Columns */}
+                      <div
+                        style={{
+                          padding: '8px 12px',
+                          overflowY: 'auto',
+                          flex: 1,
+                          display: 'flex'
+                        }}
+                      >
+                        <div className="tg-thematic-columns-3" style={{ width: '100%' }}>
+                          {activeSection.categories.map((cat, cIdx) => {
+                            const CatIcon = cat.icon
+                            return (
+                              <div key={cIdx} className="tg-category-col">
+                                <div className="tg-category-col-header">
+                                  <div className="tg-category-col-left">
+                                    <CatIcon size={12} className="text-blue-600" />
+                                    <span className="tg-category-col-title">{cat.title}</span>
+                                  </div>
+                                  <span className="tg-category-col-badge">{cat.badge}</span>
+                                </div>
+
+                                <div className="tg-category-items-stack">
+                                  {cat.items.map((item, iIdx) => {
+                                    const ItemIcon = item.icon
+                                    return (
+                                      <Link
+                                        key={iIdx}
+                                        href={item.href}
+                                        className="tg-compact-menu-card"
+                                        title={item.label}
+                                        onClick={(e) => handleNavClick(e, item.href)}
+                                      >
+                                        <div className="tg-compact-icon-box">
+                                          <ItemIcon size={13} />
+                                        </div>
+                                        <div className="tg-compact-card-body">
+                                          <div className="tg-compact-card-head">
+                                            <span className="tg-compact-card-title">{item.label}</span>
+                                            <ArrowRight size={11} className="tg-compact-arrow" />
+                                          </div>
+                                        </div>
+                                      </Link>
+                                    )
+                                  })}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })()}
               </div>
 
               {/* Mega-Menu Footer */}
               <div className="isi-mega-footer">
                 <div className="isi-footer-badge">
-                  <Users size={13} className="text-blue-600" />
-                  <span>World-class AI architects, systems leads, and advisory board</span>
+                  <Sparkles size={13} className="text-blue-600" />
+                  <span>Full-Spectrum AI Engineering Company with executive offices in US, Singapore &amp; India</span>
                 </div>
                 <Link
-                  href="/contact"
+                  href="/about"
                   className="isi-footer-action"
                   onClick={closeAll}
                 >
-                  <span>Contact Leadership</span>
+                  <span>Explore Company Profile</span>
                   <ArrowUpRight size={13} />
                 </Link>
               </div>
@@ -2335,34 +4019,60 @@ export function SiteHeader() {
                   <Link href="/practice-areas" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
                     <span>★ View All Practice Areas Overview →</span>
                   </Link>
-                  {practiceAreasFiveSections.map((sec) => (
-                    <div key={sec.id} style={{ marginTop: '10px', marginBottom: '10px' }}>
-                      <div style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', textTransform: 'uppercase', letterSpacing: '0.05em', padding: '4px 8px', background: 'rgba(29, 92, 255, 0.06)', borderRadius: '4px', margin: '4px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <span>{sec.num}. {sec.title}</span>
-                        <span style={{ fontSize: '9px', fontWeight: 600, color: '#64748b' }}>{sec.badge}</span>
-                      </div>
-                      {sec.categories.map((cat, cIdx) => (
-                        <div key={cIdx} style={{ margin: '6px 0 6px 4px' }}>
-                          <div style={{ fontSize: '10px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em', padding: '2px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <span>{cat.title}</span>
-                            <span style={{ fontSize: '8px', fontWeight: 600, color: '#94a3b8' }}>{cat.badge}</span>
+                  {practiceAreasFiveSections.map((sec) => {
+                    const SecIcon = sec.icon
+                    const isDivOpen = !!mobileOpenGroups[`sec-${sec.id}`]
+                    return (
+                      <div key={sec.id} className="mobile-group-wrapper">
+                        <button
+                          type="button"
+                          className="mobile-group-accordion-btn"
+                          onClick={() => toggleMobileGroup(`sec-${sec.id}`)}
+                          aria-expanded={isDivOpen}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <SecIcon size={12} className="text-blue-600 shrink-0" />
+                            <span className="truncate">{sec.num}. {sec.title}</span>
                           </div>
-                          {cat.items.map((item, i) => (
-                            <Link
-                              key={i}
-                              href={item.href}
-                              className="mobile-sublink"
-                              onClick={(e) => handleNavClick(e, item.href)}
-                            >
-                              <span className="text-[9.5px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
-                              <span style={{ fontWeight: 600, color: '#0f172a' }}>{item.label}</span>
-                              <span style={{ fontSize: '11px', color: '#64748b', display: 'block', marginTop: '2px', lineHeight: 1.35 }}>{item.desc}</span>
-                            </Link>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="mobile-group-count">{sec.categories.reduce((acc, c) => acc + c.items.length, 0)}</span>
+                            <ChevronDown size={12} className={`chevron-icon transition-transform ${isDivOpen ? 'rotate-180' : ''}`} />
+                          </div>
+                        </button>
+
+                        {isDivOpen && (
+                          <div className="mobile-group-body">
+                            {sec.categories.map((cat, cIdx) => (
+                              <div key={cIdx} style={{ margin: '4px 0 8px' }}>
+                                <div style={{ fontSize: '10px', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.03em', padding: '3px 6px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                  <span>{cat.title}</span>
+                                  <span style={{ fontSize: '8px', fontWeight: 600, color: '#94a3b8' }}>{cat.badge}</span>
+                                </div>
+                                {cat.items.map((item, i) => {
+                                  const ItemIcon = item.icon
+                                  return (
+                                    <Link
+                                      key={i}
+                                      href={item.href}
+                                      className="mobile-cap-card"
+                                      onClick={(e) => handleNavClick(e, item.href)}
+                                    >
+                                      <div className="mobile-cap-icon">
+                                        <ItemIcon size={12} />
+                                      </div>
+                                      <div className="mobile-cap-info">
+                                        <span className="mobile-cap-title">{item.label}</span>
+                                      </div>
+                                    </Link>
+                                  )
+                                })}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })}
                 </div>
               )}
             </div>
@@ -2378,21 +4088,54 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'value' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-value-engineering" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>AI Value Engineering Blueprint Overview →</span>
+                  <Link href="/solutions/ai-value-engineering" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
+                    <span>★ AI Value Engineering Blueprint Overview →</span>
                   </Link>
-                  {aiValueMenuItems.map((item, i) => {
-                    const itemHref = item.href || `/solutions/ai-value-engineering#${item.id}`
+                  {aiValueThematicGroups.map((group) => {
+                    const GroupIcon = group.icon
+                    const isOpen = !!mobileOpenGroups[group.id]
                     return (
-                      <Link
-                        key={i}
-                        href={itemHref}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <span className="text-[10px] font-mono font-bold text-blue-600 uppercase block mb-0.5">{item.category}</span>
-                        <span>{item.label}</span>
-                      </Link>
+                      <div key={group.id} className="mobile-group-wrapper">
+                        <button
+                          type="button"
+                          className="mobile-group-accordion-btn"
+                          onClick={() => toggleMobileGroup(group.id)}
+                          aria-expanded={isOpen}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <GroupIcon size={12} className="text-blue-600 shrink-0" />
+                            <span className="truncate">{group.title}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="mobile-group-count">{group.items.length}</span>
+                            <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className="mobile-group-body">
+                            {group.items.map((item, i) => {
+                              const ItemIcon = item.icon
+                              const itemHref = item.href || `/solutions/ai-value-engineering#${item.id}`
+                              return (
+                                <Link
+                                  key={i}
+                                  href={itemHref}
+                                  className="mobile-cap-card"
+                                  onClick={(e) => handleNavClick(e, itemHref)}
+                                >
+                                  <div className="mobile-cap-icon">
+                                    <ItemIcon size={12} />
+                                  </div>
+                                  <div className="mobile-cap-info">
+                                    <span className="mobile-cap-title">{item.label}</span>
+                                  </div>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
                     )
                   })}
                 </div>
@@ -2410,20 +4153,54 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'agentic' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/solutions/ai-agentic-factory" className="mobile-sublink font-semibold" onClick={closeAll}>
-                    <span>Agentic Enterprise Blueprint Overview →</span>
+                  <Link href="/solutions/ai-agentic-factory" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
+                    <span>★ Agentic Enterprise Blueprint Overview →</span>
                   </Link>
-                  {agenticEnterpriseMenuItems.map((item, i) => {
-                    const itemHref = `/solutions/ai-agentic-factory#${item.id}`
+                  {agenticEnterpriseThematicGroups.map((group) => {
+                    const GroupIcon = group.icon
+                    const isOpen = !!mobileOpenGroups[group.id]
                     return (
-                      <Link
-                        key={i}
-                        href={itemHref}
-                        className="mobile-sublink"
-                        onClick={(e) => handleNavClick(e, itemHref)}
-                      >
-                        <span>{item.label}</span>
-                      </Link>
+                      <div key={group.id} className="mobile-group-wrapper">
+                        <button
+                          type="button"
+                          className="mobile-group-accordion-btn"
+                          onClick={() => toggleMobileGroup(group.id)}
+                          aria-expanded={isOpen}
+                        >
+                          <div className="flex items-center gap-2 min-w-0">
+                            <GroupIcon size={12} className="text-blue-600 shrink-0" />
+                            <span className="truncate">{group.title}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5 shrink-0">
+                            <span className="mobile-group-count">{group.items.length}</span>
+                            <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                          </div>
+                        </button>
+
+                        {isOpen && (
+                          <div className="mobile-group-body">
+                            {group.items.map((item, i) => {
+                              const ItemIcon = item.icon
+                              const itemHref = item.href || `/solutions/ai-agentic-factory#${item.id}`
+                              return (
+                                <Link
+                                  key={i}
+                                  href={itemHref}
+                                  className="mobile-cap-card"
+                                  onClick={(e) => handleNavClick(e, itemHref)}
+                                >
+                                  <div className="mobile-cap-icon">
+                                    <ItemIcon size={12} />
+                                  </div>
+                                  <div className="mobile-cap-info">
+                                    <span className="mobile-cap-title">{item.label}</span>
+                                  </div>
+                                </Link>
+                              )
+                            })}
+                          </div>
+                        )}
+                      </div>
                     )
                   })}
                 </div>
@@ -2515,7 +4292,6 @@ export function SiteHeader() {
                                         </div>
                                         <div className="mobile-cap-info">
                                           <span className="mobile-cap-title">{item.label}</span>
-                                          <span className="mobile-cap-desc">{item.desc}</span>
                                         </div>
                                       </Link>
                                     )
@@ -2583,7 +4359,6 @@ export function SiteHeader() {
                                         </div>
                                         <div className="mobile-cap-info">
                                           <span className="mobile-cap-title">{item.label}</span>
-                                          <span className="mobile-cap-desc">{item.desc}</span>
                                         </div>
                                       </Link>
                                     )
@@ -2611,62 +4386,121 @@ export function SiteHeader() {
               </button>
               {mobileSection === 'about' && (
                 <div className="mobile-accordion-body">
-                  <Link href="/about" className="mobile-sublink font-semibold" onClick={closeAll}>
+                  <Link href="/about" className="mobile-sublink font-semibold text-blue-600 mb-1" onClick={closeAll}>
                     <span>About TRUSTGRID.AI Overview →</span>
                   </Link>
-                  {aboutMenuItems.map((item, i) => (
-                    <Link
-                      key={i}
-                      href={item.href}
-                      className="mobile-sublink"
-                      onClick={(e) => handleNavClick(e, item.href)}
-                    >
-                      <span>{item.label}</span>
-                    </Link>
-                  ))}
+
+                  <div className="space-y-1.5 pt-1">
+                    {aboutThematicGroups.map((group) => {
+                      const GroupIcon = group.icon
+                      const isOpen = !!mobileOpenGroups[group.id]
+                      return (
+                        <div key={group.id} className="mobile-group-wrapper">
+                          <button
+                            type="button"
+                            className="mobile-group-accordion-btn"
+                            onClick={() => toggleMobileGroup(group.id)}
+                            aria-expanded={isOpen}
+                          >
+                            <div className="flex items-center gap-2 min-w-0">
+                              <GroupIcon size={12} className="text-blue-600 shrink-0" />
+                              <span className="truncate">{group.title}</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0">
+                              <span className="mobile-group-count">{group.items.length}</span>
+                              <ChevronDown size={12} className={`chevron-icon transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                            </div>
+                          </button>
+
+                          {isOpen && (
+                            <div className="mobile-group-body">
+                              {group.items.map((item) => {
+                                const ItemIcon = item.icon
+                                return (
+                                  <Link
+                                    key={item.id}
+                                    href={item.href}
+                                    className="mobile-cap-card"
+                                    onClick={(e) => handleNavClick(e, item.href)}
+                                  >
+                                    <div className="mobile-cap-icon mobile-cap-icon-blue">
+                                      <ItemIcon size={12} />
+                                    </div>
+                                    <div className="mobile-cap-info">
+                                      <span className="mobile-cap-title">{item.label}</span>
+                                    </div>
+                                  </Link>
+                                )
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
                 </div>
               )}
             </div>
 
             <div className="mobile-cta-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <a
-                href="https://wa.me/919513088612?text=Hi%20TrustGrid%20team%2C%20I%20would%20like%20to%20discuss%20an%20enterprise%20AI%20requirement."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button button-ghost button-full"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  borderColor: 'rgba(37, 211, 102, 0.4)',
-                  color: '#25D366',
-                  background: 'rgba(37, 211, 102, 0.08)'
-                }}
-                onClick={() => {
-                  closeAll()
-                  if (typeof window !== 'undefined') {
-                    trackWhatsAppClick('mobile_drawer_cta', 'mobile_header', 'Mobile Drawer WhatsApp')
-                  }
-                }}
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="18"
-                  height="18"
-                  fill="currentColor"
-                  aria-hidden="true"
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                <a
+                  href="https://wa.me/919513088612?text=Hi%20TrustGrid%20India%20team"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button button-ghost button-sm"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    borderColor: 'rgba(37, 211, 102, 0.4)',
+                    color: '#25D366',
+                    background: 'rgba(37, 211, 102, 0.08)',
+                    fontSize: '11.5px',
+                    padding: '8px 10px'
+                  }}
+                  onClick={() => {
+                    closeAll()
+                    if (typeof window !== 'undefined') {
+                      trackWhatsAppClick('mobile_drawer_india', 'mobile_header', 'Mobile Drawer India WhatsApp')
+                    }
+                  }}
                 >
-                  <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.13.17 1.73 2.64 4.2 3.7.59.25 1.05.4 1.41.51.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.12-.23-.19-.48-.31z" />
-                </svg>
-                <span>Chat on WhatsApp</span>
-              </a>
+                  <span>WhatsApp (IN)</span>
+                </a>
+                <a
+                  href="https://wa.me/16507724145?text=Hi%20TrustGrid%20Americas%20team"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button button-ghost button-sm"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    borderColor: 'rgba(37, 211, 102, 0.4)',
+                    color: '#25D366',
+                    background: 'rgba(37, 211, 102, 0.08)',
+                    fontSize: '11.5px',
+                    padding: '8px 10px'
+                  }}
+                  onClick={() => {
+                    closeAll()
+                    if (typeof window !== 'undefined') {
+                      trackWhatsAppClick('mobile_drawer_us', 'mobile_header', 'Mobile Drawer US WhatsApp')
+                    }
+                  }}
+                >
+                  <span>WhatsApp (US)</span>
+                </a>
+              </div>
               <Link
                 href="/contact"
                 className="button button-primary button-full"
                 onClick={closeAll}
               >
-                <span>Contact Us</span>
+                <span>Contact Enterprise Advisory</span>
                 <ArrowUpRight size={16} />
               </Link>
             </div>

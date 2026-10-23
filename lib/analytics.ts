@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ============================================================================
  * TRUSTGRID.AI — HIGH-RESOLUTION 95-COLUMN BEHAVIORAL TELEMETRY & ANALYTICS ENGINE
  * ============================================================================
@@ -722,11 +722,39 @@ export async function build95TelemetryPayload(
   return payload
 }
 
+export function isProductionEnvironment(): boolean {
+  if (typeof window === 'undefined') {
+    return process.env.NODE_ENV === 'production' && !process.env.VERCEL_ENV?.includes('preview')
+  }
+  const host = window.location.hostname.toLowerCase()
+  return host === 'trustgrid.ai' || host === 'www.trustgrid.ai' || host === 'trustgrid.in' || host === 'www.trustgrid.in'
+}
+
+export function isBotOrInternalTraffic(): boolean {
+  if (typeof window === 'undefined') return false
+  if ((navigator as any).webdriver) return true
+  const ua = navigator.userAgent.toLowerCase()
+  const botSignatures = ['googlebot', 'bingbot', 'yandexbot', 'duckduckbot', 'baiduspider', 'ahrefsbot', 'semrushbot', 'lighthouse', 'headlesschrome', 'pingdom', 'gtmetrix']
+  if (botSignatures.some(bot => ua.includes(bot))) return true
+  try {
+    if (localStorage.getItem('trustgrid_internal_user') === 'true') return true
+    if (window.location.search.includes('traffic=internal') || window.location.search.includes('preview=true')) {
+      localStorage.setItem('trustgrid_internal_user', 'true')
+      return true
+    }
+  } catch (e) {}
+  return false
+}
+
 /**
  * Non-blocking dispatch to Google Apps Script Webhook
  */
 export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<void> {
   if (typeof window === 'undefined') return
+
+  const isProd = isProductionEnvironment()
+  const isInternal = isBotOrInternalTraffic()
+  const trafficType = isInternal ? 'internal' : (isProd ? 'production' : 'staging')
 
   // Check consent preference
   let consentStatus: 'granted' | 'denied' = 'granted'
@@ -740,19 +768,45 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
   // 1. GTM / GA4 dataLayer push & direct gtag event dispatch
   try {
     const w = window as any
+    const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-F0BHWRT22R'
+    const pagePath = payload.page || (typeof window !== 'undefined' ? window.location.pathname : '/')
+    const pageTitle = payload.page_title || (typeof document !== 'undefined' ? document.title : '')
+    const pageLocation = typeof window !== 'undefined' ? window.location.href : `https://trustgrid.ai${pagePath}`
+
     if (w.dataLayer && Array.isArray(w.dataLayer)) {
       w.dataLayer.push({
+        ...payload,
         event: payload.event_name,
-        ...payload
+        page_path: pagePath,
+        page_title: pageTitle,
+        page_location: pageLocation,
+        environment: isProd ? 'production' : 'staging',
+        traffic_type: trafficType,
+        is_internal: isInternal
       })
     }
+
     if (typeof w.gtag === 'function') {
-      w.gtag('event', payload.event_name, {
-        event_category: payload.event_category,
-        event_label: payload.event_label,
-        page_path: payload.page || (typeof window !== 'undefined' ? window.location.pathname : ''),
-        value: payload.conversion_value || 1
-      })
+      if (payload.event_name === 'page_view') {
+        // Standard GA4 SPA route change tracking
+        w.gtag('config', gaId, {
+          page_path: pagePath,
+          page_title: pageTitle,
+          page_location: pageLocation
+        })
+        w.gtag('event', 'page_view', {
+          page_title: pageTitle,
+          page_location: pageLocation,
+          page_path: pagePath
+        })
+      } else {
+        w.gtag('event', payload.event_name, {
+          event_category: payload.event_category,
+          event_label: payload.event_label,
+          page_path: pagePath,
+          value: payload.conversion_value || 1
+        })
+      }
 
       // Standard GA4 Lead Conversion Event
       if (payload.event_name === 'form_submit' || payload.goal_completed) {
@@ -819,14 +873,21 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
     }
   } catch (e) {}
 
-  // 3. Apps Script Endpoint (if configured)
-  const endpoint =
-    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
-    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL
+  // 3. Direct Sheet Webhook Dispatch (Strictly segregated: Production vs Staging/Vercel)
+  const defaultProdWebhookUrl =
+    'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
+
+  const stagingWebhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL || ''
+
+  const endpoint = isProd
+    ? (process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl)
+    : stagingWebhookUrl
 
   if (endpoint && endpoint.startsWith('http') && !endpoint.includes('YOUR_SCRIPT')) {
     const bodyString = JSON.stringify({
+      sheetName: isProd ? 'Live_Traffic_Events' : 'Staging_Traffic_Events',
       event_type: 'telemetry_95',
+      environment: isProd ? 'production' : 'staging_vercel',
       ...payload
     })
 
@@ -841,6 +902,9 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
         keepalive: true
       }).catch(() => {})
     } catch (e) {}
+  } else if (!isProd) {
+    // Graceful notice during local dev / preview testing
+    // Staging webhook will activate once NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL is added
   }
 }
 

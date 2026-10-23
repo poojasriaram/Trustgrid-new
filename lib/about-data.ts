@@ -293,7 +293,7 @@ export const officeLocations: OfficeLocation[] = [
     email: "cs@trustgrid.in"
   },
 
-  // 2. US Offices (West Coast, East Coast & Americas HQ - No WhatsApp)
+  // 2. US Offices (West Coast, East Coast & Americas HQ)
   {
     city: "San Mateo / Mountain View, California",
     region: "United States (West Coast AI Center)",
@@ -301,6 +301,7 @@ export const officeLocations: OfficeLocation[] = [
     address: "Suite 21, 400 Concar Dr, San Mateo, CA 94402, United States",
     contactPerson: "harpita@trustgrid.ai",
     phone: "+1 650 772 4145",
+    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20Americas%20team",
     email: "lavanya@trustgrid.ai"
   },
   {
@@ -318,6 +319,7 @@ export const officeLocations: OfficeLocation[] = [
     address: "501 E Kennedy Blvd Suite 1400, Tampa, FL 33602, United States (Mailing: 400 N Ashley Dr, Suite 1900, Tampa, FL 33602, USA)",
     contactPerson: "Murali",
     phone: "+1 650 772 4145",
+    whatsappUrl: "https://wa.me/16507724145?text=Hi%20TrustGrid%20Americas%20team",
     email: "Murali@trustgrid.ai"
   },
 
@@ -357,8 +359,6 @@ export const officeLocations: OfficeLocation[] = [
     region: "Asia-Pacific (APAC HQ)",
     tag: "APAC Operations",
     address: "5 Temasek Boulevard, 17th Floor, Singapore 038985",
-    phone: "+65 6050 5235",
-    whatsappUrl: "https://wa.me/6560505235?text=Hi%20TrustGrid%20Singapore%20team",
     email: "connect@trustgrid.ai"
   }
 ]

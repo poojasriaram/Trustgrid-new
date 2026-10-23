@@ -218,7 +218,7 @@ export function QuickContactForm({
             Send Another Message
           </button>
           <a
-            href="https://wa.me/15550192834?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20enquiry"
+            href="https://wa.me/919513088612?text=Hi%20TrustGrid%20team%2C%20following%20up%20on%20my%20enquiry"
             target="_blank"
             rel="noopener noreferrer"
             className="button button-ghost button-sm"

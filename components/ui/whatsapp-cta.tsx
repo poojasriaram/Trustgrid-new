@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
@@ -14,7 +14,7 @@ interface WhatsAppCTAProps {
 }
 
 // Configurable approved TRUSTGRID.AI WhatsApp contact point
-const DEFAULT_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+15550192834'
+const DEFAULT_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+919513088612'
 
 function getContextualMessage(pathname: string): string {
   if (pathname.includes('/solutions/ai-infra-engineering')) {

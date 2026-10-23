@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
@@ -2565,7 +2565,7 @@ export default function AIInfraEngineeringPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={14} className="text-slate-400" />
-                      <a href="tel:+919886318611" className="hover:text-cyan-300 transition-colors">+91 9886318611</a>
+                      <a href="tel:+919513088612" className="hover:text-cyan-300 transition-colors">+91 9513088612</a>
                     </div>
                   </div>
                 </div>
@@ -2582,7 +2582,7 @@ export default function AIInfraEngineeringPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Phone size={14} className="text-slate-400" />
-                      <a href="tel:+919880425247" className="hover:text-cyan-300 transition-colors">+91 9880425247</a>
+                      <a href="tel:+919513088612" className="hover:text-cyan-300 transition-colors">+91 9513088612</a>
                     </div>
                   </div>
                 </div>

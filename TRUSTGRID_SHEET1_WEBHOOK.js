@@ -36,36 +36,36 @@ const CONFIG = {
 const EMAIL_CONFIG = {
   name: "TrustGrid Business Intelligence",
   companyName: "TrustGrid.AI",
-  website: "https://trustgridnew.vercel.app", // Production website URL
+  website: "https://trustgrid.ai", // Primary production domain
+  secondaryWebsite: "https://trustgrid.in", // Regional domain
   replyTo: "connect@trustgrid.ai",
-  adminEmail: "poojasri.aram@gmail.com",
+  adminEmail: "poojasri.trustgrid@gmail.com",
   
   // Recipients for Lead & Sales Inquiries (Strictly limited to authorized team)
   salesEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
   
   // Recipients for Ad Campaign Lead Generation
   adCampaignEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
 
   // Recipients for Career Applications & Monthly Resumes
   careerEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
 
   // Recipients for Daily, Weekly & Monthly Analytics Reports
   reportEmails: [
-    "poojasri.aram@gmail.com",
-    "bv@trustflow.in",
-    "connect@trustgrid.ai"
+    "poojasri.trustgrid@gmail.com",
+    "bv@trustflow.in"
   ],
 
   // Same WhatsApp line used on the live site (components/ui/whatsapp-cta.tsx)
@@ -110,7 +110,7 @@ var SCHEMA_95_HEADERS = [
 ];
 
 var TAB_CONFIGS = {
-  // Master 95-Column Live Behavioral Telemetry for Profit Machines
+  // Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
   "Live_Traffic_Events": SCHEMA_95_HEADERS,
 
   // 1. Inbound Leads / Quick Diagnostics (LeadCaptureSection.tsx)
@@ -242,10 +242,12 @@ var SHEET_NAME_ALIASES = {
   "securityevents": "Network_Security_Log",
 
   // Master 95-Column Live Behavioral Telemetry
+  "telemetry95": "Live_Traffic_Events",
   "telemetry_95": "Live_Traffic_Events",
   "telemetry": "Live_Traffic_Events",
   "livetrafficevents": "Live_Traffic_Events",
   "live_traffic_events": "Live_Traffic_Events",
+  "livetraffic": "Live_Traffic_Events",
   "mastertelemetry": "Live_Traffic_Events",
 
   // Telemetry Routes
@@ -399,6 +401,21 @@ function doPost(e) {
     // TrustGrid High-Speed Intelligence Batch Synchronization Handler
     if (data && (data.action === "sync_intelligence" || data.sync === true)) {
       return handleIntelligenceSync(data);
+    }
+
+    // Strict Staging / Vercel / Localhost Traffic Isolation Guard
+    // Prevents test and staging traffic from contaminating production tabs or triggering executive alerts
+    var pageRef = String(data.page_url || data.pageUrl || data.referrer || "");
+    var isStagingOrigin = (
+      data.environment === "staging_vercel" ||
+      data.environment === "staging" ||
+      pageRef.indexOf("vercel.app") !== -1 ||
+      pageRef.indexOf("localhost") !== -1 ||
+      pageRef.indexOf("127.0.0.1") !== -1
+    );
+
+    if (isStagingOrigin) {
+      return logToStagingQuarantine(data);
     }
     
     // lib/analytics.ts telemetry beacons (page views, clicks, CTA, visibility) only set
@@ -904,7 +921,7 @@ function sendEmailOnce(options) {
 }
 
 // =========================================================================================
-// 5. ENHANCED EMAIL DISPATCHER (PROFIT MACHINES)
+// 5. ENHANCED EMAIL DISPATCHER (TRUSTGRID.AI)
 // =========================================================================================
 
 /**
@@ -1030,7 +1047,7 @@ function sendLeadEmails(data, sheetName, spreadsheetUrl) {
 }
 
 /**
- * Returns customized category labels, badges, recipient lists, and subject lines for Profit Machines.
+ * Returns customized category labels, badges, recipient lists, and subject lines for TRUSTGRID.AI.
  */
 function getLeadCategoryMeta(sheetName, data) {
   var name = data.name || data.Name || data["Full Name"] || data.fullName || "";
@@ -1049,8 +1066,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "AI Enterprise",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " - " + name : name || "New Enterprise Diagnostic"),
-        userSubject: "Profit Machines - Consulting Session Confirmed",
-        userMessage: "Thank you for requesting an Executive AI Diagnostic session with Profit Machines. Our Principal AI Architect is reviewing your requirements and will connect with your team shortly.",
+        userSubject: "TRUSTGRID.AI - Consulting Session Confirmed",
+        userMessage: "Thank you for requesting an Executive AI Diagnostic session with TRUSTGRID.AI. Our Principal AI Architect is reviewing your requirements and will connect with your team shortly.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1064,7 +1081,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Enterprise",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " (" + name + ")" : name || "New Readiness Audit"),
-        userSubject: "Profit Machines - AI Readiness Audit Confirmation",
+        userSubject: "TRUSTGRID.AI - AI Readiness Audit Confirmation",
         userMessage: "We have received your AI Readiness assessment request. Our Solution Architects will analyze your tech stack and provide the governance roadmap.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -1079,7 +1096,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Organization",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company ? company + " - " + name : name || "New Workshop Booking"),
-        userSubject: "Profit Machines - AI Governance Workshop Request Received",
+        userSubject: "TRUSTGRID.AI - AI Governance Workshop Request Received",
         userMessage: "Thank you for scheduling an AI Governance & Agentic Trust workshop. We will customize the curriculum for your engineering and compliance teams.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -1094,8 +1111,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Enterprise Client",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (company || name || "New Technical RFP"),
-        userSubject: "Profit Machines - RFP Proposal Received",
-        userMessage: "Thank you for submitting your RFP to Profit Machines. Our solutions engineering division is reviewing the scope of work and compliance specifications.",
+        userSubject: "TRUSTGRID.AI - RFP Proposal Received",
+        userMessage: "Thank you for submitting your RFP to TRUSTGRID.AI. Our solutions engineering division is reviewing the scope of work and compliance specifications.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1109,7 +1126,7 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Tech Team",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Consultation"),
-        userSubject: "Profit Machines - Consultation Confirmed",
+        userSubject: "TRUSTGRID.AI - Consultation Confirmed",
         userMessage: "Your technical consultation request with a Senior AI Architect has been scheduled. We look forward to discussing your agentic architecture and guardrails.",
         recipients: EMAIL_CONFIG.salesEmails
       };
@@ -1124,8 +1141,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: role || "Engineering Role",
         leadPhone: phone,
         internalSubject: "[TG Career Application] " + (name || "Applicant") + " - " + (role || "AI Engineer"),
-        userSubject: "Profit Machines - Application Received",
-        userMessage: "Thank you for applying to join Profit Machines. Our Talent Acquisition & Research team is reviewing your profile and credentials.",
+        userSubject: "TRUSTGRID.AI - Application Received",
+        userMessage: "Thank you for applying to join TRUSTGRID.AI. Our Talent Acquisition & Research team is reviewing your profile and credentials.",
         recipients: EMAIL_CONFIG.careerEmails
       };
 
@@ -1139,8 +1156,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Partner Agency",
         leadPhone: phone,
         internalSubject: "[TG Partner Application] " + (company || name || "New Strategic Partner"),
-        userSubject: "Profit Machines - Partnership Application Received",
-        userMessage: "Thank you for your interest in joining the Profit Machines Partner Ecosystem. Our Strategic Alliances team will reach out to discuss onboarding.",
+        userSubject: "TRUSTGRID.AI - Partnership Application Received",
+        userMessage: "Thank you for your interest in joining the TRUSTGRID.AI Partner Ecosystem. Our Strategic Alliances team will reach out to discuss onboarding.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1154,8 +1171,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Business Prospect",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Campaign Lead"),
-        userSubject: "Profit Machines - Consultation Request Received",
-        userMessage: "Thank you for expressing interest in Profit Machines. An Enterprise AI Consultant will connect with you promptly.",
+        userSubject: "TRUSTGRID.AI - Consultation Request Received",
+        userMessage: "Thank you for expressing interest in TRUSTGRID.AI. An Enterprise AI Consultant will connect with you promptly.",
         recipients: EMAIL_CONFIG.adCampaignEmails
       };
 
@@ -1169,8 +1186,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Interactive Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Chatbot Lead] " + (name || "Visitor") + (company ? " (" + company + ")" : ""),
-        userSubject: "Profit Machines - Thank You for Connecting",
-        userMessage: "Thank you for chatting with the Profit Machines virtual assistant. An AI Governance Advisor will follow up with your specific query.",
+        userSubject: "TRUSTGRID.AI - Thank You for Connecting",
+        userMessage: "Thank you for chatting with the TRUSTGRID.AI virtual assistant. An AI Governance Advisor will follow up with your specific query.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1184,8 +1201,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: "Industry Reader",
         leadPhone: "",
         internalSubject: "[TG Newsletter Subscriber] " + (data.email || "New Insights Reader"),
-        userSubject: "Profit Machines - Welcome to Executive Insights",
-        userMessage: "Thank you for subscribing to Profit Machines Executive Briefings. You will receive our latest research on AI agent safety, EU AI Act compliance, and LLM red teaming.",
+        userSubject: "TRUSTGRID.AI - Welcome to Executive Insights",
+        userMessage: "Thank you for subscribing to TRUSTGRID.AI Executive Briefings. You will receive our latest research on AI agent safety, EU AI Act compliance, and LLM red teaming.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1199,8 +1216,8 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Direct Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Quick Forms] " + (name ? name + (company ? " (" + company + ")" : "") : "New Quick Lead"),
-        userSubject: "Profit Machines - Quick Enquiry Received",
-        userMessage: "Thank you for reaching out to Profit Machines via our Quick Enquiry form. Our enterprise solutions advisor will follow up with you promptly.",
+        userSubject: "TRUSTGRID.AI - Quick Enquiry Received",
+        userMessage: "Thank you for reaching out to TRUSTGRID.AI via our Quick Enquiry form. Our enterprise solutions advisor will follow up with you promptly.",
         recipients: EMAIL_CONFIG.salesEmails
       };
 
@@ -1215,15 +1232,15 @@ function getLeadCategoryMeta(sheetName, data) {
         leadCompany: company || "Direct Inquirer",
         leadPhone: phone,
         internalSubject: "[TG Consulting Sessions] " + (name ? name + (company ? " (" + company + ")" : "") : "New Web Lead"),
-        userSubject: "Profit Machines - Inquiry Received",
-        userMessage: "Thank you for reaching out to Profit Machines. Our solutions team has received your inquiry and will respond within 24 hours.",
+        userSubject: "TRUSTGRID.AI - Inquiry Received",
+        userMessage: "Thank you for reaching out to TRUSTGRID.AI. Our solutions team has received your inquiry and will respond within 24 hours.",
         recipients: EMAIL_CONFIG.salesEmails
       };
   }
 }
 
 // =========================================================================================
-// 6. MODERN EXECUTIVE HTML EMAIL TEMPLATES (PROFIT MACHINES BRANDING)
+// 6. MODERN EXECUTIVE HTML EMAIL TEMPLATES (TRUSTGRID.AI BRANDING)
 // =========================================================================================
 
 /**
@@ -1307,7 +1324,7 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
   // Action Buttons
   var actionButtons = '<div style="margin-top:25px;">';
   if (email) {
-    actionButtons += '<a href="mailto:' + email + '?subject=Re: ' + encodeURIComponent(meta.categoryName + ' - Profit Machines') + '" style="background:#6366f1;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Reply to Prospect</a>';
+    actionButtons += '<a href="mailto:' + email + '?subject=Re: ' + encodeURIComponent(meta.categoryName + ' - TRUSTGRID.AI') + '" style="background:#6366f1;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Reply to Prospect</a>';
   }
   if (phone) {
     actionButtons += '<a href="tel:' + phone + '" style="background:#0f172a;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Call ' + phone + '</a>';
@@ -1367,7 +1384,7 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
     '        ' + meta.badgeText,
     '      </div>',
     '      <h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em;">' + meta.categoryName + '</h2>',
-    '      <p style="margin: 6px 0 0 0; color: #a5b4fc; font-size: 13px;">Captured live from PROFIT MACHINES Platform</p>',
+    '      <p style="margin: 6px 0 0 0; color: #a5b4fc; font-size: 13px;">Captured live from TRUSTGRID.AI Platform</p>',
     '    </div>',
     '',
     '    <!-- SUMMARY CARD -->',
@@ -1399,9 +1416,9 @@ function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
     '',
     '    <!-- FOOTER -->',
     '    <div style="background: #f8fafc; padding: 20px 25px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.5;">',
-    '      &copy; ' + new Date().getFullYear() + ' PROFIT MACHINES. All rights reserved.<br>',
+    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. All rights reserved.<br>',
     '      Direct Inquiries: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong><br>',
-    '      Confidential Notification &bull; Distributed to authorized Profit Machines team members only.',
+    '      Confidential Notification &bull; Distributed to authorized TRUSTGRID.AI team members only.',
     '    </div>',
     '  </div>',
     '</body>',
@@ -1539,16 +1556,16 @@ function buildCareerVideoRequestHtml(name) {
     '<body style="font-family: \'Segoe UI\', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; margin: 0; padding: 25px 15px;">',
     '  <div style="max-width: 600px; margin: 0 auto; background: #111827; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid #1f2937;">',
     '    <div style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%); padding: 35px 25px; text-align: center;">',
-    '      <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 0.05em;">PROFIT MACHINES CAREERS</h1>',
+    '      <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: 0.05em;">TRUSTGRID.AI CAREERS</h1>',
     '      <p style="color: #a5b4fc; margin: 8px 0 0 0; font-size: 13px; font-weight: 500;">Next Step: Candidate Profile Video</p>',
     '    </div>',
     '    <div style="padding: 35px 30px; color: #e5e7eb; line-height: 1.6;">',
     '      <h2 style="font-size: 20px; color: #818cf8; font-weight: 700; margin: 0 0 15px 0;">Hi ' + escapeHtml(name) + ',</h2>',
-    '      <p style="font-size: 15px; color: #d1d5db; margin: 0 0 20px 0;">Thanks again for applying to Profit Machines. As the next step in your application, please record a short profile video introducing yourself.</p>',
+    '      <p style="font-size: 15px; color: #d1d5db; margin: 0 0 20px 0;">Thanks again for applying to TRUSTGRID.AI. As the next step in your application, please record a short profile video introducing yourself.</p>',
     '      <div style="background: #1f2937; padding: 20px; border-radius: 10px; border: 1px solid #374151; margin: 25px 0;">',
     '        <h3 style="color: #f3f4f6; font-size: 15px; margin: 0 0 12px 0; font-weight: 700;">How to record & submit</h3>',
     '        <ul style="padding-left: 20px; margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.8;">',
-    '          <li>Record a <strong>15&ndash;20 minute</strong> video using your laptop camera &amp; mic, introducing yourself, your experience, and why you want to join Profit Machines.</li>',
+    '          <li>Record a <strong>15&ndash;20 minute</strong> video using your laptop camera &amp; mic, introducing yourself, your experience, and why you want to join TRUSTGRID.AI.</li>',
     '          <li>Upload the video to <strong>Google Drive</strong> and set sharing to &ldquo;Anyone with the link &ndash; Viewer&rdquo;.</li>',
     '          <li>Copy the shareable link and <strong>reply to this email</strong> with the link so our Talent team can review it and attach it to your application.</li>',
     '        </ul>',
@@ -1556,7 +1573,7 @@ function buildCareerVideoRequestHtml(name) {
     '      <p style="font-size: 13px; color: #9ca3af; margin: 0;">Once received, your video link will be logged against your application in our tracking sheet.</p>',
     '    </div>',
     '    <div style="background: #0d1117; padding: 20px 25px; text-align: center; font-size: 12px; color: #6b7280; border-top: 1px solid #1f2937; line-height: 1.5;">',
-    '      &copy; ' + new Date().getFullYear() + ' PROFIT MACHINES. All rights reserved.<br>',
+    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. All rights reserved.<br>',
     '      Direct Talent Team Contact: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong>',
     '    </div>',
     '  </div>',
@@ -1573,7 +1590,7 @@ function sendCareerVideoRequestEmail(userEmail, userName) {
   if (getRemainingEmailQuota() === 0) return;
   sendEmailOnce({
     to: userEmail,
-    subject: "Profit Machines Careers - Next Step: Submit Your 15-20 Min Profile Video",
+    subject: "TRUSTGRID.AI Careers - Next Step: Submit Your 15-20 Min Profile Video",
     htmlBody: buildCareerVideoRequestHtml(userName),
     name: EMAIL_CONFIG.name,
     replyTo: EMAIL_CONFIG.replyTo
@@ -1673,7 +1690,7 @@ function migrateAddCareerVideoColumns() {
  * fetches their resumes from Drive/Storage, and forwards them as attachments to Poojasri & BV.
  */
 function forwardMonthlyCareerApplications() {
-  console.log("🚀 Starting Monthly Career Applications Digest Forwarder for PROFIT MACHINES...");
+  console.log("🚀 Starting Monthly Career Applications Digest Forwarder for TRUSTGRID.AI...");
   
   var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var sheet = findSheetFlexible(ss, "Career_Applications") || findSheetFlexible(ss, "Career Applications");
@@ -1750,7 +1767,7 @@ function forwardMonthlyCareerApplications() {
 
   var monthLabel = Utilities.formatDate(now, "Asia/Kolkata", "MMMM yyyy");
   var emailHtml = buildMonthlyCareerEmailHtml(monthLabel, candidates, ss.getUrl());
-  var subject = "[Profit Machines Careers] Monthly Resumes Digest - " + monthLabel + " (" + candidates.length + " Candidates)";
+  var subject = "[TRUSTGRID.AI Careers] Monthly Resumes Digest - " + monthLabel + " (" + candidates.length + " Candidates)";
   
   var quota = getRemainingEmailQuota();
   if (quota === 0) {
@@ -1806,7 +1823,7 @@ function buildMonthlyCareerEmailHtml(monthLabel, candidates, sheetUrl) {
     ' <div style="max-width:700px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.06);border:1px solid #e2e8f0;">',
     '  <div style="background:linear-gradient(135deg,#090d16 0%,#1e1b4b 50%,#4338ca 100%);padding:30px 25px;color:#ffffff;">',
     '   <div style="display:inline-block;background:#6366f1;color:#ffffff;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:0.06em;margin-bottom:10px;">MONTHLY TALENT DIGEST</div>',
-    '   <h2 style="margin:0;font-size:22px;font-weight:800;">PROFIT MACHINES Talent &amp; Fellowship Pipeline</h2>',
+    '   <h2 style="margin:0;font-size:22px;font-weight:800;">TRUSTGRID.AI Talent &amp; Fellowship Pipeline</h2>',
     '   <p style="margin:6px 0 0 0;color:#c7d2fe;font-size:13px;">Candidates for ' + monthLabel + ' &bull; Total: <strong>' + candidates.length + '</strong></p>',
     '  </div>',
     '  <div style="padding:25px;">',
@@ -1827,7 +1844,7 @@ function buildMonthlyCareerEmailHtml(monthLabel, candidates, sheetUrl) {
     '   </div>',
     '  </div>',
     '  <div style="background:#f8fafc;padding:18px 25px;border-top:1px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center;">',
-    '   &copy; ' + new Date().getFullYear() + ' PROFIT MACHINES. Confidential Talent Pipeline.',
+    '   &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. Confidential Talent Pipeline.',
     '  </div>',
     ' </div>',
     '</body>',
@@ -1836,7 +1853,7 @@ function buildMonthlyCareerEmailHtml(monthLabel, candidates, sheetUrl) {
 }
 
 // =========================================================================================
-// 8. PROFIT MACHINES - EXECUTIVE ANALYTICS BRIEF ENGINE (DAILY, WEEKLY & MONTHLY)
+// 8. TRUSTGRID.AI - EXECUTIVE ANALYTICS BRIEF ENGINE (DAILY, WEEKLY & MONTHLY)
 // =========================================================================================
 
 function dailyReport() {
@@ -1848,7 +1865,7 @@ function dailyReport() {
 
   var reportData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
   var emailHtml = buildExecutiveAnalyticsBriefHtml(reportData, "DAILY");
-  sendReportEmail("[PROFIT MACHINES] Daily Analytics Report - " + cleanEmailText(reportData.periodDateStr), emailHtml);
+  sendReportEmail("[TRUSTGRID.AI] Daily Analytics Report - " + cleanEmailText(reportData.periodDateStr), emailHtml);
 }
 
 function weeklyReport() {
@@ -1863,7 +1880,7 @@ function weeklyReport() {
 
   var reportData = aggregateExecutiveReportData(ss, "WEEKLY", w1Start, w1End, w2Start, w2End);
   var emailHtml = buildExecutiveAnalyticsBriefHtml(reportData, "WEEKLY");
-  sendReportEmail("[PROFIT MACHINES] Weekly Analytics Report - " + cleanEmailText(reportData.periodRangeStr), emailHtml);
+  sendReportEmail("[TRUSTGRID.AI] Weekly Analytics Report - " + cleanEmailText(reportData.periodRangeStr), emailHtml);
 }
 
 function monthlyReport() {
@@ -1879,7 +1896,76 @@ function monthlyReport() {
   var reportData = aggregateExecutiveReportData(ss, "MONTHLY", m1Start, m1End, m2Start, m2End);
   var monthLabel = Utilities.formatDate(m1End, "Asia/Kolkata", "MMMM yyyy");
   var emailHtml = buildExecutiveAnalyticsBriefHtml(reportData, "MONTHLY");
-  sendReportEmail("[PROFIT MACHINES] Monthly Analytics Report - " + cleanEmailText(monthLabel), emailHtml);
+  sendReportEmail("[TRUSTGRID.AI] Monthly Executive Report - " + cleanEmailText(monthLabel), emailHtml);
+}
+
+/**
+ * Daily Traffic & Lead Snapshot Archiver
+ * Captures and logs consolidated daily performance row into 'Daily_Traffic_Snapshots' tab
+ * for historical trend analysis and long-term reporting.
+ */
+function captureDailyTrafficSnapshot() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  if (!ss) return;
+
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var dayBefore = new Date();
+  dayBefore.setDate(dayBefore.getDate() - 2);
+
+  var reportData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
+  var snapSheet = findSheetFlexible(ss, "Daily_Traffic_Snapshots");
+  var headers = [
+    "Date", "Date Str", "Total Visitors", "Total Sessions", "Total Leads",
+    "Total Enquiries", "Conversion Rate", "Top Lead Source", "Top 5 Pages (JSON)",
+    "Traffic Sources (JSON)", "Visitors Delta", "Leads Delta", "Recorded At IST"
+  ];
+
+  if (!snapSheet) {
+    snapSheet = ss.insertSheet("Daily_Traffic_Snapshots");
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  } else if (snapSheet.getLastRow() === 0) {
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  }
+
+  var dateKey = Utilities.formatDate(yesterday, "Asia/Kolkata", "yyyy-MM-dd");
+  var row = [
+    dateKey,
+    reportData.periodDateStr,
+    reportData.kpis.visitors || 0,
+    reportData.kpis.sessions || 0,
+    reportData.kpis.leads || 0,
+    reportData.kpis.enquiries || 0,
+    reportData.kpis.conversionRate || "0%",
+    reportData.kpis.topLeadSource || "Direct",
+    JSON.stringify((reportData.topPages || []).slice(0, 5)),
+    JSON.stringify(reportData.sources || []),
+    reportData.comparison.visitorsDelta || "0%",
+    reportData.comparison.leadsDelta || "0%",
+    Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'")
+  ];
+
+  var lastRow = snapSheet.getLastRow();
+  var dateCol = lastRow > 1 ? snapSheet.getRange(2, 1, lastRow - 1, 1).getValues().flat() : [];
+  var existingIdx = dateCol.indexOf(dateKey);
+
+  if (existingIdx !== -1) {
+    snapSheet.getRange(existingIdx + 2, 1, 1, row.length).setValues([row]);
+  } else {
+    snapSheet.appendRow(row);
+  }
+
+  console.log("Captured Daily Traffic Snapshot for: " + dateKey);
 }
 
 /**
@@ -2396,7 +2482,7 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     '<body style="font-family: \'Segoe UI\', -apple-system, BlinkMacSystemFont, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 25px 15px;">',
     '  <div style="max-width: 660px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">',
     '    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%); padding: 28px 25px; color: #ffffff;">',
-    '      <div style="font-size: 11px; font-weight: 800; color: #818cf8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">PROFIT MACHINES ENTERPRISE ANALYTICS</div>',
+    '      <div style="font-size: 11px; font-weight: 800; color: #818cf8; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;">TRUSTGRID.AI ENTERPRISE ANALYTICS</div>',
     '      <h2 style="margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.02em;">' + mainHeading + '</h2>',
     '      <p style="margin: 6px 0 0 0; font-size: 13px; color: #c7d2fe;">' + subtitle + '</p>',
     '    </div>',
@@ -2485,8 +2571,8 @@ function buildExecutiveAnalyticsBriefHtml(data, periodType) {
     '      </div>',
     '    </div>',
     '    <div style="background: #f8fafc; padding: 16px 20px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center;">',
-    '      &copy; ' + new Date().getFullYear() + ' PROFIT MACHINES. Confidential Executive Analytics Report.<br>',
-    '      Direct Inquiries: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong>',
+    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. Confidential Executive Analytics Report.<br>',
+    '      Direct Inquiries: <strong>poojasri.trustgrid@gmail.com</strong> | <strong>bv@trustflow.in</strong> | <strong>connect@trustgrid.ai</strong>',
     '    </div>',
     '  </div>',
     '</body>',
@@ -2717,55 +2803,66 @@ function resolvePageName(path) {
 // 10. SETUP TRIGGERS & ONE-CLICK NOTIFICATION PREVIEW SUITE
 // =========================================================================================
 
-function setupAllProfitMachinesTriggers() {
+function setupAllTrustGridTriggers() {
+  setupAllTrustGridTriggers();
+}
+
+function setupAllTrustGridTriggers() {
   var triggers = ScriptApp.getProjectTriggers();
   triggers.forEach(function(t) { ScriptApp.deleteTrigger(t); });
 
-  // 1. Daily Report at 8:30 AM IST
+  // 1. Daily Snapshot at 23:50 IST (freezes daily numbers into Traffic_History)
+  ScriptApp.newTrigger("captureDailyTrafficSnapshot")
+    .timeBased()
+    .everyDays(1)
+    .atHour(23)
+    .create();
+
+  // 2. Daily Executive Report at 8:30 AM IST
   ScriptApp.newTrigger("dailyReport")
     .timeBased()
     .everyDays(1)
     .atHour(8)
     .create();
 
-  // 2. Weekly Report on Friday at 8:30 AM IST
+  // 3. Weekly Report on Monday at 8:30 AM IST (Per User Specification)
   ScriptApp.newTrigger("weeklyReport")
     .timeBased()
-    .onWeekDay(ScriptApp.WeekDay.FRIDAY)
+    .onWeekDay(ScriptApp.WeekDay.MONDAY)
     .atHour(8)
     .create();
 
-  // 3. Monthly Report on 1st of month at 8:30 AM IST
+  // 4. Monthly Executive Report on 1st of month at 8:30 AM IST
   ScriptApp.newTrigger("monthlyReport")
     .timeBased()
     .onMonthDay(1)
     .atHour(8)
     .create();
 
-  // 4. Monthly Career Applications Trigger on 1st of month at 9:00 AM IST
+  // 5. Monthly Career Applications Trigger on 1st of month at 9:00 AM IST
   ScriptApp.newTrigger("forwardMonthlyCareerApplications")
     .timeBased()
     .onMonthDay(1)
     .atHour(9)
     .create();
 
-  console.log("All PROFIT MACHINES automation triggers successfully scheduled.");
+  console.log("All TRUSTGRID automation triggers successfully scheduled (Monday Weekly Report + 1st-of-month Monthly Report + Daily Snapshot).");
 }
 
 /**
  * ⚠️ TEST-ONLY — MANUAL TRIGGER, NEVER SCHEDULED, NEVER TOUCHES REAL SHEET DATA.
  * Sends hardcoded [PREVIEW]-prefixed sample emails so a human can visually check the HTML
- * templates render correctly. It is NOT wired to setupAllProfitMachinesTriggers() and must never
+ * templates render correctly. It is NOT wired to setupAllTrustGridTriggers() and must never
  * be added to a time-based trigger — run it only manually from the Apps Script editor.
  * Real automated reports (dailyReport/weeklyReport/monthlyReport) always pull live data via
  * aggregateExecutiveReportData() and never call this function.
  */
-function SEND_ALL_PROFIT_MACHINES_NOTIFICATION_PREVIEWS() {
+function SEND_ALL_TRUSTGRID_NOTIFICATION_PREVIEWS() {
   var recipients = EMAIL_CONFIG.reportEmails.join(",");
   var mockSheetUrl = "https://docs.google.com/spreadsheets/d/" + CONFIG.MAIN_SPREADSHEET_ID + "/edit";
-  console.log("Dispatching all PROFIT MACHINES preview notifications to: " + recipients);
+  console.log("Dispatching all TRUSTGRID.AI preview notifications to: " + recipients);
 
-  var samplePdfBlob = Utilities.newBlob("Sample Candidate Resume - PROFIT MACHINES AI/ML Research Engineer", "application/pdf", "Poojasri_Resume.pdf");
+  var samplePdfBlob = Utilities.newBlob("Sample Candidate Resume - TRUSTGRID.AI AI/ML Research Engineer", "application/pdf", "Poojasri_Resume.pdf");
 
   // 1. AI Diagnostic Sample (Consulting Sessions)
   var dData = {
@@ -2890,7 +2987,7 @@ function SEND_ALL_PROFIT_MACHINES_NOTIFICATION_PREVIEWS() {
   var dailyHtml = buildExecutiveAnalyticsBriefHtml(sampleDailyData, "DAILY");
   MailApp.sendEmail({
     to: recipients,
-    subject: "[PREVIEW] [PROFIT MACHINES] Daily Analytics Report - " + sampleDailyData.periodDateStr,
+    subject: "[PREVIEW] [TRUSTGRID.AI] Daily Analytics Report - " + sampleDailyData.periodDateStr,
     htmlBody: dailyHtml,
     name: EMAIL_CONFIG.name,
     replyTo: EMAIL_CONFIG.replyTo
@@ -2957,7 +3054,7 @@ function SEND_ALL_PROFIT_MACHINES_NOTIFICATION_PREVIEWS() {
   var weeklyHtml = buildExecutiveAnalyticsBriefHtml(sampleWeeklyData, "WEEKLY");
   MailApp.sendEmail({
     to: recipients,
-    subject: "[PREVIEW] [PROFIT MACHINES] Weekly Analytics Report - " + sampleWeeklyData.periodRangeStr,
+    subject: "[PREVIEW] [TRUSTGRID.AI] Weekly Analytics Report - " + sampleWeeklyData.periodRangeStr,
     htmlBody: weeklyHtml,
     name: EMAIL_CONFIG.name,
     replyTo: EMAIL_CONFIG.replyTo
@@ -3022,7 +3119,36 @@ function initializeAllDatabaseTables() {
     }
   });
 
-  console.log("All 20 Profit Machines database tabs initialized with enterprise styling.");
+  console.log("All 20 TRUSTGRID.AI database tabs initialized with enterprise styling.");
 }
+
+/**
+ * Quarantines any test / Vercel / localhost submission that accidentally hits the production webhook.
+ * Keeps production Contact_Leads pristine and suppresses executive alert emails.
+ */
+function logToStagingQuarantine(data) {
+  try {
+    var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+    var tab = ss.getSheetByName("Staging_Quarantine");
+    if (!tab) {
+      tab = ss.insertSheet("Staging_Quarantine");
+      var headers = ["Timestamp", "Origin", "Event / Form", "User / Name", "Email", "Data JSON"];
+      tab.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#f59e0b").setFontColor("#ffffff");
+      tab.setFrozenRows(1);
+    }
+    var ts = Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'");
+    var origin = data.page_url || data.pageUrl || data.referrer || "Vercel / Localhost QA";
+    var formType = data.form_type || data.sheetName || data.event_type || "Test Event";
+    var name = data.name || data.fullName || "";
+    var email = data.email || data.work_email || "";
+    tab.appendRow([ts, origin, formType, name, email, JSON.stringify(data)]);
+    console.log("⚠️ Staging / Vercel traffic routed to Staging_Quarantine to protect production metrics.");
+    return ContentService.createTextOutput("Quarantined to Staging").setMimeType(ContentService.MimeType.TEXT);
+  } catch (qErr) {
+    console.error("Quarantine error:", qErr);
+    return ContentService.createTextOutput("Quarantine Error: " + qErr.toString()).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
+
 
 

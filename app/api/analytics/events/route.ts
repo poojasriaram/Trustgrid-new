@@ -49,18 +49,27 @@ interface RawIncomingEvent {
  * without blocking server-side ingestion response.
  */
 async function dispatchAsyncToGoogleAppsScript(payload: any): Promise<void> {
+  const defaultWebhookUrl =
+    'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
+
   const url =
-    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
     process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
-    process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
+    process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
+    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
+    defaultWebhookUrl
 
   if (!url || !url.startsWith('http') || url.includes('YOUR_SCRIPT')) return
 
   try {
+    const formattedPayload = {
+      sheetName: payload.sheetName || 'Live_Traffic_Events',
+      event_type: 'telemetry_95',
+      ...payload
+    }
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(formattedPayload)
     }).catch(() => {})
   } catch (e) {
     // Non-blocking

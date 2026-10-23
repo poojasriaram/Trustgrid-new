@@ -14,13 +14,17 @@ export function SiteFooter() {
             The Enterprise AI Operating Company for the AGI Era. Engineering the complete vertical stack from silicon to strategy.
           </p>
           <div style={{ marginTop: '12px', fontSize: '13px', color: '#cbd5e1' }}>
-            <div style={{ marginBottom: '4px' }}>
-              <span style={{ color: '#94a3b8' }}>US Office: </span>
-              <a href="mailto:Murali@trustgrid.ai" style={{ color: '#60a5fa', textDecoration: 'none' }}>Murali@trustgrid.ai</a>
+            <div style={{ marginBottom: '6px' }}>
+              <span style={{ color: '#94a3b8' }}>US Americas / WhatsApp: </span>
+              <a href="tel:+16507724145" style={{ color: '#60a5fa', textDecoration: 'none', fontWeight: 600 }}>+1 650 772 4145</a>
+              <span style={{ color: '#64748b' }}> • </span>
+              <a href="mailto:Murali@trustgrid.ai" style={{ color: '#94a3b8', textDecoration: 'none' }}>Murali@trustgrid.ai</a>
             </div>
             <div>
-              <span style={{ color: '#94a3b8' }}>Support & Operations: </span>
-              <a href="mailto:cs@trustgrid.in" style={{ color: '#60a5fa', textDecoration: 'none' }}>cs@trustgrid.in</a>
+              <span style={{ color: '#94a3b8' }}>India HQ / WhatsApp: </span>
+              <a href="tel:+919513088612" style={{ color: '#60a5fa', textDecoration: 'none', fontWeight: 600 }}>+91 95130 88612</a>
+              <span style={{ color: '#64748b' }}> • </span>
+              <a href="mailto:cs@trustgrid.in" style={{ color: '#94a3b8', textDecoration: 'none' }}>cs@trustgrid.in</a>
             </div>
           </div>
           <div style={{ marginTop: '16px' }}>

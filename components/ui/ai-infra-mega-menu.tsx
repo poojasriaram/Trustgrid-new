@@ -80,7 +80,6 @@ export function AiInfraMegaMenu({ onNavigate, onClose }: AiInfraMegaMenuProps) {
                       <span className="v5-cluster-title">{cluster.title}</span>
                       <ChevronRight size={14} className="v5-cluster-chevron" />
                     </div>
-                    <p className="v5-cluster-desc">{cluster.description}</p>
                   </div>
                 </div>
               )
@@ -102,7 +101,6 @@ export function AiInfraMegaMenu({ onNavigate, onClose }: AiInfraMegaMenuProps) {
                 <span className="v5-services-cluster-tag">CLUSTER {activeCluster.number}</span>
                 <span className="v5-services-cluster-name">{activeCluster.title}</span>
               </div>
-              <p className="v5-services-cluster-summary">{activeCluster.description}</p>
             </div>
             
             <Link
@@ -134,7 +132,6 @@ export function AiInfraMegaMenu({ onNavigate, onClose }: AiInfraMegaMenuProps) {
                       <span className="v5-service-title">{service.title}</span>
                       <ArrowRight size={13} className="v5-service-arrow" />
                     </div>
-                    <p className="v5-service-desc">{service.desc}</p>
                   </div>
                 </Link>
               )
@@ -161,9 +158,9 @@ export function AiInfraMegaMenu({ onNavigate, onClose }: AiInfraMegaMenuProps) {
           </Link>
 
           <Link
-            href="/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section"
+            href="/book-consultation"
             className="v5-footer-primary-cta"
-            onClick={(e) => handleClick(e, '/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section')}
+            onClick={(e) => handleClick(e, '/book-consultation')}
           >
             <span>Book AI Diagnostic Assessment</span>
             <ArrowUpRight size={14} />
@@ -227,8 +224,6 @@ export function MobileAiInfraAccordion({
 
               {isExpanded && (
                 <div className="v5-mobile-cluster-body">
-                  <p className="v5-mobile-cluster-desc">{cluster.description}</p>
-                  
                   <div className="v5-mobile-services-list">
                     {cluster.services.map((svc, sIdx) => {
                       const SvcIcon = svc.icon
@@ -244,7 +239,6 @@ export function MobileAiInfraAccordion({
                           </div>
                           <div className="v5-mobile-service-text">
                             <span className="v5-mobile-service-title">{svc.title}</span>
-                            <span className="v5-mobile-service-desc">{svc.desc}</span>
                           </div>
                         </Link>
                       )

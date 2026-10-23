@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -47,6 +47,7 @@ import { ComparisonTable } from '@/components/ui/comparison-table'
 import { PrinciplesSlider } from '@/components/ui/principles-slider'
 import { ICPSlider } from '@/components/ui/icp-slider'
 import { EngagementModelsSlider } from '@/components/ui/engagement-models-slider'
+import { AiValueEngineeringSlider } from '@/components/ui/ai-value-engineering-slider'
 import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
 import { CommonFoundationSection } from '@/components/common-foundation-section'
 import {
@@ -540,6 +541,28 @@ export default function HomePage() {
       {/* AI METHODOLOGY ENGINE SHOWCASE */}
       <section className="section methodology-section" id="methodology">
         <MethodologyEngineSpecialSection />
+      </section>
+
+      {/* AI VALUE ENGINEERING SHOWCASE SLIDER (9 PROFESSIONAL SLIDES) */}
+      <section className="section value-engineering-section" id="value-engineering" style={{ paddingTop: '20px', paddingBottom: '40px' }}>
+        <div className="section-intro">
+          <div className="intro-left">
+            <span className="section-badge">VALUE ENGINEERING</span>
+            <p className="section-label">AI Value Engineering &amp; Operational Excellence</p>
+          </div>
+          <span className="section-index">VALUE REALIZATION</span>
+        </div>
+
+        <div className="showcase-header">
+          <h2>
+            Industrial rigor meets financial accountability. <span>9 Stages to Defensible ROI.</span>
+          </h2>
+          <p>
+            Bridging silicon compute, token FinOps, Theory of Constraints (TOC), and Lean Six Sigma to guarantee CFO-verified enterprise returns from initial opportunity discovery to compounding scale.
+          </p>
+        </div>
+
+        <AiValueEngineeringSlider />
       </section>
 
       {/* DIFFERENTIATION FRAMEWORK */}

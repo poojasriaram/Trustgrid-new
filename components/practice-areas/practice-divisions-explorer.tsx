@@ -483,7 +483,7 @@ export const practiceDivisionsData: PracticeDivision[] = [
       {
         category: 'METHODOLOGY ENGINE',
         label: 'Deterministic Industrial Tooling & Interfaces',
-        href: 'https://trustgrid-ai-nine.vercel.app/methodology-engine',
+        href: '/methodology-engine',
         desc: 'Operates on the methodology engine, uniting VSM, TOC, FMEA, Poka-Yoke, SMED, FinOps, and DMAIC with Divisions 2 & 3.',
         icon: Sparkles,
         bullets: [

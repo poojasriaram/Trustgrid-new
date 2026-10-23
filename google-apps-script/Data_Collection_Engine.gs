@@ -37,32 +37,32 @@ const EMAIL_CONFIG = {
   companyName: "TRUSTGRID.AI",
   website: "https://www.trustgrid.ai",
   replyTo: "connect@trustgrid.ai",
-  adminEmail: "poojasri.aram@gmail.com",
+  adminEmail: "poojasri.trustgrid@gmail.com",
   
   // Recipients for Lead & Sales Inquiries (Strictly limited to authorized team)
   salesEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
   
   // Recipients for Ad Campaign Lead Generation
   adCampaignEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
 
   // Recipients for Career Applications & Monthly Resumes
   careerEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ],
 
   // Recipients for Daily, Weekly & Monthly Analytics Reports
   reportEmails: [
-    "poojasri.aram@gmail.com",
+    "poojasri.trustgrid@gmail.com",
     "bv@trustflow.in",
     "connect@trustgrid.ai"
   ]
@@ -193,6 +193,7 @@ var TAB_CONFIGS = {
 var SHEET_NAME_ALIASES = {
   // Master 95-Column Telemetry
   "telemetry_95": "Live_Traffic_Events",
+  "telemetry95": "Live_Traffic_Events",
   "telemetry": "Live_Traffic_Events",
   "livetrafficevents": "Live_Traffic_Events",
   "live_traffic_events": "Live_Traffic_Events",
@@ -2253,35 +2254,110 @@ function setupAllTrustGridTriggers() {
   var triggers = ScriptApp.getProjectTriggers();
   triggers.forEach(function(t) { ScriptApp.deleteTrigger(t); });
 
-  // 1. Daily Report at 8:30 AM IST
+  // 1. Daily Snapshot at 23:50 IST (freezes daily numbers into Daily_Traffic_Snapshots)
+  ScriptApp.newTrigger("captureDailyTrafficSnapshot")
+    .timeBased()
+    .everyDays(1)
+    .atHour(23)
+    .create();
+
+  // 2. Daily Report at 8:30 AM IST
   ScriptApp.newTrigger("dailyReport")
     .timeBased()
     .everyDays(1)
     .atHour(8)
     .create();
 
-  // 2. Weekly Report on Friday at 8:30 AM IST
+  // 3. Weekly Report on Monday at 8:30 AM IST (Per User Specification)
   ScriptApp.newTrigger("weeklyReport")
     .timeBased()
-    .onWeekDay(ScriptApp.WeekDay.FRIDAY)
+    .onWeekDay(ScriptApp.WeekDay.MONDAY)
     .atHour(8)
     .create();
 
-  // 3. Monthly Report on 1st of month at 8:30 AM IST
+  // 4. Monthly Report on 1st of month at 8:30 AM IST
   ScriptApp.newTrigger("monthlyReport")
     .timeBased()
     .onMonthDay(1)
     .atHour(8)
     .create();
 
-  // 4. Monthly Career Applications Trigger on 1st of month at 9:00 AM IST
+  // 5. Monthly Career Applications Trigger on 1st of month at 9:00 AM IST
   ScriptApp.newTrigger("forwardMonthlyCareerApplications")
     .timeBased()
     .onMonthDay(1)
     .atHour(9)
     .create();
 
-  console.log("All TRUSTGRID.AI automation triggers successfully scheduled.");
+  console.log("All TRUSTGRID.AI automation triggers successfully scheduled (Monday Weekly Report + 1st-of-month Monthly Report + Daily Snapshot).");
+}
+
+/**
+ * Captures daily traffic & lead performance snapshots into a dedicated tab (Daily_Traffic_Snapshots)
+ * for historical trend analysis and long-term reporting.
+ */
+function captureDailyTrafficSnapshot() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  if (!ss) return;
+
+  var yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  var dayBefore = new Date();
+  dayBefore.setDate(dayBefore.getDate() - 2);
+
+  var reportData = aggregateExecutiveReportData(ss, "DAILY", yesterday, yesterday, dayBefore, dayBefore);
+  var snapSheet = findSheetFlexible(ss, "Daily_Traffic_Snapshots");
+  var headers = [
+    "Date", "Date Str", "Total Visitors", "Total Sessions", "Total Leads",
+    "Total Enquiries", "Conversion Rate", "Top Lead Source", "Top 5 Pages (JSON)",
+    "Traffic Sources (JSON)", "Visitors Delta", "Leads Delta", "Recorded At IST"
+  ];
+
+  if (!snapSheet) {
+    snapSheet = ss.insertSheet("Daily_Traffic_Snapshots");
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  } else if (snapSheet.getLastRow() === 0) {
+    snapSheet.getRange(1, 1, 1, headers.length)
+             .setValues([headers])
+             .setFontWeight("bold")
+             .setBackground("#07143d")
+             .setFontColor("#38bdf8");
+    snapSheet.setFrozenRows(1);
+  }
+
+  var dateKey = Utilities.formatDate(yesterday, "Asia/Kolkata", "yyyy-MM-dd");
+  var row = [
+    dateKey,
+    reportData.periodDateStr,
+    reportData.kpis.visitors || 0,
+    reportData.kpis.sessions || 0,
+    reportData.kpis.leads || 0,
+    reportData.kpis.enquiries || 0,
+    reportData.kpis.conversionRate || "0%",
+    reportData.kpis.topLeadSource || "Direct",
+    JSON.stringify((reportData.topPages || []).slice(0, 5)),
+    JSON.stringify(reportData.sources || []),
+    reportData.comparison.visitorsDelta || "0%",
+    reportData.comparison.leadsDelta || "0%",
+    Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'")
+  ];
+
+  var lastRow = snapSheet.getLastRow();
+  var dateCol = lastRow > 1 ? snapSheet.getRange(2, 1, lastRow - 1, 1).getValues().flat() : [];
+  var existingIdx = dateCol.indexOf(dateKey);
+
+  if (existingIdx !== -1) {
+    snapSheet.getRange(existingIdx + 2, 1, 1, row.length).setValues([row]);
+  } else {
+    snapSheet.appendRow(row);
+  }
+
+  console.log("Captured Daily Traffic Snapshot for: " + dateKey);
 }
 
 /**

@@ -59,17 +59,26 @@ function deriveSheetTabName(leadType: string): string {
 
 /**
  * Dispatch lead payload to Google Apps Script / Sheet 1 Webhook
+ * Isolates Production vs Staging / Vercel / Localhost traffic
  */
-async function dispatchToGoogleAppsScript(lead: NormalizedLead): Promise<'Success' | 'Failed'> {
-  const defaultWebhookUrl =
+async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: boolean = true): Promise<'Success' | 'Failed'> {
+  const prodWebhookUrl =
     'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
-  const apiUrl =
-    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
-    process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
-    defaultWebhookUrl
+  const stagingWebhookUrl =
+    process.env.TRUSTGRID_STAGING_FORM_API_URL ||
+    process.env.NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL ||
+    ''
+
+  const apiUrl = isProdHost
+    ? (process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || prodWebhookUrl)
+    : stagingWebhookUrl
 
   if (!apiUrl || !apiUrl.startsWith('http')) {
+    if (!isProdHost) {
+      console.log('[Staging Lead] Staging webhook not configured. Lead safely stored in local store and DB without polluting production.')
+      return 'Success'
+    }
     return 'Failed'
   }
 
@@ -329,8 +338,12 @@ export async function POST(req: NextRequest) {
       console.warn('[DB Ingestion Notice]', dbErr?.message || dbErr)
     }
 
-    // Dispatch to Google Apps Script (Sheet 1)
-    const sheetStatus = await dispatchToGoogleAppsScript(normalized)
+    // Detect Host Environment
+    const host = req.headers.get('host') || ''
+    const isProdHost = host.includes('trustgrid.ai') || host.includes('trustgrid.in')
+
+    // Dispatch to Google Apps Script (Sheet 1) - automatically isolated by host
+    const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost)
 
     // Dispatch to Jira (for Commercial / Sales Leads)
     let jiraResult: JiraIssueResult
@@ -345,34 +358,36 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Dispatch WhatsApp & Telegram Instant Alerts (Non-blocking)
-    sendWhatsAppLeadAlert({
-      leadId: normalized.leadId,
-      name: normalized.name,
-      email: normalized.email,
-      company: normalized.company,
-      phone: normalized.phone,
-      service: normalized.interestedSolution || normalized.leadTypeLabel,
-      source: normalized.channelAttribution || 'Website Form',
-      formType: normalized.leadType,
-      pageUrl: normalized.pageUrl,
-      utmCampaign: normalized.utmCampaign,
-      message: normalized.message
-    }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
+    // Dispatch WhatsApp & Telegram Instant Alerts only for real Production traffic
+    if (isProdHost) {
+      sendWhatsAppLeadAlert({
+        leadId: normalized.leadId,
+        name: normalized.name,
+        email: normalized.email,
+        company: normalized.company,
+        phone: normalized.phone,
+        service: normalized.interestedSolution || normalized.leadTypeLabel,
+        source: normalized.channelAttribution || 'Website Form',
+        formType: normalized.leadType,
+        pageUrl: normalized.pageUrl,
+        utmCampaign: normalized.utmCampaign,
+        message: normalized.message
+      }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
 
-    sendTelegramLeadAlert({
-      leadId: normalized.leadId,
-      name: normalized.name,
-      email: normalized.email,
-      company: normalized.company,
-      phone: normalized.phone,
-      service: normalized.interestedSolution || normalized.leadTypeLabel,
-      source: normalized.channelAttribution || 'Website Form',
-      formType: normalized.leadType,
-      pageUrl: normalized.pageUrl,
-      utmCampaign: normalized.utmCampaign,
-      message: normalized.message
-    }).catch((err) => console.warn('[Telegram Alert Notice]', err))
+      sendTelegramLeadAlert({
+        leadId: normalized.leadId,
+        name: normalized.name,
+        email: normalized.email,
+        company: normalized.company,
+        phone: normalized.phone,
+        service: normalized.interestedSolution || normalized.leadTypeLabel,
+        source: normalized.channelAttribution || 'Website Form',
+        formType: normalized.leadType,
+        pageUrl: normalized.pageUrl,
+        utmCampaign: normalized.utmCampaign,
+        message: normalized.message
+      }).catch((err) => console.warn('[Telegram Alert Notice]', err))
+    }
 
     // Store Record in In-Memory System Store
     leadsStore.set(normalized.leadId, {

@@ -13,10 +13,10 @@
 var DATA_SHEET_ID = "1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0";
 
 // 🔴 WEBSITE URL (For Automated QA Audits)
-var SITE_BASE_URL = "https://trustgridnew.vercel.app";
+var SITE_BASE_URL = "https://trustgrid.ai";
 
-// 🔴 DEVELOPMENT MODE: Set to true so localhost test traffic appears in dashboards
-var INCLUDE_LOCALHOST_IN_DEV = true;
+// 🔴 DEVELOPMENT MODE: False ensures staging, vercel.app and localhost traffic is purged from production dashboards
+var INCLUDE_LOCALHOST_IN_DEV = false;
 
 // ── SaaS Dark / Slate Enterprise Theme ──────────────────────────────────────────
 var C = {
@@ -27,7 +27,7 @@ var C = {
     t: "#0f172a",  // Slate-900 primary dark text
     m: "#64748b",  // Slate-500 muted text
     w: "#ffffff",  // White text for dark headers
-    pu: "#4f46e5", // Indigo accent (Profit Machines Primary)
+    pu: "#4f46e5", // Indigo accent (TRUSTGRID.AI Primary)
     g: "#10b981",  // Emerald green (Conversions)
     o: "#f59e0b",  // Amber orange (Pipeline)
     c: "#0ea5e9",  // Sky blue (Telemetry)
@@ -62,7 +62,7 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
     var eSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("CTA Clicks") || db.getSheetByName("Website Events") || db.getSheetByName("engagement_metrics");
     var ubSheet = db.getSheetByName("Live_Traffic_Events") || db.getSheetByName("Sessions") || db.getSheetByName("UTM Data") || db.getSheetByName("user_behavior_library");
     
-        // Profit Machines Dedicated Form Sheets
+        // TRUSTGRID.AI Dedicated Form Sheets
     var inboundSheet = db.getSheetByName("Form_Inbound_Leads") || db.getSheetByName("Inbound Leads");
     var consultSheet = db.getSheetByName("Form_Consultation_Bookings") || db.getSheetByName("Consultation Bookings") || db.getSheetByName("Book for Consultation");
     var expertSheet = db.getSheetByName("Form_Expert_Consulting") || db.getSheetByName("Talk to Expert") || db.getSheetByName("Expert Consulting");
@@ -155,18 +155,19 @@ function PULL_DATA_AND_BUILD_ALL_DASHBOARDS() {
 
 function filterLocalhostData(data) {
     if (!data || data.length < 2) return data || [];
-    if (INCLUDE_LOCALHOST_IN_DEV) return data; // Keep localhost data during local testing
+    if (INCLUDE_LOCALHOST_IN_DEV) return data; // Keep test data only if flag is explicitly turned on
 
     var headers = data[0];
-    var ipCol = headers.indexOf("IP Address");
-    if (ipCol === -1) ipCol = headers.indexOf("ipAddress");
-    if (ipCol === -1) ipCol = headers.indexOf("ip_address");
-    if (ipCol === -1) return data;
+    var ipCol = headers.indexOf("IP Address") > -1 ? headers.indexOf("IP Address") : (headers.indexOf("ipAddress") > -1 ? headers.indexOf("ipAddress") : headers.indexOf("ip_address"));
+    var pageCol = headers.indexOf("Page Path") > -1 ? headers.indexOf("Page Path") : (headers.indexOf("page") > -1 ? headers.indexOf("page") : headers.indexOf("page_url"));
 
     var filtered = [headers];
     for (var i = 1; i < data.length; i++) {
-        var ip = String(data[i][ipCol]);
-        if (ip !== "127.0.0.1" && ip !== "::1" && !ip.toLowerCase().includes("localhost")) {
+        var ip = ipCol > -1 ? String(data[i][ipCol]) : "";
+        var page = pageCol > -1 ? String(data[i][pageCol]) : "";
+        var isLocal = (ip === "127.0.0.1" || ip === "::1" || ip.toLowerCase().indexOf("localhost") !== -1);
+        var isVercel = (page.toLowerCase().indexOf("vercel.app") !== -1 || page.toLowerCase().indexOf("localhost") !== -1);
+        if (!isLocal && !isVercel) {
             filtered.push(data[i]);
         }
     }
@@ -236,7 +237,7 @@ function styleTitle(sh, text, c_span, bg) {
     sh.getRange(1, 1, 1, Math.max(c_span, 1)).merge().setValue(text).setBackground(bg).setFontColor(C.w).setFontWeight("bold").setFontSize(16).setHorizontalAlignment("center").setVerticalAlignment("middle");
     sh.setRowHeight(1, 55);
     sh.setFrozenRows(2);
-    sh.getRange("A2").setValue("PROFIT MACHINES ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString()).setBackground(C.bg).setFontColor(C.m).setFontSize(10).setFontStyle("italic");
+    sh.getRange("A2").setValue("TRUSTGRID.AI ENTERPRISE AI • Last Refreshed: " + new Date().toLocaleString()).setBackground(C.bg).setFontColor(C.m).setFontSize(10).setFontStyle("italic");
 }
 
 function setColWidths(sh, startCol, widths) {
@@ -249,7 +250,7 @@ function setColWidths(sh, startCol, widths) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
     var sh = getOrCreateTab("🛰️ Mission Control");
-    styleTitle(sh, "🛰️ PROFIT MACHINES — CENTRAL COMMAND & MISSION CONTROL", 12, C.t);
+    styleTitle(sh, "🛰️ TRUSTGRID.AI — CENTRAL COMMAND & MISSION CONTROL", 12, C.t);
     sh.getRange("A1:Z100").setBackground(C.bg);
     setColWidths(sh, 1, [20, 200, 200, 200, 200, 200, 20].concat(new Array(10).fill(100)));
 
@@ -332,9 +333,9 @@ function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
         } catch(e) {}
     }
 
-    sh.getRange(21, 2, 1, 5).merge().setValue("PROFIT MACHINES SYSTEM TERMINAL FEED").setBackground(C.t).setFontColor(C.g).setFontWeight("bold").setFontFamily("Courier New");
+    sh.getRange(21, 2, 1, 5).merge().setValue("TRUSTGRID.AI SYSTEM TERMINAL FEED").setBackground(C.t).setFontColor(C.g).setFontWeight("bold").setFontFamily("Courier New");
     sh.getRange(22, 2, 5, 5).merge().setBackground("#000000").setFontColor("#00ff00").setFontFamily("Courier New").setVerticalAlignment("top").setWrap(true)
-        .setValue("> PROFIT MACHINES AI DATA LINK ONLINE... \n> " + totalVisits + " TELEMETRY LOGS COMPILED... \n> DEV SANITIZATION: " + (devRecordsPurged || 0) + " LOCALHOST RECORDS PURGED... \n> AI LEAD ENGINE ACTIVE... \n> READY FOR EXECUTIVE QUERY.");
+        .setValue("> TRUSTGRID.AI AI DATA LINK ONLINE... \n> " + totalVisits + " TELEMETRY LOGS COMPILED... \n> DEV SANITIZATION: " + (devRecordsPurged || 0) + " LOCALHOST RECORDS PURGED... \n> AI LEAD ENGINE ACTIVE... \n> READY FOR EXECUTIVE QUERY.");
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -342,7 +343,7 @@ function buildMissionControlCenter(tData, eData, ubData, db, devRecordsPurged) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildExecutiveDashboard(tData, eData) {
     var sh = getOrCreateTab("🚦 Executive KPIs");
-    styleTitle(sh, "🚦 Profit Machines Executive Dashboard & Core Performance Metrics", 10, C.pu);
+    styleTitle(sh, "🚦 TRUSTGRID.AI Executive Dashboard & Core Performance Metrics", 10, C.pu);
     setColWidths(sh, 1, [250, 100, 100, 40, 600, 40, 250, 100, 100, 40, 600]);
 
     if (!tData || tData.length < 2) return;
@@ -674,7 +675,7 @@ function buildSankeySheet(tData) {
 // ══════════════════════════════════════════════════════════════════════════════
 function buildBrokenLinkSheet() {
     var sh = getOrCreateTab("🤖 Broken Link QA");
-    styleTitle(sh, "🤖 Automated Endpoint Audit for Profit Machines", 5, C.re);
+    styleTitle(sh, "🤖 Automated Endpoint Audit for TRUSTGRID.AI", 5, C.re);
     sh.getRange(3, 1, 1, 3).setValues([["URL Endpoint", "Status", "Latency"]]).setBackground(C.re).setFontColor(C.w);
     if (!SITE_BASE_URL || SITE_BASE_URL.trim() === "") {
         sh.getRange(4, 1, 1, 3).setValues([["[Pending Deployment]", "Awaiting Production Website URL (Set in SITE_BASE_URL)", "-"]]).setBackground(C.r1).setFontColor(C.m);

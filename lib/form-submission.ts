@@ -328,13 +328,18 @@ export async function submitTrustGridForm(
       console.warn('[Form Submission] Central API notice, falling back to direct webhook:', apiErr)
 
       // 2. Direct Webhook Fallback if server route unavailable
-      const defaultWebhookUrl =
+      const isProd = typeof window !== 'undefined'
+        ? (window.location.hostname === 'trustgrid.ai' || window.location.hostname === 'trustgrid.in' || window.location.hostname.endsWith('.trustgrid.ai'))
+        : process.env.NODE_ENV === 'production'
+
+      const defaultProdWebhookUrl =
         'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
-      const apiUrl =
-        process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
-        process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
-        defaultWebhookUrl
+      const stagingWebhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL || ''
+
+      const apiUrl = isProd
+        ? (process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl)
+        : stagingWebhookUrl
 
       if (apiUrl && apiUrl.startsWith('http')) {
         try {

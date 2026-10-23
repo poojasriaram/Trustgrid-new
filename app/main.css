@@ -13927,16 +13927,6 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-cybersecurity,
 .isi-mega-value,
 .isi-mega-industries {
-  width: min(1040px, calc(100vw - 32px));
-  max-width: calc(100vw - 32px);
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  transform: none;
-}
-
-.isi-mega-practice-areas {
   width: min(1080px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
   left: 0;
@@ -13946,82 +13936,166 @@ h1, h2, h3, h4, h5, h6 {
   transform: none;
 }
 
-.isi-mega-practice-areas .isi-mega-sidebar {
-  width: 230px;
-  flex-shrink: 0;
-  padding: 12px 10px;
-  background: #f8fafc;
-  border-right: 1px solid #e2e8f0;
+.isi-mega-practice-areas,
+.isi-mega-value,
+.isi-mega-agentic,
+.isi-mega-networking,
+.isi-mega-about,
+.tg-tabbed-mega {
+  width: min(1080px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: none;
 }
 
-.isi-mega-practice-areas .tg-sidebar-domain-switch {
+.isi-mega-practice-areas .isi-mega-sidebar,
+.isi-mega-value .isi-mega-sidebar,
+.isi-mega-agentic .isi-mega-sidebar,
+.isi-mega-networking .isi-mega-sidebar,
+.isi-mega-about .isi-mega-sidebar,
+.tg-tabbed-mega .isi-mega-sidebar,
+.tg-clean-sidebar {
+  width: 220px !important;
+  flex-shrink: 0 !important;
+  padding: 12px 10px !important;
+  background: #f8fafc !important;
+  border-right: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+.isi-mega-practice-areas .tg-sidebar-domain-switch,
+.isi-mega-value .tg-sidebar-domain-switch,
+.isi-mega-agentic .tg-sidebar-domain-switch,
+.isi-mega-networking .tg-sidebar-domain-switch,
+.isi-mega-about .tg-sidebar-domain-switch,
+.tg-tabbed-mega .tg-sidebar-domain-switch {
   display: flex;
   flex-direction: column;
   gap: 5px;
   margin-top: 0;
 }
 
-.isi-mega-practice-areas .tg-domain-tab-btn {
+.isi-mega-practice-areas .tg-domain-tab-btn,
+.isi-mega-value .tg-domain-tab-btn,
+.isi-mega-agentic .tg-domain-tab-btn,
+.isi-mega-networking .tg-domain-tab-btn,
+.isi-mega-about .tg-domain-tab-btn,
+.tg-tabbed-mega .tg-domain-tab-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
+  padding: 7px 9px;
   border-radius: 7px;
   border: 1px solid transparent;
   background: transparent;
   cursor: pointer;
   text-align: left;
   transition: all 0.15s ease;
+  width: 100%;
 }
 
-.isi-mega-practice-areas .tg-domain-tab-btn:hover {
+.isi-mega-practice-areas .tg-domain-tab-btn:hover,
+.isi-mega-value .tg-domain-tab-btn:hover,
+.isi-mega-agentic .tg-domain-tab-btn:hover,
+.isi-mega-networking .tg-domain-tab-btn:hover,
+.isi-mega-about .tg-domain-tab-btn:hover,
+.tg-tabbed-mega .tg-domain-tab-btn:hover {
   background: #ffffff;
   border-color: #e2e8f0;
   transform: translateX(1.5px);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
-.isi-mega-practice-areas .tg-domain-tab-btn.active-networking {
-  background: #ffffff;
-  border-color: #bfdbfe;
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking,
+.isi-mega-value .tg-domain-tab-btn.active-networking,
+.isi-mega-agentic .tg-domain-tab-btn.active-networking,
+.isi-mega-networking .tg-domain-tab-btn.active-networking,
+.isi-mega-about .tg-domain-tab-btn.active-networking,
+.tg-tabbed-mega .tg-domain-tab-btn.active-networking {
+  background: #eff6ff;
+  border-color: #93c5fd;
   box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
 }
 
-.isi-mega-practice-areas .tg-domain-tab-left {
+.isi-mega-practice-areas .tg-domain-tab-left,
+.isi-mega-value .tg-domain-tab-left,
+.isi-mega-agentic .tg-domain-tab-left,
+.isi-mega-networking .tg-domain-tab-left,
+.isi-mega-about .tg-domain-tab-left,
+.tg-tabbed-mega .tg-domain-tab-left {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-width: 0;
 }
 
-.isi-mega-practice-areas .tg-tab-title {
-  font-size: 12px;
-  font-weight: 600;
+.isi-mega-practice-areas .tg-tab-title,
+.isi-mega-value .tg-tab-title,
+.isi-mega-agentic .tg-tab-title,
+.isi-mega-networking .tg-tab-title,
+.isi-mega-about .tg-tab-title,
+.tg-tabbed-mega .tg-tab-title {
+  font-size: 11.5px;
+  font-weight: 700;
   color: #334155;
   line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.isi-mega-practice-areas .tg-domain-tab-btn.active-networking .tg-tab-title {
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking .tg-tab-title,
+.isi-mega-value .tg-domain-tab-btn.active-networking .tg-tab-title,
+.isi-mega-agentic .tg-domain-tab-btn.active-networking .tg-tab-title,
+.isi-mega-networking .tg-domain-tab-btn.active-networking .tg-tab-title,
+.isi-mega-about .tg-domain-tab-btn.active-networking .tg-tab-title,
+.tg-tabbed-mega .tg-domain-tab-btn.active-networking .tg-tab-title {
   color: #1d4ed8;
   font-weight: 700;
 }
 
-.isi-mega-practice-areas .isi-sidebar-bottom {
+.isi-mega-practice-areas .isi-sidebar-bottom,
+.isi-mega-value .isi-sidebar-bottom,
+.isi-mega-agentic .isi-sidebar-bottom,
+.isi-mega-networking .isi-sidebar-bottom,
+.isi-mega-about .isi-sidebar-bottom,
+.tg-tabbed-mega .isi-sidebar-bottom {
   margin-top: 6px;
   gap: 4px;
 }
 
-.isi-mega-practice-areas .isi-sidebar-metric-chip {
+.isi-mega-practice-areas .isi-sidebar-metric-chip,
+.isi-mega-value .isi-sidebar-metric-chip,
+.isi-mega-agentic .isi-sidebar-metric-chip,
+.isi-mega-networking .isi-sidebar-metric-chip,
+.isi-mega-about .isi-sidebar-metric-chip,
+.tg-tabbed-mega .isi-sidebar-metric-chip {
   padding: 3px 6px;
   font-size: 9.5px;
 }
 
-.isi-mega-practice-areas .isi-sidebar-action {
+.isi-mega-practice-areas .isi-sidebar-action,
+.isi-mega-value .isi-sidebar-action,
+.isi-mega-agentic .isi-sidebar-action,
+.isi-mega-networking .isi-sidebar-action,
+.isi-mega-about .isi-sidebar-action,
+.tg-tabbed-mega .isi-sidebar-action {
   padding: 4px 8px;
   font-size: 11px;
 }
 
-/* Practice Areas Right Content Columns & Cards */
-.isi-mega-practice-areas .tg-thematic-columns-3 {
+/* Tabbed Mega Right Content Columns & Cards */
+.isi-mega-practice-areas .tg-thematic-columns-3,
+.isi-mega-value .tg-thematic-columns-3,
+.isi-mega-agentic .tg-thematic-columns-3,
+.isi-mega-networking .tg-thematic-columns-3,
+.isi-mega-about .tg-thematic-columns-3,
+.tg-tabbed-mega .tg-thematic-columns-3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
@@ -14029,7 +14103,12 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
-.isi-mega-practice-areas .tg-category-col {
+.isi-mega-practice-areas .tg-category-col,
+.isi-mega-value .tg-category-col,
+.isi-mega-agentic .tg-category-col,
+.isi-mega-networking .tg-category-col,
+.isi-mega-about .tg-category-col,
+.tg-tabbed-mega .tg-category-col {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -14041,7 +14120,12 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
-.isi-mega-practice-areas .tg-category-col-header {
+.isi-mega-practice-areas .tg-category-col-header,
+.isi-mega-value .tg-category-col-header,
+.isi-mega-agentic .tg-category-col-header,
+.isi-mega-networking .tg-category-col-header,
+.isi-mega-about .tg-category-col-header,
+.tg-tabbed-mega .tg-category-col-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14050,18 +14134,28 @@ h1, h2, h3, h4, h5, h6 {
   border-bottom: 1px solid #f1f5f9;
 }
 
-.isi-mega-practice-areas .tg-category-items-stack {
+.isi-mega-practice-areas .tg-category-items-stack,
+.isi-mega-value .tg-category-items-stack,
+.isi-mega-agentic .tg-category-items-stack,
+.isi-mega-networking .tg-category-items-stack,
+.isi-mega-about .tg-category-items-stack,
+.tg-tabbed-mega .tg-category-items-stack {
   display: flex;
   flex-direction: column;
   gap: 4px;
   flex: 1;
 }
 
-.isi-mega-practice-areas .tg-compact-menu-card {
+.isi-mega-practice-areas .tg-compact-menu-card,
+.isi-mega-value .tg-compact-menu-card,
+.isi-mega-agentic .tg-compact-menu-card,
+.isi-mega-networking .tg-compact-menu-card,
+.isi-mega-about .tg-compact-menu-card,
+.tg-tabbed-mega .tg-compact-menu-card {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 4px 7px;
+  padding: 4px 6px;
   border-radius: 6px;
   background: #ffffff;
   border: 1px solid #e2e8f0;
@@ -14072,14 +14166,24 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.16s ease;
 }
 
-.isi-mega-practice-areas .tg-compact-menu-card:hover {
+.isi-mega-practice-areas .tg-compact-menu-card:hover,
+.isi-mega-value .tg-compact-menu-card:hover,
+.isi-mega-agentic .tg-compact-menu-card:hover,
+.isi-mega-networking .tg-compact-menu-card:hover,
+.isi-mega-about .tg-compact-menu-card:hover,
+.tg-tabbed-mega .tg-compact-menu-card:hover {
   border-color: #93c5fd;
   background: #f8faff;
   transform: translateY(-0.5px);
   box-shadow: 0 2px 6px -1px rgba(37, 99, 235, 0.1);
 }
 
-.isi-mega-practice-areas .tg-compact-icon-box {
+.isi-mega-practice-areas .tg-compact-icon-box,
+.isi-mega-value .tg-compact-icon-box,
+.isi-mega-agentic .tg-compact-icon-box,
+.isi-mega-networking .tg-compact-icon-box,
+.isi-mega-about .tg-compact-icon-box,
+.tg-tabbed-mega .tg-compact-icon-box {
   width: 22px;
   height: 22px;
   border-radius: 5px;
@@ -14092,14 +14196,24 @@ h1, h2, h3, h4, h5, h6 {
   transition: all 0.16s ease;
 }
 
-.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-icon-box {
+.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-icon-box,
+.isi-mega-value .tg-compact-menu-card:hover .tg-compact-icon-box,
+.isi-mega-agentic .tg-compact-menu-card:hover .tg-compact-icon-box,
+.isi-mega-networking .tg-compact-menu-card:hover .tg-compact-icon-box,
+.isi-mega-about .tg-compact-menu-card:hover .tg-compact-icon-box,
+.tg-tabbed-mega .tg-compact-menu-card:hover .tg-compact-icon-box {
   background: #2563eb;
   color: #ffffff;
   transform: scale(1.05);
 }
 
-.isi-mega-practice-areas .tg-compact-card-title {
-  font-size: 11.5px;
+.isi-mega-practice-areas .tg-compact-card-title,
+.isi-mega-value .tg-compact-card-title,
+.isi-mega-agentic .tg-compact-card-title,
+.isi-mega-networking .tg-compact-card-title,
+.isi-mega-about .tg-compact-card-title,
+.tg-tabbed-mega .tg-compact-card-title {
+  font-size: 11px;
   font-weight: 700;
   color: #0f172a;
   line-height: 1.25;
@@ -14109,26 +14223,47 @@ h1, h2, h3, h4, h5, h6 {
   transition: color 0.15s ease;
 }
 
-.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-card-title {
+.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-card-title,
+.isi-mega-value .tg-compact-menu-card:hover .tg-compact-card-title,
+.isi-mega-agentic .tg-compact-menu-card:hover .tg-compact-card-title,
+.isi-mega-networking .tg-compact-menu-card:hover .tg-compact-card-title,
+.isi-mega-about .tg-compact-menu-card:hover .tg-compact-card-title,
+.tg-tabbed-mega .tg-compact-menu-card:hover .tg-compact-card-title {
   color: #2563eb;
 }
 
-.isi-mega-practice-areas .tg-compact-arrow {
+.isi-mega-practice-areas .tg-compact-arrow,
+.isi-mega-value .tg-compact-arrow,
+.isi-mega-agentic .tg-compact-arrow,
+.isi-mega-networking .tg-compact-arrow,
+.isi-mega-about .tg-compact-arrow,
+.tg-tabbed-mega .tg-compact-arrow {
   color: #94a3b8;
   opacity: 0;
   transform: translateX(-4px);
   transition: all 0.2s ease;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
-.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-arrow {
+.isi-mega-practice-areas .tg-compact-menu-card:hover .tg-compact-arrow,
+.isi-mega-value .tg-compact-menu-card:hover .tg-compact-arrow,
+.isi-mega-agentic .tg-compact-menu-card:hover .tg-compact-arrow,
+.isi-mega-networking .tg-compact-menu-card:hover .tg-compact-arrow,
+.isi-mega-about .tg-compact-menu-card:hover .tg-compact-arrow,
+.tg-tabbed-mega .tg-compact-menu-card:hover .tg-compact-arrow {
   opacity: 1;
   color: #2563eb;
   transform: translateX(0);
 }
 
-.isi-mega-practice-areas .tg-compact-card-desc {
-  font-size: 10px;
+.isi-mega-practice-areas .tg-compact-card-desc,
+.isi-mega-value .tg-compact-card-desc,
+.isi-mega-agentic .tg-compact-card-desc,
+.isi-mega-networking .tg-compact-card-desc,
+.isi-mega-about .tg-compact-card-desc,
+.tg-tabbed-mega .tg-compact-card-desc {
+  font-size: 9.5px;
   line-height: 1.3;
   color: #64748b;
   margin: 1px 0 0;
@@ -14163,7 +14298,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .isi-mega-about {
-  width: min(840px, calc(100vw - 32px));
+  width: min(1020px, calc(100vw - 32px));
   max-width: calc(100vw - 32px);
   left: 0;
   right: 0;
@@ -14773,9 +14908,9 @@ h1, h2, h3, h4, h5, h6 {
 /* Minimized Capability Card */
 .tg-compact-menu-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 7px;
-  padding: 5px 6px;
+  padding: 6px 8px;
   border-radius: 6px;
   background: #ffffff;
   border: 1px solid #f1f5f9;
@@ -14801,7 +14936,6 @@ h1, h2, h3, h4, h5, h6 {
   background: #eff6ff;
   color: #2563eb;
   flex-shrink: 0;
-  margin-top: 1px;
   transition: all 0.15s ease;
 }
 
@@ -15322,7 +15456,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .v5-cluster-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   padding: 6px 9px;
   border-radius: 7px;
@@ -15364,7 +15498,6 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 1px;
   transition: all 0.2s ease;
 }
 
@@ -15513,9 +15646,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .v5-service-card {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
-  padding: 7px 10px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid #f1f5f9;
   background: #ffffff;
@@ -15541,7 +15674,6 @@ h1, h2, h3, h4, h5, h6 {
   background: #eff6ff;
   color: #2563eb;
   flex-shrink: 0;
-  margin-top: 1px;
   transition: all 0.2s ease;
 }
 
@@ -15800,4 +15932,777 @@ h1, h2, h3, h4, h5, h6 {
   text-decoration: none;
   border: 1px solid #bfdbfe;
 }
+
+/* ==========================================================================
+   TRUSTGRID.AI — PREMIUM MENU UI/UX REDESIGN OVERRIDES
+   Scope: Header bar, nav triggers, mega-menus, menu cards, mobile accordion.
+   Rule: ZERO changes to navigation structure, routes, labels, or hierarchy.
+   ========================================================================== */
+
+/* ── 1. HEADER BAR ── */
+.site-header {
+  height: 68px;
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+
+.site-header-scrolled {
+  height: 60px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.1), 0 1px 0 rgba(15, 23, 42, 0.04);
+}
+
+/* ── 2. LOGO ── */
+.brand img {
+  width: 140px;
+  max-height: 38px;
+}
+
+.site-header-scrolled .brand img {
+  width: 130px;
+  max-height: 34px;
+}
+
+/* ── 3. NAV CONTAINER ── */
+.nav {
+  gap: clamp(1px, 0.3vw, 6px);
+  font-size: 13px;
+}
+
+/* ── 4. NAV TRIGGERS & LINKS ── */
+.nav-menu-trigger,
+.nav-link {
+  height: 34px;
+  padding: 0 9px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 7px;
+  color: #374151;
+  transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  position: relative;
+}
+
+.nav-menu-trigger:hover,
+.nav-link:hover,
+.nav-menu-trigger.active {
+  color: #1d4ed8;
+  background: rgba(37, 99, 235, 0.06);
+  box-shadow: none;
+}
+
+/* Active underline accent */
+.nav-menu-trigger.active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 9px;
+  right: 9px;
+  height: 2px;
+  border-radius: 2px;
+  background: #2563eb;
+}
+
+.chevron-icon {
+  opacity: 0.6;
+  transition: transform 0.18s ease, opacity 0.15s ease;
+}
+
+.nav-menu-trigger:hover .chevron-icon,
+.nav-menu-trigger.active .chevron-icon {
+  opacity: 1;
+}
+
+/* ── 5. NAV WHATSAPP ICON BUTTON ── */
+.nav-whatsapp-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  color: #25D366;
+  background: rgba(37, 211, 102, 0.07);
+  border: 1px solid rgba(37, 211, 102, 0.2);
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.nav-whatsapp-cta:hover {
+  background: #25D366;
+  border-color: #25D366;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+.nav-whatsapp-cta:hover .whatsapp-icon {
+  color: #ffffff;
+  transform: none;
+}
+
+/* ── 6. CONTACT US CTA BUTTON ── */
+.nav-cta {
+  height: 34px;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #1d5cff 0%, #2563eb 50%, #1741c5 100%);
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  transition: all 0.18s ease;
+  gap: 4px;
+}
+
+.nav-cta:hover {
+  background: linear-gradient(135deg, #1741c5 0%, #1d4ed8 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* ── 7. MEGA MENU PANEL — BASE ── */
+.isi-mega-panel {
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow:
+    0 24px 48px -12px rgba(15, 23, 42, 0.18),
+    0 8px 20px -6px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(15, 23, 42, 0.03);
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.isi-mega-panel::before {
+  top: -16px;
+  height: 16px;
+}
+
+/* ── 8. MEGA MENU SIDEBAR ── */
+.isi-mega-sidebar {
+  width: 232px;
+  background: linear-gradient(170deg, #f8fafc 0%, #f1f5f9 100%);
+  border-right: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 16px 14px;
+}
+
+.isi-sidebar-badge {
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #2563eb;
+}
+
+.isi-sidebar-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.isi-sidebar-desc {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+
+.isi-sidebar-metric-chip {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1e3a8a;
+  background: rgba(37, 99, 235, 0.07);
+  border: 1px solid rgba(37, 99, 235, 0.13);
+  padding: 4px 9px;
+  border-radius: 20px;
+}
+
+.isi-sidebar-action {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.06);
+  padding: 6px 11px;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  width: fit-content;
+  border: 1px solid rgba(37, 99, 235, 0.1);
+}
+
+.isi-sidebar-action:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: translateX(2px);
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+}
+
+/* ── 9. MEGA MENU CONTENT GRID ── */
+.isi-mega-content {
+  flex: 1;
+  padding: 10px 14px;
+  display: grid;
+  gap: 6px;
+  background: #ffffff;
+  align-content: start;
+}
+
+/* ── 10. SUBMENU MENU CARD ── */
+.isi-menu-card {
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid #f1f5f9;
+  background: #ffffff;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 9px;
+}
+
+.isi-menu-card:hover {
+  border-color: #93c5fd;
+  background: #f8faff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -3px rgba(37, 99, 235, 0.12);
+}
+
+.isi-card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid rgba(219, 234, 254, 0.6);
+  flex-shrink: 0;
+  margin-top: 1px;
+  transition: all 0.18s ease;
+}
+
+.isi-menu-card:hover .isi-card-icon {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: scale(1.06);
+}
+
+.isi-card-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.isi-menu-card:hover .isi-card-title {
+  color: #1d4ed8;
+}
+
+/* De-clutter: single-line desc */
+.isi-card-desc {
+  font-size: 10.5px;
+  color: #94a3b8;
+  line-height: 1.3;
+  margin: 1px 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.isi-card-arrow {
+  color: #93c5fd;
+  opacity: 0;
+  transform: translateX(-5px);
+  transition: all 0.18s ease;
+}
+
+.isi-menu-card:hover .isi-card-arrow {
+  opacity: 1;
+  color: #2563eb;
+  transform: translateX(0);
+}
+
+/* ── 11. COMPACT MENU CARDS (Practice Areas / Networking) ── */
+.tg-compact-menu-card {
+  padding: 5px 7px;
+  border-radius: 7px;
+  border: 1px solid #f1f5f9;
+  background: #ffffff;
+  gap: 7px;
+  transition: all 0.16s ease;
+}
+
+.tg-compact-menu-card:hover {
+  border-color: #93c5fd;
+  background: #f8faff;
+  transform: translateY(-0.5px);
+  box-shadow: 0 3px 8px -2px rgba(37, 99, 235, 0.1);
+}
+
+.tg-compact-icon-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid rgba(219, 234, 254, 0.5);
+  flex-shrink: 0;
+  transition: all 0.16s ease;
+}
+
+.tg-compact-menu-card:hover .tg-compact-icon-box {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+}
+
+.tg-compact-card-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.14s ease;
+}
+
+.tg-compact-menu-card:hover .tg-compact-card-title {
+  color: #1d4ed8;
+}
+
+/* De-clutter compact desc to one line */
+.tg-compact-card-desc {
+  font-size: 10px;
+  line-height: 1.3;
+  color: #94a3b8;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 12. CATEGORY COLUMN HEADERS ── */
+.tg-category-col {
+  background: #fafbfd;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 9px;
+  padding: 7px 7px;
+  gap: 4px;
+}
+
+.tg-category-col-header {
+  padding: 0 1px 5px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.tg-category-col-title {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #475569;
+  letter-spacing: 0.06em;
+}
+
+.tg-category-col-badge {
+  font-size: 7.5px;
+  font-weight: 700;
+  color: #94a3b8;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* ── 13. SIDEBAR TAB SWITCHER ── */
+.tg-domain-tab-btn {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all 0.16s ease;
+}
+
+.tg-domain-tab-btn:hover {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+  transform: translateX(1.5px);
+}
+
+.tg-domain-tab-btn.active-networking {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  box-shadow: 0 2px 8px -2px rgba(37, 99, 235, 0.14);
+}
+
+.tg-domain-tab-btn.active-cyber {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  box-shadow: 0 2px 8px -2px rgba(79, 70, 229, 0.14);
+}
+
+.tg-tab-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #334155;
+  letter-spacing: -0.01em;
+}
+
+.tg-domain-tab-btn.active-networking .tg-tab-title {
+  color: #1d4ed8;
+}
+
+.tg-domain-tab-btn.active-cyber .tg-tab-title {
+  color: #4338ca;
+}
+
+.tg-tab-sub {
+  font-size: 9.5px;
+  color: #94a3b8;
+}
+
+.tg-tab-chevron {
+  color: #cbd5e1;
+}
+
+/* ── 14. MEGA FOOTER ── */
+.isi-mega-footer {
+  padding: 7px 16px;
+  background: #fafbfc;
+  border-top: 1px solid rgba(241, 245, 249, 0.9);
+}
+
+.isi-footer-badge {
+  font-size: 10.5px;
+  color: #94a3b8;
+  font-weight: 500;
+  gap: 5px;
+}
+
+.isi-footer-action {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #2563eb;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: all 0.16s ease;
+  gap: 4px;
+}
+
+.isi-footer-action:hover {
+  color: #1d4ed8;
+  background: rgba(37, 99, 235, 0.06);
+  text-decoration: none;
+  transform: translateX(2px);
+}
+
+/* ── 15. PRACTICE AREAS & TABBED MEGA SIDEBAR SPECIFIC ── */
+.isi-mega-practice-areas .isi-mega-sidebar,
+.tg-tabbed-mega .isi-mega-sidebar {
+  width: 220px;
+  padding: 12px 10px;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn,
+.tg-tabbed-mega .tg-domain-tab-btn {
+  padding: 7px 9px;
+  border-radius: 7px;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking,
+.tg-tabbed-mega .tg-domain-tab-btn.active-networking {
+  background: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.isi-mega-practice-areas .tg-tab-title,
+.tg-tabbed-mega .tg-tab-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+}
+
+.isi-mega-practice-areas .tg-domain-tab-btn.active-networking .tg-tab-title,
+.tg-tabbed-mega .tg-domain-tab-btn.active-networking .tg-tab-title {
+  color: #1d4ed8;
+}
+
+.isi-mega-practice-areas .tg-compact-menu-card,
+.tg-tabbed-mega .tg-compact-menu-card {
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+
+.isi-mega-practice-areas .tg-compact-card-title,
+.tg-tabbed-mega .tg-compact-card-title {
+  font-size: 11px;
+}
+
+.isi-mega-practice-areas .tg-compact-card-desc,
+.tg-tabbed-mega .tg-compact-card-desc {
+  font-size: 9.5px;
+  color: #94a3b8;
+}
+
+/* ── 16. CONTENT HEADER BAR (Networking/Cyber) ── */
+.tg-content-header-bar {
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 9px;
+}
+
+.tg-active-domain-heading {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.tg-active-domain-tagline {
+  font-size: 9.5px;
+  color: #94a3b8;
+}
+
+.tg-domain-pills-row {
+  background: #f1f5f9;
+  border: 1px solid #e8eef5;
+  border-radius: 7px;
+  padding: 2px;
+}
+
+.tg-quick-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 5px;
+  color: #64748b;
+  gap: 4px;
+}
+
+.tg-quick-pill.active-pill {
+  background: #ffffff;
+  color: #2563eb;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+.tg-quick-pill.active-pill-cyber {
+  background: #ffffff;
+  color: #4f46e5;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+}
+
+/* ── 17. MOBILE DRAWER ── */
+.mobile-drawer {
+  top: 68px;
+  background: #ffffff;
+  border-top: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 8px 30px -8px rgba(15, 23, 42, 0.18);
+}
+
+.mobile-drawer-content {
+  padding: 16px 20px 72px;
+  gap: 6px;
+}
+
+.mobile-nav-link {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  padding: 11px 12px;
+  border-radius: 8px;
+  border-bottom: 1px solid rgba(241, 245, 249, 0.8);
+  letter-spacing: -0.01em;
+}
+
+.mobile-nav-link:hover {
+  color: #1d4ed8;
+  background: rgba(37, 99, 235, 0.05);
+}
+
+/* Mobile Accordions */
+.mobile-accordion {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+
+.mobile-accordion-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+
+.mobile-accordion-btn:hover {
+  background: #f8fafc;
+  color: #1d4ed8;
+}
+
+.mobile-accordion-body {
+  padding: 6px 10px 10px;
+  background: #fafbfc;
+  border-top: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mobile-sublink {
+  display: block;
+  padding: 8px 10px;
+  border-radius: 7px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  transition: all 0.14s ease;
+  border: 1px solid transparent;
+}
+
+.mobile-sublink:hover {
+  background: rgba(37, 99, 235, 0.05);
+  border-color: rgba(37, 99, 235, 0.1);
+  color: #1d4ed8;
+  transform: translateX(2px);
+}
+
+/* Mobile domain accordion */
+.mobile-domain-accordion-btn {
+  padding: 9px 12px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.mobile-group-accordion-btn {
+  padding: 7px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.mobile-cap-card {
+  border-radius: 7px;
+  border: 1px solid #f1f5f9;
+  background: #ffffff;
+  padding: 7px 9px;
+}
+
+.mobile-cap-card:active {
+  background: #f0f7ff;
+  border-color: #93c5fd;
+}
+
+.mobile-cap-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.mobile-cap-desc {
+  font-size: 9.5px;
+  color: #94a3b8;
+  line-height: 1.3;
+}
+
+/* Mobile CTA buttons */
+.mobile-cta-wrapper .button-primary {
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+/* ── 18. SIDEBAR VALUE/AGENTIC/ABOUT MENU DESC ── */
+.isi-mega-value .isi-sidebar-desc,
+.isi-mega-agentic .isi-sidebar-desc,
+.isi-mega-about .isi-sidebar-desc {
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+/* ── 19. ABOUT MENU CARD desc — single line clamp ── */
+.isi-mega-about .isi-card-desc {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+/* ── 20. MENU ENTRY ANIMATION ── */
+@keyframes isiMegaFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── 21. SCROLLED STATE MOBILE DRAWER OFFSET ── */
+.site-header-scrolled + * .mobile-drawer {
+  top: 60px;
+}
+
+/* ── 22. REDUCED MOTION OVERRIDES ── */
+@media (prefers-reduced-motion: reduce) {
+  .isi-mega-panel,
+  .nav-menu-trigger,
+  .nav-cta,
+  .isi-menu-card,
+  .tg-compact-menu-card,
+  .nav-whatsapp-cta {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ── 23. FOCUS VISIBLE KEYBOARD ACCESSIBILITY ── */
+.nav-menu-trigger:focus-visible,
+.nav-link:focus-visible,
+.nav-cta:focus-visible,
+.nav-whatsapp-cta:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.isi-menu-card:focus-visible,
+.tg-compact-menu-card:focus-visible,
+.tg-domain-tab-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+
+/* ── 24. PRACTICE AREAS SECTION SIDEBAR BADGE ── */
+.isi-mega-practice-areas .isi-sidebar-badge {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+
+/* ── END PREMIUM REDESIGN ── */
+
 

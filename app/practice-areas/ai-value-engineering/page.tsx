@@ -389,15 +389,13 @@ export default function AIValueEngineeringPracticePage() {
 
             {/* Quick Stats Pill Bar */}
             <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="https://trustgrid-ai-nine.vercel.app/methodology-engine"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/methodology-engine"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-semibold transition-all shadow-sm hover:shadow-blue-500/20"
               >
                 <span>Methodology Engine</span>
                 <ArrowUpRight size={13} />
-              </a>
+              </Link>
 
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-slate-300 text-xs font-mono font-medium">
                 <span className="text-blue-400 font-bold">7</span> technology families in scope
@@ -437,14 +435,12 @@ export default function AIValueEngineeringPracticePage() {
               </p>
               <p>
                 It runs on the methodology engine. Deterministic stage gates, named industrial methods, and value that compounds rather than decays —{' '}
-                <a 
-                  href="https://trustgrid-ai-nine.vercel.app/methodology-engine" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                <Link 
+                  href="/methodology-engine" 
                   className="text-blue-400 hover:text-blue-300 underline font-mono text-xs inline-flex items-center gap-1"
                 >
-                  trustgrid-ai-nine.vercel.app/methodology-engine <ArrowUpRight size={12} />
-                </a>. This section is the delivery practice that operates it.
+                  trustgrid.ai/methodology-engine <ArrowRight size={12} />
+                </Link>. This section is the delivery practice that operates it.
               </p>
 
               {/* The Test of the Practice Callout */}
@@ -1060,14 +1056,12 @@ export default function AIValueEngineeringPracticePage() {
 
             <p className="text-slate-400 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
               The{' '}
-              <a
-                href="https://trustgrid-ai-nine.vercel.app/methodology-engine"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/methodology-engine"
                 className="text-blue-400 hover:text-blue-300 underline font-mono text-xs inline-flex items-center gap-1"
               >
-                methodology engine <ArrowUpRight size={12} />
-              </a>{' '}
+                methodology engine <ArrowRight size={12} />
+              </Link>{' '}
               describes six vertically integrated tiers. Value engineering is not a layer on top of the stack — it is the discipline that prices every layer beneath it.
             </p>
 
@@ -1241,14 +1235,12 @@ export default function AIValueEngineeringPracticePage() {
               </h4>
               <p className="text-xs sm:text-sm text-slate-300">
                 Runs on the{' '}
-                <a
-                  href="https://trustgrid-ai-nine.vercel.app/methodology-engine"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/methodology-engine"
                   className="text-blue-400 hover:text-blue-300 underline font-semibold"
                 >
                   TRUSTGRID methodology engine
-                </a>{' '}
+                </Link>{' '}
                 · deterministic stage gates · compounding value
               </p>
             </div>
@@ -1272,15 +1264,13 @@ export default function AIValueEngineeringPracticePage() {
                 <ArrowUpRight size={16} />
               </Link>
 
-              <a
-                href="https://trustgrid-ai-nine.vercel.app/methodology-engine"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/methodology-engine"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition-all"
               >
                 <span>Explore Methodology Engine</span>
                 <ArrowRight size={16} />
-              </a>
+              </Link>
 
               <Link
                 href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"

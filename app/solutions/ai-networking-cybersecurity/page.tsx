@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
@@ -1470,7 +1470,7 @@ export default function AINetworkingCybersecurityPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={14} className="text-cyan-400" />
-                  <span>Global Response: +1 (800) 878-7847</span>
+                  <span>Global Response: <a href="tel:+16507724145" className="hover:text-cyan-300 transition-colors text-slate-300">+1 650 772 4145</a></span>
                 </div>
               </div>
 

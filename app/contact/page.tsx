@@ -55,10 +55,10 @@ export default function ContactPage() {
                     <p style={{ margin: '3px 0 2px' }}>
                       US Executive (Americas / NY): <a href="mailto:Murali@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>
                         Murali@trustgrid.ai
-                      </a>
+                      </a> • <a href="tel:+16507724145" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+1 650 772 4145</a>
                     </p>
                     <p style={{ fontSize: '12px', color: '#64748b', margin: '2px 0 0' }}>
-                      India: <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none' }}>cs@trustgrid.in</a> • Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a>
+                      India HQ (Bengaluru): <a href="mailto:cs@trustgrid.in" style={{ color: '#1d5cff', textDecoration: 'none', fontWeight: 600 }}>cs@trustgrid.in</a> • <a href="tel:+919513088612" style={{ color: '#475569', textDecoration: 'none', fontWeight: 500 }}>+91 95130 88612</a> • Japan: <a href="mailto:Hemalata@trustgrid.ai" style={{ color: '#1d5cff', textDecoration: 'none' }}>Hemalata@trustgrid.ai</a>
                     </p>
                   </div>
                 </div>
@@ -91,7 +91,17 @@ export default function ContactPage() {
                         <MessageCircle size={14} />
                         <span>India WhatsApp: +91 95130 88612</span>
                       </a>
-                      <WhatsAppCTA inline label="Global WhatsApp" />
+                      <a
+                        href="https://wa.me/16507724145?text=Hi%20TrustGrid%20US%20team"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="button button-sm"
+                        style={{ background: '#059669', color: '#ffffff', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px', fontSize: '12px', fontWeight: 600 }}
+                      >
+                        <MessageCircle size={14} />
+                        <span>US WhatsApp: +1 650 772 4145</span>
+                      </a>
+                      <WhatsAppCTA inline label="Global Advisory" />
                     </div>
                   </div>
                 </div>

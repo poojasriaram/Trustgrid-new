@@ -1,3 +1,3 @@
-import TalkToAiArchitectPage from '../talk-to-ai-architect/page'
+import BookConsultationPage from '../book-consultation/page'
 
-export default TalkToAiArchitectPage
+export default BookConsultationPage

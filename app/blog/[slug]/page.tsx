@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import Script from 'next/script'
@@ -9,7 +9,8 @@ import {
   getAllBlogPosts,
   getBlogPostBySlug,
   getRelatedPosts,
-  getAdjacentPosts
+  getAdjacentPosts,
+  blogCategories
 } from '@/lib/blog-data'
 import { ArticleContent } from '@/components/blog/content'
 import { BlogBreadcrumbs } from '@/components/blog/blog-breadcrumbs'
@@ -40,6 +41,13 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const post = getBlogPostBySlug(slug)
 
   if (!post) {
+    const matchingCat = blogCategories.find((c) => c.slug === slug)
+    if (matchingCat) {
+      return {
+        title: `${matchingCat.name} | TRUSTGRID.AI Engineering Insights`,
+        description: matchingCat.description,
+      }
+    }
     return {
       title: 'Article Not Found | TRUSTGRID.AI Blog',
       description: 'The requested engineering insight could not be found.',
@@ -88,6 +96,10 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   const post = getBlogPostBySlug(slug)
 
   if (!post) {
+    const matchingCat = blogCategories.find((c) => c.slug === slug)
+    if (matchingCat) {
+      redirect(`/blog?category=${matchingCat.slug}`)
+    }
     notFound()
   }
 
