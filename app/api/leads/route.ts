@@ -37,6 +37,9 @@ function deriveSheetTabName(leadType: string, isTestLead: boolean = false): stri
     case 'AI_DIAGNOSTIC':
     case 'AI_READINESS':
       return 'AI_Diagnostic_Leads'
+    case 'CONSULTATION':
+    case 'STRATEGY_SESSION':
+      return 'Form_Consultation_Bookings'
     case 'PROPOSAL':
       return 'RFP_Proposals'
     case 'WORKSHOP':
@@ -89,8 +92,10 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
 
   const sheetName = deriveSheetTabName(lead.leadType, lead.isTestLead)
 
+  const rawP = (lead.rawPayload || {}) as Record<string, any>
+
   const payload = {
-    ...lead.rawPayload,
+    ...rawP,
     sheetName,
     sheet_name: sheetName,
     formType: sheetName,
@@ -121,12 +126,33 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
     requirement: lead.requirement,
     message: lead.message,
     subject: lead.isTestLead ? `[TG-TEST] ${lead.leadTypeLabel} - ${lead.company}` : `[TG] ${lead.leadTypeLabel} - ${lead.company}`,
+    serviceInterest: lead.interestedSolution || rawP.serviceInterest || rawP.service || '',
+    service: lead.interestedSolution || rawP.service || '',
     selectedSolutions: lead.interestedSolution,
     solutions: lead.interestedSolution ? [lead.interestedSolution] : [],
+    primaryAiStack: lead.interestedSolution || rawP.primaryAiStack || '',
+    companySize: rawP.companySize || rawP.teamSize || '',
+    teamSize: rawP.teamSize || rawP.companySize || '',
+    governancePriority: rawP.governancePriority || '',
+    infrastructureModel: rawP.infrastructureModel || '',
     challenges: lead.challenges,
+    keyChallenges: lead.challenges || rawP.keyChallenges || '',
+    preferredFocusArea: rawP.preferredFocusArea || rawP.focusArea || '',
+    projectScope: lead.requirement || lead.message || rawP.projectScope || '',
+    estimatedBudget: rawP.estimatedBudget || rawP.budget || rawP.annualRevenue || '',
+    targetDeadline: rawP.targetDeadline || rawP.timeline || '',
+    timeline: rawP.timeline || rawP.targetTimeline || '',
+    architectureQuery: lead.requirement || lead.message || rawP.architectureQuery || '',
+    preferredTime: rawP.preferredTime || rawP.meetingSlot || '',
+    conversationSummary: rawP.conversationSummary || rawP.chatSummary || '',
+    coverLetter: lead.message || rawP.coverLetter || rawP.coverNote || '',
     partnershipType: lead.partnershipType,
+    region: rawP.region || rawP.primaryRegion || '',
+    proposal: lead.requirement || lead.message || rawP.proposal || '',
     portfolio: lead.portfolioUrl,
+    portfolioUrl: lead.portfolioUrl,
     resume: lead.resumeUrl,
+    resumeFileName: rawP.resumeFileName || rawP.fileName || '',
     page_url: lead.pageUrl,
     pageUrl: lead.pageUrl,
     referrer: lead.referrer,
@@ -347,9 +373,9 @@ export async function POST(req: NextRequest) {
       console.warn('[DB Ingestion Notice]', dbErr?.message || dbErr)
     }
 
-    // Detect Host Environment
+    // Detect Host Environment - Live Vercel deployments and custom domains are full production
     const host = req.headers.get('host') || ''
-    const isProdHost = host.includes('trustgrid.ai') || host.includes('trustgrid.in')
+    const isProdHost = host.includes('trustgrid.ai') || host.includes('trustgrid.in') || host.includes('vercel.app') || process.env.NODE_ENV === 'production'
 
     // Dispatch to Google Apps Script (Sheet 1) - automatically isolated by host
     const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost)

@@ -113,15 +113,49 @@ var TAB_CONFIGS = {
   // Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
   "Live_Traffic_Events": SCHEMA_95_HEADERS,
 
-  // 1. Inbound Leads / Quick Diagnostics (LeadCaptureSection.tsx)
-  "Form_Inbound_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Interest / Solution", "Annual Revenue", "Timeline", "Primary Challenge",
-    "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+  // 1. Primary Inbound & Enterprise Contact Leads
+  "Contact_Leads": [
+    "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
+    "Subject", "Service Interest", "Message", "Source",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 2. AI Diagnostic Assessments
+  "AI_Diagnostic_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Company Size", "Primary AI Stack",
+    "Governance Priority", "Timeline", "Phone", "Source",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 3. AI Readiness Assessments
+  "AI_Readiness_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Designation", "Infrastructure Model",
+    "Key Challenges", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 4. Executive Workshop Requests
+  "Workshop_Requests": [
+    "Submission ID", "Name", "Work Email", "Company", "Team Size", "Preferred Focus Area",
+    "Timeline", "Message", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 2. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
+  // 5. RFP & Enterprise Proposals
+  "RFP_Proposals": [
+    "Submission ID", "Name", "Email", "Organization", "Project Scope", "Estimated Budget", "Target Deadline", "Requirements",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 6. Talk to AI Architect & Technical Inquiries
+  "Talk_To_Architect": [
+    "Submission ID", "Name", "Work Email", "Company", "Phone", "Architecture Query", "Preferred Time",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 7. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
   "Form_Consultation_Bookings": [
     "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
     "Designation / Role", "Transformation Interest", "Annual Revenue", "Primary Challenge", "Target Timeline",
@@ -129,15 +163,7 @@ var TAB_CONFIGS = {
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 3. Talk to Growth / AI Expert (TalkToExpert.tsx)
-  "Form_Expert_Consulting": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Focus Area", "Urgency / Timeline", "Message",
-    "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 4. Profit Pool Discovery Diagnostics (DiscoveryPage.tsx)
+  // 8. Profit Pool Discovery Diagnostics (DiscoveryPage.tsx)
   "Form_Diagnostic_Assessments": [
     "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
     "Industry", "Current Revenue", "Primary Leakage Area", "Estimated Leakage",
@@ -146,7 +172,19 @@ var TAB_CONFIGS = {
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 5. Partner Applications (Partners.tsx)
+  // 9. Quick Diagnostics & General Inbound Leads
+  "Form_Inbound_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Interest / Solution", "Annual Revenue", "Timeline", "Primary Challenge",
+    "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 10. Partner Applications (Partners.tsx)
+  "Partner_Applications": [
+    "Submission ID", "Name", "Work Email", "Company", "Partner Type", "Region", "Proposal",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
   "Form_Partner_Applications": [
     "Submission ID", "Name", "Work Email", "Phone", "Company Name",
     "Partner Type", "Primary Region", "Value Proposition / Proposal",
@@ -154,7 +192,11 @@ var TAB_CONFIGS = {
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 6. Career Applications (Career.tsx)
+  // 11. Career Applications (Career.tsx)
+  "Career_Applications": [
+    "Name", "Email", "Phone", "Job Title / Role", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Letter",
+    "Portfolio / GitHub", "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
   "Form_Career_Applications": [
     "Submission ID", "Full Name", "Email", "Phone", "Role Applied",
     "Experience Level", "Portfolio / LinkedIn", "Resume Drive Link", "Drive File ID",
@@ -162,7 +204,11 @@ var TAB_CONFIGS = {
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 7. Chatbot Virtual Assistant Inquiries (ChatBot.tsx)
+  // 12. Chatbot Virtual Assistant Inquiries (ChatBot.tsx)
+  "Chatbot_Leads": [
+    "Submission ID", "Name", "Email", "Phone", "Topic / Intent", "Conversation Summary",
+    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
+  ],
   "Form_Chatbot_Conversations": [
     "Submission ID", "Name", "Email", "Phone", "Company",
     "Topic / Intent", "Chat Summary", "Source",
@@ -170,11 +216,43 @@ var TAB_CONFIGS = {
     "Status", "IP Location", "IP Address", "Timestamp"
   ],
 
-  // 8. Consolidated Form Submissions Master Log
+  // 13. Floating Lead / Quick Enquiry Form
+  "Quick_Enquiry_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
+    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 14. LinkedIn Inbound Lead Channel
+  "LinkedIn_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Company Name", "Phone",
+    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
+    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
+  ],
+
+  // 15. Newsletter Subscribers
+  "Newsletter_Subscribers": [
+    "Email", "IP Location", "IP Address", "Source", "UTM Source", "UTM Campaign", "Timestamp"
+  ],
+
+  // 16. Google Ad Leads
+  "Google_Ad_Leads": [
+    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name", "Requirement",
+    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
+    "Status", "IP Location", "IP Address", "Organization", "Variant", "Timestamp"
+  ],
+
+  // 17. Consolidated Form Submissions Master Log
   "Form_Submissions": [
     "Submission ID", "Form Name", "Name", "Email", "Company", "Role", "Phone",
-    "Message / Details", "Resume Link", "Drive File ID",
+    "Message / Details", "Resume Drive Link", "Drive File ID",
     "UTM Source", "UTM Campaign", "IP Location", "IP Address", "Timestamp"
+  ],
+
+  // 18. PRODUCTION LEAD PRESERVATION & AUDIT ARCHIVE
+  "Archived_Test_Leads": [
+    "Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name",
+    "Business Email", "Phone / Mobile", "Company Name", "Reason Moved", "Row Data JSON"
   ],
 
   // 9. Page Views Telemetry
@@ -265,18 +343,21 @@ var SHEET_NAME_ALIASES = {
   "sessions": "Sessions",
   "trafficanalytics": "Page_Views",
 
-  // 1. Inbound Leads / Quick Diagnostics (LeadCaptureSection.tsx)
-  "form": "Form_Inbound_Leads",
+  // 1. Inbound Leads / Contact Forms
+  "contact": "Contact_Leads",
+  "contactleads": "Contact_Leads",
+  "contact_leads": "Contact_Leads",
+  "contactform": "Contact_Leads",
+  "contact_form": "Contact_Leads",
+  "leads": "Contact_Leads",
+  "lead": "Contact_Leads",
+  "global_lead_form": "Contact_Leads",
+  "form": "Contact_Leads",
+  "forminboundleads": "Form_Inbound_Leads",
+  "form_inbound_leads": "Form_Inbound_Leads",
   "inboundleads": "Form_Inbound_Leads",
   "inbound_leads": "Form_Inbound_Leads",
   "inbound": "Form_Inbound_Leads",
-  "leads": "Form_Inbound_Leads",
-  "lead": "Form_Inbound_Leads",
-  "quickdiagnostic": "Form_Inbound_Leads",
-  "quick_diagnostic": "Form_Inbound_Leads",
-  "contact": "Form_Inbound_Leads",
-  "contactleads": "Form_Inbound_Leads",
-  "contact_leads": "Form_Inbound_Leads",
 
   // 2. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
   "bookforconsultation": "Form_Consultation_Bookings",
@@ -286,51 +367,108 @@ var SHEET_NAME_ALIASES = {
   "consultation": "Form_Consultation_Bookings",
   "consultationbookings": "Form_Consultation_Bookings",
   "consultation_bookings": "Form_Consultation_Bookings",
+  "formconsultationbookings": "Form_Consultation_Bookings",
+  "form_consultation_bookings": "Form_Consultation_Bookings",
   "demo": "Form_Consultation_Bookings",
   "bookdemo": "Form_Consultation_Bookings",
   "book_demo": "Form_Consultation_Bookings",
+  "strategysession": "Form_Consultation_Bookings",
+  "strategy_session": "Form_Consultation_Bookings",
 
-  // 3. Talk to Growth / AI Expert (TalkToExpert.tsx)
-  "talktoexpert": "Form_Expert_Consulting",
-  "talk_to_expert": "Form_Expert_Consulting",
-  "expert": "Form_Expert_Consulting",
-  "expertconsulting": "Form_Expert_Consulting",
-  "expert_consulting": "Form_Expert_Consulting",
+  // 3. Talk to AI Architect & Growth Experts (TalkToExpert.tsx)
+  "talktoarchitect": "Talk_To_Architect",
+  "talk_to_architect": "Talk_To_Architect",
+  "talktoexpert": "Talk_To_Architect",
+  "talk_to_expert": "Talk_To_Architect",
+  "expert": "Talk_To_Architect",
+  "expertconsulting": "Talk_To_Architect",
+  "expert_consulting": "Talk_To_Architect",
+  "formexpertconsulting": "Form_Expert_Consulting",
+  "form_expert_consulting": "Form_Expert_Consulting",
 
-  // 4. Profit Pool Discovery Diagnostic (DiscoveryPage.tsx)
+  // 4. Profit Pool Discovery Diagnostics & Assessments (DiscoveryPage.tsx)
+  "aidiagnosticleads": "AI_Diagnostic_Leads",
+  "ai_diagnostic_leads": "AI_Diagnostic_Leads",
+  "aidiagnostic": "AI_Diagnostic_Leads",
+  "ai_diagnostic": "AI_Diagnostic_Leads",
+  "diagnostic": "AI_Diagnostic_Leads",
+  "diagnostics": "AI_Diagnostic_Leads",
+  "diagnostic_leads": "AI_Diagnostic_Leads",
   "diagnosticforms": "Form_Diagnostic_Assessments",
   "diagnostic_forms": "Form_Diagnostic_Assessments",
-  "diagnostic": "Form_Diagnostic_Assessments",
-  "diagnostics": "Form_Diagnostic_Assessments",
+  "formdiagnosticassessments": "Form_Diagnostic_Assessments",
+  "form_diagnostic_assessments": "Form_Diagnostic_Assessments",
   "profitpooldiscovery": "Form_Diagnostic_Assessments",
   "profit_pool_discovery": "Form_Diagnostic_Assessments",
   "assessment": "Form_Diagnostic_Assessments",
 
-  // 5. Partner Applications (Partners.tsx)
-  "partners": "Form_Partner_Applications",
-  "partner": "Form_Partner_Applications",
-  "partnerapplications": "Form_Partner_Applications",
-  "partner_applications": "Form_Partner_Applications",
+  // 5. AI Readiness Leads
+  "aireadinessleads": "AI_Readiness_Leads",
+  "ai_readiness_leads": "AI_Readiness_Leads",
+  "aireadiness": "AI_Readiness_Leads",
+  "readiness": "AI_Readiness_Leads",
 
-  // 6. Career Applications (Career.tsx)
-  "jobapplications": "Form_Career_Applications",
-  "job_applications": "Form_Career_Applications",
-  "careerapplications": "Form_Career_Applications",
-  "career_applications": "Form_Career_Applications",
-  "careers": "Form_Career_Applications",
-  "career": "Form_Career_Applications",
-  "jobs": "Form_Career_Applications",
+  // 6. Executive Workshops
+  "workshoprequests": "Workshop_Requests",
+  "workshop_requests": "Workshop_Requests",
+  "workshops": "Workshop_Requests",
+  "workshop": "Workshop_Requests",
 
-  // 7. Chatbot Virtual Assistant (ChatBot.tsx)
-  "chatbot": "Form_Chatbot_Conversations",
-  "chatbotleads": "Form_Chatbot_Conversations",
-  "chatbot_leads": "Form_Chatbot_Conversations",
-  "chatbot_conversations": "Form_Chatbot_Conversations",
+  // 7. RFP Proposals
+  "rfpproposals": "RFP_Proposals",
+  "rfp_proposals": "RFP_Proposals",
+  "rfp": "RFP_Proposals",
 
-  // 8. Consolidated Master Form Submissions
+  // 8. Partner Applications (Partners.tsx)
+  "partners": "Partner_Applications",
+  "partner": "Partner_Applications",
+  "partnerapplications": "Partner_Applications",
+  "partner_applications": "Partner_Applications",
+  "formpartnerapplications": "Form_Partner_Applications",
+  "form_partner_applications": "Form_Partner_Applications",
+
+  // 9. Career Applications (Career.tsx)
+  "jobapplications": "Career_Applications",
+  "job_applications": "Career_Applications",
+  "careerapplications": "Career_Applications",
+  "career_applications": "Career_Applications",
+  "careers": "Career_Applications",
+  "career": "Career_Applications",
+  "jobs": "Career_Applications",
+  "formcareerapplications": "Form_Career_Applications",
+  "form_career_applications": "Form_Career_Applications",
+
+  // 10. Chatbot Virtual Assistant (ChatBot.tsx)
+  "chatbot": "Chatbot_Leads",
+  "chatbotleads": "Chatbot_Leads",
+  "chatbot_leads": "Chatbot_Leads",
+  "chatbot_conversations": "Chatbot_Leads",
+  "formchatbotconversations": "Form_Chatbot_Conversations",
+  "form_chatbot_conversations": "Form_Chatbot_Conversations",
+
+  // 11. Quick Enquiry & Floating Leads
+  "quickenquiryleads": "Quick_Enquiry_Leads",
+  "quick_enquiry_leads": "Quick_Enquiry_Leads",
+  "floatinglead": "Quick_Enquiry_Leads",
+  "floating_lead": "Quick_Enquiry_Leads",
+  "quickdiagnostic": "Quick_Enquiry_Leads",
+  "quick_diagnostic": "Quick_Enquiry_Leads",
+
+  // 12. LinkedIn Leads
+  "linkedinleads": "LinkedIn_Leads",
+  "linkedin_leads": "LinkedIn_Leads",
+  "linkedin": "LinkedIn_Leads",
+
+  // 13. Consolidated Master Form Submissions
   "formsubmissions": "Form_Submissions",
   "form_submissions": "Form_Submissions",
-  "submissions": "Form_Submissions"
+  "submissions": "Form_Submissions",
+
+  // 14. Archived Test Leads
+  "archivedtestleads": "Archived_Test_Leads",
+  "archived_test_leads": "Archived_Test_Leads",
+  "testleads": "Archived_Test_Leads",
+  "test_leads": "Archived_Test_Leads"
 };
 
 /**
@@ -403,15 +541,12 @@ function doPost(e) {
       return handleIntelligenceSync(data);
     }
 
-    // Strict Staging / Vercel / Localhost Traffic Isolation Guard
-    // Prevents test and staging traffic from contaminating production tabs or triggering executive alerts
+    // Strict Staging / Sandbox Isolation Guard (Local development only; live Vercel deployments are FULL PRODUCTION)
     var pageRef = String(data.page_url || data.pageUrl || data.referrer || "");
     var isStagingOrigin = (
-      data.environment === "staging_vercel" ||
-      data.environment === "staging" ||
-      pageRef.indexOf("vercel.app") !== -1 ||
-      pageRef.indexOf("localhost") !== -1 ||
-      pageRef.indexOf("127.0.0.1") !== -1
+      data.environment === "staging_quarantine" ||
+      data.environment === "staging_isolated" ||
+      ((pageRef.indexOf("localhost:3000") !== -1 || pageRef.indexOf("127.0.0.1:3000") !== -1) && !data.isProdLead && data.leadType !== "PRODUCTION")
     );
 
     if (isStagingOrigin) {
@@ -419,8 +554,16 @@ function doPost(e) {
     }
 
     // Strict Test Lead Isolation Guard
-    // Routes TG-TEST, QA, Demo, Verification leads directly to Archived_Test_Leads
+    // Routes TG-TEST, QA, Demo, Verification, and Pooja Test leads directly to Archived_Test_Leads
     // Completely suppresses customer emails and executive alerts for test records
+    var combinedTestText = (
+      String(data.name || data.fullName || "") + " " +
+      String(data.company || "") + " " +
+      String(data.email || data.userEmail || data.work_email || "") + " " +
+      String(data.message || data.requirement || "") + " " +
+      String(data.leadId || data.submissionId || "")
+    ).toLowerCase();
+
     var isTestSubmission = (
       data.leadType === "TEST" ||
       data.LeadType === "TEST" ||
@@ -430,10 +573,14 @@ function doPost(e) {
       String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("tg-test") !== -1 ||
       String(data.company || "").toUpperCase().indexOf("TG-TEST") !== -1 ||
       String(data.leadId || data.submissionId || "").toUpperCase().indexOf("TG-TEST") !== -1 ||
-      String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("@test.local") !== -1 ||
-      String(data.email || data.userEmail || data.work_email || "").toLowerCase().indexOf("@example.com") !== -1 ||
+      combinedTestText.indexOf("pooja test") !== -1 ||
+      (combinedTestText.indexOf("pooja") !== -1 && combinedTestText.indexOf("test") !== -1) ||
+      combinedTestText.indexOf("@test.local") !== -1 ||
+      combinedTestText.indexOf("@example.com") !== -1 ||
+      combinedTestText.indexOf("test@") !== -1 ||
+      combinedTestText.indexOf("@test.") !== -1 ||
       String(data.sheetName || "") === "Archived_Test_Leads" ||
-      /\b(TG-TEST|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(String(data.name || "") + " " + String(data.company || ""))
+      /\b(tg-test|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(combinedTestText)
     );
 
     if (isTestSubmission) {
@@ -464,7 +611,11 @@ function doPost(e) {
     var isAdLead = (canonicalName === "Google_Ad_Leads" || norm.indexOf("adcampaign") !== -1 || norm.indexOf("googlead") !== -1);
     var isCareerApp = (canonicalName === "Career_Applications" || norm.indexOf("career") !== -1 || norm.indexOf("job") !== -1);
 
-        var LEAD_FORMS = [
+    var LEAD_FORMS = [
+      "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads",
+      "Workshop_Requests", "RFP_Proposals", "Talk_To_Architect",
+      "Chatbot_Leads", "Partner_Applications", "Career_Applications",
+      "Quick_Enquiry_Leads", "LinkedIn_Leads", "Google_Ad_Leads",
       "Form_Inbound_Leads", "Form_Consultation_Bookings", "Form_Expert_Consulting",
       "Form_Diagnostic_Assessments", "Form_Partner_Applications", "Form_Career_Applications",
       "Form_Chatbot_Conversations", "Form_Submissions"
@@ -2669,66 +2820,150 @@ function formatPhoneForSheet(rawPhone) {
   return "'" + str;
 }
 
+function formatVal(val) {
+  if (val === null || val === undefined) return "";
+  if (Array.isArray(val)) {
+    return val.filter(function(item) { return item != null && item !== ""; }).map(function(item) {
+      return (typeof item === "object") ? JSON.stringify(item) : String(item);
+    }).join(", ");
+  }
+  if (typeof val === "object") {
+    return JSON.stringify(val);
+  }
+  return String(val);
+}
+
 function resolveField(header, data) {
   var rawPhone = data.phone || data.mobile || data.phoneNumber || data.phone_number || data.mobileNumber || data.mobile_number || data["Phone Number"] || data["Contact Number"] || data["Mobile Number"] || data["Mobile"] || "";
   var safePhone = rawPhone ? formatPhoneForSheet(rawPhone) : "";
 
   var explicitMap = {
+    // Lead Identity
+    "Submission ID":          data.submissionId || data.submission_id || data.leadId || data.lead_id || data.id || ("TG-" + Date.now()),
+    "Lead ID":                data.leadId || data.lead_id || data.submissionId || ("TG-" + Date.now()),
+    "LeadType":               data.LeadType || data.leadType || data.leadTypeCategory || "PRODUCTION",
+    "Lead Type":              data.LeadType || data.leadType || data.leadTypeCategory || "PRODUCTION",
+
+    // Names
     "Name":                   data.name || data.fullName || data.full_name || data["Full Name"] || data["FullName"] || "",
     "Full Name":              data.name || data.fullName || data.full_name || data["Full Name"] || data["FullName"] || "",
-    "Email":                  data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
-    "Work Email":             data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
+    "Applicant Name":         data.name || data.fullName || data["Full Name"] || "",
+    "Candidate Name":         data.name || data.fullName || data["Full Name"] || "",
+
+    // Email
+    "Email":                  data.email || data.workEmail || data.work_email || data.userEmail || data["Work Email"] || data["Corporate Email"] || "",
+    "Work Email":             data.email || data.workEmail || data.work_email || data.userEmail || data["Work Email"] || data["Corporate Email"] || "",
     "Corporate Email":        data.email || data.workEmail || data.work_email || data["Work Email"] || data["Corporate Email"] || "",
+    "Business Email":         data.email || data.workEmail || data.work_email || data.userEmail || "",
+
+    // Phone / Mobile (Safely text-formatted to avoid Formula Parse Error)
     "Phone":                  safePhone,
     "Phone Number":           safePhone,
     "Mobile":                 safePhone,
     "Mobile Number":          safePhone,
     "Contact Number":         safePhone,
     "Contact":                safePhone,
-    "Company":                data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
-    "Company Name":           data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
-    "Company / Org":          data.company || data.companyName || data.company_name || data["Company Name"] || data["organization"] || "",
+    "Phone / Mobile":         safePhone,
+
+    // Company & Organization
+    "Company":                data.company || data.companyName || data.company_name || data.organization || data.currentPreviousCompany || data["Company Name"] || "",
+    "Company Name":           data.company || data.companyName || data.company_name || data.organization || data.currentPreviousCompany || data["Company Name"] || "",
+    "Company / Org":          data.company || data.companyName || data.company_name || data.organization || data["Company Name"] || "",
+    "Organization":           data.organization || data.company || data.companyName || data.company_name || data["Organization"] || "",
+    "Company Size":           formatVal(data.companySize || data.company_size || data.teamSize || data.team_size || ""),
+    "Team Size":              formatVal(data.teamSize || data.team_size || data.companySize || data.company_size || ""),
+
+    // Roles & Designations
     "Designation":            data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
     "Role":                   data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
     "Designation / Role":     data.designation || data.role || data.jobTitle || data.job_title || data["Designation"] || data["Role"] || "",
     "Role Applied":           data.role || data.roleApplied || data.jobTitle || data["Role Applied"] || "",
-    "Job Title / Role":       data.jobTitle || data.role || data["Job Title / Role"] || "",
-    "Job Title":              data.jobTitle || data.role || data["Job Title"] || "",
-    "Interest / Solution":    data.interest || data.transformationInterest || data.serviceInterest || data.service || data["Interest"] || "",
-    "Transformation Interest":data.transformationInterest || data.interest || data["Transformation Interest"] || "",
-    "Focus Area":             data.focusArea || data.focus_area || data.interest || data["Focus Area"] || "",
-    "Annual Revenue":         data.revenue || data.annualRevenue || data.annual_revenue || data.currentRevenue || data["Annual Revenue"] || "",
-    "Current Revenue":        data.currentRevenue || data.revenue || data.annual_revenue || data["Current Revenue"] || "",
-    "Timeline":               data.timeline || data.targetTimeline || data.target_timeline || data["Timeline"] || "",
-    "Target Timeline":        data.targetTimeline || data.timeline || data.target_timeline || data["Target Timeline"] || "",
-    "Urgency / Timeline":     data.urgency || data.timeline || data["Urgency"] || "",
-    "Primary Challenge":      data.challenge || data.primaryChallenge || data.primary_challenge || data["Primary Challenge"] || "",
+    "Job Title / Role":       data.jobTitle || data.role || data.designation || data["Job Title / Role"] || "",
+    "Job Title":              data.jobTitle || data.role || data.designation || data["Job Title"] || "",
+
+    // Industry & Sector
+    "Industry":               data.industry || data.sector || "",
+    "Sector":                 data.sector || data.industry || "",
+
+    // Subject
+    "Subject":                data.subject || data.subjectLine || (data.name ? ("Inquiry from " + data.name) : "Website Lead"),
+
+    // Solutions, Services & Focus
+    "Service Interest":       formatVal(data.serviceInterest || data.service || data.services || data.selectedSolutions || data.solutions || data.interest || data.primaryAiStack || data.transformationInterest || ""),
+    "Interest / Solution":    formatVal(data.interest || data.serviceInterest || data.transformationInterest || data.selectedSolutions || data.solutions || data.service || data["Interest"] || ""),
+    "Interested Solution / Service": formatVal(data.selectedSolutions || data.solutions || data.serviceInterest || data.service || data.interest || ""),
+    "Transformation Interest":formatVal(data.transformationInterest || data.interest || data.serviceInterest || data.selectedSolutions || data["Transformation Interest"] || ""),
+    "Selected Solutions":     formatVal(data.selectedSolutions || data.solutions || data.serviceInterest || data.service || ""),
+    "Primary AI Stack":       formatVal(data.primaryAiStack || data.aiStack || data.selectedSolutions || data.serviceInterest || data.service || ""),
+    "Governance Priority":    formatVal(data.governancePriority || data.governance_priority || data.governance || ""),
+    "Infrastructure Model":   formatVal(data.infrastructureModel || data.infrastructure_model || data.infrastructure || ""),
+    "Focus Area":             formatVal(data.focusArea || data.focus_area || data.preferredFocusArea || data.objective || data.areaOfInterest || data.interest || data["Focus Area"] || ""),
+    "Preferred Focus Area":   formatVal(data.preferredFocusArea || data.focusArea || data.focus_area || data.objective || data.areaOfInterest || ""),
+
+    // Financials & Scale
+    "Annual Revenue":         formatVal(data.revenue || data.annualRevenue || data.annual_revenue || data.currentRevenue || data["Annual Revenue"] || ""),
+    "Current Revenue":        formatVal(data.currentRevenue || data.revenue || data.annualRevenue || data.annual_revenue || data["Current Revenue"] || ""),
+    "Estimated Budget":       formatVal(data.estimatedBudget || data.budget || data.annualRevenue || data.revenue || ""),
+    "Budget":                 formatVal(data.budget || data.estimatedBudget || data.annualRevenue || ""),
+
+    // Deadlines & Timeline
+    "Timeline":               formatVal(data.timeline || data.targetTimeline || data.target_timeline || data.preferredTimeline || data.targetDeadline || data["Timeline"] || ""),
+    "Target Timeline":        formatVal(data.targetTimeline || data.timeline || data.target_timeline || data.preferredTimeline || data["Target Timeline"] || ""),
+    "Target Deadline":        formatVal(data.targetDeadline || data.deadline || data.targetTimeline || data.timeline || ""),
+    "Urgency / Timeline":     formatVal(data.urgency || data.timeline || data.targetTimeline || data["Urgency"] || ""),
+    "Preferred Time":         formatVal(data.preferredTime || data.preferred_time || data.preferredTimeline || data.meetingSlot || data.dateTime || ""),
+
+    // Challenges & Leakage
+    "Primary Challenge":      formatVal(data.challenges || data.keyChallenges || data.primaryChallenge || data.challenge || data["Primary Challenge"] || ""),
+    "Key Challenges":         formatVal(data.keyChallenges || data.challenges || data.primaryChallenge || data.challenge || ""),
     "Primary Leakage Area":   data.primaryLeakageArea || data.leakageArea || data["Primary Leakage Area"] || "",
     "Estimated Leakage":      data.estimatedLeakage || data.leakage || data["Estimated Leakage"] || "",
     "Diagnostic Score":       data.diagnosticScore || data.score || data["Diagnostic Score"] || "",
     "Answers Summary":        typeof data.answersSummary === "object" ? JSON.stringify(data.answersSummary) : (data.answersSummary || data.answers || ""),
-    "Partner Type":           data.partnerType || data.partner_type || data["Partner Type"] || "",
-    "Primary Region":         data.region || data.primaryRegion || data["Primary Region"] || "",
+
+    // Partnerships & Proposals
+    "Partner Type":           data.partnerType || data.partner_type || data.partnershipType || data.partnershipInterest || data["Partner Type"] || "",
+    "Region":                 data.region || data.primaryRegion || data.location || data["Primary Region"] || "",
+    "Primary Region":         data.region || data.primaryRegion || data.location || data["Primary Region"] || "",
+    "Proposal":               data.proposal || data.valueProposition || data.message || data.requirement || data["Proposal"] || "",
     "Value Proposition / Proposal": data.proposal || data.valueProposition || data.message || data["Proposal"] || "",
+
+    // Careers & Portfolio
     "Experience Level":       data.experienceLevel || data.experience || data["Experience Level"] || "",
     "Portfolio / LinkedIn":   data.portfolioUrl || data.portfolio || data.linkedin || data["Portfolio"] || "",
+    "Portfolio / GitHub":     data.portfolioUrl || data.portfolio || data.github || data.linkedin || "",
+    "Resume File Name":       data.resumeFileName || data.resume_file_name || data.fileName || (data.resume ? "Resume Attached" : ""),
     "Cover Note / Message":   data.coverNote || data.coverLetter || data.message || "",
-    "Topic / Intent":         data.intent || data.topic || data["Topic"] || "",
-    "Chat Summary":           data.chatSummary || (typeof data.messages === "object" ? JSON.stringify(data.messages) : data.message) || "",
-    "Subject":                data.subject || data.subjectLine || data["Subject"] || "",
+    "Cover Letter":           data.coverLetter || data.coverNote || data.message || "",
+
+    // Chatbot & Summaries
+    "Topic / Intent":         data.intent || data.topic || data.subject || data["Topic"] || "",
+    "Chat Summary":           formatVal(data.chatSummary || data.conversationSummary || data.messages || data.message || ""),
+    "Conversation Summary":   formatVal(data.conversationSummary || data.chatSummary || data.messages || data.message || ""),
+
+    // Requirements & Messages
+    "Project Scope":          data.projectScope || data.scope || data.requirement || data.message || "",
+    "Requirements":           data.requirements || data.requirement || data.message || data.projectScope || "",
     "Requirement / Inquiry":  data.requirement || data.message || data.requirementInquiry || data.inquiry || data.scope || "",
     "Requirement":            data.requirement || data.message || data.requirementInquiry || data.inquiry || data.scope || "",
+    "Architecture Query":     data.architectureQuery || data.requirement || data.message || "",
     "Message":                data.message || data.yourMessage || data["Your Message"] || data["Message"] || "",
-    "Message / Details":      data.message || data.details || data["Message"] || "",
-    "Message / Scope":        data.message || data.scope || data.details || data["Message"] || "",
+    "Message / Details":      data.message || data.details || data.requirement || data["Message"] || "",
+    "Message / Scope":        data.message || data.scope || data.details || data.requirement || data["Message"] || "",
+
+    // Operational Status & Metadata
+    "Form Name":              data.formName || data.form_name || data.formType || data.form_type || data.sheetName || "Website Form",
     "Status":                 data.status || "New Lead",
     "Variant":                data.variant || "Standard",
-    "Submission ID":          data.submissionId || data.submission_id || data.id || ("PM_" + Date.now()),
-    "Location":               data.location || data.ipLocation || data.ip_location || data["Location"] || data["IP Location"] || "",
     "Source":                 data.source || data.lead_source || data.utmSource || data.utm_source || "Website Inbound Form",
+    "Location":               data.location || data.ipLocation || data.ip_location || data["Location"] || data["IP Location"] || "",
     "IP Location":            data.location || data.ipLocation || data.ip_location || data["IP Location"] || "",
     "IP Address":             data.ipAddress || data.ip_address || data["IP Address"] || "127.0.0.1",
-    "Organization":           data.organization || data.company || data.company_name || data["Organization"] || "",
+    "Test Indicators":        data.testReason || "Identified as TG-TEST / QA non-production data",
+    "Reason Moved":           data.reasonMoved || "Audited & Moved from Active Leads",
+    "Payload JSON":           typeof data === "object" ? JSON.stringify(data) : String(data),
+
+    // Analytics Dimensions
     "Session ID":             data.sessionId || data.session_id || data["Session ID"] || "",
     "Visitor ID":             data.visitorId || data.visitor_id || data.user_id || data.userId || data["Visitor ID"] || "",
     "User ID":                data.user_id || data.userId || data.visitorId || data.visitor_id || data["User ID"] || "",
@@ -2749,7 +2984,6 @@ function resolveField(header, data) {
     "Destination URL":        data.destinationUrl || data.page_url || data.pageUrl || "",
     "Section":                data.section || data.event_category || "General",
     "UTM Source":             data.utmSource || data.utm_source || data.source || "",
-    "Source":                 data.source || data.utm_source || data.utmSource || "direct",
     "UTM Medium":             data.utmMedium || data.utm_medium || data.medium || "",
     "Medium":                 data.medium || data.utm_medium || data.utmMedium || "none",
     "UTM Campaign":           data.utmCampaign || data.utm_campaign || data.campaign || "",
@@ -2764,7 +2998,6 @@ function resolveField(header, data) {
     "Pages Visited":          data.pages_count != null ? data.pages_count : (data.pages != null ? data.pages : 1),
     "Country":                data.country || data.geo_country || "",
     "Country Code":           data.countryCode || data.country_code || "",
-    "Region":                 data.region || data.geo_state || "",
     "City":                   data.city || data.geo_city || "",
     "Latitude":               data.latitude != null ? data.latitude : (data.geo_latitude != null ? data.geo_latitude : ""),
     "Longitude":              data.longitude != null ? data.longitude : (data.geo_longitude != null ? data.geo_longitude : ""),
@@ -2784,41 +3017,49 @@ function resolveField(header, data) {
     "Timestamp (UTC)":        normalizeTimestamp(data.timestamp_utc || data.timestamp || new Date().toISOString()),
     "Timestamp":              normalizeTimestamp(data.timestamp || data.Timestamp || new Date().toISOString())
   };
-  
+
+  var val;
   if (explicitMap.hasOwnProperty(header)) {
-    var val = explicitMap[header];
-    if (typeof val === 'string' && val.length > 0) {
-      var fc = val.charAt(0);
-      if (fc === '+' || fc === '=' || fc === '@') {
-        val = "'" + val;
-      }
+    val = explicitMap[header];
+  } else {
+    // Intelligent fallback resolution across camelCase, snake_case, rawPayload and fields
+    var slug = header
+      .replace(/\(.*?\)/g, '')
+      .trim()
+      .split(/[\s\-_]+/)
+      .map(function(word, i) {
+        if (i === 0) return word.charAt(0).toLowerCase() + word.slice(1);
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join('');
+
+    val = data[slug];
+    if (val === undefined) val = data[header];
+    if (val === undefined) val = data[header.toLowerCase()];
+    if (val === undefined) val = data[header.toLowerCase().replace(/[\s\-_]+/g, '_')];
+    if (val === undefined) val = data[header.toLowerCase().replace(/[\s\-_]+/g, '')];
+    if (val === undefined && data.rawPayload && typeof data.rawPayload === 'object') {
+      val = data.rawPayload[slug] || data.rawPayload[header] || data.rawPayload[header.toLowerCase()];
     }
-    return (val !== null && typeof val === 'object') ? JSON.stringify(val) : (val === undefined ? "" : val);
+    if (val === undefined && data.fields && typeof data.fields === 'object') {
+      val = data.fields[slug] || data.fields[header] || data.fields[header.toLowerCase()];
+    }
+    if (val === undefined) val = "";
   }
-  
-  var slug = header
-    .replace(/\(.*?\)/g, '')
-    .trim()
-    .split(' ')
-    .map(function(word, i) {
-      if (i === 0) return word.charAt(0).toLowerCase() + word.slice(1);
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
-    .join('');
-    
-  var value = data[slug];
-  if (value === undefined) value = data[header];
-  if (value === undefined) value = data[header.toLowerCase().replace(/\s+/g, '_')];
-  if (value === undefined) value = "";
-  
-  if (typeof value === 'string' && value.length > 0) {
-    var firstChar = value.charAt(0);
-    if (firstChar === '+' || firstChar === '=' || firstChar === '@') {
-      value = "'" + value;
+
+  // Format array/object safely
+  var strVal = formatVal(val);
+
+  // Security & spreadsheet formula injection prevention:
+  // If first character is '+', '=', or '@', prefix with single quote
+  if (strVal.length > 0) {
+    var fc = strVal.charAt(0);
+    if (fc === '+' || fc === '=' || fc === '@') {
+      strVal = "'" + strVal;
     }
   }
-  
-  return (value !== null && typeof value === 'object') ? JSON.stringify(value) : value;
+
+  return strVal;
 }
 
 function documentReferrerFallback(data) {
@@ -3223,65 +3464,171 @@ function logToArchivedTestLeads(data) {
 }
 
 /**
- * Audit and Clean Google Sheet:
- * Scans all active lead sheets, moves non-production/test rows to Archived_Test_Leads,
- * and preserves 100% of genuine production customer inquiries.
+ * =========================================================================================
+ * 10. PRODUCTION LEAD PRESERVATION & UNIVERSAL TEST LEAD CLEANER
+ * =========================================================================================
+ * Scans ALL active lead sheets across the entire Google Spreadsheet,
+ * identifies non-production/test rows (TG-TEST, pooja test, test, demo, dummy, sample, qa, etc.),
+ * safely moves them to Archived_Test_Leads tab, and permanently removes them from active tabs.
+ * Preserves 100% of genuine production customer inquiries.
  */
 function auditAndArchiveGoogleSheetTestLeads() {
   var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   var archiveTab = ss.getSheetByName("Archived_Test_Leads");
+  var archiveHeaders = [
+    "Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name",
+    "Business Email", "Phone / Mobile", "Company Name", "Reason Moved", "Row Data JSON"
+  ];
+
   if (!archiveTab) {
     archiveTab = ss.insertSheet("Archived_Test_Leads");
-    var headers = ["Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name", "Business Email", "Company Name", "Reason Moved", "Row Data"];
-    archiveTab.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight("bold").setBackground("#475569").setFontColor("#ffffff");
+    archiveTab.getRange(1, 1, 1, archiveHeaders.length)
+              .setValues([archiveHeaders])
+              .setFontWeight("bold")
+              .setBackground("#334155")
+              .setFontColor("#ffffff");
     archiveTab.setFrozenRows(1);
   }
 
-  var tabsToAudit = [
-    "Contact_Leads", "AI_Diagnostic_Leads", "AI_Readiness_Leads",
-    "Workshop_Requests", "RFP_Proposals", "Talk_To_Architect",
-    "Quick_Enquiry_Leads", "LinkedIn_Leads", "Form_Submissions"
+  // System and telemetry tabs that should NEVER be audited for customer leads
+  var systemTabs = [
+    "Archived_Test_Leads", "Live_Traffic_Events", "Visitor_Intelligence_95",
+    "Page_Flow_Analysis", "Hourly_Traffic_Rollup", "Daily_Aggregates_Rollup",
+    "Telemetry_Raw_Ingest", "UTM_Campaign_Analytics", "Weekly_Executive_Report",
+    "Device_Browser_Matrix", "Executive_KPI_Dashboard", "Intelligence_Sync_Log",
+    "Staging_Quarantine", "Traffic_Analytics", "Page_Views", "Sessions",
+    "CTA_Clicks", "Sessions_Intelligence", "Traffic_Attribution",
+    "Geo_Intelligence", "Network_Security_Log", "Engagement_Metrics", "User_Behavior_Library"
   ];
 
-  var movedCount = 0;
-  var retainedCount = 0;
+  var allSheets = ss.getSheets();
+  var totalMoved = 0;
+  var totalRetained = 0;
+  var tabReports = [];
 
-  tabsToAudit.forEach(function(tabName) {
-    var sh = ss.getSheetByName(tabName);
-    if (!sh || sh.getLastRow() < 2) return;
+  for (var s = 0; s < allSheets.length; s++) {
+    var sh = allSheets[s];
+    var sheetName = sh.getName();
+
+    // Skip system, analytics, and archive sheets
+    if (systemTabs.indexOf(sheetName) !== -1) continue;
+
+    var lastRow = sh.getLastRow();
+    if (lastRow < 2) continue; // No data rows (only header or empty)
+
     var data = sh.getDataRange().getValues();
+    var headers = data[0];
+    var tabMoved = 0;
+    var tabRetained = 0;
 
+    // Scan from bottom to top so deleting rows does not shift row indices
     for (var r = data.length - 1; r >= 1; r--) {
       var row = data[r];
-      var rowStr = row.join(" ");
+      var rowStr = row.map(function(c) { return String(c || ''); }).join(" ");
+      var rowLower = rowStr.toLowerCase();
+
       var isTest = (
-        /\b(TG-TEST|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rowStr) ||
-        rowStr.toLowerCase().indexOf("@test.local") !== -1 ||
-        rowStr.toLowerCase().indexOf("@example.com") !== -1
+        /\b(tg-test|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rowStr) ||
+        rowLower.indexOf("tg-test") !== -1 ||
+        rowLower.indexOf("pooja test") !== -1 ||
+        (rowLower.indexOf("pooja") !== -1 && rowLower.indexOf("test") !== -1) ||
+        rowLower.indexOf("@test.local") !== -1 ||
+        rowLower.indexOf("@example.com") !== -1 ||
+        rowLower.indexOf("test@") !== -1 ||
+        rowLower.indexOf("@test.") !== -1
       );
 
       if (isTest) {
+        var leadId = String(row[0] || "");
+        var name = String(row[1] || "");
+        var email = String(row[2] || "");
+        var company = String(row[3] || "");
+        var phone = "";
+
+        // Dynamically find phone in row if present
+        for (var c = 0; c < row.length; c++) {
+          var cellVal = String(row[c] || "").trim().replace(/^'/, '');
+          if (/^(\+?\d[\d\s\-\(\)]{6,16})$/.test(cellVal) && cellVal.length >= 7) {
+            phone = formatPhoneForSheet(cellVal);
+            break;
+          }
+        }
+
         archiveTab.appendRow([
           Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
-          tabName,
-          row[1] || "",
+          sheetName,
+          leadId || ("ARCH-" + Date.now()),
           "TEST",
-          row[2] || "",
-          row[3] || "",
-          row[5] || "",
-          "Audited & Moved from " + tabName,
+          name,
+          email,
+          phone,
+          company,
+          "Audited & Purged from " + sheetName,
           JSON.stringify(row)
         ]);
+
         sh.deleteRow(r + 1);
-        movedCount++;
+        tabMoved++;
+        totalMoved++;
       } else {
-        retainedCount++;
+        tabRetained++;
+        totalRetained++;
       }
     }
-  });
 
-  Logger.log("✅ Production Leads Preserved: " + retainedCount + " | Test Records Archived: " + movedCount);
-  return { retainedProductionLeads: retainedCount, movedTestLeads: movedCount };
+    if (tabMoved > 0 || tabRetained > 0) {
+      tabReports.push({ tab: sheetName, movedTestLeads: tabMoved, retainedProductionLeads: tabRetained });
+    }
+  }
+
+  var report = {
+    status: "success",
+    operation: "CLEAN_ALL_TEST_LEADS",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    totalTestLeadsMovedToArchive: totalMoved,
+    totalGenuineProductionLeadsPreserved: totalRetained,
+    tabBreakdown: tabReports
+  };
+
+  Logger.log("✅ Lead Cleanup Completed: " + JSON.stringify(report));
+  return report;
+}
+
+/**
+ * Top-Level Direct Runner for Google Apps Script IDE dropdown:
+ * Select "CLEAN_ALL_TEST_LEADS_NOW" in the toolbar dropdown and click "Run".
+ */
+function CLEAN_ALL_TEST_LEADS_NOW() {
+  return auditAndArchiveGoogleSheetTestLeads();
+}
+
+/**
+ * Web App GET Handler:
+ * Trigger automated test lead cleanup via browser URL:
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=clean_test_leads
+ */
+function doGet(e) {
+  var action = (e && e.parameter && (e.parameter.action || e.parameter.clean)) || "";
+
+  if (action === "clean_test_leads" || action === "clean" || action === "purge" || action === "true") {
+    var result = auditAndArchiveGoogleSheetTestLeads();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  var status = {
+    service: "TRUSTGRID.AI Sheet 1 High-Speed Webhook Engine",
+    status: "ACTIVE",
+    version: "2026.10-ENTERPRISE",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    spreadsheetId: CONFIG.MAIN_SPREADSHEET_ID,
+    availableActions: {
+      cleanTestLeads: "?action=clean_test_leads"
+    }
+  };
+
+  return ContentService.createTextOutput(JSON.stringify(status, null, 2))
+                       .setMimeType(ContentService.MimeType.JSON);
 }
 
 

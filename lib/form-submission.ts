@@ -329,7 +329,7 @@ export async function submitTrustGridForm(
 
       // 2. Direct Webhook Fallback if server route unavailable
       const isProd = typeof window !== 'undefined'
-        ? (window.location.hostname === 'trustgrid.ai' || window.location.hostname === 'trustgrid.in' || window.location.hostname.endsWith('.trustgrid.ai'))
+        ? (window.location.hostname === 'trustgrid.ai' || window.location.hostname === 'trustgrid.in' || window.location.hostname.endsWith('.trustgrid.ai') || window.location.hostname.includes('vercel.app'))
         : process.env.NODE_ENV === 'production'
 
       const defaultProdWebhookUrl =
