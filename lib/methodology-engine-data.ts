@@ -1,4 +1,4 @@
-﻿export interface StageData {
+export interface StageData {
   number: string
   name: string
   subtitle: string
@@ -895,7 +895,7 @@ export const engagementModels: EngagementModelData[] = [
   {
     number: "03",
     title: "Full AI-Driven Enterprise Transformation",
-    duration: "48–88 weeks to first compounding value, then ongoing",
+    duration: "12–24 weeks to first compounding value, then ongoing",
     scope: "All six stages — full Diagnose, Architect, Implement, Automate, Adopt, and Accelerate — across the entire enterprise with the complete TRUSTGRID.AI AI-Driven Methodology Engine.",
     deliverables: [
       "Everything in Diagnostic and Rapid Value Sprint",
@@ -940,7 +940,7 @@ export const engagementModels: EngagementModelData[] = [
   {
     number: "06",
     title: "Industry-Specific Transformation Package",
-    duration: "44–88 weeks",
+    duration: "12–24 weeks",
     scope: "Complete end-to-end transformation tailored to a specific industry — pre-configured with industry-specific methodology selections, relevant agent fleets, benchmarking data, and compliant governance frameworks.",
     deliverables: [
       "Pre-configured industry methodology blueprint",

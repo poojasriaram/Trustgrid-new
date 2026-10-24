@@ -127,7 +127,7 @@ export default function PracticeAreasPage() {
   }
 
   return (
-    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#020617] text-slate-100">
+    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#f8fafc] text-slate-900">
       <SiteHeader />
 
       <main className="flex-1">
@@ -154,7 +154,7 @@ export default function PracticeAreasPage() {
             TRUSTGRID.AI combines industry expertise, AI engineering, enterprise data integration, and intelligent automation to solve complex business challenges.
           </p>
 
-          <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-3xl mx-auto mt-3">
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-3xl mx-auto mt-3">
             We help organizations transform business operations, optimize technology infrastructure, accelerate decision-making, and implement secure, scalable AI solutions with measurable business outcomes. Our Practice Areas bring together industry-specific expertise and cross-industry capabilities to help enterprises move from strategy to production-ready implementation.
           </p>
 
@@ -185,7 +185,7 @@ export default function PracticeAreasPage() {
               <span>Explore Practice Categories</span>
               <ArrowRight size={15} />
             </Link>
-            <Link href="#engagement-models" className="button button-outline" style={{ borderColor: 'rgba(255,255,255,0.3)', color: '#ffffff' }}>
+            <Link href="#engagement-models" className="button button-outline">
               <span>View Engagement Models</span>
               <ArrowDown size={14} />
             </Link>
@@ -198,55 +198,55 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 2. TWO PRIMARY CATEGORIES SHOWCASE */}
-      <section className="py-14 bg-slate-950/90 border-b border-slate-800" id="primary-categories">
+      <section className="py-14 bg-slate-50 border-b border-slate-200" id="primary-categories">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Category 1: Industry Vertical Practices */}
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-blue-500/30 hover:border-blue-500/60 transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div className="p-8 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">
                     PRIMARY CATEGORY 1
                   </span>
-                  <span className="text-xs text-slate-300 font-mono">8 Verticals · 34 Sub-Verticals</span>
+                  <span className="text-xs text-slate-500 font-mono">8 Verticals · 34 Sub-Verticals</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                   Industry Vertical Practices
                 </h2>
-                <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                <p className="text-slate-600 text-sm leading-relaxed mb-5">
                   Deliver AI-powered solutions tailored to the operational requirements, business models, and regulatory environments of different industries.
                 </p>
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 mb-6 font-medium">
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 mb-6 font-medium">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Manufacturing &amp; Industrial</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Financial Services &amp; BFSI</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Retail, Wholesale &amp; CPG</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Healthcare &amp; Life Sciences</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Energy &amp; Utilities</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Mobility &amp; Logistics</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Telecom &amp; Digital Platforms</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                     <span>Public Sector &amp; Defense</span>
                   </div>
@@ -259,51 +259,51 @@ export default function PracticeAreasPage() {
             </div>
 
             {/* Category 2: Cross-Industry Practices */}
-            <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-cyan-500/30 hover:border-cyan-500/60 transition-all flex flex-col justify-between relative overflow-hidden group">
+            <div className="p-8 rounded-2xl bg-white border border-slate-200 hover:border-cyan-400 shadow-xs transition-all flex flex-col justify-between relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-600/10 rounded-full blur-3xl pointer-events-none" />
               <div>
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
                     PRIMARY CATEGORY 2
                   </span>
-                  <span className="text-xs text-slate-300 font-mono">15 Horizontal Disciplines</span>
+                  <span className="text-xs text-slate-500 font-mono">15 Horizontal Disciplines</span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 group-hover:text-cyan-700 transition-colors">
                   Cross-Industry Practices
                 </h2>
-                <p className="text-slate-300 text-sm leading-relaxed mb-5">
+                <p className="text-slate-600 text-sm leading-relaxed mb-5">
                   Provide reusable enterprise capabilities across governance, finance, workforce, revenue, supply chain, cybersecurity, customer operations, data management, enterprise knowledge, technology operations, and legal functions.
                 </p>
-                <div className="grid grid-cols-2 gap-2 text-xs text-slate-300 mb-6 font-medium">
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                <div className="grid grid-cols-2 gap-2 text-xs text-slate-700 mb-6 font-medium">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>Governance, Risk &amp; GRC</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>ESG &amp; Sustainability</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>Workforce Transformation</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>AI FinOps &amp; Finance Command</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>Revenue &amp; Sales Acceleration</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>Supply Chain &amp; Demand Chain</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>Cybersecurity &amp; AI Security</span>
                   </div>
-                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-900/80 border border-slate-800">
+                  <div className="flex items-center gap-1.5 p-2 rounded bg-slate-50 border border-slate-200">
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                     <span>End-to-End Data &amp; Knowledge</span>
                   </div>
@@ -319,63 +319,63 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 3. AI ENGINEERING & VALUE REALIZATION CONNECTIVITY */}
-      <section className="py-16 bg-slate-900/40 border-b border-slate-800" id="value-realization">
+      <section className="py-16 bg-white border-b border-slate-200" id="value-realization">
         <div className="container">
           <div className="section-head text-center max-w-3xl mx-auto mb-12">
             <span className="badge badge-accent">Supporting Framework</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-2">
               AI Engineering &amp; Value Realization
             </h2>
-            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+            <p className="text-slate-600 mt-2 text-sm leading-relaxed">
               How TRUSTGRID.AI connects business objectives, AI architecture, data foundations, implementation, governance, and measurable outcomes into a unified delivery chain.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-blue-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-blue-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider block mb-2">01 · Strategic Alignment</span>
-              <h3 className="text-lg font-bold text-white mb-2">Business Objectives</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Business Objectives</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 Ground every AI initiative in board-level value streams. We decompose strategic priorities into measurable P&amp;L outcomes: Cost Down, Cash Out, Revenue Up, and Risk Down.
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-cyan-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-cyan-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider block mb-2">02 · Systems Design</span>
-              <h3 className="text-lg font-bold text-white mb-2">AI Architecture</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">AI Architecture</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 Deterministic multi-agent swarms, model routing, high-density GPU computing, and lossless networking fabrics engineered for resilient, low-latency execution.
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-indigo-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-indigo-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-wider block mb-2">03 · Semantic Fabric</span>
-              <h3 className="text-lg font-bold text-white mb-2">Data Foundations</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Data Foundations</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 End-to-end data pipelines, master data governance, semantic knowledge graphs, and hybrid retrieval-augmented generation ensuring zero hallucination.
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-emerald-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-emerald-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider block mb-2">04 · Productionization</span>
-              <h3 className="text-lg font-bold text-white mb-2">Production Implementation</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Production Implementation</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 Forward Deployed Engineers (FDEs) embedded directly on-site to build, harden, and scale production containerized microservices under turnkey DBOT.
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-amber-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-amber-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider block mb-2">05 · Board Defense</span>
-              <h3 className="text-lg font-bold text-white mb-2">Governance &amp; Risk</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Governance &amp; Risk</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 EU AI Act readiness, continuous automated audit evidence, model risk management (SR 11-7), algorithmic red-teaming, and deterministic human-in-the-loop rails.
               </p>
             </div>
 
-            <div className="p-6 rounded-xl bg-slate-950/70 border border-slate-800 hover:border-purple-500/40 transition-colors">
+            <div className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-purple-500/40 transition-colors">
               <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider block mb-2">06 · Value Verification</span>
-              <h3 className="text-lg font-bold text-white mb-2">Measurable Outcomes</h3>
-              <p className="text-slate-300 text-xs leading-relaxed">
+              <h3 className="text-lg font-bold text-slate-900 mb-2">Measurable Outcomes</h3>
+              <p className="text-slate-600 text-xs leading-relaxed">
                 Contractually banked KPIs verified against financial baselines. Commercial milestones tied directly to certified operational performance and unit economics.
               </p>
             </div>
@@ -384,14 +384,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 4. COMPREHENSIVE PRACTICE AREAS EXPLORER */}
-      <section className="py-16 bg-slate-950 border-b border-slate-800" id="comprehensive-explorer">
+      <section className="py-16 bg-[#f8fafc] border-b border-slate-200" id="comprehensive-explorer">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
             <span className="badge badge-accent">Enterprise Practice Areas</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-2">
               Industry Verticals &amp; Cross-Industry Practices
             </h2>
-            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+            <p className="text-slate-600 mt-2 text-sm leading-relaxed">
               Explore all 8 industry verticals (34 sub-verticals, 103 practice areas) and 15 cross-industry functional practices (45 practice areas). Every practice defines solution acceleration, KPIs banked, time to value, and value assurance.
             </p>
           </div>
@@ -401,14 +401,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 3. PRACTICE ARCHITECTURE & DELIVERY CONSOLE */}
-      <section className="py-16 bg-slate-950/80 border-b border-slate-800" id="practice-architecture">
+      <section className="py-16 bg-white border-b border-slate-200" id="practice-architecture">
         <div className="container">
           <div className="section-head text-center mb-8 max-w-3xl mx-auto">
             <span className="badge badge-primary">Operating Architecture &amp; Delivery</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-2">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-2">
               Enterprise Practice Architecture
             </h2>
-            <p className="text-slate-300 mt-2 text-sm leading-relaxed">
+            <p className="text-slate-600 mt-2 text-sm leading-relaxed">
               Explore TRUSTGRID.AI across Engagement Models, Engineering Practices, Functional Practices, Industry Blueprints, and Value Engineering.
             </p>
           </div>
@@ -418,14 +418,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 3. INTERACTIVE SEARCHABLE / FILTERABLE PRACTICE DIRECTORY */}
-      <section className="py-16 bg-slate-900/40 border-b border-slate-800" id="practice-directory">
+      <section className="py-16 bg-[#f8fafc] border-b border-slate-200" id="practice-directory">
         <div className="container">
           <div className="section-head text-center mb-10">
             <span className="badge badge-accent">Interactive Directory</span>
-            <h2 className="text-3xl font-bold text-white mt-2">
+            <h2 className="text-3xl font-bold text-slate-900 mt-2">
               Filter by Practice Domain
             </h2>
-            <p className="text-slate-300 max-w-2xl mx-auto mt-2 text-sm">
+            <p className="text-slate-600 max-w-2xl mx-auto mt-2 text-sm">
               Quickly locate specialized technical capabilities, functional practices, and cross-cutting integration frameworks.
             </p>
           </div>
@@ -439,10 +439,10 @@ export default function PracticeAreasPage() {
         <div className="container">
           <div className="section-head mb-12">
             <span className="badge badge-primary">Strategic Alignment &amp; Economics</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-3">
               Functional Practices
             </h2>
-            <p className="text-slate-300 max-w-3xl mt-3 text-base leading-relaxed">
+            <p className="text-slate-600 max-w-3xl mt-3 text-base leading-relaxed">
               Disciplined business, economic, and governance methodologies connecting AI 
               initiatives directly to P&amp;L impact, board assurance, and enterprise regulatory readiness.
             </p>
@@ -455,10 +455,10 @@ export default function PracticeAreasPage() {
                   <div className="pa-card-badge-row">
                     <span className="pa-category-pill">{practice.categoryLabel}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mt-2 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 mt-2 group-hover:text-blue-600 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-600 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -476,8 +476,8 @@ export default function PracticeAreasPage() {
                     ))}
                   </ul>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-300 block mb-1">Target Outcome:</span>
+                  <div className="mt-4 pt-3 border-t border-slate-200">
+                    <span className="text-[11px] text-slate-500 block mb-1">Target Outcome:</span>
                     <span className="text-xs font-semibold text-emerald-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -501,14 +501,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 4. TECHNOLOGY PRACTICES SECTION */}
-      <section className="py-20 bg-slate-950/60 border-t border-slate-800" id="technology-practices">
+      <section className="py-20 bg-white border-t border-slate-200" id="technology-practices">
         <div className="container">
           <div className="section-head mb-12">
             <span className="badge badge-accent">Core Systems Engineering</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-3">
               Technology Practices
             </h2>
-            <p className="text-slate-300 max-w-3xl mt-3 text-base leading-relaxed">
+            <p className="text-slate-600 max-w-3xl mt-3 text-base leading-relaxed">
               Full-stack technical engineering from high-density liquid-cooled compute and 
               lossless 800G networking to autonomous agent swarms, context retrieval, and quantum-safe defense.
             </p>
@@ -521,10 +521,10 @@ export default function PracticeAreasPage() {
                   <div className="pa-card-badge-row">
                     <span className="pa-category-pill pa-pill-tech">{practice.categoryLabel}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mt-2 group-hover:text-cyan-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 mt-2 group-hover:text-cyan-600 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-600 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -542,8 +542,8 @@ export default function PracticeAreasPage() {
                     ))}
                   </ul>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-300 block mb-1">Performance Benchmark:</span>
+                  <div className="mt-4 pt-3 border-t border-slate-200">
+                    <span className="text-[11px] text-slate-500 block mb-1">Performance Benchmark:</span>
                     <span className="text-xs font-semibold text-cyan-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -567,14 +567,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 5. CROSS-CUTTING ENGINEERING CAPABILITIES SECTION */}
-      <section className="py-20 border-t border-slate-800" id="cross-cutting-capabilities">
+      <section className="py-20 border-t border-slate-200" id="cross-cutting-capabilities">
         <div className="container">
           <div className="section-head mb-12">
             <span className="badge badge-secondary">Shared Capabilities</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-3">
               Cross-Cutting Engineering Capabilities
             </h2>
-            <p className="text-slate-300 max-w-3xl mt-3 text-base leading-relaxed">
+            <p className="text-slate-600 max-w-3xl mt-3 text-base leading-relaxed">
               Foundational disciplines that span every functional and technology practice — ensuring 
               cohesive architecture, resilient productionization, secure integration, and complete client sovereignty.
             </p>
@@ -587,10 +587,10 @@ export default function PracticeAreasPage() {
                   <div className="pa-card-badge-row">
                     <span className="pa-category-pill pa-pill-cross">{practice.categoryLabel}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mt-2 group-hover:text-indigo-400 transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 mt-2 group-hover:text-indigo-600 transition-colors">
                     {practice.title}
                   </h3>
-                  <p className="text-slate-300 text-sm mt-2 line-clamp-3">
+                  <p className="text-slate-600 text-sm mt-2 line-clamp-3">
                     {practice.tagline}
                   </p>
                 </div>
@@ -608,8 +608,8 @@ export default function PracticeAreasPage() {
                     ))}
                   </ul>
 
-                  <div className="mt-4 pt-3 border-t border-slate-800">
-                    <span className="text-[11px] text-slate-300 block mb-1">Autonomy Metric:</span>
+                  <div className="mt-4 pt-3 border-t border-slate-200">
+                    <span className="text-[11px] text-slate-500 block mb-1">Autonomy Metric:</span>
                     <span className="text-xs font-semibold text-indigo-400">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
@@ -633,14 +633,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 6. PRACTICE-TO-INDUSTRY OUTCOMES & VALUE IMPACT */}
-      <section className="py-20 bg-slate-950/70 border-t border-slate-800" id="industry-outcomes">
+      <section className="py-20 bg-slate-50 border-t border-slate-200" id="industry-outcomes">
         <div className="container">
           <div className="section-head text-center max-w-3xl mx-auto mb-14">
             <span className="badge badge-accent">Vertical Industrialization &amp; P&amp;L Outcomes</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-3">
               Industry Outcomes &amp; Value Impact
             </h2>
-            <p className="text-slate-300 mt-3 text-base">
+            <p className="text-slate-600 mt-3 text-base">
               How our functional and technical practices converge into quantified, board-level balance sheet impact across mission-critical enterprise sectors.
             </p>
           </div>
@@ -650,7 +650,7 @@ export default function PracticeAreasPage() {
               <div key={item.id} className="pa-outcome-card">
                 <div>
                   <div className="flex items-start justify-between gap-3 mb-2">
-                    <h3 className="text-lg font-bold text-white leading-snug">
+                    <h3 className="text-lg font-bold text-slate-900 leading-snug">
                       {item.industry}
                     </h3>
                     <Link
@@ -662,7 +662,7 @@ export default function PracticeAreasPage() {
                     </Link>
                   </div>
 
-                  <p className="text-slate-300 text-xs mb-4 leading-relaxed font-light">
+                  <p className="text-slate-600 text-xs mb-4 leading-relaxed font-light">
                     {item.highlight}
                   </p>
 
@@ -703,8 +703,8 @@ export default function PracticeAreasPage() {
                   </div>
                 </div>
 
-                <div className="space-y-2 pt-4 border-t border-slate-800">
-                  <span className="text-[10px] font-mono text-slate-300 uppercase tracking-wider block font-semibold">
+                <div className="space-y-2 pt-4 border-t border-slate-200">
+                  <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block font-semibold">
                     Primary Intersecting Practices:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
@@ -734,14 +734,14 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 7. ENGAGEMENT MODELS & EXECUTION CADENCE */}
-      <section className="py-20 border-t border-slate-800" id="engagement-models">
+      <section className="py-20 border-t border-slate-200" id="engagement-models">
         <div className="container">
           <div className="section-head text-center max-w-3xl mx-auto mb-16">
             <span className="badge badge-primary">Turnkey Execution &amp; Co-Engineering</span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-white mt-3">
+            <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 mt-3">
               Enterprise Engagement Models
             </h2>
-            <p className="text-slate-300 mt-3 text-base">
+            <p className="text-slate-600 mt-3 text-base">
               Four structured engagement tiers tailored to your engineering maturity, risk posture, and delivery velocity — backed by strict SLAs and complete intellectual property sovereignty.
             </p>
           </div>
@@ -756,22 +756,22 @@ export default function PracticeAreasPage() {
                     <span className="pa-timeline-badge">{model.duration}</span>
                   </div>
 
-                  <h3 className="text-lg font-bold text-white mb-2 leading-snug">
+                  <h3 className="text-lg font-bold text-slate-900 mb-2 leading-snug">
                     {model.title}
                   </h3>
 
-                  <p className="text-slate-300 text-xs mb-3 leading-relaxed">
-                    <strong className="text-slate-100">Target Fit: </strong>
+                  <p className="text-slate-600 text-xs mb-3 leading-relaxed">
+                    <strong className="text-slate-900">Target Fit: </strong>
                     {model.idealFor}
                   </p>
 
-                  <p className="text-slate-300 text-xs mb-4 leading-relaxed font-light">
+                  <p className="text-slate-600 text-xs mb-4 leading-relaxed font-light">
                     {model.keyFocus}
                   </p>
 
                   {/* Deliverables Checklist */}
                   <div className="space-y-2 mb-4">
-                    <span className="text-[10px] font-mono text-slate-300 uppercase tracking-wider block font-semibold">
+                    <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider block font-semibold">
                       Core Engineering Deliverables:
                     </span>
                     {model.deliverables.map((del, dIdx) => (
@@ -801,13 +801,13 @@ export default function PracticeAreasPage() {
                     <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider block font-bold mb-1">
                       Target Balance-Sheet Outcome:
                     </span>
-                    <p className="text-slate-200 text-xs leading-relaxed m-0">
+                    <p className="text-slate-700 text-xs leading-relaxed m-0">
                       {model.expectedOutcome}
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-slate-800/80">
+                <div className="pt-4 border-t border-slate-200/80">
                   <Link
                     href={model.ctaHref}
                     className="button button-primary w-full text-center justify-center text-xs"
@@ -821,13 +821,13 @@ export default function PracticeAreasPage() {
           </div>
 
           {/* 5-Stage Delivery Cadence Pathway */}
-          <div className="pt-8 border-t border-slate-800">
+          <div className="pt-8 border-t border-slate-200">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="badge badge-accent">Chronological Delivery Cadence</span>
-              <h3 className="text-2xl font-bold text-white mt-2">
+              <h3 className="text-2xl font-bold text-slate-900 mt-2">
                 Five-Stage Delivery Cadence
               </h3>
-              <p className="text-slate-300 text-xs mt-1">
+              <p className="text-slate-600 text-xs mt-1">
                 From initial zero-footprint diagnostic to full operational sovereignty under Turnkey DBOT.
               </p>
             </div>
@@ -839,10 +839,10 @@ export default function PracticeAreasPage() {
                     <span className="pa-pathway-number">{stage.step}</span>
                     <span className="pa-pathway-timeline">{stage.timeline}</span>
                   </div>
-                  <h4 className="text-sm font-bold text-white mt-3 mb-2">
+                  <h4 className="text-sm font-bold text-slate-900 mt-3 mb-2">
                     {stage.title}
                   </h4>
-                  <p className="text-slate-300 text-xs leading-relaxed mb-4">
+                  <p className="text-slate-600 text-xs leading-relaxed mb-4">
                     {stage.description}
                   </p>
                   <div className="pa-pathway-outcome">
@@ -857,13 +857,13 @@ export default function PracticeAreasPage() {
       </section>
 
       {/* 8. FINAL CTA SECTION */}
-      <section className="py-20 bg-gradient-to-b from-slate-900 to-black border-t border-slate-800 text-center">
+      <section className="py-20 bg-gradient-to-b from-slate-50 to-white border-t border-slate-200 text-center">
         <div className="container max-w-4xl mx-auto">
           <span className="badge badge-accent mb-4">Practice Advisory Consultation</span>
-          <h2 className="text-3xl lg:text-5xl font-bold text-white tracking-tight">
+          <h2 className="text-3xl lg:text-5xl font-bold text-slate-900 tracking-tight">
             Discuss Your Engineering Challenge
           </h2>
-          <p className="text-slate-300 mt-4 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-600 mt-4 text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
             Connect directly with a TRUSTGRID.AI Practice Lead to audit your architecture, 
             evaluate compute bottlenecks, or scope a Forward Deployment sprint.
           </p>

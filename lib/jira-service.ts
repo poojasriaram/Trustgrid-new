@@ -15,7 +15,7 @@ export interface JiraSubtaskConfig {
 
 export interface JiraIssueResult {
   success: boolean
-  status: 'Created' | 'Pending' | 'Failed' | 'Skipped_NonSales'
+  status: 'Created' | 'Pending' | 'Failed' | 'Skipped_NonSales' | 'Skipped_Test_Lead'
   issueKey?: string
   issueId?: string
   issueUrl?: string
@@ -112,6 +112,17 @@ export async function createJiraLead(
   lead: NormalizedLead,
   workflow: JiraSubtaskConfig[] = DEFAULT_LEAD_WORKFLOW
 ): Promise<JiraIssueResult> {
+  // Strict Test Lead Filter: Test/Demo/QA/Vercel leads strictly bypass Jira lead & subtask creation
+  if (lead.isTestLead || lead.productionOrTest === 'TEST') {
+    return {
+      success: true,
+      status: 'Skipped_Test_Lead',
+      issueKey: undefined,
+      subtasks: [],
+      error: 'Test lead strictly bypassed Jira issue creation'
+    }
+  }
+
   // Non-sales submissions (Careers, Newsletters) bypass Jira sales tickets
   if (!lead.isSalesLead) {
     return {

@@ -95,6 +95,15 @@ export function getAllLeadsDb(): DbLeadRecord[] {
 }
 
 /**
+ * Delete a lead record from the database (for test lead purge)
+ */
+export function deleteLeadDb(id: string): void {
+  const db = getDatabase()
+  const stmt = db.prepare('DELETE FROM leads WHERE id = ?')
+  stmt.run(id)
+}
+
+/**
  * Save or update a LinkedIn Connection token and profile
  */
 export function saveLinkedInConnectionDb(conn: {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { normalizeLead, RawLeadInput, NormalizedLead } from '@/lib/lead-normalization'
 import { createJiraLead, JiraIssueResult } from '@/lib/jira-service'
 import { validateLeadSubmission } from '@/lib/validation'
-import { insertLeadDb, getAllLeadsDb, DbLeadRecord } from '@/lib/db/leads'
+import { insertLeadDb, getAllLeadsDb, deleteLeadDb, DbLeadRecord } from '@/lib/db/leads'
 import { appendLeadToGoogleSheets } from '@/lib/services/google-sheets'
 import { createLinkedInJiraLead } from '@/lib/services/jira'
 import { sendWhatsAppLeadAlert } from '@/lib/services/whatsapp'
@@ -337,8 +337,20 @@ export async function POST(req: NextRequest) {
       })
     }
 
-    // 3. Standard Enterprise Leads Normalization Pipeline
-    const normalized = normalizeLead(body)
+    // 3. Extract and Verify Origin & Host
+    const host = req.headers.get('host') || ''
+    const referer = req.headers.get('referer') || ''
+    const origin = req.headers.get('origin') || ''
+    const bodySourceUrl = body.source_url || body.sourceUrl || body.page_url || body.pageUrl || ''
+    const sourceUrl = bodySourceUrl || referer || origin || ''
+
+    // Normalize incoming lead
+    const normalized = normalizeLead({
+      ...body,
+      source_url: sourceUrl,
+      sourceUrl,
+      host
+    })
 
     // Deduplication Check
     if (leadsStore.has(normalized.leadId)) {
@@ -347,13 +359,91 @@ export async function POST(req: NextRequest) {
         success: true,
         message: 'Lead already received and processed.',
         leadId: normalized.leadId,
-        jiraStatus: existing.jiraResult.status,
-        issueKey: existing.jiraResult.issueKey,
-        issueUrl: existing.jiraResult.issueUrl
+        jiraStatus: existing.jiraResult?.status || 'Created',
+        issueKey: existing.jiraResult?.issueKey || null,
+        issueUrl: existing.jiraResult?.issueUrl || null
       })
     }
 
-    // Store in SQLite Database
+    // ==================================================
+    // STRICT TEST LEAD FILTER & REJECTION RULES:
+    // Before email is sent, IF source_url contains:
+    // - vercel.app, localhost, 127.0.0.1, dev, staging, preview
+    // OR if lead is classified as TEST, OR does not originate from trustgrid.ai:
+    // THEN:
+    // - Do not send email
+    // - Do not create JIRA lead
+    // - Delete lead record
+    // - Delete follow-up task
+    // - Mark as TEST DATA
+    // ==================================================
+    const combinedOrigin = `${sourceUrl} ${host} ${referer} ${origin}`.toLowerCase()
+    const nonProdPatterns = ['vercel.app', 'localhost', '127.0.0.1', 'dev', 'staging', 'preview']
+    const hasNonProdSource = nonProdPatterns.some(pattern => combinedOrigin.includes(pattern))
+    const isProductionOrigin = combinedOrigin.includes('trustgrid.ai') || combinedOrigin.includes('www.trustgrid.ai')
+
+    const isTestLead =
+      normalized.isTestLead ||
+      normalized.productionOrTest === 'TEST' ||
+      hasNonProdSource ||
+      (!isProductionOrigin && (sourceUrl.startsWith('http') || host.length > 0))
+
+    if (isTestLead) {
+      console.log(`[Central Lead API] Test / Non-Production lead quarantined: ${normalized.leadId} (${normalized.email}). Origin: ${sourceUrl || host || 'Unknown'}. Reason: ${normalized.testReason || 'Non-production environment detected'}`)
+
+      // 1. Purge / Delete lead record from database if present
+      try {
+        deleteLeadDb(normalized.leadId)
+      } catch (delErr) {
+        // Safe to ignore if not present
+      }
+
+      // 2. Mark in in-memory quarantine store as TEST DATA (not in production pipeline)
+      leadsStore.set(normalized.leadId, {
+        leadId: normalized.leadId,
+        normalized: {
+          ...normalized,
+          productionOrTest: 'TEST',
+          isTestLead: true
+        },
+        googleSheetStatus: 'Skipped',
+        jiraResult: {
+          success: true,
+          status: 'Skipped_Test_Lead',
+          issueKey: null,
+          issueUrl: null,
+          subtasks: []
+        },
+        createdAt: isoTimestamp,
+        retryCount: 0
+      })
+
+      // 3. Return explicit Test Data response (No Email, No JIRA, No Sheet, Record Deleted)
+      return NextResponse.json({
+        success: true,
+        message: 'Lead received and processed according to test data policy.',
+        leadId: normalized.leadId,
+        leadType: normalized.leadType,
+        leadTypeCategory: 'TEST',
+        isTestLead: true,
+        isSalesLead: normalized.isSalesLead,
+        channelAttribution: normalized.channelAttribution,
+        jiraStatus: 'Skipped_Test_Lead',
+        issueKey: null,
+        issueUrl: null,
+        subtasks: [],
+        emailStatus: 'Skipped_Test_Lead',
+        filterAction: 'DELETED_TEST_DATA',
+        reason: normalized.testReason || 'Source origin non-production (vercel.app, localhost, staging, dev, preview)'
+      })
+    }
+
+    // ==================================================
+    // GENUINE PRODUCTION LEAD PIPELINE
+    // Origin: https://trustgrid.ai or https://www.trustgrid.ai
+    // ==================================================
+
+    // 1. Store genuine lead in SQLite Database
     try {
       insertLeadDb({
         id: normalized.leadId,
@@ -373,14 +463,11 @@ export async function POST(req: NextRequest) {
       console.warn('[DB Ingestion Notice]', dbErr?.message || dbErr)
     }
 
-    // Detect Host Environment - Live Vercel deployments and custom domains are full production
-    const host = req.headers.get('host') || ''
-    const isProdHost = host.includes('trustgrid.ai') || host.includes('trustgrid.in') || host.includes('vercel.app') || process.env.NODE_ENV === 'production'
-
-    // Dispatch to Google Apps Script (Sheet 1) - automatically isolated by host
+    // 2. Dispatch to Google Apps Script (Production Sheet)
+    const isProdHost = true
     const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost)
 
-    // Dispatch to Jira (for Commercial / Sales Leads)
+    // 3. Create JIRA Lead & Follow-Up Subtasks
     let jiraResult: JiraIssueResult
     try {
       jiraResult = await createJiraLead(normalized)
@@ -393,40 +480,37 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Dispatch WhatsApp & Telegram Instant Alerts only for real Production traffic
-    if (isProdHost) {
-      sendWhatsAppLeadAlert({
-        leadId: normalized.leadId,
-        name: normalized.name,
-        email: normalized.email,
-        company: normalized.company,
-        phone: normalized.phone,
-        service: normalized.interestedSolution || normalized.leadTypeLabel,
-        source: normalized.channelAttribution || 'Website Form',
-        formType: normalized.leadType,
-        pageUrl: normalized.pageUrl,
-        utmCampaign: normalized.utmCampaign,
-        message: normalized.message
-      }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
+    // 4. Dispatch Instant Team Alerts (WhatsApp & Telegram)
+    sendWhatsAppLeadAlert({
+      leadId: normalized.leadId,
+      name: normalized.name,
+      email: normalized.email,
+      company: normalized.company,
+      phone: normalized.phone,
+      service: normalized.interestedSolution || normalized.leadTypeLabel,
+      source: normalized.channelAttribution || 'Website Form',
+      formType: normalized.leadType,
+      pageUrl: normalized.pageUrl,
+      utmCampaign: normalized.utmCampaign,
+      message: normalized.message
+    }).catch((err) => console.warn('[WhatsApp Alert Notice]', err))
 
-      sendTelegramLeadAlert({
-        leadId: normalized.leadId,
-        name: normalized.name,
-        email: normalized.email,
-        company: normalized.company,
-        phone: normalized.phone,
-        service: normalized.interestedSolution || normalized.leadTypeLabel,
-        source: normalized.channelAttribution || 'Website Form',
-        formType: normalized.leadType,
-        pageUrl: normalized.pageUrl,
-        utmCampaign: normalized.utmCampaign,
-        message: normalized.message
-      }).catch((err) => console.warn('[Telegram Alert Notice]', err))
-    }
+    sendTelegramLeadAlert({
+      leadId: normalized.leadId,
+      name: normalized.name,
+      email: normalized.email,
+      company: normalized.company,
+      phone: normalized.phone,
+      service: normalized.interestedSolution || normalized.leadTypeLabel,
+      source: normalized.channelAttribution || 'Website Form',
+      formType: normalized.leadType,
+      pageUrl: normalized.pageUrl,
+      utmCampaign: normalized.utmCampaign,
+      message: normalized.message
+    }).catch((err) => console.warn('[Telegram Alert Notice]', err))
 
-    // Dispatch Customer Response Email & Booking Options
-    // Only real production leads receive customer emails + 4 booking tracks + 3 meeting slots
-    // Test leads are strictly bypassed
+    // 5. Dispatch Fully Branded Customer Response Email
+    // Uses H.png header, F.png footer, 650px container, Next Steps, Consultation Booking
     let emailResult: any = null
     try {
       emailResult = await sendCustomerResponseEmail(normalized)
@@ -434,7 +518,7 @@ export async function POST(req: NextRequest) {
       console.warn('[Central Lead API] Response email error:', emailErr)
     }
 
-    // Store Record in In-Memory System Store
+    // 6. Store Record in In-Memory System Store
     leadsStore.set(normalized.leadId, {
       leadId: normalized.leadId,
       normalized,
@@ -449,15 +533,15 @@ export async function POST(req: NextRequest) {
       message: 'Your request has been submitted successfully.',
       leadId: normalized.leadId,
       leadType: normalized.leadType,
-      leadTypeCategory: normalized.productionOrTest,
-      isTestLead: normalized.isTestLead,
+      leadTypeCategory: 'PRODUCTION',
+      isTestLead: false,
       isSalesLead: normalized.isSalesLead,
       channelAttribution: normalized.channelAttribution,
       jiraStatus: jiraResult.status,
       issueKey: jiraResult.issueKey || null,
       issueUrl: jiraResult.issueUrl || null,
       subtasks: jiraResult.subtasks || [],
-      emailStatus: emailResult?.deliveryStatus || (normalized.isTestLead ? 'Skipped_Test_Lead' : 'Pending')
+      emailStatus: emailResult?.deliveryStatus || 'Sent'
     })
   } catch (error: any) {
     console.error('[Central Lead API Error]', error)

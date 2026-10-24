@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
@@ -22,6 +22,7 @@ import {
 export interface ICPPersona {
   id: string
   role: string
+  tabLabel?: string
   title: string
   badge: string
   whatTheyCareAbout: string[]
@@ -40,6 +41,7 @@ export interface ICPPersona {
 export const defaultICPs: ICPPersona[] = [
   {
     id: 'cio',
+    tabLabel: 'CIO',
     role: 'Chief Information Officer (CIO)',
     title: 'Infrastructure Modernization & AI Operating Model',
     badge: 'EXECUTIVE LEADERSHIP',
@@ -63,6 +65,7 @@ export const defaultICPs: ICPPersona[] = [
   },
   {
     id: 'cto',
+    tabLabel: 'CTO',
     role: 'Chief Technology Officer (CTO)',
     title: 'AI Architecture & Platform Engineering',
     badge: 'TECHNICAL LEADERSHIP',
@@ -86,6 +89,7 @@ export const defaultICPs: ICPPersona[] = [
   },
   {
     id: 'ciso',
+    tabLabel: 'CISO',
     role: 'Chief Information Security Officer (CISO)',
     title: 'AI Security, Zero Trust & Threat Detection',
     badge: 'SECURITY & RISK LEADERSHIP',
@@ -108,6 +112,7 @@ export const defaultICPs: ICPPersona[] = [
   },
   {
     id: 'ai-ml-leader',
+    tabLabel: 'AI Leadership',
     role: 'Head of AI / ML & Platform Engineering',
     title: 'Model Performance, Agentic Systems & LLMOps',
     badge: 'AI ENGINEERING LEADERSHIP',
@@ -130,13 +135,14 @@ export const defaultICPs: ICPPersona[] = [
   },
   {
     id: 'infra-dc-leader',
-    role: 'Data Center & Infrastructure Director',
-    title: 'High-Density Facilities & Compute Density',
-    badge: 'INFRASTRUCTURE LEADERSHIP',
+    tabLabel: 'Data Center Leadership',
+    role: 'Data Center Facilities & Thermal Engineering Director',
+    title: '30–100kW Liquid Cooling & High-Density Facilities',
+    badge: 'FACILITIES & THERMAL LEADERSHIP',
     whatTheyCareAbout: [
       'High-Density Power & Thermal Envelope (30–100kW/rack)',
       'Direct-to-Chip & Immersion Liquid Cooling Retrofits',
-      'Power Usage Effectiveness (PUE) Optimization',
+      'Power Usage Effectiveness (PUE) Optimization (<1.15)',
       'Predictive Facilities Maintenance & 24/7 AI NOC Telemetry'
     ],
     theirChallenge: 'Legacy air-cooled facilities hit immediate power and thermal walls with modern accelerator clusters (NVIDIA Blackwell, HGX, AMD MI300X), stranding capital and stalling growth.',
@@ -151,7 +157,31 @@ export const defaultICPs: ICPPersona[] = [
     icon: Layers
   },
   {
+    id: 'infra-network-leader',
+    tabLabel: 'Infrastructure Leadership',
+    role: 'AI Networking & Infrastructure Systems Director',
+    title: 'Lossless Fabrics & High-Density Computing Infrastructure',
+    badge: 'INFRASTRUCTURE LEADERSHIP',
+    whatTheyCareAbout: [
+      'Non-Blocking 800G/1.6T RoCEv2 and InfiniBand Fabrics',
+      'Elimination of GPU Collective Wait States (NCCL/RCCL)',
+      'Rail-Optimized Topologies & Adaptive Congestion Routing',
+      'Predictive Interconnect Telemetry & Automated Flow Control'
+    ],
+    theirChallenge: 'Inter-node network jitter and micro-burst packet loss cause catastrophic GPU idle stalls during collective communication, collapsing cluster computational yield.',
+    trustgridRelevance: 'TRUSTGRID.AI designs non-blocking lossless network topologies with hardware-level PFC/ECN tuning, buffer optimization, and real-time fabric telemetry to maintain line-rate throughput.',
+    relevantSolutions: [
+      { title: 'AI Networking & Cybersecurity', slug: 'ai-networking-cybersecurity' },
+      { title: 'AI Infra & Data Center', slug: 'ai-infra-engineering' }
+    ],
+    expectedOutcome: 'Zero-loss packet flow at full 800G line rate, minimal collective wait states, and deterministic inter-node cluster latency.',
+    ctaText: 'Audit Network Fabric & Interconnects',
+    ctaLink: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section',
+    icon: Network
+  },
+  {
     id: 'cfo-business',
+    tabLabel: 'CFO & Finance',
     role: 'Chief Financial Officer & Business Leaders',
     title: 'Cost Optimization, Unit Economics & AI ROI',
     badge: 'FINANCIAL LEADERSHIP',
@@ -223,7 +253,7 @@ export function ICPSlider({ personas = defaultICPs }: { personas?: ICPPersona[] 
               onClick={() => setActiveIdx(idx)}
             >
               <PIcon size={14} />
-              <span>{p.role.split('(')[0].trim()}</span>
+              <span>{p.tabLabel || p.role.split('(')[0].trim()}</span>
             </button>
           )
         })}
@@ -301,7 +331,7 @@ export function ICPSlider({ personas = defaultICPs }: { personas?: ICPPersona[] 
                 <span>{current.ctaText}</span>
                 <ArrowUpRight size={15} />
               </Link>
-              <Link href="/contact" className="button button-ghost button-sm">
+              <Link href="/contact" className="button button-secondary button-sm">
                 <span>Speak to Practice Lead</span>
               </Link>
 

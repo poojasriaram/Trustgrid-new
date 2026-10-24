@@ -11,7 +11,9 @@ import {
   ArrowUpRight,
   CheckCircle2,
   AlertCircle,
-  ChevronRight
+  ChevronRight,
+  Network,
+  Layers
 } from 'lucide-react'
 
 export interface ICPSegment {
@@ -30,12 +32,29 @@ export interface ICPSegment {
 
 export const icpSegments: ICPSegment[] = [
   {
-    id: 'cio-cto',
-    role: 'CIO / CTO',
-    title: 'Enterprise Architecture & Infrastructure Scale',
+    id: 'cio',
+    role: 'CIO',
+    title: 'Enterprise Architecture & AI Operating Model',
     icon: Cpu,
-    challenge: 'High inference latency, runaway GPU compute spend (30–50% idle waste), and lack of predictable system throughput.',
-    solution: 'Turnkey high-density AI Factories, liquid cooling engineering, and hardware-level accelerator optimization.',
+    challenge: 'Uncoordinated pilot sprawl, runaway token costs, and high compliance risk under EU AI Act and NIST frameworks.',
+    solution: 'Turnkey enterprise AI operating models, mathematical governance frameworks, and Lean/TOC unit economics.',
+    offeringSlug: 'trusted-ai-transformation',
+    offeringName: 'Trusted AI Transformation',
+    keyOutcomes: [
+      'Single pane-of-glass governance across all enterprise AI workloads',
+      'Continuous regulatory conformity with automated compliance checks',
+      'Defensible FinOps unit economics linking compute directly to business metrics'
+    ],
+    ctaText: 'Explore CIO Executive Diagnostic',
+    ctaHref: '/book-ai-diagnostic?role=cio#diagnostic-form-section'
+  },
+  {
+    id: 'cto',
+    role: 'CTO',
+    title: 'AI Platform Engineering & Model Acceleration',
+    icon: Cpu,
+    challenge: 'High inference latency, accelerator underutilization (30–50% GPU idle waste), and fragile distributed deployment pipelines.',
+    solution: 'Hardware-to-code systems engineering, kernel micro-tuning (vLLM/TensorRT-LLM), and turnkey high-density AI factories.',
     offeringSlug: 'ai-infra-engineering',
     offeringName: 'AI Infrastructure & AI Data Center Engineering',
     keyOutcomes: [
@@ -48,7 +67,7 @@ export const icpSegments: ICPSegment[] = [
   },
   {
     id: 'ciso',
-    role: 'CISO / Head of Cyber Risk',
+    role: 'CISO',
     title: 'Agent Security & Quantum-Safe Resilience',
     icon: ShieldCheck,
     challenge: 'Non-deterministic agent execution paths, prompt injection attack surfaces, and looming Harvest Now Decrypt Later quantum threats.',
@@ -65,7 +84,7 @@ export const icpSegments: ICPSegment[] = [
   },
   {
     id: 'ai-leaders',
-    role: 'AI & Engineering Leaders',
+    role: 'AI Leadership',
     title: 'Autonomous Multi-Agent Systems & AgentOps',
     icon: Bot,
     challenge: 'Fragile single-prompt copilots that hallucinate under real enterprise workflows and lack durable cross-session context.',
@@ -81,16 +100,33 @@ export const icpSegments: ICPSegment[] = [
     ctaHref: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section'
   },
   {
-    id: 'infra-leaders',
-    role: 'Data Center & Network Directors',
-    title: 'Lossless Fabrics & High-Density Facilities',
+    id: 'dc-leaders',
+    role: 'Data Center Leadership',
+    title: '30–100kW Thermal Distribution & Facilities Engineering',
     icon: Building2,
-    challenge: 'Silent packet drops, inter-node jitter stalling collective training jobs, and thermal limits shutting down high-density compute.',
-    solution: 'Non-blocking InfiniBand / RoCEv2 network fabrics, dragonfly+ topologies, and direct-to-chip liquid thermal distribution.',
+    challenge: 'Legacy air-cooled facilities hit thermal and power walls with Blackwell and modern accelerator clusters, stranding capital.',
+    solution: 'Turnkey facility thermal retrofits, direct-to-chip hydronic cooling distribution, and continuous AI NOC telemetry.',
+    offeringSlug: 'ai-infra-engineering',
+    offeringName: 'AI Infrastructure & AI Data Center Engineering',
+    keyOutcomes: [
+      'Safe operation of up to 100kW per rack with sub-1.15 PUE',
+      'Elimination of thermal throttling under peak matrix multiplication load',
+      'Closed-loop hydronic distribution and predictive maintenance'
+    ],
+    ctaText: 'Evaluate Facility Density & PUE',
+    ctaHref: '/book-ai-diagnostic?solution=ai-infra-engineering#diagnostic-form-section'
+  },
+  {
+    id: 'infra-leaders',
+    role: 'Infrastructure Leadership',
+    title: 'Lossless Fabrics & Low-Latency AI Networks',
+    icon: Network,
+    challenge: 'Silent packet drops, inter-node jitter stalling collective training jobs, and buffer bloat across multi-node clusters.',
+    solution: 'Non-blocking InfiniBand / RoCEv2 network fabrics, rail-optimized topologies, and adaptive congestion routing.',
     offeringSlug: 'ai-networking-cybersecurity',
     offeringName: 'AI Networking & Cybersecurity Intelligence',
     keyOutcomes: [
-      'Zero-loss packet flow at full 400G/800G line rate',
+      'Zero-loss packet flow at full 800G line rate',
       'Minimization of GPU collective wait states (NCCL/RCCL)',
       'Self-healing autonomous AI NOC packet telemetry'
     ],
@@ -99,7 +135,7 @@ export const icpSegments: ICPSegment[] = [
   },
   {
     id: 'cfo-finance',
-    role: 'CFO / Transformation & Finance Leaders',
+    role: 'CFO / Finance',
     title: 'AI FinOps & Compounding P&L Attribution',
     icon: TrendingUp,
     challenge: 'Billions committed to exploratory pilots with opaque returns, unpredictable token sprawl, and zero balance-sheet attribution.',
@@ -117,7 +153,7 @@ export const icpSegments: ICPSegment[] = [
 ]
 
 export function ICPMatrix() {
-  const [activeTab, setActiveTab] = useState('cio-cto')
+  const [activeTab, setActiveTab] = useState('cio')
   const current = icpSegments.find((s) => s.id === activeTab) || icpSegments[0]
   const Icon = current.icon
 
@@ -147,16 +183,16 @@ export function ICPMatrix() {
               width: '32px',
               height: '32px',
               borderRadius: '8px',
-              background: '#eff6ff',
+              background: '#DBEAFE',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#1d5cff',
+              color: '#2563EB',
               flexShrink: 0
             }}>
               <Icon size={18} />
             </div>
-            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.06em' }}>
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#2563EB', letterSpacing: '0.06em' }}>
               {current.role.toUpperCase()} PERSPECTIVE
             </span>
           </div>
@@ -166,10 +202,10 @@ export function ICPMatrix() {
           </h3>
 
           <div className="icp-matrix-bottleneck-box">
-            <div style={{ fontSize: '11px', fontWeight: 700, color: '#991b1b', marginBottom: '4px', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, color: '#991B1B', marginBottom: '4px', letterSpacing: '0.05em' }}>
               CRITICAL ENTERPRISE BOTTLENECK
             </div>
-            <p style={{ fontSize: '13.5px', color: '#7f1d1d', margin: 0, lineHeight: 1.5 }}>
+            <p style={{ fontSize: '13.5px', color: '#7F1D1D', margin: 0, lineHeight: 1.5 }}>
               {current.challenge}
             </p>
           </div>
@@ -178,7 +214,7 @@ export function ICPMatrix() {
             <div style={{ fontSize: '11px', fontWeight: 700, color: '#166534', marginBottom: '4px', letterSpacing: '0.05em' }}>
               TRUSTGRID.AI ENGINEERED RESOLUTION
             </div>
-            <p style={{ fontSize: '13.5px', color: '#14532d', margin: 0, lineHeight: 1.5 }}>
+            <p style={{ fontSize: '13.5px', color: '#14532D', margin: 0, lineHeight: 1.5 }}>
               {current.solution}
             </p>
           </div>
@@ -187,12 +223,12 @@ export function ICPMatrix() {
         {/* RIGHT COLUMN: OUTCOMES & CTA */}
         <div className="icp-details-right">
           <div>
-            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#64748b', letterSpacing: '0.06em', display: 'block' }}>
+            <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#6B7280', letterSpacing: '0.06em', display: 'block' }}>
               EXPECTED BUSINESS &amp; TECHNICAL OUTCOMES
             </span>
             <ul style={{ listStyle: 'none', padding: 0, margin: '14px 0 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {current.keyOutcomes.map((outcome, idx) => (
-                <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '13.5px', color: '#1e293b', lineHeight: 1.45 }}>
+                <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '13.5px', color: '#374151', lineHeight: 1.45 }}>
                   <CheckCircle2 size={16} className="text-blue-600 shrink-0 mt-0.5" />
                   <span>{outcome}</span>
                 </li>
@@ -200,7 +236,7 @@ export function ICPMatrix() {
             </ul>
           </div>
 
-          <div className="icp-matrix-cta-row">
+          <div className="icp-matrix-cta-row" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <Link
               href={current.ctaHref}
               className="button button-primary button-sm icp-matrix-primary-cta"
@@ -211,7 +247,7 @@ export function ICPMatrix() {
 
             <Link
               href={`/solutions/${current.offeringSlug}`}
-              className="icp-matrix-secondary-link"
+              className="button button-secondary button-sm"
             >
               <span>Explore Offering Blueprint</span>
               <ChevronRight size={14} />

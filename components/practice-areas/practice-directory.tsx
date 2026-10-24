@@ -105,8 +105,8 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
 
       {/* Results Count & Active Status */}
       <div className="pa-results-meta">
-        <span className="text-xs text-slate-300">
-          Showing <strong className="text-white">{filteredPractices.length}</strong> of{' '}
+        <span className="text-xs text-slate-600">
+          Showing <strong className="text-slate-900">{filteredPractices.length}</strong> of{' '}
           {practices.length} practices
           {query && ` matching "${query}"`}
         </span>
@@ -130,10 +130,10 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
                       {practice.categoryLabel}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-white mt-2 group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 mt-2 group-hover:text-blue-600 transition-colors">
                     <Link href={`/practice-areas/${practice.slug}`}>{practice.title}</Link>
                   </h3>
-                  <p className="text-slate-300 text-xs mt-2 line-clamp-2 leading-relaxed">
+                  <p className="text-slate-600 text-xs mt-2 line-clamp-2 leading-relaxed">
                     {practice.tagline}
                   </p>
                 </div>
@@ -144,7 +144,7 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
                   </span>
                   <ul className="space-y-1.5 mb-4">
                     {practice.deliverables.slice(0, 2).map((del, i) => (
-                      <li key={i} className="flex items-start gap-1.5 text-xs text-slate-300">
+                      <li key={i} className="flex items-start gap-1.5 text-xs text-slate-600">
                         <CheckCircle2 size={12} className="text-blue-500 shrink-0 mt-0.5" />
                         <span className="line-clamp-1">{del}</span>
                       </li>
@@ -176,7 +176,7 @@ export function PracticeAreasDirectory({ practices }: PracticeAreasDirectoryProp
         </div>
       ) : (
         <div className="pa-empty-state">
-          <p className="text-slate-300 text-base font-medium">
+          <p className="text-slate-600 text-base font-medium">
             No practices found matching your search.
           </p>
           <p className="text-slate-500 text-xs mt-1">

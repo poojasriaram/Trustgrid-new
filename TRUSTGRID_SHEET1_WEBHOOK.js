@@ -110,6 +110,12 @@ var SCHEMA_95_HEADERS = [
 ];
 
 var TAB_CONFIGS = {
+  // Dedicated Master Tab for all Consulting Sessions
+  "Consulting_Sessions": [
+    "Submission ID", "Name", "Email", "Company", "Role / Designation", "Phone",
+    "Service / Focus", "Requirement / Message", "Source", "Page URL",
+    "Status", "Timestamp"
+  ],
   // Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
   "Live_Traffic_Events": SCHEMA_95_HEADERS,
 
@@ -300,6 +306,10 @@ var TAB_CONFIGS = {
 
 // Aliases mapping incoming form sheetNames to canonical tab names
 var SHEET_NAME_ALIASES = {
+  "consultingsessions": "Consulting_Sessions",
+  "consulting_sessions": "Consulting_Sessions",
+  "consultingsession": "Consulting_Sessions",
+  "consulting": "Consulting_Sessions",
   // TrustGrid Intelligence Dimensions
   "sessions_intelligence": "Sessions_Intelligence",
   "sessionsintelligence": "Sessions_Intelligence",
@@ -506,6 +516,43 @@ function findSheetFlexible(spreadsheet, requestedName) {
 }
 
 // =========================================================================================
+
+/**
+ * Dispatches branded customer confirmation email via GmailApp / MailApp.
+ * Handles action="send_lead_response_email" invoked by Next.js API.
+ */
+function handleCustomerResponseEmailDispatch(data) {
+  try {
+    var toEmail = data.to || data.email || data.userEmail || data.recipientEmail;
+    if (!toEmail || toEmail.indexOf("@") === -1) {
+      return ContentService.createTextOutput("Error: Missing or invalid recipient email").setMimeType(ContentService.MimeType.TEXT);
+    }
+    var subject = data.subject || "Thank You for Contacting TRUSTGRID.AI — Consulting Session Confirmation";
+    var userName = data.name || data.fullName || data.userName || "Valued Enterprise Leader";
+    var htmlBody = data.htmlBody;
+    if (!htmlBody) {
+      htmlBody = buildUserConfirmationHtml(userName, "Consulting Sessions", "Thank you for scheduling a technical session with TRUSTGRID.AI.", data);
+    }
+    var mailRes = sendEmailOnce({
+      to: toEmail,
+      subject: subject,
+      htmlBody: htmlBody,
+      name: EMAIL_CONFIG.name,
+      replyTo: EMAIL_CONFIG.replyTo
+    });
+    if (mailRes.ok) {
+      console.log("✅ [Response Mail Action] Dispatched customer response to: " + toEmail + " via " + mailRes.via);
+      return ContentService.createTextOutput("Response Email Sent Successfully via " + mailRes.via).setMimeType(ContentService.MimeType.TEXT);
+    } else {
+      console.error("❌ [Response Mail Action] Failed to dispatch response email: " + mailRes.error);
+      return ContentService.createTextOutput("Error: " + mailRes.error).setMimeType(ContentService.MimeType.TEXT);
+    }
+  } catch (err) {
+    console.error("handleCustomerResponseEmailDispatch exception:", err.toString());
+    return ContentService.createTextOutput("Error: " + err.toString()).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
+
 // 3. MAIN WEBHOOK ENDPOINT (doPost)
 // =========================================================================================
 
@@ -539,6 +586,11 @@ function doPost(e) {
     // TrustGrid High-Speed Intelligence Batch Synchronization Handler
     if (data && (data.action === "sync_intelligence" || data.sync === true)) {
       return handleIntelligenceSync(data);
+    }
+
+    // Direct Customer Response Email Dispatch Action
+    if (data && data.action === "send_lead_response_email") {
+      return handleCustomerResponseEmailDispatch(data);
     }
 
     // Strict Staging / Sandbox Isolation Guard (Local development only; live Vercel deployments are FULL PRODUCTION)
@@ -650,7 +702,22 @@ function doPost(e) {
     var rowSaved = false;
 
     try {
-      var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+      var ss = null;
+      try {
+        ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+      } catch (openErr) {
+        console.warn("SpreadsheetApp.openById failed, falling back to getActiveSpreadsheet:", openErr.toString());
+      }
+      if (!ss) {
+        try {
+          ss = SpreadsheetApp.getActiveSpreadsheet();
+        } catch (activeErr) {
+          console.warn("SpreadsheetApp.getActiveSpreadsheet failed:", activeErr.toString());
+        }
+      }
+      if (!ss) {
+        throw new Error("Unable to access Google Spreadsheet: ID=" + CONFIG.MAIN_SPREADSHEET_ID);
+      }
       var targetSheet = findSheetFlexible(ss, canonicalName) || findSheetFlexible(ss, rawSheetName);
 
       // Auto-create tab if not present
@@ -707,6 +774,55 @@ function doPost(e) {
           }
         } catch (mErr) {
           console.warn("Could not log to master Form Submissions tab:", mErr.toString());
+        }
+      }
+
+      // AUTO-LOG TO DEDICATED "Consulting Sessions" TAB
+      var leadMetaObj = (typeof leadMeta !== "undefined" && leadMeta) ? leadMeta : getLeadCategoryMeta(canonicalName, data);
+      var isConsultingCategory = (
+        (leadMetaObj && leadMetaObj.categoryName === "Consulting Sessions") ||
+        canonicalName === "Contact_Leads" ||
+        canonicalName === "Talk_To_Architect" ||
+        canonicalName === "AI_Diagnostic_Leads" ||
+        canonicalName === "AI_Readiness_Leads" ||
+        canonicalName === "Workshop_Requests" ||
+        canonicalName === "RFP_Proposals" ||
+        canonicalName === "Form_Consultation_Bookings" ||
+        canonicalName === "Form_Expert_Consulting" ||
+        canonicalName === "Consulting_Sessions"
+      );
+
+      if (isConsultingCategory && canonicalName !== "Consulting_Sessions") {
+        try {
+          var consultSheet = findSheetFlexible(ss, "Consulting Sessions") || findSheetFlexible(ss, "Consulting_Sessions");
+          if (!consultSheet) {
+            consultSheet = ss.insertSheet("Consulting Sessions");
+            var consultHeaders = [
+              "Submission ID", "Name", "Email", "Company", "Role / Designation", "Phone",
+              "Service / Focus", "Requirement / Message", "Source", "Page URL",
+              "Status", "Timestamp"
+            ];
+            consultSheet.getRange(1, 1, 1, consultHeaders.length)
+                        .setValues([consultHeaders])
+                        .setFontWeight("bold")
+                        .setBackground("#0f172a")
+                        .setFontColor("#ffffff");
+            consultSheet.setFrozenRows(1);
+          }
+          if (consultSheet.getLastRow() > 0) {
+            var cHeaders = consultSheet.getRange(1, 1, 1, Math.max(consultSheet.getLastColumn(), 1)).getValues()[0];
+            var cRow = cHeaders.map(function(h) {
+              if (h === "Service / Focus") return data.areaOfInterest || data.serviceInterest || data.service || data.requirement || "Consulting Session";
+              if (h === "Role / Designation") return data.designation || data.role || data.jobTitle || "";
+              if (h === "Requirement / Message") return data.message || data.requirement || data.projectScope || "";
+              if (h === "Page URL") return data.pageUrl || data.page_url || data.source_url || "";
+              return resolveField(h, data);
+            });
+            consultSheet.appendRow(cRow);
+            console.log("✅ Successfully logged lead to dedicated 'Consulting Sessions' tab!");
+          }
+        } catch (consultErr) {
+          console.warn("Could not log to Consulting Sessions tab:", consultErr.toString());
         }
       }
 
@@ -1614,109 +1730,129 @@ function formatWhatsAppNumber(num) {
  */
 function buildUserConfirmationHtml(name, categoryName, messageStr, data) {
   data = data || {};
+  var leadName = name || "Valued Enterprise Leader";
   var bookingDate = data.bookingDate || data.preferredTime || data.date || "";
   var startTime = data.startTime || "";
   var endTime = data.endTime || "";
   var timezone = data.timezone || "America/New_York";
   var meetLink = data.meetLink || "";
-  var gcalUrl = data.googleCalendarUrl || "https://calendar.app.google/voXXRkbgVuuft3fz6";
-  var focusArea = data.areaOfInterest || data.requirement || data.service || data.selectedSolutions || "Executive AI Architecture & Strategy Briefing";
+  var gcalUrl = data.googleCalendarUrl || "https://calendar.app.google/ZZF7cW8GVX8r6Bwf6";
+  var focusArea = data.areaOfInterest || data.requirement || data.service || data.selectedSolutions || "AI Governance & Architecture Consulting Session";
   var company = data.company || data.organization || "";
   var bookingId = data.bookingId || data.leadId || data.submissionId || "";
   var phone = data.phone || data.mobile || "";
 
   var isScheduledMeeting = !!(bookingDate || startTime || meetLink || bookingId.indexOf("TG-BK") !== -1);
+  var currentYear = new Date().getFullYear();
 
   var meetingCardHtml = "";
   if (isScheduledMeeting) {
     var timeSlotStr = (startTime && endTime) ? (startTime + " – " + endTime + " (" + timezone + ")") : (startTime || timezone);
     meetingCardHtml = [
-      '      <!-- SCHEDULED MEETING DETAILS CARD -->',
-      '      <div style="background: #1e293b; border: 1.5px solid #6366f1; border-radius: 12px; padding: 22px; margin: 25px 0; box-shadow: 0 4px 16px rgba(99,102,241,0.2);">',
-      '        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">',
-      '          <span style="background: #312e81; color: #a5b4fc; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase;">CONFIRMED CONSULTATION</span>',
-      (bookingId ? '          <span style="color: #94a3b8; font-size: 12px; font-family: monospace;">Ref: ' + escapeHtml(bookingId) + '</span>' : ''),
-      '        </div>',
-      '        <table style="width: 100%; font-size: 13.5px; color: #e2e8f0; border-collapse: collapse;">',
-      (bookingDate ? '          <tr><td style="padding: 6px 0; color: #94a3b8; width: 35%;"><strong>Date:</strong></td><td style="padding: 6px 0; color: #ffffff; font-weight: 700;">' + escapeHtml(bookingDate) + '</td></tr>' : ''),
-      (timeSlotStr ? '          <tr><td style="padding: 6px 0; color: #94a3b8;"><strong>Time:</strong></td><td style="padding: 6px 0; color: #38bdf8; font-weight: 700;">' + escapeHtml(timeSlotStr) + '</td></tr>' : ''),
-      '          <tr><td style="padding: 6px 0; color: #94a3b8;"><strong>Focus / Agenda:</strong></td><td style="padding: 6px 0; color: #f8fafc;">' + escapeHtml(String(focusArea)) + '</td></tr>',
-      (company ? '          <tr><td style="padding: 6px 0; color: #94a3b8;"><strong>Organization:</strong></td><td style="padding: 6px 0; color: #f8fafc;">' + escapeHtml(company) + '</td></tr>' : ''),
-      (phone ? '          <tr><td style="padding: 6px 0; color: #94a3b8;"><strong>Contact Phone:</strong></td><td style="padding: 6px 0; color: #f8fafc;">' + escapeHtml(phone) + '</td></tr>' : ''),
-      '          <tr><td style="padding: 6px 0; color: #94a3b8;"><strong>Session Host:</strong></td><td style="padding: 6px 0; color: #a5b4fc;">Principal AI Architecture Team</td></tr>',
-      '        </table>',
-      '        ',
-      '        <!-- MEETING ACTION BUTTONS -->',
-      '        <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #334155; text-align: center;">',
-      (meetLink ? '          <a href="' + escapeHtml(meetLink) + '" target="_blank" style="display: inline-block; background: #22c55e; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; margin: 4px; box-shadow: 0 2px 8px rgba(34,197,94,0.3);">🎥 Join Google Meet</a>' : ''),
-      '          <a href="' + escapeHtml(gcalUrl) + '" target="_blank" style="display: inline-block; background: #6366f1; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; margin: 4px; box-shadow: 0 2px 8px rgba(99,102,241,0.3);">📅 Add to Calendar</a>',
-      '        </div>',
-      '      </div>'
-    ].join('\n');
-  } else {
-    meetingCardHtml = [
-      '      <!-- SELF-SERVE CALENDAR SCHEDULER CTA -->',
-      '      <div style="background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 20px; margin: 25px 0; text-align: center;">',
-      '        <h3 style="color: #f8fafc; font-size: 15px; margin: 0 0 8px 0; font-weight: 700;">Lock Your 45-Minute Calendar Slot</h3>',
-      '        <p style="font-size: 13px; color: #94a3b8; margin: 0 0 16px 0; line-height: 1.5;">Pick your preferred date and time directly on our live Google Calendar with principal AI architects.</p>',
-      '        <a href="https://calendar.app.google/voXXRkbgVuuft3fz6" target="_blank" style="display: inline-block; background: #6366f1; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 13px; box-shadow: 0 4px 12px rgba(99,102,241,0.3);">📅 Book on Google Calendar</a>',
-      '      </div>'
+      '      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px; background-color: #f8fafc; border: 1.5px solid #6366f1; border-radius: 10px; padding: 20px;">',
+      '        <tr><td>',
+      '          <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #4338ca; margin-bottom: 10px;">CONFIRMED CONSULTATION' + (bookingId ? ' &bull; Ref: ' + escapeHtml(bookingId) : '') + '</div>',
+      '          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 13.5px; color: #1e293b;">',
+      (bookingDate ? '            <tr><td style="padding: 5px 0; color: #64748b; width: 35%;"><strong>Date:</strong></td><td style="padding: 5px 0; font-weight: 700;">' + escapeHtml(bookingDate) + '</td></tr>' : ''),
+      (timeSlotStr ? '            <tr><td style="padding: 5px 0; color: #64748b;"><strong>Time:</strong></td><td style="padding: 5px 0; color: #0284c7; font-weight: 700;">' + escapeHtml(timeSlotStr) + '</td></tr>' : ''),
+      '            <tr><td style="padding: 5px 0; color: #64748b;"><strong>Focus:</strong></td><td style="padding: 5px 0;">' + escapeHtml(String(focusArea)) + '</td></tr>',
+      (company ? '            <tr><td style="padding: 5px 0; color: #64748b;"><strong>Company:</strong></td><td style="padding: 5px 0;">' + escapeHtml(company) + '</td></tr>' : ''),
+      '            <tr><td style="padding: 5px 0; color: #64748b;"><strong>Session Host:</strong></td><td style="padding: 5px 0; color: #4338ca; font-weight: 600;">Principal AI Architecture Team</td></tr>',
+      '          </table>',
+      '          <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #e2e8f0; text-align: center;">',
+      (meetLink ? '            <a href="' + escapeHtml(meetLink) + '" target="_blank" style="display: inline-block; background: #16a34a; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; font-size: 13px; margin: 4px;">🎥 Join Google Meet</a>' : ''),
+      '            <a href="' + escapeHtml(gcalUrl) + '" target="_blank" style="display: inline-block; background: #0A66FF; color: #ffffff; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; font-size: 13px; margin: 4px;">📅 Add to Calendar</a>',
+      '          </div>',
+      '        </td></tr>',
+      '      </table>'
     ].join('\n');
   }
 
   return [
-    '<!DOCTYPE html>',
-    '<html>',
+    '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+    '<html xmlns="http://www.w3.org/1999/xhtml" lang="en">',
     '<head>',
-    '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">',
-    '  <meta charset="utf-8">',
-    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />',
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />',
+    '  <title>Thank You for Contacting TRUSTGRID.AI</title>',
     '</head>',
-    '<body style="font-family: \'Segoe UI\', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f19; margin: 0; padding: 25px 15px;">',
-    '  <div style="max-width: 600px; margin: 0 auto; background: #111827; border-radius: 14px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.45); border: 1px solid #1f2937;">',
-    '    ',
-    '    <!-- HEADER -->',
-    '    <div style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); padding: 32px 25px; text-align: center; border-bottom: 1px solid #312e81;">',
-    '      <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 0.05em;">TRUSTGRID.AI</h1>',
-    '      <p style="color: #a5b4fc; margin: 8px 0 0 0; font-size: 13px; font-weight: 500;">Enterprise AI Governance & Agentic Architecture Practice</p>',
-    '    </div>',
-    '',
-    '    <!-- CONTENT -->',
-    '    <div style="padding: 30px 25px; color: #e5e7eb; line-height: 1.6;">',
-    '      <h2 style="font-size: 19px; color: #ffffff; font-weight: 700; margin: 0 0 12px 0;">Hello ' + escapeHtml(name) + ',</h2>',
-    '      <p style="font-size: 14.5px; color: #cbd5e1; margin: 0 0 16px 0;">' + escapeHtml(messageStr) + '</p>',
-    '      ',
+    '<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">',
+    '  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc;">',
+    '    <tr><td align="center" style="padding: 24px 12px;">',
+    '      <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 650px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05); text-align: left;">',
+    '        <tr><td align="center" style="margin: 0; padding: 0; background-color: #0b1329;">',
+    '          <a href="https://trustgrid.ai" target="_blank" style="display: block; text-decoration: none; border: none;">',
+    '            <img src="https://trustgrid.ai/images/H.png" alt="TRUSTGRID.AI — Engineering Intelligence at Scale" width="650" style="width: 100%; max-width: 650px; height: auto; display: block; border: 0;" />',
+    '          </a>',
+    '        </td></tr>',
+    '        <tr><td style="padding: 36px 36px 28px 36px; background-color: #ffffff;">',
+    '          <h1 style="margin: 0 0 18px 0; font-size: 21px; font-weight: 700; color: #0f172a; line-height: 1.35;">',
+    '            Hello ' + escapeHtml(leadName) + ',',
+    '          </h1>',
+    '          <p style="margin: 0 0 16px 0; font-size: 15px; color: #334155; line-height: 1.65;">',
+    '            Thank you for contacting <strong>TRUSTGRID.AI</strong>.',
+    '          </p>',
+    '          <p style="margin: 0 0 16px 0; font-size: 15px; color: #334155; line-height: 1.65;">',
+    '            We have successfully received your inquiry for a <strong>Consulting Session</strong> and appreciate your interest in our <strong>AI Governance, Multi-Agent Architecture, and Digital Transformation solutions</strong>.',
+    '          </p>',
+    '          <p style="margin: 0 0 28px 0; font-size: 15px; color: #334155; line-height: 1.65;">',
+    '            ' + escapeHtml(messageStr || 'Our Principal AI Architecture Team is currently reviewing your requirements and will connect with your team promptly.') + '',
+    '          </p>',
     meetingCardHtml,
-    '      ',
-    '      <!-- PILLARS -->',
-    '      <div style="background: #0f172a; padding: 18px 20px; border-radius: 10px; border: 1px solid #1e293b; margin: 20px 0;">',
-    '        <h4 style="color: #94a3b8; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin: 0 0 10px 0; font-weight: 700;">TRUSTGRID.AI Architecture Scope:</h4>',
-    '        <ul style="padding-left: 18px; margin: 0; font-size: 12.5px; color: #94a3b8; line-height: 1.65;">',
-    '          <li><strong>Autonomous Multi-Agent Governance:</strong> Verification, runtime auditability, circuit breakers.</li>',
-    '          <li><strong>Adversarial Red Teaming & LLM Security:</strong> Threat modeling, prompt hardening, data boundary defense.</li>',
-    '          <li><strong>Lossless AI Infrastructure:</strong> GPU cluster optimization, RoCEv2/IB fabric, high-throughput RAG.</li>',
-    '        </ul>',
-    '      </div>',
-    '',
-    '      <div style="text-align: center; margin-top: 24px;">',
-    '        <a href="' + (EMAIL_CONFIG.website || 'https://www.trustgrid.ai') + '" style="display: inline-block; padding: 11px 24px; background: #334155; color: #ffffff; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 13px;">Explore TrustGrid Architecture Suite &rarr;</a>',
-    '      </div>',
-    '    </div>',
-    '',
-    '    <!-- FOOTER -->',
-    '    <div style="background: #090d16; padding: 18px 20px; text-align: center; font-size: 11.5px; color: #64748b; border-top: 1px solid #1e293b; line-height: 1.5;">',
-    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI &bull; Confidential Executive Communication<br>',
-    '      Direct Contact: <strong>connect@trustgrid.ai</strong> | <strong>poojasri.aram@gmail.com</strong>',
-    '    </div>',
-    '  </div>',
+    '          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">',
+    '            <tr><td style="padding: 16px 20px 10px 20px; border-bottom: 1px solid #edf2f7;">',
+    '              <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF;">NEXT STEPS</span>',
+    '            </td></tr>',
+    '            <tr><td style="padding: 12px 20px 16px 20px;">',
+    '              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">',
+    '                <tr><td style="padding: 7px 0; font-size: 14px; color: #1e293b;"><span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span><strong>Requirement Review</strong> — Technical constraint & topology evaluation</td></tr>',
+    '                <tr><td style="padding: 7px 0; font-size: 14px; color: #1e293b;"><span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span><strong>Consultation Call</strong> — 45-minute technical session with lead architect</td></tr>',
+    '                <tr><td style="padding: 7px 0; font-size: 14px; color: #1e293b;"><span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span><strong>Solution Recommendation</strong> — Reference architecture & unit economics</td></tr>',
+    '                <tr><td style="padding: 7px 0; font-size: 14px; color: #1e293b;"><span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span><strong>Implementation Discussion</strong> — Production Forward Deployment sprint scope</td></tr>',
+    '              </table>',
+    '            </td></tr>',
+    '          </table>',
+    '          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%); border: 1px solid #bfdbfe; border-radius: 10px; padding: 22px 24px; text-align: left;">',
+    '            <tr><td>',
+    '              <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 6px;">BOOK A CONSULTATION</div>',
+    '              <p style="margin: 0 0 16px 0; font-size: 15px; color: #1e293b; line-height: 1.5;">Pick your preferred date and time directly on our live calendar with principal architects:</p>',
+    '              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 14px;">',
+    '                <tr><td align="center" bgcolor="#0A66FF" style="border-radius: 8px;">',
+    '                  <a href="' + escapeHtml(gcalUrl) + '" target="_blank" style="display: inline-block; padding: 14px 28px; font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 8px; background-color: #0A66FF;">BOOK YOUR CONSULTATION &rarr;</a>',
+    '                </td></tr>',
+    '              </table>',
+    '              <div style="font-size: 12px; color: #64748b;">Direct Link: <a href="' + escapeHtml(gcalUrl) + '" target="_blank" style="color: #0A66FF; text-decoration: underline;">' + escapeHtml(gcalUrl) + '</a></div>',
+    '            </td></tr>',
+    '          </table>',
+    '          <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px 20px;">',
+    '            <tr><td>',
+    '              <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #166534; margin-bottom: 4px;">WHATSAPP SUPPORT</div>',
+    '              <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: 600; color: #14532d;">Need immediate technical assistance?</p>',
+    '              <div style="font-size: 13.5px; color: #1e293b;">',
+    '                &bull; <strong>US / Global:</strong> <a href="https://wa.me/16507724145" target="_blank" style="color: #16a34a; font-weight: 700; text-decoration: none;">+1 650 772 4145</a><br>',
+    '                &bull; <strong>Bangalore / APAC:</strong> <a href="https://wa.me/919513088612" target="_blank" style="color: #16a34a; font-weight: 700; text-decoration: none;">+91 9513088612</a>',
+    '              </div>',
+    '            </td></tr>',
+    '          </table>',
+    '        </td></tr>',
+    '        <tr><td align="center" style="margin: 0; padding: 0; background-color: #ffffff; border-top: 1px solid #edf2f7;">',
+    '          <a href="https://trustgrid.ai" target="_blank" style="display: block; text-decoration: none; border: none;">',
+    '            <img src="https://trustgrid.ai/images/F.png" alt="TRUSTGRID.AI — Full-Spectrum AI Engineering" width="650" style="width: 100%; max-width: 650px; height: auto; display: block; border: 0;" />',
+    '          </a>',
+    '        </td></tr>',
+    '        <tr><td style="padding: 24px 32px 28px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">',
+    '          <p style="margin: 0 0 8px 0; font-size: 12px; color: #64748b;">Copyright &copy; ' + currentYear + ' <strong>TRUSTGRID.AI</strong>. All Rights Reserved.</p>',
+    '          <p style="margin: 0; font-size: 11.5px; color: #94a3b8;">Direct Inquiries: <a href="mailto:connect@trustgrid.ai" style="color: #0A66FF; text-decoration: none;">connect@trustgrid.ai</a> | <a href="mailto:poojasri.aram@gmail.com" style="color: #0A66FF; text-decoration: none;">poojasri.aram@gmail.com</a></p>',
+    '        </td></tr>',
+    '      </table>',
+    '    </td></tr>',
+    '  </table>',
     '</body>',
     '</html>'
   ].join('\n');
 }
 
-/**
- * Builds the "next step" email asking a career applicant to record and submit a profile video.
- */
+
 function buildCareerVideoRequestHtml(name) {
   return [
     '<!DOCTYPE html>',

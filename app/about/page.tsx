@@ -35,7 +35,7 @@ import {
   aboutHero,
   missionVision,
   whatWeDoVerticals,
-  metricsFootprint,
+  valueEngineeringRoadmap,
   societalValueAddition,
   culturePrinciples,
   teamMembers,
@@ -148,12 +148,12 @@ export default function AboutPage() {
         <ICPSlider />
       </section>
 
-      {/* METRICS FOOTPRINT */}
+      {/* METRICS FOOTPRINT / AI VALUE ENGINEERING ROADMAP */}
       <section className="section metrics-footprint-section" id="metrics">
         <div className="section-intro">
           <div className="intro-left">
-            <span className="section-badge">GLOBAL IMPACT</span>
-            <p className="section-label">Our Metrics Footprint</p>
+            <span className="section-badge">VALUE ENGINEERING ROADMAP</span>
+            <p className="section-label">Milestone-Based Value Realization</p>
           </div>
           <span className="section-index">ENTERPRISE SCALE</span>
         </div>
@@ -164,11 +164,21 @@ export default function AboutPage() {
         </div>
 
         <div className="metrics-cards-grid">
-          {metricsFootprint.map((m, idx) => (
-            <div key={idx} className="metric-stat-card animated-card reveal-up">
-              <div className="stat-val">{m.value}</div>
-              <div className="stat-lbl">{m.label}</div>
-              {m.sub && <div className="stat-sub">{m.sub}</div>}
+          {valueEngineeringRoadmap.map((card, idx) => (
+            <div key={idx} className="metric-stat-card ve-roadmap-card animated-card reveal-up">
+              <div className="ve-card-header">
+                <span className="ve-step-badge">Stage {card.step}</span>
+                <span className="ve-timeline-badge">{card.timeline}</span>
+              </div>
+              <div className="ve-card-body">
+                <h4 className="ve-card-title">{card.title}</h4>
+                <div className="ve-card-question">“{card.question}”</div>
+                <p className="ve-card-desc">{card.description}</p>
+              </div>
+              <div className="ve-card-footer">
+                <span className="ve-status-dot" aria-hidden="true" />
+                <span className="ve-status-text">Milestone {card.step}</span>
+              </div>
             </div>
           ))}
         </div>

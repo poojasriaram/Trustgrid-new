@@ -68,6 +68,9 @@ export interface RawLeadInput {
   service?: string
   website?: string
   chatIntent?: string
+  source_url?: string
+  sourceUrl?: string
+  host?: string
   pageUrl?: string
   page_url?: string
   referrer?: string
@@ -321,6 +324,7 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
   const message = (input.message || input.requirement || '').trim()
 
   // Evaluate Lead Classification: PRODUCTION vs TEST
+  const sourceUrl = (input as any).source_url || (input as any).sourceUrl || input.page_url || input.pageUrl || ''
   const testAudit = detectTestLead({
     name,
     email,
@@ -328,7 +332,10 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
     message: `${requirement} ${message}`,
     phone,
     formType: input.form_type || input.formType,
-    submissionId: input.submissionId
+    submissionId: input.submissionId,
+    sourceUrl,
+    pageUrl: input.page_url || input.pageUrl,
+    referrer: input.referrer
   })
 
   const isTestLead = testAudit.isTestLead || input.form_type === 'TEST' || (input as any).isTest === true
@@ -494,8 +501,11 @@ export interface TestLeadResult {
 }
 
 /**
- * Detects whether a lead is a test / QA lead based on standard indicators
- * Indicators: TG-TEST, test, demo, sample, qa, dummy, automation, internal, sandbox, uat, verification
+ * Detects whether a lead is a test / QA / non-production lead based on:
+ * 1. Non-production origin or URL: vercel.app, localhost, 127.0.0.1, dev, staging, preview
+ * 2. Non-trustgrid.ai origin domains
+ * 3. Standard test indicators: tg-test, test, demo, sample, qa, dummy, automation, internal, sandbox, uat, verification
+ * 4. Test/disposable email domains
  */
 export function detectTestLead(lead: {
   name?: string
@@ -505,7 +515,53 @@ export function detectTestLead(lead: {
   phone?: string
   formType?: string
   submissionId?: string
+  sourceUrl?: string
+  source_url?: string
+  pageUrl?: string
+  page_url?: string
+  referrer?: string
+  host?: string
 }): TestLeadResult {
+  const matchedIndicators: string[] = []
+
+  // 1. Non-Production Source URL & Host Filter
+  const nonProdUrlPatterns = [
+    'vercel.app',
+    'localhost',
+    '127.0.0.1',
+    'dev',
+    'staging',
+    'preview'
+  ]
+
+  const urlsToCheck = [
+    lead.sourceUrl,
+    lead.source_url,
+    lead.pageUrl,
+    lead.page_url,
+    lead.referrer,
+    lead.host
+  ].filter(Boolean) as string[]
+
+  for (const rawUrl of urlsToCheck) {
+    const urlLower = rawUrl.toLowerCase().trim()
+    for (const pattern of nonProdUrlPatterns) {
+      if (urlLower.includes(pattern)) {
+        matchedIndicators.push(`Environment/URL: contains non-production indicator '${pattern}' (${rawUrl})`)
+      }
+    }
+  }
+
+  // 2. Production Domain Verification (Strict Rule: Production leads must originate from trustgrid.ai)
+  const primarySource = (lead.sourceUrl || lead.source_url || lead.pageUrl || lead.page_url || '').toLowerCase().trim()
+  if (primarySource && primarySource.startsWith('http')) {
+    const isTrustGridDomain = primarySource.includes('trustgrid.ai') || primarySource.includes('www.trustgrid.ai')
+    if (!isTrustGridDomain) {
+      matchedIndicators.push(`Origin: Source does not originate from trustgrid.ai (${primarySource})`)
+    }
+  }
+
+  // 3. Keyword Indicators
   const indicators = [
     'tg-test',
     'test',
@@ -519,7 +575,6 @@ export function detectTestLead(lead: {
     'uat',
     'verification'
   ]
-  const matchedIndicators: string[] = []
 
   const check = (text?: string, fieldName?: string) => {
     if (!text) return
@@ -539,6 +594,7 @@ export function detectTestLead(lead: {
   check(lead.submissionId, 'Submission ID')
   check(lead.formType, 'Form Type')
 
+  // 4. Test Email Domains
   if (lead.email) {
     const emailLower = lead.email.toLowerCase()
     if (

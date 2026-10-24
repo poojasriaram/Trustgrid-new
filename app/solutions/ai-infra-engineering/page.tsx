@@ -478,45 +478,44 @@ export default function AIInfraEngineeringPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-blue-100 selection:text-blue-900 font-sans">
       <SiteHeader />
 
-      {/* DARK HERO SECTION */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-slate-950 text-white border-b border-slate-800">
+      {/* ENTERPRISE LIGHT HERO SECTION */}
+      <section className="relative pt-32 pb-20 overflow-hidden bg-white text-slate-900 border-b border-slate-200">
         <HeroCanvas />
 
         {/* Radial Ambient Glow Overlays */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(29,78,216,0.35),rgba(255,255,255,0))] pointer-events-none" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-gradient-to-tr from-blue-600/20 via-cyan-500/15 to-indigo-600/20 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute -top-10 -right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/40 via-transparent to-white pointer-events-none" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[380px] bg-gradient-to-tr from-blue-600/10 via-cyan-500/10 to-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
           {/* Breadcrumbs */}
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-300 mb-6">
-            <Link href="/" className="hover:text-cyan-400 transition-colors">Home</Link>
-            <ChevronRight size={12} className="text-slate-500" />
-            <Link href="/#offerings" className="hover:text-cyan-400 transition-colors">Solutions</Link>
-            <ChevronRight size={12} className="text-slate-500" />
-            <span className="text-cyan-400 font-semibold">AI Infrastructure & Data Center Engineering</span>
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-600 mb-6">
+            <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
+            <ChevronRight size={12} className="text-slate-400" />
+            <Link href="/#offerings" className="hover:text-blue-600 transition-colors">Solutions</Link>
+            <ChevronRight size={12} className="text-slate-400" />
+            <span className="text-blue-600 font-semibold">AI Infrastructure & Data Center Engineering</span>
           </div>
 
           <div className="max-w-4xl">
             {/* Enterprise Lifecycle Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/40 text-cyan-300 text-xs font-semibold tracking-wide uppercase mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold tracking-wide uppercase mb-6 backdrop-blur-md">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-600 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
               </span>
               <span>End-to-End Infrastructure Lifecycle</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-slate-300 font-medium">Land → Design → Build → Operate → Transfer</span>
+              <span className="text-slate-300">|</span>
+              <span className="text-slate-700 font-medium">Land → Design → Build → Operate → Transfer</span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12] mb-6">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12] mb-6">
               AI Infrastructure & <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">
                 Hyperscale Data Center Engineering
               </span>
             </h1>
 
-            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed font-normal mb-8 max-w-3xl">
+            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal mb-8 max-w-3xl">
               From land and power strategy to AI-ready design, construction, operations and asset monetisation — one integrated delivery spine for next-generation AI infrastructure, cable landing stations and satellite gateways.
             </p>
 
@@ -524,7 +523,7 @@ export default function AIInfraEngineeringPage() {
               <a
                 href="#contact-advisory"
                 onClick={() => trackCTA('Book an AI Diagnostic', 'hero', '#contact-advisory')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-semibold text-sm shadow-[0_0_25px_rgba(37,99,235,0.35)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm shadow-md transition-all"
               >
                 <Sparkles size={16} />
                 <span>Book an AI Diagnostic</span>
@@ -532,7 +531,7 @@ export default function AIInfraEngineeringPage() {
               <a
                 href="#core-offerings"
                 onClick={() => trackCTA('Explore AI Data Center Capabilities', 'hero_cta', 'core-offerings')}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 font-semibold text-sm border border-slate-700/80 hover:border-cyan-500/50 backdrop-blur-md shadow-xs hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm border border-slate-300 shadow-xs transition-all"
               >
                 <span>Explore AI Data Center Capabilities</span>
                 <ArrowRight size={16} />
@@ -1569,27 +1568,27 @@ export default function AIInfraEngineeringPage() {
           </div>
 
           {/* STAGE-GATED JOURNEY CARD */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-slate-950 text-white border border-indigo-900/50 shadow-xl relative overflow-hidden mb-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-indigo-900/60 mb-6">
+          <div className="p-6 sm:p-8 rounded-3xl bg-white text-slate-900 border border-slate-200 shadow-md relative overflow-hidden mb-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 mb-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-indigo-400 inline-block mb-1">
+                <span className="text-xs font-bold uppercase tracking-widest text-blue-600 inline-block mb-1">
                   Lifecycle Architecture
                 </span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                  <Satellite className="text-indigo-400" size={22} />
+                <h3 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
+                  <Satellite className="text-blue-600" size={22} />
                   Stage-Gated Lifecycle (00 → 09)
                 </h3>
               </div>
 
               {/* View mode toggle */}
-              <div className="inline-flex rounded-xl p-1 bg-slate-900 border border-slate-800 self-start sm:self-auto">
+              <div className="inline-flex rounded-xl p-1 bg-slate-100 border border-slate-200 self-start sm:self-auto">
                 <button
                   type="button"
                   onClick={() => setSlsViewMode('stepper')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     slsViewMode === 'stepper'
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   Interactive Stepper
@@ -1599,8 +1598,8 @@ export default function AIInfraEngineeringPage() {
                   onClick={() => setSlsViewMode('all')}
                   className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
                     slsViewMode === 'all'
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'text-slate-300 hover:text-white'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   View All 10 Gates
@@ -1609,7 +1608,7 @@ export default function AIInfraEngineeringPage() {
             </div>
 
             {/* STAGE TABS BAR */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-4 pt-1 scrollbar-none mb-6 border-b border-slate-800/80">
+            <div className="flex items-center gap-2 overflow-x-auto pb-4 pt-1 scrollbar-none mb-6 border-b border-slate-200">
               {slsStageGates.map((gate, idx) => {
                 const isActive = activeSLSStage === idx
                 return (
@@ -1622,15 +1621,15 @@ export default function AIInfraEngineeringPage() {
                     }}
                     className={`shrink-0 px-3.5 py-2 rounded-xl text-left transition-all border ${
                       isActive && slsViewMode === 'stepper'
-                        ? 'bg-indigo-600/30 border-indigo-400 text-white shadow-lg shadow-indigo-950'
-                        : 'bg-slate-900/80 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white'
+                        ? 'bg-blue-50 border-blue-400 text-blue-700 shadow-xs'
+                        : 'bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 hover:text-slate-900'
                     }`}
                   >
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
                         isActive && slsViewMode === 'stepper'
-                          ? 'bg-indigo-500 text-white'
-                          : 'bg-slate-800 text-slate-300'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-slate-200 text-slate-700'
                       }`}>
                         {gate.step}
                       </span>
@@ -1645,35 +1644,35 @@ export default function AIInfraEngineeringPage() {
             {slsViewMode === 'stepper' && (
               <div className="transition-all duration-300">
                 {/* Active Gate Header */}
-                <div className="p-6 rounded-2xl bg-indigo-950/40 border border-indigo-800/40 mb-6">
+                <div className="p-6 rounded-2xl bg-blue-50/60 border border-blue-200 mb-6">
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
                     <div className="flex items-center gap-3">
-                      <span className="text-lg sm:text-xl font-mono font-black text-indigo-400">
+                      <span className="text-lg sm:text-xl font-mono font-black text-blue-600">
                         {slsStageGates[activeSLSStage].step}
                       </span>
-                      <h4 className="text-lg sm:text-2xl font-bold text-white">
+                      <h4 className="text-lg sm:text-2xl font-bold text-slate-900">
                         {slsStageGates[activeSLSStage].title}
                       </h4>
                     </div>
-                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/40 uppercase tracking-widest">
+                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-blue-100 text-blue-700 border border-blue-300 uppercase tracking-widest">
                       {slsStageGates[activeSLSStage].badge}
                     </span>
                   </div>
-                  <p className="text-sm text-indigo-200/90 font-medium leading-relaxed">
+                  <p className="text-sm text-slate-600 font-medium leading-relaxed">
                     {slsStageGates[activeSLSStage].tagline}
                   </p>
                 </div>
 
                 {/* Key Activities */}
-                <div className="mb-6 p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
-                  <h5 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-3 flex items-center gap-2">
+                <div className="mb-6 p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                  <h5 className="text-xs font-bold uppercase tracking-wider text-blue-600 mb-3 flex items-center gap-2">
                     <Workflow size={15} />
                     Key Activities
                   </h5>
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
                     {slsStageGates[activeSLSStage].activities.map((activity, i) => (
-                      <li key={i} className="text-xs text-slate-100 flex items-start gap-2.5 leading-relaxed font-normal">
-                        <CheckCircle2 size={14} className="text-indigo-400 shrink-0 mt-0.5" />
+                      <li key={i} className="text-xs text-slate-700 flex items-start gap-2.5 leading-relaxed font-normal">
+                        <CheckCircle2 size={14} className="text-blue-600 shrink-0 mt-0.5" />
                         <span>{activity}</span>
                       </li>
                     ))}
@@ -1683,62 +1682,62 @@ export default function AIInfraEngineeringPage() {
                 {/* 4 Details Grid: Deliverables, Commercial Model, KPIs, Key Risks */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {/* Deliverables */}
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
-                      <FileText size={14} className="text-indigo-400" />
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      <FileText size={14} className="text-blue-600" />
                       <span>Deliverables</span>
                     </div>
-                    <p className="text-xs text-slate-100 leading-relaxed font-mono">
+                    <p className="text-xs text-slate-700 leading-relaxed font-mono">
                       {slsStageGates[activeSLSStage].deliverables}
                     </p>
                   </div>
 
                   {/* Commercial Model */}
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
-                      <DollarSign size={14} className="text-emerald-400" />
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      <DollarSign size={14} className="text-emerald-600" />
                       <span>Commercial Model</span>
                     </div>
-                    <p className="text-xs text-slate-100 leading-relaxed">
+                    <p className="text-xs text-slate-700 leading-relaxed">
                       {slsStageGates[activeSLSStage].commercialModel}
                     </p>
                   </div>
 
                   {/* KPIs */}
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
-                      <Target size={14} className="text-cyan-400" />
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      <Target size={14} className="text-cyan-600" />
                       <span>KPIs</span>
                     </div>
-                    <p className="text-xs text-slate-100 leading-relaxed">
+                    <p className="text-xs text-slate-700 leading-relaxed">
                       {slsStageGates[activeSLSStage].kpis}
                     </p>
                   </div>
 
                   {/* Key Risks */}
-                  <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-700/80">
-                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-200 mb-1.5">
-                      <AlertCircle size={14} className="text-rose-400" />
+                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      <AlertCircle size={14} className="text-rose-600" />
                       <span>Key Risks &amp; Mitigations</span>
                     </div>
-                    <p className="text-xs text-slate-100 leading-relaxed">
+                    <p className="text-xs text-slate-700 leading-relaxed">
                       {slsStageGates[activeSLSStage].keyRisks}
                     </p>
                   </div>
                 </div>
 
                 {/* Gate Stepper Navigation */}
-                <div className="flex items-center justify-between pt-4 border-t border-slate-800/80">
+                <div className="flex items-center justify-between pt-4 border-t border-slate-200">
                   <button
                     type="button"
                     onClick={() => setActiveSLSStage((prev) => Math.max(0, prev - 1))}
                     disabled={activeSLSStage === 0}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:text-slate-900 disabled:opacity-40 disabled:pointer-events-none transition-colors shadow-2xs"
                   >
                     ← Previous Gate
                   </button>
 
-                  <div className="text-xs text-slate-300 font-mono">
+                  <div className="text-xs text-slate-500 font-mono">
                     Gate {activeSLSStage + 1} of {slsStageGates.length}
                   </div>
 
@@ -1746,7 +1745,7 @@ export default function AIInfraEngineeringPage() {
                     type="button"
                     onClick={() => setActiveSLSStage((prev) => Math.min(slsStageGates.length - 1, prev + 1))}
                     disabled={activeSLSStage === slsStageGates.length - 1}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white disabled:opacity-40 disabled:pointer-events-none transition-colors"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-500 text-white disabled:opacity-40 disabled:pointer-events-none transition-colors"
                   >
                     Next Gate →
                   </button>
@@ -1758,54 +1757,54 @@ export default function AIInfraEngineeringPage() {
             {slsViewMode === 'all' && (
               <div className="space-y-6">
                 {slsStageGates.map((gate) => (
-                  <div key={gate.step} className="p-6 rounded-2xl bg-slate-900/90 border border-slate-800">
-                    <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-3 border-b border-slate-800">
+                  <div key={gate.step} className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs">
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-2 pb-3 border-b border-slate-100">
                       <div className="flex items-center gap-3">
-                        <span className="text-base sm:text-lg font-mono font-black text-indigo-400">
+                        <span className="text-base sm:text-lg font-mono font-black text-blue-600">
                           {gate.step}
                         </span>
-                        <h4 className="text-base sm:text-xl font-bold text-white">
+                        <h4 className="text-base sm:text-xl font-bold text-slate-900">
                           {gate.title}
                         </h4>
                       </div>
-                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 uppercase tracking-widest">
+                      <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-widest">
                         {gate.badge}
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-indigo-200/90 mb-4 font-medium">
+                    <p className="text-xs sm:text-sm text-slate-600 mb-4 font-medium">
                       {gate.tagline}
                     </p>
 
                     <div className="mb-4">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-cyan-400 block mb-2">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-blue-600 block mb-2">
                         Key Activities
                       </span>
                       <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {gate.activities.map((activity, i) => (
-                          <li key={i} className="text-xs text-slate-300 flex items-start gap-2">
-                            <span className="text-indigo-400 mt-0.5">•</span>
+                          <li key={i} className="text-xs text-slate-700 flex items-start gap-2">
+                            <span className="text-blue-600 mt-0.5">•</span>
                             <span>{activity}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-800 text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 pt-3 border-t border-slate-100 text-xs">
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Deliverables</span>
-                        <p className="text-slate-300 text-[11px] font-mono leading-tight">{gate.deliverables}</p>
+                        <span className="text-[10px] font-bold uppercase text-slate-500 block mb-1">Deliverables</span>
+                        <p className="text-slate-800 text-[11px] font-mono leading-tight">{gate.deliverables}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Commercial Model</span>
-                        <p className="text-slate-300 text-[11px] leading-tight">{gate.commercialModel}</p>
+                        <span className="text-[10px] font-bold uppercase text-slate-500 block mb-1">Commercial Model</span>
+                        <p className="text-slate-800 text-[11px] leading-tight">{gate.commercialModel}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">KPIs</span>
-                        <p className="text-slate-300 text-[11px] leading-tight">{gate.kpis}</p>
+                        <span className="text-[10px] font-bold uppercase text-slate-500 block mb-1">KPIs</span>
+                        <p className="text-slate-800 text-[11px] leading-tight">{gate.kpis}</p>
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase text-slate-300 block mb-1">Key Risks</span>
-                        <p className="text-slate-300 text-[11px] leading-tight">{gate.keyRisks}</p>
+                        <span className="text-[10px] font-bold uppercase text-slate-500 block mb-1">Key Risks</span>
+                        <p className="text-slate-800 text-[11px] leading-tight">{gate.keyRisks}</p>
                       </div>
                     </div>
                   </div>

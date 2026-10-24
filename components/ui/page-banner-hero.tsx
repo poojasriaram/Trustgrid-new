@@ -167,63 +167,63 @@ export function PageBannerHero({
         {metrics && (
           <div className="hero-aside-banner-card" aria-label="Page Domain Showcase">
             <div className="banner-card-frame">
-              {/* Featured Visual */}
-              <div className="banner-card-image-wrap relative overflow-hidden aspect-[16/10]">
+              {/* Dedicated Featured Visual Frame */}
+              <div className="banner-card-visual-header relative w-full h-[220px] sm:h-[240px] overflow-hidden">
                 <Image
                   src={image}
                   alt={title}
-                  width={680}
-                  height={425}
+                  fill
                   priority
-                  sizes="(max-width: 768px) 100vw, 680px"
-                  quality={80}
-                  className="banner-card-img object-cover w-full h-full"
+                  sizes="(max-width: 768px) 100vw, 560px"
+                  quality={90}
+                  className="banner-card-img object-cover object-center"
                 />
-                <div className="banner-card-glow-overlay" />
-                <div className="banner-card-scanline" />
-              </div>
+                <div className="banner-card-img-gradient" />
 
-              {/* Top Live Domain Status Chip */}
-              <div className="banner-card-top-chip">
-                <div className="banner-chip-pulse">
-                  <span className="live-pulse" />
-                  <span>VERIFIED ARCHITECTURE</span>
-                </div>
-                {badgeTag && <span className="banner-chip-domain">{badgeTag}</span>}
-              </div>
-
-              {/* Key Features Overlaid */}
-              {metrics.features && metrics.features.length > 0 && (
-                <div className="banner-card-capabilities-stack">
-                  {metrics.features.map((feat, i) => (
-                    <div key={i} className="banner-capability-pill">
-                      <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Bottom Metric Footer */}
-              <div className="banner-card-footer">
-                <div className="banner-footer-stat-group">
-                  <div className="banner-footer-stat-value">
-                    <StatIcon size={20} className="banner-stat-icon" />
-                    <span>{metrics.statValue}</span>
+                {/* Top Live Domain Status Chip (Floating on Image) */}
+                <div className="banner-card-top-chip-floating">
+                  <div className="banner-chip-pulse">
+                    <span className="live-pulse" />
+                    <span>VERIFIED ARCHITECTURE</span>
                   </div>
-                  <span className="banner-footer-stat-label">{metrics.statLabel}</span>
+                  {badgeTag && <span className="banner-chip-domain">{badgeTag}</span>}
                 </div>
+              </div>
 
-                {primaryCta && (
-                  <Link
-                    href={primaryCta.href}
-                    className="banner-footer-action-btn"
-                    aria-label={`Initiate ${title}`}
-                  >
-                    <span>Initiate</span>
-                    <ArrowRight size={14} />
-                  </Link>
+              {/* Lower Intelligence Panel: Key Features & Deliverables */}
+              <div className="banner-card-lower-panel">
+                {metrics.features && metrics.features.length > 0 && (
+                  <div className="banner-card-capabilities-stack">
+                    {metrics.features.map((feat, i) => (
+                      <div key={i} className="banner-capability-pill">
+                        <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                        <span>{feat}</span>
+                      </div>
+                    ))}
+                  </div>
                 )}
+
+                {/* Bottom Metric Footer */}
+                <div className="banner-card-footer">
+                  <div className="banner-footer-stat-group">
+                    <div className="banner-footer-stat-value">
+                      <StatIcon size={20} className="banner-stat-icon" />
+                      <span>{metrics.statValue}</span>
+                    </div>
+                    <span className="banner-footer-stat-label">{metrics.statLabel}</span>
+                  </div>
+
+                  {primaryCta && (
+                    <Link
+                      href={primaryCta.href}
+                      className="banner-footer-action-btn"
+                      aria-label={`Initiate ${title}`}
+                    >
+                      <span>Initiate</span>
+                      <ArrowRight size={14} />
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
 

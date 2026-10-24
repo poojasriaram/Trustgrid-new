@@ -203,28 +203,28 @@ export default function AINetworkingCybersecurityPage() {
       {/* =================================================================== */}
       {/* 1. HERO SECTION & POSITIONING */}
       {/* =================================================================== */}
-      <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden bg-slate-950 text-white border-b border-slate-800">
+      <section className="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden bg-white text-slate-900 border-b border-slate-200">
         <HeroCanvas />
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 via-transparent to-slate-950 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/40 via-transparent to-white pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl">
             {/* Top Badge */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs font-semibold tracking-wide uppercase mb-6 backdrop-blur-md">
-              <Sparkles size={14} className="text-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold tracking-wide uppercase mb-6 backdrop-blur-md">
+              <Sparkles size={14} className="text-blue-600 animate-pulse" />
               <span>Unified Full-Stack Offering · Master Portfolio v1.0</span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.12] mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12] mb-6">
               AI Networking &amp; <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-indigo-600">
                 Cybersecurity Intelligence
               </span>
             </h1>
 
             {/* Subhead / Positioning Statement */}
-            <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-3xl mb-8">
+            <p className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-3xl mb-8">
               From the LAN switch and WiFi access point to the orbital asset and the hyperscale AI factory —
               TRUSTGRID.AI AI delivers measurable, purpose-engineered resilience with <strong>zero packet loss</strong>,
               <strong>sub-microsecond tail latency</strong>, and <strong>L1–L7 post-quantum cyber defense</strong> engineered as one nervous system.
@@ -1034,14 +1034,14 @@ export default function AINetworkingCybersecurityPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start max-w-5xl mx-auto">
             {/* Input Controls (Left Column) */}
-            <div className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-slate-950 border border-slate-800 space-y-6">
+            <div className="lg:col-span-7 p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-6">
               {/* Slider 1: GPU Accelerator Count */}
               <div>
                 <div className="flex justify-between items-center mb-2">
-                  <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                  <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
                     Accelerator Cluster Scale (GPUs / Nodes)
                   </label>
-                  <span className="text-sm font-mono font-bold text-cyan-400 bg-slate-900 px-3 py-1 rounded border border-slate-800">
+                  <span className="text-sm font-mono font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded border border-blue-200">
                     {gpuCount.toLocaleString()} GPUs
                   </span>
                 </div>
@@ -1052,7 +1052,7 @@ export default function AINetworkingCybersecurityPage() {
                   step="64"
                   value={gpuCount}
                   onChange={(e) => setGpuCount(Number(e.target.value))}
-                  className="w-full accent-blue-500 cursor-pointer h-2 bg-slate-800 rounded-lg appearance-none"
+                  className="w-full accent-blue-600 cursor-pointer h-2 bg-slate-200 rounded-lg appearance-none"
                 />
                 <div className="flex justify-between text-[11px] text-slate-500 mt-1">
                   <span>64 (Pilot Pod)</span>
@@ -1430,47 +1430,47 @@ export default function AINetworkingCybersecurityPage() {
       {/* =================================================================== */}
       {/* 10. EXECUTIVE INTAKE & DIAGNOSTIC BOOKING */}
       {/* =================================================================== */}
-      <section className="py-20 bg-slate-950 text-white relative overflow-hidden" id="intake-form">
+      <section className="py-20 bg-slate-50 text-slate-900 relative overflow-hidden border-t border-slate-200" id="intake-form">
         <HeroCanvas />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             {/* Left Column: Context & Assurances */}
             <div className="lg:col-span-5">
-              <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold px-2.5 py-1 rounded bg-blue-900/50 border border-blue-500/30 inline-block mb-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-blue-700 font-bold px-2.5 py-1 rounded bg-blue-100 border border-blue-200 inline-block mb-3">
                 Diagnostic Intake Gate
               </span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                 Initiate Your AI Networking &amp; Cyber Diagnostic
               </h2>
-              <p className="text-sm sm:text-base text-slate-300 mt-4 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-600 mt-4 leading-relaxed">
                 Connect with our Principal AI Network &amp; Security Architects to baseline your fabric,
                 discover your Cryptographic Bill of Materials (CBOM), and architect a zero-loss, quantum-safe operating model.
               </p>
 
               <div className="space-y-4 mt-8">
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-                  <div className="text-xs font-bold text-cyan-300">Phase 01: 2–4 Week Diagnostic Sprint</div>
-                  <p className="text-xs text-slate-300 mt-1">
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+                  <div className="text-xs font-bold text-blue-700">Phase 01: 2–4 Week Diagnostic Sprint</div>
+                  <p className="text-xs text-slate-600 mt-1">
                     Delivers a board-ready posture report, passive INT telemetry analysis, RF spectrum study, and 90-day ROI realization roadmap.
                   </p>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800">
-                  <div className="text-xs font-bold text-emerald-300">Confidentiality &amp; Security Standard</div>
-                  <p className="text-xs text-slate-300 mt-1">
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
+                  <div className="text-xs font-bold text-emerald-700">Confidentiality &amp; Security Standard</div>
+                  <p className="text-xs text-slate-600 mt-1">
                     All telemetry ingestion, packet inspection, and CBOM discovery are executed under mutual enterprise NDA with strict data-residency controls.
                   </p>
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-slate-800 space-y-2 text-xs text-slate-300">
+              <div className="mt-8 pt-6 border-t border-slate-200 space-y-2 text-xs text-slate-600">
                 <div className="flex items-center gap-2">
-                  <Mail size={14} className="text-cyan-400" />
+                  <Mail size={14} className="text-blue-600" />
                   <span>Direct Advisory: advisory@trustgrid.ai</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone size={14} className="text-cyan-400" />
-                  <span>Global Response: <a href="tel:+16507724145" className="hover:text-cyan-300 transition-colors text-slate-300">+1 650 772 4145</a></span>
+                  <Phone size={14} className="text-blue-600" />
+                  <span>Global Response: <a href="tel:+16507724145" className="hover:text-blue-600 transition-colors text-slate-600">+1 650 772 4145</a></span>
                 </div>
               </div>
 

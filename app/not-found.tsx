@@ -1,14 +1,12 @@
 import Link from 'next/link'
 import {
   Cpu,
-  Layers,
   Workflow,
   ShieldCheck,
   Building2,
   TrendingUp,
   ArrowRight,
   ArrowUpRight,
-  Boxes,
   Home,
   Mail
 } from 'lucide-react'
@@ -75,9 +73,9 @@ export default function NotFound() {
       category: 'Compliance & Audit'
     },
     {
-      title: 'Enterprise LLM & Context Engineering',
+      title: 'Enterprise Knowledge Semantic Fabric',
       href: '/practice-areas/enterprise-llm-rag-context-engineering',
-      category: 'Knowledge Graph'
+      category: 'Knowledge & RAG'
     }
   ]
 
@@ -109,7 +107,7 @@ export default function NotFound() {
   ]
 
   return (
-    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#0b1220] text-slate-100">
+    <div className="page-shell min-h-screen flex flex-col justify-between bg-[#f8fafc] text-slate-900">
       <SiteHeader />
       <ClientPathRedirector />
 
@@ -117,14 +115,14 @@ export default function NotFound() {
         <div className="max-w-6xl mx-auto">
           {/* Header Banner */}
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-xs font-mono font-bold uppercase tracking-wider mb-4">
-              <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-mono font-bold uppercase tracking-wider mb-4">
+              <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
               Enterprise Architecture Navigator
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
               Explore TRUSTGRID.AI Systems &amp; Solutions
             </h1>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
               Access the complete blueprint catalog across high-density AI infrastructure, autonomous agent factories, sovereign cybersecurity meshes, and industry-specific deployment practices.
             </p>
           </div>
@@ -133,12 +131,12 @@ export default function NotFound() {
           <div className="mb-14">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <h2 className="text-xl font-bold text-white">Flagship Engineering Solutions</h2>
-                <p className="text-xs text-slate-300">Core turnkey operational platforms</p>
+                <h2 className="text-xl font-bold text-slate-900">Flagship Engineering Solutions</h2>
+                <p className="text-xs text-slate-500">Core turnkey operational platforms</p>
               </div>
               <Link
                 href="/solutions/ai-infra-engineering"
-                className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 font-semibold transition-colors"
+                className="text-xs text-blue-600 hover:text-blue-700 flex items-center gap-1 font-semibold transition-colors"
               >
                 <span>View all solutions</span>
                 <ArrowRight size={13} />
@@ -152,25 +150,25 @@ export default function NotFound() {
                   <Link
                     key={i}
                     href={sol.href}
-                    className="group p-5 rounded-2xl bg-slate-900/80 border border-slate-800/80 hover:border-blue-500/50 hover:bg-slate-800/60 transition-all flex flex-col justify-between"
+                    className="group p-5 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="p-2.5 rounded-xl bg-blue-600/10 text-blue-400 border border-blue-500/20 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                        <span className="p-2.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-200 group-hover:bg-blue-600 group-hover:text-white transition-all">
                           <IconComponent size={18} />
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-600 border border-slate-200 font-semibold">
                           {sol.badge}
                         </span>
                       </div>
-                      <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors mb-2">
+                      <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
                         {sol.title}
                       </h3>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-slate-600 leading-relaxed">
                         {sol.desc}
                       </p>
                     </div>
-                    <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs font-semibold text-blue-400 group-hover:text-blue-300">
+                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-blue-600 group-hover:text-blue-700">
                       <span>Explore Architecture</span>
                       <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
@@ -183,63 +181,63 @@ export default function NotFound() {
           {/* Two-Column Directory: Practice Areas & Industries */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             {/* Practice Areas */}
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/70">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Workflow size={18} className="text-cyan-400" />
-                  <h3 className="text-lg font-bold text-white">Engineering Practice Areas</h3>
+                  <Workflow size={18} className="text-blue-600" />
+                  <h3 className="text-lg font-bold text-slate-900">Engineering Practice Areas</h3>
                 </div>
                 <Link
                   href="/practice-areas"
-                  className="text-xs text-cyan-400 hover:text-cyan-300 font-semibold transition-colors"
+                  className="text-xs text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
                   Directory →
                 </Link>
               </div>
-              <div className="divide-y divide-slate-800">
+              <div className="divide-y divide-slate-100">
                 {practiceAreas.map((pa, idx) => (
                   <Link
                     key={idx}
                     href={pa.href}
-                    className="py-3 flex items-center justify-between group hover:text-cyan-300 transition-colors"
+                    className="py-3 flex items-center justify-between group hover:text-blue-600 transition-colors"
                   >
                     <div>
-                      <span className="text-xs font-semibold text-slate-200 group-hover:text-cyan-300 block">
+                      <span className="text-xs font-semibold text-slate-800 group-hover:text-blue-600 block">
                         {pa.title}
                       </span>
-                      <span className="text-[10px] text-slate-300">{pa.category}</span>
+                      <span className="text-[10px] text-slate-500">{pa.category}</span>
                     </div>
-                    <ArrowRight size={14} className="text-slate-300 group-hover:text-cyan-300 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight size={14} className="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
                   </Link>
                 ))}
               </div>
             </div>
 
             {/* Industry Verticals */}
-            <div className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800/70">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Building2 size={18} className="text-blue-400" />
-                  <h3 className="text-lg font-bold text-white">Industry Vertical Blueprints</h3>
+                  <Building2 size={18} className="text-blue-600" />
+                  <h3 className="text-lg font-bold text-slate-900">Industry Vertical Blueprints</h3>
                 </div>
                 <Link
                   href="/industries"
-                  className="text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors"
+                  className="text-xs text-blue-600 hover:text-blue-700 font-semibold transition-colors"
                 >
-                  All 12 Verticals →
+                  All Verticals →
                 </Link>
               </div>
-              <div className="divide-y divide-slate-800">
+              <div className="divide-y divide-slate-100">
                 {industryVerticals.map((ind, idx) => (
                   <Link
                     key={idx}
                     href={ind.href}
-                    className="py-3 flex items-center justify-between group hover:text-blue-300 transition-colors"
+                    className="py-3 flex items-center justify-between group hover:text-blue-600 transition-colors"
                   >
-                    <span className="text-xs font-semibold text-slate-200 group-hover:text-blue-300">
+                    <span className="text-xs font-semibold text-slate-800 group-hover:text-blue-600">
                       {ind.title}
                     </span>
-                    <ArrowRight size={14} className="text-slate-300 group-hover:text-blue-300 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight size={14} className="text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
                   </Link>
                 ))}
               </div>
@@ -247,25 +245,25 @@ export default function NotFound() {
           </div>
 
           {/* Quick Actions Footer */}
-          <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-900/20 via-slate-900/80 to-cyan-900/20 border border-blue-500/20 flex flex-wrap items-center justify-between gap-4">
+          <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h4 className="text-base font-bold text-white mb-1">
+              <h4 className="text-base font-bold text-slate-900 mb-1">
                 Need an architectural feasibility review or custom engagement?
               </h4>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-slate-600">
                 Our forward-deployed systems engineers evaluate workloads within 72 hours.
               </p>
             </div>
             <div className="flex items-center gap-3">
               <Link
                 href="/book-ai-diagnostic"
-                className="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20"
+                className="button button-primary"
               >
                 Book AI Diagnostic
               </Link>
               <Link
-                href="/talk-to-ai-architect"
-                className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition-all"
+                href="/contact"
+                className="button button-outline"
               >
                 Talk to AI Architect
               </Link>
@@ -278,4 +276,3 @@ export default function NotFound() {
     </div>
   )
 }
-

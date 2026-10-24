@@ -85,11 +85,50 @@ export const whatWeDoVerticals = [
   }
 ]
 
-export const metricsFootprint: MetricItem[] = [
-  { value: "30–60%", label: "Inference Cost Reduction", sub: "Delivered across production clusters" },
-  { value: "4.2x", label: "Agent Throughput", sub: "Via hardware-aware orchestration" },
-  { value: "99.999%", label: "Platform Availability", sub: "Mission-critical uptime standard" },
-  { value: "48–88 wks", label: "To Compounding Value", sub: "From initial diagnostic to live self-improving fleet" }
+export interface ValueEngineeringProofCard {
+  step: string
+  title: string
+  timeline: string
+  question: string
+  description: string
+}
+
+export const valueEngineeringRoadmap: ValueEngineeringProofCard[] = [
+  {
+    step: "01",
+    title: "Proof of Feasibility",
+    timeline: "T + 2 Weeks",
+    question: "Can it be built?",
+    description: "Validate technical feasibility and operational readiness."
+  },
+  {
+    step: "02",
+    title: "Proof of Value",
+    timeline: "T + 4 Weeks",
+    question: "Does it deliver benefit?",
+    description: "Demonstrate measurable business outcomes and ROI signals."
+  },
+  {
+    step: "03",
+    title: "Proof of Performance",
+    timeline: "T + 6 Weeks",
+    question: "Does it scale?",
+    description: "Validate scalability, reliability, resilience, and performance benchmarks."
+  },
+  {
+    step: "04",
+    title: "Proof of Recurring Value",
+    timeline: "T + 8 Weeks",
+    question: "Is it sustainable?",
+    description: "Demonstrate repeatable value, adoption, and long-term usage."
+  },
+  {
+    step: "05",
+    title: "Proof of Compounding",
+    timeline: "T + 12 Weeks",
+    question: "Does value multiply?",
+    description: "Show compounded business impact, cross-functional leverage, and measurable growth."
+  }
 ]
 
 export const societalValueAddition = [

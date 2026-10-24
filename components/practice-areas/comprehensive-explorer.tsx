@@ -242,7 +242,7 @@ export function ComprehensivePracticeExplorer() {
                     </div>
                     <div className="tg-spec-item">
                       <span className="tg-spec-label">VALUE ASSURANCE</span>
-                      <span className="tg-spec-val text-slate-300 font-mono">{item.valueAssurance}</span>
+                      <span className="tg-spec-val text-slate-700 font-mono">{item.valueAssurance}</span>
                     </div>
                   </div>
 
@@ -302,7 +302,7 @@ export function ComprehensivePracticeExplorer() {
                     </div>
                     <div className="tg-spec-item">
                       <span className="tg-spec-label">VALUE ASSURANCE</span>
-                      <span className="tg-spec-val text-slate-300 font-mono">{item.valueAssurance}</span>
+                      <span className="tg-spec-val text-slate-700 font-mono">{item.valueAssurance}</span>
                     </div>
                   </div>
 
@@ -432,7 +432,7 @@ export function ComprehensivePracticeExplorer() {
               >
                 <span className="font-mono text-blue-400 text-[10px] mr-1">{sub.code}</span>
                 <span>{sub.title}</span>
-                <span className="text-[10px] text-slate-300 ml-1.5">({sub.practiceAreas.length})</span>
+                <span className="text-[10px] text-slate-700 ml-1.5">({sub.practiceAreas.length})</span>
               </button>
             ))}
           </div>
@@ -465,7 +465,7 @@ export function ComprehensivePracticeExplorer() {
                   </div>
                   <div className="tg-spec-item">
                     <span className="tg-spec-label">VALUE ASSURANCE</span>
-                    <span className="tg-spec-val text-slate-300 font-mono">{pa.valueAssurance}</span>
+                    <span className="tg-spec-val text-slate-700 font-mono">{pa.valueAssurance}</span>
                   </div>
                 </div>
 
@@ -616,7 +616,7 @@ export function ComprehensivePracticeExplorer() {
                   </div>
                   <div className="tg-spec-item">
                     <span className="tg-spec-label">VALUE ASSURANCE</span>
-                    <span className="tg-spec-val text-slate-300 font-mono">{pa.valueAssurance}</span>
+                    <span className="tg-spec-val text-slate-700 font-mono">{pa.valueAssurance}</span>
                   </div>
                 </div>
 
