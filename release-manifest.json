@@ -1,8 +1,9 @@
 {
-  "project": "ISIVX3",
+  "project": "TRUSTGRID-AI",
   "version": "Production",
-  "releaseDate": "24-10-2026",
-  "archive": "ISIVX3-24-10-2026.tar",
+  "releaseDate": "28-10-2026",
+  "archive": "TRUSTGRID-AI-28-10-2026.tar",
+  "deploymentReady": true,
   "buildStatus": "SUCCESS",
   "tested": true
 }

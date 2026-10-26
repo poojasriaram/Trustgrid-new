@@ -437,14 +437,14 @@ export function AIArchitectChatbot() {
           className="ai-architect-chatbot-launcher"
           onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.04)')}
           onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-          aria-label="Open TRUSTGRID.AI AI Architect Assistant"
+          aria-label="Open TRUSTGRID.AI Architect Assistant"
         >
           <div className="ai-architect-chatbot-avatar">
             <Bot size={18} className="text-white" />
           </div>
           <div className="ai-architect-chatbot-text-col">
             <span className="ai-architect-chatbot-title">
-              TRUSTGRID.AI AI
+              TRUSTGRID.AI
             </span>
             <span className="ai-architect-chatbot-subtitle">
               Enterprise Architect
@@ -460,7 +460,7 @@ export function AIArchitectChatbot() {
           className={`ai-architect-chatbot-window ${isMinimized ? 'minimized' : ''} ${isMaximized ? 'maximized' : ''}`}
           role="dialog"
           aria-modal="true"
-          aria-label="TRUSTGRID.AI AI Architect Assistant"
+          aria-label="TRUSTGRID.AI Architect Assistant"
         >
           {/* HEADER */}
           <div

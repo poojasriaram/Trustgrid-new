@@ -93,6 +93,7 @@ export interface NormalizedLead {
   isSalesLead: boolean
   leadType: LeadType
   leadTypeLabel: string
+  leadTypeCategory?: 'PRODUCTION' | 'TEST' | string
   name: string
   email: string
   phone: string
@@ -486,11 +487,12 @@ ${timestampFormatted}`
     timestampIso,
     timestampFormatted,
     productionOrTest,
+    leadTypeCategory: productionOrTest,
     isTestLead,
     testReason: isTestLead ? testAudit.reason : undefined,
     jiraSummary,
     jiraDescription,
-    rawPayload: { ...input, leadId, siteOrigin: 'TG', productionOrTest }
+    rawPayload: { ...input, leadId, siteOrigin: 'TG', productionOrTest, leadTypeCategory: productionOrTest }
   }
 }
 

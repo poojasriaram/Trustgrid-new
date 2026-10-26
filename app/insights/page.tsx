@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -264,7 +264,7 @@ export default function InsightsPage({ initialCategory = 'all' }: InsightsPagePr
                 <span>EXECUTIVE TECHNICAL BRIEFINGS</span>
               </div>
               <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--foreground)', margin: '0 0 8px' }}>
-                Subscribe to TRUSTGRID.AI AI Engineering Dispatches
+                Subscribe to TRUSTGRID.AI Engineering Dispatches
               </h2>
               <p style={{ fontSize: '14px', color: 'var(--ink-soft)', margin: 0 }}>
                 Receive peer-reviewed token economics benchmarks, hardware teardowns, and multi-agent safety whitepapers delivered directly to your inbox.

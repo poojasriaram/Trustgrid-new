@@ -6,7 +6,7 @@ import { ShieldCheck, Mail, MapPin, Building2, Calendar, CheckCircle2, AlertTria
 
 export const metadata: Metadata = {
   title: 'Privacy Notice | TRUSTGRID.AI',
-  description: 'Official Privacy Notice of TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED (TRUSTGRID.AI). Details personal data processing, enterprise security controls, AI disclaimers, and data subject rights under DPDP Act 2023, GDPR, and CCPA/CPRA.',
+  description: 'Official Privacy Notice of TRUSTGRID AI INNOVATIONS PRIVATE LIMITED (TRUSTGRID.AI). Details personal data processing, enterprise security controls, AI disclaimers, and data subject rights under DPDP Act 2023, GDPR, and CCPA/CPRA.',
   alternates: {
     canonical: 'https://trustgrid.ai/privacy-policy',
   },
@@ -37,7 +37,7 @@ export default function PrivacyPolicyPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed mb-6">
-              This Privacy Notice describes how <strong>TRUSTGRID.AI AI INNOVATIONS PRIVATE LIMITED</strong> (“TRUSTGRID.AI”, “we”, “us” or “our”) collects, uses, protects, and handles personal data in connection with our website and generative AI enterprise platforms.
+              This Privacy Notice describes how <strong>TRUSTGRID AI INNOVATIONS PRIVATE LIMITED</strong> (“TRUSTGRID.AI”, “we”, “us” or “our”) collects, uses, protects, and handles personal data in connection with our website and generative AI enterprise platforms.
             </p>
 
             <div className="flex flex-wrap items-center gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-300 border-t border-slate-800/80 pt-4">

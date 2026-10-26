@@ -469,7 +469,7 @@ export default function PracticeAreasPage() {
                   </h4>
                   <ul className="pa-capability-list">
                     {practice.deliverables.slice(0, 3).map((d, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
                         <CheckCircle2 size={13} className="text-blue-500 shrink-0 mt-0.5" />
                         <span>{d}</span>
                       </li>
@@ -478,7 +478,7 @@ export default function PracticeAreasPage() {
 
                   <div className="mt-4 pt-3 border-t border-slate-200">
                     <span className="text-[11px] text-slate-500 block mb-1">Target Outcome:</span>
-                    <span className="text-xs font-semibold text-emerald-400">
+                    <span className="text-xs font-semibold text-emerald-700">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
                   </div>
@@ -535,8 +535,8 @@ export default function PracticeAreasPage() {
                   </h4>
                   <ul className="pa-capability-list">
                     {practice.capabilities.slice(0, 3).map((cap, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                        <CheckCircle2 size={13} className="text-cyan-500 shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                        <CheckCircle2 size={13} className="text-cyan-600 shrink-0 mt-0.5" />
                         <span>{cap}</span>
                       </li>
                     ))}
@@ -544,7 +544,7 @@ export default function PracticeAreasPage() {
 
                   <div className="mt-4 pt-3 border-t border-slate-200">
                     <span className="text-[11px] text-slate-500 block mb-1">Performance Benchmark:</span>
-                    <span className="text-xs font-semibold text-cyan-400">
+                    <span className="text-xs font-semibold text-cyan-700">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
                   </div>
@@ -601,8 +601,8 @@ export default function PracticeAreasPage() {
                   </h4>
                   <ul className="pa-capability-list">
                     {practice.capabilities.slice(0, 3).map((cap, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                        <CheckCircle2 size={13} className="text-indigo-500 shrink-0 mt-0.5" />
+                      <li key={i} className="flex items-start gap-2 text-xs text-slate-600">
+                        <CheckCircle2 size={13} className="text-indigo-600 shrink-0 mt-0.5" />
                         <span>{cap}</span>
                       </li>
                     ))}
@@ -610,7 +610,7 @@ export default function PracticeAreasPage() {
 
                   <div className="mt-4 pt-3 border-t border-slate-200">
                     <span className="text-[11px] text-slate-500 block mb-1">Autonomy Metric:</span>
-                    <span className="text-xs font-semibold text-indigo-400">
+                    <span className="text-xs font-semibold text-indigo-700">
                       {practice.outcomesAndKpis[0]?.metric} — {practice.outcomesAndKpis[0]?.description}
                     </span>
                   </div>
@@ -775,8 +775,8 @@ export default function PracticeAreasPage() {
                       Core Engineering Deliverables:
                     </span>
                     {model.deliverables.map((del, dIdx) => (
-                      <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-300">
-                        <CheckCircle2 size={13} className="text-cyan-400 shrink-0 mt-0.5" />
+                      <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-600">
+                        <CheckCircle2 size={13} className="text-cyan-600 shrink-0 mt-0.5" />
                         <span>{del}</span>
                       </div>
                     ))}
@@ -798,7 +798,7 @@ export default function PracticeAreasPage() {
 
                   {/* Expected Balance-Sheet Outcome */}
                   <div className="pa-expected-outcome">
-                    <span className="text-[10px] font-mono text-emerald-400 uppercase tracking-wider block font-bold mb-1">
+                    <span className="text-[10px] font-mono text-emerald-700 uppercase tracking-wider block font-bold mb-1">
                       Target Balance-Sheet Outcome:
                     </span>
                     <p className="text-slate-700 text-xs leading-relaxed m-0">
@@ -847,7 +847,7 @@ export default function PracticeAreasPage() {
                   </p>
                   <div className="pa-pathway-outcome">
                     <span className="text-[10px] text-slate-500 uppercase font-mono block">Key Output:</span>
-                    <span className="text-xs font-semibold text-cyan-300">{stage.outcome}</span>
+                    <span className="text-xs font-semibold text-blue-700">{stage.outcome}</span>
                   </div>
                 </div>
               ))}
@@ -885,7 +885,7 @@ export default function PracticeAreasPage() {
             </Link>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-300">
+          <div className="mt-8 flex items-center justify-center gap-6 text-xs text-slate-500">
             <span>✓ Direct Access to Systems Architects</span>
             <span>✓ No-Obligation Architecture Review</span>
             <span>✓ US, Singapore &amp; India Labs</span>

@@ -379,7 +379,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
             
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 mb-6 leading-tight">
-              AI Value Engineering <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-sky-300 bg-clip-text text-transparent">Practice</span>
+              AI Value Engineering <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 bg-clip-text text-transparent">Practice</span>
             </h1>
 
             <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-4xl leading-relaxed font-normal mb-8">
@@ -391,25 +391,25 @@ export default function AIValueEngineeringPracticePage() {
             <div className="flex flex-wrap items-center gap-3">
               <Link
                 href="/methodology-engine"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-900 text-xs font-mono font-semibold transition-all shadow-sm hover:shadow-blue-500/20"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-semibold transition-all shadow-sm hover:shadow-blue-500/20"
               >
                 <span>Methodology Engine</span>
                 <ArrowUpRight size={13} />
               </Link>
 
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium shadow-2xs">
                 <span className="text-blue-600 font-bold">7</span> technology families in scope
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium shadow-2xs">
                 <span className="text-emerald-600 font-bold">5</span> stage gates
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium shadow-2xs">
                 <span className="text-indigo-600 font-bold">≤4</span> engineers per pod
               </div>
 
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 text-xs font-mono font-medium shadow-2xs">
                 <span className="text-amber-600 font-bold">1</span> number Finance signs
               </div>
             </div>
@@ -418,7 +418,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.0: What this practice is */}
           <section id="what-this-is" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-6">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold shadow-2xs">
                 4.0
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -426,7 +426,7 @@ export default function AIValueEngineeringPracticePage() {
               </h2>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-5 text-slate-600 text-sm sm:text-base leading-relaxed">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-5 text-slate-600 text-sm sm:text-base leading-relaxed shadow-xs">
               <p>
                 <strong className="text-slate-900">Forward Deployed Engineering</strong> described where we sit. <strong className="text-slate-900">AI Value Engineering</strong> describes what we are accountable for: a number Finance signs. The practice is one thing with two halves — the discipline of defining, engineering and proving value, delivered by engineers deployed inside the client&apos;s environment.
               </p>
@@ -437,21 +437,21 @@ export default function AIValueEngineeringPracticePage() {
                 It runs on the methodology engine. Deterministic stage gates, named industrial methods, and value that compounds rather than decays —{' '}
                 <Link 
                   href="/methodology-engine" 
-                  className="text-blue-600 hover:text-blue-300 underline font-mono text-xs inline-flex items-center gap-1"
+                  className="text-blue-600 hover:text-blue-700 underline font-mono text-xs inline-flex items-center gap-1 font-semibold"
                 >
                   trustgrid.ai/methodology-engine <ArrowRight size={12} />
                 </Link>. This section is the delivery practice that operates it.
               </p>
 
               {/* The Test of the Practice Callout */}
-              <div className="mt-6 p-4 sm:p-5 rounded-xl bg-gradient-to-r from-blue-950/60 to-slate-900/80 border-l-4 border-blue-500 border-t border-r border-b border-slate-200">
+              <div className="mt-6 p-4 sm:p-5 rounded-xl bg-blue-50/70 border-l-4 border-blue-600 border border-blue-200/80 shadow-2xs">
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="text-blue-600 shrink-0 mt-0.5" size={18} />
                   <div>
-                    <h4 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-1 font-mono">
+                    <h4 className="text-sm font-bold text-blue-950 uppercase tracking-wider mb-1 font-mono">
                       The Test of the Practice
                     </h4>
-                    <p className="text-sm text-slate-600 italic">
+                    <p className="text-sm text-slate-700 italic">
                       &ldquo;If a client cannot say which of the five proofs they are currently being shown, the pod has stopped doing value engineering and become a project team with better vocabulary.&rdquo;
                     </p>
                   </div>
@@ -463,7 +463,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.1: The value lifecycle — five stages, five gates */}
           <section id="lifecycle" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold shadow-2xs">
                 4.1
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -486,18 +486,18 @@ export default function AIValueEngineeringPracticePage() {
                     onClick={() => setActiveStage(idx)}
                     className={`cursor-pointer rounded-xl p-5 border transition-all duration-200 flex flex-col justify-between ${
                       isSelected
-                        ? 'bg-blue-950/50 border-blue-500 shadow-lg shadow-blue-500/10 ring-1 ring-blue-500/40'
-                        : 'bg-white border-slate-200 hover:border-slate-700 hover:bg-slate-900'
+                        ? 'bg-blue-50/80 border-blue-600 shadow-sm ring-1 ring-blue-600/30'
+                        : 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-xs'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <span className={`font-mono text-xs font-extrabold px-2 py-0.5 rounded ${
-                          isSelected ? 'bg-blue-600 text-slate-900' : 'bg-slate-800 text-slate-600'
+                          isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'
                         }`}>
                           STAGE {stage.num}
                         </span>
-                        <span className="text-[11px] font-mono text-slate-600">{stage.title}</span>
+                        <span className="text-[11px] font-mono text-slate-500 font-medium">{stage.title}</span>
                       </div>
                       <h3 className="text-base font-bold text-slate-900 mb-2">{stage.subtitle}</h3>
                       <p className="text-xs text-slate-600 leading-relaxed mb-4">
@@ -506,10 +506,10 @@ export default function AIValueEngineeringPracticePage() {
                     </div>
 
                     <div className="pt-3 border-t border-slate-200">
-                      <span className="text-[10px] font-mono font-bold text-emerald-600 uppercase tracking-wider block mb-1">
+                      <span className="text-[10px] font-mono font-bold text-emerald-700 uppercase tracking-wider block mb-1">
                         Gate Exit
                       </span>
-                      <span className="text-xs text-slate-600 font-medium">
+                      <span className="text-xs text-slate-700 font-medium">
                         {stage.exitGate}
                       </span>
                     </div>
@@ -519,17 +519,17 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* Selected Stage Detail Panel */}
-            <div className="bg-white border border-slate-200 rounded-xl p-6 mb-12">
+            <div className="bg-white border border-slate-200 rounded-xl p-6 mb-12 shadow-xs">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-mono font-bold text-blue-600 bg-blue-950/60 border border-blue-800/40 px-2.5 py-1 rounded">
+                  <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded">
                     STAGE {stagesData[activeStage].num} DEEP-DIVE
                   </span>
                   <h4 className="text-lg font-bold text-slate-900">
                     {stagesData[activeStage].subtitle} ({stagesData[activeStage].title})
                   </h4>
                 </div>
-                <span className="text-xs font-mono text-emerald-600 font-semibold bg-emerald-950/40 border border-emerald-800/30 px-3 py-1 rounded-full">
+                <span className="text-xs font-mono text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
                   {stagesData[activeStage].exitGate}
                 </span>
               </div>
@@ -538,7 +538,7 @@ export default function AIValueEngineeringPracticePage() {
                 {stagesData[activeStage].deliverables.map((item, i) => (
                   <div key={i} className="flex items-start gap-2.5 bg-slate-50 border border-slate-200 rounded-lg p-3.5">
                     <CheckCircle2 size={15} className="text-blue-600 shrink-0 mt-0.5" />
-                    <span className="text-xs sm:text-sm text-slate-600 leading-snug">{item}</span>
+                    <span className="text-xs sm:text-sm text-slate-700 leading-snug">{item}</span>
                   </div>
                 ))}
               </div>
@@ -553,10 +553,10 @@ export default function AIValueEngineeringPracticePage() {
                 Four workstreams run in parallel, not in sequence. Serial phases are the largest single cause of elapsed time in enterprise technology programmes.
               </p>
 
-              <div className="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50">
+              <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="bg-white border-b border-slate-200 text-slate-600 font-mono text-[11px] uppercase tracking-wider">
+                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
                       <th className="py-3 px-4 font-bold text-slate-900">Workstream</th>
                       <th className="py-3 px-4">01 Discover</th>
                       <th className="py-3 px-4">02 Design</th>
@@ -565,10 +565,10 @@ export default function AIValueEngineeringPracticePage() {
                       <th className="py-3 px-4">05 Prove</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/70 text-slate-600 font-normal">
+                  <tbody className="divide-y divide-slate-200 text-slate-600 font-normal">
                     {workstreamsMatrix.map((row) => (
-                      <tr key={row.stream} className="hover:bg-slate-900/40 transition-colors">
-                        <td className="py-3.5 px-4 font-bold text-slate-900 bg-slate-900/40">{row.stream}</td>
+                      <tr key={row.stream} className="hover:bg-slate-50/80 transition-colors">
+                        <td className="py-3.5 px-4 font-bold text-slate-900 bg-slate-50/50 border-r border-slate-200">{row.stream}</td>
                         <td className="py-3.5 px-4">{row.discover}</td>
                         <td className="py-3.5 px-4">{row.design}</td>
                         <td className="py-3.5 px-4">{row.deploy}</td>
@@ -582,7 +582,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* AI Value Acceleration is the lifecycle, compressed */}
-            <div className="bg-gradient-to-r from-blue-950/30 via-slate-900/80 to-slate-950 border border-slate-200 rounded-2xl p-6 sm:p-8">
+            <div className="bg-gradient-to-br from-blue-50/50 via-white to-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles size={16} className="text-blue-600" />
                 <h3 className="text-lg sm:text-xl font-bold text-slate-900">
@@ -595,28 +595,28 @@ export default function AIValueEngineeringPracticePage() {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="font-mono text-xs font-bold text-blue-600 block mb-1">Lever 01 · Reusable assets</span>
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-blue-300 transition-all">
+                  <span className="font-mono text-xs font-bold text-blue-700 block mb-1">Lever 01 · Reusable assets</span>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Kits, connectors and eval sets mean Deploy does not start from zero. This is the only lever that improves with every engagement.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="font-mono text-xs font-bold text-indigo-600 block mb-1">Lever 02 · Parallel stages</span>
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-indigo-300 transition-all">
+                  <span className="font-mono text-xs font-bold text-indigo-700 block mb-1">Lever 02 · Parallel stages</span>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Data and assurance run alongside delivery. A serial assurance phase adds a quarter and no additional certainty.
                   </p>
                 </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                  <span className="font-mono text-xs font-bold text-emerald-600 block mb-1">Lever 03 · One decision owner</span>
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-2xs hover:border-emerald-300 transition-all">
+                  <span className="font-mono text-xs font-bold text-emerald-700 block mb-1">Lever 03 · One decision owner</span>
                   <p className="text-xs text-slate-600 leading-relaxed">
                     Every gate exits on a signature. Waiting for consensus is the largest component of elapsed time in most programmes.
                   </p>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-600 font-mono">
-                <span className="text-slate-700 font-semibold">Measurement standard:</span> Measured as cycle time against the last cycle — not against a benchmark we invented. If the second engagement in an account takes as long as the first, acceleration is not happening.
+              <div className="p-3.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-mono">
+                <span className="text-slate-900 font-bold">Measurement standard:</span> Measured as cycle time against the last cycle — not against a benchmark we invented. If the second engagement in an account takes as long as the first, acceleration is not happening.
               </div>
             </div>
           </section>
@@ -624,7 +624,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.2: Technologies in scope — not just agents */}
           <section id="technologies" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold shadow-2xs">
                 4.2
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -637,17 +637,17 @@ export default function AIValueEngineeringPracticePage() {
             </p>
 
             {/* 7 Technologies Table */}
-            <div className="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 mb-8">
+            <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs mb-8">
               <table className="w-full text-left text-xs sm:text-sm border-collapse">
                 <thead>
-                  <tr className="bg-white border-b border-slate-200 text-slate-600 font-mono text-[11px] uppercase tracking-wider">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
                     <th className="py-3 px-4 font-bold text-slate-900">Technology family</th>
                     <th className="py-3 px-4">Where the value is trapped</th>
                     <th className="py-3 px-4">The proof that decides it</th>
                     <th className="py-3 px-4">Assurance regime</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/70 text-slate-600">
+                <tbody className="divide-y divide-slate-200 text-slate-600">
                   {technologiesInScope.map((tech) => {
                     const TechIcon = tech.icon
                     const isRowSelected = selectedTech === tech.id
@@ -656,7 +656,7 @@ export default function AIValueEngineeringPracticePage() {
                         key={tech.id} 
                         onClick={() => setSelectedTech(isRowSelected ? null : tech.id)}
                         className={`cursor-pointer transition-colors ${
-                          isRowSelected ? 'bg-blue-950/40' : 'hover:bg-slate-900/40'
+                          isRowSelected ? 'bg-blue-50/80 border-l-2 border-blue-600' : 'hover:bg-slate-50/80'
                         }`}
                       >
                         <td className="py-3.5 px-4 font-semibold text-slate-900 whitespace-nowrap">
@@ -667,7 +667,7 @@ export default function AIValueEngineeringPracticePage() {
                         </td>
                         <td className="py-3.5 px-4 text-xs sm:text-sm leading-relaxed max-w-xs">{tech.valueTrapped}</td>
                         <td className="py-3.5 px-4 text-xs sm:text-sm leading-relaxed max-w-xs">{tech.proof}</td>
-                        <td className="py-3.5 px-4 text-xs font-mono text-slate-600">{tech.regime}</td>
+                        <td className="py-3.5 px-4 text-xs font-mono text-slate-500">{tech.regime}</td>
                       </tr>
                     )
                   })}
@@ -676,15 +676,15 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* Three Failure Modes Callout */}
-            <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 mb-8">
+            <div className="p-5 rounded-xl bg-amber-50/60 border border-amber-200 mb-8">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="text-amber-600 shrink-0 mt-0.5" size={17} />
                 <div className="space-y-2">
-                  <h4 className="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider">
+                  <h4 className="text-xs font-mono font-bold text-amber-900 uppercase tracking-wider">
                     Three technology-specific failure modes worth pricing in
                   </h4>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    <strong>RPA</strong> banks fastest and decays fastest — <em>PoRV is the decisive proof, not PoV</em>. <strong>Robotics and physical AI</strong> move the TTV because commissioning changes the building, not just the software. And <strong>DLT value</strong> almost never comes from the ledger: it comes from removing a reconciliation step, which means the proof must be measured in the finance close, not in node throughput.
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <strong className="text-slate-900">RPA</strong> banks fastest and decays fastest — <em>PoRV is the decisive proof, not PoV</em>. <strong className="text-slate-900">Robotics and physical AI</strong> move the TTV because commissioning changes the building, not just the software. And <strong className="text-slate-900">DLT value</strong> almost never comes from the ledger: it comes from removing a reconciliation step, which means the proof must be measured in the finance close, not in node throughput.
                   </p>
                 </div>
               </div>
@@ -710,9 +710,9 @@ export default function AIValueEngineeringPracticePage() {
                   { name: 'Throughput Accounting', stage: 'Perform', desc: 'Bank at the constraint' },
                   { name: 'DMAIC', stage: 'Prove', desc: 'Evidence discipline' }
                 ].map((tool, idx) => (
-                  <div key={idx} className="p-3 rounded-lg bg-white border border-slate-200">
+                  <div key={idx} className="p-3 rounded-lg bg-white border border-slate-200 shadow-xs hover:border-blue-300 transition-all">
                     <span className="font-semibold text-xs text-slate-900 block mb-0.5">{tool.name}</span>
-                    <span className="text-[10px] font-mono font-bold text-blue-600 block mb-1">
+                    <span className="text-[10px] font-mono font-bold text-blue-700 block mb-1">
                       {tool.stage}
                     </span>
                     <span className="text-[11px] text-slate-600 block">{tool.desc}</span>
@@ -725,7 +725,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.3: The delivery cycle vs. a conventional engagement */}
           <section id="delivery-cycle" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.3
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -738,16 +738,16 @@ export default function AIValueEngineeringPracticePage() {
               The value cycle runs a loop instead — <span className="text-blue-600 font-medium">Discover → Design → Deploy → Perform → Prove</span>, then back to Discover with the assets and the evidence from the last lap.
             </p>
 
-            <div className="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 mb-6">
+            <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs mb-6">
               <table className="w-full text-left text-xs sm:text-sm border-collapse">
                 <thead>
-                  <tr className="bg-white border-b border-slate-200 text-slate-600 font-mono text-[11px] uppercase tracking-wider">
+                  <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
                     <th className="py-3 px-4 font-bold text-slate-900 w-1/4">Dimension</th>
-                    <th className="py-3 px-4 text-slate-600 w-3/8">Conventional engagement</th>
-                    <th className="py-3 px-4 text-blue-600 font-bold w-3/8">The value cycle</th>
+                    <th className="py-3 px-4 text-slate-700 w-3/8">Conventional engagement</th>
+                    <th className="py-3 px-4 text-blue-700 font-bold w-3/8">The value cycle</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/70 text-slate-600">
+                <tbody className="divide-y divide-slate-200 text-slate-600">
                   {[
                     {
                       dimension: 'Starting point',
@@ -780,17 +780,17 @@ export default function AIValueEngineeringPracticePage() {
                       cycle: 'Starts from the assets, the proofs, and the cost curve'
                     }
                   ].map((row, i) => (
-                    <tr key={i} className="hover:bg-slate-900/40 transition-colors">
-                      <td className="py-3.5 px-4 font-semibold text-slate-900 bg-slate-900/40">{row.dimension}</td>
+                    <tr key={i} className="hover:bg-slate-50/80 transition-colors">
+                      <td className="py-3.5 px-4 font-semibold text-slate-900 bg-slate-50/50 border-r border-slate-200">{row.dimension}</td>
                       <td className="py-3.5 px-4 text-slate-600">{row.conventional}</td>
-                      <td className="py-3.5 px-4 font-medium text-blue-300 bg-blue-950/20">{row.cycle}</td>
+                      <td className="py-3.5 px-4 font-medium text-blue-700 bg-blue-50/40">{row.cycle}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="p-4 sm:p-5 rounded-xl bg-slate-900/70 border border-slate-200 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <div className="p-4 sm:p-5 rounded-xl bg-white border border-slate-200 shadow-xs text-xs sm:text-sm text-slate-700 leading-relaxed">
               <strong className="text-slate-900">The loop must close.</strong> A cycle that does not return to Discover is a project. Prove feeds the next Discovery with three things: reusable assets, a cost curve that prices the next case, and evidence that shortens the next assurance review. That return path is the first thing lost when a pod is managed as a fixed-scope project.
             </div>
           </section>
@@ -798,7 +798,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.4: The pod — four of ours, three of theirs */}
           <section id="pod" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.4
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -812,13 +812,13 @@ export default function AIValueEngineeringPracticePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
               {/* TrustGrid Pod (Maximum 4) */}
-              <div className="bg-slate-50 border border-blue-900/40 rounded-2xl p-6">
+              <div className="bg-white border border-blue-200 rounded-2xl p-6 shadow-xs">
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2.5">
                     <Users size={18} className="text-blue-600" />
                     <h3 className="text-base sm:text-lg font-bold text-slate-900">Forward-deployed pod</h3>
                   </div>
-                  <span className="font-mono text-xs font-bold text-blue-600 bg-blue-950/60 border border-blue-800 px-2.5 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-0.5 rounded">
                     Maximum 4
                   </span>
                 </div>
@@ -843,7 +843,7 @@ export default function AIValueEngineeringPracticePage() {
                     }
                   ].map((p, i) => (
                     <div key={i} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="font-bold text-sm text-blue-300 block mb-1 font-mono">{p.role}</span>
+                      <span className="font-bold text-sm text-blue-700 block mb-1 font-mono">{p.role}</span>
                       <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
                     </div>
                   ))}
@@ -851,13 +851,13 @@ export default function AIValueEngineeringPracticePage() {
               </div>
 
               {/* Client Side (Roles, not attendees) */}
-              <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs">
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center gap-2.5">
                     <Workflow size={18} className="text-indigo-600" />
                     <h3 className="text-base sm:text-lg font-bold text-slate-900">Client side</h3>
                   </div>
-                  <span className="font-mono text-xs font-bold text-indigo-600 bg-indigo-950/60 border border-indigo-800 px-2.5 py-0.5 rounded">
+                  <span className="font-mono text-xs font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded">
                     Roles, not attendees
                   </span>
                 </div>
@@ -878,14 +878,14 @@ export default function AIValueEngineeringPracticePage() {
                     }
                   ].map((c, i) => (
                     <div key={i} className="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                      <span className="font-bold text-sm text-indigo-300 block mb-1 font-mono">{c.role}</span>
+                      <span className="font-bold text-sm text-indigo-700 block mb-1 font-mono">{c.role}</span>
                       <p className="text-xs text-slate-600 leading-relaxed">{c.desc}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-blue-950/30 border border-blue-900/40 text-xs text-slate-600 leading-relaxed">
-                  <strong className="text-blue-300">The functional lead is the role most often missing</strong> and most often the reason a benefit fails to repeat. A product lead can approve a deployment; only the functional lead can change how the work is actually done. Where the technology is physical, the domain engineer is an OT or robotics engineer — and the safety case is part of the deliverable, not an appendix.
+                <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 text-xs text-slate-700 leading-relaxed">
+                  <strong className="text-blue-950 font-bold">The functional lead is the role most often missing</strong> and most often the reason a benefit fails to repeat. A product lead can approve a deployment; only the functional lead can change how the work is actually done. Where the technology is physical, the domain engineer is an OT or robotics engineer — and the safety case is part of the deliverable, not an appendix.
                 </div>
               </div>
             </div>
@@ -894,7 +894,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.5: Engagement models (WITHOUT fixed pricing) */}
           <section id="engagement-models" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.5
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -908,13 +908,13 @@ export default function AIValueEngineeringPracticePage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               {engagementModels.map((model, idx) => (
-                <div key={idx} className="p-5 rounded-xl bg-slate-900/70 border border-slate-200 flex flex-col justify-between">
+                <div key={idx} className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-400 hover:shadow-sm transition-all flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="font-mono text-xs font-bold text-blue-600 bg-blue-950/60 border border-blue-900/40 px-2 py-0.5 rounded">
+                      <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
                         {model.stage}
                       </span>
-                      <span className="font-mono text-xs text-slate-600">{model.duration}</span>
+                      <span className="font-mono text-xs text-slate-500">{model.duration}</span>
                     </div>
                     <h3 className="text-base font-bold text-slate-900 mb-2">{model.title}</h3>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -926,11 +926,11 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* Two Rules on Model Selection */}
-            <div className="p-4 sm:p-5 rounded-xl bg-white border-l-4 border-amber-500 border-t border-r border-b border-slate-200 space-y-2">
-              <h4 className="text-xs font-mono font-bold text-amber-300 uppercase tracking-wider">
+            <div className="p-4 sm:p-5 rounded-xl bg-amber-50/60 border-l-4 border-amber-500 border border-amber-200 space-y-2">
+              <h4 className="text-xs font-mono font-bold text-amber-900 uppercase tracking-wider">
                 Two rules on model selection
               </h4>
-              <ul className="text-xs sm:text-sm text-slate-600 space-y-1 list-disc list-inside">
+              <ul className="text-xs sm:text-sm text-slate-700 space-y-1 list-disc list-inside">
                 <li>Never sell a proof to a client whose real question is strategic — they will treat the proof as procrastination.</li>
                 <li>Never sell deployment before Framing is signed — a deployment without a frame is a build with no definition of done.</li>
               </ul>
@@ -940,7 +940,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.6: The five proofs */}
           <section id="proofs" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.6
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -956,26 +956,26 @@ export default function AIValueEngineeringPracticePage() {
             {/* 5 Proof Cards */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-14">
               {fiveProofs.map((proof) => (
-                <div key={proof.num} className="rounded-xl p-5 bg-slate-900/70 border border-slate-200 flex flex-col justify-between">
+                <div key={proof.num} className="rounded-xl p-5 bg-white border border-slate-200 shadow-xs hover:border-blue-400 hover:shadow-sm transition-all flex flex-col justify-between">
                   <div>
                     <div className="flex items-center justify-between mb-3">
                       <span className="font-mono text-base font-extrabold text-blue-600">{proof.num}</span>
-                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-800 text-slate-600">
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                         {proof.badge}
                       </span>
                     </div>
                     <h3 className="text-sm font-bold text-slate-900 mb-2">{proof.name}</h3>
-                    <p className="text-xs font-medium text-slate-700 mb-3 italic">
+                    <p className="text-xs font-medium text-slate-600 mb-3 italic">
                       &ldquo;{proof.question}&rdquo;
                     </p>
                     <p className="text-[11px] text-slate-600 leading-relaxed mb-4">
-                      <strong className="text-slate-600">Evidence:</strong> {proof.evidence}
+                      <strong className="text-slate-700">Evidence:</strong> {proof.evidence}
                     </p>
                   </div>
 
                   <div className="pt-3 border-t border-slate-200 space-y-1 text-[11px]">
-                    <span className="font-mono text-blue-600 block">{proof.stage}</span>
-                    <span className="text-slate-600 block font-normal">{proof.licenses}</span>
+                    <span className="font-mono text-blue-700 font-bold block">{proof.stage}</span>
+                    <span className="text-slate-500 block font-normal">{proof.licenses}</span>
                   </div>
                 </div>
               ))}
@@ -991,19 +991,19 @@ export default function AIValueEngineeringPracticePage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3 text-xs font-mono">
-                  <span className="flex items-center gap-1.5 text-emerald-600">
-                    <span className="w-2.5 h-2.5 rounded bg-emerald-500/20 border border-emerald-500 inline-block" /> Evidence produced
+                  <span className="flex items-center gap-1.5 text-emerald-700 font-semibold">
+                    <span className="w-2.5 h-2.5 rounded bg-emerald-100 border border-emerald-500 inline-block" /> Evidence produced
                   </span>
                   <span className="flex items-center gap-1.5 text-slate-600">
-                    <span className="w-2.5 h-2.5 rounded bg-slate-800 inline-block" /> Consumed or prepared
+                    <span className="w-2.5 h-2.5 rounded bg-slate-200 border border-slate-300 inline-block" /> Consumed or prepared
                   </span>
                 </div>
               </div>
 
-              <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white mb-6">
+              <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs mb-6">
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
-                    <tr className="bg-slate-900 border-b border-slate-200 text-slate-600 font-mono text-[11px] uppercase tracking-wider">
+                    <tr className="bg-slate-100 border-b border-slate-200 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
                       <th className="py-3 px-4 font-bold text-slate-900">Value stage ↓ / Proof →</th>
                       <th className="py-3 px-4">Proof of Concept</th>
                       <th className="py-3 px-4">Proof of Value</th>
@@ -1012,23 +1012,23 @@ export default function AIValueEngineeringPracticePage() {
                       <th className="py-3 px-4">Proof of Compounding</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800 text-slate-600">
+                  <tbody className="divide-y divide-slate-200 text-slate-600">
                     {focalMatrixRows.map((row, i) => (
-                      <tr key={i} className="hover:bg-slate-900/40 transition-colors">
+                      <tr key={i} className="hover:bg-slate-50/80 transition-colors">
                         <td className="py-3.5 px-4 font-semibold text-slate-900 bg-white whitespace-nowrap">{row.stage}</td>
-                        <td className={`py-3.5 px-4 ${row.poc.produced ? 'bg-emerald-950/30 text-emerald-300 font-bold border-l-2 border-emerald-500' : row.poc.na ? 'text-slate-600' : ''}`}>
+                        <td className={`py-3.5 px-4 ${row.poc.produced ? 'bg-emerald-50 text-emerald-800 font-bold border-l-2 border-emerald-500' : row.poc.na ? 'text-slate-400' : ''}`}>
                           {row.poc.text} {row.poc.produced && '★'}
                         </td>
-                        <td className={`py-3.5 px-4 ${row.pov.produced ? 'bg-emerald-950/30 text-emerald-300 font-bold border-l-2 border-emerald-500' : ''}`}>
+                        <td className={`py-3.5 px-4 ${row.pov.produced ? 'bg-emerald-50 text-emerald-800 font-bold border-l-2 border-emerald-500' : ''}`}>
                           {row.pov.text} {row.pov.produced && '★'}
                         </td>
-                        <td className={`py-3.5 px-4 ${row.pop.produced ? 'bg-emerald-950/30 text-emerald-300 font-bold border-l-2 border-emerald-500' : ''}`}>
+                        <td className={`py-3.5 px-4 ${row.pop.produced ? 'bg-emerald-50 text-emerald-800 font-bold border-l-2 border-emerald-500' : ''}`}>
                           {row.pop.text} {row.pop.produced && '★'}
                         </td>
-                        <td className={`py-3.5 px-4 ${row.porv.produced ? 'bg-emerald-950/30 text-emerald-300 font-bold border-l-2 border-emerald-500' : ''}`}>
+                        <td className={`py-3.5 px-4 ${row.porv.produced ? 'bg-emerald-50 text-emerald-800 font-bold border-l-2 border-emerald-500' : ''}`}>
                           {row.porv.text} {row.porv.produced && '★'}
                         </td>
-                        <td className={`py-3.5 px-4 ${row.pocomp.produced ? 'bg-emerald-950/30 text-emerald-300 font-bold border-l-2 border-emerald-500' : ''}`}>
+                        <td className={`py-3.5 px-4 ${row.pocomp.produced ? 'bg-emerald-50 text-emerald-800 font-bold border-l-2 border-emerald-500' : ''}`}>
                           {row.pocomp.text}
                         </td>
                       </tr>
@@ -1038,7 +1038,7 @@ export default function AIValueEngineeringPracticePage() {
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed italic">
-                <strong className="text-slate-600 not-italic">Why the model is shaped this way:</strong> PoC and PoV are produced in consecutive stages, which is why pilots feel fast and bank nothing. PoRV cannot be produced before month four, and PoComp cannot be produced inside the same cycle at all — it needs a second deployment to compare against. That is the structural reason compounding is rare: it is the only proof that cannot be manufactured within a single engagement.
+                <strong className="text-slate-900 not-italic">Why the model is shaped this way:</strong> PoC and PoV are produced in consecutive stages, which is why pilots feel fast and bank nothing. PoRV cannot be produced before month four, and PoComp cannot be produced inside the same cycle at all — it needs a second deployment to compare against. That is the structural reason compounding is rare: it is the only proof that cannot be manufactured within a single engagement.
               </p>
             </div>
           </section>
@@ -1046,7 +1046,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.7: Where value engineering sits in the stack */}
           <section id="stack" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.7
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -1058,7 +1058,7 @@ export default function AIValueEngineeringPracticePage() {
               The{' '}
               <Link
                 href="/methodology-engine"
-                className="text-blue-600 hover:text-blue-300 underline font-mono text-xs inline-flex items-center gap-1"
+                className="text-blue-600 hover:text-blue-700 underline font-mono text-xs inline-flex items-center gap-1"
               >
                 methodology engine <ArrowRight size={12} />
               </Link>{' '}
@@ -1098,12 +1098,12 @@ export default function AIValueEngineeringPracticePage() {
                   desc: 'Unit economics, banked ledger, compounding curve — this practice\'s home tier'
                 }
               ].map((t) => (
-                <div key={t.tier} className="p-4 rounded-xl bg-slate-900/70 border border-slate-200">
+                <div key={t.tier} className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-400 hover:shadow-sm transition-all">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-xs font-bold text-blue-600 bg-blue-950/60 border border-blue-900/40 px-2 py-0.5 rounded">
+                    <span className="font-mono text-xs font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded">
                       {t.tier}
                     </span>
-                    <span className="text-xs font-semibold text-slate-900">{t.name}</span>
+                    <span className="text-xs font-bold text-slate-900">{t.name}</span>
                   </div>
                   <p className="text-xs text-slate-600 leading-relaxed">{t.desc}</p>
                 </div>
@@ -1111,7 +1111,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* Compounding, by design */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-xs">
               <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-6 font-mono">
                 Compounding, by design
               </h3>
@@ -1141,7 +1141,7 @@ export default function AIValueEngineeringPracticePage() {
                 ].map((item, i) => (
                   <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
                     <div>
-                      <span className="text-xs font-mono font-bold text-blue-600 block mb-1">{item.year}</span>
+                      <span className="text-xs font-mono font-bold text-blue-700 block mb-1">{item.year}</span>
                       <h4 className="text-sm font-bold text-slate-900 mb-2">{item.stage}</h4>
                       <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
                     </div>
@@ -1154,7 +1154,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.8: What the client keeps */}
           <section id="what-client-keeps" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.8
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -1168,7 +1168,7 @@ export default function AIValueEngineeringPracticePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
               {clientKeeps.map((item, idx) => (
-                <div key={idx} className="p-5 rounded-xl bg-slate-900/70 border border-slate-200">
+                <div key={idx} className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-slate-300 transition-all">
                   <div className="flex items-center gap-2 mb-2">
                     <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
                     <h3 className="text-sm font-bold text-slate-900">{item.title}</h3>
@@ -1180,7 +1180,7 @@ export default function AIValueEngineeringPracticePage() {
               ))}
             </div>
 
-            <div className="p-4 rounded-xl bg-slate-50 border-l-4 border-emerald-500 border-t border-r border-b border-slate-200 text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <div className="p-4 rounded-xl bg-emerald-50/60 border-l-4 border-emerald-500 border border-emerald-200 text-xs sm:text-sm text-slate-700 leading-relaxed">
               <strong className="text-slate-900">Strict Assurance Exit Criteria:</strong> If any of the five is missing, the assurance stage does not close and the capability claim is withdrawn. That is a harder line than most practices take — and it is why the next engagement starts faster.
             </div>
           </section>
@@ -1188,7 +1188,7 @@ export default function AIValueEngineeringPracticePage() {
           {/* Section 4.9: Interfaces */}
           <section id="interfaces" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
-              <div className="px-2.5 py-1 rounded bg-blue-900/40 border border-blue-500/30 text-blue-600 font-mono text-xs font-bold">
+              <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold">
                 4.9
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
@@ -1197,8 +1197,8 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-              <div className="p-5 rounded-xl bg-slate-900/70 border border-slate-200">
-                <span className="text-xs font-mono font-bold text-blue-600 block mb-1">
+              <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded inline-block mb-2">
                   Division 2 · Section 5
                 </span>
                 <h3 className="text-base font-bold text-slate-900 mb-2">Horizontal functions</h3>
@@ -1207,8 +1207,8 @@ export default function AIValueEngineeringPracticePage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl bg-slate-900/70 border border-slate-200">
-                <span className="text-xs font-mono font-bold text-indigo-600 block mb-1">
+              <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded inline-block mb-2">
                   Division 3 · Section 6
                 </span>
                 <h3 className="text-base font-bold text-slate-900 mb-2">Industry verticals</h3>
@@ -1217,8 +1217,8 @@ export default function AIValueEngineeringPracticePage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-xl bg-slate-900/70 border border-slate-200">
-                <span className="text-xs font-mono font-bold text-emerald-600 block mb-1">
+              <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
+                <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded inline-block mb-2">
                   Section 3
                 </span>
                 <h3 className="text-base font-bold text-slate-900 mb-2">The value spine</h3>
@@ -1229,7 +1229,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             {/* Section 4 Footer Banner */}
-            <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-950/60 to-slate-900 border border-blue-800/40 text-center space-y-2">
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50/40 to-slate-50 border border-blue-200 text-center space-y-2">
               <h4 className="text-base font-bold text-slate-900">
                 Section 4 · AI Value Engineering Practice — Forward Deployment & Value Delivery
               </h4>
@@ -1237,7 +1237,7 @@ export default function AIValueEngineeringPracticePage() {
                 Runs on the{' '}
                 <Link
                   href="/methodology-engine"
-                  className="text-blue-600 hover:text-blue-300 underline font-semibold"
+                  className="text-blue-600 hover:text-blue-700 underline font-semibold"
                 >
                   TRUSTGRID methodology engine
                 </Link>{' '}
@@ -1247,7 +1247,7 @@ export default function AIValueEngineeringPracticePage() {
           </section>
 
           {/* Action CTAs */}
-          <section className="rounded-2xl bg-gradient-to-br from-blue-900/30 via-slate-900 to-slate-950 border border-blue-500/30 p-8 sm:p-12 text-center">
+          <section className="rounded-2xl bg-gradient-to-br from-blue-50 via-white to-indigo-50/60 border border-blue-200 shadow-sm p-8 sm:p-12 text-center">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-4">
               Ready to engineer defensible, compounding AI value?
             </h2>
@@ -1258,7 +1258,7 @@ export default function AIValueEngineeringPracticePage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/book-ai-diagnostic#diagnostic-form-section"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-slate-900 font-semibold text-sm transition-all shadow-lg shadow-blue-600/30"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-md shadow-blue-600/20"
               >
                 <span>Book AI Value Diagnostic</span>
                 <ArrowUpRight size={16} />
@@ -1266,7 +1266,7 @@ export default function AIValueEngineeringPracticePage() {
 
               <Link
                 href="/methodology-engine"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-700 font-semibold text-sm border border-slate-700 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-sm border border-slate-300 transition-all shadow-xs"
               >
                 <span>Explore Methodology Engine</span>
                 <ArrowRight size={16} />
@@ -1274,7 +1274,7 @@ export default function AIValueEngineeringPracticePage() {
 
               <Link
                 href="/talk-to-ai-architect?topic=ai-value-engineering#session-booking-section"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-transparent hover:bg-slate-800/60 text-blue-600 hover:text-slate-900 font-semibold text-sm border border-blue-500/30 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-white hover:bg-blue-50 text-blue-600 hover:text-blue-700 font-semibold text-sm border border-blue-200 transition-all shadow-xs"
               >
                 <span>Talk to an AI Architect</span>
                 <ArrowRight size={16} />

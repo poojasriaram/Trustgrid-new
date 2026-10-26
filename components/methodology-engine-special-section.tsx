@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -96,7 +96,7 @@ export function MethodologyEngineSpecialSection() {
       <div className="engine-diagram-box">
         <div className="diagram-top-label">
           <Workflow size={16} />
-          <span>TRUSTGRID.AI AI-DRIVEN METHODOLOGY IMPLEMENTATION ENGINE</span>
+          <span>TRUSTGRID.AI METHODOLOGY IMPLEMENTATION ENGINE</span>
         </div>
 
         <div className="diagram-flow-grid">
@@ -351,7 +351,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
       {activeTab === 'comparison' && (
         <div className="engine-comparison-wrapper">
           <div className="comp-matrix-intro">
-            <h3>Traditional Consulting vs. TRUSTGRID.AI AI-Driven Approach</h3>
+            <h3>Traditional Consulting vs. TRUSTGRID.AI Autonomous Engine</h3>
             <p>Why AI-driven methodology delivery represents a permanent, self-improving new category.</p>
           </div>
           <div className="table-responsive">
@@ -360,7 +360,7 @@ Year N Value = Year (N-1) Value × Compounding Factor`}
                 <tr>
                   <th style={{ width: '22%' }}>Dimension</th>
                   <th style={{ width: '38%' }}>Traditional Consulting</th>
-                  <th style={{ width: '40%' }}>TRUSTGRID.AI AI-Driven Engine</th>
+                  <th style={{ width: '40%' }}>TRUSTGRID.AI Autonomous Engine</th>
                 </tr>
               </thead>
               <tbody>

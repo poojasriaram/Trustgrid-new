@@ -538,7 +538,7 @@ export default function AIInfraEngineeringPage() {
               </a>
               <a
                 href="#lifecycle"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-300 hover:text-cyan-300 font-semibold text-sm transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 text-slate-600 hover:text-blue-600 font-semibold text-sm transition-colors"
               >
                 <span>7-Stage Lifecycle</span>
                 <ChevronDown size={16} />
@@ -547,48 +547,48 @@ export default function AIInfraEngineeringPage() {
           </div>
 
           {/* 7 Verified Capability Indicators Grid from Document */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-8 border-t border-slate-800/80">
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-cyan-500/40 transition-all overflow-hidden group">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-8 border-t border-slate-200">
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-cyan-500/40 hover:shadow-sm transition-all overflow-hidden group">
               <BorderBeam size={120} duration={7} colorFrom="#38bdf8" colorTo="#3b82f6" />
-              <span className="text-xl sm:text-2xl font-extrabold text-cyan-400 block mb-0.5 tracking-tight">50–500+ MW</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Campus Scale</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Hyperscale ready</span>
+              <span className="text-xl sm:text-2xl font-extrabold text-cyan-600 block mb-0.5 tracking-tight">50–500+ MW</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Campus Scale</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Hyperscale ready</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-emerald-500/40 transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-emerald-400 block mb-0.5 tracking-tight">PUE &lt;1.15</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Target Efficiency</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Liquid-cooled target</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-emerald-500/40 hover:shadow-sm transition-all overflow-hidden group">
+              <span className="text-xl sm:text-2xl font-extrabold text-emerald-600 block mb-0.5 tracking-tight">PUE &lt;1.15</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Target Efficiency</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Liquid-cooled target</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-blue-500/40 transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-blue-400 block mb-0.5 tracking-tight">30–120 kW+</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Rack Density</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">High-density GPU racks</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-500/40 hover:shadow-sm transition-all overflow-hidden group">
+              <span className="text-xl sm:text-2xl font-extrabold text-blue-600 block mb-0.5 tracking-tight">30–120 kW+</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Rack Density</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">High-density GPU racks</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-indigo-500/40 transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-indigo-400 block mb-0.5 tracking-tight">400G / 800G</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">AI Networking</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">InfiniBand / RoCEv2</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-indigo-500/40 hover:shadow-sm transition-all overflow-hidden group">
+              <span className="text-xl sm:text-2xl font-extrabold text-indigo-600 block mb-0.5 tracking-tight">400G / 800G</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">AI Networking</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">InfiniBand / RoCEv2</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-purple-500/40 transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-purple-400 block mb-0.5 tracking-tight">Liquid Cooling</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Direct &amp; Immersion</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">CDU &amp; cold-plate loops</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-purple-500/40 hover:shadow-sm transition-all overflow-hidden group">
+              <span className="text-xl sm:text-2xl font-extrabold text-purple-600 block mb-0.5 tracking-tight">Liquid Cooling</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Direct &amp; Immersion</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">CDU &amp; cold-plate loops</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-amber-500/40 transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-amber-400 block mb-0.5 tracking-tight">AI-DCIM</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">&amp; AIOps Telemetry</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Self-healing operations</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-amber-500/40 hover:shadow-sm transition-all overflow-hidden group">
+              <span className="text-xl sm:text-2xl font-extrabold text-amber-600 block mb-0.5 tracking-tight">AI-DCIM</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">&amp; AIOps Telemetry</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Self-healing operations</span>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-slate-900/80 border border-slate-800 backdrop-blur-md hover:border-teal-500/40 transition-all overflow-hidden group col-span-2 sm:col-span-1">
-              <span className="text-xl sm:text-2xl font-extrabold text-teal-400 block mb-0.5 tracking-tight">100% RE</span>
-              <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block">Green PPAs</span>
-              <span className="text-[10px] text-slate-200 mt-0.5 block font-medium">Solar, wind &amp; BESS</span>
+            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-teal-500/40 hover:shadow-sm transition-all overflow-hidden group col-span-2 sm:col-span-1">
+              <span className="text-xl sm:text-2xl font-extrabold text-teal-600 block mb-0.5 tracking-tight">100% RE</span>
+              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Green PPAs</span>
+              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Solar, wind &amp; BESS</span>
             </div>
           </div>
         </div>

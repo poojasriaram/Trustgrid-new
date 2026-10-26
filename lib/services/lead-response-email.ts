@@ -587,7 +587,8 @@ export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<L
     }
   }
 
-  const isConsulting = (lead.leadTypeCategory === 'CONSULTING SESSIONS') || 
+  const isConsulting = (lead.leadType === 'TALK_TO_ARCHITECT') ||
+                       (lead.leadTypeCategory === 'CONSULTING SESSIONS') || 
                        (lead.requirement && lead.requirement.toLowerCase().includes('consulting')) ||
                        (lead.pageUrl && (lead.pageUrl.includes('talk-to-ai-architect') || lead.pageUrl.includes('consulting'))) ||
                        (lead.formName && lead.formName.toLowerCase().includes('consulting'))
