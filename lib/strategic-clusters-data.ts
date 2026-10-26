@@ -295,7 +295,7 @@ export const strategicClustersData: StrategicCluster[] = [
       {
         title: 'Pre-Leasing & Anchor-Tenant Structuring',
         desc: 'Structuring institutional off-take agreements, anchor tenants & commercial terms.',
-        href: '/solutions/ai-value-engineering#job-plan-stages',
+        href: '/solutions/ai-value-engineering#job-plan-phases',
         icon: DollarSign
       },
       {

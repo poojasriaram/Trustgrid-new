@@ -1,4 +1,4 @@
-﻿export interface InsightArticle {
+export interface InsightArticle {
   id: string
   title: string
   category: 'Case Study' | 'Whitepaper' | 'Research' | 'Blog' | 'Open Innovation'
@@ -225,7 +225,7 @@ export const insightsArticles: InsightArticle[] = [
   {
     id: 'case-study-enterprise-ai-deployment',
     title: 'Enterprise AI Deployment: 10× Velocity Acceleration Across Regulated Environments',
-    subtitle: 'Deterministic Methodology Stage Gates, Full-Spectrum Architecture & Sovereign CI/CD',
+    subtitle: 'Deterministic Methodology Gates, Full-Spectrum Architecture & Sovereign CI/CD',
     category: 'Case Study',
     industryTag: 'Government & Regulated AI',
     readTime: '7 min read',

@@ -81,7 +81,7 @@ html {
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--tg-slate-900);
   background-color: var(--tg-slate-50);
 }
@@ -1692,9 +1692,9 @@ label,
 
 /* Mobile Responsive Optimization across all viewports (320px–768px) */
 @media (max-width: 768px) {
-  /* Prevent horizontal document overflow */
+  /* Prevent horizontal document overflow without breaking sticky */
   html, body {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     max-width: 100vw !important;
   }
 

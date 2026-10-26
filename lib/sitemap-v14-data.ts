@@ -1,4 +1,4 @@
-﻿// TRUSTGRID.AI COMPREHENSIVE & COMPLETE SITE MAP v14.0
+// TRUSTGRID.AI COMPREHENSIVE & COMPLETE SITE MAP v14.0
 // Final Expert Content Model — 5 Levels Deep
 // Structure: L1 Group > L2 Solution Area > L3 Engineering Area > L4 Offering > L5 Sub-Offering / Deliverables / Tech Stack
 
@@ -1306,7 +1306,7 @@ export const siteMapV14: {
                     'Integration with finance, risk & strategy'
                   ],
                   deliverables: [
-                    'AI Stage-Gate Capital Allocation Framework',
+                    'AI Gate Capital Allocation Framework',
                     'Hard Kill-Criteria & Initiative Pivoting Rules',
                     'Finance & Enterprise Risk Committee Integration Plan'
                   ],

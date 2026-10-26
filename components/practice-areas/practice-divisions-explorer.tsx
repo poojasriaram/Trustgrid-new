@@ -64,7 +64,7 @@ export const practiceDivisionsData: PracticeDivision[] = [
     num: '1',
     title: 'Engagement Models',
     shortLabel: 'Engagement Models',
-    sub: '5-Stage Proof · DBOT · Operating Model',
+    sub: '5-Phase Proof · DBOT · Operating Model',
     badge: 'OUTCOME-BASED DELIVERY',
     headerTitle: 'Outcome-Based Engagement Models & FDE Delivery',
     tagline: 'Commercially accountable delivery models tied directly to verified business impact and permanent capability transfer.',
@@ -74,7 +74,7 @@ export const practiceDivisionsData: PracticeDivision[] = [
     items: [
       {
         category: 'OUTCOME PROOF',
-        label: '5-Stage Outcome Proof Framework',
+        label: '5-Phase Outcome Proof Framework',
         href: '/practice-areas#engagement-models',
         desc: 'Deterministic progression where clients only commit to subsequent phases upon verified milestone delivery.',
         icon: CheckCircle2,
@@ -412,24 +412,26 @@ export const practiceDivisionsData: PracticeDivision[] = [
     num: '5',
     title: 'AI Value Engineering',
     shortLabel: 'AI Value Engineering',
-    sub: '5 Stages · 4 Engineers · 5 Proofs · Forward Deployed Pods',
+    sub: '4 Engineers · 5 Proofs · Forward Deployed Pods',
     badge: 'SECTION 4 · DIVISION 1',
     headerTitle: 'Division 1 · Delivery Practice: AI Value Engineering',
-    tagline: 'Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI. Five stages, four engineers, five proofs, one number Finance signs.',
+    tagline: 'Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI. Four engineers, five proofs, one number Finance signs.',
     ctaText: 'Explore AI Value Engineering Practice',
     ctaHref: '/practice-areas/ai-value-engineering',
     icon: TrendingUp,
     items: [
       {
         category: 'VALUE LIFECYCLE',
-        label: '5-Stage Value Lifecycle & Stage Gates',
+        label: 'Value Lifecycle & Gates',
         href: '/practice-areas/ai-value-engineering#lifecycle',
-        desc: 'Deterministic stage progression from Value Discovery and Framing to Production Delivery, Repeatable Realization and Value Assurance.',
+        desc: 'Deterministic progression from Value Discovery and Framing to Production Delivery, Repeatable Realization and Value Assurance.',
         icon: Workflow,
         bullets: [
-          'Stage 01 Discover & Stage 02 Design: P&L value pool sizing, binding constraints & frozen baselines',
-          'Stage 03 Deploy & Stage 04 Perform: Thinnest production path, unaided operator lift & 3 signed cycles',
-          'Stage 05 Prove: Complete versioned assurance dossier, control mapping & capability certification'
+          'Discover: P&L value pool sizing, binding constraints & KPI owner agreed',
+          'Design: Frozen baseline, pre-registered success threshold & total cost of ownership modelled',
+          'Deploy: Thinnest end-to-end production path, unaided operator lift & passing PoC/PoV gates',
+          'Perform: Habitual adoption, superseded process retired & 3 cycles signed by Finance',
+          'Prove: Complete versioned assurance dossier, control mapping & capability certification'
         ]
       },
       {

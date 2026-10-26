@@ -1,0 +1,37 @@
+# ==============================================================================
+# TRUSTGRID.AI — Apache / LiteSpeed Web Server Rewrite & Clean URL Configuration
+# Fixes 404 on page refresh for Next.js Static Export sites (e.g. /contact/, /about/)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Force Trailing Slash for sub-directories if missing
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !(.*)/$
+  RewriteRule ^(.*)$ $1/ [L,R=301]
+
+  # 2. Do not rewrite real existing files or directories
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 3. Check if directory has an index.html (e.g. /contact/ -> /contact/index.html)
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.*)/?$ $1/index.html [L]
+
+  # 4. Check if the URL with .html exists (e.g. /contact -> /contact.html)
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  # 5. Fallback to 404 custom page
+  ErrorDocument 404 /404.html
+</IfModule>
+
+# Security & Cache Headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

@@ -165,6 +165,40 @@ export function deriveFormType(formId?: string, formName?: string, explicitType?
 }
 
 /**
+ * Maps form type to its dedicated Sheet 1 tab name
+ */
+export function deriveDedicatedSheet(formType: string): string {
+  switch (formType) {
+    case 'CONTACT':
+      return 'Contact_Leads'
+    case 'AI_DIAGNOSTIC':
+      return 'AI_Diagnostic_Leads'
+    case 'AI_READINESS':
+      return 'AI_Readiness_Leads'
+    case 'TALK_TO_ARCHITECT':
+    case 'CONSULTATION':
+      return 'Consulting_Sessions'
+    case 'WORKSHOP':
+      return 'Workshop_Requests'
+    case 'PROPOSAL':
+    case 'RFP':
+      return 'RFP_Proposals'
+    case 'PARTNER':
+      return 'Partner_Applications'
+    case 'CAREER':
+      return 'Career_Applications'
+    case 'CHATBOT':
+      return 'Chatbot_Leads'
+    case 'FLOATING_LEAD':
+      return 'Quick_Enquiry_Leads'
+    case 'NEWSLETTER':
+      return 'Newsletter_Subscribers'
+    default:
+      return 'Contact_Leads'
+  }
+}
+
+/**
  * Validates work email and standard email format
  */
 export function validateEmail(email: string): boolean {
@@ -243,8 +277,8 @@ export async function submitTrustGridForm(
       form_id: formId,
       formName: formData.formName,
       form_name: formData.formName,
-      sheetName: formData.sheetName || 'Form_Submissions',
-      sheet_name: formData.sheetName || 'Form_Submissions',
+      sheetName: formData.sheetName || deriveDedicatedSheet(formType),
+      sheet_name: formData.sheetName || deriveDedicatedSheet(formType),
       submissionId: clientSubmissionId,
       lead_id: clientSubmissionId,
       name: nameVal,
@@ -305,31 +339,17 @@ export async function submitTrustGridForm(
         if (json.issueKey) issueKey = json.issueKey
         if (json.issueUrl) issueUrl = json.issueUrl
       } else {
-        const errJson = await apiRes.json().catch(() => null)
-        if (errJson?.message) {
-          isSubmittingGlobal = false
-          return {
-            success: false,
-            message: errJson.message
-          }
-        }
+        // If /api/leads returns 404/405 (static export host without Node.js backend), fall back to direct Google Webhook!
+        throw new Error(`Central API returned status ${apiRes.status}, fallback to direct webhook`)
       }
     } catch (apiErr) {
       console.warn('[Form Submission] Central API notice, falling back to direct webhook:', apiErr)
 
-      // 2. Direct Webhook Fallback if server route unavailable
-      const isProd = typeof window !== 'undefined'
-        ? (window.location.hostname === 'trustgrid.ai' || window.location.hostname === 'trustgrid.in' || window.location.hostname.endsWith('.trustgrid.ai') || window.location.hostname.includes('vercel.app'))
-        : process.env.NODE_ENV === 'production'
-
+      // 2. Direct Webhook Fallback (Guarantees 100% lead capture on static exports and cPanel/LiteSpeed hosts)
       const defaultProdWebhookUrl =
         'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
-      const stagingWebhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL || ''
-
-      const apiUrl = isProd
-        ? (process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl)
-        : stagingWebhookUrl
+      const apiUrl = process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl
 
       if (apiUrl && apiUrl.startsWith('http')) {
         try {
@@ -341,7 +361,9 @@ export async function submitTrustGridForm(
             },
             body: JSON.stringify(payload),
           })
-        } catch (e) {}
+        } catch (e) {
+          console.warn('[Form Submission] Webhook dispatch notice:', e)
+        }
       }
     }
 

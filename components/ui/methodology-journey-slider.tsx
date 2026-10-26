@@ -225,7 +225,7 @@ export function MethodologyJourneySlider() {
           {/* Left Column: Stage Objective & What Happens */}
           <div className="meth-left-col">
             <div className="meth-stage-head">
-              <span className="meth-badge-pill">ENGAGEMENT STAGE</span>
+              <span className="meth-badge-pill">ENGAGEMENT PHASE</span>
               <span className="meth-stage-sub">{current.subtitle}</span>
             </div>
 

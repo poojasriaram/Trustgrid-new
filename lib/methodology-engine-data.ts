@@ -229,7 +229,7 @@ export const engineStages: StageData[] = [
     number: "04",
     name: "AUTOMATE",
     subtitle: "Agentic AI Continuous Operation",
-    whatIsUnique: "This is the stage that no other organization in the world delivers. TRUSTGRID.AI deploys Operational AI Agent Fleets that continuously execute activated methodologies — not as one-time projects, but as permanently operating intelligent systems. Traditional OpEx = temporary projects. TRUSTGRID.AI OpEx = 24/7 operating systems.",
+    whatIsUnique: "This is the phase that no other organization in the world delivers. TRUSTGRID.AI deploys Operational AI Agent Fleets that continuously execute activated methodologies — not as one-time projects, but as permanently operating intelligent systems. Traditional OpEx = temporary projects. TRUSTGRID.AI OpEx = 24/7 operating systems.",
     agentFleetName: "Methodology Operating Agent Fleets",
     agents: [],
     operatingAgents: [
@@ -392,7 +392,7 @@ export const engineStages: StageData[] = [
     number: "06",
     name: "ACCELERATE",
     subtitle: "Continuous Value Compounding & Expansion",
-    whatIsUnique: "The final stage is not a conclusion — it is an exponential launchpad. TRUSTGRID.AI's Agentic AI engine continuously identifies adjacent opportunities to expand methodology scope, deepen automation, and compound value. Each improvement cycle fuels the next.",
+    whatIsUnique: "The final phase is not a conclusion — it is an exponential launchpad. TRUSTGRID.AI's Agentic AI engine continuously identifies adjacent opportunities to expand methodology scope, deepen automation, and compound value. Each improvement cycle fuels the next.",
     agentFleetName: "Acceleration & Expansion Agents",
     agents: [
       {
@@ -470,12 +470,12 @@ export const industryApplications: IndustryApplication[] = [
       "Cost-to-serve optimization agents (per-product, per-channel, per-segment cost tracking)"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1 — 3 methodologies)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt (Literacy + Kata)", duration: "16 weeks" },
-      { stage: "Stage 6: Accelerate (Continuous)", duration: "Ongoing (quarterly compounding)" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1 — 3 methodologies)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt (Literacy + Kata)", duration: "16 weeks" },
+      { stage: "Accelerate (Continuous)", duration: "Ongoing (quarterly compounding)" }
     ],
     totalToFirstValue: "48–56 weeks",
     complexity: "High"
@@ -503,12 +503,12 @@ export const industryApplications: IndustryApplication[] = [
       "Regulatory reporting automation agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt", duration: "16 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt", duration: "16 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "48–56 weeks",
     complexity: "High"
@@ -536,12 +536,12 @@ export const industryApplications: IndustryApplication[] = [
       "Drug adverse event detection and pharmacovigilance reporting agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "8 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "20 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "16 weeks" },
-      { stage: "Stage 5: Adopt", duration: "20 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "8 weeks" },
+      { stage: "Implement (Phase 1)", duration: "20 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "16 weeks" },
+      { stage: "Adopt", duration: "20 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "60–72 weeks",
     complexity: "Very High"
@@ -569,12 +569,12 @@ export const industryApplications: IndustryApplication[] = [
       "Energy consumption and sustainability optimization agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt", duration: "16 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt", duration: "16 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "48–56 weeks",
     complexity: "High"
@@ -602,12 +602,12 @@ export const industryApplications: IndustryApplication[] = [
       "Raw material quality spectroscopy assessment agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "8 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "20 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "16 weeks" },
-      { stage: "Stage 5: Adopt", duration: "20 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "8 weeks" },
+      { stage: "Implement (Phase 1)", duration: "20 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "16 weeks" },
+      { stage: "Adopt", duration: "20 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "60–72 weeks",
     complexity: "Very High"
@@ -635,12 +635,12 @@ export const industryApplications: IndustryApplication[] = [
       "Carbon footprint monitoring and ESG compliance agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "8 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "20 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "16 weeks" },
-      { stage: "Stage 5: Adopt", duration: "20 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "8 weeks" },
+      { stage: "Implement (Phase 1)", duration: "20 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "16 weeks" },
+      { stage: "Adopt", duration: "20 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "60–72 weeks",
     complexity: "Very High"
@@ -668,12 +668,12 @@ export const industryApplications: IndustryApplication[] = [
       "Revenue assurance and billing leakage audit agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt", duration: "16 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt", duration: "16 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "48–56 weeks",
     complexity: "High"
@@ -701,12 +701,12 @@ export const industryApplications: IndustryApplication[] = [
       "Store labor scheduling and front-of-house replenishment agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt", duration: "12 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt", duration: "12 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "44–52 weeks",
     complexity: "Medium-High"
@@ -734,12 +734,12 @@ export const industryApplications: IndustryApplication[] = [
       "Supplier scorecards and automated tier-n risk assessment agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "8 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "16 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "12 weeks" },
-      { stage: "Stage 5: Adopt", duration: "16 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "8 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "16 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "12 weeks" },
+      { stage: "Adopt", duration: "16 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "48–56 weeks",
     complexity: "High"
@@ -767,12 +767,12 @@ export const industryApplications: IndustryApplication[] = [
       "Transparency audit and open-records reporting automation agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "12 weeks" },
-      { stage: "Stage 2: Architect", duration: "8 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "20 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "16 weeks" },
-      { stage: "Stage 5: Adopt", duration: "20 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "12 weeks" },
+      { stage: "Architect", duration: "8 weeks" },
+      { stage: "Implement (Phase 1)", duration: "20 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "16 weeks" },
+      { stage: "Adopt", duration: "20 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "64–80 weeks",
     complexity: "Very High"
@@ -800,12 +800,12 @@ export const industryApplications: IndustryApplication[] = [
       "Continuous vulnerability scanning and automated remediation agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "4 weeks" },
-      { stage: "Stage 2: Architect", duration: "4 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "12 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "8 weeks" },
-      { stage: "Stage 5: Adopt", duration: "12 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "4 weeks" },
+      { stage: "Architect", duration: "4 weeks" },
+      { stage: "Implement (Phase 1)", duration: "12 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "8 weeks" },
+      { stage: "Adopt", duration: "12 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "32–40 weeks",
     complexity: "Medium"
@@ -833,12 +833,12 @@ export const industryApplications: IndustryApplication[] = [
       "Airworthiness certification compliance documentation automation agents"
     ],
     timeline: [
-      { stage: "Stage 1: Diagnose", duration: "12 weeks" },
-      { stage: "Stage 2: Architect", duration: "8 weeks" },
-      { stage: "Stage 3: Implement (Phase 1)", duration: "24 weeks" },
-      { stage: "Stage 4: Automate (Phase 1 agent fleets)", duration: "20 weeks" },
-      { stage: "Stage 5: Adopt", duration: "24 weeks" },
-      { stage: "Stage 6: Accelerate", duration: "Ongoing" }
+      { stage: "Diagnose", duration: "12 weeks" },
+      { stage: "Architect", duration: "8 weeks" },
+      { stage: "Implement (Phase 1)", duration: "24 weeks" },
+      { stage: "Automate (Phase 1 agent fleets)", duration: "20 weeks" },
+      { stage: "Adopt", duration: "24 weeks" },
+      { stage: "Accelerate", duration: "Ongoing" }
     ],
     totalToFirstValue: "76–88 weeks",
     complexity: "Extreme"
@@ -865,7 +865,7 @@ export const engagementModels: EngagementModelData[] = [
     number: "01",
     title: "AI-Driven Diagnostic",
     duration: "4–8 weeks",
-    scope: "Full Stage 1 (Diagnose) — AI agent fleet deployment for enterprise-wide diagnostics, maturity assessment, constraint analysis, value opportunity identification, and methodology activation roadmap generation.",
+    scope: "Full Diagnostic — AI agent fleet deployment for enterprise-wide diagnostics, maturity assessment, constraint analysis, value opportunity identification, and methodology activation roadmap generation.",
     deliverables: [
       "AI-Generated Diagnostic Intelligence Report",
       "AI Maturity Assessment across six dimensions",
@@ -881,7 +881,7 @@ export const engagementModels: EngagementModelData[] = [
     number: "02",
     title: "AI-Driven Rapid Value Sprint",
     duration: "12–16 weeks",
-    scope: "Stages 1–3 for a focused scope — diagnose, architect, and implement 2–3 highest-priority methodologies with AI acceleration, including initial agent fleet deployment.",
+    scope: "Initial Diagnostic to Implementation for a focused scope — diagnose, architect, and implement 2–3 highest-priority methodologies with AI acceleration, including initial agent fleet deployment.",
     deliverables: [
       "Diagnostic Intelligence Report (focused scope)",
       "Transformation Architecture for 2–3 methodologies",
@@ -896,7 +896,7 @@ export const engagementModels: EngagementModelData[] = [
     number: "03",
     title: "Full AI-Driven Enterprise Transformation",
     duration: "12–24 weeks to first compounding value, then ongoing",
-    scope: "All six stages — full Diagnose, Architect, Implement, Automate, Adopt, and Accelerate — across the entire enterprise with the complete TRUSTGRID.AI AI-Driven Methodology Engine.",
+    scope: "All six pillars — full Diagnose, Architect, Implement, Automate, Adopt, and Accelerate — across the entire enterprise with the complete TRUSTGRID.AI AI-Driven Methodology Engine.",
     deliverables: [
       "Everything in Diagnostic and Rapid Value Sprint",
       "Full methodology activation across all priority operational domains",
@@ -946,7 +946,7 @@ export const engagementModels: EngagementModelData[] = [
       "Pre-configured industry methodology blueprint",
       "Industry-specific agent fleets (e.g. GMP batch review, AML monitoring, flight SPC)",
       "Sector benchmarking and regulatory compliance mapping",
-      "Full 6-stage execution with accelerated time-to-value"
+      "Full execution with accelerated time-to-value"
     ],
     idealFor: "Organizations in regulated or specialized sectors (Banking, Healthcare, Pharma, Discrete Mfg, Utilities, Aerospace) seeking battle-tested, domain-tailored AI operational excellence."
   }

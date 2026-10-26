@@ -188,7 +188,7 @@ export const functionalPractices: PracticeArea[] = [
       'Independent AI Architectural & Codebase Reviews',
       'Algorithmic Bias, Safety, and Robustness Stress Testing',
       'Commercial Vendor & Technology Due Diligence',
-      'Governance Milestone Verification and Stage-Gate Protocols',
+      'Governance Milestone Verification and Gate Protocols',
       'Pre-Production Security and Resilience Red-Teaming'
     ],
     referenceArchitecture: {
@@ -205,7 +205,7 @@ export const functionalPractices: PracticeArea[] = [
       'Independent Architectural Assurance Report with Risk Heatmap',
       'Algorithmic Vulnerability & Bias Audit Certificate',
       'Vendor Benchmark & SLA Verification Assessment',
-      'Milestone Stage-Gate Sign-off Documentation for Audit Committees'
+      'Milestone Gate Sign-off Documentation for Audit Committees'
     ],
     technologiesAndStandards: [
       'LangSmith, DeepEval, RAGAS, TruLens',
@@ -1332,13 +1332,13 @@ export const crossCuttingCapabilities: PracticeArea[] = [
       'Formal technical transfer audits and internal team autonomy certification'
     ],
     referenceArchitecture: {
-      title: 'Four-Stage Capability Transfer Model',
+      title: 'Capability Transfer Model',
       description: 'Progressive autonomy framework transitioning operational responsibility from TRUSTGRID.AI to internal engineering leads.',
       phases: [
-        { name: 'Stage 1: Foundation & Shadowing', detail: 'TRUSTGRID.AI leads engineering; client teams shadow, review PRs, and attend daily standups.' },
-        { name: 'Stage 2: Paired Co-Engineering', detail: 'Client engineers co-author core modules and deployment scripts under TRUSTGRID.AI mentorship.' },
-        { name: 'Stage 3: Supervised Handover', detail: 'Client leads execute production deployments, triage incidents, and operate the platform.' },
-        { name: 'Stage 4: Autonomous Sovereignty', detail: 'Full client ownership with TRUSTGRID.AI transitioning to advisory and board review.' }
+        { name: 'Foundation & Shadowing', detail: 'TRUSTGRID.AI leads engineering; client teams shadow, review PRs, and attend daily standups.' },
+        { name: 'Paired Co-Engineering', detail: 'Client engineers co-author core modules and deployment scripts under TRUSTGRID.AI mentorship.' },
+        { name: 'Supervised Handover', detail: 'Client leads execute production deployments, triage incidents, and operate the platform.' },
+        { name: 'Autonomous Sovereignty', detail: 'Full client ownership with TRUSTGRID.AI transitioning to advisory and board review.' }
       ]
     },
     deliverables: [
@@ -1564,7 +1564,7 @@ export const engagementModelCards: EngagementModelCard[] = [
   {
     id: 'diagnostic',
     title: 'Executive AI Architecture Diagnostic',
-    stageBadge: 'STAGE 1 • DISCOVERY & EVALUATION',
+    stageBadge: 'DISCOVERY & EVALUATION',
     duration: '2–4 Weeks',
     idealFor: 'Enterprises needing clear technical & financial evaluation before large capital deployment.',
     keyFocus: 'Objective architectural audit of GPU clusters, inference latency, agent readiness, security postures, and unit-economic spend leaks.',
@@ -1582,7 +1582,7 @@ export const engagementModelCards: EngagementModelCard[] = [
   {
     id: 'sprint',
     title: 'Forward Deployment & Value Realization Sprints',
-    stageBadge: 'STAGE 2 • RAPID PRODUCTION',
+    stageBadge: 'RAPID PRODUCTION',
     duration: '4–8 Weeks',
     idealFor: 'Deploying high-stakes production AI models or agent swarms with rapid time-to-value.',
     keyFocus: 'Embedded engineering squad unblocking critical bottlenecks: latency compression, model containerization, and legacy ERP integration.',
@@ -1600,7 +1600,7 @@ export const engagementModelCards: EngagementModelCard[] = [
   {
     id: 'co-engineering',
     title: 'Strategic Co-Engineering Partnership',
-    stageBadge: 'STAGE 3 • COLLABORATIVE SCALE',
+    stageBadge: 'COLLABORATIVE SCALE',
     duration: '3–12 Months',
     idealFor: 'Building long-term internal AI capability while delivering complex multi-agent platforms.',
     keyFocus: 'Paired engineering transfer: our systems leads pair directly with client developers to build proprietary IP and internal factory autonomy.',
@@ -1618,7 +1618,7 @@ export const engagementModelCards: EngagementModelCard[] = [
   {
     id: 'turnkey',
     title: 'Turnkey AI Factory & Managed DBOT (Design, Build, Operate, Transfer)',
-    stageBadge: 'STAGE 4 • FULL-SPECTRUM SOVEREIGNTY',
+    stageBadge: 'FULL-SPECTRUM SOVEREIGNTY',
     duration: 'Multi-Year SLA / DBOT',
     idealFor: 'Sovereign private AI data centers, high-density compute facilities, and air-gapped agent operations.',
     keyFocus: 'Complete single-contract accountability: from power substations and liquid cooling to cluster orchestration and 24/7 managed NOC/SOC.',

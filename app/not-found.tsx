@@ -39,7 +39,7 @@ export default function NotFound() {
     },
     {
       title: 'AI Value Engineering',
-      desc: '5-Stage proof framework, 4-engineer pods, and CFO-audited ROI realization.',
+      desc: 'Outcome proof framework, 4-engineer pods, and CFO-audited ROI realization.',
       href: '/practice-areas/ai-value-engineering',
       badge: 'Delivery Practice',
       icon: TrendingUp

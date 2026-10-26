@@ -31,10 +31,10 @@ import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
 
 export default function AIValueEngineeringPracticePage() {
-  const [activeStage, setActiveStage] = useState<number>(0)
+  const [activePhase, setActivePhase] = useState<number>(0)
   const [selectedTech, setSelectedTech] = useState<string | null>(null)
 
-  const stagesData = [
+  const phasesData = [
     {
       num: '01',
       id: 'discover',
@@ -241,7 +241,7 @@ export default function AIValueEngineeringPracticePage() {
       name: 'Proof of Concept (PoC)',
       question: 'Can it work at all, on our data, in our building?',
       evidence: 'Task-level accuracy on a representative sample; failure taxonomy documented; long tail visible; physical constraints measured',
-      stage: 'Produced in Design stage',
+      stage: 'Produced in Design',
       licenses: 'Licenses spend on Framing and Deploy — nothing more',
       badge: 'FEASIBILITY'
     },
@@ -250,7 +250,7 @@ export default function AIValueEngineeringPracticePage() {
       name: 'Proof of Value (PoV)',
       question: 'Does it pay, here?',
       evidence: 'Locked baseline; control or matched cohort; identical metric both sides; confidence interval; decision on the lower bound',
-      stage: 'Produced in Deploy stage',
+      stage: 'Produced in Deploy',
       licenses: 'Licenses deployment and an in-flight benefit',
       badge: 'ECONOMIC LIFT'
     },
@@ -259,7 +259,7 @@ export default function AIValueEngineeringPracticePage() {
       name: 'Proof of Performance (PoP)',
       question: 'Does it hold at production standard?',
       evidence: 'SLOs attained; p95 and p99 latency; accuracy by segment; adversarial input; rollback tested; security and safety reviewed',
-      stage: 'Produced in Deploy stage',
+      stage: 'Produced in Deploy',
       licenses: 'Licenses operation and handover to a run team',
       badge: 'PRODUCTION HARDENING'
     },
@@ -268,7 +268,7 @@ export default function AIValueEngineeringPracticePage() {
       name: 'Proof of Recurring Value (PoRV)',
       question: 'Does it pay every cycle?',
       evidence: 'Three consecutive finance-signed cycles; adoption at activated and habitual use; attrition tracked; old process retired',
-      stage: 'Produced in Perform stage',
+      stage: 'Produced in Perform',
       licenses: 'Licenses a run-rate claim and the removal of the pilot label',
       badge: 'RUN-RATE'
     },
@@ -384,7 +384,7 @@ export default function AIValueEngineeringPracticePage() {
 
             <p className="text-base sm:text-lg lg:text-xl text-slate-600 max-w-4xl leading-relaxed font-normal mb-8">
               Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI. 
-              Five stages, four engineers, five proofs, one number Finance signs.
+              Four engineers, five proofs, one number Finance signs.
             </p>
 
             {/* Quick Stats Pill Bar */}
@@ -460,30 +460,30 @@ export default function AIValueEngineeringPracticePage() {
             </div>
           </section>
 
-          {/* Section 4.1: The value lifecycle — five stages, five gates */}
+          {/* Section 4.1: The value lifecycle — five gates */}
           <section id="lifecycle" className="mb-20 scroll-mt-24">
             <div className="flex items-center gap-3 mb-4">
               <div className="px-2.5 py-1 rounded bg-blue-50 border border-blue-200 text-blue-700 font-mono text-xs font-bold shadow-2xs">
                 4.1
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-                The value lifecycle — five stages, five gates
+                The value lifecycle — five gates
               </h2>
             </div>
             
             <p className="text-slate-600 text-sm sm:text-base mb-8 max-w-4xl">
-              Every engagement runs the same five stages in the same order, whether it lasts six weeks or four quarters. 
-              The stage names are the client&apos;s language, not ours. Each stage exits on a signature, not a consensus.
+              Every engagement runs the same five gates in the same order, whether it lasts six weeks or four quarters. 
+              The names are the client&apos;s language, not ours. Each gate exits on a signature, not a consensus.
             </p>
 
-            {/* 5 Stages Interactive Grid */}
+            {/* 5 Gates Interactive Grid */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-10">
-              {stagesData.map((stage, idx) => {
-                const isSelected = activeStage === idx
+              {phasesData.map((phase, idx) => {
+                const isSelected = activePhase === idx
                 return (
                   <div
-                    key={stage.id}
-                    onClick={() => setActiveStage(idx)}
+                    key={phase.id}
+                    onClick={() => setActivePhase(idx)}
                     className={`cursor-pointer rounded-xl p-5 border transition-all duration-200 flex flex-col justify-between ${
                       isSelected
                         ? 'bg-blue-50/80 border-blue-600 shadow-sm ring-1 ring-blue-600/30'
@@ -495,13 +495,13 @@ export default function AIValueEngineeringPracticePage() {
                         <span className={`font-mono text-xs font-extrabold px-2 py-0.5 rounded ${
                           isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 border border-slate-200'
                         }`}>
-                          STAGE {stage.num}
+                          {phase.num}
                         </span>
-                        <span className="text-[11px] font-mono text-slate-500 font-medium">{stage.title}</span>
+                        <span className="text-[11px] font-mono text-slate-500 font-medium">{phase.title}</span>
                       </div>
-                      <h3 className="text-base font-bold text-slate-900 mb-2">{stage.subtitle}</h3>
+                      <h3 className="text-base font-bold text-slate-900 mb-2">{phase.subtitle}</h3>
                       <p className="text-xs text-slate-600 leading-relaxed mb-4">
-                        <strong className="text-blue-600">Objective:</strong> {stage.objective}
+                        <strong className="text-blue-600">Objective:</strong> {phase.objective}
                       </p>
                     </div>
 
@@ -510,7 +510,7 @@ export default function AIValueEngineeringPracticePage() {
                         Gate Exit
                       </span>
                       <span className="text-xs text-slate-700 font-medium">
-                        {stage.exitGate}
+                        {phase.exitGate}
                       </span>
                     </div>
                   </div>
@@ -518,24 +518,24 @@ export default function AIValueEngineeringPracticePage() {
               })}
             </div>
 
-            {/* Selected Stage Detail Panel */}
+            {/* Selected Detail Panel */}
             <div className="bg-white border border-slate-200 rounded-xl p-6 mb-12 shadow-xs">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded">
-                    STAGE {stagesData[activeStage].num} DEEP-DIVE
+                    {phasesData[activePhase].title.toUpperCase()} DEEP-DIVE
                   </span>
                   <h4 className="text-lg font-bold text-slate-900">
-                    {stagesData[activeStage].subtitle} ({stagesData[activeStage].title})
+                    {phasesData[activePhase].subtitle} ({phasesData[activePhase].title})
                   </h4>
                 </div>
                 <span className="text-xs font-mono text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                  {stagesData[activeStage].exitGate}
+                  {phasesData[activePhase].exitGate}
                 </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                {stagesData[activeStage].deliverables.map((item, i) => (
+                {phasesData[activePhase].deliverables.map((item, i) => (
                   <div key={i} className="flex items-start gap-2.5 bg-slate-50 border border-slate-200 rounded-lg p-3.5">
                     <CheckCircle2 size={15} className="text-blue-600 shrink-0 mt-0.5" />
                     <span className="text-xs sm:text-sm text-slate-700 leading-snug">{item}</span>
@@ -544,13 +544,13 @@ export default function AIValueEngineeringPracticePage() {
               </div>
             </div>
 
-            {/* 4 Workstreams Running Through Every Stage */}
+            {/* 4 Workstreams Running Across All Disciplines */}
             <div className="mb-12">
               <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">
-                Workstreams running through every stage
+                Workstreams running across all disciplines
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 mb-5">
-                Four workstreams run in parallel, not in sequence. Serial phases are the largest single cause of elapsed time in enterprise technology programmes.
+                Four workstreams run in parallel, not in sequence. Serial handoffs are the largest single cause of elapsed time in enterprise technology programmes.
               </p>
 
               <div className="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-xs">
@@ -591,7 +591,7 @@ export default function AIValueEngineeringPracticePage() {
               </div>
               
               <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mb-6">
-                Acceleration is not a sixth stage and not a separate offering. It is what happens when the five stages run faster on each lap — because the assets are reusable, the evidence carries forward, and decisions are made in the room.
+                Acceleration is not a separate offering. It is what happens when the delivery runs faster on each lap — because the assets are reusable, the evidence carries forward, and decisions are made in the room.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -903,7 +903,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             <p className="text-slate-600 text-sm sm:text-base mb-8 max-w-4xl">
-              Six shapes, each entering the lifecycle at a different stage. Choosing the wrong one is the most common commercial error: a proof sold to a client who needs a decision, or a diagnostic sold to a client who has already decided.
+              Six shapes, each entering the lifecycle at a different entry point. Choosing the wrong one is the most common commercial error: a proof sold to a client who needs a decision, or a diagnostic sold to a client who has already decided.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -949,7 +949,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             <p className="text-slate-600 text-sm sm:text-base mb-8 max-w-4xl leading-relaxed">
-              The proofs are the practice&apos;s evidence standard and the engine&apos;s stage gates in practice. 
+              The proofs are the practice&apos;s evidence standard and the engine&apos;s gates in practice. 
               They escalate: each answers a harder question, and each is a gate to the next. All five are required; none can be skipped by asserting the one below it.
             </p>
 
@@ -987,7 +987,7 @@ export default function AIValueEngineeringPracticePage() {
                 <div>
                   <h3 className="text-lg sm:text-xl font-bold text-slate-900">The Focal Value Creation Model</h3>
                   <p className="text-xs text-slate-600">
-                    Operating model of the practice: Rows are value stages; columns are proofs.
+                    Operating model of the practice: Rows are value disciplines; columns are proofs.
                   </p>
                 </div>
                 <div className="flex items-center gap-3 text-xs font-mono">
@@ -1004,7 +1004,7 @@ export default function AIValueEngineeringPracticePage() {
                 <table className="w-full text-left text-xs sm:text-sm border-collapse">
                   <thead>
                     <tr className="bg-slate-100 border-b border-slate-200 text-slate-700 font-mono text-[11px] uppercase tracking-wider">
-                      <th className="py-3 px-4 font-bold text-slate-900">Value stage ↓ / Proof →</th>
+                      <th className="py-3 px-4 font-bold text-slate-900">Value discipline ↓ / Proof →</th>
                       <th className="py-3 px-4">Proof of Concept</th>
                       <th className="py-3 px-4">Proof of Value</th>
                       <th className="py-3 px-4">Proof of Performance</th>
@@ -1038,7 +1038,7 @@ export default function AIValueEngineeringPracticePage() {
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed italic">
-                <strong className="text-slate-900 not-italic">Why the model is shaped this way:</strong> PoC and PoV are produced in consecutive stages, which is why pilots feel fast and bank nothing. PoRV cannot be produced before month four, and PoComp cannot be produced inside the same cycle at all — it needs a second deployment to compare against. That is the structural reason compounding is rare: it is the only proof that cannot be manufactured within a single engagement.
+                <strong className="text-slate-900 not-italic">Why the model is shaped this way:</strong> PoC and PoV are produced in consecutive progression, which is why pilots feel fast and bank nothing. PoRV cannot be produced before month four, and PoComp cannot be produced inside the same cycle at all — it needs a second deployment to compare against. That is the structural reason compounding is rare: it is the only proof that cannot be manufactured within a single engagement.
               </p>
             </div>
           </section>
@@ -1163,7 +1163,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             <p className="text-slate-600 text-sm sm:text-base mb-8 max-w-4xl">
-              Transfer is not a closing slide. At the end of the fifth stage the client holds, demonstrably:
+              Transfer is not a closing slide. At the end of the engagement the client holds, demonstrably:
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -1181,7 +1181,7 @@ export default function AIValueEngineeringPracticePage() {
             </div>
 
             <div className="p-4 rounded-xl bg-emerald-50/60 border-l-4 border-emerald-500 border border-emerald-200 text-xs sm:text-sm text-slate-700 leading-relaxed">
-              <strong className="text-slate-900">Strict Assurance Exit Criteria:</strong> If any of the five is missing, the assurance stage does not close and the capability claim is withdrawn. That is a harder line than most practices take — and it is why the next engagement starts faster.
+              <strong className="text-slate-900">Strict Assurance Exit Criteria:</strong> If any of the five is missing, the assurance gate does not close and the capability claim is withdrawn. That is a harder line than most practices take — and it is why the next engagement starts faster.
             </div>
           </section>
 
@@ -1203,7 +1203,7 @@ export default function AIValueEngineeringPracticePage() {
                 </span>
                 <h3 className="text-base font-bold text-slate-900 mb-2">Horizontal functions</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  The pod delivers GRC, ESG, data integration or CIO operations through the same five stages and five proofs. The function supplies domain content; the pod supplies delivery and evidence.
+                  The pod delivers GRC, ESG, data integration or CIO operations through the same five proofs. The function supplies domain content; the pod supplies delivery and evidence.
                 </p>
               </div>
 
@@ -1223,7 +1223,7 @@ export default function AIValueEngineeringPracticePage() {
                 </span>
                 <h3 className="text-base font-bold text-slate-900 mb-2">The value spine</h3>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  The ledger entry produced at stage four is the same object the enterprise spine defines. This section is where that object is manufactured.
+                  The ledger entry produced is the same object the enterprise spine defines. This section is where that object is manufactured.
                 </p>
               </div>
             </div>
@@ -1241,7 +1241,7 @@ export default function AIValueEngineeringPracticePage() {
                 >
                   TRUSTGRID methodology engine
                 </Link>{' '}
-                · deterministic stage gates · compounding value
+                · deterministic gates · compounding value
               </p>
             </div>
           </section>
@@ -1252,7 +1252,7 @@ export default function AIValueEngineeringPracticePage() {
               Ready to engineer defensible, compounding AI value?
             </h2>
             <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto mb-8">
-              Engage an elite forward-deployed pod to run the five stages, pass the five proofs, and deliver a number Finance signs.
+              Engage an elite forward-deployed pod to pass the five proofs and deliver a number Finance signs.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

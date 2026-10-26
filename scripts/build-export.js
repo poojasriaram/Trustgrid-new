@@ -8,25 +8,44 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 
 const origConfig = fs.readFileSync('next.config.mjs', 'utf8');
-const moves = [
-  ['app/api', 'app/_api_temp'],
-  ['app/auth', 'app/_auth_temp'],
-  ['app/linkedin', 'app/_linkedin_temp']
-];
+
+function findRouteFiles(dir) {
+  let list = [];
+  if (!fs.existsSync(dir)) return list;
+  for (const item of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, item.name);
+    if (item.isDirectory()) {
+      list.push(...findRouteFiles(full));
+    } else if (item.name === 'route.ts' || item.name === 'route.js') {
+      list.push(full);
+    }
+  }
+  return list;
+}
+
+const targetDirs = ['app/api', 'app/auth', 'app/linkedin'];
+let movedFiles = [];
 
 console.log('=== [1/5] Isolating dynamic server API routes for static export ===');
-for (const [src, dst] of moves) {
-  if (fs.existsSync(src)) {
-    fs.renameSync(src, dst);
-    console.log(`  ✓ Temporarily moved ${src} -> ${dst}`);
+for (const dir of targetDirs) {
+  const routes = findRouteFiles(dir);
+  for (const r of routes) {
+    const backup = r + '.temp_bak';
+    try {
+      fs.renameSync(r, backup);
+      movedFiles.push([r, backup]);
+      console.log(`  ✓ Temporarily renamed ${r} -> ${backup}`);
+    } catch (e) {
+      console.warn(`  ⚠ Warning renaming ${r}: ${e.message}`);
+    }
   }
 }
 
 try {
-  console.log('=== [2/5] Configuring static export in next.config.mjs ===');
   const exportConfig = `/** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
+  trailingSlash: true,
   typescript: {
     ignoreBuildErrors: true,
   },
@@ -53,10 +72,14 @@ export default nextConfig
   fs.writeFileSync('next.config.mjs', origConfig, 'utf8');
   console.log('  ✓ Restored next.config.mjs');
 
-  for (const [src, dst] of moves) {
-    if (fs.existsSync(dst)) {
-      fs.renameSync(dst, src);
-      console.log(`  ✓ Restored ${dst} -> ${src}`);
+  for (const [orig, backup] of movedFiles) {
+    if (fs.existsSync(backup)) {
+      try {
+        fs.renameSync(backup, orig);
+        console.log(`  ✓ Restored ${orig}`);
+      } catch (e) {
+        console.error(`  ❌ Failed restoring ${orig}: ${e.message}`);
+      }
     }
   }
 }
@@ -67,21 +90,30 @@ if (fs.existsSync('dist')) {
   fs.rmSync('dist', { recursive: true, force: true });
 }
 fs.cpSync('out', 'dist', { recursive: true });
+if (fs.existsSync('public/.htaccess')) {
+  fs.copyFileSync('public/.htaccess', 'dist/.htaccess');
+  console.log('  ✓ Preserved public/.htaccess in dist/.htaccess');
+}
 console.log('  ✓ Synchronized out/ -> dist/');
 
-// 2. Package TGVX3-23-10-2026.tar
-const tarName = 'TGVX3-23-10-2026.tar';
-const tarAltName = 'TGV3-23-10-2026.tar';
+// 2. Package today's production deliverables
+const now = new Date();
+const dd = String(now.getDate()).padStart(2, '0');
+const mm = String(now.getMonth() + 1).padStart(2, '0');
+const yyyy = now.getFullYear();
+const todayDateStr = `${dd}-${mm}-${yyyy}`;
 
-if (fs.existsSync(tarName)) fs.unlinkSync(tarName);
-if (fs.existsSync(tarAltName)) fs.unlinkSync(tarAltName);
+const primaryTar = `TGVX3-${todayDateStr}.tar`;
 
-execSync(`tar -C dist -cf ${tarName} .`);
-fs.copyFileSync(tarName, tarAltName);
-fs.copyFileSync(tarName, 'TGVX3-22-10-2026.tar');
+if (fs.existsSync(primaryTar)) fs.unlinkSync(primaryTar);
 
-const stat = fs.statSync(tarName);
-console.log(`  ✓ Created ${tarName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
-console.log(`  ✓ Created ${tarAltName} (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
-console.log(`  ✓ Created TGVX3-22-10-2026.tar (${(stat.size / (1024 * 1024)).toFixed(2)} MB)`);
+console.log(`  ✓ Archiving dist/ into ${primaryTar}...`);
+execSync(`tar -C dist -cf ${primaryTar} .`);
+fs.copyFileSync(primaryTar, 'TGVX3-28-10-2026.tar');
+
+const stat = fs.statSync(primaryTar);
+const sizeMB = (stat.size / (1024 * 1024)).toFixed(2);
+console.log(`  ✓ Created ${primaryTar} (${sizeMB} MB)`);
+console.log(`  ✓ Created TGVX3-28-10-2026.tar (${sizeMB} MB)`);
 console.log('✅ All production deliverables successfully generated and verified!');
+

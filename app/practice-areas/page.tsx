@@ -820,12 +820,12 @@ export default function PracticeAreasPage() {
             ))}
           </div>
 
-          {/* 5-Stage Delivery Cadence Pathway */}
+          {/* 5-Phase Delivery Cadence Pathway */}
           <div className="pt-8 border-t border-slate-200">
             <div className="text-center max-w-2xl mx-auto mb-10">
               <span className="badge badge-accent">Chronological Delivery Cadence</span>
               <h3 className="text-2xl font-bold text-slate-900 mt-2">
-                Five-Stage Delivery Cadence
+                Five-Phase Delivery Cadence
               </h3>
               <p className="text-slate-600 text-xs mt-1">
                 From initial zero-footprint diagnostic to full operational sovereignty under Turnkey DBOT.
@@ -833,21 +833,21 @@ export default function PracticeAreasPage() {
             </div>
 
             <div className="pa-pathway-grid">
-              {engagementPathway.map((stage, idx) => (
+              {engagementPathway.map((phase, idx) => (
                 <div key={idx} className="pa-pathway-card">
                   <div className="pa-pathway-header">
-                    <span className="pa-pathway-number">{stage.step}</span>
-                    <span className="pa-pathway-timeline">{stage.timeline}</span>
+                    <span className="pa-pathway-number">{phase.step}</span>
+                    <span className="pa-pathway-timeline">{phase.timeline}</span>
                   </div>
                   <h4 className="text-sm font-bold text-slate-900 mt-3 mb-2">
-                    {stage.title}
+                    {phase.title}
                   </h4>
                   <p className="text-slate-600 text-xs leading-relaxed mb-4">
-                    {stage.description}
+                    {phase.description}
                   </p>
                   <div className="pa-pathway-outcome">
                     <span className="text-[10px] text-slate-500 uppercase font-mono block">Key Output:</span>
-                    <span className="text-xs font-semibold text-blue-700">{stage.outcome}</span>
+                    <span className="text-xs font-semibold text-blue-700">{phase.outcome}</span>
                   </div>
                 </div>
               ))}

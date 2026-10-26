@@ -63,7 +63,7 @@ import { AiInfraMegaMenu, MobileAiInfraAccordion } from '@/components/ui/ai-infr
 const aiInfraMenuItems = [
   {
     id: 'lifecycle',
-    label: '7-Stage Lifecycle',
+    label: 'Turnkey Infrastructure Lifecycle',
     desc: 'Turnkey site selection, power, build, commissioning & ops',
     icon: Layers
   },
@@ -521,7 +521,7 @@ export const aiValueThematicGroups: ThematicGroup[] = [
         id: 'ai-value-engineering-practice',
         href: '/practice-areas/ai-value-engineering',
         label: 'AI Value Engineering Practice',
-        desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families',
+        desc: '4 engineers, 5 proofs, one number Finance signs across 7 tech families',
         icon: TrendingUp
       },
       {
@@ -623,8 +623,8 @@ export const aiValueThematicGroups: ThematicGroup[] = [
       {
         category: 'DELIVERY STANDARDS',
         id: 'job-plan',
-        href: '/solutions/ai-value-engineering#job-plan-stages',
-        label: '70-Year AI-VE Job Plan (8 Stages)',
+        href: '/solutions/ai-value-engineering#job-plan',
+        label: '70-Year AI-VE Job Plan',
         desc: 'SAVE International standard re-engineered with AI: Info to Audit',
         icon: Zap
       },
@@ -1147,7 +1147,7 @@ const practiceAreasFiveSections = [
     num: '4',
     title: 'Engagement Models',
     shortLabel: 'Engagement Models',
-    sub: '5-Stage Proof · DBOT · Gain-Share · Private Cloud',
+    sub: 'Outcome Proof · DBOT · Gain-Share · Private Cloud',
     badge: 'OUTCOME-BASED DELIVERY',
     headerTitle: 'Outcome-Based Engagement Models & Turnkey Delivery',
     tagline: 'Commercially accountable delivery models tied directly to verified business impact & capability transfer.',
@@ -1162,7 +1162,7 @@ const practiceAreasFiveSections = [
         items: [
           {
             category: 'OUTCOME PROOF',
-            label: '5-Stage Outcome Proof Framework',
+            label: 'Outcome Proof Framework',
             href: '/practice-areas/ai-value-engineering',
             desc: 'Deterministic progression from validation to enterprise scale, with fees tied to milestones.',
             icon: CheckCircle2
@@ -1246,7 +1246,7 @@ const practiceAreasFiveSections = [
     num: '5',
     title: 'AI Value Engineering',
     shortLabel: 'AI Value Engineering',
-    sub: '5 Stages · 4 Engineers · 5 Proofs · Forward Deployed Pods',
+    sub: '4 Engineers · 5 Proofs · Forward Deployed Pods',
     badge: 'SECTION 4 · DIVISION 1',
     headerTitle: 'Division 1 · Delivery Practice: AI Value Engineering',
     tagline: 'Forward deployment for value delivery — across agents, data, robotics, IoT, RPA, DLT and physical AI.',
@@ -1255,29 +1255,43 @@ const practiceAreasFiveSections = [
     icon: TrendingUp,
     categories: [
       {
-        title: '5 Stages & 5 Gates',
+        title: 'Value Lifecycle & Gates',
         badge: 'VALUE LIFECYCLE',
         icon: Workflow,
         items: [
           {
-            category: 'DISCOVER & DESIGN',
-            label: 'Stage 01–02: Value Discovery & Framing',
+            category: 'DISCOVER',
+            label: 'Value Discovery',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'P&L value pool sizing, binding constraints, frozen baselines & pre-registered thresholds.',
+            desc: 'P&L value pool sizing, binding constraints, and KPI owner identification.',
             icon: Target
           },
           {
-            category: 'DEPLOY & PERFORM',
-            label: 'Stage 03–04: Delivery & Repeatable Realization',
+            category: 'DESIGN',
+            label: 'Value Framing',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'Thinnest end-to-end production path, unaided operator lift, and 3 consecutive Finance-signed cycles.',
+            desc: 'Frozen baselines, pre-registered success thresholds, and full TCO modeling.',
+            icon: Compass
+          },
+          {
+            category: 'DEPLOY',
+            label: 'Value Delivery',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Thinnest production path, unaided operator lift, and passing PoC/PoV gates.',
             icon: CheckCircle2
           },
           {
-            category: 'PROVE & ACCELERATE',
-            label: 'Stage 05: Value Assurance & Acceleration',
+            category: 'PERFORM',
+            label: 'Repeatable Realization',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'Audit-ready assurance dossier, 3 acceleration levers (reusable assets, parallel stages, one owner).',
+            desc: 'Habitual adoption, superseded process retired, and 3 cycles signed by Finance.',
+            icon: TrendingUp
+          },
+          {
+            category: 'PROVE',
+            label: 'Value Assurance',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Audit-ready assurance dossier, control mapping, and certified client operations.',
             icon: ShieldCheck
           }
         ]
@@ -1348,45 +1362,52 @@ export const aiValueFiveSections = [
     id: 'framework',
     title: 'Delivery Frameworks',
     shortLabel: 'Frameworks',
-    badge: '5-STAGE LIFECYCLE',
+    badge: 'VALUE LIFECYCLE',
     headerTitle: 'AI Value Engineering Practice & Delivery Pods',
-    tagline: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families.',
+    tagline: '4 engineers, 5 proofs, one number Finance signs across 7 tech families.',
     ctaText: 'Explore Practice Blueprint →',
     ctaHref: '/practice-areas/ai-value-engineering',
     icon: TrendingUp,
     categories: [
       {
-        title: '5 Stages & 5 Gates',
+        title: 'Value Lifecycle & Gates',
         badge: 'VALUE LIFECYCLE',
         icon: Workflow,
         items: [
           {
-            category: 'DISCOVER & DESIGN',
-            label: 'Stage 01–02: Value Discovery & Framing',
+            category: 'DISCOVER',
+            label: 'Value Discovery',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'P&L value pool sizing, binding constraints, frozen baselines & pre-registered thresholds.',
+            desc: 'P&L value pool sizing, binding constraints, and KPI owner identification.',
             icon: Target
           },
           {
-            category: 'DEPLOY & PERFORM',
-            label: 'Stage 03–04: Delivery & Realization',
+            category: 'DESIGN',
+            label: 'Value Framing',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'Thinnest end-to-end production path, unaided operator lift, and 3 consecutive Finance-signed cycles.',
+            desc: 'Frozen baselines, pre-registered success thresholds, and full TCO modeling.',
+            icon: Compass
+          },
+          {
+            category: 'DEPLOY',
+            label: 'Value Delivery',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Thinnest production path, unaided operator lift, and passing PoC/PoV gates.',
             icon: CheckCircle2
           },
           {
-            category: 'PROVE & ACCELERATE',
-            label: 'Stage 05: Value Assurance',
+            category: 'PERFORM',
+            label: 'Repeatable Realization',
             href: '/practice-areas/ai-value-engineering#lifecycle',
-            desc: 'Audit-ready assurance dossier, 3 acceleration levers (reusable assets, parallel stages, one owner).',
-            icon: ShieldCheck
+            desc: 'Habitual adoption, superseded process retired, and 3 cycles signed by Finance.',
+            icon: TrendingUp
           },
           {
-            category: 'DELIVERY PRACTICE',
-            label: 'AI Value Engineering Practice',
-            href: '/practice-areas/ai-value-engineering',
-            desc: '5 stages, 4 engineers, 5 proofs, one number Finance signs across 7 tech families.',
-            icon: TrendingUp
+            category: 'PROVE',
+            label: 'Value Assurance',
+            href: '/practice-areas/ai-value-engineering#lifecycle',
+            desc: 'Audit-ready assurance dossier, control mapping, and certified client operations.',
+            icon: ShieldCheck
           }
         ]
       },
@@ -1715,9 +1736,9 @@ export const aiValueFiveSections = [
         icon: Zap,
         items: [
           {
-            category: 'JOB PLAN STAGES',
-            label: '8-Stage Standard: Info to Audit',
-            href: '/solutions/ai-value-engineering#job-plan-stages',
+            category: 'JOB PLAN STANDARD',
+            label: 'SAVE Standard: Info to Audit',
+            href: '/solutions/ai-value-engineering#job-plan',
             desc: 'SAVE International standard re-engineered with AI: Information, Function Analysis, Creative, Evaluation, Development, Presentation, Implementation, Audit.',
             icon: Zap
           },
@@ -2993,6 +3014,7 @@ export function SiteHeader() {
     <header
       ref={headerRef}
       className={`site-header ${scrolled ? 'site-header-scrolled' : ''}`}
+      style={{ position: 'sticky', top: 0, zIndex: 1000 }}
     >
       <Link className="brand" href="/" aria-label="TRUSTGRID.AI home" onClick={closeAll}>
         <img src={logoUrl} alt="TRUSTGRID.AI" width="90" height="75" fetchPriority="high" />
@@ -3966,7 +3988,7 @@ export function SiteHeader() {
                     { label: 'Engineering Practices', category: 'PRACTICE AREAS', desc: 'Silicon, high-density compute, lossless fabrics & agent swarms', href: '/practice-areas#primary-categories', icon: Cpu },
                     { label: 'Functional Practices', category: 'PRACTICE AREAS', desc: '15 horizontal disciplines: GRC, RevOps, supply chain & finance', href: '/practice-areas#primary-categories', icon: Workflow },
                     { label: 'Industry Practices', category: 'PRACTICE AREAS', desc: '8 specialized industry practices delivering deterministic solutions', href: '/practice-areas#primary-categories', icon: Building2 },
-                    { label: 'Engagement Models', category: 'PRACTICE AREAS', desc: '5-Stage proof, DBOT delivery, gain-share & capacity pods', href: '/practice-areas#engagement-models', icon: Boxes },
+                    { label: 'Engagement Models', category: 'PRACTICE AREAS', desc: 'Outcome proof, DBOT delivery, gain-share & capacity pods', href: '/practice-areas#engagement-models', icon: Boxes },
                     { label: 'AI Data Center & Compute Factory', category: 'PRACTICE', desc: 'GPU clusters, ASIC accelerators, power distribution & liquid cooling', href: '/practice-areas/ai-infrastructure-high-density-compute', icon: Cpu },
                     { label: 'Lossless AI Networking & Fabrics', category: 'PRACTICE', desc: 'Ultra-low latency RoCEv2, InfiniBand & telemetry for zero-drop workloads', href: '/practice-areas/ai-native-networking-systems-integration', icon: Activity },
                     { label: 'Distributed Agent Swarms & Mesh', category: 'PRACTICE', desc: 'Production-grade multi-agent swarms with deterministic execution', href: '/practice-areas/agentic-ai-multi-agent-orchestration', icon: Network },
