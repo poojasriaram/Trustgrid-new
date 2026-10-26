@@ -52,16 +52,43 @@ export async function createLinkedInJiraLead(lead: JiraLeadInput): Promise<JiraD
   const phone = lead.phone || 'Not Provided'
   const message = lead.message || 'Expressed interest via LinkedIn API Integration.'
 
-  // Required exact summary & description format
-  const summary = `New LinkedIn Lead - ${company}`
-  const description = `Name: ${lead.name}
-Email: ${lead.email}
-Company: ${company}
-Phone: ${phone}
-Message: ${message}
-Source: ${source}
-Service: ${service}
-Website: ${website}`
+  const isTest = lead.source?.toLowerCase().includes('test') || lead.name.toLowerCase().includes('test') || lead.company.toLowerCase().includes('test')
+  const summary = isTest
+    ? `[TEST LEAD] Lead - ${lead.name}`
+    : (company ? `Lead - ${lead.name} - ${company}` : `Lead - ${lead.name}`)
+
+  const defaultSheetUrl = process.env.GOOGLE_SPREADSHEET_URL ||
+    'https://docs.google.com/spreadsheets/d/1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0/edit'
+
+  const descParts: string[] = []
+
+  // LEAD INFORMATION
+  const infoParts: string[] = []
+  if (lead.name) infoParts.push(`Name: ${lead.name}`)
+  if (lead.email) infoParts.push(`Email: ${lead.email}`)
+  if (phone && phone !== 'Not Provided') infoParts.push(`Phone: ${phone}`)
+  if (company && company !== 'Enterprise Partner') infoParts.push(`Company: ${company}`)
+  if (infoParts.length > 0) descParts.push(`LEAD INFORMATION\n\n${infoParts.join('\n')}`)
+
+  // ENQUIRY
+  const enquiryParts: string[] = []
+  enquiryParts.push(`Subject: LinkedIn Inbound - ${service}`)
+  if (message) enquiryParts.push(`Requirement: ${message}`)
+  if (enquiryParts.length > 0) descParts.push(`ENQUIRY\n\n${enquiryParts.join('\n')}`)
+
+  // SOURCE
+  const sourceParts: string[] = []
+  if (source) sourceParts.push(`Lead Source: ${source}`)
+  sourceParts.push(`Form: LinkedIn Integration`)
+  if (sourceParts.length > 0) descParts.push(`SOURCE\n\n${sourceParts.join('\n')}`)
+
+  // LINKS
+  const linkParts: string[] = []
+  linkParts.push(`Google Sheet Record: ${defaultSheetUrl}`)
+  if (lead.leadId) linkParts.push(`Website Submission ID: ${lead.leadId}`)
+  if (linkParts.length > 0) descParts.push(`LINKS\n\n${linkParts.join('\n')}`)
+
+  const description = descParts.join('\n\n')
 
   if (!apiToken || !apiToken.trim()) {
     console.warn('[Jira Service] JIRA_API_TOKEN is not configured. Running in simulated fallback mode.')

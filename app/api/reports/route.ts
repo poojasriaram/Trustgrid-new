@@ -25,8 +25,8 @@ export async function GET(req: NextRequest) {
 
     if (reportType === 'audit' || reportType === 'leads') {
       const allLeads = await getConsolidatedLeads()
-      const realLeads = allLeads.filter(l => l.leadTypeCategory === 'PRODUCTION')
-      const testLeads = allLeads.filter(l => l.leadTypeCategory === 'TEST')
+      const realLeads = allLeads.filter(l => !l.isTestLead)
+      const testLeads = allLeads.filter(l => l.isTestLead)
 
       return NextResponse.json({
         success: true,

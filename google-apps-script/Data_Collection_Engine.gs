@@ -109,376 +109,179 @@ var SCHEMA_95_HEADERS = [
   "js_error_message", "api_error_message", "http_status_code", "cpu_cores", "memory_size", "tab_visibility_status", "back_button_used", "copy_event", "paste_event", "rage_click_detected", "user_segment", "timestamp"
 ];
 
+var STANDARDIZED_LEAD_HEADERS = [
+  "Timestamp", "Lead Name", "Email", "Phone", "Company",
+  "Lead Source", "Form Name", "Subject", "Requirement", "JIRA Link", "Status"
+];
+
 var TAB_CONFIGS = {
-  // Dedicated Master Tab for all Consulting Sessions
-  "Consulting_Sessions": [
-    "Submission ID", "Name", "Email", "Company", "Role / Designation", "Phone",
-    "Service / Focus", "Requirement / Message", "Source", "Page URL",
-    "Status", "Timestamp"
-  ],
-  // Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
+  // 1. Master Consolidated Form Submissions Log (11 Standardized Columns)
+  "Form_Submissions": STANDARDIZED_LEAD_HEADERS,
+
+  // 2. Master 95-Column Live Behavioral Telemetry for TRUSTGRID.AI
   "Live_Traffic_Events": SCHEMA_95_HEADERS,
 
-  // 1. Primary Inbound & Enterprise Contact Leads
-  "Contact_Leads": [
-    "Submission ID", "Name", "Email", "Company", "Designation", "Phone",
-    "Subject", "Service Interest", "Message", "Source",
-    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
-  ],
-
-  // 2. AI Diagnostic Assessments
-  "AI_Diagnostic_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Company Name", "Company Size", "Primary AI Stack",
-    "Governance Priority", "Timeline", "Phone", "Source",
-    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
-  ],
-
-  // 3. AI Readiness Assessments
-  "AI_Readiness_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Company Name", "Designation", "Infrastructure Model",
-    "Key Challenges", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
-  ],
-
-  // 4. Executive Workshop Requests
-  "Workshop_Requests": [
-    "Submission ID", "Name", "Work Email", "Company", "Team Size", "Preferred Focus Area",
-    "Timeline", "Message", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 5. RFP & Enterprise Proposals
-  "RFP_Proposals": [
-    "Submission ID", "Name", "Email", "Organization", "Project Scope", "Estimated Budget", "Target Deadline", "Requirements",
-    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 6. Talk to AI Architect & Technical Inquiries
-  "Talk_To_Architect": [
-    "Submission ID", "Name", "Work Email", "Company", "Phone", "Architecture Query", "Preferred Time",
-    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 7. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
-  "Form_Consultation_Bookings": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Designation / Role", "Transformation Interest", "Annual Revenue", "Primary Challenge", "Target Timeline",
-    "Message / Scope", "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 8. Profit Pool Discovery Diagnostics (DiscoveryPage.tsx)
-  "Form_Diagnostic_Assessments": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Industry", "Current Revenue", "Primary Leakage Area", "Estimated Leakage",
-    "Diagnostic Score", "Answers Summary", "Message",
-    "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 9. Quick Diagnostics & General Inbound Leads
-  "Form_Inbound_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Interest / Solution", "Annual Revenue", "Timeline", "Primary Challenge",
-    "Source", "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 10. Partner Applications (Partners.tsx)
-  "Partner_Applications": [
-    "Submission ID", "Name", "Work Email", "Company", "Partner Type", "Region", "Proposal",
-    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-  "Form_Partner_Applications": [
-    "Submission ID", "Name", "Work Email", "Phone", "Company Name",
-    "Partner Type", "Primary Region", "Value Proposition / Proposal",
-    "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 11. Career Applications (Career.tsx)
-  "Career_Applications": [
-    "Submission ID", "Name", "Email", "Phone", "Job Title / Role", "Resume File Name", "Resume Drive Link", "Drive File ID", "Cover Letter",
-    "Portfolio / GitHub", "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-  "Form_Career_Applications": [
-    "Submission ID", "Full Name", "Email", "Phone", "Role Applied",
-    "Experience Level", "Portfolio / LinkedIn", "Resume Drive Link", "Drive File ID",
-    "Cover Note / Message", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 12. Chatbot Virtual Assistant Inquiries (ChatBot.tsx)
-  "Chatbot_Leads": [
-    "Submission ID", "Name", "Email", "Phone", "Topic / Intent", "Conversation Summary",
-    "UTM Source", "UTM Medium", "UTM Campaign", "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-  "Form_Chatbot_Conversations": [
-    "Submission ID", "Name", "Email", "Phone", "Company",
-    "Topic / Intent", "Chat Summary", "Source",
-    "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 13. Floating Lead / Quick Enquiry Form
-  "Quick_Enquiry_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name",
-    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
-  ],
-
-  // 14. LinkedIn Inbound Lead Channel
-  "LinkedIn_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Company Name", "Phone",
-    "Requirement / Inquiry", "Source", "UTM Source", "UTM Medium", "UTM Campaign",
-    "Status", "IP Location", "IP Address", "Variant", "Timestamp"
-  ],
-
-  // 15. Newsletter Subscribers
-  "Newsletter_Subscribers": [
-    "Email", "IP Location", "IP Address", "Source", "UTM Source", "UTM Campaign", "Timestamp"
-  ],
-
-  // 16. Google Ad Leads
-  "Google_Ad_Leads": [
-    "Submission ID", "Full Name", "Work Email", "Phone", "Company Name", "Requirement",
-    "UTM Source", "UTM Medium", "UTM Campaign", "UTM Term", "UTM Content",
-    "Status", "IP Location", "IP Address", "Organization", "Variant", "Timestamp"
-  ],
-
-  // 17. Consolidated Form Submissions Master Log
-  "Form_Submissions": [
-    "Submission ID", "Form Name", "Name", "Email", "Company", "Role", "Phone",
-    "Message / Details", "Resume Drive Link", "Drive File ID",
-    "UTM Source", "UTM Campaign", "IP Location", "IP Address", "Timestamp"
-  ],
-
-  // 18. PRODUCTION LEAD PRESERVATION & AUDIT ARCHIVE
-  "Archived_Test_Leads": [
-    "Timestamp", "Original Tab", "Lead ID", "LeadType", "Full Name",
-    "Business Email", "Phone / Mobile", "Company Name", "Reason Moved", "Row Data JSON"
-  ],
-
-  // 9. Page Views Telemetry
-  "Page_Views": [
-    "Session ID", "Visitor ID", "Page Path", "Page Title", "Referrer", "Traffic Source",
-    "UTM Source", "UTM Medium", "UTM Campaign", "Device", "Browser", "OS", "IP Location", "Timestamp"
-  ],
-
-  // 10. Sessions Telemetry
-  "Sessions": [
-    "Session ID", "Visitor ID", "Landing Page", "Referrer", "Traffic Source",
-    "UTM Source", "UTM Campaign", "Device", "Browser", "OS", "Screen Size", "IP Location", "Timestamp"
-  ],
-
-  // 11. CTA & Interaction Clicks
-  "CTA_Clicks": [
-    "Session ID", "Visitor ID", "CTA Name", "Destination URL", "Section", "Page Path", "Device", "Timestamp"
-  ],
-
-  // 12. Sessions Intelligence (Advanced Lifecycle, Bounces, Geo, Duration)
-  "Sessions_Intelligence": [
-    "Session ID", "User ID", "Start Time (UTC)", "Last Activity (UTC)", "Duration (Sec)",
-    "Pages Visited", "Entry Page", "Exit Page", "Traffic Channel", "Campaign",
-    "Country", "City", "Timezone", "Masked IP", "Bounce", "Converted", "User Type", "Timestamp"
-  ],
-
-  // 13. Traffic Attribution (Multi-touch, Channels, UTMs, Referrers)
-  "Traffic_Attribution": [
-    "Timestamp (UTC)", "Session ID", "User ID", "Channel", "Source", "Medium",
-    "Campaign", "Term", "Content", "Referrer Domain", "Landing Page", "Converted"
-  ],
-
-  // 14. Geo Intelligence (Enriched Geographic & Network Mapping)
-  "Geo_Intelligence": [
-    "Timestamp (UTC)", "Masked IP", "Country", "Country Code", "Region", "City",
-    "Latitude", "Longitude", "Timezone", "ISP", "Organization", "ASN"
-  ],
-
-  // 15. Network Security Intelligence (Forensics, Severity, Threat Scans)
-  "Network_Security_Log": [
-    "Timestamp (UTC)", "Masked IP", "Threat Category", "Severity", "Description",
-    "Target Path", "Blocked", "Action Taken"
-  ]
+  // 3. Isolated Test & QA Leads Archive (11 Standardized Columns)
+  "Archived_Test_Leads": STANDARDIZED_LEAD_HEADERS
 };
 
 // Aliases mapping incoming form sheetNames to canonical tab names
+// Routes ALL form submissions exclusively to Form_Submissions, and ALL traffic to Live_Traffic_Events
 var SHEET_NAME_ALIASES = {
-  "consultingsessions": "Consulting_Sessions",
-  "consulting_sessions": "Consulting_Sessions",
-  "consultingsession": "Consulting_Sessions",
-  "consulting": "Consulting_Sessions",
-  // TrustGrid Intelligence Dimensions
-  "sessions_intelligence": "Sessions_Intelligence",
-  "sessionsintelligence": "Sessions_Intelligence",
-  "session_intelligence": "Sessions_Intelligence",
-  "sessionsintel": "Sessions_Intelligence",
-  "traffic_attribution": "Traffic_Attribution",
-  "trafficattribution": "Traffic_Attribution",
-  "attribution": "Traffic_Attribution",
-  "geo_intelligence": "Geo_Intelligence",
-  "geointelligence": "Geo_Intelligence",
-  "geointel": "Geo_Intelligence",
-  "geo": "Geo_Intelligence",
-  "network_security_log": "Network_Security_Log",
-  "networksecuritylog": "Network_Security_Log",
-  "security_log": "Network_Security_Log",
-  "securitylog": "Network_Security_Log",
-  "security_events": "Network_Security_Log",
-  "securityevents": "Network_Security_Log",
+  // Master Form Submissions - All Inbound Lead Forms map exclusively to Form_Submissions
+  "formsubmissions": "Form_Submissions",
+  "form_submissions": "Form_Submissions",
+  "formsubmission": "Form_Submissions",
+  "submissions": "Form_Submissions",
+  "consultingsessions": "Form_Submissions",
+  "consulting_sessions": "Form_Submissions",
+  "consultingsession": "Form_Submissions",
+  "consulting": "Form_Submissions",
+  "contact": "Form_Submissions",
+  "contactleads": "Form_Submissions",
+  "contact_leads": "Form_Submissions",
+  "contactform": "Form_Submissions",
+  "contact_form": "Form_Submissions",
+  "leads": "Form_Submissions",
+  "lead": "Form_Submissions",
+  "global_lead_form": "Form_Submissions",
+  "form": "Form_Submissions",
+  "forminboundleads": "Form_Submissions",
+  "form_inbound_leads": "Form_Submissions",
+  "inboundleads": "Form_Submissions",
+  "inbound_leads": "Form_Submissions",
+  "inbound": "Form_Submissions",
+  "bookforconsultation": "Form_Submissions",
+  "book_for_consultation": "Form_Submissions",
+  "bookforconsulting": "Form_Submissions",
+  "book_for_consulting": "Form_Submissions",
+  "consultation": "Form_Submissions",
+  "consultationbookings": "Form_Submissions",
+  "consultation_bookings": "Form_Submissions",
+  "formconsultationbookings": "Form_Submissions",
+  "form_consultation_bookings": "Form_Submissions",
+  "demo": "Form_Submissions",
+  "bookdemo": "Form_Submissions",
+  "book_demo": "Form_Submissions",
+  "strategysession": "Form_Submissions",
+  "strategy_session": "Form_Submissions",
+  "talktoarchitect": "Form_Submissions",
+  "talk_to_architect": "Form_Submissions",
+  "talktoexpert": "Form_Submissions",
+  "talk_to_expert": "Form_Submissions",
+  "expert": "Form_Submissions",
+  "expertconsulting": "Form_Submissions",
+  "expert_consulting": "Form_Submissions",
+  "formexpertconsulting": "Form_Submissions",
+  "form_expert_consulting": "Form_Submissions",
+  "aidiagnosticleads": "Form_Submissions",
+  "ai_diagnostic_leads": "Form_Submissions",
+  "aidiagnostic": "Form_Submissions",
+  "ai_diagnostic": "Form_Submissions",
+  "diagnostic": "Form_Submissions",
+  "diagnostics": "Form_Submissions",
+  "diagnostic_leads": "Form_Submissions",
+  "diagnosticforms": "Form_Submissions",
+  "diagnostic_forms": "Form_Submissions",
+  "formdiagnosticassessments": "Form_Submissions",
+  "form_diagnostic_assessments": "Form_Submissions",
+  "profitpooldiscovery": "Form_Submissions",
+  "profit_pool_discovery": "Form_Submissions",
+  "assessment": "Form_Submissions",
+  "aireadinessleads": "Form_Submissions",
+  "ai_readiness_leads": "Form_Submissions",
+  "aireadiness": "Form_Submissions",
+  "readiness": "Form_Submissions",
+  "workshoprequests": "Form_Submissions",
+  "workshop_requests": "Form_Submissions",
+  "workshops": "Form_Submissions",
+  "workshop": "Form_Submissions",
+  "rfpproposals": "Form_Submissions",
+  "rfp_proposals": "Form_Submissions",
+  "rfp": "Form_Submissions",
+  "partners": "Form_Submissions",
+  "partner": "Form_Submissions",
+  "partnerapplications": "Form_Submissions",
+  "partner_applications": "Form_Submissions",
+  "formpartnerapplications": "Form_Submissions",
+  "form_partner_applications": "Form_Submissions",
+  "jobapplications": "Form_Submissions",
+  "job_applications": "Form_Submissions",
+  "careerapplications": "Form_Submissions",
+  "career_applications": "Form_Submissions",
+  "careers": "Form_Submissions",
+  "career": "Form_Submissions",
+  "jobs": "Form_Submissions",
+  "formcareerapplications": "Form_Submissions",
+  "form_career_applications": "Form_Submissions",
+  "chatbot": "Form_Submissions",
+  "chatbotleads": "Form_Submissions",
+  "chatbot_leads": "Form_Submissions",
+  "chatbot_conversations": "Form_Submissions",
+  "formchatbotconversations": "Form_Submissions",
+  "form_chatbot_conversations": "Form_Submissions",
+  "quickenquiryleads": "Form_Submissions",
+  "quick_enquiry_leads": "Form_Submissions",
+  "floatinglead": "Form_Submissions",
+  "floating_lead": "Form_Submissions",
+  "quickdiagnostic": "Form_Submissions",
+  "quick_diagnostic": "Form_Submissions",
+  "linkedinleads": "Form_Submissions",
+  "linkedin_leads": "Form_Submissions",
+  "linkedin": "Form_Submissions",
+  "newsletter": "Form_Submissions",
+  "newslettersubscribers": "Form_Submissions",
+  "newsletter_subscribers": "Form_Submissions",
+  "googleadleads": "Form_Submissions",
+  "google_ad_leads": "Form_Submissions",
 
-  // Master 95-Column Live Behavioral Telemetry
-  "telemetry95": "Live_Traffic_Events",
-  "telemetry_95": "Live_Traffic_Events",
-  "telemetry": "Live_Traffic_Events",
+  // Master Traffic & Telemetry - All Traffic & Telemetry Events map exclusively to Live_Traffic_Events
   "livetrafficevents": "Live_Traffic_Events",
   "live_traffic_events": "Live_Traffic_Events",
   "livetraffic": "Live_Traffic_Events",
   "mastertelemetry": "Live_Traffic_Events",
+  "telemetry95": "Live_Traffic_Events",
+  "telemetry_95": "Live_Traffic_Events",
+  "telemetry": "Live_Traffic_Events",
+  "pageview": "Live_Traffic_Events",
+  "pageviews": "Live_Traffic_Events",
+  "page_views": "Live_Traffic_Events",
+  "page_view": "Live_Traffic_Events",
+  "event": "Live_Traffic_Events",
+  "events": "Live_Traffic_Events",
+  "ctaclicks": "Live_Traffic_Events",
+  "cta_clicks": "Live_Traffic_Events",
+  "visitor": "Live_Traffic_Events",
+  "visitors": "Live_Traffic_Events",
+  "session": "Live_Traffic_Events",
+  "sessions": "Live_Traffic_Events",
+  "trafficanalytics": "Live_Traffic_Events",
+  "traffic_analytics": "Live_Traffic_Events",
+  "sessions_intelligence": "Live_Traffic_Events",
+  "sessionsintelligence": "Live_Traffic_Events",
+  "session_intelligence": "Live_Traffic_Events",
+  "sessionsintel": "Live_Traffic_Events",
+  "traffic_attribution": "Live_Traffic_Events",
+  "trafficattribution": "Live_Traffic_Events",
+  "attribution": "Live_Traffic_Events",
+  "geo_intelligence": "Live_Traffic_Events",
+  "geointelligence": "Live_Traffic_Events",
+  "geointel": "Live_Traffic_Events",
+  "geo": "Live_Traffic_Events",
+  "network_security_log": "Live_Traffic_Events",
+  "networksecuritylog": "Live_Traffic_Events",
+  "security_log": "Live_Traffic_Events",
+  "securitylog": "Live_Traffic_Events",
+  "security_events": "Live_Traffic_Events",
+  "securityevents": "Live_Traffic_Events",
 
-  // Telemetry Routes
-  "pageview": "Page_Views",
-  "pageviews": "Page_Views",
-  "page_views": "Page_Views",
-  "page_view": "Page_Views",
-  "event": "CTA_Clicks",
-  "events": "CTA_Clicks",
-  "ctaclicks": "CTA_Clicks",
-  "cta_clicks": "CTA_Clicks",
-  "visitor": "Sessions",
-  "visitors": "Sessions",
-  "session": "Sessions",
-  "sessions": "Sessions",
-  "trafficanalytics": "Page_Views",
-
-  // 1. Inbound Leads / Contact Forms
-  "contact": "Contact_Leads",
-  "contactleads": "Contact_Leads",
-  "contact_leads": "Contact_Leads",
-  "contactform": "Contact_Leads",
-  "contact_form": "Contact_Leads",
-  "leads": "Contact_Leads",
-  "lead": "Contact_Leads",
-  "global_lead_form": "Contact_Leads",
-  "form": "Contact_Leads",
-  "forminboundleads": "Form_Inbound_Leads",
-  "form_inbound_leads": "Form_Inbound_Leads",
-  "inboundleads": "Form_Inbound_Leads",
-  "inbound_leads": "Form_Inbound_Leads",
-  "inbound": "Form_Inbound_Leads",
-
-  // 2. Executive Consultation Bookings (BookConsultation.tsx & BookDemo.tsx)
-  "bookforconsultation": "Form_Consultation_Bookings",
-  "book_for_consultation": "Form_Consultation_Bookings",
-  "bookforconsulting": "Form_Consultation_Bookings",
-  "book_for_consulting": "Form_Consultation_Bookings",
-  "consultation": "Form_Consultation_Bookings",
-  "consultationbookings": "Form_Consultation_Bookings",
-  "consultation_bookings": "Form_Consultation_Bookings",
-  "formconsultationbookings": "Form_Consultation_Bookings",
-  "form_consultation_bookings": "Form_Consultation_Bookings",
-  "demo": "Form_Consultation_Bookings",
-  "bookdemo": "Form_Consultation_Bookings",
-  "book_demo": "Form_Consultation_Bookings",
-  "strategysession": "Form_Consultation_Bookings",
-  "strategy_session": "Form_Consultation_Bookings",
-
-  // 3. Talk to AI Architect & Growth Experts (TalkToExpert.tsx)
-  "talktoarchitect": "Talk_To_Architect",
-  "talk_to_architect": "Talk_To_Architect",
-  "talktoexpert": "Talk_To_Architect",
-  "talk_to_expert": "Talk_To_Architect",
-  "expert": "Talk_To_Architect",
-  "expertconsulting": "Talk_To_Architect",
-  "expert_consulting": "Talk_To_Architect",
-  "formexpertconsulting": "Form_Expert_Consulting",
-  "form_expert_consulting": "Form_Expert_Consulting",
-
-  // 4. Profit Pool Discovery Diagnostics & Assessments (DiscoveryPage.tsx)
-  "aidiagnosticleads": "AI_Diagnostic_Leads",
-  "ai_diagnostic_leads": "AI_Diagnostic_Leads",
-  "aidiagnostic": "AI_Diagnostic_Leads",
-  "ai_diagnostic": "AI_Diagnostic_Leads",
-  "diagnostic": "AI_Diagnostic_Leads",
-  "diagnostics": "AI_Diagnostic_Leads",
-  "diagnostic_leads": "AI_Diagnostic_Leads",
-  "diagnosticforms": "Form_Diagnostic_Assessments",
-  "diagnostic_forms": "Form_Diagnostic_Assessments",
-  "formdiagnosticassessments": "Form_Diagnostic_Assessments",
-  "form_diagnostic_assessments": "Form_Diagnostic_Assessments",
-  "profitpooldiscovery": "Form_Diagnostic_Assessments",
-  "profit_pool_discovery": "Form_Diagnostic_Assessments",
-  "assessment": "Form_Diagnostic_Assessments",
-
-  // 5. AI Readiness Leads
-  "aireadinessleads": "AI_Readiness_Leads",
-  "ai_readiness_leads": "AI_Readiness_Leads",
-  "aireadiness": "AI_Readiness_Leads",
-  "readiness": "AI_Readiness_Leads",
-
-  // 6. Executive Workshops
-  "workshoprequests": "Workshop_Requests",
-  "workshop_requests": "Workshop_Requests",
-  "workshops": "Workshop_Requests",
-  "workshop": "Workshop_Requests",
-
-  // 7. RFP Proposals
-  "rfpproposals": "RFP_Proposals",
-  "rfp_proposals": "RFP_Proposals",
-  "rfp": "RFP_Proposals",
-
-  // 8. Partner Applications (Partners.tsx)
-  "partners": "Partner_Applications",
-  "partner": "Partner_Applications",
-  "partnerapplications": "Partner_Applications",
-  "partner_applications": "Partner_Applications",
-  "formpartnerapplications": "Form_Partner_Applications",
-  "form_partner_applications": "Form_Partner_Applications",
-
-  // 9. Career Applications (Career.tsx)
-  "jobapplications": "Career_Applications",
-  "job_applications": "Career_Applications",
-  "careerapplications": "Career_Applications",
-  "career_applications": "Career_Applications",
-  "careers": "Career_Applications",
-  "career": "Career_Applications",
-  "jobs": "Career_Applications",
-  "formcareerapplications": "Form_Career_Applications",
-  "form_career_applications": "Form_Career_Applications",
-
-  // 10. Chatbot Virtual Assistant (ChatBot.tsx)
-  "chatbot": "Chatbot_Leads",
-  "chatbotleads": "Chatbot_Leads",
-  "chatbot_leads": "Chatbot_Leads",
-  "chatbot_conversations": "Chatbot_Leads",
-  "formchatbotconversations": "Form_Chatbot_Conversations",
-  "form_chatbot_conversations": "Form_Chatbot_Conversations",
-
-  // 11. Quick Enquiry & Floating Leads
-  "quickenquiryleads": "Quick_Enquiry_Leads",
-  "quick_enquiry_leads": "Quick_Enquiry_Leads",
-  "floatinglead": "Quick_Enquiry_Leads",
-  "floating_lead": "Quick_Enquiry_Leads",
-  "quickdiagnostic": "Quick_Enquiry_Leads",
-  "quick_diagnostic": "Quick_Enquiry_Leads",
-
-  // 12. LinkedIn Leads
-  "linkedinleads": "LinkedIn_Leads",
-  "linkedin_leads": "LinkedIn_Leads",
-  "linkedin": "LinkedIn_Leads",
-
-  // 13. Consolidated Master Form Submissions
-  "formsubmissions": "Form_Submissions",
-  "form_submissions": "Form_Submissions",
-  "submissions": "Form_Submissions",
-
-  // 14. Archived Test Leads
+  // Archived Test Leads
   "archivedtestleads": "Archived_Test_Leads",
   "archived_test_leads": "Archived_Test_Leads",
   "testleads": "Archived_Test_Leads",
-  "test_leads": "Archived_Test_Leads"
+  "test_leads": "Archived_Test_Leads",
+  "test": "Archived_Test_Leads",
+  "tgtest": "Archived_Test_Leads"
 };
 
 /**
@@ -521,6 +324,48 @@ function findSheetFlexible(spreadsheet, requestedName) {
  * Dispatches branded customer confirmation email via GmailApp / MailApp.
  * Handles action="send_lead_response_email" invoked by Next.js API.
  */
+/**
+ * Dispatches standardized internal lead notification email to team via GmailApp / MailApp.
+ * Handles action="send_lead_notification_email" invoked by Next.js API.
+ */
+function handleLeadNotificationEmailDispatch(data) {
+  try {
+    var toRecipients = uniqueEmails(EMAIL_CONFIG.salesEmails);
+    if (!toRecipients || toRecipients.length === 0) {
+      toRecipients = ["poojasri.trustgrid@gmail.com", "bv@trustflow.in", "connect@trustgrid.ai"];
+    }
+    var leadObj = data.leadData || data;
+    var isTest = Boolean(data.isTestLead || leadObj.isTestLead || (leadObj.name && String(leadObj.name).indexOf("[TEST LEAD]") !== -1));
+    var cleanName = (leadObj.name || leadObj.fullName || "Valued Prospect").replace(/^\[TEST LEAD\]\s*/i, "");
+    var cleanCompany = (leadObj.company && leadObj.company !== "Enterprise Organization") ? leadObj.company : "";
+
+    var defaultSubject = (isTest ? "[TEST LEAD] " : "") + "New Lead Received - " + cleanName + (cleanCompany ? (" - " + cleanCompany) : "");
+    var subject = data.subject || defaultSubject;
+    var htmlBody = data.htmlBody;
+    if (!htmlBody) {
+      var meta = getLeadCategoryMeta(data.sheetName || "Contact_Leads", leadObj);
+      htmlBody = buildInternalLeadHtml(meta, leadObj, "https://docs.google.com/spreadsheets/d/" + CONFIG.MAIN_SPREADSHEET_ID);
+    }
+    var mailRes = sendEmailOnce({
+      to: toRecipients.join(","),
+      subject: subject,
+      htmlBody: htmlBody,
+      name: EMAIL_CONFIG.name,
+      replyTo: (leadObj.email && leadObj.email.indexOf("@") !== -1) ? leadObj.email : EMAIL_CONFIG.replyTo
+    });
+    if (mailRes.ok) {
+      console.log("✅ [Lead Notification Action] Dispatched internal lead notification to: " + toRecipients.join(",") + " via " + mailRes.via);
+      return ContentService.createTextOutput("Lead Notification Sent Successfully via " + mailRes.via).setMimeType(ContentService.MimeType.TEXT);
+    } else {
+      console.error("❌ [Lead Notification Action] Failed to dispatch internal notification: " + mailRes.error);
+      return ContentService.createTextOutput("Error: " + mailRes.error).setMimeType(ContentService.MimeType.TEXT);
+    }
+  } catch (err) {
+    console.error("handleLeadNotificationEmailDispatch exception:", err.toString());
+    return ContentService.createTextOutput("Error: " + err.toString()).setMimeType(ContentService.MimeType.TEXT);
+  }
+}
+
 function handleCustomerResponseEmailDispatch(data) {
   try {
     var toEmail = data.to || data.email || data.userEmail || data.recipientEmail;
@@ -591,6 +436,11 @@ function doPost(e) {
     // Direct Customer Response Email Dispatch Action
     if (data && data.action === "send_lead_response_email") {
       return handleCustomerResponseEmailDispatch(data);
+    }
+
+    // Direct Team Lead Notification Email Dispatch Action
+    if (data && data.action === "send_lead_notification_email") {
+      return handleLeadNotificationEmailDispatch(data);
     }
 
     // Strict Staging / Sandbox Isolation Guard (Local development only; live Vercel deployments are FULL PRODUCTION)
@@ -718,182 +568,82 @@ function doPost(e) {
       if (!ss) {
         throw new Error("Unable to access Google Spreadsheet: ID=" + CONFIG.MAIN_SPREADSHEET_ID);
       }
-      var targetSheet = findSheetFlexible(ss, canonicalName) || findSheetFlexible(ss, rawSheetName);
+      var targetSheet = null;
+      var headers = [];
 
-      // Auto-create tab if not present
-      if (!targetSheet) {
-        var createName = canonicalName.replace(/_/g, ' ');
-        targetSheet = ss.insertSheet(createName);
-        var defaultHeaders = TAB_CONFIGS[canonicalName] || TAB_CONFIGS[rawSheetName] || Object.keys(data).filter(function(k) { return k !== 'sheetName'; });
-        targetSheet.getRange(1, 1, 1, defaultHeaders.length)
-                   .setValues([defaultHeaders])
-                   .setFontWeight("bold")
-                   .setBackground("#0f172a")
-                   .setFontColor("#ffffff");
-        targetSheet.setFrozenRows(1);
-      } else if (targetSheet.getLastRow() === 0) {
-        var defaultHeaders = TAB_CONFIGS[canonicalName] || TAB_CONFIGS[rawSheetName] || Object.keys(data).filter(function(k) { return k !== 'sheetName'; });
-        targetSheet.getRange(1, 1, 1, defaultHeaders.length)
-                   .setValues([defaultHeaders])
-                   .setFontWeight("bold")
-                   .setBackground("#0f172a")
-                   .setFontColor("#ffffff");
-        targetSheet.setFrozenRows(1);
-      }
-
-      var lastCol = Math.max(targetSheet.getLastColumn(), 1);
-      var headers = targetSheet.getRange(1, 1, 1, lastCol).getValues()[0];
-
-      var hasResumeBlob = !!(data.resumeBlob || data.resume || data.resumeBase64 || data.fileBlob || data.attachmentBlob);
-      var newRow = headers.map(function(header) {
-        if (header === "Resume Blob" || header === "resumeBlob") {
-          return data.resumeDriveLink ? "Archived in Drive" : (hasResumeBlob ? (emailSent ? "Attached to Email" : "Decode/Archive Failed") : "None");
+      if (isLeadForm) {
+        // All genuine form submissions route exclusively to Form_Submissions (11 Columns)
+        targetSheet = findSheetFlexible(ss, "Form_Submissions") || findSheetFlexible(ss, "Form Submissions");
+        if (!targetSheet) {
+          targetSheet = ss.insertSheet("Form_Submissions");
+          targetSheet.getRange(1, 1, 1, STANDARDIZED_LEAD_HEADERS.length)
+                     .setValues([STANDARDIZED_LEAD_HEADERS])
+                     .setFontWeight("bold")
+                     .setBackground("#0f172a")
+                     .setFontColor("#ffffff");
+          targetSheet.setFrozenRows(1);
+        } else if (targetSheet.getLastRow() === 0) {
+          targetSheet.getRange(1, 1, 1, STANDARDIZED_LEAD_HEADERS.length)
+                     .setValues([STANDARDIZED_LEAD_HEADERS])
+                     .setFontWeight("bold")
+                     .setBackground("#0f172a")
+                     .setFontColor("#ffffff");
+          targetSheet.setFrozenRows(1);
         }
-        if (header === "Resume Drive Link" || header === "resumeDriveLink" || header === "Resume Link") {
-          return data.resumeDriveLink || emailResult.driveLink || (hasResumeBlob && emailSent ? "Attached to Email" : (hasResumeBlob ? "Unavailable" : "None"));
-        }
-        if (header === "Drive File ID" || header === "driveFileId") {
-          return data.driveFileId || emailResult.driveFileId || "";
-        }
-        return resolveField(header, data);
-      });
 
-      // Also log to Master Form Submissions if it's a lead form
-      if (isLeadForm && canonicalName !== "Form_Submissions") {
-        try {
-          var masterSheet = findSheetFlexible(ss, "Form_Submissions") || findSheetFlexible(ss, "Form Submissions");
-          if (masterSheet && masterSheet.getLastRow() > 0) {
-            var mHeaders = masterSheet.getRange(1, 1, 1, Math.max(masterSheet.getLastColumn(), 1)).getValues()[0];
-            var mRow = mHeaders.map(function(h) {
-              if (h === "Form Name") return canonicalName.replace(/_/g, ' ');
-              if (h === "Resume Drive Link") return data.resumeDriveLink || emailResult.driveLink || "";
-              if (h === "Drive File ID") return data.driveFileId || emailResult.driveFileId || "";
-              return resolveField(h, data);
-            });
-            masterSheet.appendRow(mRow);
+        var lastCol = Math.max(targetSheet.getLastColumn(), 1);
+        headers = targetSheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+        var hasResumeBlob = !!(data.resumeBlob || data.resume || data.resumeBase64 || data.fileBlob || data.attachmentBlob);
+        var newRow = headers.map(function(header) {
+          if (header === "Form Name") {
+            return data["Form Name"] || data.formName || (data.leadType ? String(data.leadType).replace(/_/g, ' ') : (canonicalName !== "Form_Submissions" ? canonicalName.replace(/_/g, ' ') : "Inbound Inquiry"));
           }
-        } catch (mErr) {
-          console.warn("Could not log to master Form Submissions tab:", mErr.toString());
-        }
-      }
-
-      // AUTO-LOG TO DEDICATED "Consulting Sessions" TAB
-      var leadMetaObj = (typeof leadMeta !== "undefined" && leadMeta) ? leadMeta : getLeadCategoryMeta(canonicalName, data);
-      var isConsultingCategory = (
-        (leadMetaObj && leadMetaObj.categoryName === "Consulting Sessions") ||
-        canonicalName === "Contact_Leads" ||
-        canonicalName === "Talk_To_Architect" ||
-        canonicalName === "AI_Diagnostic_Leads" ||
-        canonicalName === "AI_Readiness_Leads" ||
-        canonicalName === "Workshop_Requests" ||
-        canonicalName === "RFP_Proposals" ||
-        canonicalName === "Form_Consultation_Bookings" ||
-        canonicalName === "Form_Expert_Consulting" ||
-        canonicalName === "Consulting_Sessions"
-      );
-
-      if (isConsultingCategory && canonicalName !== "Consulting_Sessions") {
-        try {
-          var consultSheet = findSheetFlexible(ss, "Consulting Sessions") || findSheetFlexible(ss, "Consulting_Sessions");
-          if (!consultSheet) {
-            consultSheet = ss.insertSheet("Consulting Sessions");
-            var consultHeaders = [
-              "Submission ID", "Name", "Email", "Company", "Role / Designation", "Phone",
-              "Service / Focus", "Requirement / Message", "Source", "Page URL",
-              "Status", "Timestamp"
-            ];
-            consultSheet.getRange(1, 1, 1, consultHeaders.length)
-                        .setValues([consultHeaders])
-                        .setFontWeight("bold")
-                        .setBackground("#0f172a")
-                        .setFontColor("#ffffff");
-            consultSheet.setFrozenRows(1);
+          if (header === "Resume Drive Link" || header === "resumeDriveLink" || header === "Resume Link") {
+            return data.resumeDriveLink || emailResult.driveLink || (hasResumeBlob && emailSent ? "Attached to Email" : (hasResumeBlob ? "Unavailable" : "None"));
           }
-          if (consultSheet.getLastRow() > 0) {
-            var cHeaders = consultSheet.getRange(1, 1, 1, Math.max(consultSheet.getLastColumn(), 1)).getValues()[0];
-            var cRow = cHeaders.map(function(h) {
-              if (h === "Service / Focus") return data.areaOfInterest || data.serviceInterest || data.service || data.requirement || "Consulting Session";
-              if (h === "Role / Designation") return data.designation || data.role || data.jobTitle || "";
-              if (h === "Requirement / Message") return data.message || data.requirement || data.projectScope || "";
-              if (h === "Page URL") return data.pageUrl || data.page_url || data.source_url || "";
-              return resolveField(h, data);
-            });
-            consultSheet.appendRow(cRow);
-            console.log("✅ Successfully logged lead to dedicated 'Consulting Sessions' tab!");
+          if (header === "Drive File ID" || header === "driveFileId") {
+            return data.driveFileId || emailResult.driveFileId || "";
           }
-        } catch (consultErr) {
-          console.warn("Could not log to Consulting Sessions tab:", consultErr.toString());
-        }
-      }
+          return resolveField(header, data);
+        });
 
-      // Upsert / Dedup logic for Telemetry
-      var shouldUpsert = (canonicalName === "User_Behavior_Library" || canonicalName === "Engagement_Metrics");
-      var shouldDedup  = (canonicalName === "Traffic_Analytics" || canonicalName === "Page_Views");
-      var lastRow = targetSheet.getLastRow();
-
-      if ((shouldUpsert || shouldDedup) && lastRow > 1) {
-        var sessionCol = targetSheet.getRange(2, 1, lastRow - 1, 1).getValues().flat();
-        if (shouldUpsert) {
-          var rowIndex = sessionCol.indexOf(data.sessionId);
-          if (rowIndex !== -1) {
-            targetSheet.getRange(rowIndex + 2, 1, 1, newRow.length).setValues([newRow]);
-            rowSaved = true;
-          }
-        }
-        if (!rowSaved && shouldDedup) {
-          var pagePathColIndex = headers.indexOf("Page Path");
-          if (pagePathColIndex !== -1 && data.sessionId && data.pagePath) {
-            var pageCol = targetSheet.getRange(2, pagePathColIndex + 1, lastRow - 1, 1).getValues().flat();
-            for (var i = 0; i < sessionCol.length; i++) {
-              if (sessionCol[i] === data.sessionId && pageCol[i] === data.pagePath) {
-                targetSheet.getRange(i + 2, 1, 1, newRow.length).setValues([newRow]);
-                rowSaved = true;
-                break;
-              }
-            }
-          }
-        }
-      }
-
-      if (!rowSaved) {
         targetSheet.appendRow(newRow);
         rowSaved = true;
-      }
+        console.log("✅ Successfully logged lead exclusively to 'Form_Submissions' (Row " + targetSheet.getLastRow() + ")");
 
-      // Auto-replicate to Sessions_Intelligence if companion record attached
-      if (data.session_record && typeof data.session_record === 'object') {
-        try {
-          var sTab = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
-          var sHead = sTab.getRange(1, 1, 1, Math.max(sTab.getLastColumn(), 1)).getValues()[0];
-          var sRow = sHead.map(function(h) { return resolveField(h, data.session_record); });
-          sTab.appendRow(sRow);
-        } catch (sErr) {
-          console.warn("Sessions_Intelligence append warning:", sErr.toString());
+      } else {
+        // All behavioral & live traffic events route exclusively to Live_Traffic_Events (95 Columns)
+        targetSheet = findSheetFlexible(ss, "Live_Traffic_Events") || findSheetFlexible(ss, "Live Traffic Events");
+        if (!targetSheet) {
+          targetSheet = ss.insertSheet("Live_Traffic_Events");
+          targetSheet.getRange(1, 1, 1, SCHEMA_95_HEADERS.length)
+                     .setValues([SCHEMA_95_HEADERS])
+                     .setFontWeight("bold")
+                     .setBackground("#060e22")
+                     .setFontColor("#38bdf8")
+                     .setHorizontalAlignment("center");
+          targetSheet.setFrozenRows(1);
+        } else if (targetSheet.getLastRow() === 0) {
+          targetSheet.getRange(1, 1, 1, SCHEMA_95_HEADERS.length)
+                     .setValues([SCHEMA_95_HEADERS])
+                     .setFontWeight("bold")
+                     .setBackground("#060e22")
+                     .setFontColor("#38bdf8")
+                     .setHorizontalAlignment("center");
+          targetSheet.setFrozenRows(1);
         }
-      }
 
-      // Auto-replicate to Traffic_Attribution if companion record attached
-      if (data.attribution_record && typeof data.attribution_record === 'object') {
-        try {
-          var aTab = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
-          var aHead = aTab.getRange(1, 1, 1, Math.max(aTab.getLastColumn(), 1)).getValues()[0];
-          var aRow = aHead.map(function(h) { return resolveField(h, data.attribution_record); });
-          aTab.appendRow(aRow);
-        } catch (aErr) {
-          console.warn("Traffic_Attribution append warning:", aErr.toString());
-        }
-      }
+        var lastCol = Math.max(targetSheet.getLastColumn(), 1);
+        headers = targetSheet.getRange(1, 1, 1, lastCol).getValues()[0];
 
-      // Auto-replicate to Network_Security_Log if security flag or threat attached
-      if (data.security_record && typeof data.security_record === 'object') {
-        try {
-          var secTab = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
-          var secHead = secTab.getRange(1, 1, 1, Math.max(secTab.getLastColumn(), 1)).getValues()[0];
-          var secRow = secHead.map(function(h) { return resolveField(h, data.security_record); });
-          secTab.appendRow(secRow);
-        } catch (secErr) {
-          console.warn("Network_Security_Log append warning:", secErr.toString());
-        }
+        var newRow = headers.map(function(header) {
+          return resolveField(header, data);
+        });
+
+        targetSheet.appendRow(newRow);
+        rowSaved = true;
+        console.log("✅ Successfully logged traffic event to 'Live_Traffic_Events' (Row " + targetSheet.getLastRow() + ")");
       }
     } catch (sheetErr) {
       console.warn("⚠️ Google Sheets service error: " + sheetErr.toString());
@@ -916,65 +666,28 @@ function doPost(e) {
 function handleIntelligenceSync(data) {
   try {
     var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
-    var counts = { sessions: 0, traffic: 0, geo: 0, security: 0, events: 0 };
+    var counts = { events: 0 };
 
-    // 1. Sessions Intelligence
-    if (Array.isArray(data.sessions) && data.sessions.length > 0) {
-      var sSheet = getOrCreateConfiguredSheet(ss, "Sessions_Intelligence");
-      var sHeaders = sSheet.getRange(1, 1, 1, Math.max(sSheet.getLastColumn(), 1)).getValues()[0];
-      var sRows = data.sessions.map(function(s) {
-        return sHeaders.map(function(h) { return resolveField(h, s); });
-      });
-      if (sRows.length > 0) {
-        sSheet.getRange(sSheet.getLastRow() + 1, 1, sRows.length, sHeaders.length).setValues(sRows);
-        counts.sessions = sRows.length;
+    var evList = [];
+    if (Array.isArray(data.events)) evList = evList.concat(data.events);
+    if (Array.isArray(data.sessions)) evList = evList.concat(data.sessions);
+    if (Array.isArray(data.traffic)) evList = evList.concat(data.traffic);
+
+    // Sync directly to Live_Traffic_Events
+    if (evList.length > 0) {
+      var evSheet = findSheetFlexible(ss, "Live_Traffic_Events") || findSheetFlexible(ss, "Live Traffic Events");
+      if (!evSheet) {
+        evSheet = ss.insertSheet("Live_Traffic_Events");
+        evSheet.getRange(1, 1, 1, SCHEMA_95_HEADERS.length)
+               .setValues([SCHEMA_95_HEADERS])
+               .setFontWeight("bold")
+               .setBackground("#060e22")
+               .setFontColor("#38bdf8")
+               .setHorizontalAlignment("center");
+        evSheet.setFrozenRows(1);
       }
-    }
-
-    // 2. Traffic Attribution
-    if (Array.isArray(data.traffic) && data.traffic.length > 0) {
-      var tSheet = getOrCreateConfiguredSheet(ss, "Traffic_Attribution");
-      var tHeaders = tSheet.getRange(1, 1, 1, Math.max(tSheet.getLastColumn(), 1)).getValues()[0];
-      var tRows = data.traffic.map(function(t) {
-        return tHeaders.map(function(h) { return resolveField(h, t); });
-      });
-      if (tRows.length > 0) {
-        tSheet.getRange(tSheet.getLastRow() + 1, 1, tRows.length, tHeaders.length).setValues(tRows);
-        counts.traffic = tRows.length;
-      }
-    }
-
-    // 3. Geo Intelligence
-    if (Array.isArray(data.geo) && data.geo.length > 0) {
-      var gSheet = getOrCreateConfiguredSheet(ss, "Geo_Intelligence");
-      var gHeaders = gSheet.getRange(1, 1, 1, Math.max(gSheet.getLastColumn(), 1)).getValues()[0];
-      var gRows = data.geo.map(function(g) {
-        return gHeaders.map(function(h) { return resolveField(h, g); });
-      });
-      if (gRows.length > 0) {
-        gSheet.getRange(gSheet.getLastRow() + 1, 1, gRows.length, gHeaders.length).setValues(gRows);
-        counts.geo = gRows.length;
-      }
-    }
-
-    // 4. Network Security Log
-    if (Array.isArray(data.security) && data.security.length > 0) {
-      var secSheet = getOrCreateConfiguredSheet(ss, "Network_Security_Log");
-      var secHeaders = secSheet.getRange(1, 1, 1, Math.max(secSheet.getLastColumn(), 1)).getValues()[0];
-      var secRows = data.security.map(function(sec) {
-        return secHeaders.map(function(h) { return resolveField(h, sec); });
-      });
-      if (secRows.length > 0) {
-        secSheet.getRange(secSheet.getLastRow() + 1, 1, secRows.length, secHeaders.length).setValues(secRows);
-        counts.security = secRows.length;
-      }
-    }
-
-    // 5. Raw Events / Telemetry
-    if (Array.isArray(data.events) && data.events.length > 0) {
-      var evSheet = getOrCreateConfiguredSheet(ss, "Live_Traffic_Events");
       var evHeaders = evSheet.getRange(1, 1, 1, Math.max(evSheet.getLastColumn(), 1)).getValues()[0];
-      var evRows = data.events.map(function(ev) {
+      var evRows = evList.map(function(ev) {
         return evHeaders.map(function(h) { return resolveField(h, ev); });
       });
       if (evRows.length > 0) {
@@ -985,7 +698,7 @@ function handleIntelligenceSync(data) {
 
     return ContentService.createTextOutput(JSON.stringify({
       success: true,
-      message: "TrustGrid Intelligence synchronized successfully",
+      message: "TrustGrid Live Traffic synchronized successfully",
       synced: counts
     })).setMimeType(ContentService.MimeType.JSON);
   } catch (syncErr) {
@@ -1309,7 +1022,7 @@ function sendLeadEmails(data, sheetName, spreadsheetUrl) {
 
     var mailOptions = {
       to: targetRecipients.join(","),
-      subject: (isTest ? "[TEST] " : "") + subjectInternal,
+      subject: (isTest ? "[TEST LEAD] " : "") + subjectInternal.replace(/^\[TEST( LEAD)?\]\s*/i, ""),
       body: plainTextBody,
       htmlBody: htmlInternal,
       name: EMAIL_CONFIG.name,
@@ -1538,187 +1251,125 @@ function getLeadCategoryMeta(sheetName, data) {
 function buildInternalLeadHtml(meta, data, spreadsheetUrl) {
   var phone = data.phone || data.Phone || data["Phone Number"] || data.phoneNumber || "";
   var email = data.email || data.Email || data["Work Email"] || data.workEmail || "";
-  var name  = data.name || data.Name || data["Full Name"] || data.fullName || "Prospective Client / Partner";
-  var location = data.location || data.ipLocation || data["IP Location"] || data["City"] || "Global";
-  var timestamp = normalizeTimestamp(data.timestamp || data.Timestamp);
-  var resumeName = data.resumeFileName || data.fileName || data["Resume File Name"] || "";
-  var coverLetter = data.coverLetter || data["Cover Letter"] || "";
-  var jobTitle = data.jobTitle || data["Job Title"] || data.designation || meta.leadCompany || "";
+  var rawName = data["Lead Name"] || data.name || data.Name || data["Full Name"] || data.fullName || "Prospective Client / Partner";
+  var rawCompany = data.company || data.Company || data.companyName || data.organization || "";
+  var company = (rawCompany === "Enterprise Organization") ? "" : rawCompany;
+  var subject = data.subject || data.Subject || data.serviceInterest || data.interestedSolution || meta.categoryName || "Enterprise AI Consultation";
+  var requirement = data.requirement || data.Requirement || data.message || data.Message || data.details || "";
+  var leadSource = data["Lead Source"] || data.leadSource || data.source || data.utmSource || data.channelAttribution || "Website Inbound";
+  var formName = data["Form Name"] || data.formName || data.formType || meta.categoryName || "Enterprise Inbound Form";
+  var jiraUrl = data["JIRA Link"] || data.jiraLink || data.jiraUrl || (data.jiraKey ? ("https://trustgrid.atlassian.net/browse/" + data.jiraKey) : "");
+  var sheetUrl = spreadsheetUrl || data.sheetUrl || data.sheetRowLink || ("https://docs.google.com/spreadsheets/d/" + CONFIG.MAIN_SPREADSHEET_ID);
 
-  var seenKeys = {};
-  var formRows = "";
-  var utmRows = "";
+  var isTest = Boolean(
+    data.isTestLead ||
+    data.testMode ||
+    data.testMode === "true" ||
+    String(rawName).indexOf("[TEST LEAD]") !== -1 ||
+    String(data.submissionId || data.leadId || "").indexOf("TG-TEST") !== -1 ||
+    /\b(test|staging|development|qa|sandbox|bot|crawler)\b/i.test(String(data.environment || "")) ||
+    /\b(tg-test|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rawName + " " + company + " " + email)
+  );
 
-  function normalizeKey(k) {
-    return k.toLowerCase().replace(/[\s\-_]/g, '');
+  var cleanName = String(rawName).replace(/^\[TEST LEAD\]\s*/i, "").trim();
+  var displayName = isTest ? ("[TEST LEAD] " + cleanName) : cleanName;
+
+  function buildCardRow(label, value, isLink, linkHref) {
+    if (!value || (typeof value !== "string" && typeof value !== "number")) return "";
+    var strVal = String(value).trim();
+    if (!strVal || strVal === "Enterprise Organization" || strVal === "None" || strVal === "N/A") return "";
+    var content = isLink && linkHref
+      ? '<a href="' + escapeHtml(linkHref) + '" target="_blank" style="color: #0A66FF; text-decoration: none; font-weight: 600;">' + escapeHtml(strVal) + '</a>'
+      : escapeHtml(strVal);
+    return '<div style="padding: 9px 0; border-bottom: 1px solid #f8fafc; font-size: 13.5px; line-height: 1.5;">' +
+      '<span style="color: #64748b; font-weight: 600; display: inline-block; width: 120px;">' + escapeHtml(label) + ':</span>' +
+      '<span style="color: #0f172a; font-weight: 500;">' + content + '</span>' +
+    '</div>';
   }
 
-  var ignoredKeys = [
-    "sheetname", "resumeblob", "resumemimetype", "targetemail", "notifyemail", "emailto",
-    "drivefileid", "resumedrivelink", "resume", "resumebase64", "fileblob", "attachmentblob", "attachment",
-    "testmode", "isinternaltest"
-  ];
+  var leadInfoRows = [
+    buildCardRow("Name", displayName),
+    buildCardRow("Email", email, true, "mailto:" + email),
+    phone ? buildCardRow("Phone", phone, true, "tel:" + phone) : "",
+    company ? buildCardRow("Company", company) : ""
+  ].filter(Boolean).join("");
 
-  for (var rawKey in data) {
-    var normKey = normalizeKey(rawKey);
-    if (ignoredKeys.indexOf(normKey) !== -1) continue;
-    if (seenKeys[normKey]) continue;
-    
-    var val = data[rawKey];
-    if (val === undefined || val === null || val === "" || typeof val === "object") continue;
+  var enquiryRows = [
+    buildCardRow("Subject", subject),
+    requirement ? ('<div style="padding: 10px 0;"><div style="color: #64748b; font-weight: 600; font-size: 12.5px; margin-bottom: 6px;">Requirement / Message:</div><div style="background: #f8fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 12px 14px; color: #0f172a; font-size: 13.5px; line-height: 1.6; word-break: break-word;">' + escapeHtml(requirement).replace(/\n/g, '<br>') + '</div></div>') : ""
+  ].filter(Boolean).join("");
 
-    seenKeys[normKey] = true;
+  var sourceRows = [
+    buildCardRow("Lead Source", leadSource),
+    buildCardRow("Form Name", formName)
+  ].filter(Boolean).join("");
 
-    var isUtm = normKey.indexOf("utm") !== -1;
-    var prettyKey = rawKey.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); }).replace(/_/g, ' ').trim();
+  var actionButtons = [
+    email ? '<a href="mailto:' + escapeHtml(email) + '?subject=Re: ' + encodeURIComponent(subject) + '" class="btn-action" style="background:#0A66FF;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Reply To Prospect</a>' : '',
+    phone ? '<a href="tel:' + escapeHtml(phone) + '" class="btn-action" style="background:#0f172a;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Call Prospect</a>' : '',
+    jiraUrl ? '<a href="' + escapeHtml(jiraUrl) + '" target="_blank" class="btn-action" style="background:#0052cc;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Open JIRA Ticket</a>' : '',
+    '<a href="' + escapeHtml(sheetUrl || jiraUrl) + '" target="_blank" class="btn-action" style="background:#1e293b;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Open Lead Record</a>',
+    sheetUrl ? '<a href="' + escapeHtml(sheetUrl) + '" target="_blank" class="btn-action" style="background:#059669;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Open Google Sheet</a>' : '',
+    '<a href="https://calendar.app.google/ZZF7cW8GVX8r6Bwf6" target="_blank" class="btn-action" style="background:#4f46e5;color:#ffffff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;text-align:center;min-width:140px;">Book Follow-up</a>'
+  ].filter(Boolean).join('');
 
-    if (normKey === "leadsource" || normKey === "source") {
-      prettyKey = "Lead Source";
-      seenKeys["source"] = true;
-      seenKeys["leadsource"] = true;
-      var lowVal = String(val || "").toLowerCase();
-      if (!val || lowVal === "organic" || lowVal === "organic search" || lowVal.indexOf("organic") !== -1 || lowVal.indexOf("direct") !== -1) {
-        val = "Google Organic Search";
-      }
-    }
-    if (normKey === "submissionid") prettyKey = "Submission ID";
-    if (normKey === "workemail") prettyKey = "Work Email";
-    if (normKey === "companyname") prettyKey = "Company Name";
-    if (normKey === "primaryaistack") prettyKey = "Primary AI Stack";
-    if (normKey === "governancepriority") prettyKey = "Governance Priority";
-    if (normKey === "ipaddress") prettyKey = "IP Address";
+  var linksCard = '<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">' +
+    '<div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 12px;">LINKS</div>' +
+    (jiraUrl ? '<div style="padding: 8px 0; border-bottom: 1px solid #f8fafc; font-size: 13px;"><span style="color: #64748b; font-weight: 600; display: inline-block; width: 140px;">JIRA Link:</span> <a href="' + escapeHtml(jiraUrl) + '" target="_blank" style="color: #0A66FF; font-weight: 600; text-decoration: none; word-break: break-all;">' + escapeHtml(jiraUrl) + ' &rarr;</a></div>' : '') +
+    (sheetUrl ? '<div style="padding: 8px 0; font-size: 13px;"><span style="color: #64748b; font-weight: 600; display: inline-block; width: 140px;">Google Sheet Link:</span> <a href="' + escapeHtml(sheetUrl) + '" target="_blank" style="color: #0A66FF; font-weight: 600; text-decoration: none; word-break: break-all;">' + escapeHtml(sheetUrl) + ' &rarr;</a></div>' : '') +
+  '</div>';
 
-    var valStr = escapeHtml(String(val)).replace(/\n/g, "<br>");
+  var headerTitle = isTest ? "[TEST LEAD] TRUSTGRID NEW LEAD" : "TRUSTGRID NEW LEAD";
 
-    if (isUtm) {
-      utmRows += '<div style="margin-bottom:6px;font-size:12px;color:#334155;">' +
-                 '<strong style="color:#0f172a;">' + prettyKey + ':</strong> ' +
-                 '<span style="background:#e2e8f0;padding:2px 8px;border-radius:4px;font-family:monospace;">' + valStr + '</span></div>';
-    } else {
-      formRows += '<tr>' +
-                  '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#64748b;font-size:13px;width:35%;vertical-align:top;">' + prettyKey + '</td>' +
-                  '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#0f172a;font-size:13px;font-weight:500;">' + valStr + '</td>' +
-                  '</tr>';
-    }
-  }
-
-  if (!seenKeys["leadsource"] && !seenKeys["source"]) {
-    var defaultSourceVal = "Google Organic Search";
-    formRows = '<tr>' +
-               '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;font-weight:600;color:#64748b;font-size:13px;width:35%;vertical-align:top;">Lead Source</td>' +
-               '<td style="padding:10px 14px;border-bottom:1px solid #f1f5f9;color:#0f172a;font-size:13px;font-weight:500;">' + escapeHtml(defaultSourceVal) + '</td>' +
-               '</tr>' + formRows;
-  }
-
-  // Action Buttons
-  var actionButtons = '<div style="margin-top:25px;">';
-  if (email) {
-    actionButtons += '<a href="mailto:' + email + '?subject=Re: ' + encodeURIComponent(meta.categoryName + ' - TRUSTGRID.AI') + '" style="background:#6366f1;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Reply to Prospect</a>';
-  }
-  if (phone) {
-    actionButtons += '<a href="tel:' + phone + '" style="background:#0f172a;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-right:8px;margin-bottom:8px;">Call ' + phone + '</a>';
-  }
-  if (spreadsheetUrl) {
-    actionButtons += '<a href="' + spreadsheetUrl + '" target="_blank" style="background:#334155;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-bottom:8px;margin-right:8px;">Open Google Sheet</a>';
-  }
-  if (data.resumeDriveLink) {
-    actionButtons += '<a href="' + escapeHtml(data.resumeDriveLink) + '" target="_blank" style="background:#059669;color:#ffffff;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:bold;font-size:13px;display:inline-block;margin-bottom:8px;">View Resume in Drive</a>';
-  }
-  actionButtons += '</div>';
-
-  var resumeAttachmentNotice = "";
-  var driveLink = data.resumeDriveLink || data.driveLink || "";
-  if (resumeName || data.resumeBlob || driveLink) {
-    var driveBtn = driveLink
-      ? '<div style="margin-top:6px;"><a href="' + escapeHtml(driveLink) + '" target="_blank" style="color:#059669;font-weight:700;font-size:12px;">Open resume in Google Drive</a></div>'
-      : '<div style="color:#059669;font-size:12px;margin-top:2px;">Download from email attachments.</div>';
-    resumeAttachmentNotice =
-      '<div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:12px 16px;margin-bottom:20px;">' +
-      '  <div style="font-weight:700;color:#065f46;font-size:13px;">Candidate Resume Attached</div>' +
-      '  <div style="color:#047857;font-size:12px;margin-top:2px;"><strong>Document:</strong> ' + escapeHtml(resumeName || 'Candidate_Resume.pdf') + '</div>' +
-      driveBtn +
-      '</div>';
-  }
-
-  var coverLetterSection = "";
-  if (coverLetter) {
-    coverLetterSection = 
-      '<div style="margin-bottom:20px;padding:16px;background:#f8fafc;border-left:4px solid #6366f1;border-radius:4px;">' +
-      '  <h4 style="margin:0 0 6px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:#4338ca;font-weight:700;">Candidate Cover Letter</h4>' +
-      '  <div style="font-size:13px;color:#334155;line-height:1.6;font-style:italic;">"' + escapeHtml(String(coverLetter)).replace(/\n/g, '<br>') + '"</div>' +
-      '</div>';
-  }
-
-  var utmSection = utmRows ? (
-    '<div style="margin-top:20px;padding:15px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;">' +
-    '<h4 style="margin:0 0 10px 0;font-size:12px;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;">Campaign Attribution &amp; Traffic Context</h4>' +
-    utmRows +
-    '</div>'
-  ) : '';
-
-  return [
-    '<!DOCTYPE html>',
-    '<html>',
-    '<head>',
-    '  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">',
-    '  <meta charset="utf-8">',
-    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
-    '</head>',
-    '<body style="font-family: \'Segoe UI\', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 25px 15px;">',
-    '  <div style="max-width: 640px; margin: 0 auto; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">',
-    '    ',
-    '    <!-- HEADER -->',
-    '    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #312e81 100%); padding: 30px 25px; color: #ffffff;">',
-    '      <div style="display: inline-block; background: ' + meta.badgeBg + '; color: ' + meta.badgeColor + '; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.06em; margin-bottom: 12px;">',
-    '        ' + meta.badgeText,
-    '      </div>',
-    '      <h2 style="margin: 0; font-size: 22px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em;">' + meta.categoryName + '</h2>',
-    '      <p style="margin: 6px 0 0 0; color: #a5b4fc; font-size: 13px;">Captured live from TRUSTGRID.AI Platform</p>',
-    '    </div>',
-    '',
-    '    <!-- SUMMARY CARD -->',
-    '    <div style="padding: 25px 25px 10px 25px;">',
-    '      <div style="background: #f8fafc; border-left: 4px solid #6366f1; border-radius: 8px; padding: 16px 20px; margin-bottom: 20px;">',
-    '        <div style="font-size: 18px; font-weight: 700; color: #0f172a;">' + escapeHtml(name) + '</div>',
-    '        <div style="color: #475569; font-size: 14px; margin-top: 4px;">' + (jobTitle ? escapeHtml(jobTitle) + ' &bull; ' : '') + escapeHtml(location) + '</div>',
-    '        <div style="color: #64748b; font-size: 12px; margin-top: 6px;">' + timestamp + '</div>',
-    '      </div>',
-    '',
-    '      <!-- RESUME ATTACHMENT BANNER -->',
-    '      ' + resumeAttachmentNotice,
-    '',
-    '      <!-- COVER LETTER (IF PROVIDED) -->',
-    '      ' + coverLetterSection,
-    '',
-    '      <!-- FORM DATA TABLE -->',
-    '      <h4 style="margin: 0 0 10px 0; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: #4338ca; font-weight: 700;">Lead Details</h4>',
-    '      <table style="width: 100%; border-collapse: collapse; border: 1px solid #f1f5f9; border-radius: 8px; overflow: hidden;">',
-    '        <tbody>' + formRows + '</tbody>',
-    '      </table>',
-    '',
-    '      <!-- UTM CONTEXT -->',
-    '      ' + utmSection,
-    '',
-    '      <!-- ACTION BUTTONS -->',
-    '      ' + actionButtons,
-    '    </div>',
-    '',
-    '    <!-- FOOTER -->',
-    '    <div style="background: #f8fafc; padding: 20px 25px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.5;">',
-    '      &copy; ' + new Date().getFullYear() + ' TRUSTGRID.AI. All rights reserved.<br>',
-    '      Direct Inquiries: <strong>poojasri.aram@gmail.com</strong> | <strong>connect@trustgrid.ai</strong><br>',
-    '      Confidential Notification &bull; Distributed to authorized TRUSTGRID.AI team members only.',
-    '    </div>',
-    '  </div>',
-    '</body>',
-    '</html>'
-  ].join('\n');
+  return '<!DOCTYPE html>' +
+    '<html lang="en">' +
+    '<head>' +
+    '  <meta charset="utf-8">' +
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+    '  <title>' + escapeHtml(headerTitle) + '</title>' +
+    '  <style>' +
+    '    .btn-action { display: inline-block; padding: 11px 18px; font-size: 13px; font-weight: 700; border-radius: 8px; text-decoration: none; text-align: center; box-sizing: border-box; margin-right: 8px; margin-bottom: 8px; transition: all 0.2s ease; min-width: 140px; }' +
+    '    .btn-action:hover { opacity: 0.92; transform: translateY(-1px); }' +
+    '    @media (max-width: 600px) {' +
+    '      .btn-action { display: block !important; width: 100% !important; margin-right: 0 !important; margin-bottom: 8px !important; }' +
+    '    }' +
+    '  </style>' +
+    '</head>' +
+    '<body style="font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px 12px; color: #1e293b;">' +
+    '  <div style="max-width: 620px; margin: 0 auto;">' +
+    '    <!-- HEADER -->' +
+    '    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%); padding: 28px 24px; border-radius: 14px 14px 0 0; color: #ffffff; text-align: left;">' +
+    '      <div style="margin-bottom: 10px;">' +
+    '        <span style="display: inline-block; width: 10px; height: 10px; background: #0A66FF; border-radius: 2px; margin-right: 8px;"></span>' +
+    '        <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase;">TRUSTGRID</span>' +
+    (isTest ? '        <span style="background: #f59e0b; color: #000000; font-size: 10.5px; font-weight: 800; padding: 3px 10px; border-radius: 12px; letter-spacing: 0.08em; margin-left: 10px;">[TEST LEAD]</span>' : '') +
+    '      </div>' +
+    '      <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">' + escapeHtml(headerTitle) + '</h1>' +
+    '      <p style="margin: 6px 0 0 0; color: #c7d2fe; font-size: 13px;">Central Inbound Lead Notification</p>' +
+    '    </div>' +
+    '    <!-- MAIN BODY CONTAINER WITH ROUNDED CARDS -->' +
+    '    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 14px 14px; padding: 22px 20px;">' +
+    (leadInfoRows ? ('      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);"><div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">LEAD INFORMATION</div>' + leadInfoRows + '</div>') : '') +
+    (enquiryRows ? ('      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);"><div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">ENQUIRY DETAILS</div>' + enquiryRows + '</div>') : '') +
+    (sourceRows ? ('      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);"><div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">SOURCE INFORMATION</div>' + sourceRows + '</div>') : '') +
+    '      <!-- QUICK ACTIONS CARD -->' +
+    '      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">' +
+    '        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 12px;">QUICK ACTIONS</div>' +
+    '        <div>' + actionButtons + '</div>' +
+    '      </div>' +
+    '      <!-- LINKS CARD -->' +
+    linksCard +
+    '    </div>' +
+    '    <!-- FOOTER -->' +
+    '    <div style="padding: 16px 20px; font-size: 11.5px; color: #94a3b8; text-align: center; line-height: 1.5;">' +
+    '      &copy; ' + new Date().getFullYear() + ' <strong>TRUSTGRID.AI</strong>. All Rights Reserved.<br>' +
+    '      Confidential Notification &bull; Authorized recipients only.' +
+    '    </div>' +
+    '  </div>' +
+    '</body>' +
+    '</html>';
 }
 
-/**
- * Normalizes a phone number to wa.me format, defaulting to India's country code for bare
- * 10-digit mobile numbers (matches components/ui/whatsapp-cta.tsx's number format).
- */
 function formatWhatsAppNumber(num) {
   var digits = String(num || "").replace(/[^0-9]/g, "");
   if (digits.length === 10) digits = "91" + digits;
@@ -2973,7 +2624,58 @@ function resolveField(header, data) {
   var rawPhone = data.phone || data.mobile || data.phoneNumber || data.phone_number || data.mobileNumber || data.mobile_number || data["Phone Number"] || data["Contact Number"] || data["Mobile Number"] || data["Mobile"] || "";
   var safePhone = rawPhone ? formatPhoneForSheet(rawPhone) : "";
 
-  var explicitMap = {
+  // 1. Completely removed fields (Site Origin, Production Or Test, Lead Type Category)
+  if (header === "Site Origin" || header === "Production Or Test" || header === "Lead Type Category" || header === "LeadType" || header === "Lead Type") {
+    return "";
+  }
+
+  // 2. Standardized 11 Columns Direct Handlers
+  if (header === "Timestamp") {
+    return normalizeTimestamp(data.timestamp || data.Timestamp || new Date().toISOString());
+  }
+  if (header === "Lead Name") {
+    var rawName = data["Lead Name"] || data.leadName || data.name || data.fullName || data["Full Name"] || "Lead";
+    var isTestLead = Boolean(
+      data.isTestLead ||
+      data.testMode ||
+      String(rawName).indexOf("[TEST LEAD]") !== -1 ||
+      String(data.submissionId || data.leadId || "").indexOf("TG-TEST") !== -1 ||
+      /\b(test|staging|development|qa|sandbox|bot|crawler)\b/i.test(String(data.environment || "")) ||
+      /\b(tg-test|test|demo|dummy|sample|qa|uat|verification|sandbox)\b/i.test(rawName + " " + String(data.company || "") + " " + String(data.email || ""))
+    );
+    var cleanName = String(rawName).replace(/^\[TEST LEAD\]\s*/i, "").trim();
+    return isTestLead ? ("[TEST LEAD] " + cleanName) : cleanName;
+  }
+  if (header === "Email") {
+    return data.email || data.workEmail || data.work_email || data.userEmail || data["Work Email"] || data["Email"] || "";
+  }
+  if (header === "Phone") {
+    return safePhone;
+  }
+  if (header === "Company") {
+    var c = data.company || data.companyName || data.organization || data["Company"] || "";
+    return (c === "Enterprise Organization") ? "" : c;
+  }
+  if (header === "Lead Source") {
+    return data["Lead Source"] || data.leadSource || data.source || data.utmSource || data.channelAttribution || "Website Inbound Form";
+  }
+  if (header === "Form Name") {
+    return data["Form Name"] || data.formName || data.formType || data.sheetName || "Website Inbound Form";
+  }
+  if (header === "Subject") {
+    return data.Subject || data.subject || data.interestedSolution || data.service || "Enterprise AI Consultation";
+  }
+  if (header === "Requirement") {
+    return data.Requirement || data.requirement || data.message || data.projectScope || data.inquiry || "";
+  }
+  if (header === "JIRA Link") {
+    return data["JIRA Link"] || data.jiraLink || data.jiraUrl || (data.jiraKey ? ("https://trustgrid.atlassian.net/browse/" + data.jiraKey) : "");
+  }
+  if (header === "Status") {
+    return data.Status || data.status || "New";
+  }
+
+    var explicitMap = {
     // Lead Identity
     "Submission ID":          data.submissionId || data.submission_id || data.leadId || data.lead_id || data.id || ("TG-" + Date.now()),
     "Lead ID":                data.leadId || data.lead_id || data.submissionId || ("TG-" + Date.now()),
@@ -3500,21 +3202,24 @@ function initializeMasterTelemetrySheet() {
 }
 
 /**
- * Pre-creates and formats all 20 dedicated database tabs in Sheet 1
+ * Pre-creates and formats the 3 essential database tables in Sheet 1:
+ * 1. Form_Submissions     - Master consolidated repository for all genuine form leads (11 standardized columns)
+ * 2. Live_Traffic_Events  - Master 95-column behavioral telemetry schema for live site traffic
+ * 3. Archived_Test_Leads  - Quarantined test & QA submissions (11 standardized columns)
  */
 function initializeAllDatabaseTables() {
   var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
   
-  // 1. Initialize Master Telemetry
+  // 1. Initialize Master Telemetry (95 columns)
   initializeMasterTelemetrySheet();
 
-  // 2. Initialize All Dedicated Lead & Event Tabs
+  // 2. Initialize Form_Submissions and Archived_Test_Leads (11 standardized columns)
   Object.keys(TAB_CONFIGS).forEach(function(tabKey) {
     if (tabKey === "Live_Traffic_Events") return;
     var tabName = tabKey.replace(/_/g, ' ');
     var sheet = findSheetFlexible(ss, tabKey) || findSheetFlexible(ss, tabName);
     if (!sheet) {
-      sheet = ss.insertSheet(tabName);
+      sheet = ss.insertSheet(tabKey);
     }
     if (sheet.getLastRow() === 0) {
       var headers = TAB_CONFIGS[tabKey];
@@ -3527,7 +3232,7 @@ function initializeAllDatabaseTables() {
     }
   });
 
-  console.log("All 20 TRUSTGRID.AI database tabs initialized with enterprise styling.");
+  console.log("All essential TRUSTGRID.AI database tables (Form_Submissions, Live_Traffic_Events, Archived_Test_Leads) initialized.");
 }
 
 /**
@@ -3857,6 +3562,204 @@ function removeDuplicateRecordsAndFields() {
 }
 
 /**
+ * =========================================================================================
+ * 11. UNWANTED SHEETS PURGE & CONSOLIDATION ENGINE
+ * =========================================================================================
+ * Retains ONLY the 3 essential database sheets:
+ * 1. Form_Submissions     - Master consolidated repository for all genuine form leads (11 standardized columns)
+ * 2. Live_Traffic_Events  - Master 95-column behavioral telemetry schema for live site traffic
+ * 3. Archived_Test_Leads  - Quarantined test & QA submissions (11 standardized columns)
+ * 
+ * Safely migrates any historical form submissions from deprecated tabs (Contact_Leads, 
+ * Consulting_Sessions, AI_Diagnostic_Leads, Career_Applications, etc.) into Form_Submissions so no genuine leads are lost.
+ * Permanently deletes all other redundant, duplicate, and unwanted sheets (including Page_Views, Sessions, CTA_Clicks, etc.).
+ */
+function purgeUnwantedSheets() {
+  var ss = SpreadsheetApp.openById(CONFIG.MAIN_SPREADSHEET_ID);
+  
+  // 1. Ensure the 3 required tabs exist before deleting anything
+  var formSubmissionsSheet = findSheetFlexible(ss, "Form_Submissions") || findSheetFlexible(ss, "Form Submissions");
+  if (!formSubmissionsSheet) {
+    formSubmissionsSheet = ss.insertSheet("Form_Submissions");
+    formSubmissionsSheet.getRange(1, 1, 1, STANDARDIZED_LEAD_HEADERS.length)
+                        .setValues([STANDARDIZED_LEAD_HEADERS])
+                        .setFontWeight("bold")
+                        .setBackground("#0f172a")
+                        .setFontColor("#ffffff");
+    formSubmissionsSheet.setFrozenRows(1);
+  }
+  
+  var trafficSheet = findSheetFlexible(ss, "Live_Traffic_Events") || findSheetFlexible(ss, "Live Traffic Events");
+  if (!trafficSheet) {
+    trafficSheet = ss.insertSheet("Live_Traffic_Events");
+    trafficSheet.getRange(1, 1, 1, SCHEMA_95_HEADERS.length)
+                .setValues([SCHEMA_95_HEADERS])
+                .setFontWeight("bold")
+                .setBackground("#060e22")
+                .setFontColor("#38bdf8")
+                .setHorizontalAlignment("center");
+    trafficSheet.setFrozenRows(1);
+  }
+  
+  var testArchiveSheet = findSheetFlexible(ss, "Archived_Test_Leads") || findSheetFlexible(ss, "Archived Test Leads");
+  if (!testArchiveSheet) {
+    testArchiveSheet = ss.insertSheet("Archived_Test_Leads");
+    testArchiveSheet.getRange(1, 1, 1, STANDARDIZED_LEAD_HEADERS.length)
+                    .setValues([STANDARDIZED_LEAD_HEADERS])
+                    .setFontWeight("bold")
+                    .setBackground("#334155")
+                    .setFontColor("#ffffff");
+    testArchiveSheet.setFrozenRows(1);
+  }
+
+  // 2. Build set of existing emails/leads in Form_Submissions to prevent duplication during migration
+  var existingFormSubmissionKeys = {};
+  if (formSubmissionsSheet.getLastRow() > 1) {
+    var fsData = formSubmissionsSheet.getDataRange().getValues();
+    var fsHeaders = fsData[0];
+    var fsEmailIdx = fsHeaders.indexOf("Email");
+    var fsNameIdx = fsHeaders.indexOf("Lead Name");
+    var fsTsIdx = fsHeaders.indexOf("Timestamp");
+    for (var r = 1; r < fsData.length; r++) {
+      var rowEmail = fsEmailIdx !== -1 ? String(fsData[r][fsEmailIdx] || "").trim().toLowerCase() : "";
+      var rowName = fsNameIdx !== -1 ? String(fsData[r][fsNameIdx] || "").trim().toLowerCase() : "";
+      var rowTs = fsTsIdx !== -1 ? String(fsData[r][fsTsIdx] || "").trim() : "";
+      if (rowEmail) existingFormSubmissionKeys[rowEmail] = true;
+      if (rowName && rowTs) existingFormSubmissionKeys[rowName + "_" + rowTs] = true;
+    }
+  }
+
+  var allSheets = ss.getSheets();
+  var deletedSheets = [];
+  var migratedRowsTotal = 0;
+  var retainedSheets = [];
+
+  for (var i = 0; i < allSheets.length; i++) {
+    var curSheet = allSheets[i];
+    var curName = curSheet.getName();
+    var normName = curName.toLowerCase().replace(/[\s\-_]/g, '');
+
+    // Check if this sheet is one of the 3 preserved sheets
+    var isPreserved = (
+      normName === "formsubmissions" ||
+      normName === "livetrafficevents" ||
+      normName === "archivedtestleads"
+    );
+
+    if (isPreserved) {
+      retainedSheets.push(curName);
+      continue;
+    }
+
+    // Unwanted sheet detected:
+    // If it's a form lead sheet and has data, migrate genuine rows to Form_Submissions
+    var lastRow = curSheet.getLastRow();
+    var migratedFromTab = 0;
+
+    if (lastRow > 1) {
+      var tabData = curSheet.getDataRange().getValues();
+      var tabHeaders = tabData[0];
+      var hasEmail = tabHeaders.some(function(h) { return /email/i.test(String(h)); });
+      var hasName = tabHeaders.some(function(h) { return /name/i.test(String(h)); });
+
+      // If it looks like a lead tab, migrate unrecorded genuine rows
+      if (hasEmail || hasName) {
+        var fsHeaders = formSubmissionsSheet.getRange(1, 1, 1, formSubmissionsSheet.getLastColumn()).getValues()[0];
+        
+        for (var rowIdx = 1; rowIdx < tabData.length; rowIdx++) {
+          var rowValues = tabData[rowIdx];
+          var rowObj = {};
+          for (var colIdx = 0; colIdx < tabHeaders.length; colIdx++) {
+            rowObj[tabHeaders[colIdx]] = rowValues[colIdx];
+          }
+
+          var rEmail = String(rowObj["Email"] || rowObj["Business Email"] || rowObj["Work Email"] || rowObj["email"] || "").trim().toLowerCase();
+          var rName = String(rowObj["Lead Name"] || rowObj["Full Name"] || rowObj["Name"] || rowObj["name"] || "").trim();
+          var rTs = String(rowObj["Timestamp"] || rowObj["timestamp"] || "").trim();
+
+          // Skip if row is empty or already in Form_Submissions
+          if (!rEmail && !rName) continue;
+          if (rEmail && existingFormSubmissionKeys[rEmail]) continue;
+          if (rName && rTs && existingFormSubmissionKeys[rName.toLowerCase() + "_" + rTs]) continue;
+
+          // Check if test lead
+          var isTest = Boolean(
+            rName.toUpperCase().indexOf("TG-TEST") !== -1 ||
+            rEmail.indexOf("tg-test") !== -1 ||
+            /test|dummy|sample|qa/i.test(rName + " " + rEmail)
+          );
+
+          if (isTest) {
+            continue;
+          }
+
+          // Map to Form_Submissions standardized headers
+          var newFsRow = fsHeaders.map(function(h) {
+            if (h === "Timestamp") return rTs || Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'");
+            if (h === "Lead Name") return rName;
+            if (h === "Email") return rEmail;
+            if (h === "Phone") return formatPhoneForSheet(rowObj["Phone"] || rowObj["Phone / Mobile"] || rowObj["phone"] || "");
+            if (h === "Company") return (rowObj["Company"] || rowObj["Company Name"] || rowObj["company"] || "");
+            if (h === "Lead Source") return rowObj["Lead Source"] || rowObj["Source"] || "Migrated Form";
+            if (h === "Form Name") return rowObj["Form Name"] || curName.replace(/_/g, ' ');
+            if (h === "Subject") return rowObj["Subject"] || (curName.replace(/_/g, ' ') + " - " + rName);
+            if (h === "Requirement") return rowObj["Requirement"] || rowObj["Message"] || rowObj["message"] || "";
+            if (h === "JIRA Link") return rowObj["JIRA Link"] || rowObj["jiraLink"] || "";
+            if (h === "Status") return rowObj["Status"] || rowObj["Lead Status"] || "New Lead";
+            return resolveField(h, rowObj);
+          });
+
+          formSubmissionsSheet.appendRow(newFsRow);
+          if (rEmail) existingFormSubmissionKeys[rEmail] = true;
+          if (rName && rTs) existingFormSubmissionKeys[rName.toLowerCase() + "_" + rTs] = true;
+          migratedFromTab++;
+          migratedRowsTotal++;
+        }
+      }
+    }
+
+    // Now safely delete the unwanted sheet
+    try {
+      ss.deleteSheet(curSheet);
+      deletedSheets.push({
+        sheetName: curName,
+        status: "DELETED",
+        rowsMigrated: migratedFromTab
+      });
+      Logger.log("🗑️ Deleted unwanted sheet: " + curName + " (migrated " + migratedFromTab + " rows)");
+    } catch (delErr) {
+      Logger.warn("Could not delete sheet " + curName + ": " + delErr.toString());
+      deletedSheets.push({
+        sheetName: curName,
+        status: "ERROR: " + delErr.toString(),
+        rowsMigrated: migratedFromTab
+      });
+    }
+  }
+
+  var report = {
+    status: "success",
+    operation: "PURGE_UNWANTED_SHEETS",
+    timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    totalSheetsDeleted: deletedSheets.length,
+    totalRowsMigratedToFormSubmissions: migratedRowsTotal,
+    deletedSheets: deletedSheets,
+    retainedSheets: retainedSheets
+  };
+
+  Logger.log("✨ Unwanted Sheets Purge Completed: " + JSON.stringify(report));
+  return report;
+}
+
+/**
+ * Top-Level Runner for Unwanted Sheets Purge:
+ * Select "DELETE_UNWANTED_SHEETS_NOW" in toolbar dropdown and click "Run".
+ */
+function DELETE_UNWANTED_SHEETS_NOW() {
+  return purgeUnwantedSheets();
+}
+
+/**
  * Top-Level Runner for Deduplication:
  * Select "REMOVE_DUPLICATES_NOW" in toolbar dropdown and click "Run".
  */
@@ -3866,15 +3769,19 @@ function REMOVE_DUPLICATES_NOW() {
 
 /**
  * Complete Full Maintenance:
- * Cleans all test leads AND removes all duplicate records & fields in one pass.
+ * 1. Purges all unwanted sheets (leaving only Form_Submissions, Live_Traffic_Events, Archived_Test_Leads)
+ * 2. Cleans all test leads and quarantines them to Archived_Test_Leads
+ * 3. Removes all duplicate records & fields in one pass
  */
 function RUN_COMPLETE_SHEET_MAINTENANCE_NOW() {
+  var purgeReport = purgeUnwantedSheets();
   var cleanReport = auditAndArchiveGoogleSheetTestLeads();
   var dedupReport = removeDuplicateRecordsAndFields();
   return {
     status: "success",
     operation: "COMPLETE_SHEET_MAINTENANCE",
     timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
+    unwantedSheetsPurge: purgeReport,
     testLeadPurge: cleanReport,
     deduplication: dedupReport
   };
@@ -3890,7 +3797,8 @@ function CLEAN_ALL_TEST_LEADS_NOW() {
 
 /**
  * Web App GET Handler:
- * Trigger automated test lead cleanup or deduplication via browser URL:
+ * Trigger automated test lead cleanup, deduplication, or unwanted sheet purge via browser URL:
+ * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=remove_unwanted_sheets
  * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=clean_test_leads
  * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=remove_duplicates
  * https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec?action=maintenance
@@ -3898,7 +3806,13 @@ function CLEAN_ALL_TEST_LEADS_NOW() {
 function doGet(e) {
   var action = (e && e.parameter && (e.parameter.action || e.parameter.clean || e.parameter.op)) || "";
 
-  if (action === "clean_test_leads" || action === "clean" || action === "purge") {
+  if (action === "remove_unwanted_sheets" || action === "clean_unwanted_sheets" || action === "purge_sheets" || action === "clean_sheets") {
+    var result = purgeUnwantedSheets();
+    return ContentService.createTextOutput(JSON.stringify(result, null, 2))
+                         .setMimeType(ContentService.MimeType.JSON);
+  }
+
+  if (action === "clean_test_leads" || action === "clean" || action === "purge" || action === "purge_tests") {
     var result = auditAndArchiveGoogleSheetTestLeads();
     return ContentService.createTextOutput(JSON.stringify(result, null, 2))
                          .setMimeType(ContentService.MimeType.JSON);
@@ -3922,7 +3836,13 @@ function doGet(e) {
     version: "2026.10-ENTERPRISE",
     timestamp: Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss 'IST'"),
     spreadsheetId: CONFIG.MAIN_SPREADSHEET_ID,
+    requiredSheets: [
+      "Form_Submissions",
+      "Live_Traffic_Events",
+      "Archived_Test_Leads"
+    ],
     availableActions: {
+      removeUnwantedSheets: "?action=remove_unwanted_sheets",
       cleanTestLeads: "?action=clean_test_leads",
       removeDuplicates: "?action=remove_duplicates",
       fullMaintenance: "?action=maintenance"

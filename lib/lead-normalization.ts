@@ -56,6 +56,7 @@ export interface RawLeadInput {
   aiMaturity?: string
   challenges?: string | string[]
   preferredTimeline?: string
+  subject?: string
   requirement?: string
   message?: string
   partnershipType?: string
@@ -89,11 +90,9 @@ export interface RawLeadInput {
 
 export interface NormalizedLead {
   leadId: string
-  siteOrigin: string
   isSalesLead: boolean
   leadType: LeadType
   leadTypeLabel: string
-  leadTypeCategory?: 'PRODUCTION' | 'TEST' | string
   name: string
   email: string
   phone: string
@@ -124,12 +123,15 @@ export interface NormalizedLead {
   channelAttribution: ChannelAttribution
   timestampIso: string
   timestampFormatted: string
-  productionOrTest: 'PRODUCTION' | 'TEST'
   isTestLead: boolean
   testReason?: string
   jiraSummary: string
   jiraDescription: string
   rawPayload: Record<string, any>
+  // Legacy optional properties to prevent breaking any callers during refactor
+  siteOrigin?: string
+  productionOrTest?: string
+  leadTypeCategory?: string
 }
 
 /**
@@ -340,7 +342,6 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
   })
 
   const isTestLead = testAudit.isTestLead || input.form_type === 'TEST' || (input as any).isTest === true
-  const productionOrTest: 'PRODUCTION' | 'TEST' = isTestLead ? 'TEST' : 'PRODUCTION'
 
   let leadId = input.submissionId && input.submissionId.startsWith('TG-')
     ? input.submissionId
@@ -350,7 +351,6 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
     leadId = leadId.replace(/^TG-/, 'TG-TEST-')
   }
 
-  const siteOrigin = 'TG'
   const { type: leadType, isSales: isSalesLead, label: leadTypeLabel } = classifyLeadType(input)
 
   const utmSource = input.utm_source || input.utmSource || input.metadata?.utmSource || ''
@@ -387,79 +387,81 @@ export function normalizeLead(input: RawLeadInput): NormalizedLead {
     timeZone: 'Asia/Kolkata'
   }).format(now) + ' IST'
 
-  // Build Parent Jira Issue Summary:
-  // Production: [TG] [TG-YYYYMMDD-XXXX] <Lead Type> – <Company Name or Solution>
-  // Test: [TG-TEST] [TG-TEST-YYYYMMDD-XXXX] <Lead Type> – <Company Name or Solution>
-  const companyDisplay = company && company !== 'Enterprise Organization' ? company : solutionsStr || 'Enterprise AI'
-  const prefix = isTestLead ? '[TG-TEST]' : '[TG]'
-  const jiraSummary = `${prefix} [${leadId}] ${leadTypeLabel} – ${companyDisplay}`
+  // Build Standardized Parent Jira Issue Summary:
+  // For Test Leads: [TEST LEAD] Lead - {{Name}}
+  // For Production Leads: Lead - {{Name}} - {{Company}}
+  const cleanCompany = company && company !== 'Enterprise Organization' ? company : ''
+  const jiraSummary = isTestLead
+    ? `[TEST LEAD] Lead - ${name}`
+    : (cleanCompany ? `Lead - ${name} - ${cleanCompany}` : `Lead - ${name}`)
 
-  // Build Structured Clean Jira Description
-  const jiraDescription = `=========================================
-SITE ORIGIN: TG (TRUSTGRID.AI)
-=========================================
+  const emailSubject = isTestLead
+    ? `[TEST LEAD] New Lead Received - ${name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
+    : `New Lead Received - ${name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
 
-Lead ID:
-${leadId}
+  // Standard Google Sheet lead display name
+  const sheetLeadName = isTestLead ? `[TEST LEAD] ${name}` : name
 
-Lead Classification:
-${productionOrTest} (${isTestLead ? 'Test & QA Record' : 'Live Production Lead'})
+  // Default Sheet URL for links
+  const defaultSheetUrl = process.env.GOOGLE_SPREADSHEET_URL ||
+    (process.env.GOOGLE_SPREADSHEET_ID ? `https://docs.google.com/spreadsheets/d/${process.env.GOOGLE_SPREADSHEET_ID}` : '') ||
+    'https://docs.google.com/spreadsheets/d/1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0/edit'
 
-Lead Type:
-${leadTypeLabel}
+  // Build Structured Clean Jira Description:
+  // Only show fields that have values. Do not show empty fields.
+  const jiraDescriptionParts: string[] = []
 
-Contact Details:
-Name: ${name}
-Email: ${email}
-Phone: ${phone || 'Not Provided'}
+  // LEAD INFORMATION
+  const leadInfoFields: string[] = []
+  if (name) leadInfoFields.push(`Name: ${name}`)
+  if (email) leadInfoFields.push(`Email: ${email}`)
+  if (phone) leadInfoFields.push(`Phone: ${phone}`)
+  if (cleanCompany) leadInfoFields.push(`Company: ${cleanCompany}`)
+  if (leadInfoFields.length > 0) {
+    jiraDescriptionParts.push(`LEAD INFORMATION\n\n${leadInfoFields.join('\n')}`)
+  }
 
-Company / Organization:
-${company}
+  // ENQUIRY
+  const enquiryFields: string[] = []
+  const enquirySubject = input.subject || (leadTypeLabel ? `${leadTypeLabel} Inquiry` : 'Enterprise Inquiry')
+  if (enquirySubject) enquiryFields.push(`Subject: ${enquirySubject}`)
+  const enquiryReq = requirement || message
+  if (enquiryReq) enquiryFields.push(`Requirement: ${enquiryReq}`)
+  if (enquiryFields.length > 0) {
+    jiraDescriptionParts.push(`ENQUIRY\n\n${enquiryFields.join('\n')}`)
+  }
 
-Job Title / Role:
-${jobTitle}
+  // SOURCE
+  const sourceFields: string[] = []
+  const effectiveSource = channelAttribution || input.leadSource || input.source || 'Website'
+  if (effectiveSource) sourceFields.push(`Lead Source: ${effectiveSource}`)
+  const effectiveForm = input.formName || leadTypeLabel
+  if (effectiveForm) sourceFields.push(`Form Name: ${effectiveForm}`)
+  if (sourceFields.length > 0) {
+    jiraDescriptionParts.push(`SOURCE\n\n${sourceFields.join('\n')}`)
+  }
 
-Industry Sector:
-${industry}
+  // LINKS
+  const linkFields: string[] = []
+  const defaultJiraUrl = process.env.JIRA_BASE_URL ? `${process.env.JIRA_BASE_URL}/browse/DFX` : 'https://trustworkz.atlassian.net/browse/DFX'
+  linkFields.push(`JIRA URL: ${defaultJiraUrl}`)
+  if (defaultSheetUrl) linkFields.push(`Google Sheet URL: ${defaultSheetUrl}`)
+  if (leadId) linkFields.push(`Submission ID: ${leadId}`)
+  if (linkFields.length > 0) {
+    jiraDescriptionParts.push(`LINKS\n\n${linkFields.join('\n')}`)
+  }
 
-Interested Solution:
-${solutionsStr || 'Enterprise AI Engineering Stack'}
-
-Requirement / Details:
-${requirement}
-${challengesStr ? `\nTarget Challenges:\n${challengesStr}` : ''}
-${input.aiMaturity ? `AI Maturity Stage: ${input.aiMaturity}` : ''}
-${input.preferredTimeline ? `Target Timeline: ${input.preferredTimeline}` : ''}
-${input.partnershipType ? `Partnership Scope: ${input.partnershipType}` : ''}
-${input.portfolio ? `Portfolio/GitHub: ${input.portfolio}` : ''}
-
-Traffic & Attribution:
-Source: ${channelAttribution}
-UTM Source: ${utmSource || 'N/A'}
-UTM Medium: ${utmMedium || 'N/A'}
-UTM Campaign: ${utmCampaign || 'N/A'}
-UTM Term: ${utmTerm || 'N/A'}
-UTM Content: ${utmContent || 'N/A'}
-Referrer: ${referrer || 'Direct'}
-
-Origin Page Context:
-Page Name: ${pageName}
-Page URL: ${pageUrl}
-CTA Trigger: ${input.ctaSource || input.formName || 'Direct'}
-
-Timestamp:
-${timestampFormatted}`
+  const jiraDescription = jiraDescriptionParts.join('\n\n')
 
   return {
     leadId,
-    siteOrigin,
     isSalesLead,
     leadType,
     leadTypeLabel,
     name,
     email,
     phone,
-    company,
+    company: cleanCompany || 'Enterprise Organization',
     jobTitle,
     industry,
     companySize: input.companySize || '',
@@ -486,13 +488,11 @@ ${timestampFormatted}`
     channelAttribution,
     timestampIso,
     timestampFormatted,
-    productionOrTest,
-    leadTypeCategory: productionOrTest,
     isTestLead,
     testReason: isTestLead ? testAudit.reason : undefined,
     jiraSummary,
     jiraDescription,
-    rawPayload: { ...input, leadId, siteOrigin: 'TG', productionOrTest, leadTypeCategory: productionOrTest }
+    rawPayload: { ...input, leadId }
   }
 }
 
@@ -563,17 +563,24 @@ export function detectTestLead(lead: {
     }
   }
 
-  // 3. Keyword Indicators
+  // 3. Keyword & Environment Indicators
+  // Test environments per policy: TEST, STAGING, DEVELOPMENT, QA, SANDBOX, BOT GENERATED
   const indicators = [
     'tg-test',
     'test',
+    'staging',
+    'development',
+    'dev',
+    'qa',
+    'sandbox',
+    'bot generated',
+    'bot',
+    'crawler',
     'demo',
     'sample',
-    'qa',
     'dummy',
     'automation',
     'internal',
-    'sandbox',
     'uat',
     'verification'
   ]

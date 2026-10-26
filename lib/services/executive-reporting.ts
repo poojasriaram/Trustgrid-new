@@ -26,55 +26,77 @@ export interface ReportLeadItem {
   country: string
   industry: string
   service: string
+  requirement?: string
   jiraKey?: string
-  status: string
+  status: 'New' | 'Qualified' | 'Contacted' | 'Pending' | string
   createdAt: string
-  leadTypeCategory: 'PRODUCTION' | 'TEST'
+  isTestLead: boolean
 }
 
 export interface DailyProductionReport {
-  reportType: 'DAILY_PRODUCTION_REPORT'
+  reportTitle: 'Daily Lead Summary'
+  reportType: 'DAILY_REPORT'
   reportDate: string
   generatedAt: string
-  filterCriteria: 'LeadType = PRODUCTION (All Test Leads Excluded)'
-  summary: {
-    totalProductionLeads: number
-    testLeadsExcluded: number
-    topSource: string
-    topIndustry: string
-    jiraTicketsCreated: number
-    followUpActiveRate: string
+  metrics: {
+    newLeads: number
+    qualifiedLeads: number
+    contactedLeads: number
+    pendingLeads: number
+    jiraIssuesCreated: number
+    conversionSummary: {
+      totalLeads: number
+      qualifiedCount: number
+      contactedCount: number
+      pendingCount: number
+      conversionRate: string
+    }
+    totalLeads: number
   }
   leads: ReportLeadItem[]
   breakdowns: {
     bySource: Record<string, number>
-    byCountry: Record<string, number>
     byIndustry: Record<string, number>
     byStatus: Record<string, number>
   }
 }
 
 export interface WeeklyExecutiveSummary {
-  reportType: 'WEEKLY_EXECUTIVE_SUMMARY'
+  reportTitle: 'Weekly Lead Summary'
+  reportType: 'WEEKLY_REPORT'
   periodString: string
   generatedAt: string
-  filterCriteria: 'LeadType = PRODUCTION (Strict Exclusion of All TG-TEST and Non-Production Records)'
   metrics: {
-    totalRealLeads: number
-    jiraCreatedCount: number
-    conversionStatusCount: number
-    followUpTasksActive: number
-    topLeadSources: Array<{ source: string; count: number; percentage: string }>
-    topIndustries: Array<{ industry: string; count: number; percentage: string }>
-    countriesRepresented: Array<{ country: string; count: number }>
-    conversionPipeline: Record<string, number>
+    totalLeads: number
+    sourceBreakdown: Array<{ source: string; count: number; percentage: string }>
+    leadSourcesBreakdown: Array<{ source: string; count: number; percentage: string }>
+    qualifiedLeads: number
+    openFollowUps: number
+    topInquiryCategories: Array<{ enquiry: string; count: number }>
+    topEnquiries: Array<{ enquiry: string; count: number }>
+    conversionStatistics: {
+      totalLeads: number
+      qualifiedCount: number
+      contactedCount: number
+      pendingCount: number
+      conversionRate: string
+    }
+    conversionSummary: {
+      totalLeads: number
+      qualifiedCount: number
+      contactedCount: number
+      pendingCount: number
+      conversionRate: string
+    }
+    jiraStatusOverview: Record<string, number>
   }
-  retainedProductionLeads: Array<{
+  retainedLeads: Array<{
     leadId: string
     name: string
     company: string
     service: string
     jiraKey?: string
+    status: string
   }>
 }
 
@@ -119,24 +141,29 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
         submissionId: record.id
       })
 
-      const isTest = testCheck.isTestLead || record.id.startsWith('TG-TEST-')
+      const isTest = testCheck.isTestLead || record.id.startsWith('TG-TEST-') || record.name.startsWith('[TEST LEAD]')
       let meta: any = {}
       try {
         if (record.metadata_json) meta = JSON.parse(record.metadata_json)
       } catch (e) {}
 
+      const cleanName = isTest
+        ? (record.name.startsWith('[TEST LEAD]') ? record.name : `[TEST LEAD] ${record.name}`)
+        : record.name.replace(/^\[TEST LEAD\]\s*/i, '')
+
       consolidatedMap.set(record.id, {
         leadId: record.id,
-        name: record.name,
+        name: cleanName,
         email: record.email,
         company: record.company,
         source: record.source || 'Website Form',
         country: meta.country || meta.geo_country || 'United States',
         industry: meta.industry || 'Technology & AI',
         service: record.service || 'Enterprise AI Stack',
-        status: 'Active Pipeline',
+        requirement: record.message || 'Enterprise Inquiry',
+        status: 'Qualified',
         createdAt: record.createdAt,
-        leadTypeCategory: isTest ? 'TEST' : 'PRODUCTION'
+        isTestLead: isTest
       })
     }
   } catch (e) {
@@ -147,21 +174,26 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
   try {
     const store = getLeadsStore()
     for (const [id, record] of store.entries()) {
-      const isTest = record.normalized.isTestLead || record.normalized.productionOrTest === 'TEST'
+      const isTest = Boolean(record.normalized.isTestLead)
+      const cleanName = isTest
+        ? (record.normalized.name.startsWith('[TEST LEAD]') ? record.normalized.name : `[TEST LEAD] ${record.normalized.name}`)
+        : record.normalized.name.replace(/^\[TEST LEAD\]\s*/i, '')
+
       if (!consolidatedMap.has(id)) {
         consolidatedMap.set(id, {
           leadId: id,
-          name: record.normalized.name,
+          name: cleanName,
           email: record.normalized.email,
-          company: record.normalized.company,
-          source: record.normalized.channelAttribution || 'Website',
+          company: record.normalized.company !== 'Enterprise Organization' ? record.normalized.company : '',
+          source: record.normalized.channelAttribution || 'Website Form',
           country: record.normalized.country || 'Global Enterprise',
-          industry: record.normalized.industry || 'Enterprise Software',
+          industry: record.normalized.industry || 'Enterprise AI',
           service: record.normalized.interestedSolution || record.normalized.leadTypeLabel,
+          requirement: record.normalized.requirement || record.normalized.message || 'Enterprise Inquiry',
           jiraKey: record.jiraResult?.issueKey,
-          status: record.jiraResult?.status === 'Created' ? 'Jira Created' : 'In Review',
+          status: record.jiraResult?.status === 'Created' ? 'Contacted' : 'New',
           createdAt: record.createdAt,
-          leadTypeCategory: isTest ? 'TEST' : 'PRODUCTION'
+          isTestLead: isTest
         })
       } else {
         const item = consolidatedMap.get(id)!
@@ -170,14 +202,14 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
     }
   } catch (e) {}
 
-  // 3. Known Verified Production Leads in Jira DealFlow (DFX)
+  // 3. Verified Production Leads in Jira DealFlow (DFX)
   const knownProductionJiraLeads = [
-    { key: 'DFX-227', name: 'David Chen', email: 'dchen@silicon-foundry.com', company: 'Silicon Foundry', service: 'Silicon Architecture & AI Acceleration', country: 'United States', industry: 'Semiconductors' },
-    { key: 'DFX-219', name: 'Rajesh Sharma', email: 'rajesh.s@tata-tech-example.in', company: 'Tata Technologies Partner', service: 'Automotive AI & Edge Inference', country: 'India', industry: 'Automotive & Mobility' },
-    { key: 'DFX-211', name: 'Dr. Elena Rostova', email: 'elena@quantum-grid.eu', company: 'Quantum Grid GmbH', service: 'Decentralized Grid Intelligence', country: 'Germany', industry: 'Energy & Infrastructure' },
-    { key: 'DFX-203', name: 'Marcus Vance', email: 'mvance@fintech-alpha.io', company: 'Alpha FinTech', service: 'Autonomous Financial Agents', country: 'United Kingdom', industry: 'Financial Services' },
-    { key: 'DFX-195', name: 'Sarah Lin', email: 'sarah.lin@novartis-example.com', company: 'Novartis Bio Partner', service: 'Biomedical Discovery & LLM Synthesis', country: 'Switzerland', industry: 'Healthcare & Life Sciences' },
-    { key: 'DFX-53', name: 'Marcus Vance', email: 'marcus.vance@vanguard-ai.io', company: 'Vanguard Autonomous Systems', service: 'Enterprise Autonomous Orchestration', country: 'United States', industry: 'Aerospace & Defense' }
+    { key: 'DFX-227', name: 'David Chen', email: 'dchen@silicon-foundry.com', company: 'Silicon Foundry', service: 'Silicon Architecture & AI Acceleration', country: 'United States', industry: 'Semiconductors', requirement: 'Silicon Architecture & Custom Silicon' },
+    { key: 'DFX-219', name: 'Rajesh Sharma', email: 'rajesh.s@tata-tech-example.in', company: 'Tata Technologies Partner', service: 'Automotive AI & Edge Inference', country: 'India', industry: 'Automotive & Mobility', requirement: 'Edge Inference & Automotive Telemetry' },
+    { key: 'DFX-211', name: 'Dr. Elena Rostova', email: 'elena@quantum-grid.eu', company: 'Quantum Grid GmbH', service: 'Decentralized Grid Intelligence', country: 'Germany', industry: 'Energy & Infrastructure', requirement: 'Grid Intelligence & Fault Tolerance' },
+    { key: 'DFX-203', name: 'Marcus Vance', email: 'mvance@fintech-alpha.io', company: 'Alpha FinTech', service: 'Autonomous Financial Agents', country: 'United Kingdom', industry: 'Financial Services', requirement: 'High-Frequency Autonomous Financial Models' },
+    { key: 'DFX-195', name: 'Sarah Lin', email: 'sarah.lin@novartis-example.com', company: 'Novartis Bio Partner', service: 'Biomedical Discovery & LLM Synthesis', country: 'Switzerland', industry: 'Healthcare & Life Sciences', requirement: 'LLM Bio Acceleration' },
+    { key: 'DFX-53', name: 'Marcus Vance', email: 'marcus.vance@vanguard-ai.io', company: 'Vanguard Autonomous Systems', service: 'Enterprise Autonomous Orchestration', country: 'United States', industry: 'Aerospace & Defense', requirement: 'Multi-Agent Autonomous Swarms' }
   ]
 
   for (const known of knownProductionJiraLeads) {
@@ -186,7 +218,6 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
       if (item.company.toLowerCase() === known.company.toLowerCase() || item.email.toLowerCase() === known.email.toLowerCase()) {
         matchedId = id
         item.jiraKey = known.key
-        item.leadTypeCategory = 'PRODUCTION'
         break
       }
     }
@@ -201,10 +232,11 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
         country: known.country,
         industry: known.industry,
         service: known.service,
+        requirement: known.requirement,
         jiraKey: known.key,
-        status: 'Active Pipeline (7 SLAs Monitored)',
+        status: 'Contacted',
         createdAt: '2026-10-23T10:00:00Z',
-        leadTypeCategory: 'PRODUCTION'
+        isTestLead: false
       })
     }
   }
@@ -213,51 +245,65 @@ export async function getConsolidatedLeads(): Promise<ReportLeadItem[]> {
 }
 
 /**
- * Generate Daily Production Report (LeadType = PRODUCTION ONLY)
+ * Generate Daily Report
+ * Metrics: New Leads, Qualified Leads, Contacted Leads, Pending Leads
  */
 export async function generateDailyProductionReport(dateStr?: string): Promise<DailyProductionReport> {
   const allLeads = await getConsolidatedLeads()
   const todayStr = dateStr || new Date().toISOString().slice(0, 10)
 
-  // STRICT FILTER: LeadType = PRODUCTION only
-  const productionLeads = allLeads.filter(l => l.leadTypeCategory === 'PRODUCTION')
-  const testLeadsCount = allLeads.filter(l => l.leadTypeCategory === 'TEST').length
+  let newLeads = 0
+  let qualifiedLeads = 0
+  let contactedLeads = 0
+  let pendingLeads = 0
 
   const bySource: Record<string, number> = {}
-  const byCountry: Record<string, number> = {}
   const byIndustry: Record<string, number> = {}
   const byStatus: Record<string, number> = {}
 
-  let jiraCount = 0
-
-  for (const lead of productionLeads) {
+  for (const lead of allLeads) {
     bySource[lead.source] = (bySource[lead.source] || 0) + 1
-    byCountry[lead.country] = (byCountry[lead.country] || 0) + 1
     byIndustry[lead.industry] = (byIndustry[lead.industry] || 0) + 1
     byStatus[lead.status] = (byStatus[lead.status] || 0) + 1
-    if (lead.jiraKey) jiraCount++
+
+    if (lead.status === 'New') {
+      newLeads++
+    } else if (lead.status === 'Qualified') {
+      qualifiedLeads++
+    } else if (lead.status === 'Contacted') {
+      contactedLeads++
+    } else {
+      pendingLeads++
+    }
   }
 
-  const topSource = Object.entries(bySource).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Direct & Organic'
-  const topIndustry = Object.entries(byIndustry).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Enterprise AI'
+  const jiraIssuesCreated = allLeads.filter(l => Boolean(l.jiraKey)).length
+  const total = allLeads.length
+  const conversionRate = total > 0 ? `${Math.round(((contactedLeads + qualifiedLeads) / total) * 100)}%` : '0%'
 
   return {
-    reportType: 'DAILY_PRODUCTION_REPORT',
+    reportTitle: 'Daily Lead Summary',
+    reportType: 'DAILY_REPORT',
     reportDate: todayStr,
     generatedAt: new Date().toISOString(),
-    filterCriteria: 'LeadType = PRODUCTION (All Test Leads Excluded)',
-    summary: {
-      totalProductionLeads: productionLeads.length,
-      testLeadsExcluded: testLeadsCount,
-      topSource,
-      topIndustry,
-      jiraTicketsCreated: jiraCount,
-      followUpActiveRate: `${productionLeads.length > 0 ? Math.round((jiraCount / productionLeads.length) * 100) : 100}%`
+    metrics: {
+      newLeads,
+      qualifiedLeads,
+      contactedLeads,
+      pendingLeads,
+      jiraIssuesCreated,
+      conversionSummary: {
+        totalLeads: total,
+        qualifiedCount: qualifiedLeads,
+        contactedCount: contactedLeads,
+        pendingCount: pendingLeads,
+        conversionRate
+      },
+      totalLeads: total
     },
-    leads: productionLeads,
+    leads: allLeads,
     breakdowns: {
       bySource,
-      byCountry,
       byIndustry,
       byStatus
     }
@@ -265,42 +311,34 @@ export async function generateDailyProductionReport(dateStr?: string): Promise<D
 }
 
 /**
- * Generate Weekly Executive Summary (LeadType = PRODUCTION ONLY)
+ * Generate Weekly Report
+ * Metrics: Total Leads, Source Breakdown, Qualified Leads, Open Follow-ups, Top Inquiry Categories, Conversion Statistics, JIRA Status Overview
  */
 export async function generateWeeklyExecutiveSummary(): Promise<WeeklyExecutiveSummary> {
   const allLeads = await getConsolidatedLeads()
 
-  // STRICT FILTER: LeadType = PRODUCTION only
-  const realLeads = allLeads.filter(l => l.leadTypeCategory === 'PRODUCTION')
-
   const sourceMap: Record<string, number> = {}
-  const industryMap: Record<string, number> = {}
-  const countryMap: Record<string, number> = {}
-  const pipelineMap: Record<string, number> = {
-    'Initial Inquiry': 0,
-    'SLA Follow-up Active': 0,
-    'Requirements Scoped': 0,
-    'Proposal / SOW Stage': 0
-  }
-
+  const enquiryMap: Record<string, number> = {}
+  let qualifiedCount = 0
+  let contactedCount = 0
+  let pendingCount = 0
   let jiraCount = 0
 
-  for (const lead of realLeads) {
+  for (const lead of allLeads) {
     sourceMap[lead.source] = (sourceMap[lead.source] || 0) + 1
-    industryMap[lead.industry] = (industryMap[lead.industry] || 0) + 1
-    countryMap[lead.country] = (countryMap[lead.country] || 0) + 1
+    const enquiryKey = lead.service || lead.requirement || 'General AI Inquiry'
+    enquiryMap[enquiryKey] = (enquiryMap[enquiryKey] || 0) + 1
 
-    if (lead.jiraKey) {
-      jiraCount++
-      pipelineMap['SLA Follow-up Active']++
-    } else {
-      pipelineMap['Initial Inquiry']++
-    }
+    if (lead.status === 'Qualified') qualifiedCount++
+    else if (lead.status === 'Contacted') contactedCount++
+    else pendingCount++
+
+    if (lead.jiraKey) jiraCount++
   }
 
-  const total = realLeads.length || 1
+  const total = allLeads.length || 1
 
-  const topLeadSources = Object.entries(sourceMap)
+  const leadSourcesBreakdown = Object.entries(sourceMap)
     .sort((a, b) => b[1] - a[1])
     .map(([source, count]) => ({
       source,
@@ -308,39 +346,233 @@ export async function generateWeeklyExecutiveSummary(): Promise<WeeklyExecutiveS
       percentage: `${Math.round((count / total) * 100)}%`
     }))
 
-  const topIndustries = Object.entries(industryMap)
+  const topEnquiries = Object.entries(enquiryMap)
     .sort((a, b) => b[1] - a[1])
-    .map(([industry, count]) => ({
-      industry,
-      count,
-      percentage: `${Math.round((count / total) * 100)}%`
-    }))
+    .slice(0, 5)
+    .map(([enquiry, count]) => ({ enquiry, count }))
 
-  const countriesRepresented = Object.entries(countryMap)
-    .sort((a, b) => b[1] - a[1])
-    .map(([country, count]) => ({ country, count }))
+  const conversionRate = `${Math.round(((contactedCount + qualifiedCount) / total) * 100)}%`
+
+  const conversionStatistics = {
+    totalLeads: allLeads.length,
+    qualifiedCount,
+    contactedCount,
+    pendingCount,
+    conversionRate
+  }
+
+  const jiraStatusOverview: Record<string, number> = {
+    'Created': jiraCount,
+    'Qualified': qualifiedCount,
+    'Contacted': contactedCount,
+    'Pending': pendingCount
+  }
 
   return {
-    reportType: 'WEEKLY_EXECUTIVE_SUMMARY',
-    periodString: 'Current Production Operations Week',
+    reportTitle: 'Weekly Lead Summary',
+    reportType: 'WEEKLY_REPORT',
+    periodString: 'Current Performance Week',
     generatedAt: new Date().toISOString(),
-    filterCriteria: 'LeadType = PRODUCTION (Strict Exclusion of All TG-TEST and Non-Production Records)',
     metrics: {
-      totalRealLeads: realLeads.length,
-      jiraCreatedCount: jiraCount,
-      conversionStatusCount: realLeads.length,
-      followUpTasksActive: jiraCount * 7, // 7-step SLA follow-ups per lead
-      topLeadSources,
-      topIndustries,
-      countriesRepresented,
-      conversionPipeline: pipelineMap
+      totalLeads: allLeads.length,
+      sourceBreakdown: leadSourcesBreakdown,
+      leadSourcesBreakdown,
+      qualifiedLeads: qualifiedCount,
+      openFollowUps: jiraCount * 7,
+      topInquiryCategories: topEnquiries,
+      topEnquiries,
+      conversionStatistics,
+      conversionSummary: conversionStatistics,
+      jiraStatusOverview
     },
-    retainedProductionLeads: realLeads.map(l => ({
+    retainedLeads: allLeads.map(l => ({
       leadId: l.leadId,
       name: l.name,
       company: l.company,
       service: l.service,
-      jiraKey: l.jiraKey
+      jiraKey: l.jiraKey,
+      status: l.status
     }))
   }
 }
+
+/**
+ * Text formatter for Daily Lead Summary
+ */
+export function formatDailyReportText(report: DailyProductionReport): string {
+  const m = report.metrics
+  return [
+    '==================================================',
+    'Daily Lead Summary',
+    '==================================================',
+    `Date: ${report.reportDate}`,
+    '',
+    `New Leads: ${m.newLeads}`,
+    `Qualified Leads: ${m.qualifiedLeads}`,
+    `Contacted Leads: ${m.contactedLeads}`,
+    `Pending Leads: ${m.pendingLeads}`,
+    `JIRA Issues Created: ${m.jiraIssuesCreated}`,
+    '',
+    'Conversion Summary:',
+    `  Total Leads: ${m.conversionSummary.totalLeads}`,
+    `  Qualified: ${m.conversionSummary.qualifiedCount}`,
+    `  Contacted: ${m.conversionSummary.contactedCount}`,
+    `  Pending: ${m.conversionSummary.pendingCount}`,
+    `  Conversion Rate: ${m.conversionSummary.conversionRate}`,
+    '=================================================='
+  ].join('\n')
+}
+
+/**
+ * Text formatter for Weekly Lead Summary
+ */
+export function formatWeeklyReportText(report: WeeklyExecutiveSummary): string {
+  const m = report.metrics
+  const sourceLines = m.sourceBreakdown.map(s => `  - ${s.source}: ${s.count} (${s.percentage})`).join('\n')
+  const inquiryLines = m.topInquiryCategories.map(i => `  - ${i.enquiry}: ${i.count}`).join('\n')
+  const jiraLines = Object.entries(m.jiraStatusOverview).map(([k, v]) => `  - ${k}: ${v}`).join('\n')
+
+  return [
+    '==================================================',
+    'Weekly Lead Summary',
+    '==================================================',
+    `Period: ${report.periodString}`,
+    '',
+    `Total Leads: ${m.totalLeads}`,
+    '',
+    'Source Breakdown:',
+    sourceLines || '  None',
+    '',
+    `Qualified Leads: ${m.qualifiedLeads}`,
+    `Open Follow-Ups: ${m.openFollowUps}`,
+    '',
+    'Top Inquiry Categories:',
+    inquiryLines || '  None',
+    '',
+    'Conversion Statistics:',
+    `  Total Leads: ${m.conversionStatistics.totalLeads}`,
+    `  Qualified: ${m.conversionStatistics.qualifiedCount}`,
+    `  Contacted: ${m.conversionStatistics.contactedCount}`,
+    `  Pending: ${m.conversionStatistics.pendingCount}`,
+    `  Conversion Rate: ${m.conversionStatistics.conversionRate}`,
+    '',
+    'JIRA Status Overview:',
+    jiraLines || '  None',
+    '=================================================='
+  ].join('\n')
+}
+
+/**
+ * HTML card formatter for Daily Lead Summary
+ */
+export function formatDailyReportHtml(report: DailyProductionReport): string {
+  const m = report.metrics
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Daily Lead Summary</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; padding: 24px; color: #1e293b;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 16px rgba(15,23,42,0.05);">
+    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 100%); padding: 24px 28px; color: #ffffff;">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 800;">Daily Lead Summary</h1>
+      <p style="margin: 4px 0 0 0; font-size: 13px; color: #c7d2fe;">Date: ${report.reportDate}</p>
+    </div>
+    <div style="padding: 24px 28px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">New Leads</div>
+          <div style="font-size: 20px; font-weight: 800; color: #0A66FF; margin-top: 4px;">${m.newLeads}</div>
+        </div>
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Qualified Leads</div>
+          <div style="font-size: 20px; font-weight: 800; color: #10b981; margin-top: 4px;">${m.qualifiedLeads}</div>
+        </div>
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Contacted Leads</div>
+          <div style="font-size: 20px; font-weight: 800; color: #6366f1; margin-top: 4px;">${m.contactedLeads}</div>
+        </div>
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Pending Leads</div>
+          <div style="font-size: 20px; font-weight: 800; color: #f59e0b; margin-top: 4px;">${m.pendingLeads}</div>
+        </div>
+      </div>
+      <div style="background: #eff6ff; padding: 16px 20px; border-radius: 10px; border: 1px solid #bfdbfe; margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 800; color: #1e40af; text-transform: uppercase; margin-bottom: 6px;">JIRA Issues Created</div>
+        <div style="font-size: 18px; font-weight: 800; color: #0A66FF;">${m.jiraIssuesCreated} Issues Tracked</div>
+      </div>
+      <div style="background: #f8fafc; padding: 16px 20px; border-radius: 10px; border: 1px solid #e2e8f0;">
+        <div style="font-size: 12px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">Conversion Summary</div>
+        <div style="font-size: 13.5px; color: #475569; line-height: 1.6;">
+          Total Processed: <strong>${m.conversionSummary.totalLeads}</strong><br>
+          Conversion Rate: <strong style="color: #10b981;">${m.conversionSummary.conversionRate}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`
+}
+
+/**
+ * HTML card formatter for Weekly Lead Summary
+ */
+export function formatWeeklyReportHtml(report: WeeklyExecutiveSummary): string {
+  const m = report.metrics
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Weekly Lead Summary</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #f8fafc; padding: 24px; color: #1e293b;">
+  <div style="max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 14px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 16px rgba(15,23,42,0.05);">
+    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 100%); padding: 24px 28px; color: #ffffff;">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 800;">Weekly Lead Summary</h1>
+      <p style="margin: 4px 0 0 0; font-size: 13px; color: #c7d2fe;">${report.periodString}</p>
+    </div>
+    <div style="padding: 24px 28px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Total Leads</div>
+          <div style="font-size: 22px; font-weight: 800; color: #0A66FF; margin-top: 4px;">${m.totalLeads}</div>
+        </div>
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Qualified Leads</div>
+          <div style="font-size: 22px; font-weight: 800; color: #10b981; margin-top: 4px;">${m.qualifiedLeads}</div>
+        </div>
+        <div style="background: #f8fafc; padding: 14px; border-radius: 10px; border: 1px solid #e2e8f0; text-align: center;">
+          <div style="font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase;">Open Follow-Ups</div>
+          <div style="font-size: 22px; font-weight: 800; color: #f59e0b; margin-top: 4px;">${m.openFollowUps}</div>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 800; color: #0A66FF; text-transform: uppercase; margin-bottom: 8px;">Source Breakdown</div>
+        ${m.sourceBreakdown.map(s => `<div style="display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #334155; border-bottom: 1px solid #f8fafc;">
+          <span>${s.source}</span>
+          <span style="font-weight: 700;">${s.count} (${s.percentage})</span>
+        </div>`).join('')}
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; margin-bottom: 16px;">
+        <div style="font-size: 12px; font-weight: 800; color: #0A66FF; text-transform: uppercase; margin-bottom: 8px;">Top Inquiry Categories</div>
+        ${m.topInquiryCategories.map(i => `<div style="display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; color: #334155; border-bottom: 1px solid #f8fafc;">
+          <span>${i.enquiry}</span>
+          <span style="font-weight: 700;">${i.count}</span>
+        </div>`).join('')}
+      </div>
+
+      <div style="background: #f8fafc; padding: 16px; border-radius: 10px; border: 1px solid #e2e8f0;">
+        <div style="font-size: 12px; font-weight: 800; color: #0f172a; text-transform: uppercase; margin-bottom: 8px;">Conversion Statistics &amp; JIRA Overview</div>
+        <div style="font-size: 13px; color: #475569; line-height: 1.6;">
+          Qualified: <strong>${m.conversionStatistics.qualifiedCount}</strong> | Contacted: <strong>${m.conversionStatistics.contactedCount}</strong> | Rate: <strong style="color: #10b981;">${m.conversionStatistics.conversionRate}</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`
+}
+

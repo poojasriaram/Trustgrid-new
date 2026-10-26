@@ -14200,6 +14200,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas,
 .isi-mega-value,
 .isi-mega-agentic,
+.isi-mega-infra,
 .isi-mega-networking,
 .isi-mega-about,
 .tg-tabbed-mega {
@@ -14215,6 +14216,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .isi-mega-sidebar,
 .isi-mega-value .isi-mega-sidebar,
 .isi-mega-agentic .isi-mega-sidebar,
+.isi-mega-infra .isi-mega-sidebar,
 .isi-mega-networking .isi-mega-sidebar,
 .isi-mega-about .isi-mega-sidebar,
 .tg-tabbed-mega .isi-mega-sidebar,
@@ -14232,6 +14234,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-sidebar-domain-switch,
 .isi-mega-value .tg-sidebar-domain-switch,
 .isi-mega-agentic .tg-sidebar-domain-switch,
+.isi-mega-infra .tg-sidebar-domain-switch,
 .isi-mega-networking .tg-sidebar-domain-switch,
 .isi-mega-about .tg-sidebar-domain-switch,
 .tg-tabbed-mega .tg-sidebar-domain-switch {
@@ -14244,6 +14247,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-domain-tab-btn,
 .isi-mega-value .tg-domain-tab-btn,
 .isi-mega-agentic .tg-domain-tab-btn,
+.isi-mega-infra .tg-domain-tab-btn,
 .isi-mega-networking .tg-domain-tab-btn,
 .isi-mega-about .tg-domain-tab-btn,
 .tg-tabbed-mega .tg-domain-tab-btn {
@@ -14263,6 +14267,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-domain-tab-btn:hover,
 .isi-mega-value .tg-domain-tab-btn:hover,
 .isi-mega-agentic .tg-domain-tab-btn:hover,
+.isi-mega-infra .tg-domain-tab-btn:hover,
 .isi-mega-networking .tg-domain-tab-btn:hover,
 .isi-mega-about .tg-domain-tab-btn:hover,
 .tg-tabbed-mega .tg-domain-tab-btn:hover {
@@ -14275,6 +14280,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-domain-tab-btn.active-networking,
 .isi-mega-value .tg-domain-tab-btn.active-networking,
 .isi-mega-agentic .tg-domain-tab-btn.active-networking,
+.isi-mega-infra .tg-domain-tab-btn.active-networking,
 .isi-mega-networking .tg-domain-tab-btn.active-networking,
 .isi-mega-about .tg-domain-tab-btn.active-networking,
 .tg-tabbed-mega .tg-domain-tab-btn.active-networking {
@@ -14286,6 +14292,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-domain-tab-left,
 .isi-mega-value .tg-domain-tab-left,
 .isi-mega-agentic .tg-domain-tab-left,
+.isi-mega-infra .tg-domain-tab-left,
 .isi-mega-networking .tg-domain-tab-left,
 .isi-mega-about .tg-domain-tab-left,
 .tg-tabbed-mega .tg-domain-tab-left {
@@ -14298,6 +14305,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-tab-title,
 .isi-mega-value .tg-tab-title,
 .isi-mega-agentic .tg-tab-title,
+.isi-mega-infra .tg-tab-title,
 .isi-mega-networking .tg-tab-title,
 .isi-mega-about .tg-tab-title,
 .tg-tabbed-mega .tg-tab-title {
@@ -14313,6 +14321,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-domain-tab-btn.active-networking .tg-tab-title,
 .isi-mega-value .tg-domain-tab-btn.active-networking .tg-tab-title,
 .isi-mega-agentic .tg-domain-tab-btn.active-networking .tg-tab-title,
+.isi-mega-infra .tg-domain-tab-btn.active-networking .tg-tab-title,
 .isi-mega-networking .tg-domain-tab-btn.active-networking .tg-tab-title,
 .isi-mega-about .tg-domain-tab-btn.active-networking .tg-tab-title,
 .tg-tabbed-mega .tg-domain-tab-btn.active-networking .tg-tab-title {
@@ -14343,6 +14352,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .isi-sidebar-action,
 .isi-mega-value .isi-sidebar-action,
 .isi-mega-agentic .isi-sidebar-action,
+.isi-mega-infra .isi-sidebar-action,
 .isi-mega-networking .isi-sidebar-action,
 .isi-mega-about .isi-sidebar-action,
 .tg-tabbed-mega .isi-sidebar-action {
@@ -14354,6 +14364,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-thematic-columns-3,
 .isi-mega-value .tg-thematic-columns-3,
 .isi-mega-agentic .tg-thematic-columns-3,
+.isi-mega-infra .tg-thematic-columns-3,
 .isi-mega-networking .tg-thematic-columns-3,
 .isi-mega-about .tg-thematic-columns-3,
 .tg-tabbed-mega .tg-thematic-columns-3 {
@@ -14367,6 +14378,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-category-col,
 .isi-mega-value .tg-category-col,
 .isi-mega-agentic .tg-category-col,
+.isi-mega-infra .tg-category-col,
 .isi-mega-networking .tg-category-col,
 .isi-mega-about .tg-category-col,
 .tg-tabbed-mega .tg-category-col {
@@ -14384,6 +14396,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-category-col-header,
 .isi-mega-value .tg-category-col-header,
 .isi-mega-agentic .tg-category-col-header,
+.isi-mega-infra .tg-category-col-header,
 .isi-mega-networking .tg-category-col-header,
 .isi-mega-about .tg-category-col-header,
 .tg-tabbed-mega .tg-category-col-header {
@@ -14398,6 +14411,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-category-items-stack,
 .isi-mega-value .tg-category-items-stack,
 .isi-mega-agentic .tg-category-items-stack,
+.isi-mega-infra .tg-category-items-stack,
 .isi-mega-networking .tg-category-items-stack,
 .isi-mega-about .tg-category-items-stack,
 .tg-tabbed-mega .tg-category-items-stack {
@@ -14410,6 +14424,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-compact-menu-card,
 .isi-mega-value .tg-compact-menu-card,
 .isi-mega-agentic .tg-compact-menu-card,
+.isi-mega-infra .tg-compact-menu-card,
 .isi-mega-networking .tg-compact-menu-card,
 .isi-mega-about .tg-compact-menu-card,
 .tg-tabbed-mega .tg-compact-menu-card {
@@ -14430,6 +14445,7 @@ h1, h2, h3, h4, h5, h6 {
 .isi-mega-practice-areas .tg-compact-menu-card:hover,
 .isi-mega-value .tg-compact-menu-card:hover,
 .isi-mega-agentic .tg-compact-menu-card:hover,
+.isi-mega-infra .tg-compact-menu-card:hover,
 .isi-mega-networking .tg-compact-menu-card:hover,
 .isi-mega-about .tg-compact-menu-card:hover,
 .tg-tabbed-mega .tg-compact-menu-card:hover {

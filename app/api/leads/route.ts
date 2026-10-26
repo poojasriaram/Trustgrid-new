@@ -33,43 +33,18 @@ function deriveSheetTabName(leadType: string, isTestLead: boolean = false): stri
   if (isTestLead) {
     return 'Archived_Test_Leads'
   }
-  switch (leadType) {
-    case 'AI_DIAGNOSTIC':
-    case 'AI_READINESS':
-      return 'AI_Diagnostic_Leads'
-    case 'CONSULTATION':
-    case 'STRATEGY_SESSION':
-      return 'Form_Consultation_Bookings'
-    case 'PROPOSAL':
-      return 'RFP_Proposals'
-    case 'WORKSHOP':
-      return 'Workshop_Requests'
-    case 'TALK_TO_ARCHITECT':
-      return 'Talk_To_Architect'
-    case 'CHATBOT':
-      return 'Chatbot_Leads'
-    case 'PARTNER':
-      return 'Partner_Applications'
-    case 'CAREER':
-      return 'Career_Applications'
-    case 'NEWSLETTER':
-      return 'Newsletter_Subscribers'
-    case 'FLOATING_LEAD':
-    case 'QUICK_ENQUIRY':
-      return 'Quick_Enquiry_Leads'
-    case 'LINKEDIN_LEAD':
-      return 'LinkedIn_Leads'
-    case 'CONTACT':
-    default:
-      return 'Contact_Leads'
-  }
+  return 'Form_Submissions'
 }
 
 /**
  * Dispatch lead payload to Google Apps Script / Sheet 1 Webhook
  * Isolates Production vs Staging / Vercel / Localhost traffic
  */
-async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: boolean = true): Promise<'Success' | 'Failed'> {
+async function dispatchToGoogleAppsScript(
+  lead: NormalizedLead,
+  isProdHost: boolean = true,
+  jiraUrl?: string
+): Promise<'Success' | 'Failed'> {
   const prodWebhookUrl =
     'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
@@ -84,87 +59,76 @@ async function dispatchToGoogleAppsScript(lead: NormalizedLead, isProdHost: bool
 
   if (!apiUrl || !apiUrl.startsWith('http')) {
     if (!isProdHost) {
-      console.log('[Staging Lead] Staging webhook not configured. Lead safely stored in local store and DB without polluting production.')
+      console.log('[Staging Lead] Staging webhook not configured. Lead safely stored in local store and DB.')
       return 'Success'
     }
     return 'Failed'
   }
 
   const sheetName = deriveSheetTabName(lead.leadType, lead.isTestLead)
+  const cleanCompany = lead.company && lead.company !== 'Enterprise Organization' ? lead.company : ''
+  const cleanLeadName = lead.isTestLead ? `[TEST LEAD] ${lead.name}` : lead.name
+  const cleanSubject = lead.isTestLead
+    ? `[TEST LEAD] New Lead Received - ${lead.name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
+    : `New Lead Received - ${lead.name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
+  const resolvedJiraLink = jiraUrl || (process.env.JIRA_BASE_URL ? `${process.env.JIRA_BASE_URL}/browse/DFX` : 'https://trustworkz.atlassian.net/browse/DFX')
 
-  const rawP = (lead.rawPayload || {}) as Record<string, any>
+  // Standardized 11-column fields for Google Sheet:
+  // Timestamp, Lead Name, Email, Phone, Company, Lead Source, Form Name, Subject, Requirement, JIRA Link, Lead Status
+  const standardizedHeaders = [
+    'Timestamp',
+    'Lead Name',
+    'Email',
+    'Phone',
+    'Company',
+    'Lead Source',
+    'Form Name',
+    'Subject',
+    'Requirement',
+    'JIRA Link',
+    'Lead Status'
+  ]
+
+  const standardizedRow = [
+    lead.timestampFormatted || lead.timestampIso,
+    cleanLeadName,
+    lead.email,
+    lead.phone || '',
+    cleanCompany,
+    lead.channelAttribution || 'Website Form',
+    lead.formName || lead.leadTypeLabel,
+    cleanSubject,
+    lead.requirement || lead.message || '',
+    resolvedJiraLink,
+    'New Lead'
+  ]
 
   const payload = {
-    ...rawP,
     sheetName,
     sheet_name: sheetName,
     formType: sheetName,
-    lead_id: lead.leadId,
-    submissionId: lead.leadId,
     leadId: lead.leadId,
-    leadTypeCategory: lead.productionOrTest,
-    LeadType: lead.productionOrTest,
+    submissionId: lead.leadId,
     isTestLead: lead.isTestLead,
-    testReason: lead.testReason || '',
-    form_type: lead.leadType,
-    form_id: lead.formId,
-    formId: lead.formId,
-    form_name: lead.formName,
-    formName: lead.formName,
-    fullName: lead.name,
-    name: lead.name,
+    // Standardized 11 Columns
+    timestamp: lead.timestampFormatted || lead.timestampIso,
+    leadName: cleanLeadName,
+    name: cleanLeadName,
     email: lead.email,
-    userEmail: lead.email,
-    work_email: lead.email,
-    attendeeEmail: lead.email,
-    phone: lead.phone,
-    mobile: lead.phone,
-    company: lead.company,
-    role: lead.jobTitle,
-    designation: lead.jobTitle,
-    industry: lead.industry,
-    requirement: lead.requirement,
-    message: lead.message,
-    subject: lead.isTestLead ? `[TG-TEST] ${lead.leadTypeLabel} - ${lead.company}` : `[TG] ${lead.leadTypeLabel} - ${lead.company}`,
-    serviceInterest: lead.interestedSolution || rawP.serviceInterest || rawP.service || '',
-    service: lead.interestedSolution || rawP.service || '',
-    selectedSolutions: lead.interestedSolution,
-    solutions: lead.interestedSolution ? [lead.interestedSolution] : [],
-    primaryAiStack: lead.interestedSolution || rawP.primaryAiStack || '',
-    companySize: rawP.companySize || rawP.teamSize || '',
-    teamSize: rawP.teamSize || rawP.companySize || '',
-    governancePriority: rawP.governancePriority || '',
-    infrastructureModel: rawP.infrastructureModel || '',
-    challenges: lead.challenges,
-    keyChallenges: lead.challenges || rawP.keyChallenges || '',
-    preferredFocusArea: rawP.preferredFocusArea || rawP.focusArea || '',
-    projectScope: lead.requirement || lead.message || rawP.projectScope || '',
-    estimatedBudget: rawP.estimatedBudget || rawP.budget || rawP.annualRevenue || '',
-    targetDeadline: rawP.targetDeadline || rawP.timeline || '',
-    timeline: rawP.timeline || rawP.targetTimeline || '',
-    architectureQuery: lead.requirement || lead.message || rawP.architectureQuery || '',
-    preferredTime: rawP.preferredTime || rawP.meetingSlot || '',
-    conversationSummary: rawP.conversationSummary || rawP.chatSummary || '',
-    coverLetter: lead.message || rawP.coverLetter || rawP.coverNote || '',
-    partnershipType: lead.partnershipType,
-    region: rawP.region || rawP.primaryRegion || '',
-    proposal: lead.requirement || lead.message || rawP.proposal || '',
-    portfolio: lead.portfolioUrl,
-    portfolioUrl: lead.portfolioUrl,
-    resume: lead.resumeUrl,
-    resumeFileName: rawP.resumeFileName || rawP.fileName || '',
-    page_url: lead.pageUrl,
-    pageUrl: lead.pageUrl,
-    referrer: lead.referrer,
-    utm_source: lead.utmSource,
-    utm_medium: lead.utmMedium,
-    utm_campaign: lead.utmCampaign,
-    utm_term: lead.utmTerm,
-    utm_content: lead.utmContent,
-    traffic_source: lead.channelAttribution,
-    channel_attribution: lead.channelAttribution,
-    timestamp: lead.timestampIso,
-    timestamp_formatted: lead.timestampFormatted
+    phone: lead.phone || '',
+    company: cleanCompany,
+    leadSource: lead.channelAttribution || 'Website Form',
+    source: lead.channelAttribution || 'Website Form',
+    formName: lead.formName || lead.leadTypeLabel,
+    subject: cleanSubject,
+    requirement: lead.requirement || lead.message || '',
+    jiraLink: resolvedJiraLink,
+    jiraUrl: resolvedJiraLink,
+    leadStatus: 'New Lead',
+    'Lead Status': 'New Lead',
+    status: 'New Lead',
+    headers: standardizedHeaders,
+    row: standardizedRow
   }
 
   try {
@@ -366,16 +330,14 @@ export async function POST(req: NextRequest) {
     }
 
     // ==================================================
-    // STRICT TEST LEAD FILTER & REJECTION RULES:
-    // Before email is sent, IF source_url contains:
-    // - vercel.app, localhost, 127.0.0.1, dev, staging, preview
-    // OR if lead is classified as TEST, OR does not originate from trustgrid.ai:
-    // THEN:
-    // - Do not send email
-    // - Do not create JIRA lead
-    // - Delete lead record
-    // - Delete follow-up task
-    // - Mark as TEST DATA
+    // STANDARDIZED LEAD PROCESSING PIPELINE
+    // Complies with Lead Notification Cleanup & Standardization:
+    // - TEST LEADS: Add only [TEST LEAD] at beginning of:
+    //   Email Subject, JIRA Summary, JIRA Ticket, Google Sheet Lead Name, Reports.
+    //   Do NOT display: TEST, STAGING, DEVELOPMENT, QA, SANDBOX, Production Or Test, Lead Type Category.
+    // - PRODUCTION LEADS: Normal leads with NO label.
+    //   Do NOT show: PRODUCTION, Production Lead, Site Origin, Lead Type Category, Environment Name.
+    // - Fields removed completely: Site Origin, Production Or Test, Lead Type Category.
     // ==================================================
     const combinedOrigin = `${sourceUrl} ${host} ${referer} ${origin}`.toLowerCase()
     const nonProdPatterns = ['vercel.app', 'localhost', '127.0.0.1', 'dev', 'staging', 'preview']
@@ -384,78 +346,32 @@ export async function POST(req: NextRequest) {
 
     const isTestLead =
       normalized.isTestLead ||
-      normalized.productionOrTest === 'TEST' ||
       hasNonProdSource ||
       (!isProductionOrigin && (sourceUrl.startsWith('http') || host.length > 0))
 
-    if (isTestLead) {
-      console.log(`[Central Lead API] Test / Non-Production lead quarantined: ${normalized.leadId} (${normalized.email}). Origin: ${sourceUrl || host || 'Unknown'}. Reason: ${normalized.testReason || 'Non-production environment detected'}`)
+    // Ensure normalized.isTestLead reflects final determination
+    normalized.isTestLead = isTestLead
+    const cleanLeadName = isTestLead ? `[TEST LEAD] ${normalized.name}` : normalized.name
+    const cleanCompany = normalized.company && normalized.company !== 'Enterprise Organization' ? normalized.company : ''
 
-      // 1. Purge / Delete lead record from database if present
-      try {
-        deleteLeadDb(normalized.leadId)
-      } catch (delErr) {
-        // Safe to ignore if not present
-      }
-
-      // 2. Mark in in-memory quarantine store as TEST DATA (not in production pipeline)
-      leadsStore.set(normalized.leadId, {
-        leadId: normalized.leadId,
-        normalized: {
-          ...normalized,
-          productionOrTest: 'TEST',
-          isTestLead: true
-        },
-        googleSheetStatus: 'Skipped',
-        jiraResult: {
-          success: true,
-          status: 'Skipped_Test_Lead',
-          issueKey: null,
-          issueUrl: null,
-          subtasks: []
-        },
-        createdAt: isoTimestamp,
-        retryCount: 0
-      })
-
-      // 3. Return explicit Test Data response (No Email, No JIRA, No Sheet, Record Deleted)
-      return NextResponse.json({
-        success: true,
-        message: 'Lead received and processed according to test data policy.',
-        leadId: normalized.leadId,
-        leadType: normalized.leadType,
-        leadTypeCategory: 'TEST',
-        isTestLead: true,
-        isSalesLead: normalized.isSalesLead,
-        channelAttribution: normalized.channelAttribution,
-        jiraStatus: 'Skipped_Test_Lead',
-        issueKey: null,
-        issueUrl: null,
-        subtasks: [],
-        emailStatus: 'Skipped_Test_Lead',
-        filterAction: 'DELETED_TEST_DATA',
-        reason: normalized.testReason || 'Source origin non-production (vercel.app, localhost, staging, dev, preview)'
-      })
-    }
-
-    // ==================================================
-    // GENUINE PRODUCTION LEAD PIPELINE
-    // Origin: https://trustgrid.ai or https://www.trustgrid.ai
-    // ==================================================
-
-    // 1. Store genuine lead in SQLite Database
+    // 1. Store lead in SQLite Database
     try {
       insertLeadDb({
         id: normalized.leadId,
-        name: normalized.name,
+        name: cleanLeadName,
         email: normalized.email,
-        company: normalized.company,
+        company: cleanCompany,
         phone: normalized.phone,
         message: normalized.message,
         source: normalized.channelAttribution,
-        service: normalized.interestedSolution || 'Enterprise AI Stack',
+        service: normalized.interestedSolution || normalized.leadTypeLabel,
         website: 'TRUSTGRID.AI',
-        metadata_json: JSON.stringify(normalized.rawPayload || {}),
+        metadata_json: JSON.stringify({
+          isTestLead,
+          channel: normalized.channelAttribution,
+          pageUrl: normalized.pageUrl,
+          leadId: normalized.leadId
+        }),
         createdAt: normalized.timestampIso,
         updatedAt: normalized.timestampIso
       })
@@ -463,11 +379,10 @@ export async function POST(req: NextRequest) {
       console.warn('[DB Ingestion Notice]', dbErr?.message || dbErr)
     }
 
-    // 2. Dispatch to Google Apps Script (Production Sheet)
-    const isProdHost = true
-    const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost)
-
-    // 3. Create JIRA Lead & Follow-Up Subtasks
+    // 2. Create JIRA Lead & Follow-Up Tasks
+    // Format:
+    // Test: [TEST LEAD] Lead - {{Name}}
+    // Production: Lead - {{Name}} - {{Company}}
     let jiraResult: JiraIssueResult
     try {
       jiraResult = await createJiraLead(normalized)
@@ -480,12 +395,22 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 4. Dispatch Instant Team Alerts (WhatsApp & Telegram)
+    const capturedJiraUrl = jiraResult.issueUrl || (jiraResult.issueKey ? `https://trustworkz.atlassian.net/browse/${jiraResult.issueKey}` : 'https://trustworkz.atlassian.net/browse/DFX')
+
+    // 3. Dispatch to Google Apps Script (Standardized 11 Columns with captured JIRA URL)
+    // Google Apps Script ingests the row to Google Sheets and dispatches the standardized email notification
+    const isProdHost = true
+    const capturedSheetUrl =
+      process.env.GOOGLE_SPREADSHEET_URL ||
+      'https://docs.google.com/spreadsheets/d/1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0/edit'
+    const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost, capturedJiraUrl)
+
+    // 5. Dispatch Instant Team Alerts (WhatsApp & Telegram)
     sendWhatsAppLeadAlert({
       leadId: normalized.leadId,
-      name: normalized.name,
+      name: cleanLeadName,
       email: normalized.email,
-      company: normalized.company,
+      company: cleanCompany,
       phone: normalized.phone,
       service: normalized.interestedSolution || normalized.leadTypeLabel,
       source: normalized.channelAttribution || 'Website Form',
@@ -497,9 +422,9 @@ export async function POST(req: NextRequest) {
 
     sendTelegramLeadAlert({
       leadId: normalized.leadId,
-      name: normalized.name,
+      name: cleanLeadName,
       email: normalized.email,
-      company: normalized.company,
+      company: cleanCompany,
       phone: normalized.phone,
       service: normalized.interestedSolution || normalized.leadTypeLabel,
       source: normalized.channelAttribution || 'Website Form',
@@ -509,8 +434,7 @@ export async function POST(req: NextRequest) {
       message: normalized.message
     }).catch((err) => console.warn('[Telegram Alert Notice]', err))
 
-    // 5. Dispatch Fully Branded Customer Response Email
-    // Uses H.png header, F.png footer, 650px container, Next Steps, Consultation Booking
+    // 6. Trigger Prospect Acknowledgement Auto-Response Email Immediately
     let emailResult: any = null
     try {
       emailResult = await sendCustomerResponseEmail(normalized)
@@ -518,7 +442,7 @@ export async function POST(req: NextRequest) {
       console.warn('[Central Lead API] Response email error:', emailErr)
     }
 
-    // 6. Store Record in In-Memory System Store
+    // 7. Store Record in In-Memory System Store
     leadsStore.set(normalized.leadId, {
       leadId: normalized.leadId,
       normalized,
@@ -533,15 +457,16 @@ export async function POST(req: NextRequest) {
       message: 'Your request has been submitted successfully.',
       leadId: normalized.leadId,
       leadType: normalized.leadType,
-      leadTypeCategory: 'PRODUCTION',
-      isTestLead: false,
+      isTestLead,
       isSalesLead: normalized.isSalesLead,
       channelAttribution: normalized.channelAttribution,
       jiraStatus: jiraResult.status,
       issueKey: jiraResult.issueKey || null,
-      issueUrl: jiraResult.issueUrl || null,
+      issueUrl: capturedJiraUrl,
       subtasks: jiraResult.subtasks || [],
-      emailStatus: emailResult?.deliveryStatus || 'Sent'
+      googleSheetStatus: sheetStatus,
+      googleSheetUrl: capturedSheetUrl,
+      emailStatus: isTestLead ? 'Sent_Notification' : (emailResult?.deliveryStatus || 'Sent')
     })
   } catch (error: any) {
     console.error('[Central Lead API Error]', error)

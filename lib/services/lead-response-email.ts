@@ -16,7 +16,7 @@
 
 import { NormalizedLead } from '../lead-normalization'
 
-export const EMAIL_SUBJECT = 'Thank You for Contacting TRUSTGRID.AI'
+export const EMAIL_SUBJECT = 'Thank You For Contacting TrustGrid'
 export const DEFAULT_BOOKING_LINK = process.env.GOOGLE_CALENDAR_BOOKING_LINK || 'https://calendar.app.google/ZZF7cW8GVX8r6Bwf6'
 export const US_WHATSAPP_NUMBER = '+1 650 772 4145'
 export const BANGALORE_WHATSAPP_NUMBER = '+91 9513088612'
@@ -179,429 +179,150 @@ export function buildLeadResponseEmailHtml(
     baseUrl?: string
   }
 ): string {
-  const leadName = (lead.name || 'Valued Executive').trim()
+  const fullName = (lead.name || 'Valued Executive').trim()
+  const nameParts = fullName.split(/\s+/)
+  let firstName = nameParts[0]
+  if (['dr.', 'dr', 'prof.', 'prof', 'mr.', 'mr', 'ms.', 'ms', 'mrs.', 'mrs'].includes(firstName.toLowerCase()) && nameParts.length > 1) {
+    firstName = `${nameParts[0]} ${nameParts[1]}`
+  }
+  const submissionId = lead.leadId || (lead as any).submissionId || ('TG-' + Date.now())
   const currentYear = new Date().getFullYear().toString()
   const bookingLink = options?.bookingLink || DEFAULT_BOOKING_LINK
   const baseUrl = (options?.baseUrl || 'https://trustgrid.ai').replace(/\/$/, '')
-  const headerImgUrl = `${baseUrl}/images/H.png`
-  const footerImgUrl = `${baseUrl}/images/F.png`
-  const usWhatsappLink = `https://wa.me/16507724145?text=Hi`
-  const blrWhatsappLink = `https://wa.me/919513088612?text=Hi`
 
-  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  return `<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="x-apple-disable-message-reformatting" />
-  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no" />
-  <title>Thank You for Contacting TRUSTGRID.AI</title>
-  <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <![endif]-->
-  <style type="text/css">
-    /* Global Resets */
-    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
-    table { border-collapse: collapse !important; }
-    body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; }
-
-    /* Interactive Button Hover */
-    .cta-btn:hover {
-      background-color: #0052cc !important;
-      border-color: #0052cc !important;
-    }
-    .text-link:hover {
-      text-decoration: underline !important;
-    }
-
-    /* Mobile Responsive Styles */
-    @media screen and (max-width: 650px) {
-      .email-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        border-radius: 0 !important;
-        border-left: none !important;
-        border-right: none !important;
-      }
-      .content-padding {
-        padding: 24px 20px !important;
-      }
-      .next-step-cell {
-        padding: 8px 12px !important;
-        font-size: 13.5px !important;
-      }
-      .whatsapp-col {
-        display: block !important;
-        width: 100% !important;
-        margin-bottom: 10px !important;
-      }
-      .banner-img {
-        width: 100% !important;
-        height: auto !important;
-      }
-      .cta-button-table {
-        width: 100% !important;
-      }
-      .cta-btn {
-        display: block !important;
-        width: 100% !important;
-        text-align: center !important;
-        padding: 14px 16px !important;
-        box-sizing: border-box !important;
-      }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You For Contacting TrustGrid</title>
+  <style>
+    body { margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b; -webkit-font-smoothing: antialiased; }
+    .email-container { max-width: 620px; margin: 0 auto; background: #ffffff; border-radius: 14px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05); }
+    .btn { display: inline-block; padding: 12px 24px; font-size: 13.5px; font-weight: 700; border-radius: 8px; text-decoration: none; text-align: center; transition: all 0.2s ease; }
+    .btn-primary { background-color: #0A66FF; color: #ffffff !important; }
+    .btn-secondary { background-color: #0f172a; color: #ffffff !important; }
+    @media (max-width: 600px) {
+      .email-container { border-radius: 0 !important; border: none !important; }
+      .btn { display: block !important; width: 100% !important; box-sizing: border-box !important; margin-right: 0 !important; margin-bottom: 8px !important; }
+      .content-box { padding: 24px 18px !important; }
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f8fafc; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 24px 12px; background-color: #f8fafc;">
+  <div class="email-container">
+    
+    <!-- HEADER WITH TRUSTGRID LOGO -->
+    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%); padding: 32px 28px; text-align: left; color: #ffffff;">
+      <div style="margin-bottom: 12px;">
+        <span style="display: inline-block; width: 10px; height: 10px; background: #0A66FF; border-radius: 2px; margin-right: 8px;"></span>
+        <span style="font-size: 14px; font-weight: 800; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase;">TRUSTGRID</span>
+      </div>
+      <h1 style="margin: 0 0 6px 0; font-size: 24px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">Thank You For Reaching Out</h1>
+      <p style="margin: 0; font-size: 13.5px; color: #c7d2fe;">Enterprise AI Systems &amp; Multi-Agent Architecture</p>
+    </div>
 
-  <!-- HIDDEN PREHEADER TEXT -->
-  <div style="display: none; font-size: 1px; color: #f8fafc; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all;">
-    Thank you for contacting TRUSTGRID.AI. We have received your inquiry and our team is reviewing your requirements.
+    <!-- MAIN BODY CONTENT -->
+    <div class="content-box" style="padding: 32px 28px;">
+      <h2 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 700; color: #0f172a;">
+        Hello ${firstName},
+      </h2>
+
+      <p style="margin: 0 0 14px 0; font-size: 15px; color: #334155; line-height: 1.65;">
+        Thank you for contacting TrustGrid.
+      </p>
+
+      <p style="margin: 0 0 14px 0; font-size: 15px; color: #334155; line-height: 1.65;">
+        We have successfully received your enquiry and assigned it to our team.
+      </p>
+
+      <p style="margin: 0 0 24px 0; font-size: 15px; color: #334155; line-height: 1.65;">
+        Our specialists will review your requirements and reach out within 24 business hours.
+      </p>
+
+      <!-- STATUS TIMELINE CARD -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 20px; margin-bottom: 24px;">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 12px;">
+          REQUEST STATUS
+        </div>
+        <div style="font-size: 13.5px; color: #0f172a; font-weight: 600; padding: 4px 0;">
+          <span style="color: #10b981; font-weight: 800; margin-right: 8px;">✓</span> Enquiry Received
+        </div>
+        <div style="font-size: 13.5px; color: #0f172a; font-weight: 600; padding: 4px 0;">
+          <span style="color: #10b981; font-weight: 800; margin-right: 8px;">✓</span> Under Review
+        </div>
+        <div style="font-size: 13.5px; color: #0f172a; font-weight: 600; padding: 4px 0;">
+          <span style="color: #10b981; font-weight: 800; margin-right: 8px;">✓</span> Assigned To Team
+        </div>
+        <div style="font-size: 13.5px; color: #0f172a; font-weight: 600; padding: 4px 0;">
+          <span style="color: #10b981; font-weight: 800; margin-right: 8px;">✓</span> Response Within 24 Business Hours
+        </div>
+      </div>
+
+      <!-- REFERENCE NUMBER CARD -->
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 16px 20px; margin-bottom: 24px;">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #1e40af; margin-bottom: 4px;">
+          REFERENCE NUMBER
+        </div>
+        <div style="font-size: 16px; font-weight: 800; color: #0A66FF; font-family: monospace;">
+          ${submissionId}
+        </div>
+      </div>
+
+      <p style="margin: 0 0 14px 0; font-size: 14.5px; color: #475569; line-height: 1.6;">
+        If you have additional details to share, simply reply to this email.
+      </p>
+
+      <p style="margin: 0 0 24px 0; font-size: 14.5px; color: #475569; line-height: 1.6;">
+        We appreciate your interest in TrustGrid and look forward to speaking with you.
+      </p>
+
+      <!-- BUTTONS -->
+      <div style="margin-bottom: 28px; padding-top: 8px;">
+        <a href="https://trustgrid.ai" target="_blank" class="btn btn-secondary" style="background: #0f172a; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 13.5px; display: inline-block; margin-right: 10px; margin-bottom: 8px;">
+          Visit Website
+        </a>
+        <a href="${bookingLink}" target="_blank" class="btn btn-primary" style="background: #0A66FF; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 13.5px; display: inline-block; margin-bottom: 8px;">
+          Book Consultation &rarr;
+        </a>
+      </div>
+
+      <!-- SIGN-OFF -->
+      <div style="border-top: 1px solid #f1f5f9; padding-top: 18px; font-size: 14px; color: #475569; line-height: 1.6;">
+        Best Regards,<br>
+        <strong style="color: #0f172a;">TrustGrid Team</strong><br>
+        <a href="https://trustgrid.ai" target="_blank" style="color: #0A66FF; text-decoration: none; font-weight: 600;">https://trustgrid.ai</a>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div style="background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 22px 28px; font-size: 12px; color: #94a3b8; text-align: center; line-height: 1.6;">
+      <strong style="color: #475569;">TRUSTGRID.AI</strong> &bull; Enterprise AI Systems &amp; Multi-Agent Architecture<br>
+      Inquiries: <a href="mailto:connect@trustgrid.ai" style="color: #64748b; text-decoration: underline;">connect@trustgrid.ai</a> &bull; 
+      <a href="https://trustgrid.ai/privacy-policy" target="_blank" style="color: #64748b; text-decoration: underline;">Privacy Policy</a><br>
+      &copy; ${currentYear} TrustGrid. All rights reserved.
+    </div>
+
   </div>
-
-  <!-- OUTER WRAPPER TABLE -->
-  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc;">
-    <tr>
-      <td align="center" style="padding: 24px 12px;">
-
-        <!--[if (gte mso 9)|(IE)]>
-        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="650">
-        <tr>
-        <td>
-        <![endif]-->
-
-        <!-- MAIN 650px CONTAINER -->
-        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" class="email-container" style="max-width: 650px; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05); text-align: left;">
-
-          <!-- ==============================================
-               EMAIL HEADER (H.png FULL-WIDTH BANNER)
-               ============================================== -->
-          <tr>
-            <td align="center" style="margin: 0; padding: 0; background-color: #0b1329;">
-              <a href="https://trustgrid.ai" target="_blank" style="display: block; text-decoration: none; border: none;">
-                <img src="${headerImgUrl}" alt="TRUSTGRID.AI — Engineering Intelligence at Scale" width="650" class="banner-img" style="width: 100%; max-width: 650px; height: auto; display: block; border: 0; outline: none; text-decoration: none;" />
-              </a>
-            </td>
-          </tr>
-
-          <!-- ==============================================
-               EMAIL BODY CONTENT
-               ============================================== -->
-          <tr>
-            <td class="content-padding" style="padding: 36px 36px 28px 36px; background-color: #ffffff;">
-
-              <!-- SALUTATION -->
-              <h1 style="margin: 0 0 18px 0; font-size: 21px; font-weight: 700; color: #0f172a; line-height: 1.35; letter-spacing: -0.01em;">
-                Hello ${leadName},
-              </h1>
-
-              <!-- INTRO PARAGRAPHS -->
-              <p style="margin: 0 0 16px 0; font-size: 15px; color: #334155; line-height: 1.65;">
-                Thank you for contacting <strong>TRUSTGRID.AI</strong>.
-              </p>
-              <p style="margin: 0 0 16px 0; font-size: 15px; color: #334155; line-height: 1.65;">
-                We have successfully received your inquiry for a <strong>Consulting Session</strong> and appreciate your interest in our <strong>AI Governance, Multi-Agent Architecture, and Digital Transformation solutions</strong>.
-              </p>
-              <p style="margin: 0 0 28px 0; font-size: 15px; color: #334155; line-height: 1.65;">
-                Our Principal AI Architecture Team is currently reviewing your technical requirements and will connect with your team shortly.
-              </p>
-
-              <!-- ==============================================
-                   NEXT STEPS SECTION
-                   ============================================== -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
-                <tr>
-                  <td style="padding: 16px 20px 10px 20px; border-bottom: 1px solid #edf2f7;">
-                    <span style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF;">
-                      NEXT STEPS
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding: 12px 20px 16px 20px;">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td class="next-step-cell" style="padding: 7px 0; font-size: 14px; color: #1e293b; line-height: 1.5;">
-                          <span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span>
-                          <strong>Requirement Review</strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="next-step-cell" style="padding: 7px 0; font-size: 14px; color: #1e293b; line-height: 1.5;">
-                          <span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span>
-                          <strong>Consultation Call</strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="next-step-cell" style="padding: 7px 0; font-size: 14px; color: #1e293b; line-height: 1.5;">
-                          <span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span>
-                          <strong>Solution Recommendation</strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="next-step-cell" style="padding: 7px 0; font-size: 14px; color: #1e293b; line-height: 1.5;">
-                          <span style="color: #10b981; font-weight: bold; margin-right: 8px;">✅</span>
-                          <strong>Proposal &amp; Implementation Discussion</strong>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- ==============================================
-                   BOOK A CONSULTATION & CALL TO ACTION
-                   ============================================== -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px; background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%); border: 1px solid #bfdbfe; border-radius: 10px; padding: 22px 24px; text-align: left;">
-                <tr>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 6px;">
-                      BOOK A CONSULTATION
-                    </div>
-                    <p style="margin: 0 0 16px 0; font-size: 15px; color: #1e293b; line-height: 1.5;">
-                      Schedule a meeting with our team:
-                    </p>
-
-                    <!-- BULLETPROOF CALL TO ACTION BUTTON -->
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="cta-button-table" style="margin-bottom: 14px;">
-                      <tr>
-                        <td align="center" bgcolor="#0A66FF" style="border-radius: 8px; background-color: #0A66FF;">
-                          <!--[if mso]>
-                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${bookingLink}" style="height:48px;v-text-anchor:middle;width:260px;" arcsize="17%" stroke="f" fillcolor="#0A66FF">
-                          <w:anchorlock/>
-                          <center style="color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;font-weight:bold;">
-                            BOOK YOUR CONSULTATION &rarr;
-                          </center>
-                          </v:roundrect>
-                          <![endif]-->
-                          <!--[if !mso]><!-- -->
-                          <a href="${bookingLink}" target="_blank" class="cta-btn" style="display: inline-block; padding: 14px 28px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 8px; letter-spacing: 0.03em; text-align: center; background-color: #0A66FF; border: 1px solid #0A66FF; box-shadow: 0 4px 12px rgba(10, 102, 255, 0.25);">
-                            BOOK YOUR CONSULTATION &rarr;
-                          </a>
-                          <!--<![endif]-->
-                        </td>
-                      </tr>
-                    </table>
-
-                    <!-- Direct Calendar Link -->
-                    <div style="font-size: 12.5px; color: #64748b; line-height: 1.5; word-break: break-all;">
-                      Direct Link:
-                      <a href="${bookingLink}" target="_blank" style="color: #0A66FF; text-decoration: underline; font-weight: 600;">
-                        ${bookingLink}
-                      </a>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- ==============================================
-                   ABOUT TRUSTGRID.AI
-                   ============================================== -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 26px;">
-                <tr>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 6px;">
-                      ABOUT TRUSTGRID.AI
-                    </div>
-                    <p style="margin: 0 0 8px 0; font-size: 14.5px; color: #334155; line-height: 1.6;">
-                      Explore our services, solutions, use cases, and success stories:
-                    </p>
-                    <p style="margin: 0; font-size: 14.5px;">
-                      <a href="https://trustgrid.ai" target="_blank" class="text-link" style="color: #0A66FF; font-weight: 600; text-decoration: none;">
-                        https://trustgrid.ai &rarr;
-                      </a>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- ==============================================
-                   WHATSAPP SUPPORT SECTION
-                   ============================================== -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px 20px;">
-                <tr>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #166534; margin-bottom: 4px;">
-                      WHATSAPP SUPPORT
-                    </div>
-                    <p style="margin: 0 0 12px 0; font-size: 14.5px; font-weight: 600; color: #14532d;">
-                      Need immediate assistance?
-                    </p>
-
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td class="whatsapp-col" style="padding: 6px 0; font-size: 14px; color: #1f2937;">
-                          <strong>WhatsApp US:</strong>
-                          <a href="${usWhatsappLink}" target="_blank" style="color: #059669; text-decoration: none; font-weight: 600; margin-left: 4px;">
-                            ${US_WHATSAPP_NUMBER}
-                          </a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="whatsapp-col" style="padding: 6px 0; font-size: 14px; color: #1f2937;">
-                          <strong>WhatsApp Bangalore:</strong>
-                          <a href="${blrWhatsappLink}" target="_blank" style="color: #059669; text-decoration: none; font-weight: 600; margin-left: 4px;">
-                            ${BANGALORE_WHATSAPP_NUMBER}
-                          </a>
-                        </td>
-                      </tr>
-                    </table>
-
-                    <p style="margin: 12px 0 0 0; font-size: 13px; color: #15803d; font-style: italic;">
-                      Send us a simple &ldquo;Hi&rdquo; to start the conversation.
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- ==============================================
-                   CONTACT INFORMATION
-                   ============================================== -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 28px; border-top: 1px solid #edf2f7; padding-top: 20px;">
-                <tr>
-                  <td>
-                    <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 8px;">
-                      CONTACT INFORMATION
-                    </div>
-                    <p style="margin: 0 0 6px 0; font-size: 14px; color: #334155;">
-                      <strong>Website:</strong>
-                      <a href="https://trustgrid.ai" target="_blank" style="color: #0A66FF; text-decoration: none; font-weight: 500;">
-                        https://trustgrid.ai
-                      </a>
-                    </p>
-                    <p style="margin: 0; font-size: 14px; color: #334155;">
-                      <strong>Email:</strong>
-                      <a href="mailto:${SUPPORT_EMAIL}" style="color: #0A66FF; text-decoration: none; font-weight: 500;">
-                        ${SUPPORT_EMAIL}
-                      </a>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- ==============================================
-                   FOOTER MESSAGE & SIGN-OFF
-                   ============================================== -->
-              <div style="border-top: 1px solid #edf2f7; padding-top: 22px;">
-                <p style="margin: 0 0 12px 0; font-size: 14.5px; color: #334155; line-height: 1.6;">
-                  Thank you for considering TRUSTGRID.AI.
-                </p>
-                <p style="margin: 0 0 18px 0; font-size: 14.5px; color: #334155; line-height: 1.6;">
-                  We look forward to helping your organization accelerate growth through intelligent technology solutions and automation excellence.
-                </p>
-                <p style="margin: 0; font-size: 14.5px; color: #0f172a; line-height: 1.5;">
-                  Best Regards,<br />
-                  <strong style="color: #0A66FF;">TRUSTGRID.AI Team</strong>
-                </p>
-              </div>
-
-            </td>
-          </tr>
-
-          <!-- ==============================================
-               EMAIL FOOTER (F.png FULL-WIDTH BANNER)
-               ============================================== -->
-          <tr>
-            <td align="center" style="margin: 0; padding: 0; background-color: #ffffff; border-top: 1px solid #edf2f7;">
-              <a href="https://trustgrid.ai" target="_blank" style="display: block; text-decoration: none; border: none;">
-                <img src="${footerImgUrl}" alt="TRUSTGRID.AI — Full-Spectrum AI Engineering" width="650" class="banner-img" style="width: 100%; max-width: 650px; height: auto; display: block; border: 0; outline: none; text-decoration: none;" />
-              </a>
-            </td>
-          </tr>
-
-          <!-- ==============================================
-               LEGAL FOOTER
-               ============================================== -->
-          <tr>
-            <td style="padding: 24px 32px 28px 32px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
-              <p style="margin: 0 0 10px 0; font-size: 12px; color: #64748b; line-height: 1.5;">
-                Copyright &copy; ${currentYear} <strong>TRUSTGRID.AI</strong>. All Rights Reserved.
-              </p>
-              <p style="margin: 0 0 8px 0; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-                This email was generated in response to your inquiry submitted through TRUSTGRID.AI.
-              </p>
-              <p style="margin: 0; font-size: 11.5px; color: #94a3b8; line-height: 1.5;">
-                If you received this email in error, please disregard this message.
-              </p>
-            </td>
-          </tr>
-
-        </table>
-        <!-- /MAIN 650px CONTAINER -->
-
-        <!--[if (gte mso 9)|(IE)]>
-        </td>
-        </tr>
-        </table>
-        <![endif]-->
-
-      </td>
-    </tr>
-  </table>
-  <!-- /OUTER WRAPPER TABLE -->
-
 </body>
 </html>`
 }
 
 /**
- * Sends or logs branded response email to genuine customer leads.
- * Strictly bypassed for any test, demo, staging, localhost, or Vercel leads.
+ * Sends branded response acknowledgement email to prospect.
+ * Triggers for all lead captures, applying [TEST LEAD] for non-production environments.
  */
 export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<LeadResponseEmailResult> {
-  const sourceUrl = lead.rawPayload?.source_url || lead.rawPayload?.sourceUrl || lead.pageUrl || ''
-  const host = lead.rawPayload?.host || ''
-
-  // STRICT TEST LEAD FILTER:
-  // Before email is sent, if source_url contains vercel.app, localhost, 127.0.0.1, dev, staging, preview,
-  // or test indicators: DO NOT SEND EMAIL
-  const isTest = isNonProductionLead({
-    isTestLead: lead.isTestLead,
-    productionOrTest: lead.productionOrTest,
-    sourceUrl,
-    host,
-    referrer: lead.referrer,
-    email: lead.email,
-    name: lead.name
-  })
-
-  if (isTest) {
-    console.log(`[Lead Response Email] Strict test filter triggered for lead ${lead.leadId} (${lead.email}). Customer response email strictly bypassed.`)
-    return {
-      success: true,
-      skippedTest: true,
-      leadId: lead.leadId,
-      recipientEmail: lead.email,
-      subject: `[Skipped] Test lead quarantined`,
-      bookingSlots: [],
-      deliveryStatus: 'Skipped_Test_Lead'
-    }
-  }
-
-  const isConsulting = (lead.leadType === 'TALK_TO_ARCHITECT') ||
-                       (lead.leadTypeCategory === 'CONSULTING SESSIONS') || 
-                       (lead.requirement && lead.requirement.toLowerCase().includes('consulting')) ||
-                       (lead.pageUrl && (lead.pageUrl.includes('talk-to-ai-architect') || lead.pageUrl.includes('consulting'))) ||
-                       (lead.formName && lead.formName.toLowerCase().includes('consulting'))
-
-  const subject = isConsulting 
-    ? 'Thank You for Contacting TRUSTGRID.AI — Consulting Session Confirmation'
-    : EMAIL_SUBJECT
+  const isTest = Boolean(lead.isTestLead)
+  const subject = isTest
+    ? '[TEST LEAD] Thank You For Contacting TrustGrid'
+    : 'Thank You For Contacting TrustGrid'
 
   const htmlBody = buildLeadResponseEmailHtml(lead)
   const slots = generateMeetingSlots()
 
   try {
-    // Attempt webhook dispatch to Apps Script for mail sending
     const webhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
     if (webhookUrl && webhookUrl.startsWith('http')) {
       await fetch(webhookUrl, {
@@ -613,6 +334,7 @@ export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<L
           subject,
           htmlBody,
           leadId: lead.leadId,
+          isTestLead: isTest,
           slots
         }),
         signal: AbortSignal.timeout(8000)
@@ -621,7 +343,7 @@ export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<L
       })
     }
 
-    console.log(`[Lead Response Email] Successfully prepared and dispatched customer response to ${lead.email} for ${lead.leadId}`)
+    console.log(`[Lead Response Email] Successfully dispatched acknowledgement to ${lead.email} for ${lead.leadId}`)
 
     return {
       success: true,
@@ -646,3 +368,238 @@ export async function sendCustomerResponseEmail(lead: NormalizedLead): Promise<L
     }
   }
 }
+
+export interface LeadNotificationEmailInput {
+  name: string
+  email: string
+  phone?: string
+  company?: string
+  subject?: string
+  requirement?: string
+  message?: string
+  leadSource?: string
+  formName?: string
+  isTestLead?: boolean
+  jiraTicketUrl?: string
+  jiraUrl?: string
+  jiraTicketKey?: string
+  googleSheetRecordUrl?: string
+  sheetUrl?: string
+  submissionId?: string
+}
+
+/**
+ * Builds modern branded card-based internal lead notification HTML email.
+ * Replaces old table layout with rounded section cards and consistent buttons.
+ */
+export function buildLeadNotificationEmailHtml(data: LeadNotificationEmailInput): string {
+  const isTest = Boolean(data.isTestLead)
+  const name = (data.name || 'Inbound Prospect').trim()
+  const email = (data.email || '').trim()
+  const phone = (data.phone || '').trim()
+  const company = (data.company && data.company !== 'Enterprise Organization' ? data.company : '').trim()
+  const subject = (data.subject || 'Enterprise AI Consultation').trim()
+  const requirement = (data.requirement || data.message || '').trim()
+  const leadSource = (data.leadSource || 'Website Inbound Form').trim()
+  const formName = (data.formName || 'Enterprise Inbound Form').trim()
+  const jiraUrl = data.jiraUrl || data.jiraTicketUrl || 'https://trustworkz.atlassian.net/browse/DFX'
+  const sheetUrl = data.sheetUrl || data.googleSheetRecordUrl || 'https://docs.google.com/spreadsheets/d/1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0/edit'
+  const currentYear = new Date().getFullYear()
+
+  // Helper card row builder
+  const buildCardRow = (label: string, value?: string, isLink: boolean = false, linkHref?: string) => {
+    if (!value || !value.trim()) return ''
+    const content = isLink && linkHref
+      ? `<a href="${linkHref}" target="_blank" style="color: #0A66FF; text-decoration: none; font-weight: 600;">${value}</a>`
+      : value
+    return `<div style="padding: 9px 0; border-bottom: 1px solid #f8fafc; font-size: 13.5px; line-height: 1.5;">
+      <span style="color: #64748b; font-weight: 600; display: inline-block; width: 120px;">${label}:</span>
+      <span style="color: #0f172a; font-weight: 500;">${content}</span>
+    </div>`
+  }
+
+  // LEAD INFORMATION CARD ROWS
+  const leadInfoRows = [
+    buildCardRow('Name', name),
+    buildCardRow('Email', email, true, `mailto:${email}`),
+    phone ? buildCardRow('Phone', phone, true, `tel:${phone}`) : '',
+    company ? buildCardRow('Company', company) : ''
+  ].filter(Boolean).join('')
+
+  // ENQUIRY DETAILS CARD ROWS
+  const enquiryRows = [
+    buildCardRow('Subject', subject),
+    requirement ? `<div style="padding: 10px 0;">
+      <div style="color: #64748b; font-weight: 600; font-size: 12.5px; margin-bottom: 6px;">Requirement / Message:</div>
+      <div style="background: #f8fafc; border: 1px solid #edf2f7; border-radius: 8px; padding: 12px 14px; color: #0f172a; font-size: 13.5px; line-height: 1.6; word-break: break-word;">${requirement.replace(/\n/g, '<br>')}</div>
+    </div>` : ''
+  ].filter(Boolean).join('')
+
+  // SOURCE INFORMATION CARD ROWS
+  const sourceRows = [
+    buildCardRow('Lead Source', leadSource),
+    buildCardRow('Form Name', formName)
+  ].filter(Boolean).join('')
+
+  // QUICK ACTIONS BUTTONS
+  const leadRecordUrl = sheetUrl || jiraUrl
+  const buttons: string[] = []
+  if (email) {
+    buttons.push(`<a href="mailto:${email}?subject=Re: ${encodeURIComponent(subject)}" class="btn-action btn-reply" style="background: #0A66FF; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Reply To Prospect</a>`)
+  }
+  if (phone) {
+    buttons.push(`<a href="tel:${phone}" class="btn-action btn-call" style="background: #0f172a; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Call Prospect</a>`)
+  }
+  if (jiraUrl) {
+    buttons.push(`<a href="${jiraUrl}" target="_blank" class="btn-action btn-jira" style="background: #0052cc; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Open JIRA Ticket</a>`)
+  }
+  if (leadRecordUrl) {
+    buttons.push(`<a href="${leadRecordUrl}" target="_blank" class="btn-action btn-record" style="background: #1e293b; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Open Lead Record</a>`)
+  }
+  if (sheetUrl) {
+    buttons.push(`<a href="${sheetUrl}" target="_blank" class="btn-action btn-sheet" style="background: #059669; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Open Google Sheet</a>`)
+  }
+  buttons.push(`<a href="${DEFAULT_BOOKING_LINK}" target="_blank" class="btn-action btn-followup" style="background: #4f46e5; color: #ffffff; text-decoration: none; padding: 11px 18px; border-radius: 8px; font-weight: 700; font-size: 13px; display: inline-block; margin-right: 8px; margin-bottom: 8px; text-align: center; min-width: 140px;">Book Follow-up</a>`)
+
+  // LINKS CARD
+  const linksCard = `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+    <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 12px;">LINKS</div>
+    ${jiraUrl ? `<div style="padding: 8px 0; border-bottom: 1px solid #f8fafc; font-size: 13px;"><span style="color: #64748b; font-weight: 600; display: inline-block; width: 140px;">JIRA Link:</span> <a href="${jiraUrl}" target="_blank" style="color: #0A66FF; font-weight: 600; text-decoration: none; word-break: break-all;">${jiraUrl} &rarr;</a></div>` : ''}
+    ${sheetUrl ? `<div style="padding: 8px 0; font-size: 13px;"><span style="color: #64748b; font-weight: 600; display: inline-block; width: 140px;">Google Sheet Link:</span> <a href="${sheetUrl}" target="_blank" style="color: #0A66FF; font-weight: 600; text-decoration: none; word-break: break-all;">${sheetUrl} &rarr;</a></div>` : ''}
+  </div>`
+
+  const headerTitle = isTest ? '[TEST LEAD] TRUSTGRID NEW LEAD' : 'TRUSTGRID NEW LEAD'
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${headerTitle}</title>
+  <style>
+    .btn-action {
+      display: inline-block;
+      padding: 11px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 8px;
+      text-decoration: none;
+      text-align: center;
+      box-sizing: border-box;
+      margin-right: 8px;
+      margin-bottom: 8px;
+      transition: all 0.2s ease;
+      min-width: 140px;
+    }
+    .btn-action:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+    @media (max-width: 600px) {
+      .btn-action {
+        display: block !important;
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-bottom: 8px !important;
+      }
+    }
+  </style>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 24px 12px; color: #1e293b;">
+  <div style="max-width: 620px; margin: 0 auto;">
+    
+    <!-- HEADER -->
+    <div style="background: linear-gradient(135deg, #090d16 0%, #1e1b4b 60%, #312e81 100%); padding: 28px 24px; border-radius: 14px 14px 0 0; color: #ffffff; text-align: left;">
+      <div style="margin-bottom: 10px;">
+        <span style="display: inline-block; width: 10px; height: 10px; background: #0A66FF; border-radius: 2px; margin-right: 8px;"></span>
+        <span style="font-size: 13px; font-weight: 800; letter-spacing: 0.12em; color: #ffffff; text-transform: uppercase;">TRUSTGRID</span>
+        ${isTest ? '<span style="background: #f59e0b; color: #000000; font-size: 10.5px; font-weight: 800; padding: 3px 10px; border-radius: 12px; letter-spacing: 0.08em; margin-left: 10px;">[TEST LEAD]</span>' : ''}
+      </div>
+      <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.01em;">${headerTitle}</h1>
+      <p style="margin: 6px 0 0 0; color: #c7d2fe; font-size: 13px;">Central Inbound Lead Notification</p>
+    </div>
+
+    <!-- MAIN BODY CONTAINER WITH ROUNDED CARDS -->
+    <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 14px 14px; padding: 22px 20px;">
+
+      <!-- LEAD INFORMATION CARD -->
+      ${leadInfoRows ? `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">LEAD INFORMATION</div>
+        ${leadInfoRows}
+      </div>` : ''}
+
+      <!-- ENQUIRY DETAILS CARD -->
+      ${enquiryRows ? `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">ENQUIRY DETAILS</div>
+        ${enquiryRows}
+      </div>` : ''}
+
+      <!-- SOURCE INFORMATION CARD -->
+      ${sourceRows ? `<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 10px;">SOURCE INFORMATION</div>
+        ${sourceRows}
+      </div>` : ''}
+
+      <!-- QUICK ACTIONS CARD -->
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+        <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: #0A66FF; margin-bottom: 12px;">QUICK ACTIONS</div>
+        <div>
+          ${buttons.join('\n')}
+        </div>
+      </div>
+
+      <!-- LINKS CARD -->
+      ${linksCard}
+
+    </div>
+
+    <!-- FOOTER -->
+    <div style="padding: 16px 20px; font-size: 11.5px; color: #94a3b8; text-align: center; line-height: 1.5;">
+      &copy; ${currentYear} <strong>TRUSTGRID.AI</strong>. All Rights Reserved.<br>
+      Confidential Notification &bull; Authorized recipients only.
+    </div>
+
+  </div>
+</body>
+</html>`
+}
+
+export async function sendLeadNotificationEmail(
+  data: LeadNotificationEmailInput
+): Promise<{ success: boolean; error?: string }> {
+  const isTest = Boolean(data.isTestLead)
+  const cleanCompany = data.company && data.company !== 'Enterprise Organization' ? data.company : ''
+  const subject = isTest
+    ? `[TEST LEAD] New Lead Received - ${data.name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
+    : `New Lead Received - ${data.name}${cleanCompany ? ` - ${cleanCompany}` : ''}`
+
+  const htmlBody = buildLeadNotificationEmailHtml(data)
+  const webhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL
+
+  if (!webhookUrl || !webhookUrl.startsWith('http')) {
+    console.log(`[Lead Notification Email] Webhook not configured. Email logged: ${subject}`)
+    return { success: true }
+  }
+
+  try {
+    const res = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        action: 'send_lead_notification_email',
+        subject,
+        htmlBody,
+        isTestLead: isTest,
+        leadId: data.submissionId,
+        leadData: data
+      }),
+      signal: AbortSignal.timeout(8000)
+    })
+
+    return { success: res.ok }
+  } catch (err: any) {
+    console.warn('[Lead Notification Email] Dispatch note:', err?.message || err)
+    return { success: false, error: err?.message }
+  }
+}
+

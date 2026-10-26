@@ -112,17 +112,6 @@ export async function createJiraLead(
   lead: NormalizedLead,
   workflow: JiraSubtaskConfig[] = DEFAULT_LEAD_WORKFLOW
 ): Promise<JiraIssueResult> {
-  // Strict Test Lead Filter: Test/Demo/QA/Vercel leads strictly bypass Jira lead & subtask creation
-  if (lead.isTestLead || lead.productionOrTest === 'TEST') {
-    return {
-      success: true,
-      status: 'Skipped_Test_Lead',
-      issueKey: undefined,
-      subtasks: [],
-      error: 'Test lead strictly bypassed Jira issue creation'
-    }
-  }
-
   // Non-sales submissions (Careers, Newsletters) bypass Jira sales tickets
   if (!lead.isSalesLead) {
     return {
@@ -159,7 +148,7 @@ export async function createJiraLead(
   const authHeader = `Basic ${Buffer.from(`${config.email}:${config.apiToken}`).toString('base64')}`
 
   try {
-    // 1. Create Parent Lead Issue with custom field mapping and TG labeling
+    // 1. Create Parent Lead Issue with standardized summary & description
     const fields: Record<string, any> = {
       project: {
         key: config.projectKey
@@ -174,19 +163,8 @@ export async function createJiraLead(
         name: lead.isTestLead ? 'Medium' : 'High'
       },
       labels: lead.isTestLead
-        ? [
-            'TG',
-            'TG-TEST',
-            'TEST_LEAD',
-            lead.leadType
-          ]
-        : [
-            'TG',
-            'SITE_TG',
-            'PRODUCTION_LEAD',
-            lead.leadType,
-            lead.channelAttribution.replace(/[\s\/]+/g, '_')
-          ]
+        ? ['TG', 'TEST_LEAD', lead.leadType]
+        : ['TG', lead.leadType, lead.channelAttribution.replace(/[\s\/]+/g, '_')]
     }
 
     // Map custom fields on DealFlow (DFX)
@@ -233,10 +211,10 @@ export async function createJiraLead(
     const createdSubtasks: Array<{ key: string; name: string }> = []
 
     // 2. Create the 7 Workflow FollowUp Tasks
-    const subtaskPrefix = lead.isTestLead ? '[TG-TEST]' : '[TG]'
+    const subtaskPrefix = lead.isTestLead ? '[TEST LEAD] ' : ''
     const subtaskLabels = lead.isTestLead
-      ? ['TG', 'TG-TEST', 'TEST_FOLLOWUP', lead.leadType]
-      : ['TG', 'LEAD_FOLLOWUP', 'PRODUCTION_FOLLOWUP', lead.leadType]
+      ? ['TG', 'TEST_LEAD', lead.leadType]
+      : ['TG', lead.leadType]
 
     for (const step of workflow) {
       try {
@@ -248,8 +226,8 @@ export async function createJiraLead(
             parent: {
               key: parentKey
             },
-            summary: `${subtaskPrefix} [${lead.leadId}] ${step.name}`,
-            description: `Site Origin: TG (TRUSTGRID.AI)\nClassification: ${lead.productionOrTest} (${lead.isTestLead ? 'Test/QA Lead' : 'Live Production Lead'})\nTask: ${step.description || step.name}\n\nLead Reference: ${lead.leadId}\nContact: ${lead.name} (${lead.email} | ${lead.phone})\nCompany: ${lead.company}\nSolution: ${lead.interestedSolution}`,
+            summary: `${subtaskPrefix}${step.name} - ${lead.name}`,
+            description: `Task: ${step.description || step.name}\n\nLEAD INFORMATION\nName: ${lead.name}\nEmail: ${lead.email}${lead.phone ? `\nPhone: ${lead.phone}` : ''}${lead.company ? `\nCompany: ${lead.company}` : ''}\n\nLINKS\nWebsite Submission ID: ${lead.leadId}`,
             issuetype: {
               name: config.subtaskIssueType
             },

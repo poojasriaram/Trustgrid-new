@@ -243,18 +243,8 @@ export async function submitTrustGridForm(
       form_id: formId,
       formName: formData.formName,
       form_name: formData.formName,
-      sheetName: formData.sheetName || (
-        formType === 'CAREER' ? 'Career_Applications' :
-        formType === 'PARTNER' ? 'Partner_Applications' :
-        formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' :
-        'Contact_Leads'
-      ),
-      sheet_name: formData.sheetName || (
-        formType === 'CAREER' ? 'Career_Applications' :
-        formType === 'PARTNER' ? 'Partner_Applications' :
-        formType === 'FLOATING_LEAD' ? 'Quick_Enquiry_Leads' :
-        'Contact_Leads'
-      ),
+      sheetName: formData.sheetName || 'Form_Submissions',
+      sheet_name: formData.sheetName || 'Form_Submissions',
       submissionId: clientSubmissionId,
       lead_id: clientSubmissionId,
       name: nameVal,
