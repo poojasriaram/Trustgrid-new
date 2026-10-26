@@ -62,7 +62,7 @@ export default nextConfig
   fs.writeFileSync('next.config.mjs', exportConfig, 'utf8');
 
   console.log('=== [3/5] Executing Next.js production static build ===');
-  const buildOut = execSync('npm run build', { encoding: 'utf8', stdio: 'inherit' });
+  const buildOut = execSync('npx next build', { encoding: 'utf8', stdio: 'inherit' });
 
 } catch (err) {
   console.error('❌ Build failed:', err.message);
