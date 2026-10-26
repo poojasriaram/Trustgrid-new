@@ -41,7 +41,6 @@ import { HeroSlider } from '@/components/ui/hero-slider'
 import { OfferingSlider, PrimaryOffering } from '@/components/ui/offering-slider'
 import { MarketGapsSlider, MarketGapItem } from '@/components/ui/market-gaps-slider'
 import { InteractiveOperatingStack, StackLayerItem } from '@/components/ui/interactive-operating-stack'
-import { MethodologyTimeline } from '@/components/ui/methodology-timeline'
 import { IndustryShowcaseSlider } from '@/components/ui/industry-showcase-slider'
 import { ComparisonTable } from '@/components/ui/comparison-table'
 import { PrinciplesSlider } from '@/components/ui/principles-slider'
@@ -529,13 +528,8 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Interactive Engagement Models Slider */}
-        <div style={{ marginBottom: '40px' }}>
-          <EngagementModelsSlider />
-        </div>
-
-        {/* Interactive Methodology Timeline */}
-        <MethodologyTimeline />
+        {/* Interactive Engagement Models */}
+        <EngagementModelsSlider />
       </section>
 
       {/* AI METHODOLOGY ENGINE SHOWCASE */}
@@ -555,7 +549,7 @@ export default function HomePage() {
 
         <div className="showcase-header">
           <h2>
-            Industrial rigor meets financial accountability. <span>9 Stages to Defensible ROI.</span>
+            Industrial rigor meets financial accountability. <span>9-Step Engine to Defensible ROI.</span>
           </h2>
           <p>
             Bridging silicon compute, token FinOps, Theory of Constraints (TOC), and Lean Six Sigma to guarantee CFO-verified enterprise returns from initial opportunity discovery to compounding scale.

@@ -1,17 +1,9 @@
 'use client'
 
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import {
-  ChevronLeft,
-  ChevronRight,
   ArrowUpRight,
-  Check,
-  BarChart3,
-  Clock,
-  Layers,
-  Sparkles,
   Bot,
   Cpu,
   Network,
@@ -46,320 +38,117 @@ const defaultOfferingIcons: Record<string, LucideIcon> = {
   'ai-value-engineering': TrendingUp,
 }
 
+// Concise 1-line summaries capped at <= 120 characters per requirements
+const conciseSummaries: Record<string, string> = {
+  'ai-infra-engineering': 'High-density AI Factories (30–100kW/rack) with direct-to-chip liquid cooling and low-latency inference serving.',
+  'ai-agentic-factory': 'Production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics, and native MCP tools.',
+  'ai-networking': 'Ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss at scale.',
+  'ai-networking-cybersecurity': 'Zero-loss RoCEv2 fabrics, Cognitive WiFi 7, and post-quantum cryptographic defense unified as one nervous system.',
+  'ai-cybersecurity-quantum-safe': 'Zero-trust agent protection and runtime prompt firewalls migrating enterprise crypto to NIST post-quantum standards.',
+  'trusted-ai-transformation': 'Mathematical explainability (SHAP/LIME), continuous SPC, formal robustness, and immutable decision audit trails.',
+  'ai-value-engineering': 'Industrial operational excellence (Lean, TOC, DMAIC) and AI FinOps unit economics ensuring compounding 3–10x ROI.'
+}
+
 interface OfferingSliderProps {
   offerings: PrimaryOffering[]
 }
 
 export function OfferingSlider({ offerings }: OfferingSliderProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [expandedDeliverables, setExpandedDeliverables] = useState<Record<string, boolean>>({})
-  const [isPaused, setIsPaused] = useState(false)
-  const [isDragging, setIsDragging] = useState(false)
-  const [startX, setStartX] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-  const sliderTrackRef = useRef<HTMLDivElement>(null)
+  const [activeIdx, setActiveIdx] = useState<number>(0)
+  const [displayedDesc, setDisplayedDesc] = useState<string>(
+    conciseSummaries[offerings[0]?.slug] || offerings[0]?.solution?.slice(0, 118) || ''
+  )
+  const [isFading, setIsFading] = useState<boolean>(false)
+  const fadeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
-  const total = offerings.length
+  const activeOffering = offerings[activeIdx] || offerings[0]
 
-  const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => (prev + 1) % total)
-  }, [total])
+  const handleSelect = (idx: number) => {
+    if (idx === activeIdx) return
+    setActiveIdx(idx)
 
-  const goToPrev = useCallback(() => {
-    setCurrentIndex((prev) => (prev - 1 + total) % total)
-  }, [total])
+    // Smooth 200ms to 300ms fade transition without layout shift
+    setIsFading(true)
+    if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current)
+    fadeTimeoutRef.current = setTimeout(() => {
+      const summary = conciseSummaries[offerings[idx]?.slug] || offerings[idx]?.solution?.slice(0, 118) || ''
+      setDisplayedDesc(summary)
+      setIsFading(false)
+    }, 150)
+  }
 
-  // Autoplay
   useEffect(() => {
-    if (isPaused || isDragging) return
-    const timer = setInterval(() => {
-      goToNext()
-    }, 7000)
-    return () => clearInterval(timer)
-  }, [isPaused, isDragging, goToNext])
-
-  // Toggle deliverables expand
-  const toggleDeliverables = (slug: string) => {
-    setExpandedDeliverables((prev) => ({ ...prev, [slug]: !prev[slug] }))
-  }
-
-  // Drag handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setIsDragging(true)
-    setStartX(e.touches[0].clientX)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging) return
-    const currentX = e.touches[0].clientX
-    const diff = currentX - startX
-    setDragOffset(diff)
-  }
-
-  const handleTouchEnd = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-    if (dragOffset < -45) {
-      goToNext()
-    } else if (dragOffset > 45) {
-      goToPrev()
+    return () => {
+      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current)
     }
-    setDragOffset(0)
-  }
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true)
-    setStartX(e.clientX)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return
-    const diff = e.clientX - startX
-    setDragOffset(diff)
-  }
-
-  const handleMouseUp = () => {
-    if (!isDragging) return
-    setIsDragging(false)
-    if (dragOffset < -50) {
-      goToNext()
-    } else if (dragOffset > 50) {
-      goToPrev()
-    }
-    setDragOffset(0)
-  }
+  }, [])
 
   return (
-    <div
-      className="offering-slider-wrapper"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => {
-        setIsPaused(false)
-        if (isDragging) setIsDragging(false)
-      }}
-    >
-      {/* Slider Controls Bar */}
-      <div className="offering-slider-header">
-        <div className="offering-slider-counter">
-          <span className="slider-live-label">
-            {offerings[currentIndex]?.badge}
-          </span>
-          <span className="slider-practice-tag">
-            {offerings[currentIndex]?.groupTag}
-          </span>
-        </div>
-
-        {/* Progress Dots */}
-        <div className="offering-slider-dots">
-          {offerings.map((_, i) => (
-            <button
-              key={i}
-              className={`slider-dot ${i === currentIndex ? 'active' : ''}`}
-              onClick={() => setCurrentIndex(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-
-        {/* Navigation Arrows */}
-        <div className="offering-slider-nav-btns">
-          <button
-            className="slider-arrow-btn"
-            onClick={goToPrev}
-            aria-label="Previous offering"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            className="slider-arrow-btn"
-            onClick={goToNext}
-            aria-label="Next offering"
-          >
-            <ChevronRight size={18} />
-          </button>
-        </div>
-      </div>
-
-      {/* Slider Viewport */}
+    <div className="services-card-grid-container" aria-label="Enterprise AI Services Navigation">
+      {/* 1. Symmetrical Clean Card Grid (Navigation Tab Style: Icon + Title only) */}
       <div
-        className="offering-slider-viewport"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
+        className="services-tabs-grid"
+        role="tablist"
+        aria-label="Enterprise AI Offerings"
       >
-        <div
-          ref={sliderTrackRef}
-          className="offering-slider-track"
-          style={{
-            transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
-            transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}
-        >
-          {offerings.map((offering, idx) => {
-            const Icon = offering.icon || defaultOfferingIcons[offering.slug] || Cpu
-            const isExpanded = !!expandedDeliverables[offering.slug]
-            const isSlideActive = idx === currentIndex
+        {offerings.map((offering, idx) => {
+          const Icon = offering.icon || defaultOfferingIcons[offering.slug] || Cpu
+          const isActive = idx === activeIdx
 
-            return (
-              <div
-                key={offering.slug}
-                className={`offering-slide-item ${isSlideActive ? 'slide-active' : ''}`}
-              >
-                <article className="enhanced-offering-card animated-card">
-                  <span className="card-corner-tl" />
-                  <span className="card-corner-br" />
-
-                  {/* Top Split: Visual Preview + Summary */}
-                  <div className="offering-card-main-split">
-                    {/* Visual Media Container with Hover Zoom */}
-                    <div className="offering-image-container relative overflow-hidden aspect-[16/10]">
-                      <Image
-                        src={offering.image}
-                        alt={offering.title}
-                        width={540}
-                        height={338}
-                        loading={idx === 0 ? 'eager' : 'lazy'}
-                        sizes="(max-width: 768px) 100vw, 540px"
-                        quality={80}
-                        className="offering-featured-img object-cover w-full h-full"
-                      />
-                      <div className="offering-image-overlay" />
-                      
-                      <div className="offering-image-badge-floating">
-                        <Icon size={16} className="text-cyan-400" />
-                        <span>{offering.groupTag}</span>
-                      </div>
-
-                      <div className="offering-image-metric-chip">
-                        <BarChart3 size={13} className="text-cyan-300" />
-                        <span>{offering.metric}</span>
-                      </div>
-                    </div>
-
-                    {/* Content Column */}
-                    <div className="offering-content-col">
-                      <div className="offering-header-row">
-                        <div className="offering-title-wrap">
-                          <span className="offering-badge-pill">{offering.badge}</span>
-                          <h3 className="offering-heading-title">
-                            <Link href={`/solutions/${offering.slug}`}>
-                              {offering.title}
-                            </Link>
-                          </h3>
-                        </div>
-                      </div>
-
-                      <div className="offering-problem-statement">
-                        <span className="problem-label">Buyer Bottleneck:</span>
-                        <p>{offering.problem}</p>
-                      </div>
-
-                      <p className="offering-solution-summary">
-                        {offering.solution}
-                      </p>
-
-                      <div className="offering-impact-badges">
-                        <div className="impact-pill">
-                          <BarChart3 size={14} className="text-blue-500" />
-                          <span><strong>Impact:</strong> {offering.metric}</span>
-                        </div>
-                        <div className="duration-pill">
-                          <Clock size={13} className="text-slate-600" />
-                          <span><strong>Timeframe:</strong> {offering.duration}</span>
-                        </div>
-                      </div>
-
-                      {/* Expandable Engineering Deliverables */}
-                      <div className="offering-deliverables-section">
-                        <button
-                          type="button"
-                          className="deliverables-toggle-btn"
-                          onClick={() => toggleDeliverables(offering.slug)}
-                        >
-                          <span>{isExpanded ? 'Hide Key Deliverables' : 'View Engineering Deliverables'}</span>
-                          <span className="toggle-indicator">{isExpanded ? '−' : '+'}</span>
-                        </button>
-
-                        <div className={`deliverables-drawer ${isExpanded ? 'drawer-open' : ''}`}>
-                          <ul className="deliverables-grid-list">
-                            {offering.deliverables.map((d, dIdx) => (
-                              <li key={dIdx} className="deliverable-list-item">
-                                <Check size={14} className="text-blue-500 shrink-0" />
-                                <span>{d}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      {/* Footer CTA Action Group */}
-                      <div className="offering-card-actions">
-                        <Link
-                          href={`/book-ai-diagnostic?solution=${offering.slug}#diagnostic-form-section`}
-                          className="button button-primary button-sm"
-                        >
-                          <span>Book an AI Diagnostic</span>
-                          <ArrowUpRight size={16} />
-                        </Link>
-                        <Link
-                          href={`/solutions/${offering.slug}`}
-                          className="button button-ghost button-sm"
-                        >
-                          <span>Explore {offering.title}</span>
-                        </Link>
-                        <Link
-                          href="/sitemap"
-                          className="text-link-subtle ml-auto"
-                        >
-                          <span>Explore Technical Architecture</span>
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </article>
+          return (
+            <button
+              key={offering.slug}
+              type="button"
+              role="tab"
+              id={`service-card-tab-${offering.slug}`}
+              aria-selected={isActive}
+              aria-controls="selected-service-ribbon"
+              tabIndex={0}
+              onClick={() => handleSelect(idx)}
+              onMouseEnter={() => handleSelect(idx)}
+              onFocus={() => handleSelect(idx)}
+              className={`service-tab-card ${isActive ? 'active-tab' : ''}`}
+            >
+              <div className="tab-card-inner">
+                <div className={`tab-icon-box ${isActive ? 'icon-active' : ''}`}>
+                  <Icon size={20} className="tab-icon" />
+                </div>
+                <span className="tab-title">{offering.title}</span>
               </div>
-            )
-          })}
-        </div>
+              <div className={`tab-active-indicator ${isActive ? 'indicator-visible' : ''}`} />
+            </button>
+          )
+        })}
       </div>
 
-      {/* 21st.dev inspired minimal bottom dots & arrows */}
-      <div className="flex items-center justify-between pt-5 px-1">
-        <div className="text-xs font-semibold text-slate-500">
-          Slide <strong>0{currentIndex + 1}</strong> / 0{total}
-        </div>
-        <div className="flex items-center gap-2">
-          {offerings.map((_, i) => (
-            <button
-              key={i}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === currentIndex
-                  ? 'w-8 bg-blue-600 shadow-xs'
-                  : 'w-2 bg-slate-300 hover:bg-slate-400'
-              }`}
-              onClick={() => setCurrentIndex(i)}
-              aria-label={`Go to slide ${i + 1}`}
-            />
-          ))}
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all shadow-xs"
-            onClick={goToPrev}
-            aria-label="Previous offering"
+      {/* 2. Single Dedicated Information Ribbon Section */}
+      <div
+        id="selected-service-ribbon"
+        role="region"
+        aria-live="polite"
+        className="selected-service-ribbon"
+      >
+        <div className="ribbon-header-row">
+          <div className="ribbon-label-group">
+            <span className="ribbon-status-dot" />
+            <span className="ribbon-label">SELECTED SERVICE INFORMATION</span>
+            <span className="ribbon-service-name">{activeOffering.title}</span>
+          </div>
+
+          <Link
+            href={`/solutions/${activeOffering.slug}`}
+            className="ribbon-action-link"
+            title={`View full engineering architecture for ${activeOffering.title}`}
           >
-            <ChevronLeft size={16} />
-          </button>
-          <button
-            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all shadow-xs"
-            onClick={goToNext}
-            aria-label="Next offering"
-          >
-            <ChevronRight size={16} />
-          </button>
+            <span>Explore Practice</span>
+            <ArrowUpRight size={13} />
+          </Link>
+        </div>
+
+        <div className="ribbon-body-wrap">
+          <p className={`ribbon-description ${isFading ? 'fade-out' : 'fade-in'}`}>
+            {displayedDesc}
+          </p>
         </div>
       </div>
     </div>

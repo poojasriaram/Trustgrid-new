@@ -120,7 +120,6 @@ export function InteractiveOperatingStack({ layers }: InteractiveOperatingStackP
                         <h4 className="layer-title">{layer.title}</h4>
                       </div>
                     </div>
-                    <p className="layer-summary">{layer.description}</p>
                   </div>
 
                   <div className="stack-layer-status">

@@ -17848,4 +17848,377 @@ html, body {
 
 /* ── END 25. COMPREHENSIVE MOBILE-FIRST OVERHAUL ── */
 
+/* ==================================================
+   26. TRUSTGRID SERVICES CARD GRID & INFORMATION RIBBON
+   ================================================== */
+
+.services-card-grid-container {
+  width: 100%;
+  margin: 28px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 1. Symmetrical Clean Card Grid (Navigation Tab Style) */
+.services-tabs-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. Menu-Style Service Tab Card (Icon + Title Only) */
+.service-tab-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 12px 14px 12px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 250ms ease;
+  user-select: none;
+  min-height: 94px;
+  box-sizing: border-box;
+  outline: none;
+  overflow: hidden;
+}
+
+.service-tab-card:hover {
+  border-color: #3b82f6;
+  background: #f8faff;
+  box-shadow: 0 4px 18px rgba(37, 99, 235, 0.12);
+  transform: translateY(-1px);
+}
+
+.service-tab-card:active {
+  transform: translateY(0);
+}
+
+.service-tab-card.active-tab {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.16), 0 0 0 1px #2563eb;
+}
+
+.tab-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.tab-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #475569;
+  transition: all 250ms ease;
+  flex-shrink: 0;
+}
+
+.service-tab-card:hover .tab-icon-box {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.tab-icon-box.icon-active,
+.service-tab-card.active-tab .tab-icon-box {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.tab-icon {
+  stroke-width: 2.2px;
+}
+
+.tab-title {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: #0f172a;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  transition: color 250ms ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.service-tab-card:hover .tab-title,
+.service-tab-card.active-tab .tab-title {
+  color: #1d4ed8;
+}
+
+.tab-active-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 3px;
+  width: 0%;
+  background: #2563eb;
+  border-radius: 3px 3px 0 0;
+  transition: width 250ms ease;
+}
+
+.tab-active-indicator.indicator-visible,
+.service-tab-card.active-tab .tab-active-indicator {
+  width: 60%;
+}
+
+/* 3. Dedicated Information Ribbon Section Below Cards */
+.selected-service-ribbon {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 20px;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-height: 76px; /* Guaranteed zero layout shift */
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.selected-service-ribbon:hover {
+  border-color: #cbd5e1;
+}
+
+.ribbon-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.ribbon-label-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ribbon-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.6);
+  flex-shrink: 0;
+}
+
+.ribbon-label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+
+.ribbon-service-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f172a;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: -0.01em;
+}
+
+.ribbon-action-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 200ms ease;
+  white-space: nowrap;
+}
+
+.ribbon-action-link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.ribbon-body-wrap {
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ribbon-description {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: #334155;
+  font-weight: 500;
+  max-width: 100%;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.ribbon-description.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ribbon-description.fade-out {
+  opacity: 0;
+  transform: translateY(2px);
+}
+
+/* 4. Responsive Optimization (Tablet & Mobile) */
+@media (max-width: 1024px) {
+  .services-tabs-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .services-card-grid-container {
+    margin-top: 18px;
+    gap: 12px;
+  }
+
+  .services-tabs-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .service-tab-card {
+    padding: 12px 10px 10px 10px;
+    min-height: 80px;
+  }
+
+  .tab-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .tab-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .tab-title {
+    font-size: 0.76rem;
+  }
+
+  .selected-service-ribbon {
+    padding: 12px 14px;
+    min-height: 86px;
+  }
+
+  .ribbon-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .ribbon-action-link {
+    align-self: flex-end;
+  }
+
+  .ribbon-description {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+}
+
+/* 5. Dark Mode Consistency */
+.dark .service-tab-card {
+  background: #091225;
+  border-color: #1e293b;
+}
+
+.dark .service-tab-card:hover {
+  background: #0e1b38;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 18px rgba(59, 130, 246, 0.2);
+}
+
+.dark .service-tab-card.active-tab {
+  background: #0e1e40;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25), 0 0 0 1px #3b82f6;
+}
+
+.dark .tab-icon-box {
+  background: #131e33;
+  color: #94a3b8;
+}
+
+.dark .service-tab-card:hover .tab-icon-box,
+.dark .service-tab-card.active-tab .tab-icon-box {
+  background: rgba(37, 99, 235, 0.25);
+  color: #60a5fa;
+}
+
+.dark .tab-title {
+  color: #e2e8f0;
+}
+
+.dark .service-tab-card:hover .tab-title,
+.dark .service-tab-card.active-tab .tab-title {
+  color: #ffffff;
+}
+
+.dark .selected-service-ribbon {
+  background: #091225;
+  border-color: #1e293b;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+
+.dark .ribbon-header-row {
+  border-bottom-color: #1e293b;
+}
+
+.dark .ribbon-label {
+  color: #94a3b8;
+}
+
+.dark .ribbon-service-name {
+  color: #e2e8f0;
+  background: #131e33;
+  border-color: #1e293b;
+}
+
+.dark .ribbon-action-link {
+  color: #60a5fa;
+}
+
+.dark .ribbon-action-link:hover {
+  color: #93c5fd;
+}
+
+.dark .ribbon-description {
+  color: #cbd5e1;
+}
+
 

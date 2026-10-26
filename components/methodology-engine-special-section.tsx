@@ -136,7 +136,7 @@ export function MethodologyEngineSpecialSection() {
           onClick={() => setActiveTab('stages')}
         >
           <Layers size={16} />
-          <span>Implementation Stages</span>
+          <span>Implementation Framework</span>
         </button>
         <button
           className={`engine-tab-btn ${activeTab === 'comparison' ? 'active' : ''}`}

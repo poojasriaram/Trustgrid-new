@@ -36,7 +36,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
   {
     id: 'diagnostic',
     title: 'Executive AI Diagnostic',
-    badge: 'STAGE 1 • EVALUATION',
+    badge: 'EVALUATION & AUDIT',
     duration: '2–4 Weeks',
     bestFor: 'Enterprises needing clear technical & financial evaluation before large capital deployment.',
     whenToUse: 'When leadership requires an objective architectural audit of GPU clusters, agent readiness, inference latency, security gaps, and token spend.',
@@ -55,7 +55,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
   {
     id: 'sprint',
     title: 'Value Realization Sprints',
-    badge: 'STAGE 2 • RAPID PRODUCTION',
+    badge: 'RAPID PRODUCTION',
     duration: '6–12 Weeks',
     bestFor: 'Deploying a high-stakes production AI system or agent fleet with rapid time-to-value.',
     whenToUse: 'When an organization has a high-value bottleneck (e.g., inference latency, multi-agent workflow, network packet drops) requiring senior engineering execution.',
@@ -74,7 +74,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
   {
     id: 'co-engineering',
     title: 'Strategic Co-Engineering Partnership',
-    badge: 'STAGE 3 • COLLABORATIVE SCALE',
+    badge: 'COLLABORATIVE SCALE',
     duration: '3–12 Months',
     bestFor: 'Building long-term internal AI factory capability while delivering complex multi-agent platforms.',
     whenToUse: 'When enterprises want to upskill their internal workforce while architecting proprietary AI systems without permanent agency dependence.',
@@ -93,7 +93,7 @@ export const defaultEngagementModels: EngagementModelDetail[] = [
   {
     id: 'turnkey',
     title: 'Turnkey AI Factory & Managed NOC/SOC',
-    badge: 'STAGE 4 • FULL-SPECTRUM OPERATIONS',
+    badge: 'FULL-SPECTRUM OPERATIONS',
     duration: 'Multi-Year SLA',
     bestFor: 'Sovereign private AI data centers, high-density compute facilities, and air-gapped agent operations.',
     whenToUse: 'When enterprises require end-to-end design, construction, optimization, and 24/7 managed operations for high-density compute and security.',
