@@ -88,17 +88,17 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* 4. COMPANY & TALENT */}
+        {/* 4. COMPANY & PORTALS */}
         <div className="footer-links-col">
-          <h4>Company</h4>
+          <h4>Portals &amp; Access</h4>
           <ul>
-            <li><Link href="/about">About TRUSTGRID.AI</Link></li>
-            <li><Link href="/leadership">Leadership & Teams</Link></li>
-            <li><Link href="/careers">Careers & Fellowships</Link></li>
-            <li><Link href="/partners">Ecosystem Partners</Link></li>
-            <li><Link href="/about#presence">Global Offices & Labs</Link></li>
-            <li><Link href="/contact">Contact & Inquiries</Link></li>
+            <li><Link href="/chat" style={{ color: '#93c5fd', fontWeight: 600 }}>🤖 AI Architect Chatbot Desk</Link></li>
+            <li><Link href="/booking">📅 Executive Session Booking</Link></li>
+            <li><Link href="/quick-session">⚡ 30-Sec Quick Request</Link></li>
+            <li><Link href="/forms">📁 Central Forms Directory</Link></li>
+            <li><Link href="/whatsapp" style={{ color: '#4ade80' }}>💬 WhatsApp Engineering</Link></li>
             <li><Link href="/book-ai-diagnostic#diagnostic-form-section">AI Diagnostic Assessment</Link></li>
+            <li><Link href="/contact">Contact &amp; Global Offices</Link></li>
             <li><a href="https://www.linkedin.com/company/trustgridai/" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', fontWeight: 600 }}>LinkedIn Official Page ↗</a></li>
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>
           </ul>

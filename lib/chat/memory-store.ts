@@ -53,7 +53,7 @@ export async function getOrCreateSession(conversationId?: string): Promise<Sessi
     const redis = await getRedisClient()
     if (redis && redis.isOpen) {
       const data = await redis.get(`${REDIS_SESSION_PREFIX}${id}`)
-      if (data) {
+      if (typeof data === 'string' && data.length > 0) {
         return JSON.parse(data) as SessionContext
       }
     }
@@ -141,8 +141,10 @@ export async function getConversationHistory(
     if (redis && redis.isOpen) {
       const key = `${REDIS_HISTORY_PREFIX}${conversationId}`
       const raw = await redis.lRange(key, -limit, -1)
-      if (raw && raw.length > 0) {
-        return raw.map(item => JSON.parse(item) as StoredChatMessage)
+      if (Array.isArray(raw) && raw.length > 0) {
+        return raw
+          .filter((item): item is string => typeof item === 'string')
+          .map(item => JSON.parse(item) as StoredChatMessage)
       }
     }
   } catch (err) {

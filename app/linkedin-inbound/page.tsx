@@ -16,6 +16,8 @@ import {
 } from 'lucide-react'
 import { SiteHeader } from '@/components/site-header'
 import { SiteFooter } from '@/components/site-footer'
+import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
+import { dispatchDirectToGoogleSheets } from '@/lib/form-submission'
 
 export default function LinkedInInboundPage() {
   const [hasLoggedVisit, setHasLoggedVisit] = useState(false)
@@ -77,25 +79,42 @@ export default function LinkedInInboundPage() {
     setIsSubmitting(true)
 
     try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          company: company.trim(),
-          message: message.trim() || 'Direct inquiry from LinkedIn company page landing page.',
-          source: 'LinkedIn',
-          service: 'LinkedIn Company Page Lead',
-          website: 'TRUSTGRID.AI'
-        })
-      })
+      const leadId = `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`
+      const payload = {
+        submissionId: leadId,
+        leadId,
+        name: name.trim(),
+        email: email.trim(),
+        company: company.trim(),
+        message: message.trim() || 'Direct inquiry from LinkedIn company page landing page.',
+        source: 'LinkedIn',
+        formName: 'LinkedIn Company Page Lead',
+        leadType: 'LINKEDIN_LEAD',
+        service: 'LinkedIn Company Page Lead',
+        website: 'TRUSTGRID.AI',
+        directDispatched: true
+      }
 
-      const data = await res.json()
-      if (res.ok && data.success) {
+      // Direct Parallel Dispatch:
+      // 1. WebApp -> Supabase Directly
+      // 2. WebApp -> Google Sheets Directly
+      // 3. Backend Alerts (/api/leads for Jira/WhatsApp/Telegram)
+      const [supaRes, sheetOk, apiRes] = await Promise.all([
+        insertLeadToSupabase(payload).catch(() => ({ success: false })),
+        dispatchDirectToGoogleSheets(payload),
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null)
+      ])
+
+      if (supaRes.success || sheetOk || (apiRes && apiRes.success)) {
         setIsSuccess(true)
       } else {
-        setErrorMsg(data.message || 'Unable to submit your request.')
+        setErrorMsg('Unable to submit your request.')
       }
     } catch (err) {
       setErrorMsg('Unable to submit your request. Please try again.')

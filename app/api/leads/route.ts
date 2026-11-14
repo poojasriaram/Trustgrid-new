@@ -8,12 +8,14 @@ import { createLinkedInJiraLead } from '@/lib/services/jira'
 import { sendWhatsAppLeadAlert } from '@/lib/services/whatsapp'
 import { sendTelegramLeadAlert } from '@/lib/services/telegram'
 import { sendCustomerResponseEmail } from '@/lib/services/lead-response-email'
+import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
 
 // In-memory lead repository for runtime monitoring, deduplication, and retry management
 export interface StoredLeadRecord {
   leadId: string
   normalized: NormalizedLead | any
   googleSheetStatus: 'Success' | 'Failed' | 'Skipped'
+  supabaseStatus?: 'Success' | 'Failed'
   jiraResult: JiraIssueResult | any
   createdAt: string
   retryCount: number
@@ -220,18 +222,38 @@ export async function POST(req: NextRequest) {
         console.error('[Database Lead Insert Notice]', dbErr?.message || dbErr)
       }
 
-      // B. Dispatch to Google Sheets (Dedicated Row Append)
-      const sheetResult = await appendLeadToGoogleSheets({
-        leadId,
-        name: leadRecord.name,
-        email: leadRecord.email,
-        company: leadRecord.company,
-        phone: leadRecord.phone,
-        message: leadRecord.message,
-        source: 'LinkedIn',
-        service: 'LinkedIn API Integration',
-        createdAt: isoTimestamp
-      })
+      // B. Dual-Write to Google Sheets AND Supabase in Parallel (unless WebApp already dispatched directly)
+      const alreadyDirectDispatched = Boolean((body as any).directDispatched)
+      const [sheetResult, supabaseResult] = alreadyDirectDispatched
+        ? [
+            { success: true, destination: 'Google Apps Script Webhook' as const },
+            { success: true, status: 'Success' as const, tablesWritten: ['form_submissions', 'linkedin_leads'] }
+          ]
+        : await Promise.all([
+            appendLeadToGoogleSheets({
+              leadId,
+              name: leadRecord.name,
+              email: leadRecord.email,
+              company: leadRecord.company,
+              phone: leadRecord.phone,
+              message: leadRecord.message,
+              source: 'LinkedIn',
+              service: 'LinkedIn API Integration',
+              createdAt: isoTimestamp
+            }),
+            insertLeadToSupabase({
+              leadId,
+              name: leadRecord.name,
+              email: leadRecord.email,
+              company: leadRecord.company,
+              phone: leadRecord.phone,
+              message: leadRecord.message,
+              source: 'LinkedIn',
+              formName: 'LinkedIn API Integration',
+              leadType: 'LINKEDIN_LEAD',
+              timestamp: isoTimestamp
+            })
+          ])
 
       // C. Dispatch to Jira (DealFlow DFX Workspace)
       let jiraResult: any
@@ -285,6 +307,7 @@ export async function POST(req: NextRequest) {
           pageName: 'Integrated Services'
         },
         googleSheetStatus: sheetResult.success ? 'Success' : 'Failed',
+        supabaseStatus: supabaseResult.status,
         jiraResult,
         createdAt: isoTimestamp,
         retryCount: 0
@@ -296,6 +319,9 @@ export async function POST(req: NextRequest) {
         leadId,
         source: 'LinkedIn',
         service: 'LinkedIn API Integration',
+        googleSheetStatus: sheetResult.success ? 'Success' : 'Failed',
+        supabaseStatus: supabaseResult.status,
+        supabaseTables: supabaseResult.tablesWritten,
         jiraStatus: jiraResult.status,
         issueKey: jiraResult.issueKey || null
       })
@@ -397,13 +423,22 @@ export async function POST(req: NextRequest) {
 
     const capturedJiraUrl = jiraResult.issueUrl || (jiraResult.issueKey ? `https://trustworkz.atlassian.net/browse/${jiraResult.issueKey}` : 'https://trustworkz.atlassian.net/browse/DFX')
 
-    // 3. Dispatch to Google Apps Script (Standardized 11 Columns with captured JIRA URL)
-    // Google Apps Script ingests the row to Google Sheets and dispatches the standardized email notification
+    // 3. Dual-Write to Google Apps Script (Sheet 1) AND Supabase in Parallel (unless WebApp already dispatched directly)
     const isProdHost = true
     const capturedSheetUrl =
       process.env.GOOGLE_SPREADSHEET_URL ||
       'https://docs.google.com/spreadsheets/d/1z2kBM_90kYX_MXWknlQ7UHnsBms4EQ9p6aXukUBHYT0/edit'
-    const sheetStatus = await dispatchToGoogleAppsScript(normalized, isProdHost, capturedJiraUrl)
+
+    const alreadyDirectDispatched = Boolean((body as any).directDispatched)
+    const [sheetStatus, supabaseResult] = alreadyDirectDispatched
+      ? [
+          'Success' as const,
+          { success: true, status: 'Success' as const, tablesWritten: ['form_submissions'] }
+        ]
+      : await Promise.all([
+          dispatchToGoogleAppsScript(normalized, isProdHost, capturedJiraUrl),
+          insertLeadToSupabase(normalized, body as Record<string, any>)
+        ])
 
     // 5. Dispatch Instant Team Alerts (WhatsApp & Telegram)
     sendWhatsAppLeadAlert({
@@ -447,6 +482,7 @@ export async function POST(req: NextRequest) {
       leadId: normalized.leadId,
       normalized,
       googleSheetStatus: sheetStatus,
+      supabaseStatus: supabaseResult.status,
       jiraResult,
       createdAt: isoTimestamp,
       retryCount: 0
@@ -466,6 +502,8 @@ export async function POST(req: NextRequest) {
       subtasks: jiraResult.subtasks || [],
       googleSheetStatus: sheetStatus,
       googleSheetUrl: capturedSheetUrl,
+      supabaseStatus: supabaseResult.status,
+      supabaseTables: supabaseResult.tablesWritten,
       emailStatus: isTestLead ? 'Sent_Notification' : (emailResult?.deliveryStatus || 'Sent')
     })
   } catch (error: any) {

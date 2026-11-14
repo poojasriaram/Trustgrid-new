@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "node scripts/build-export.js",
+    "build": "next build",
     "build:next": "next build",
     "build:export": "node scripts/build-export.js",
     "start": "next start",

@@ -11,6 +11,8 @@
  * ============================================================================
  */
 
+import { insertTelemetryToSupabase } from './services/supabase-leads'
+
 export interface Telemetry95Event {
   // 1-6: Geo & Network Location
   ip_address?: string
@@ -851,7 +853,8 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
         element_text: payload.element_text,
         element_id: payload.element_id,
         section: payload.section,
-        rage_click: payload.rage_click_detected
+        rage_click: payload.rage_click_detected,
+        direct_dispatched: true
       }
     }
 
@@ -873,19 +876,22 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
     }
   } catch (e) {}
 
-  // 3. Direct Sheet Webhook Dispatch (Strictly segregated: Production vs Staging/Vercel)
+  // 3. Direct WebApp -> Supabase Telemetry Dispatch
+  insertTelemetryToSupabase(payload as any).catch(() => {})
+
+  // 4. Direct WebApp -> Google Sheets Webhook Dispatch
   const defaultProdWebhookUrl =
     'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
 
-  const stagingWebhookUrl = process.env.NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL || ''
-
-  const endpoint = isProd
-    ? (process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl)
-    : stagingWebhookUrl
+  const endpoint =
+    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
+    process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
+    process.env.NEXT_PUBLIC_TRUSTGRID_ANALYTICS_API_URL ||
+    defaultProdWebhookUrl
 
   if (endpoint && endpoint.startsWith('http') && !endpoint.includes('YOUR_SCRIPT')) {
     const bodyString = JSON.stringify({
-      sheetName: isProd ? 'Live_Traffic_Events' : 'Staging_Traffic_Events',
+      sheetName: 'Live_Traffic_Events',
       event_type: 'telemetry_95',
       environment: isProd ? 'production' : 'staging_vercel',
       ...payload
@@ -902,9 +908,6 @@ export async function sendTelemetryEvent(payload: Telemetry95Event): Promise<voi
         keepalive: true
       }).catch(() => {})
     } catch (e) {}
-  } else if (!isProd) {
-    // Graceful notice during local dev / preview testing
-    // Staging webhook will activate once NEXT_PUBLIC_TRUSTGRID_STAGING_WEBHOOK_URL is added
   }
 }
 

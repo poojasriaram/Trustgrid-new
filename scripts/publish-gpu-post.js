@@ -63,9 +63,15 @@ Optimized CapEx utilization and sustainability metrics
 
 Let’s engineer true AI economics — where every watt and every GPU cycle counts.
 
-🌐 Visit: www.trustgrid.ai
-📩 Email: poojasri@trustgrid.ai
-📞 WhatsApp: 7530044868
+🔗 Dedicated Access & Engineering Portals:
+⚡ 30-Sec Quick Session Request: https://trustgrid.ai/quick-session?utm_source=linkedin&utm_medium=post&utm_campaign=gpu_optimization
+📅 Book 45-Min Executive Consultation: https://trustgrid.ai/booking?utm_source=linkedin&utm_medium=post&utm_campaign=gpu_optimization
+🤖 Dedicated AI Architect Chatbot Desk: https://trustgrid.ai/chat?utm_source=linkedin&utm_medium=post&utm_campaign=gpu_optimization
+💬 Direct WhatsApp Engineering Desk: https://trustgrid.ai/whatsapp?utm_source=linkedin&utm_medium=post&utm_campaign=gpu_optimization
+📁 All Diagnostic Forms & Portals: https://trustgrid.ai/forms?utm_source=linkedin&utm_medium=post&utm_campaign=gpu_optimization
+
+🌐 Main Operating Company: https://trustgrid.ai
+📩 Direct Systems Desk: poojasri@trustgrid.ai
 
 #TRUSTGRIDAI #GPUOptimization #AIInfrastructure #DataCenters #PerformanceEngineering #Sustainability #AIValueEngineering #SmartCity #EnergyTransition`
 

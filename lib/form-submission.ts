@@ -6,6 +6,7 @@
 import { getTrackingMetadata, TrackingMetadata } from './tracking'
 import { trackFormSubmit } from './analytics'
 import { isValidName, isValidEmail, isValidPhone, normalizePhone } from './validation'
+import { insertLeadToSupabase } from './services/supabase-leads'
 
 export const CAREER_ROLES = [
   'AI Systems & Infrastructure Architect',
@@ -90,10 +91,87 @@ export interface SubmissionResponse {
   success: boolean
   message: string
   submissionId?: string
+  supabaseStatus?: string
+  googleSheetStatus?: string
   jiraStatus?: string
   issueKey?: string
   issueUrl?: string
   leadScore?: number
+}
+
+const DEFAULT_GOOGLE_SHEET_WEBHOOK_URL =
+  'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
+
+/**
+ * Direct WebApp -> Google Sheets Dispatch (via Google Apps Script Web App)
+ */
+export async function dispatchDirectToGoogleSheets(payload: Record<string, any>): Promise<boolean> {
+  const apiUrl =
+    process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL ||
+    process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL ||
+    DEFAULT_GOOGLE_SHEET_WEBHOOK_URL
+
+  if (!apiUrl || !apiUrl.startsWith('http') || apiUrl.includes('YOUR_SCRIPT')) {
+    return false
+  }
+
+  const standardizedHeaders = [
+    'Timestamp',
+    'Lead Name',
+    'Email',
+    'Phone',
+    'Company',
+    'Lead Source',
+    'Form Name',
+    'Subject',
+    'Requirement',
+    'JIRA Link',
+    'Lead Status'
+  ]
+
+  const ts = payload.timestamp || new Date().toISOString()
+  const leadName = payload.name || payload.fullName || 'Website Visitor'
+  const email = payload.email || payload.work_email || ''
+  const phone = payload.phone || payload.mobile || ''
+  const company = payload.company || ''
+  const source = payload.leadSource || payload.source || payload.utm_source || 'Website Form'
+  const formName = payload.formName || payload.form_name || 'Website Form'
+  const subject = payload.subject || `New Lead Received - ${leadName}${company ? ` - ${company}` : ''}`
+  const requirement = payload.requirement || payload.message || ''
+  const jiraLink = 'https://trustworkz.atlassian.net/browse/DFX'
+  const status = 'New Lead'
+
+  const sheetPayload = {
+    ...payload,
+    sheetName: payload.sheetName || 'Form_Submissions',
+    sheet_name: payload.sheet_name || 'Form_Submissions',
+    leadId: payload.submissionId || payload.lead_id,
+    timestamp: ts,
+    leadName,
+    leadSource: source,
+    subject,
+    requirement,
+    jiraLink,
+    leadStatus: status,
+    status,
+    headers: standardizedHeaders,
+    row: [ts, leadName, email, phone, company, source, formName, subject, requirement, jiraLink, status]
+  }
+
+  try {
+    await fetch(apiUrl, {
+      method: 'POST',
+      mode: typeof window !== 'undefined' ? 'no-cors' : 'cors',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(sheetPayload)
+    })
+    return true
+  } catch (err) {
+    console.warn('[WebApp -> Google Sheets Direct Dispatch Notice]', err)
+    return false
+  }
 }
 
 // Searchable international dialing country codes with +91 (India) default
@@ -322,49 +400,37 @@ export async function submitTrustGridForm(
     let issueKey: string | undefined
     let issueUrl: string | undefined
 
-    // 1. Primary: Send to Central Next.js Server API (/api/leads)
-    try {
-      const apiRes = await fetch('/api/leads', {
+    // =========================================================================
+    // DIRECT PARALLEL DISPATCH FROM WEBAPP:
+    // 1. WebApp -> Supabase Directly (REST API)
+    // 2. WebApp -> Google Sheets Directly (Google Apps Script Webhook)
+    // 3. WebApp -> Backend Alerts (/api/leads for Jira, WhatsApp, Telegram)
+    // =========================================================================
+    const [supabaseRes, googleSheetOk, backendRes] = await Promise.all([
+      insertLeadToSupabase(payload).catch((err) => {
+        console.warn('[WebApp -> Supabase Direct Dispatch Notice]', err)
+        return { success: false, status: 'Failed' as const, tablesWritten: [] }
+      }),
+      dispatchDirectToGoogleSheets(payload),
+      fetch('/api/leads', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          ...payload,
+          directDispatched: true
+        }),
       })
+        .then(async (r) => (r.ok ? r.json() : null))
+        .catch(() => null)
+    ])
 
-      if (apiRes.ok) {
-        const json = await apiRes.json()
-        if (json.leadId) returnedLeadId = json.leadId
-        if (json.jiraStatus) jiraStatus = json.jiraStatus
-        if (json.issueKey) issueKey = json.issueKey
-        if (json.issueUrl) issueUrl = json.issueUrl
-      } else {
-        // If /api/leads returns 404/405 (static export host without Node.js backend), fall back to direct Google Webhook!
-        throw new Error(`Central API returned status ${apiRes.status}, fallback to direct webhook`)
-      }
-    } catch (apiErr) {
-      console.warn('[Form Submission] Central API notice, falling back to direct webhook:', apiErr)
-
-      // 2. Direct Webhook Fallback (Guarantees 100% lead capture on static exports and cPanel/LiteSpeed hosts)
-      const defaultProdWebhookUrl =
-        'https://script.google.com/macros/s/AKfycbxZ9QvaSdgCGE8t6btfwTSmfklZ6j5F0o_CPyqFJPvm7LMncLS85xQVP2ObqkWNy803/exec'
-
-      const apiUrl = process.env.NEXT_PUBLIC_TRUSTGRID_FORM_API_URL || process.env.NEXT_PUBLIC_GOOGLE_APPS_SCRIPT_URL || defaultProdWebhookUrl
-
-      if (apiUrl && apiUrl.startsWith('http')) {
-        try {
-          await fetch(apiUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-              'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify(payload),
-          })
-        } catch (e) {
-          console.warn('[Form Submission] Webhook dispatch notice:', e)
-        }
-      }
+    if (backendRes) {
+      if (backendRes.leadId) returnedLeadId = backendRes.leadId
+      if (backendRes.jiraStatus) jiraStatus = backendRes.jiraStatus
+      if (backendRes.issueKey) issueKey = backendRes.issueKey
+      if (backendRes.issueUrl) issueUrl = backendRes.issueUrl
     }
 
     // Trigger form submit and lead creation analytics telemetry
@@ -375,6 +441,8 @@ export async function submitTrustGridForm(
       success: true,
       message: 'Form submitted successfully',
       submissionId: returnedLeadId,
+      supabaseStatus: supabaseRes.status,
+      googleSheetStatus: googleSheetOk ? 'Success' : 'Failed',
       jiraStatus,
       issueKey,
       issueUrl,

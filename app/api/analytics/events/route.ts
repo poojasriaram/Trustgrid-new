@@ -11,6 +11,7 @@ import {
   ALLOWED_EVENT_TYPES,
   SafeAnalyticsEvent
 } from '@/lib/redis-analytics'
+import { insertTelemetryToSupabase } from '@/lib/services/supabase-leads'
 
 export const runtime = 'nodejs'
 
@@ -71,6 +72,7 @@ async function dispatchAsyncToGoogleAppsScript(payload: any): Promise<void> {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(formattedPayload)
     }).catch(() => {})
+    insertTelemetryToSupabase(formattedPayload).catch(() => {})
   } catch (e) {
     // Non-blocking
   }
@@ -415,9 +417,10 @@ export async function POST(req: NextRequest) {
         durationSec
       })
 
-      // Asynchronous non-blocking dispatch to Google Sheets webhook
-      dispatchAsyncToGoogleAppsScript({
-        sheetName: 'Live_Traffic_Events',
+      // Asynchronous non-blocking dispatch to Google Sheets + Supabase (unless already dispatched directly by WebApp)
+      if (!ev.metadata?.direct_dispatched) {
+        dispatchAsyncToGoogleAppsScript({
+          sheetName: 'Live_Traffic_Events',
         event_type: 'telemetry_95',
         event_name: eventName,
         event_id: eventId,
@@ -481,6 +484,7 @@ export async function POST(req: NextRequest) {
           timestamp_utc: nowUtc
         }
       })
+      }
     }
 
     return NextResponse.json({

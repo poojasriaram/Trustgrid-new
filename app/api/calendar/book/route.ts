@@ -4,6 +4,7 @@ import { isValidEmail, isValidPhone } from '@/lib/validation'
 import { normalizeLead } from '@/lib/lead-normalization'
 import { createJiraLead } from '@/lib/jira-service'
 import { getLeadsStore } from '@/app/api/leads/route'
+import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
 
 export async function POST(req: NextRequest) {
   try {
@@ -171,6 +172,19 @@ export async function POST(req: NextRequest) {
           console.warn('[Webhook Email Notification Notice]', webhookErr)
         })
       }
+
+      // Dual-write session booking to Supabase (`form_submissions`, `talk_to_architect`, `form_consultation_bookings`, `consulting_sessions`)
+      insertLeadToSupabase(normalized, {
+        ...normalized.rawPayload,
+        bookingDate,
+        startTime: bookingResult.startTime || startTime,
+        endTime: bookingResult.endTime || endTime,
+        timezone,
+        areaOfInterest,
+        challengeDescription
+      }).catch((supaErr) => {
+        console.warn('[Supabase Session Booking Sync Notice]', supaErr)
+      })
 
       // Register in memory store
       const leadsStore = getLeadsStore()
