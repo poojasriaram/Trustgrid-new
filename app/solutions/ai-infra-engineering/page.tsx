@@ -546,49 +546,167 @@ export default function AIInfraEngineeringPage() {
             </div>
           </div>
 
-          {/* 7 Verified Capability Indicators Grid from Document */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pt-8 border-t border-slate-200">
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-cyan-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <BorderBeam size={120} duration={7} colorFrom="#38bdf8" colorTo="#3b82f6" />
-              <span className="text-xl sm:text-2xl font-extrabold text-cyan-600 block mb-0.5 tracking-tight">50–500+ MW</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Campus Scale</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Hyperscale ready</span>
+          {/* 8 Verified Capability Indicators Grid (4x2 Large Cards) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-8 border-t border-slate-200">
+            {/* CARD 1 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-cyan-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <BorderBeam size={140} duration={7} colorFrom="#38bdf8" colorTo="#3b82f6" />
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-cyan-600 block mb-1.5 tracking-tight leading-snug">
+                  50 MW Live | 500 MW Masterplanned
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  CAMPUS SCALE
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  Scalable in 25 MW blocks — Land + power secured
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  Hyperscale ready
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-emerald-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-emerald-600 block mb-0.5 tracking-tight">PUE &lt;1.15</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Target Efficiency</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Liquid-cooled target</span>
+            {/* CARD 2 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-emerald-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-emerald-600 block mb-1.5 tracking-tight leading-snug">
+                  PUE 1.15 Design
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  TARGET EFFICIENCY
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  1.18 annualised @ 80% IT load, 35°C ambient
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  Measured per ISO/IEC 30134-2 | WUE &lt;0.15 L/kWh
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-blue-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-blue-600 block mb-0.5 tracking-tight">30–120 kW+</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Rack Density</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">High-density GPU racks</span>
+            {/* CARD 3 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-blue-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-blue-600 block mb-1.5 tracking-tight leading-snug">
+                  120 kW Ready
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  RACK DENSITY
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  30 kW standard | 60 kW AI average
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  Direct-to-chip + immersion zones | Rear-door HX fallback
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-indigo-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-indigo-600 block mb-0.5 tracking-tight">400G / 800G</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">AI Networking</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">InfiniBand / RoCEv2</span>
+            {/* CARD 4 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-indigo-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-indigo-600 block mb-1.5 tracking-tight leading-snug">
+                  800G Ready Fabric
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  AI NETWORKING
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  400G Day-1 | &lt;2µs leaf-spine latency
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  Lossless RoCEv2 / InfiniBand | 800G spine upgrade path
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-purple-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-purple-600 block mb-0.5 tracking-tight">Liquid Cooling</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Direct &amp; Immersion</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">CDU &amp; cold-plate loops</span>
+            {/* CARD 5 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-purple-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-purple-600 block mb-1.5 tracking-tight leading-snug">
+                  100% Liquid-Ready Halls
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  LIQUID COOLING
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  70% direct-to-chip | 30°C supply water
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  CDU N+1 | Cold-plate + immersion pods
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-amber-500/40 hover:shadow-sm transition-all overflow-hidden group">
-              <span className="text-xl sm:text-2xl font-extrabold text-amber-600 block mb-0.5 tracking-tight">AI-DCIM</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">&amp; AIOps Telemetry</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Self-healing operations</span>
+            {/* CARD 6 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-amber-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-amber-600 block mb-1.5 tracking-tight leading-snug">
+                  15-Sec Telemetry
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  AI-DCIM &amp; AIOPS TELEMETRY
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  99.99% DCIM uptime | Predictive failure &lt;72h ahead
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  MTTR -40% via AI triage | Auto-remediation for 30% of alarms
+                </span>
+              </div>
             </div>
 
-            <div className="relative p-4 rounded-xl bg-white border border-slate-200 shadow-xs hover:border-teal-500/40 hover:shadow-sm transition-all overflow-hidden group col-span-2 sm:col-span-1">
-              <span className="text-xl sm:text-2xl font-extrabold text-teal-600 block mb-0.5 tracking-tight">100% RE</span>
-              <span className="text-[11px] font-bold text-slate-900 uppercase tracking-wider block">Green PPAs</span>
-              <span className="text-[10px] text-slate-500 mt-0.5 block font-medium">Solar, wind &amp; BESS</span>
+            {/* CARD 7 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-teal-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-teal-600 block mb-1.5 tracking-tight leading-snug">
+                  100% RE Matched Annually
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  GREEN PPAs
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  80% 24/7 CFE target by 2030
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  Solar + Wind + BESS | RECs retired in customer name
+                </span>
+              </div>
+            </div>
+
+            {/* CARD 8 */}
+            <div className="relative p-6 rounded-2xl bg-white border border-slate-200 shadow-sm hover:border-rose-500/50 hover:shadow-md transition-all overflow-hidden group flex flex-col justify-between">
+              <div>
+                <span className="text-xl sm:text-2xl font-extrabold text-rose-600 block mb-1.5 tracking-tight leading-snug">
+                  99.999% Availability
+                </span>
+                <span className="text-xs font-extrabold text-slate-900 uppercase tracking-wider block mb-2.5">
+                  RESILIENCE &amp; UPTIME
+                </span>
+              </div>
+              <div className="space-y-1 pt-2 border-t border-slate-100">
+                <span className="text-xs text-slate-700 block font-semibold leading-relaxed">
+                  Tier III+ Concurrently Maintainable | N+1 / 2N
+                </span>
+                <span className="text-xs text-slate-500 block font-medium">
+                  72h fuel autonomy | 100-year flood + 1m freeboard
+                </span>
+              </div>
             </div>
           </div>
         </div>
