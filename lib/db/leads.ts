@@ -1,4 +1,9 @@
 import { getDatabase } from './index'
+import {
+  syncLeadRecordToSupabase,
+  syncLinkedInConnectionToSupabase,
+  syncLinkedInPostToSupabase
+} from '@/lib/supabase/api-store'
 
 export interface DbLeadRecord {
   id: string
@@ -79,6 +84,8 @@ export function insertLeadDb(lead: DbLeadRecord): void {
     lead.createdAt,
     lead.updatedAt
   )
+
+  syncLeadRecordToSupabase(lead).catch(() => {})
 }
 
 /**
@@ -156,6 +163,22 @@ export function saveLinkedInConnectionDb(conn: {
     createdAt,
     updatedAt
   )
+
+  syncLinkedInConnectionToSupabase({
+    id,
+    account_id: conn.accountId || 'admin',
+    account_name: conn.accountName || 'LinkedIn Account',
+    account_email: conn.accountEmail || '',
+    access_token: conn.accessToken,
+    refresh_token: conn.refreshToken || '',
+    expires_at: expiresAt || undefined,
+    scope: conn.scope || '',
+    organization_id: conn.organizationId || '',
+    organization_name: conn.organizationName || '',
+    profile_json: JSON.stringify(conn.profile || {}),
+    created_at: createdAt,
+    updated_at: updatedAt
+  }).catch(() => {})
 }
 
 /**
@@ -288,7 +311,7 @@ export function insertLinkedInPostDb(post: {
     now
   )
 
-  return {
+  const record: DbLinkedInPost = {
     id,
     text: post.text,
     visibility,
@@ -302,6 +325,9 @@ export function insertLinkedInPostDb(post: {
     created_at: now,
     updated_at: now
   }
+
+  syncLinkedInPostToSupabase(record).catch(() => {})
+  return record
 }
 
 /**
@@ -339,6 +365,11 @@ export function updateLinkedInPostDb(
     now,
     id
   )
+
+  const updated = getLinkedInPostByIdDb(id)
+  if (updated) {
+    syncLinkedInPostToSupabase(updated).catch(() => {})
+  }
 }
 
 /**

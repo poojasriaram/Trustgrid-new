@@ -12,7 +12,10 @@
     "build:export": "node scripts/build-export.js",
     "start": "next start",
     "linkedin:publish": "node scripts/publish-gpu-post.js",
-    "analytics:view": "npx tsx scripts/view-redis-analytics.ts"
+    "analytics:view": "npx tsx scripts/view-redis-analytics.ts",
+    "copper:consolidate": "node scripts/consolidate-copper-dataset.mjs",
+    "copper:import": "node scripts/import-copper-profiles.mjs",
+    "copper:verify": "node scripts/verify-copper-database.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

@@ -53,6 +53,7 @@ export type TabKey =
   | 'std-deviation'
   | 'network-intel'
   | 'reports-export'
+  | 'copper-import'
   | 'broken-link-qa'
 
 interface NavGroup {
@@ -113,6 +114,7 @@ const NAVIGATION_GROUPS: NavGroup[] = [
   {
     name: 'Reports & Performance',
     items: [
+      { key: 'copper-import', label: 'Copper Data Import', icon: FileSpreadsheet, badge: 'COPPER' },
       { key: 'reports-export', label: 'Reports & CSV Export', icon: FileSpreadsheet, badge: 'CSV' },
       { key: 'pareto', label: 'Pareto 80/20', icon: BarChart3 },
       { key: 'std-deviation', label: 'Standard Deviation', icon: Sparkles },

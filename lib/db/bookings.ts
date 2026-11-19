@@ -1,4 +1,5 @@
 import { getDatabase } from './index'
+import { syncBookingToSupabase } from '@/lib/supabase/api-store'
 
 export interface DbSessionBooking {
   id: string
@@ -78,6 +79,8 @@ export function insertBookingDb(booking: DbSessionBooking): void {
     booking.created_at,
     booking.updated_at
   )
+
+  syncBookingToSupabase(booking).catch(() => {})
 }
 
 /**

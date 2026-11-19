@@ -2,478 +2,335 @@
 
 import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
-import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
 import {
-  FileText,
-  Calendar,
-  MessageSquare,
-  Zap,
-  ArrowRight,
   Sparkles,
   ShieldCheck,
-  Check,
-  Copy,
-  ExternalLink,
-  Share2,
-  Cpu,
-  Layers,
-  Link2,
-  Mail
+  CheckCircle2,
+  Send,
+  Loader2,
+  Calendar,
+  MessageSquare
 } from 'lucide-react'
+import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
+import { dispatchDirectToGoogleSheets } from '@/lib/form-submission'
 
-const FORMS_DIRECTORY = [
-  {
-    id: 'quick-session',
-    title: '30-Second Quick Session Request Form',
-    url: '/quick-session',
-    badge: 'HIGH CONVERSION &bull; 30 SECONDS',
-    description: 'Minimalist fast-track form for C-suite and engineers. Requires only Name, Work Email, Phone/WhatsApp, Company, and Focus Topic. Triggers prioritized architect response within 2 hours.',
-    bestFor: 'LinkedIn Post CTAs, YouTube Video Descriptions, Short Form Content',
-    icon: Zap,
-    color: '#1d5cff'
-  },
-  {
-    id: 'booking',
-    title: 'Executive AI Consultation & Session Booking',
-    url: '/booking',
-    badge: '45-MIN TECHNICAL BRIEFING',
-    description: 'Comprehensive appointment scheduler with direct Google Calendar lock, time slot picker, timezone selection, and deep technical scope intake.',
-    bestFor: 'Direct InMail Outreach, High-Intent Website Visitors, Newsletter Top Links',
-    icon: Calendar,
-    color: '#0d47e5'
-  },
-  {
-    id: 'chat',
-    title: 'AI Architect Chatbot Desk',
-    url: '/chat',
-    badge: 'AUTONOMOUS ADVISORY &bull; 24/7 ACCESS',
-    description: 'Full-page dedicated AI systems engineering assistant capable of evaluating GPU cluster economics, agentic swarms, RoCEv2 fabrics, and quantum-safe defense.',
-    bestFor: 'Interactive Demos, Technical Product Posts, YouTube Pinned Comments',
-    icon: MessageSquare,
-    color: '#6366f1'
-  },
-  {
-    id: 'ai-diagnostic',
-    title: 'Executive AI Diagnostic & Architecture Scorecard',
-    url: '/ai-diagnostic',
-    badge: 'SELF-SERVICE BENCHMARK',
-    description: 'Multi-step diagnostic evaluation providing an instant maturity rating and architecture gap analysis across compute, model serving, networking, and governance.',
-    bestFor: 'Educational Content, Thought Leadership Articles, Whitepapers',
-    icon: Layers,
-    color: '#0284c7'
-  },
-  {
-    id: 'request-proposal',
-    title: 'Turnkey DBOT AI Factory RFP & Proposal Request',
-    url: '/request-proposal',
-    badge: 'ENTERPRISE RFP &bull; FORMAL SCOPING',
-    description: 'Formal proposal intake for enterprise Design-Build-Operate-Transfer (DBOT) AI factories, GPU cluster buildouts, and multi-agent infrastructure.',
-    bestFor: 'Procurement Teams, Enterprise RFP Submissions, Corporate Partners',
-    icon: FileText,
-    color: '#0f766e'
-  },
-  {
-    id: 'whatsapp',
-    title: 'Direct WhatsApp Engineering Advisory Desk',
-    url: '/whatsapp',
-    badge: 'INSTANT MESSAGING &bull; SLA &lt; 15 MIN',
-    description: 'Direct WhatsApp gateway connecting executives and engineers to our on-call systems leads with customized pre-filled technical messages.',
-    bestFor: 'Mobile Social Traffic, Email Signatures, Urgent Engineering Advisory',
-    icon: MessageSquare,
-    color: '#16a34a'
-  },
-  {
-    id: 'contact',
-    title: 'General Enterprise Contact & Global Offices',
-    url: '/contact',
-    badge: 'GLOBAL HEADQUARTERS &amp; DIRECT DIALS',
-    description: 'Direct contact coordinates for Silicon Valley (California), New York, Toronto, Sydney, Tokyo, Singapore, and India offices.',
-    bestFor: 'Press, General Inquiries, Vendor Relations, Executive Dial-ins',
-    icon: Sparkles,
-    color: '#475569'
-  }
+const SERVICE_OPTIONS = [
+  '20% Assured GPU Cluster & Infrastructure Optimization',
+  'Autonomous Multi-Agent Swarm & Agentic Factory',
+  '400G / 800G Lossless AI Networking (RoCEv2 / InfiniBand)',
+  'Quantum-Safe Cybersecurity & Sovereign AI Compliance',
+  'AI Value Engineering & FinOps Cost Governance',
+  'Turnkey DBOT AI Factory Buildout & Operations'
 ]
 
-const CAMPAIGN_PRESETS = [
-  { label: 'LinkedIn Post', source: 'linkedin', medium: 'post' },
-  { label: 'LinkedIn Bio / Featured', source: 'linkedin', medium: 'profile_link' },
-  { label: 'YouTube Video Description', source: 'youtube', medium: 'description' },
-  { label: 'YouTube Pinned Comment', source: 'youtube', medium: 'pinned_comment' },
-  { label: 'Email Signature', source: 'email', medium: 'signature' },
-  { label: 'Email Newsletter', source: 'newsletter', medium: 'email' },
-  { label: 'WhatsApp Broadcast', source: 'whatsapp', medium: 'broadcast' }
+const INDUSTRY_OPTIONS = [
+  'Technology, Cloud & Hyperscale Data Centers',
+  'Banking, Financial Services & Insurance (BFSI)',
+  'Manufacturing, Robotics & Industrial Automation',
+  'Healthcare, Life Sciences & Pharmaceuticals',
+  'Energy, Utilities & Smart Infrastructure',
+  'Telecommunications, Subsea & Satellite Networks',
+  'Government, Defense & Sovereign Public Sector',
+  'Retail, E-Commerce & Global Supply Chain'
 ]
 
-function FormsDirectoryContent() {
-  const [selectedDest, setSelectedDest] = useState('/quick-session')
-  const [selectedChannel, setSelectedChannel] = useState(CAMPAIGN_PRESETS[0])
-  const [campaignName, setCampaignName] = useState('gpu_optimization_20pct')
-  const [copiedUrl, setCopiedUrl] = useState<string | null>(null)
+function StandaloneGeneralFormContent() {
+  const [fullName, setFullName] = useState('')
+  const [company, setCompany] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [serviceInterestedIn, setServiceInterestedIn] = useState(SERVICE_OPTIONS[0])
+  const [industry, setIndustry] = useState(INDUSTRY_OPTIONS[0])
+  const [message, setMessage] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submittedLeadId, setSubmittedLeadId] = useState<string | null>(null)
+  const [errorMsg, setErrorMsg] = useState('')
 
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://trustgrid.ai'
-  const generatedUrl = `${baseUrl}${selectedDest}?utm_source=${selectedChannel.source}&utm_medium=${selectedChannel.medium}&utm_campaign=${encodeURIComponent(campaignName || 'campaign')}`
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setErrorMsg('')
 
-  const copyToClipboard = (url: string, id: string) => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        setCopiedUrl(id)
-        setTimeout(() => setCopiedUrl(null), 2500)
-      })
+    if (!fullName.trim() || !company.trim() || !email.trim() || !phone.trim()) {
+      setErrorMsg('Please enter all required fields.')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const leadId = `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`
+      const payload = {
+        submissionId: leadId,
+        leadId,
+        name: fullName.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        company: company.trim(),
+        role: serviceInterestedIn,
+        industry,
+        message: message.trim() || `Enterprise Inquiry for ${serviceInterestedIn} (${industry})`,
+        source: 'General Enterprise Form (/forms)',
+        formName: 'Enterprise Lead Capture Form',
+        leadType: 'GENERAL_FORM',
+        service: serviceInterestedIn,
+        website: 'TRUSTGRID.AI',
+        directDispatched: true
+      }
+
+      const [supaRes, sheetOk, apiRes] = await Promise.all([
+        insertLeadToSupabase(payload).catch(() => ({ success: false })),
+        dispatchDirectToGoogleSheets(payload),
+        fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null)
+      ])
+
+      if (supaRes.success || sheetOk || (apiRes && apiRes.success)) {
+        setSubmittedLeadId(apiRes?.leadId || leadId)
+      } else {
+        setErrorMsg('Failed to register inquiry. Please try again.')
+      }
+    } catch {
+      setErrorMsg('Connection error. Please try again.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
   return (
-    <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '32px 20px 70px' }}>
-      {/* PAGE HEADER */}
-      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-        <span
-          style={{
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: '#1d5cff',
-            background: '#eff6ff',
-            padding: '4px 12px',
-            borderRadius: '12px',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px'
-          }}
-        >
-          <Sparkles size={12} />
-          CENTRAL FORMS &bull; BOOKINGS &bull; CHATBOT DIRECTORY
-        </span>
-        <h1
-          style={{
-            fontSize: 'clamp(28px, 3.8vw, 44px)',
-            fontWeight: 800,
-            color: '#09142e',
-            margin: '10px 0 8px',
-            lineHeight: 1.15
-          }}
-        >
-          Public Access Portals &amp; <span style={{ color: '#1d5cff' }}>Dedicated Entry Points</span>
-        </h1>
-        <p style={{ fontSize: '15.5px', color: '#475569', maxWidth: '720px', margin: '0 auto', lineHeight: 1.6 }}>
-          Direct, tracked URLs for our AI Architect Chatbot, Booking Calendars, Quick Session Requests, and Enterprise Diagnostics — optimized for LinkedIn, YouTube, email campaigns, and marketing distribution.
-        </p>
-      </div>
-
-      {/* CAMPAIGN TRACKING & URL BUILDER UTILITY */}
-      <div
-        style={{
-          background: 'linear-gradient(135deg, #09142e 0%, #0f2452 100%)',
-          borderRadius: '16px',
-          padding: '28px 30px',
-          color: '#ffffff',
-          marginBottom: '40px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: '0 15px 35px rgba(9, 20, 46, 0.25)'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
-          <Link2 size={18} color="#60a5fa" />
-          <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-            Marketing Campaign Link Builder &amp; UTM Tracker
-          </h2>
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+      <header className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
+        <div className="flex items-center gap-2.5">
+          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm">
+            TG
+          </div>
+          <span className="font-bold text-slate-100 text-sm tracking-wide">
+            TRUSTGRID.AI • Enterprise Inquiries
+          </span>
         </div>
-        <p style={{ fontSize: '13px', color: '#cbd5e1', margin: '0 0 20px', lineHeight: 1.5 }}>
-          Generate UTM-tagged URLs for your LinkedIn posts, YouTube video descriptions, newsletters, and email signatures. Every click and submission will be tracked directly in the TRUSTGRID 95-column telemetry engine.
-        </p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '18px' }}>
-          {/* DESTINATION */}
-          <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#93c5fd', marginBottom: '6px' }}>
-              Target Destination URL
-            </label>
-            <select
-              value={selectedDest}
-              onChange={(e) => setSelectedDest(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '9px 12px',
-                borderRadius: '8px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                color: '#ffffff',
-                fontSize: '13px',
-                outline: 'none'
-              }}
-            >
-              <option value="/quick-session" style={{ color: '#000' }}>⚡ Quick Session Request (/quick-session)</option>
-              <option value="/booking" style={{ color: '#000' }}>📅 Booking Sessions (/booking)</option>
-              <option value="/chat" style={{ color: '#000' }}>🤖 AI Architect Chatbot (/chat)</option>
-              <option value="/whatsapp" style={{ color: '#000' }}>💬 WhatsApp Direct (/whatsapp)</option>
-              <option value="/forms" style={{ color: '#000' }}>📁 Central Forms Directory (/forms)</option>
-              <option value="/ai-diagnostic" style={{ color: '#000' }}>📊 AI Readiness Diagnostic (/ai-diagnostic)</option>
-              <option value="/request-proposal" style={{ color: '#000' }}>📄 Turnkey Proposal (/request-proposal)</option>
-            </select>
-          </div>
-
-          {/* CHANNEL PRESET */}
-          <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#93c5fd', marginBottom: '6px' }}>
-              Marketing Channel Preset
-            </label>
-            <select
-              value={selectedChannel.label}
-              onChange={(e) => {
-                const found = CAMPAIGN_PRESETS.find(p => p.label === e.target.value)
-                if (found) setSelectedChannel(found)
-              }}
-              style={{
-                width: '100%',
-                padding: '9px 12px',
-                borderRadius: '8px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                color: '#ffffff',
-                fontSize: '13px',
-                outline: 'none'
-              }}
-            >
-              {CAMPAIGN_PRESETS.map((p) => (
-                <option key={p.label} value={p.label} style={{ color: '#000' }}>
-                  {p.label} ({p.source} / {p.medium})
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* CAMPAIGN NAME */}
-          <div>
-            <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: '#93c5fd', marginBottom: '6px' }}>
-              Campaign Identifier (slug)
-            </label>
-            <input
-              type="text"
-              value={campaignName}
-              onChange={(e) => setCampaignName(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '_'))}
-              placeholder="e.g. gpu_optimization_20pct"
-              style={{
-                width: '100%',
-                padding: '9px 12px',
-                borderRadius: '8px',
-                background: 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                color: '#ffffff',
-                fontSize: '13px',
-                outline: 'none'
-              }}
-            />
-          </div>
+        <div className="flex items-center gap-3 text-xs">
+          <Link
+            href="/booking"
+            className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition no-underline"
+          >
+            Book a Meeting
+          </Link>
+          <Link
+            href="/chat"
+            className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition no-underline"
+          >
+            Live AI Chat
+          </Link>
         </div>
+      </header>
 
-        {/* OUTPUT LINK */}
-        <div
-          style={{
-            background: 'rgba(0, 0, 0, 0.3)',
-            borderRadius: '10px',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            padding: '10px 14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-            flexWrap: 'wrap'
-          }}
-        >
-          <code style={{ fontSize: '13px', color: '#67e8f9', wordBreak: 'break-all', fontFamily: 'monospace' }}>
-            {generatedUrl}
-          </code>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <button
-              type="button"
-              onClick={() => copyToClipboard(generatedUrl, 'generator')}
-              style={{
-                background: copiedUrl === 'generator' ? '#22c55e' : '#1d5cff',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '6px',
-                padding: '8px 14px',
-                fontSize: '12px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px'
-              }}
-            >
-              {copiedUrl === 'generator' ? <Check size={14} /> : <Copy size={14} />}
-              <span>{copiedUrl === 'generator' ? 'Copied Tracked Link!' : 'Copy Tracked URL'}</span>
-            </button>
-
-            <a
-              href={generatedUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                color: '#ffffff',
-                borderRadius: '6px',
-                padding: '8px 12px',
-                fontSize: '12px',
-                textDecoration: 'none',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              <span>Test</span>
-              <ExternalLink size={12} />
-            </a>
+      <main className="flex-1 max-w-5xl w-full mx-auto p-4 md:p-8 flex items-center justify-center">
+        {submittedLeadId ? (
+          <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-5 shadow-2xl">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-10 h-10" />
+            </div>
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full">
+                Proposal Request Logged
+              </span>
+              <h2 className="text-2xl font-bold text-white mt-3">Inquiry Successfully Registered</h2>
+              <p className="text-slate-400 text-xs mt-1">
+                Your dossier reference:{' '}
+                <strong className="text-blue-400 font-mono">{submittedLeadId}</strong>
+              </p>
+            </div>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Our principal AI systems architect will review your infrastructure parameters and deliver an initial architecture scope &amp; proposal within 24 business hours.
+            </p>
+            <div className="pt-2 flex flex-col gap-2">
+              <Link
+                href="/booking"
+                className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition no-underline"
+              >
+                Schedule an Immediate Advisory Call
+              </Link>
+              <Link
+                href="/chat"
+                className="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition no-underline"
+              >
+                Open AI Architect Chat Desk
+              </Link>
+            </div>
           </div>
-        </div>
-      </div>
+        ) : (
+          <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-3">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-900/40 text-blue-300 border border-blue-700/50">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Request Official Proposal
+                </span>
+                <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                  Engineer Your Enterprise AI Infrastructure &amp; Agentic Stack
+                </h1>
+                <p className="text-slate-400 text-sm leading-relaxed">
+                  Submit your compute, networking, or autonomous agent requirements. Our principal systems engineering group will prepare a tailored techno-commercial blueprint within 24 hours.
+                </p>
+              </div>
 
-      {/* DIRECTORY CARDS GRID */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
-        {FORMS_DIRECTORY.map((item) => {
-          const IconComponent = item.icon
-          const fullUrl = `${baseUrl}${item.url}`
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="text-xl font-bold text-blue-400">20%+</div>
+                  <div className="text-[11px] text-slate-400">Assured GPU Yield Gain</div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="text-xl font-bold text-emerald-400">&lt; 1.10 PUE</div>
+                  <div className="text-[11px] text-slate-400">Liquid-Cooled AI Factories</div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="text-xl font-bold text-cyan-400">400G / 800G</div>
+                  <div className="text-[11px] text-slate-400">Lossless RoCEv2 Fabrics</div>
+                </div>
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800">
+                  <div className="text-xl font-bold text-amber-400">24/7/365</div>
+                  <div className="text-[11px] text-slate-400">Autonomous Fleet Ops</div>
+                </div>
+              </div>
 
-          return (
-            <div
-              key={item.id}
-              style={{
-                background: '#ffffff',
-                borderRadius: '16px',
-                border: '1px solid #e2e8f0',
-                padding: '24px',
-                boxShadow: '0 4px 20px rgba(0, 0, 0, 0.04)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'transform 0.15s ease, box-shadow 0.15s ease'
-              }}
-            >
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '10px',
-                      background: `${item.color}15`,
-                      color: item.color,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <IconComponent size={22} />
+              <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 flex items-start gap-3">
+                <ShieldCheck className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <p>
+                  All inquiries are processed under ISO 27001 &amp; Quantum-Safe data security guidelines. Your architectural details remain strictly confidential under mutual NDA.
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {errorMsg && (
+                  <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-500/40 text-xs text-rose-200">
+                    {errorMsg}
                   </div>
+                )}
 
-                  <span
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      letterSpacing: '0.06em',
-                      color: item.color,
-                      background: `${item.color}12`,
-                      padding: '3px 8px',
-                      borderRadius: '6px'
-                    }}
-                    dangerouslySetInnerHTML={{ __html: item.badge }}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label className="text-slate-300 block mb-1">Full Name *</label>
+                    <input
+                      type="text"
+                      required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      placeholder="e.g. Ananya Roy"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-slate-300 block mb-1">Company / Organization *</label>
+                    <input
+                      type="text"
+                      required
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="e.g. Global Cloud Infrastructure"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-slate-300 block mb-1">Corporate Email Address *</label>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="name@enterprise.com"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-slate-300 block mb-1">Direct Phone Number *</label>
+                    <input
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+91 95130 88612"
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label className="text-slate-300 block mb-1">Service Interested In *</label>
+                    <select
+                      value={serviceInterestedIn}
+                      onChange={(e) => setServiceInterestedIn(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    >
+                      {SERVICE_OPTIONS.map((srv, idx) => (
+                        <option key={idx} value={srv}>
+                          {srv}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-slate-300 block mb-1">Industry Vertical *</label>
+                    <select
+                      value={industry}
+                      onChange={(e) => setIndustry(e.target.value)}
+                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                    >
+                      {INDUSTRY_OPTIONS.map((ind, idx) => (
+                        <option key={idx} value={ind}>
+                          {ind}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="text-xs">
+                  <label className="text-slate-300 block mb-1">Detailed Message / Project Scope</label>
+                  <textarea
+                    rows={3}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Describe your GPU cluster capacity, agentic workflow objectives, network topology, or timeline..."
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:border-blue-500 focus:outline-none"
                   />
                 </div>
 
-                <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#09142e', margin: '0 0 8px' }}>
-                  {item.title}
-                </h3>
-
-                <p style={{ fontSize: '13.5px', color: '#475569', lineHeight: 1.55, margin: '0 0 14px' }}>
-                  {item.description}
-                </p>
-
-                <div
-                  style={{
-                    background: '#f8fafc',
-                    borderRadius: '8px',
-                    padding: '8px 12px',
-                    marginBottom: '16px',
-                    border: '1px solid #e2e8f0'
-                  }}
-                >
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', display: 'block', marginBottom: '2px' }}>
-                    Recommended Marketing Channels:
-                  </span>
-                  <span style={{ fontSize: '12px', color: '#0f172a', fontWeight: 500 }}>
-                    {item.bestFor}
-                  </span>
-                </div>
-              </div>
-
-              {/* CARD ACTIONS */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingTop: '12px', borderTop: '1px solid #f1f5f9' }}>
-                <Link
-                  href={item.url}
-                  className="button button-primary"
-                  style={{
-                    flex: 1,
-                    textAlign: 'center',
-                    padding: '9px 14px',
-                    borderRadius: '8px',
-                    background: item.color,
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '6px'
-                  }}
-                >
-                  <span>Open URL</span>
-                  <ArrowRight size={14} />
-                </Link>
-
                 <button
-                  type="button"
-                  onClick={() => copyToClipboard(fullUrl, item.id)}
-                  title="Copy Direct URL"
-                  style={{
-                    padding: '9px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5e1',
-                    background: copiedUrl === item.id ? '#f0fdf4' : '#ffffff',
-                    color: copiedUrl === item.id ? '#16a34a' : '#475569',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    fontSize: '12px',
-                    fontWeight: 600
-                  }}
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 cursor-pointer"
                 >
-                  {copiedUrl === item.id ? <Check size={14} /> : <Copy size={14} />}
-                  <span>{copiedUrl === item.id ? 'Copied' : 'Copy'}</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Transmitting Inquiry...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Submit Proposal Request</span>
+                      <Send className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
-              </div>
+              </form>
             </div>
-          )
-        })}
-      </div>
+          </div>
+        )}
+      </main>
     </div>
   )
 }
 
 export default function FormsPage() {
   return (
-    <div className="page-shell">
-      <SiteHeader />
-      <main className="main-content" style={{ minHeight: '85vh', background: 'linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%)' }}>
-        <Suspense fallback={<div style={{ padding: '60px 20px', textAlign: 'center', color: '#64748b' }}>Loading Central Forms Directory...</div>}>
-          <FormsDirectoryContent />
-        </Suspense>
-      </main>
-      <SiteFooter />
-    </div>
+    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-slate-400 flex items-center justify-center text-sm">Loading Enterprise Inquiry Portal...</div>}>
+      <StandaloneGeneralFormContent />
+    </Suspense>
   )
 }
-

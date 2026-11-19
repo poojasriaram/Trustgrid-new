@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react'
 import type { Metadata } from 'next'
-import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
 import { QuickSessionRequestForm } from '@/components/ui/quick-session-request-form'
-import { Zap, Clock, ShieldCheck, Cpu, ArrowUpRight, CheckCircle2, MessageSquare } from 'lucide-react'
+import { Zap, Clock, ShieldCheck, Cpu, ArrowUpRight, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -14,15 +12,40 @@ export const metadata: Metadata = {
     title: 'Quick Session Request | TRUSTGRID.AI',
     description:
       'Fast-track your enterprise AI engineering consultation in 30 seconds.',
-    url: 'https://trustgrid.ai/quick-session'
+    url: 'https://trustgrid.ai/session-request'
   }
+}
+
+function StandaloneSessionRequestHeader() {
+  return (
+    <header className="h-16 border-b border-slate-200 bg-white/95 backdrop-blur px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
+      <div className="flex items-center gap-2.5">
+        <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shadow-sm">
+          TG
+        </div>
+        <div>
+          <span className="font-bold text-slate-900 text-sm tracking-wide block">
+            TRUSTGRID.AI • Priority Session Request Portal
+          </span>
+          <span className="text-[11px] text-slate-500 hidden sm:block">
+            30-Second Fast-Track Intake • Priority &lt;2-Hour Architect Callback
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center gap-3 text-xs">
+        <span className="text-slate-500 hidden sm:inline">24/7 Rapid Response:</span>
+        <a href="tel:+919513088612" className="text-blue-600 font-semibold no-underline">
+          +91 95130 88612
+        </a>
+      </div>
+    </header>
+  )
 }
 
 function QuickSessionPageContent() {
   return (
     <section className="section dedicated-form-hero-section" style={{ paddingTop: '28px', paddingBottom: '60px' }}>
       <div className="diagnostic-grid-layout" style={{ alignItems: 'flex-start' }}>
-        {/* LEFT COLUMN: FAST-TRACK OVERVIEW & VALUE */}
         <div className="diagnostic-intro-col">
           <div className="diagnostic-badge-wrap">
             <span className="section-label" style={{ color: '#1d5cff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -69,7 +92,6 @@ function QuickSessionPageContent() {
             </div>
           </div>
 
-          {/* ALTERNATIVE CHANNELS */}
           <div style={{ marginTop: '24px', padding: '18px 20px', background: '#f8fafc', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
             <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.06em', display: 'block', marginBottom: '8px' }}>
               ALTERNATE ACCESS CHANNELS
@@ -117,7 +139,6 @@ function QuickSessionPageContent() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: QUICK SESSION REQUEST FORM */}
         <div className="diagnostic-form-col">
           <QuickSessionRequestForm sourceChannel="quick_session_dedicated_page" />
         </div>
@@ -128,15 +149,13 @@ function QuickSessionPageContent() {
 
 export default function QuickSessionPage() {
   return (
-    <div className="page-shell">
-      <SiteHeader />
-      <main className="main-content">
+    <div className="min-h-screen flex flex-col font-sans bg-slate-50">
+      <StandaloneSessionRequestHeader />
+      <main className="flex-1">
         <Suspense fallback={<div style={{ padding: '60px 20px', textAlign: 'center', color: '#64748b' }}>Loading Quick Session portal...</div>}>
           <QuickSessionPageContent />
         </Suspense>
       </main>
-      <SiteFooter />
     </div>
   )
 }
-

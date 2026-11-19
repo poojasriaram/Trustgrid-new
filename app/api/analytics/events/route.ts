@@ -12,6 +12,7 @@ import {
   SafeAnalyticsEvent
 } from '@/lib/redis-analytics'
 import { insertTelemetryToSupabase } from '@/lib/services/supabase-leads'
+import { syncAnalyticsEventAndSessionToSupabase } from '@/lib/supabase/api-store'
 
 export const runtime = 'nodejs'
 
@@ -416,6 +417,67 @@ export async function POST(req: NextRequest) {
         isBounce: Boolean(isBounce),
         durationSec
       })
+
+      syncAnalyticsEventAndSessionToSupabase(
+        {
+          event_id: eventId,
+          event_name: eventName,
+          event_category: ev.event_category || 'telemetry',
+          event_action: ev.event_action || 'interaction',
+          session_id: sessionId,
+          user_id: userId,
+          timestamp_utc: nowUtc,
+          page_path: pagePath,
+          page_title: pageTitle,
+          referrer,
+          traffic_source: traffic.channel,
+          utm_source: ev.utm_source || '',
+          utm_medium: ev.utm_medium || '',
+          utm_campaign: ev.utm_campaign || '',
+          utm_term: ev.utm_term || '',
+          utm_content: ev.utm_content || '',
+          device_type: ev.device_type || 'Desktop',
+          operating_system: ev.operating_system || 'Unknown',
+          browser: ev.browser || 'Unknown',
+          screen_res: ev.screen_res || '',
+          country: geo.country,
+          country_code: geo.countryCode,
+          region: geo.region,
+          city: geo.city,
+          timezone_browser: ev.timezone || 'UTC',
+          timezone_ip: geo.timezone,
+          ip_masked: maskedIp,
+          asn: geo.asn,
+          organization: geo.organization,
+          isp: geo.isp,
+          is_bounce: isBounce,
+          is_conversion: isConversion ? 1 : 0,
+          conversion_goal: ev.conversion_goal || '',
+          dwell_time_sec: ev.dwell_time_sec || 0,
+          scroll_depth: ev.scroll_depth || 0,
+          metadata_json: ev.metadata || {},
+          created_at: nowUtc
+        },
+        {
+          session_id: sessionId,
+          user_id: userId,
+          start_time_utc: existingSession?.start_time_utc || nowUtc,
+          last_activity_utc: nowUtc,
+          duration_sec: durationSec,
+          pages_count: existingSession ? existingSession.pages_count + 1 : 1,
+          entry_page: existingSession?.entry_page || pagePath,
+          exit_page: pagePath,
+          traffic_source: traffic.channel,
+          utm_campaign: traffic.campaign || '',
+          country: geo.country,
+          city: geo.city,
+          timezone_browser: ev.timezone || geo.timezone,
+          ip_masked: maskedIp,
+          is_bounce: isBounce,
+          converted: isConversion ? 1 : 0,
+          user_type: existingSession ? 'returning' : 'new'
+        }
+      ).catch(() => {})
 
       // Asynchronous non-blocking dispatch to Google Sheets + Supabase (unless already dispatched directly by WebApp)
       if (!ev.metadata?.direct_dispatched) {

@@ -4,17 +4,23 @@ This document provides the standardized, publicly accessible dedicated URLs host
 
 ---
 
-## 1. Master Matrix of Dedicated URLs
+## 1. Master Matrix of Dedicated Standalone URLs (Separate From Main Site Navigation)
+
+- **AI Chatbot**: `https://trustgridnew.vercel.app/chat` (`https://trustgrid-ai-nine.vercel.app/chat`)
+- **Booking Portal**: `https://trustgridnew.vercel.app/booking` (`https://trustgrid-ai-nine.vercel.app/booking`)
+- **Session Request**: `https://trustgridnew.vercel.app/session-request` (`https://trustgrid-ai-nine.vercel.app/session-request`)
+- **General Form**: `https://trustgridnew.vercel.app/forms` (`https://trustgrid-ai-nine.vercel.app/forms`)
+- **WhatsApp Escalation**: `https://trustgridnew.vercel.app/whatsapp` (`https://trustgrid-ai-nine.vercel.app/whatsapp`)
+- **LinkedIn Campaign Landing Page**: `https://trustgridnew.vercel.app/linkedin` (`https://trustgrid-ai-nine.vercel.app/linkedin`)
 
 | Resource | Dedicated Public URL | Purpose / Best Channel |
 | :--- | :--- | :--- |
-| **🤖 Dedicated AI Architect Chatbot** | `https://trustgrid.ai/chat`<br>*(Alias: `https://trustgrid.ai/chatbot`)* | 24/7 technical advisory desk for GPU topologies, agentic swarms, and RoCEv2 fabrics. Ideal for YouTube pinned comments, interactive demos, and product posts. |
-| **📅 Executive Session Booking** | `https://trustgrid.ai/booking`<br>*(Alias: `https://trustgrid.ai/book-session`)* | 45-minute technical briefing with Google Calendar synchronization and topic selectors. Ideal for InMail, direct sales sequences, and top CTA buttons. |
-| **⚡ 30-Second Quick Session Request Form** | `https://trustgrid.ai/quick-session`<br>*(Alias: `https://trustgrid.ai/request-session`)* | High-velocity fast-track form (under 30s) requiring minimal fields with a &lt;2 hour SLA callback. Ideal for LinkedIn post links, YouTube descriptions, and mobile traffic. |
-| **💬 Direct WhatsApp Engineering Desk** | `https://trustgrid.ai/whatsapp` | Direct deep-link to WhatsApp with pre-filled technical messages and automated campaign tracking (+91 95130 88612). Ideal for urgent enquiries and mobile users. |
-| **📁 Central Forms & Diagnostic Directory** | `https://trustgrid.ai/forms` | Executive hub hosting all forms, diagnostic scorecards, RFP tools, and the **interactive UTM Campaign Link Generator**. |
-| **📊 AI Readiness Diagnostic Scorecard** | `https://trustgrid.ai/ai-diagnostic` | Interactive diagnostic tool providing a comprehensive readiness report across 5 dimensions. Ideal for thought leadership and whitepapers. |
-| **📄 Turnkey DBOT AI Factory RFP** | `https://trustgrid.ai/request-proposal` | Enterprise intake for turnkey Design-Build-Operate-Transfer GPU factories and infrastructure buildouts. |
+| **🤖 AI Chatbot** | `/chat`<br>*(Alias: `/chatbot`)* | Standalone 24/7 technical advisory desk for GPU topologies, agentic swarms, and RoCEv2 fabrics. |
+| **📅 Booking Portal** | `/booking`<br>*(Alias: `/book-session`)* | Standalone 45-minute technical briefing scheduler with Google Calendar synchronization. |
+| **⚡ Session Request** | `/session-request`<br>*(Alias: `/quick-session`, `/request-session`)* | Standalone high-velocity fast-track form (<30s) with a &lt;2 hour SLA callback. |
+| **📁 General Form** | `/forms` | Standalone enterprise proposal & inquiry capture form. |
+| **💬 WhatsApp Escalation** | `/whatsapp` | Standalone WhatsApp gateway with pre-filled messages, custom notes, and QR code (+91 95130 88612). |
+| **🔗 LinkedIn Campaign Landing Page** | `/linkedin`<br>*(Alias: `/linkedin-inbound`)* | Standalone B2B LinkedIn campaign landing page and executive proposal intake. |
 
 ---
 

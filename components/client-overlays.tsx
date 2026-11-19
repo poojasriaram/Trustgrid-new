@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { usePathname } from 'next/navigation'
 
 const AIArchitectChatbot = dynamic(
   () => import('@/components/ui/ai-architect-chatbot').then((mod) => mod.AIArchitectChatbot),
@@ -20,18 +21,37 @@ const PrivacyConsentBanner = dynamic(
   { ssr: false }
 )
 
+const STANDALONE_PORTAL_PREFIXES = [
+  '/chat',
+  '/chatbot',
+  '/booking',
+  '/book-session',
+  '/session-request',
+  '/quick-session',
+  '/request-session',
+  '/forms',
+  '/whatsapp',
+  '/linkedin',
+  '/linkedin-inbound',
+  '/admin'
+]
+
 export function ClientOverlays() {
+  const pathname = usePathname() || ''
   const [mounted, setMounted] = useState(false)
 
+  const isStandalonePortal = STANDALONE_PORTAL_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`)
+  )
+
   useEffect(() => {
-    // Delay mounting non-critical interactive overlays until after first meaningful paint
     const timer = setTimeout(() => {
       setMounted(true)
     }, 1500)
     return () => clearTimeout(timer)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted || isStandalonePortal) return null
 
   return (
     <>

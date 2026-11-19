@@ -1,10 +1,10 @@
 /**
  * ============================================================================
- * TRUSTGRID.AI — PERSISTENT CONVERSATION MEMORY STORE (REDIS + IN-MEMORY FALLBACK)
+ * TRUSTGRID.AI — PERSISTENT CONVERSATION MEMORY STORE (SUPABASE + REDIS + IN-MEMORY)
  * ============================================================================
  * Features:
  * - Isolated conversation session state keyed by unique conversationId
- * - Dual storage: Redis Cloud with automatic in-memory fallback
+ * - Triple storage: Supabase (`chat_sessions` & `chat_messages`) + Redis Cloud + In-Memory fallback
  * - 24-Hour TTL retention policy for privacy & compliance
  * - Rolling conversation summaries for long threads
  * - Session restoration and explicit conversation reset
@@ -13,6 +13,12 @@
 
 import { getRedisClient } from '@/lib/redis'
 import { SessionContext, TopicDomain, TaskStage } from './context-engine'
+import {
+  getChatSessionFromSupabase,
+  saveChatSessionToSupabase,
+  appendChatMessageToSupabase,
+  getChatHistoryFromSupabase
+} from '@/lib/supabase/api-store'
 
 export interface StoredChatMessage {
   id: string
@@ -66,6 +72,17 @@ export async function getOrCreateSession(conversationId?: string): Promise<Sessi
     return inMemorySessions.get(id)!
   }
 
+  // Check Supabase `chat_sessions` table
+  try {
+    const supaSession = await getChatSessionFromSupabase(id)
+    if (supaSession) {
+      inMemorySessions.set(id, supaSession)
+      return supaSession
+    }
+  } catch (err) {
+    console.warn('[MemoryStore] Supabase getSession fallback:', err)
+  }
+
   // Initialize new session
   const newSession: SessionContext = {
     conversationId: id,
@@ -90,6 +107,11 @@ export async function getOrCreateSession(conversationId?: string): Promise<Sessi
 export async function saveSession(session: SessionContext): Promise<void> {
   session.updatedAt = new Date().toISOString()
   inMemorySessions.set(session.conversationId, session)
+
+  // Non-blocking write to Supabase `chat_sessions`
+  saveChatSessionToSupabase(session).catch((err) => {
+    console.warn('[MemoryStore] Supabase saveSession warning:', err)
+  })
 
   try {
     const redis = await getRedisClient()
@@ -116,6 +138,11 @@ export async function appendMessage(
   const existing = inMemoryMessages.get(conversationId) || []
   existing.push(message)
   inMemoryMessages.set(conversationId, existing)
+
+  // Non-blocking write to Supabase `chat_messages`
+  appendChatMessageToSupabase(conversationId, message).catch((err) => {
+    console.warn('[MemoryStore] Supabase appendMessage warning:', err)
+  })
 
   try {
     const redis = await getRedisClient()
@@ -152,7 +179,21 @@ export async function getConversationHistory(
   }
 
   const mem = inMemoryMessages.get(conversationId) || []
-  return mem.slice(-limit)
+  if (mem.length > 0) {
+    return mem.slice(-limit)
+  }
+
+  try {
+    const supaHistory = await getChatHistoryFromSupabase(conversationId, limit)
+    if (supaHistory.length > 0) {
+      inMemoryMessages.set(conversationId, supaHistory)
+      return supaHistory
+    }
+  } catch (err) {
+    console.warn('[MemoryStore] Supabase getHistory fallback:', err)
+  }
+
+  return []
 }
 
 /**

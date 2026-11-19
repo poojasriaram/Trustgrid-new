@@ -1,10 +1,7 @@
 import React, { Suspense } from 'react'
 import type { Metadata } from 'next'
-import { SiteHeader } from '@/components/site-header'
-import { SiteFooter } from '@/components/site-footer'
 import { SessionBookingForm, GOOGLE_CALENDAR_SCHEDULING_URL } from '@/components/ui/session-booking-form'
-import { WhatsAppCTA } from '@/components/ui/whatsapp-cta'
-import { Sparkles, Calendar, Cpu, Zap, ShieldCheck, ArrowUpRight, Clock, MessageSquare } from 'lucide-react'
+import { Sparkles, Calendar, Cpu, Zap, ShieldCheck, ArrowUpRight, Phone } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -19,11 +16,44 @@ export const metadata: Metadata = {
   }
 }
 
+function StandaloneBookingHeader() {
+  return (
+    <header className="h-16 border-b border-slate-200 bg-white/95 backdrop-blur px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
+      <div className="flex items-center gap-2.5">
+        <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shadow-sm">
+          TG
+        </div>
+        <div>
+          <span className="font-bold text-slate-900 text-sm tracking-wide block">
+            TRUSTGRID.AI • Enterprise Booking Portal
+          </span>
+          <span className="text-[11px] text-slate-500 hidden sm:block">
+            Dedicated 45-Min Technical Briefing &amp; Google Calendar Scheduler
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center gap-3 text-xs text-slate-600">
+        <span className="hidden sm:inline">
+          Direct Helpline:{' '}
+          <a href="tel:+919513088612" className="text-blue-600 font-semibold no-underline">
+            +91 95130 88612
+          </a>
+        </span>
+        <Link
+          href="/chat"
+          className="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white font-semibold transition no-underline"
+        >
+          Chat with AI
+        </Link>
+      </div>
+    </header>
+  )
+}
+
 function BookingPageContent() {
   return (
     <section className="section dedicated-form-hero-section" id="booking-consultation-section" style={{ paddingTop: '28px', paddingBottom: '60px' }}>
       <div className="diagnostic-grid-layout" style={{ alignItems: 'flex-start' }}>
-        {/* LEFT COLUMN: BRIEFING SCOPE & CALENDAR CHANNELS */}
         <div className="diagnostic-intro-col">
           <div className="diagnostic-badge-wrap">
             <span className="section-label" style={{ color: '#1d5cff', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
@@ -70,7 +100,6 @@ function BookingPageContent() {
             </div>
           </div>
 
-          {/* INSTANT GOOGLE CALENDAR & FAST TRACK CARD */}
           <div style={{ marginTop: '24px', padding: '18px 20px', background: '#ffffff', borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
               <span style={{ fontSize: '11px', fontWeight: 700, color: '#1d5cff', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
@@ -110,7 +139,7 @@ function BookingPageContent() {
 
               <div style={{ display: 'flex', gap: '8px' }}>
                 <Link
-                  href="/quick-session"
+                  href="/session-request"
                   style={{
                     flex: 1,
                     textAlign: 'center',
@@ -148,7 +177,6 @@ function BookingPageContent() {
           </div>
         </div>
 
-        {/* RIGHT COLUMN: SESSION BOOKING FORM */}
         <div className="diagnostic-form-col">
           <SessionBookingForm
             title="Book an Enterprise AI Consultation"
@@ -164,15 +192,13 @@ function BookingPageContent() {
 
 export default function BookingPage() {
   return (
-    <div className="page-shell">
-      <SiteHeader />
-      <main className="main-content">
+    <div className="min-h-screen flex flex-col font-sans bg-slate-50">
+      <StandaloneBookingHeader />
+      <main className="flex-1">
         <Suspense fallback={<div style={{ padding: '60px 20px', textAlign: 'center', color: '#64748b' }}>Loading consultation scheduler...</div>}>
           <BookingPageContent />
         </Suspense>
       </main>
-      <SiteFooter />
     </div>
   )
 }
-

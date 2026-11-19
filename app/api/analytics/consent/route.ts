@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getDatabase } from '@/lib/db'
 import { extractClientIp, maskIp } from '@/lib/network-intel'
+import { syncPrivacyConsentToSupabase } from '@/lib/supabase/api-store'
 
 export const runtime = 'nodejs'
 
@@ -42,6 +43,15 @@ export async function POST(req: NextRequest) {
       masked,
       now
     )
+
+    await syncPrivacyConsentToSupabase({
+      userId,
+      consentStatus: consentStatus || 'granted',
+      analyticsAllowed: analyticsAllowed !== false ? 1 : 0,
+      marketingAllowed: marketingAllowed === true ? 1 : 0,
+      ipMasked: masked,
+      updatedAt: now
+    })
 
     return NextResponse.json({
       success: true,
