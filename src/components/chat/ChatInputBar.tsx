@@ -303,6 +303,7 @@ export function ChatInputBar({
             onStopRecording={voice.stopRecording}
             onCancelRecording={handleCancelVoiceMode}
             onSendVoiceNote={handleSendVoiceNote}
+            onRetryRecording={voice.startRecording}
           />
         ) : (
           <form

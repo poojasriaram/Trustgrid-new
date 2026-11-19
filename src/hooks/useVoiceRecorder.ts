@@ -25,6 +25,27 @@ export function formatTimerSeconds(totalSec: number): string {
   return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
 }
 
+function getSupportedMimeType(): string {
+  if (typeof MediaRecorder === 'undefined') return ''
+  const candidates = [
+    'audio/webm;codecs=opus',
+    'audio/webm',
+    'audio/mp4',
+    'audio/aac',
+    'audio/ogg;codecs=opus'
+  ]
+  for (const type of candidates) {
+    try {
+      if (MediaRecorder.isTypeSupported(type)) {
+        return type
+      }
+    } catch {
+      // ignore check errors in unsupported browsers
+    }
+  }
+  return ''
+}
+
 export function useVoiceRecorder(): UseVoiceRecorderReturn {
   const [isRecording, setIsRecording] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
@@ -71,7 +92,14 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
 
   const updateWaveformLoop = useCallback(() => {
     const analyser = analyserRef.current
-    if (!analyser) return
+    if (!analyser) {
+      // Gentle ambient pulse fallback if analyser is unavailable
+      setWaveformBars((prev) =>
+        prev.map(() => 15 + Math.floor(Math.random() * 25))
+      )
+      animFrameRef.current = requestAnimationFrame(updateWaveformLoop)
+      return
+    }
 
     const bufferLength = analyser.frequencyBinCount
     const dataArray = new Uint8Array(bufferLength)
@@ -105,33 +133,64 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
     }
 
     try {
-      if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
-        throw new Error('Microphone recording is not supported in this browser.')
+      // Validate secure context (HTTPS or localhost)
+      if (
+        typeof window !== 'undefined' &&
+        !window.isSecureContext &&
+        window.location.hostname !== 'localhost' &&
+        window.location.hostname !== '127.0.0.1'
+      ) {
+        throw new Error('Microphone access requires a secure connection (HTTPS).')
       }
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      if (typeof navigator === 'undefined' || !navigator.mediaDevices?.getUserMedia) {
+        throw new Error('Microphone recording is not supported in this browser. Please use Chrome, Safari, Edge, or Firefox.')
+      }
+
+      if (typeof MediaRecorder === 'undefined') {
+        throw new Error('Audio recording (MediaRecorder) is not supported in this browser.')
+      }
+
+      // Request microphone stream
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      })
       mediaStreamRef.current = stream
 
       // Setup Web Audio API AnalyserNode for 32-bar real-time frequency waveform
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
-      const audioCtx: AudioContext = new AudioCtx()
-      audioContextRef.current = audioCtx
-      const source = audioCtx.createMediaStreamSource(stream)
-      const analyser = audioCtx.createAnalyser()
-      analyser.fftSize = 128
-      analyser.smoothingTimeConstant = 0.75
-      source.connect(analyser)
-      analyserRef.current = analyser
+      try {
+        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext
+        if (AudioCtx) {
+          const audioCtx: AudioContext = new AudioCtx()
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume().catch(() => {})
+          }
+          audioContextRef.current = audioCtx
+          const source = audioCtx.createMediaStreamSource(stream)
+          const analyser = audioCtx.createAnalyser()
+          analyser.fftSize = 128
+          analyser.smoothingTimeConstant = 0.75
+          source.connect(analyser)
+          analyserRef.current = analyser
+        }
+      } catch (audioErr) {
+        console.warn('Web Audio Analyser initialization skipped:', audioErr)
+      }
 
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-        ? 'audio/webm;codecs=opus'
-        : MediaRecorder.isTypeSupported('audio/mp4')
-        ? 'audio/mp4'
-        : ''
-
-      const recorder = mimeType
-        ? new MediaRecorder(stream, { mimeType })
-        : new MediaRecorder(stream)
+      // Pick best supported MIME type
+      const mimeType = getSupportedMimeType()
+      let recorder: MediaRecorder
+      try {
+        recorder = mimeType
+          ? new MediaRecorder(stream, { mimeType })
+          : new MediaRecorder(stream)
+      } catch {
+        recorder = new MediaRecorder(stream)
+      }
       mediaRecorderRef.current = recorder
 
       recorder.ondataavailable = (e) => {
@@ -168,7 +227,30 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
       animFrameRef.current = requestAnimationFrame(updateWaveformLoop)
     } catch (err: any) {
       cleanupAudioGraph()
-      setError(err?.message || 'Microphone access denied. Please enable microphone permissions.')
+      let errorMsg = 'Microphone access denied. Please enable microphone permissions in your browser.'
+      const errName = err?.name || ''
+      const rawMsg = err?.message || ''
+
+      if (
+        errName === 'NotAllowedError' ||
+        errName === 'PermissionDeniedError' ||
+        rawMsg.toLowerCase().includes('permission') ||
+        rawMsg.toLowerCase().includes('denied') ||
+        rawMsg.toLowerCase().includes('disallowed')
+      ) {
+        errorMsg =
+          'Microphone permission was denied. Please click the permissions icon (lock/tune) in your browser address bar to allow microphone access, then click Try Again.'
+      } else if (errName === 'NotFoundError' || errName === 'DevicesNotFoundError') {
+        errorMsg = 'No microphone device was detected. Please connect or enable your microphone.'
+      } else if (errName === 'NotReadableError' || errName === 'TrackStartError') {
+        errorMsg = 'Microphone is already in use by another application or blocked at the OS level.'
+      } else if (errName === 'SecurityError') {
+        errorMsg = 'Microphone access blocked by security policy. A secure HTTPS connection is required.'
+      } else if (rawMsg) {
+        errorMsg = rawMsg
+      }
+
+      setError(errorMsg)
       setIsRecording(false)
     }
   }, [audioPreviewUrl, cleanupAudioGraph, updateWaveformLoop])
@@ -197,6 +279,7 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
       URL.revokeObjectURL(audioPreviewUrl)
       setAudioPreviewUrl(null)
     }
+    setError(null)
   }, [audioPreviewUrl, cleanupAudioGraph])
 
   const resetRecording = useCallback(() => {
@@ -207,6 +290,7 @@ export function useVoiceRecorder(): UseVoiceRecorderReturn {
     }
     setDurationSec(0)
     setWaveformBars(Array(NUM_BARS).fill(12))
+    setError(null)
   }, [audioPreviewUrl])
 
   return {

@@ -557,3 +557,52 @@ export async function GET() {
     leads: allLeads
   })
 }
+
+/**
+ * PATCH /api/leads - Update Lead Status & Trigger Lifecycle Sync (Everywhere)
+ */
+export async function PATCH(req: NextRequest) {
+  try {
+    const body = await req.json().catch(() => null)
+    if (!body || !body.leadId) {
+      return NextResponse.json({ success: false, error: 'Missing leadId parameter' }, { status: 400 })
+    }
+
+    const leadId = body.leadId
+    const newStatus = body.status || 'QUALIFIED'
+    const nowIso = new Date().toISOString()
+
+    // 1. Update in-memory store
+    const existing = leadsStore.get(leadId)
+    if (existing) {
+      existing.normalized.status = newStatus
+      leadsStore.set(leadId, existing)
+    }
+
+    // 2. Dual-Update Supabase
+    await insertLeadToSupabase(
+      {
+        leadId,
+        name: body.name || existing?.normalized?.name || 'Enterprise Lead',
+        email: body.email || existing?.normalized?.email || 'lead@enterprise.com',
+        phone: body.phone,
+        company: body.company,
+        formName: 'Lead Lifecycle Update',
+        leadType: 'lifecycle_update',
+        timestamp: nowIso,
+        rawPayload: { status: newStatus, ...body }
+      },
+      body
+    ).catch(() => {})
+
+    return NextResponse.json({
+      success: true,
+      leadId,
+      status: newStatus,
+      updatedAt: nowIso,
+      syncedEverywhere: true
+    })
+  } catch (err: any) {
+    return NextResponse.json({ success: false, error: err?.message }, { status: 500 })
+  }
+}

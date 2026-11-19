@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Trash2, Square, Send, Mic } from 'lucide-react'
+import { Trash2, Square, Send, Mic, AlertCircle, RotateCcw } from 'lucide-react'
 import { AudioMessagePlayer } from './AudioMessagePlayer'
 
 interface VoiceRecorderProps {
@@ -15,6 +15,7 @@ interface VoiceRecorderProps {
   onStopRecording: () => void
   onCancelRecording: () => void
   onSendVoiceNote: () => void
+  onRetryRecording?: () => void
 }
 
 export function VoiceRecorder({
@@ -27,19 +28,35 @@ export function VoiceRecorder({
   error,
   onStopRecording,
   onCancelRecording,
-  onSendVoiceNote
+  onSendVoiceNote,
+  onRetryRecording
 }: VoiceRecorderProps) {
   if (error) {
     return (
-      <div className="flex items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-rose-950/60 border border-rose-500/40 text-xs text-rose-200">
-        <span>{error}</span>
-        <button
-          type="button"
-          onClick={onCancelRecording}
-          className="px-2.5 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-100 font-semibold cursor-pointer"
-        >
-          Dismiss
-        </button>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 rounded-2xl bg-rose-950/80 border border-rose-500/50 text-xs text-rose-200 shadow-lg animate-in fade-in duration-200">
+        <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5 sm:mt-0" />
+          <span className="leading-relaxed">{error}</span>
+        </div>
+        <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+          {onRetryRecording && (
+            <button
+              type="button"
+              onClick={onRetryRecording}
+              className="px-3 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-200 font-semibold cursor-pointer transition flex items-center gap-1.5"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Try Again</span>
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={onCancelRecording}
+            className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-100 font-semibold cursor-pointer transition"
+          >
+            Dismiss
+          </button>
+        </div>
       </div>
     )
   }
@@ -107,7 +124,7 @@ export function VoiceRecorder({
       ) : (
         <div className="flex items-center gap-2 text-xs text-slate-400">
           <Mic className="w-4 h-4 text-cyan-400 animate-pulse" />
-          <span>Initializing microphone...</span>
+          <span>Requesting microphone access...</span>
         </div>
       )}
     </div>

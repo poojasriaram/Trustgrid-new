@@ -11,6 +11,18 @@ export const metadata: Metadata = {
     description:
       'Enterprise AI consultation desk for 50–500MW GPU factories, PUE 1.15 liquid cooling, 800G RoCEv2 fabrics, and autonomous multi-agent swarms.',
     url: 'https://trustgrid.ai/chat'
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico?v=4', sizes: 'any' },
+      { url: '/icon.svg?v=4', type: 'image/svg+xml' },
+      { url: '/icon-light-32x32.png?v=4', sizes: '32x32', type: 'image/png', media: '(prefers-color-scheme: light)' },
+      { url: '/icon-dark-32x32.png?v=4', sizes: '32x32', type: 'image/png', media: '(prefers-color-scheme: dark)' }
+    ],
+    shortcut: '/favicon.ico?v=4',
+    apple: [
+      { url: '/apple-icon.png?v=4', sizes: '180x180', type: 'image/png' }
+    ]
   }
 }
 
