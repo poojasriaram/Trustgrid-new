@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { X, Mail, Lock, User, Loader2, ShieldCheck, CheckCircle2, ArrowRight } from 'lucide-react'
+import { X, Mail, Lock, User, Loader2, ShieldCheck, ArrowRight } from 'lucide-react'
 import { useAuth } from '@/src/contexts/AuthContext'
 
 export function AuthModal() {
@@ -10,44 +10,30 @@ export function AuthModal() {
     closeAuthModal,
     signInWithEmail,
     signUpWithEmail,
-    resetPasswordForEmail,
     continueAsGuest
   } = useAuth()
 
-  const [activeTab, setActiveTab] = useState<'signin' | 'signup' | 'reset'>('signin')
+  const [activeTab, setActiveTab] = useState<'signin' | 'signup'>('signin')
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
-  const [successMsg, setSuccessMsg] = useState<string | null>(null)
 
   if (!isAuthModalOpen) return null
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMsg(null)
-    setSuccessMsg(null)
     setIsSubmitting(true)
 
     try {
       if (activeTab === 'signin') {
         const res = await signInWithEmail(identifier, password)
         if (!res.success) setErrorMsg(res.error || 'Sign in failed.')
-      } else if (activeTab === 'signup') {
-        const res = await signUpWithEmail(identifier, password, fullName)
-        if (!res.success) {
-          setErrorMsg(res.error || 'Sign up failed.')
-        } else if (res.message) {
-          setSuccessMsg(res.message)
-        }
       } else {
-        const res = await resetPasswordForEmail(identifier)
-        if (!res.success) {
-          setErrorMsg(res.error || 'Reset password request failed.')
-        } else {
-          setSuccessMsg('Password recovery instructions have been sent to your email.')
-        }
+        const res = await signUpWithEmail(identifier, password, fullName)
+        if (!res.success) setErrorMsg(res.error || 'Sign up failed.')
       }
     } finally {
       setIsSubmitting(false)
@@ -80,25 +66,22 @@ export function AuthModal() {
           <h2 className="text-lg font-bold text-white">
             {activeTab === 'signin'
               ? 'Sign in to TRUSTGRID.AI Architect Desk'
-              : activeTab === 'signup'
-              ? 'Create Your Enterprise Architect Account'
-              : 'Reset Your Account Password'}
+              : 'Create Your Enterprise Architect Account'}
           </h2>
           <p className="text-xs text-slate-400">
-            Sync your consultation history, architecture files, and voice briefings across devices.
+            Instant access — no email verification wait. Automatically syncs with Supabase &amp; Google Sheets.
           </p>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="grid grid-cols-3 gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800 mb-5 text-xs">
+        {/* Tab Switcher (Sign In / Sign Up) */}
+        <div className="grid grid-cols-2 gap-1 p-1 rounded-xl bg-slate-950 border border-slate-800 mb-5 text-xs">
           <button
             type="button"
             onClick={() => {
               setActiveTab('signin')
               setErrorMsg(null)
-              setSuccessMsg(null)
             }}
-            className={`py-1.5 rounded-lg font-semibold transition cursor-pointer ${
+            className={`py-2 rounded-lg font-semibold transition cursor-pointer ${
               activeTab === 'signin'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
@@ -111,9 +94,8 @@ export function AuthModal() {
             onClick={() => {
               setActiveTab('signup')
               setErrorMsg(null)
-              setSuccessMsg(null)
             }}
-            className={`py-1.5 rounded-lg font-semibold transition cursor-pointer ${
+            className={`py-2 rounded-lg font-semibold transition cursor-pointer ${
               activeTab === 'signup'
                 ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
@@ -121,33 +103,11 @@ export function AuthModal() {
           >
             Sign Up
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab('reset')
-              setErrorMsg(null)
-              setSuccessMsg(null)
-            }}
-            className={`py-1.5 rounded-lg font-semibold transition cursor-pointer ${
-              activeTab === 'reset'
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            Reset
-          </button>
         </div>
 
         {errorMsg && (
           <div className="mb-4 p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-xs text-rose-200">
             {errorMsg}
-          </div>
-        )}
-
-        {successMsg && (
-          <div className="mb-4 p-3 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-xs text-emerald-200 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{successMsg}</span>
           </div>
         )}
 
@@ -171,39 +131,34 @@ export function AuthModal() {
           )}
 
           <div>
-            <label className="text-slate-300 block mb-1">
-              {activeTab === 'reset' ? 'Email Address *' : 'Email or Username *'}
-            </label>
+            <label className="text-slate-300 block mb-1">Email or Username *</label>
             <div className="relative">
               <Mail className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
-                type={activeTab === 'reset' ? 'email' : 'text'}
+                type="text"
                 required
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
-                placeholder={activeTab === 'reset' ? 'name@enterprise.com' : 'name@enterprise.com or username'}
+                placeholder="name@enterprise.com or username"
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
               />
             </div>
           </div>
 
-          {activeTab !== 'reset' && (
-            <div>
-              <label className="text-slate-300 block mb-1">Password *</label>
-              <div className="relative">
-                <Lock className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="password"
-                  required
-                  minLength={4}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
-                />
-              </div>
+          <div>
+            <label className="text-slate-300 block mb-1">Password *</label>
+            <div className="relative">
+              <Lock className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-9 pr-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+              />
             </div>
-          )}
+          </div>
 
           <button
             type="submit"
@@ -213,16 +168,14 @@ export function AuthModal() {
             {isSubmitting ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Authenticating...</span>
+                <span>Signing In &amp; Syncing...</span>
               </>
             ) : (
               <>
                 <span>
                   {activeTab === 'signin'
                     ? 'Sign In & Sync History'
-                    : activeTab === 'signup'
-                    ? 'Create Enterprise Account'
-                    : 'Send Recovery Link'}
+                    : 'Create Account & Start Chatting'}
                 </span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </>
@@ -241,7 +194,7 @@ export function AuthModal() {
           </button>
           <div className="flex items-center justify-center gap-1.5 text-[10px] text-slate-500">
             <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Supabase Auth • End-to-End Encrypted Enterprise Session</span>
+            <span>Instant Access • Captured in Supabase &amp; Google Sheets</span>
           </div>
         </div>
       </div>

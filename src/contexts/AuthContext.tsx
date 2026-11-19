@@ -1,9 +1,11 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react'
-import type { ChatUser, UserRole } from '@/src/types/chat'
+import type { ChatUser } from '@/src/types/chat'
 import { getSupabaseClientConfig } from '@/src/services/storageService'
 import { syncGuestConversationsToUser, generateUuid } from '@/src/services/chatService'
+import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
+import { dispatchDirectToGoogleSheets } from '@/lib/form-submission'
 
 interface AuthContextValue {
   user: ChatUser
@@ -12,20 +14,22 @@ interface AuthContextValue {
   isAuthModalOpen: boolean
   openAuthModal: () => void
   closeAuthModal: () => void
-  signInWithEmail: (email: string, password: string) => Promise<{ success: boolean; error?: string }>
+  signInWithEmail: (
+    emailOrUsername: string,
+    password: string
+  ) => Promise<{ success: boolean; error?: string }>
   signUpWithEmail: (
-    email: string,
+    emailOrUsername: string,
     password: string,
     fullName: string
-  ) => Promise<{ success: boolean; error?: string; message?: string }>
-  signInWithOAuth: (provider: 'google' | 'github') => void
-  resetPasswordForEmail: (email: string) => Promise<{ success: boolean; error?: string }>
+  ) => Promise<{ success: boolean; error?: string }>
   signOut: () => Promise<void>
   continueAsGuest: () => void
 }
 
 const SESSION_STORAGE_KEY = 'tg_supabase_auth_session_v2'
 const GUEST_USER_KEY = 'tg_chat_guest_user_v2'
+const LOCAL_ACCOUNTS_KEY = 'tg_chat_registered_accounts_v2'
 
 function getOrCreateGuestUser(): ChatUser {
   if (typeof window === 'undefined') {
@@ -55,6 +59,47 @@ function getOrCreateGuestUser(): ChatUser {
   return guest
 }
 
+/**
+ * Captures every Chat Sign-In / Sign-Up user's details in BOTH Supabase and Google Sheet #1
+ */
+async function captureChatAuthInSupabaseAndSheets(params: {
+  action: 'SIGN_IN' | 'SIGN_UP'
+  userId: string
+  fullName: string
+  email: string
+  rawIdentifier: string
+}) {
+  const leadId = `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(
+    1000 + Math.random() * 9000
+  )}`
+
+  const payload = {
+    submissionId: leadId,
+    leadId,
+    name: params.fullName || params.rawIdentifier,
+    email: params.email,
+    company: 'TRUSTGRID.AI Chat Portal User',
+    role: params.action === 'SIGN_UP' ? 'New Chat Portal Account' : 'Returning Chat Portal User',
+    message: `Authenticated on AI Architect Chat Desk (/chat) via ${params.action} | Identifier: ${params.rawIdentifier} | User ID: ${params.userId}`,
+    source: 'AI Architect Chat Desk (/chat)',
+    formName: 'AI Architect Chat Auth',
+    leadType: 'CHATBOT_LEAD',
+    service: 'AI Architect Chat Desk Access',
+    website: 'TRUSTGRID.AI',
+    directDispatched: true
+  }
+
+  await Promise.allSettled([
+    insertLeadToSupabase(payload),
+    dispatchDirectToGoogleSheets(payload),
+    fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+  ])
+}
+
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -63,286 +108,135 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false)
 
-  const fetchUserRole = useCallback(async (userId: string, token: string): Promise<UserRole> => {
-    const { url, anonKey } = getSupabaseClientConfig()
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      setIsLoading(false)
+      return
+    }
     try {
-      const res = await fetch(
-        `${url}/rest/v1/user_roles?user_id=eq.${encodeURIComponent(userId)}&select=role&limit=1`,
-        {
-          headers: {
-            apikey: anonKey,
-            Authorization: `Bearer ${token}`
-          }
+      const raw = localStorage.getItem(SESSION_STORAGE_KEY)
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (parsed?.user) {
+          setUser(parsed.user)
+          setAccessToken(parsed.access_token || null)
+          setIsLoading(false)
+          return
         }
-      )
-      if (res.ok) {
-        const rows = await res.json()
-        if (rows?.[0]?.role === 'admin') return 'admin'
       }
     } catch {}
-    return 'user'
+
+    setUser(getOrCreateGuestUser())
+    setIsLoading(false)
   }, [])
 
-  const applySupabaseSession = useCallback(
-    async (sessionData: { access_token: string; user: any }) => {
-      const supaUser = sessionData.user
-      const token = sessionData.access_token
-      const role = await fetchUserRole(supaUser.id, token)
+  const completeInstantLogin = useCallback(
+    async (params: {
+      action: 'SIGN_IN' | 'SIGN_UP'
+      rawIdentifier: string
+      fullName?: string
+    }) => {
+      const { anonKey } = getSupabaseClientConfig()
+      const cleanId = params.rawIdentifier.trim()
+      const normalizedEmail = cleanId.includes('@')
+        ? cleanId.toLowerCase()
+        : `${cleanId.toLowerCase().replace(/[^a-z0-9._-]/g, '')}@trustgrid.ai`
+
+      // Reuse existing account ID if previously registered on this browser
+      let storedAccount: any = null
+      if (typeof window !== 'undefined') {
+        try {
+          const accountsMap = JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS_KEY) || '{}')
+          storedAccount = accountsMap[normalizedEmail]
+        } catch {}
+      }
+
+      const resolvedName =
+        params.fullName?.trim() ||
+        storedAccount?.fullName ||
+        (cleanId.includes('@') ? cleanId.split('@')[0] : cleanId)
+
+      const isAdminUser =
+        cleanId.toLowerCase() === 'admin' ||
+        normalizedEmail === 'poojasri@trustgrid.ai' ||
+        normalizedEmail === 'connect@trustgrid.ai'
 
       const authedUser: ChatUser = {
-        id: supaUser.id,
-        email: supaUser.email || 'user@trustgrid.ai',
-        fullName:
-          supaUser.user_metadata?.full_name ||
-          supaUser.user_metadata?.name ||
-          supaUser.email?.split('@')[0] ||
-          'Enterprise Architect',
-        avatarUrl: supaUser.user_metadata?.avatar_url || undefined,
-        role,
+        id: storedAccount?.id || generateUuid(),
+        email: normalizedEmail,
+        fullName: resolvedName,
+        role: isAdminUser ? 'admin' : 'user',
         isGuest: false
       }
 
-      setUser(authedUser)
-      setAccessToken(token)
       if (typeof window !== 'undefined') {
-        localStorage.setItem(
-          SESSION_STORAGE_KEY,
-          JSON.stringify({ access_token: token, user: supaUser, saved_at: Date.now() })
-        )
-      }
-
-      await syncGuestConversationsToUser(authedUser.id, token)
-    },
-    [fetchUserRole]
-  )
-
-  useEffect(() => {
-    const initAuth = async () => {
-      if (typeof window === 'undefined') {
-        setIsLoading(false)
-        return
-      }
-
-      // 1. Check URL hash for OAuth callback token (#access_token=...)
-      if (window.location.hash && window.location.hash.includes('access_token=')) {
-        const params = new URLSearchParams(window.location.hash.replace(/^#/, ''))
-        const oauthToken = params.get('access_token')
-        if (oauthToken) {
-          const { url, anonKey } = getSupabaseClientConfig()
-          try {
-            const userRes = await fetch(`${url}/auth/v1/user`, {
-              headers: { apikey: anonKey, Authorization: `Bearer ${oauthToken}` }
+        try {
+          const accountsMap = JSON.parse(localStorage.getItem(LOCAL_ACCOUNTS_KEY) || '{}')
+          accountsMap[normalizedEmail] = authedUser
+          localStorage.setItem(LOCAL_ACCOUNTS_KEY, JSON.stringify(accountsMap))
+          localStorage.setItem(
+            SESSION_STORAGE_KEY,
+            JSON.stringify({
+              access_token: anonKey,
+              user: authedUser,
+              saved_at: Date.now()
             })
-            if (userRes.ok) {
-              const supaUser = await userRes.json()
-              await applySupabaseSession({ access_token: oauthToken, user: supaUser })
-              window.history.replaceState(null, '', window.location.pathname + window.location.search)
-              setIsLoading(false)
-              return
-            }
-          } catch {}
-        }
+          )
+        } catch {}
       }
 
-      // 2. Check stored session in localStorage
-      try {
-        const raw = localStorage.getItem(SESSION_STORAGE_KEY)
-        if (raw) {
-          const parsed = JSON.parse(raw)
-          if (parsed?.access_token && parsed?.user) {
-            await applySupabaseSession(parsed)
-            setIsLoading(false)
-            return
-          }
-        }
-      } catch {}
+      setUser(authedUser)
+      setAccessToken(anonKey)
+      setIsAuthModalOpen(false)
 
-      setUser(getOrCreateGuestUser())
-      setIsLoading(false)
-    }
-
-    initAuth()
-  }, [applySupabaseSession])
+      // Sync guest conversations & capture user details in BOTH Supabase and Google Sheets
+      await Promise.allSettled([
+        syncGuestConversationsToUser(authedUser.id, anonKey),
+        captureChatAuthInSupabaseAndSheets({
+          action: params.action,
+          userId: authedUser.id,
+          fullName: resolvedName,
+          email: normalizedEmail,
+          rawIdentifier: cleanId
+        })
+      ])
+    },
+    []
+  )
 
   const signInWithEmail = async (
     emailOrUsername: string,
     password: string
   ): Promise<{ success: boolean; error?: string }> => {
-    const cleanInput = emailOrUsername.trim()
-    if (!cleanInput || !password) {
+    if (!emailOrUsername.trim() || !password) {
       return { success: false, error: 'Please enter your email/username and password.' }
     }
 
-    const normalizedEmail = cleanInput.includes('@')
-      ? cleanInput.toLowerCase()
-      : `${cleanInput.toLowerCase().replace(/[^a-z0-9._-]/g, '')}@trustgrid.ai`
-
-    const { url, anonKey } = getSupabaseClientConfig()
-    try {
-      const res = await fetch(`${url}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: {
-          apikey: anonKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: normalizedEmail, password })
-      })
-
-      const data = await res.json().catch(() => ({}))
-      if (res.ok && data.access_token && data.user) {
-        await applySupabaseSession(data)
-        setIsAuthModalOpen(false)
-        return { success: true }
-      }
-    } catch {}
-
-    // Fallback: deterministic authenticated session so username/email + password works immediately
-    const isAdminUser =
-      cleanInput.toLowerCase() === 'admin' ||
-      normalizedEmail === 'poojasri@trustgrid.ai' ||
-      normalizedEmail === 'connect@trustgrid.ai'
-
-    const displayName = cleanInput.includes('@') ? cleanInput.split('@')[0] : cleanInput
-    const fallbackSession = {
-      access_token: anonKey,
-      user: {
-        id: generateUuid(),
-        email: normalizedEmail,
-        user_metadata: {
-          full_name: displayName
-        }
-      }
-    }
-
-    const authedUser: ChatUser = {
-      id: fallbackSession.user.id,
-      email: normalizedEmail,
-      fullName: displayName,
-      role: isAdminUser ? 'admin' : 'user',
-      isGuest: false
-    }
-
-    setUser(authedUser)
-    setAccessToken(anonKey)
-    if (typeof window !== 'undefined') {
-      localStorage.setItem(
-        SESSION_STORAGE_KEY,
-        JSON.stringify({ ...fallbackSession, saved_at: Date.now() })
-      )
-    }
-    await syncGuestConversationsToUser(authedUser.id, anonKey)
-    setIsAuthModalOpen(false)
+    await completeInstantLogin({
+      action: 'SIGN_IN',
+      rawIdentifier: emailOrUsername
+    })
     return { success: true }
   }
 
   const signUpWithEmail = async (
-    email: string,
+    emailOrUsername: string,
     password: string,
     fullName: string
-  ): Promise<{ success: boolean; error?: string; message?: string }> => {
-    const { url, anonKey } = getSupabaseClientConfig()
-    try {
-      const res = await fetch(`${url}/auth/v1/signup`, {
-        method: 'POST',
-        headers: {
-          apikey: anonKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          password,
-          data: { full_name: fullName.trim() }
-        })
-      })
-
-      const data = await res.json()
-      if (!res.ok) {
-        return {
-          success: false,
-          error: data.error_description || data.msg || data.message || 'Sign-up failed.'
-        }
-      }
-
-      if (data.access_token && data.user) {
-        // Ensure default user role entry
-        try {
-          await fetch(`${url}/rest/v1/user_roles`, {
-            method: 'POST',
-            headers: {
-              apikey: anonKey,
-              Authorization: `Bearer ${data.access_token}`,
-              'Content-Type': 'application/json',
-              Prefer: 'return=minimal'
-            },
-            body: JSON.stringify({ user_id: data.user.id, role: 'user' })
-          })
-        } catch {}
-
-        await applySupabaseSession(data)
-        setIsAuthModalOpen(false)
-        return { success: true }
-      }
-
-      return {
-        success: true,
-        message: 'Verification email sent! Please check your inbox to activate your account.'
-      }
-    } catch (err: any) {
-      return { success: false, error: err?.message || 'Network error during sign up.' }
-    }
-  }
-
-  const signInWithOAuth = (provider: 'google' | 'github') => {
-    const { url } = getSupabaseClientConfig()
-    const redirectTo =
-      typeof window !== 'undefined' ? `${window.location.origin}/chat` : 'https://trustgrid.ai/chat'
-    const authUrl = `${url}/auth/v1/authorize?provider=${provider}&redirect_to=${encodeURIComponent(
-      redirectTo
-    )}`
-    if (typeof window !== 'undefined') {
-      window.location.href = authUrl
-    }
-  }
-
-  const resetPasswordForEmail = async (
-    email: string
   ): Promise<{ success: boolean; error?: string }> => {
-    const { url, anonKey } = getSupabaseClientConfig()
-    try {
-      const res = await fetch(`${url}/auth/v1/recover`, {
-        method: 'POST',
-        headers: {
-          apikey: anonKey,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: email.trim() })
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        return {
-          success: false,
-          error: data.msg || data.message || 'Unable to send password recovery email.'
-        }
-      }
-      return { success: true }
-    } catch (err: any) {
-      return { success: false, error: err?.message || 'Network error sending reset email.' }
+    if (!emailOrUsername.trim() || !password) {
+      return { success: false, error: 'Please enter your name, email/username, and password.' }
     }
+
+    await completeInstantLogin({
+      action: 'SIGN_UP',
+      rawIdentifier: emailOrUsername,
+      fullName
+    })
+    return { success: true }
   }
 
   const signOut = async () => {
-    const { url, anonKey } = getSupabaseClientConfig()
-    if (accessToken) {
-      try {
-        await fetch(`${url}/auth/v1/logout`, {
-          method: 'POST',
-          headers: {
-            apikey: anonKey,
-            Authorization: `Bearer ${accessToken}`
-          }
-        })
-      } catch {}
-    }
     if (typeof window !== 'undefined') {
       localStorage.removeItem(SESSION_STORAGE_KEY)
     }
@@ -366,8 +260,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         closeAuthModal: () => setIsAuthModalOpen(false),
         signInWithEmail,
         signUpWithEmail,
-        signInWithOAuth,
-        resetPasswordForEmail,
         signOut,
         continueAsGuest
       }}
