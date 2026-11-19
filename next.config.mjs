@@ -51,6 +51,8 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: blob: https: https://hebbkx1anhila5yf.public.blob.vercel-storage.com https://*.clarity.ms https://c.clarity.ms https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
               "font-src 'self' data: https://fonts.gstatic.com",
+              "media-src 'self' data: blob: https: https://*.supabase.co",
+              "worker-src 'self' blob:",
               "connect-src 'self' https://*.supabase.co https://*.clarity.ms https://c.clarity.ms https://va.vercel-scripts.com https://vitals.vercel-insights.com https://script.google.com https://script.googleusercontent.com https://ipapi.co https://www.google-analytics.com https://analytics.google.com https://*.google-analytics.com https://region1.google-analytics.com https://region2.google-analytics.com https://www.googletagmanager.com https://*.googletagmanager.com https://stats.g.doubleclick.net",
               "frame-src 'self' https://www.googletagmanager.com",
               "frame-ancestors 'self'",
