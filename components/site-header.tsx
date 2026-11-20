@@ -58,6 +58,7 @@ import { logoUrl, solutions } from '@/lib/solutions'
 import { industriesData } from '@/lib/industries-data'
 import { trackWhatsAppClick } from '@/lib/analytics'
 import { AiInfraMegaMenu, MobileAiInfraAccordion } from '@/components/ui/ai-infra-mega-menu'
+import { ConversionCTA } from '@/components/ui/conversion-cta'
 
 // 1. AI Infra Menu Items (12 Items)
 const aiInfraMenuItems = [
@@ -3930,15 +3931,15 @@ export function SiteHeader() {
 
 
 
-        {/* 9. CONTACT US — Primary CTA */}
-        <Link
-          href="/contact"
+        {/* 9. PRIMARY HEADER CONVERSION CTA */}
+        <ConversionCTA
+          ctaName="Book a Free AI Consultation"
+          href="/book-ai-diagnostic#diagnostic-form-section"
+          ctaPosition="Header"
+          ctaType="Primary"
           className="nav-cta"
           onClick={closeAll}
-        >
-          <span>Contact Us</span>
-          <ArrowUpRight size={14} />
-        </Link>
+        />
       </nav>
 
       {/* MOBILE HAMBURGER BUTTON */}
@@ -4602,14 +4603,15 @@ export function SiteHeader() {
                   <span>WhatsApp (US)</span>
                 </a>
               </div>
-              <Link
-                href="/contact"
-                className="button button-primary button-full"
+              <ConversionCTA
+                ctaName="Book a Free AI Consultation"
+                href="/book-ai-diagnostic#diagnostic-form-section"
+                variant="primary"
+                size="full"
+                ctaPosition="MobileDrawer"
+                ctaType="Primary"
                 onClick={closeAll}
-              >
-                <span>Contact Enterprise Advisory</span>
-                <ArrowUpRight size={16} />
-              </Link>
+              />
             </div>
           </div>
         </div>

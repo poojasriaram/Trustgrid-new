@@ -54,6 +54,7 @@ import { StdDeviationTab } from '@/components/analytics/tabs/std-deviation-tab'
 import { NetworkIntelTab } from '@/components/analytics/tabs/network-intel-tab'
 import { ReportsExportTab } from '@/components/analytics/tabs/reports-export-tab'
 import { BrokenLinkQaTab } from '@/components/analytics/tabs/broken-link-qa-tab'
+import { CTAPerformanceTab } from '@/components/analytics/tabs/cta-performance-tab'
 
 export default function AnalyticsDashboardPage() {
   const [activeTab, setActiveTab] = useState<TabKey>('mission-control')
@@ -611,6 +612,12 @@ export default function AnalyticsDashboardPage() {
         {activeTab === 'network-intel' && ds.networkIntel && (
           <ModuleErrorBoundary moduleTitle="IP & Network Intel">
             <NetworkIntelTab data={ds.networkIntel} />
+          </ModuleErrorBoundary>
+        )}
+
+        {activeTab === 'cta-performance' && (
+          <ModuleErrorBoundary moduleTitle="CTA Performance & Conversion">
+            <CTAPerformanceTab />
           </ModuleErrorBoundary>
         )}
 

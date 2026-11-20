@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowUpRight, Sparkles, MessageSquare, ArrowRight } from 'lucide-react'
+import { Sparkles, MessageSquare } from 'lucide-react'
+import { ConversionCTA } from '@/components/ui/conversion-cta'
 
 interface BlogCtaProps {
   badge?: string
@@ -17,10 +18,10 @@ export function BlogCta({
   badge = 'ENTERPRISE AI ARCHITECTURE CONSULTATION',
   title,
   description,
-  buttonText = 'Book AI Diagnostic Session',
+  buttonText = 'Discuss This AI Architecture',
   buttonHref = '/book-ai-diagnostic#diagnostic-form-section',
-  secondaryButtonText = 'Talk to Senior Architect',
-  secondaryButtonHref = '/talk-to-ai-architect'
+  secondaryButtonText = 'Explore Related Solutions',
+  secondaryButtonHref = '/solutions'
 }: BlogCtaProps) {
   return (
     <section className="tg-blog-cta-wrapper" aria-label="Architecture Consultation CTA">
@@ -43,31 +44,34 @@ export function BlogCta({
           <p className="tg-cta-desc">{description}</p>
 
           <div className="tg-cta-buttons-row">
-            <Link
+            <ConversionCTA
+              ctaName={buttonText}
               href={buttonHref}
-              className="button button-primary tg-cta-btn-main"
-            >
-              <span>{buttonText}</span>
-              <ArrowUpRight size={16} />
-            </Link>
+              variant="primary"
+              ctaPosition="Middle"
+              ctaType="Primary"
+              className="tg-cta-btn-main"
+            />
 
             {secondaryButtonText && (
-              <Link
+              <ConversionCTA
+                ctaName={secondaryButtonText}
                 href={secondaryButtonHref}
-                className="button button-ghost tg-cta-btn-ghost"
-              >
-                <MessageSquare size={15} />
-                <span>{secondaryButtonText}</span>
-              </Link>
+                variant="ghost"
+                ctaPosition="Middle"
+                ctaType="Secondary"
+                className="tg-cta-btn-ghost"
+              />
             )}
 
-            <Link
-              href="/contact"
+            <ConversionCTA
+              ctaName="Talk to Our Engineering Team"
+              href="/talk-to-ai-architect"
+              variant="text"
+              ctaPosition="Middle"
+              ctaType="Tertiary"
               className="tg-cta-tertiary-link"
-            >
-              <span>Direct Enterprise Inquiries</span>
-              <ArrowRight size={13} />
-            </Link>
+            />
           </div>
         </div>
       </div>

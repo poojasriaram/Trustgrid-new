@@ -16,10 +16,13 @@ import { getRedisClient, checkRedisHealth, RedisHealthStatus } from './redis'
 export const ALLOWED_EVENT_TYPES = [
   'page_view',
   'session_start',
+  'cta_view',
   'cta_click',
+  'cta_destination_open',
   'form_view',
   'form_start',
   'form_field_error',
+  'form_validation_error',
   'form_submit_attempt',
   'form_submit_success',
   'form_submit_failure',
@@ -46,6 +49,8 @@ export interface SafeAnalyticsEvent {
   utm_medium?: string
   utm_campaign?: string
   cta_name?: string
+  cta_type?: 'Primary' | 'Secondary' | 'Tertiary' | string
+  cta_position?: string
   cta_destination?: string
   device_type?: string
   browser?: string

@@ -166,7 +166,7 @@ export default async function IndustryDetailPage({ params }: PageProps) {
               href={`/book-ai-diagnostic?industry=${encodeURIComponent(industry.name)}#diagnostic-form-section`}
               className="button button-primary button-sm whitespace-nowrap hidden lg:inline-flex"
             >
-              <span>Schedule Diagnostic</span>
+              <span>Discuss Your Industry AI Opportunity</span>
               <ArrowUpRight size={13} />
             </Link>
           </div>

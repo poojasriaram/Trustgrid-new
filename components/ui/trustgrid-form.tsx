@@ -364,12 +364,14 @@ export function TrustGridForm({
 
   // Submit button text based on form type
   const submitButtonText = isCareer
-    ? 'Submit Application'
+    ? 'Submit Your Profile'
     : isPartner
     ? 'Become a Partner'
+    : variant === 'diagnostic'
+    ? 'Confirm Your Consultation'
     : variant === 'proposal'
     ? 'Submit Proposal Request'
-    : 'Submit Enquiry'
+    : 'Submit Your Business Enquiry'
 
   // ==========================================
   // SUCCESS MESSAGE STATE

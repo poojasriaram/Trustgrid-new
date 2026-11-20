@@ -1105,7 +1105,7 @@ const heroSlides: HeroSlide[] = [
     subheadline: 'Value That Compounds — Year After Year.',
     description: 'TRUSTGRID.AI runs Lean, Six Sigma, TOC and TPM 4–10x faster through autonomous AI agent fleets — structured through the 70-year-old Value Engineering Job Plan, certified by Finance, and compounding at a measured factor annually.',
     points: ['Finance-certified value claims only', 'Autonomous 24/7 agent execution', '≥1.3x annual compounding factor'],
-    primaryCTA: { label: 'Book an AI Diagnostic', href: '#strategy-session-section' },
+    primaryCTA: { label: 'Identify Your AI Value Opportunity', href: '#strategy-session-section' },
     secondaryCTA: { label: 'Explore AI-VE Models', href: '#models-section' },
     accentColor: 'from-blue-400 via-cyan-400 to-indigo-400',
     accentSolid: '#38bdf8',
@@ -3395,7 +3395,7 @@ export default function AIValueEngineeringPage() {
                 href="#strategy-session-section"
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white text-blue-900 font-bold text-xs hover:bg-blue-50 transition-colors"
               >
-                <span>Book Diagnostic</span>
+                <span>Identify Your AI Value Opportunity</span>
                 <ArrowRight size={14} />
               </a>
             </div>

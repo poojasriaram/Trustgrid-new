@@ -645,7 +645,7 @@ export default function CareersPage() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
                     <a href="#apply-now" className="button button-secondary button-sm">
                       <FileText size={15} />
-                      <span>Learn More</span>
+                      <span>Apply for This Role</span>
                     </a>
 
                     <a
@@ -1101,7 +1101,7 @@ export default function CareersPage() {
             </p>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
               <a href="#apply-now" className="button button-primary button-sm">
-                <span>Submit Open Application</span>
+                <span>Submit Your Profile</span>
                 <ArrowRight size={14} />
               </a>
               <a

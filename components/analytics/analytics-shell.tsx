@@ -30,7 +30,8 @@ import {
   ArrowLeft,
   FileSpreadsheet,
   ShieldAlert,
-  Server
+  Server,
+  MousePointerClick
 } from 'lucide-react'
 import { DashboardDataset } from '@/lib/analytics-service'
 
@@ -52,6 +53,7 @@ export type TabKey =
   | 'pareto'
   | 'std-deviation'
   | 'network-intel'
+  | 'cta-performance'
   | 'reports-export'
   | 'copper-import'
   | 'broken-link-qa'
@@ -101,6 +103,7 @@ const NAVIGATION_GROUPS: NavGroup[] = [
   {
     name: 'Conversion & Funnel',
     items: [
+      { key: 'cta-performance', label: 'CTA Performance', icon: MousePointerClick, badge: 'CRO' },
       { key: 'funnel-drop-off', label: 'Funnel Drop-Off', icon: Layers },
       { key: 'lead-scoring', label: 'Lead Scoring Engine', icon: Flame, badge: 'AI' }
     ]

@@ -426,7 +426,7 @@ export function QuickContactForm({
           </>
         ) : (
           <>
-            <span>Submit Request</span>
+            <span>Submit Your Business Enquiry</span>
             <Send size={13} />
           </>
         )}

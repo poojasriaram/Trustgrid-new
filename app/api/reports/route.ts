@@ -3,7 +3,8 @@ import {
   generateDailyProductionReport,
   generateWeeklyExecutiveSummary,
   generateMonthlyExecutiveSummary,
-  getConsolidatedLeads
+  getConsolidatedLeads,
+  getCTAPerformanceReport
 } from '@/lib/services/executive-reporting'
 
 /**
@@ -29,6 +30,14 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({
         success: true,
         report: monthly
+      })
+    }
+
+    if (reportType === 'cta') {
+      const ctaReport = await getCTAPerformanceReport()
+      return NextResponse.json({
+        success: true,
+        report: ctaReport
       })
     }
 

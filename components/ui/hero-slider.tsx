@@ -22,6 +22,7 @@ import {
   LucideIcon
 } from 'lucide-react'
 import { HeroCanvas } from '@/components/ui/hero-canvas'
+import { ConversionCTA } from '@/components/ui/conversion-cta'
 
 export interface HeroSlideData {
   id: string
@@ -53,7 +54,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Engineered for Scale.',
     copy: 'TRUSTGRID.AI is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories with direct-to-chip liquid cooling to low-latency inference serving.',
     thesisHighlight: 'Strategic Core: Purpose-engineered AI Factories delivering maximum intelligence per dollar and watt with 30–70% higher accelerator utilization.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Book a Free AI Consultation',
     primaryCtaLink: '/book-ai-diagnostic#diagnostic-form-section',
     secondaryCtaText: 'Explore Our AI Engineering Practices',
     secondaryCtaLink: '/#offerings',
@@ -77,7 +78,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Autonomous Agent Fleets.',
     copy: 'Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics, tool sandboxing, and native Model Context Protocol (MCP) integrations across enterprise systems.',
     thesisHighlight: 'Strategic Core: Turning autonomy into compounding enterprise capability with deterministic execution and strict SLA guarantees.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Explore Agentic AI Solutions',
     primaryCtaLink: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section',
     secondaryCtaText: 'Explore Agentic Factory',
     secondaryCtaLink: '/solutions/ai-agentic-factory',
@@ -101,7 +102,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Zero Packet Drops.',
     copy: 'Ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, and autonomous NOC telemetry for massive distributed AI training and inference.',
     thesisHighlight: 'Strategic Core: Eliminating tail jitter and silent network congestion that stall GPU clusters at line speed.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Discuss AI-Native Networking',
     primaryCtaLink: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section',
     secondaryCtaText: 'Explore AI Networking',
     secondaryCtaLink: '/solutions/ai-networking-cybersecurity',
@@ -125,7 +126,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Post-Quantum Resilience.',
     copy: 'Comprehensive security engineering protecting autonomous agents with zero-trust permissions and runtime prompt firewalls while transitioning enterprise cryptography to NIST Post-Quantum Cryptographic standards.',
     thesisHighlight: 'Strategic Core: Neutralizing novel AI attack surfaces and Harvest Now Decrypt Later quantum threats across L1–L7.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Request an AI Security Assessment',
     primaryCtaLink: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section',
     secondaryCtaText: 'Explore AI Cybersecurity',
     secondaryCtaLink: '/solutions/ai-networking-cybersecurity',
@@ -149,7 +150,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Zero Black-Box Risk.',
     copy: 'Rigorous engineering of mathematical explainability (SHAP/LIME), continuous statistical process control (SPC), formal robustness verification, and immutable cryptographic decision audit trails for EU AI Act & NIST AI RMF compliance.',
     thesisHighlight: 'Strategic Core: Guaranteeing board oversight, mathematical verifiability, and regulatory assurance in high-stakes mission-critical workflows.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Request a Governance Assessment',
     primaryCtaLink: '/book-ai-diagnostic?solution=trusted-ai-transformation#diagnostic-form-section',
     secondaryCtaText: 'Explore Trusted AI',
     secondaryCtaLink: '/solutions/trusted-ai-transformation',
@@ -173,7 +174,7 @@ export const heroSlidesData: HeroSlideData[] = [
     titleHighlight: 'Measurable P&L Impact.',
     copy: 'Industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) combined with AI FinOps to prioritize high-yield initiatives, eliminate token sprawl, and ensure compounding business ROI tied to CFO balance sheets.',
     thesisHighlight: 'Strategic Core: Bridging compute spend directly to enterprise revenue growth, unit cost reduction, and defensible ROI.',
-    primaryCtaText: 'Book an AI Diagnostic',
+    primaryCtaText: 'Identify Your AI Value Opportunity',
     primaryCtaLink: '/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section',
     secondaryCtaText: 'Explore Value Engineering',
     secondaryCtaLink: '/solutions/ai-value-engineering',
@@ -329,18 +330,32 @@ export function HeroSlider() {
           </div>
 
           <div className="hero-actions">
-            <Link className="button button-primary hero-btn-main" href={currentSlide.primaryCtaLink}>
-              <span>{currentSlide.primaryCtaText}</span>
-              <ArrowUpRight size={17} />
-            </Link>
-            <Link className="button button-ghost" href={currentSlide.secondaryCtaLink}>
-              <span>{currentSlide.secondaryCtaText}</span>
-              <ArrowRight size={17} />
-            </Link>
-            <Link className="text-link" href="/talk-to-ai-architect">
-              <span>Talk to an AI Architect</span>
-              <ArrowRight size={15} />
-            </Link>
+            <ConversionCTA
+              ctaName={currentSlide.primaryCtaText}
+              href={currentSlide.primaryCtaLink}
+              variant="primary"
+              size="lg"
+              ctaType="Primary"
+              ctaPosition="Hero"
+              experimentId={currentSlideIndex === 0 ? 'exp_hero_primary_cta' : undefined}
+              supportingText={currentSlideIndex === 0 ? 'Discuss your enterprise AI challenges with our engineering experts and identify the right technical approach.' : undefined}
+              className="hero-btn-main shadow-lg hover:shadow-blue-500/25 transition-all"
+            />
+            <ConversionCTA
+              ctaName={currentSlide.secondaryCtaText}
+              href={currentSlide.secondaryCtaLink}
+              variant="ghost"
+              size="lg"
+              ctaType="Secondary"
+              ctaPosition="Hero"
+            />
+            <ConversionCTA
+              ctaName="Talk to an AI Architect"
+              href="/talk-to-ai-architect"
+              variant="text"
+              ctaType="Tertiary"
+              ctaPosition="Hero"
+            />
           </div>
         </div>
 

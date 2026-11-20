@@ -1257,10 +1257,10 @@ export default function AIValueEngineeringPracticePage() {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
-                href="/book-ai-diagnostic#diagnostic-form-section"
+                href="/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-sm transition-all shadow-md shadow-blue-600/20"
               >
-                <span>Book AI Value Diagnostic</span>
+                <span>Identify Your AI Value Opportunity</span>
                 <ArrowUpRight size={16} />
               </Link>
 

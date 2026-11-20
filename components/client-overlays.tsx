@@ -20,6 +20,10 @@ const PrivacyConsentBanner = dynamic(
   () => import('@/components/ui/privacy-consent-banner').then((mod) => mod.PrivacyConsentBanner),
   { ssr: false }
 )
+const MobileStickyCTA = dynamic(
+  () => import('@/components/ui/mobile-sticky-cta').then((mod) => mod.MobileStickyCTA),
+  { ssr: false }
+)
 
 const STANDALONE_PORTAL_PREFIXES = [
   '/chat',
@@ -59,6 +63,7 @@ export function ClientOverlays() {
       <WhatsAppCTA />
       <AIArchitectChatbot />
       <PrivacyConsentBanner />
+      <MobileStickyCTA />
     </>
   )
 }

@@ -400,7 +400,7 @@ export default function IndustriesPage() {
                         href={`/book-ai-diagnostic?industry=${encodeURIComponent(ind.name)}#diagnostic-form-section`}
                         className="button button-primary button-sm"
                       >
-                        <span>Schedule {ind.name} Diagnostic</span>
+                        <span>Discuss Your {ind.name} AI Opportunity</span>
                         <ArrowUpRight size={14} />
                       </Link>
                     </div>
@@ -424,7 +424,7 @@ export default function IndustriesPage() {
             </p>
             <div className="cta-actions">
               <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary">
-                <span>Book an AI Diagnostic</span>
+                <span>Book a Free AI Consultation</span>
                 <ArrowUpRight size={16} />
               </Link>
               <Link href="/methodology-engine" className="button button-ghost">

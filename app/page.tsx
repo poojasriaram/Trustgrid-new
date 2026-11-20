@@ -49,6 +49,7 @@ import { EngagementModelsSlider } from '@/components/ui/engagement-models-slider
 import { AiValueEngineeringSlider } from '@/components/ui/ai-value-engineering-slider'
 import { MethodologyEngineSpecialSection } from '@/components/methodology-engine-special-section'
 import { CommonFoundationSection } from '@/components/common-foundation-section'
+import { ConversionCTA } from '@/components/ui/conversion-cta'
 import {
   solutions,
   differentiationData,
@@ -332,6 +333,30 @@ export default function HomePage() {
 
         {/* Dynamic Offering Horizontal Slider */}
         <OfferingSlider offerings={primaryOfferingsData} />
+
+        {/* Phase 3 CTA Bar: After Offerings Capabilities */}
+        <div className="flex flex-col sm:flex-row items-center justify-between p-6 mt-8 rounded-2xl bg-gradient-to-r from-blue-900/10 via-slate-900/5 to-indigo-900/10 border border-blue-500/20 backdrop-blur-sm gap-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">Explore Full Enterprise Architecture</h3>
+            <p className="text-xs text-slate-600 mt-0.5">Discover all six specialized engineering solutions designed for mission-critical enterprise scale.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <ConversionCTA
+              ctaName="Explore Our Solutions"
+              href="/solutions"
+              variant="primary"
+              ctaPosition="Middle"
+              ctaType="Secondary"
+            />
+            <ConversionCTA
+              ctaName="Discuss Your Enterprise AI Project"
+              href="/book-ai-diagnostic#diagnostic-form-section"
+              variant="secondary"
+              ctaPosition="Middle"
+              ctaType="Primary"
+            />
+          </div>
+        </div>
       </section>
 
       {/* 2B. ENTERPRISE AI IMPACT & PROOF (SECTION 6 & 10) */}
@@ -557,6 +582,22 @@ export default function HomePage() {
         </div>
 
         <AiValueEngineeringSlider />
+
+        {/* Phase 3 CTA Bar: After AI Value Engineering */}
+        <div className="flex flex-col sm:flex-row items-center justify-between p-6 mt-8 rounded-2xl bg-gradient-to-r from-emerald-950/15 via-slate-900/5 to-teal-950/15 border border-emerald-500/20 backdrop-blur-sm gap-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">Uncover Hidden Compute &amp; Operational Savings</h3>
+            <p className="text-xs text-slate-600 mt-0.5">A structured evaluation of business objectives, feasibility, and high-yield use cases without speculative ROI promises.</p>
+          </div>
+          <ConversionCTA
+            ctaName="Discover Your AI Opportunity"
+            href="/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section"
+            variant="primary"
+            ctaPosition="Middle"
+            ctaType="Primary"
+            supportingText="Zero-footprint diagnostic with senior enterprise architects."
+          />
+        </div>
       </section>
 
       {/* DIFFERENTIATION FRAMEWORK */}
@@ -612,6 +653,30 @@ export default function HomePage() {
               <span>{ind}</span>
             </div>
           ))}
+        </div>
+
+        {/* Phase 3 CTA Bar: After Industry Showcase */}
+        <div className="flex flex-col sm:flex-row items-center justify-between p-6 mt-8 rounded-2xl bg-gradient-to-r from-indigo-950/15 via-slate-900/5 to-blue-950/15 border border-indigo-500/20 backdrop-blur-sm gap-4">
+          <div>
+            <h3 className="text-base font-bold text-slate-900">Pre-Calibrated Domain Architectures</h3>
+            <p className="text-xs text-slate-600 mt-0.5">Select your industry vertical and evaluate compliance-verified blueprints with our engineering advisory.</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <ConversionCTA
+              ctaName="Discuss Your Industry Challenge"
+              href="/contact?subject=Industry+Challenge"
+              variant="primary"
+              ctaPosition="Middle"
+              ctaType="Primary"
+            />
+            <ConversionCTA
+              ctaName="Explore Industry Use Cases"
+              href="/industries"
+              variant="secondary"
+              ctaPosition="Middle"
+              ctaType="Secondary"
+            />
+          </div>
         </div>
       </section>
 
@@ -673,15 +738,24 @@ export default function HomePage() {
             </div>
           </div>
           <div className="cta-actions">
-            <Link className="button button-light" href="/book-ai-diagnostic#diagnostic-form-section">
-              <span>Book an AI Diagnostic</span>
-              <ArrowUpRight size={17} />
-            </Link>
-            <Link className="button button-ghost" style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.25)' }} href="/talk-to-ai-architect">
-              <span>Talk to an AI Architect</span>
-              <ArrowRight size={16} />
-            </Link>
-            <span className="cta-subtext">Typically 2–4 weeks structured engagement with senior AI architects.</span>
+            <ConversionCTA
+              ctaName="Talk to an AI Architect"
+              href="/talk-to-ai-architect"
+              variant="light"
+              size="lg"
+              ctaPosition="Footer"
+              ctaType="Primary"
+            />
+            <ConversionCTA
+              ctaName="Book a Free AI Consultation"
+              href="/book-ai-diagnostic#diagnostic-form-section"
+              variant="ghost"
+              size="lg"
+              ctaPosition="Footer"
+              ctaType="Secondary"
+              style={{ color: '#fff', borderColor: 'rgba(255,255,255,0.3)' }}
+            />
+            <span className="cta-subtext">Typically 2–4 weeks structured engagement with senior AI architects. Non-disclosure guaranteed.</span>
           </div>
         </div>
       </section>

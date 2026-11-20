@@ -1028,14 +1028,110 @@ export async function trackCTA(
   ctaName: string,
   destination?: string,
   section?: string,
-  ctaSource?: string
+  ctaSource?: string,
+  ctaType: 'Primary' | 'Secondary' | 'Tertiary' | string = 'Primary',
+  ctaPosition: string = 'Section'
 ): Promise<void> {
   const payload = await build95TelemetryPayload('cta_click', 'conversion', 'click', {
     element_text: ctaName,
-    section: section || 'Main',
-    event_label: destination || ctaSource || 'CTA'
+    section: section || ctaPosition || 'Main',
+    event_label: destination || ctaSource || 'CTA',
+    element_type: ctaType
   })
   await sendTelemetryEvent(payload)
+
+  // Direct Telemetry Event to Analytics Engine (Redis, SQLite, Supabase)
+  if (typeof window !== 'undefined') {
+    try {
+      fetch('/api/analytics/events', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: 'cta_click',
+          session_id: getOrCreateSessionId(),
+          user_id: getOrCreateUserId(),
+          page_path: window.location.pathname,
+          page_title: document.title,
+          cta_name: ctaName,
+          cta_type: ctaType,
+          cta_position: ctaPosition,
+          cta_destination: destination || '',
+          metadata: { ctaName, destination, section, ctaType, ctaPosition }
+        })
+      }).catch(() => {})
+
+      // Microsoft Clarity Custom Event
+      if ((window as any).clarity) {
+        (window as any).clarity('event', 'cta_click', { cta: ctaName, type: ctaType, pos: ctaPosition })
+      }
+
+      // GA4 / Google Tag Manager dataLayer push
+      if (Array.isArray((window as any).dataLayer)) {
+        (window as any).dataLayer.push({
+          event: 'cta_click',
+          cta_name: ctaName,
+          cta_type: ctaType,
+          cta_position: ctaPosition,
+          cta_destination: destination || ''
+        })
+      }
+    } catch {}
+  }
+}
+
+// Session cache to prevent repeated cta_view impressions for the same button in one pageview
+const viewedCtasInSession = new Set<string>()
+
+export async function trackCTAView(
+  ctaName: string,
+  ctaPosition: string = 'Section',
+  ctaType: string = 'Primary'
+): Promise<void> {
+  if (typeof window === 'undefined') return
+  const key = `${window.location.pathname}_${ctaName}_${ctaPosition}`
+  if (viewedCtasInSession.has(key)) return
+  viewedCtasInSession.add(key)
+
+  try {
+    fetch('/api/analytics/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'cta_view',
+        session_id: getOrCreateSessionId(),
+        user_id: getOrCreateUserId(),
+        page_path: window.location.pathname,
+        page_title: document.title,
+        cta_name: ctaName,
+        cta_type: ctaType,
+        cta_position: ctaPosition,
+        metadata: { ctaName, ctaType, ctaPosition }
+      })
+    }).catch(() => {})
+  } catch {}
+}
+
+export async function trackCTADestinationOpen(
+  destination: string,
+  ctaName: string
+): Promise<void> {
+  if (typeof window === 'undefined') return
+  try {
+    fetch('/api/analytics/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: 'cta_destination_open',
+        session_id: getOrCreateSessionId(),
+        user_id: getOrCreateUserId(),
+        page_path: window.location.pathname,
+        page_title: document.title,
+        cta_name: ctaName,
+        cta_destination: destination,
+        metadata: { destination, ctaName }
+      })
+    }).catch(() => {})
+  } catch {}
 }
 
 export async function trackVisibilityState(status: 'visible' | 'hidden'): Promise<void> {
