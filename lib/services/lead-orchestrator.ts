@@ -251,7 +251,7 @@ async function syncToJiraCrm(
               }
             ]
           },
-          issuetype: { name: 'Task' }
+          issuetype: { name: jira.parentIssueType || 'Lead_Record' }
         }
       })
     })
@@ -400,11 +400,21 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
   }
 
   // 4. Dual-Write Target 2: Google Sheets (31-Column LEADS_MASTER Architecture)
+  const isTest = Boolean(
+    input.rawPayload?.isTestLead ||
+    input.leadId?.includes('TG-TEST') ||
+    input.name?.includes('TG-TEST') ||
+    input.email?.includes('example.com') ||
+    input.email?.includes('test.local') ||
+    input.email?.includes('@test.')
+  )
+  const targetSheet = isTest ? 'Archived_Test_Leads' : 'LEADS_MASTER'
   const assignedTo = scoreResult.priority === 'HIGH' ? 'Principal Solutions Architect' : 'Engineering Advisory Team'
   const sheetPayload = {
     // Top-level sheet destination
-    sheetName: 'LEADS_MASTER',
-    sheet_name: 'LEADS_MASTER',
+    sheetName: targetSheet,
+    sheet_name: targetSheet,
+    isTestLead: isTest,
     fallbackSheetName: input.source || 'Form_Submissions',
 
     // 31-Column LEADS_MASTER Exact Schema
