@@ -148,8 +148,19 @@ export async function POST(req: NextRequest) {
 
       if (rawName === 'page_view' || rawName === 'pageview') eventType = 'page_view'
       else if (rawName === 'session_start') eventType = 'session_start'
+      else if (rawName === 'whatsapp_click') eventType = 'whatsapp_click'
+      else if (rawName === 'phone_click') eventType = 'phone_click'
+      else if (rawName === 'email_click') eventType = 'email_click'
+      else if (rawName === 'booking_start') eventType = 'booking_start'
+      else if (rawName === 'booking_success') eventType = 'booking_success'
+      else if (rawName === 'form_view') eventType = 'form_view'
+      else if (rawName === 'form_start') eventType = 'form_start'
+      else if (rawName === 'form_field_error' || rawName.includes('validation_error')) eventType = 'form_field_error'
+      else if (rawName === 'form_submit_attempt' || rawName === 'submit_attempt') eventType = 'form_submit_attempt'
+      else if (rawName === 'form_submit_success' || rawName === 'lead_generated') eventType = 'form_submit_success'
+      else if (rawName === 'form_submit_failure' || rawName.includes('submit_fail')) eventType = 'form_submit_failure'
       else if (rawName.includes('cta') || rawName.includes('click')) eventType = 'cta_click'
-      else if (rawName.includes('form') || rawName.includes('submit') || rawEv.is_conversion) eventType = 'form_success'
+      else if (rawEv.is_conversion) eventType = 'form_submit_success'
 
       if (eventType && ALLOWED_EVENT_TYPES.includes(eventType)) {
         const safeEvent: SafeAnalyticsEvent = {
@@ -259,15 +270,20 @@ export async function POST(req: NextRequest) {
         currentHost
       )
 
-      const isConversion = Boolean(
-        ev.is_conversion ||
-        eventName === 'form_submit' ||
-        eventName === 'lead_generated' ||
-        eventName.includes('conversion')
-      )
-
       // 3. Session State Resolution & Inactivity Timeout Check
       const existingSession = getSessionStmt.get(sessionId) as any
+
+      // If internal link click, retain existing session acquisition channel
+      const effectiveChannel = (traffic.channel === 'Direct' && existingSession?.traffic_source)
+        ? existingSession.traffic_source
+        : traffic.channel
+
+      const isConversion = Boolean(
+        ev.is_conversion ||
+        eventName === 'form_submit_success' ||
+        eventName === 'lead_generated' ||
+        eventName === 'booking_success'
+      )
 
       let isBounce = 1
       let durationSec = 0
@@ -378,7 +394,7 @@ export async function POST(req: NextRequest) {
           pagePath,
           pageTitle,
           referrer,
-          traffic.channel,
+          effectiveChannel,
           ev.utm_source || '',
           ev.utm_medium || '',
           ev.utm_campaign || '',

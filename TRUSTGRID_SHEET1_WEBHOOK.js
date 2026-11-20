@@ -110,6 +110,42 @@ var SCHEMA_95_HEADERS = [
 ];
 
 var TAB_CONFIGS = {
+  // =========================================================================
+  // CENTRALIZED 6-SHEET ENTERPRISE ARCHITECTURE
+  // =========================================================================
+  "LEADS_MASTER": [
+    "Lead_ID", "Capture_Date", "Capture_Time", "Full_Name", "Business_Email",
+    "Phone_Number", "Company", "Designation", "Industry", "Location",
+    "Service_Interest", "Message", "Source", "Source_Page", "Landing_Page",
+    "UTM_Source", "UTM_Medium", "UTM_Campaign", "UTM_Term", "UTM_Content",
+    "Device_Type", "Session_ID", "CTA_Source", "Lead_Status", "Lead_Score",
+    "Assigned_To", "JIRA_Issue_ID", "Email_Status", "Followup_Status", "Notes", "Last_Updated"
+  ],
+
+  "FORM_SUBMISSIONS": [
+    "Submission_ID", "Lead_ID", "Form_ID", "Form_Name", "Source_Page",
+    "Name", "Email", "Phone", "Company", "Requirement",
+    "Validation_Status", "IP_Masked", "Session_ID", "Timestamp"
+  ],
+
+  "CTA_TRACKING": [
+    "Event_ID", "CTA_Name", "CTA_Location", "Page_URL", "Session_ID",
+    "User_ID", "Device_Type", "Traffic_Source", "Timestamp"
+  ],
+
+  "WEBSITE_ANALYTICS": [
+    "Date", "Page_Views", "Unique_Visitors", "Sessions", "Avg_Session_Duration_Sec",
+    "Bounce_Rate_Pct", "Total_Leads", "Conversion_Rate_Pct", "Top_Traffic_Source", "Last_Updated"
+  ],
+
+  "LEAD_ACTIVITY": [
+    "Activity_ID", "Lead_ID", "Activity_Type", "Description", "Actor", "Status", "Timestamp"
+  ],
+
+  "SYSTEM_ERRORS": [
+    "Error_ID", "Timestamp", "Service_Name", "Severity", "Error_Message", "Payload_Summary", "Resolved"
+  ],
+
   // Dedicated Master Tab for all Consulting Sessions
   "Consulting_Sessions": [
     "Submission ID", "Name", "Email", "Company", "Role / Designation", "Phone",
@@ -783,6 +819,70 @@ function doPost(e) {
           }
         } catch (mErr) {
           console.warn("Could not log to master Form Submissions tab:", mErr.toString());
+        }
+      }
+
+      // =========================================================================
+      // AUTO-LOG TO CENTRALIZED "LEADS_MASTER" (31-COLUMN ENTERPRISE SHEET)
+      // =========================================================================
+      if (isLeadForm && canonicalName !== "LEADS_MASTER") {
+        try {
+          var lmSheet = findSheetFlexible(ss, "LEADS_MASTER") || findSheetFlexible(ss, "Leads Master");
+          if (!lmSheet) {
+            lmSheet = ss.insertSheet("LEADS_MASTER");
+            var lmHeaders = TAB_CONFIGS["LEADS_MASTER"];
+            lmSheet.getRange(1, 1, 1, lmHeaders.length)
+                   .setValues([lmHeaders])
+                   .setFontWeight("bold")
+                   .setBackground("#0f172a")
+                   .setFontColor("#ffffff");
+            lmSheet.setFrozenRows(1);
+          }
+          if (lmSheet && lmSheet.getLastRow() > 0) {
+            var lmHeaders = lmSheet.getRange(1, 1, 1, Math.max(lmSheet.getLastColumn(), 1)).getValues()[0];
+            var nowD = new Date();
+            var cDate = data.Capture_Date || nowD.toISOString().slice(0, 10);
+            var cTime = data.Capture_Time || nowD.toTimeString().slice(0, 8);
+            var lScore = data.Lead_Score != null ? data.Lead_Score : (data.lead_score != null ? data.lead_score : 50);
+
+            var lmRow = lmHeaders.map(function(h) {
+              if (h === "Lead_ID" || h === "Lead ID") return data.Lead_ID || data.leadId || data.submissionId || ("LEAD-" + Date.now());
+              if (h === "Capture_Date" || h === "Capture Date") return cDate;
+              if (h === "Capture_Time" || h === "Capture Time") return cTime;
+              if (h === "Full_Name" || h === "Full Name") return data.Full_Name || data.name || data.fullName || "";
+              if (h === "Business_Email" || h === "Business Email") return data.Business_Email || data.email || data.work_email || "";
+              if (h === "Phone_Number" || h === "Phone Number") return data.Phone_Number || data.phone || data.mobile || "";
+              if (h === "Company") return data.Company || data.company || "";
+              if (h === "Designation") return data.Designation || data.designation || data.role || "";
+              if (h === "Industry") return data.Industry || data.industry || "";
+              if (h === "Location") return data.Location || data.location || data.country || "";
+              if (h === "Service_Interest" || h === "Service Interest") return data.Service_Interest || data.service || data.serviceInterest || "Enterprise AI Infrastructure";
+              if (h === "Message") return data.Message || data.message || data.requirement || "";
+              if (h === "Source") return data.Source || data.source || canonicalName.replace(/_/g, ' ');
+              if (h === "Source_Page" || h === "Source Page") return data.Source_Page || data.page_url || data.pageUrl || "";
+              if (h === "Landing_Page" || h === "Landing Page") return data.Landing_Page || data.landing_page || data.page_url || "";
+              if (h === "UTM_Source" || h === "UTM Source") return data.UTM_Source || data.utm_source || "";
+              if (h === "UTM_Medium" || h === "UTM Medium") return data.UTM_Medium || data.utm_medium || "";
+              if (h === "UTM_Campaign" || h === "UTM Campaign") return data.UTM_Campaign || data.utm_campaign || "";
+              if (h === "UTM_Term" || h === "UTM Term") return data.UTM_Term || data.utm_term || "";
+              if (h === "UTM_Content" || h === "UTM Content") return data.UTM_Content || data.utm_content || "";
+              if (h === "Device_Type" || h === "Device Type") return data.Device_Type || data.device_type || "Desktop";
+              if (h === "Session_ID" || h === "Session ID") return data.Session_ID || data.session_id || data.sessionId || "";
+              if (h === "CTA_Source" || h === "CTA Source") return data.CTA_Source || data.ctaSource || "";
+              if (h === "Lead_Status" || h === "Lead Status") return data.Lead_Status || data.status || "NEW";
+              if (h === "Lead_Score" || h === "Lead Score") return lScore;
+              if (h === "Assigned_To" || h === "Assigned To") return data.Assigned_To || (lScore >= 70 ? "Principal Solutions Architect" : "Engineering Advisory Team");
+              if (h === "JIRA_Issue_ID" || h === "JIRA Issue ID") return data.JIRA_Issue_ID || data.jiraIssueKey || data.issueKey || "";
+              if (h === "Email_Status" || h === "Email Status") return emailSent ? "Delivered" : "Pending";
+              if (h === "Followup_Status" || h === "Followup Status") return "Pending";
+              if (h === "Notes") return data.Notes || data.notes || (data.scoring && data.scoring.reasons ? data.scoring.reasons.join('; ') : "");
+              if (h === "Last_Updated" || h === "Last Updated") return new Date().toISOString();
+              return resolveField(h, data);
+            });
+            lmSheet.appendRow(lmRow);
+          }
+        } catch (lmErr) {
+          console.warn("Could not log to master LEADS_MASTER tab:", lmErr.toString());
         }
       }
 

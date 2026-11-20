@@ -499,31 +499,88 @@ export function getUtmAndTrafficSource() {
   const campaign = urlParams.get('utm_campaign') || ''
   const term = urlParams.get('utm_term') || ''
   const content = urlParams.get('utm_content') || ''
-
   const referrer = document.referrer || ''
-  let trafficSource = 'direct'
 
+  // 1. If UTM params exist on current URL, persist them in sessionStorage for the lifetime of this session
   if (source || campaign) {
-    trafficSource = 'campaign'
-  } else if (referrer) {
+    const utmObj = { utmSource: source, utmMedium: medium, utmCampaign: campaign, utmTerm: term, utmContent: content }
+    try {
+      sessionStorage.setItem('tg_utm_data', JSON.stringify(utmObj))
+      sessionStorage.setItem('tg_initial_traffic_source', 'campaign')
+      sessionStorage.setItem('tg_initial_referrer', referrer)
+    } catch (e) {}
+    return {
+      trafficSource: 'campaign',
+      referrerUrl: referrer,
+      campaignName: campaign,
+      utmSource: source,
+      utmMedium: medium,
+      utmCampaign: campaign,
+      utmTerm: term,
+      utmContent: content
+    }
+  }
+
+  // 2. Check stored session UTM data for internal navigation
+  let storedUtm: any = null
+  let storedSource: string | null = null
+  let storedReferrer: string | null = null
+  try {
+    const raw = sessionStorage.getItem('tg_utm_data')
+    if (raw) storedUtm = JSON.parse(raw)
+    storedSource = sessionStorage.getItem('tg_initial_traffic_source')
+    storedReferrer = sessionStorage.getItem('tg_initial_referrer')
+  } catch (e) {}
+
+  if (storedUtm && (storedUtm.utmSource || storedUtm.utmCampaign)) {
+    return {
+      trafficSource: storedSource || 'campaign',
+      referrerUrl: storedReferrer || referrer,
+      campaignName: storedUtm.utmCampaign || '',
+      utmSource: storedUtm.utmSource || '',
+      utmMedium: storedUtm.utmMedium || '',
+      utmCampaign: storedUtm.utmCampaign || '',
+      utmTerm: storedUtm.utmTerm || '',
+      utmContent: storedUtm.utmContent || ''
+    }
+  }
+
+  // 3. Evaluate referrer for initial non-campaign entry
+  let trafficSource = 'direct'
+  if (referrer) {
     if (referrer.includes(window.location.hostname)) {
-      trafficSource = 'internal'
+      // Internal navigation: keep previously resolved session source if any
+      trafficSource = storedSource || 'direct'
     } else if (/google|bing|yahoo|duckduckgo|baidu/i.test(referrer)) {
       trafficSource = 'organic'
+      try {
+        sessionStorage.setItem('tg_initial_traffic_source', 'organic')
+        sessionStorage.setItem('tg_initial_referrer', referrer)
+      } catch (e) {}
+    } else if (/linkedin|twitter|t\.co|facebook|instagram|youtube|reddit/i.test(referrer)) {
+      trafficSource = 'social'
+      try {
+        sessionStorage.setItem('tg_initial_traffic_source', 'social')
+        sessionStorage.setItem('tg_initial_referrer', referrer)
+      } catch (e) {}
     } else {
       trafficSource = 'referral'
+      try {
+        sessionStorage.setItem('tg_initial_traffic_source', 'referral')
+        sessionStorage.setItem('tg_initial_referrer', referrer)
+      } catch (e) {}
     }
   }
 
   return {
     trafficSource,
-    referrerUrl: referrer,
-    campaignName: campaign,
-    utmSource: source,
-    utmMedium: medium,
-    utmCampaign: campaign,
-    utmTerm: term,
-    utmContent: content
+    referrerUrl: storedReferrer || referrer,
+    campaignName: '',
+    utmSource: '',
+    utmMedium: '',
+    utmCampaign: '',
+    utmTerm: '',
+    utmContent: ''
   }
 }
 
@@ -1097,7 +1154,74 @@ export function trackFormAbandon(formId: string, formName: string, lastFieldInte
 }
 
 export function trackFormSubmit(formId: string, formName: string, isSuccess: boolean, submissionId?: string, errorMsg?: string) {
-  trackFormFunnel(formId, '', isSuccess ? 'submit' : 'error', errorMsg, submissionId)
+  if (isSuccess) {
+    trackFormSubmitSuccess(formId, formName, submissionId || `TG-${Date.now()}`)
+  } else {
+    trackFormSubmitFailure(formId, formName, errorMsg || 'Submission error')
+  }
+}
+
+export function trackFormSubmitAttempt(formId: string, formName: string) {
+  build95TelemetryPayload('form_submit_attempt', 'form', 'submit_attempt', {
+    form_id: formId,
+    element_text: formName,
+    goal_completed: false
+  }).then(sendTelemetryEvent)
+}
+
+export function trackFormSubmitSuccess(formId: string, formName: string, submissionId: string) {
+  build95TelemetryPayload('form_submit_success', 'conversion', 'submit_success', {
+    form_id: formId,
+    form_completion_status: true,
+    goal_name: 'Lead Generated',
+    goal_completed: true,
+    conversion_id: submissionId,
+    element_text: `Success: ${formName}`
+  }).then(sendTelemetryEvent)
+}
+
+export function trackFormSubmitFailure(formId: string, formName: string, errorMsg: string) {
+  build95TelemetryPayload('form_submit_failure', 'form', 'submit_failure', {
+    form_id: formId,
+    form_completion_status: false,
+    goal_completed: false,
+    js_error_message: errorMsg,
+    element_text: `Failed: ${formName}`
+  }).then(sendTelemetryEvent)
+}
+
+export function trackBookingStart(bookingType: string, slot?: string) {
+  build95TelemetryPayload('booking_start', 'conversion', 'booking_start', {
+    form_id: 'consulting_booking',
+    element_text: `Booking Start: ${bookingType}`,
+    event_label: slot || ''
+  }).then(sendTelemetryEvent)
+}
+
+export function trackBookingSuccess(bookingId: string, bookingType: string, slot?: string) {
+  build95TelemetryPayload('booking_success', 'conversion', 'booking_success', {
+    form_id: 'consulting_booking',
+    conversion_id: bookingId,
+    goal_name: 'Consulting Session Booked',
+    goal_completed: true,
+    element_text: `Booking Confirmed: ${bookingType} - ${slot || ''}`
+  }).then(sendTelemetryEvent)
+}
+
+export function trackPhoneClick(phoneNumber: string, location?: string) {
+  build95TelemetryPayload('phone_click', 'conversion', 'click', {
+    element_text: `Call: ${phoneNumber}`,
+    event_label: phoneNumber,
+    section: location || 'contact_info'
+  }).then(sendTelemetryEvent)
+}
+
+export function trackEmailClick(emailAddress: string, location?: string) {
+  build95TelemetryPayload('email_click', 'conversion', 'click', {
+    element_text: `Email: ${emailAddress}`,
+    event_label: emailAddress,
+    section: location || 'contact_info'
+  }).then(sendTelemetryEvent)
 }
 
 export function trackChatbotEvent(eventType: string, extraData: any = {}) {

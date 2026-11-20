@@ -10,6 +10,9 @@ import {
   trackVisibilityState,
   trackCopyEvent,
   trackPasteEvent,
+  trackPhoneClick,
+  trackEmailClick,
+  trackWhatsAppClick,
   initScrollTracking,
   getOrCreateSessionId,
   getOrCreateUserId
@@ -42,8 +45,16 @@ function AnalyticsInner() {
     getOrCreateSessionId()
 
     const currentUrl = `${pathname}${searchParams?.toString() ? `?${searchParams.toString()}` : ''}`
-    if (lastTrackedUrlRef.current !== currentUrl) {
+    const now = Date.now()
+    const lastTrackedTime = parseInt(sessionStorage.getItem('tg_last_tracked_time') || '0', 10)
+    const lastTrackedPath = sessionStorage.getItem('tg_last_tracked_path') || ''
+
+    // Prevent duplicate pageview hits if same path tracked within 1200ms
+    if (lastTrackedUrlRef.current !== currentUrl && !(lastTrackedPath === pathname && now - lastTrackedTime < 1200)) {
       lastTrackedUrlRef.current = currentUrl
+      sessionStorage.setItem('tg_last_tracked_time', String(now))
+      sessionStorage.setItem('tg_last_tracked_path', pathname)
+
       trackPageView(pathname, typeof document !== 'undefined' ? document.title : '')
       if (typeof window !== 'undefined' && (window as any).clarity) {
         try {
@@ -154,10 +165,14 @@ function AnalyticsInner() {
         const href = (interactiveEl as HTMLAnchorElement).href || interactiveEl.getAttribute('href') || ''
         const isButton = interactiveEl.tagName === 'BUTTON'
 
-        // Outbound links
-        if (href && href.startsWith('http') && !href.includes(window.location.hostname)) {
-          trackOutboundClick(href, text)
-        } else if (href && (href.startsWith('mailto:') || href.startsWith('tel:'))) {
+        // Outbound & Contact links
+        if (href && (href.includes('wa.me') || href.includes('whatsapp.com'))) {
+          trackWhatsAppClick(text || href, pathname)
+        } else if (href && href.startsWith('tel:')) {
+          trackPhoneClick(href.replace(/^tel:/, '').trim(), pathname)
+        } else if (href && href.startsWith('mailto:')) {
+          trackEmailClick(href.replace(/^mailto:/, '').trim(), pathname)
+        } else if (href && href.startsWith('http') && !href.includes(window.location.hostname)) {
           trackOutboundClick(href, text)
         }
 

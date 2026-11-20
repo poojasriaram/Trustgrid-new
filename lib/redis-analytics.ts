@@ -17,7 +17,18 @@ export const ALLOWED_EVENT_TYPES = [
   'page_view',
   'session_start',
   'cta_click',
-  'form_success'
+  'form_view',
+  'form_start',
+  'form_field_error',
+  'form_submit_attempt',
+  'form_submit_success',
+  'form_submit_failure',
+  'booking_start',
+  'booking_success',
+  'phone_click',
+  'email_click',
+  'whatsapp_click',
+  'form_success' // alias for form_submit_success backward compatibility
 ] as const
 
 export type AllowedEventType = typeof ALLOWED_EVENT_TYPES[number]
@@ -41,6 +52,7 @@ export interface SafeAnalyticsEvent {
   operating_system?: string
   country?: string
   consent_granted?: boolean
+  metadata?: Record<string, any>
 }
 
 export interface RedisAnalyticsDashboardData {
@@ -178,7 +190,19 @@ export async function trackRedisEvent(event: SafeAnalyticsEvent): Promise<boolea
       const dailyKey = `tg:counts:daily:${today}`
       if (event.event_type === 'page_view') multi.hIncrBy(dailyKey, 'page_views', 1)
       if (event.event_type === 'cta_click') multi.hIncrBy(dailyKey, 'cta_clicks', 1)
-      if (event.event_type === 'form_success') multi.hIncrBy(dailyKey, 'form_success', 1)
+      if (event.event_type === 'form_view') multi.hIncrBy(dailyKey, 'form_views', 1)
+      if (event.event_type === 'form_start') multi.hIncrBy(dailyKey, 'form_starts', 1)
+      if (event.event_type === 'form_field_error') multi.hIncrBy(dailyKey, 'form_field_errors', 1)
+      if (event.event_type === 'form_submit_attempt') multi.hIncrBy(dailyKey, 'form_submit_attempts', 1)
+      if (event.event_type === 'form_submit_success' || event.event_type === 'form_success') {
+        multi.hIncrBy(dailyKey, 'form_success', 1)
+      }
+      if (event.event_type === 'form_submit_failure') multi.hIncrBy(dailyKey, 'form_submit_failures', 1)
+      if (event.event_type === 'booking_start') multi.hIncrBy(dailyKey, 'booking_starts', 1)
+      if (event.event_type === 'booking_success') multi.hIncrBy(dailyKey, 'booking_successes', 1)
+      if (event.event_type === 'phone_click') multi.hIncrBy(dailyKey, 'phone_clicks', 1)
+      if (event.event_type === 'email_click') multi.hIncrBy(dailyKey, 'email_clicks', 1)
+      if (event.event_type === 'whatsapp_click') multi.hIncrBy(dailyKey, 'whatsapp_clicks', 1)
       multi.expire(dailyKey, 90 * 86400)
 
       // 3. Track Sessions & Active Session Set (TTL: 24 hours)

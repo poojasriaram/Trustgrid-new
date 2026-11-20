@@ -576,3 +576,51 @@ export function formatWeeklyReportHtml(report: WeeklyExecutiveSummary): string {
 </html>`
 }
 
+/**
+ * Generate Monthly Executive Strategic Digest
+ */
+export async function generateMonthlyExecutiveSummary(): Promise<any> {
+  const allLeads = await getConsolidatedLeads()
+  const realLeads = allLeads.filter(l => !l.isTestLead)
+  const now = new Date()
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 86400000)
+
+  const monthLeads = realLeads.filter(l => {
+    const d = new Date(l.createdAt)
+    return !isNaN(d.getTime()) && d >= thirtyDaysAgo
+  })
+
+  const sourceMap: Record<string, number> = {}
+  let qualified = 0
+  let contacted = 0
+
+  for (const l of monthLeads) {
+    const src = l.source || 'Website Form'
+    sourceMap[src] = (sourceMap[src] || 0) + 1
+    if (l.status === 'Qualified' || l.status === 'QUALIFIED') qualified++
+    if (l.status === 'Contacted' || l.status === 'CONTACTED') contacted++
+  }
+
+  const total = monthLeads.length
+  return {
+    reportTitle: 'Monthly Strategic Lead Summary',
+    reportType: 'MONTHLY_REPORT',
+    periodString: `${thirtyDaysAgo.toLocaleDateString()} – ${now.toLocaleDateString()}`,
+    generatedAt: now.toISOString(),
+    metrics: {
+      totalLeads: total,
+      qualifiedLeads: qualified,
+      contactedLeads: contacted,
+      pendingLeads: Math.max(0, total - (qualified + contacted)),
+      conversionRate: total > 0 ? `${((qualified / total) * 100).toFixed(1)}%` : '0.0%',
+      sourceBreakdown: Object.entries(sourceMap).map(([source, count]) => ({
+        source,
+        count,
+        percentage: total > 0 ? `${Math.round((count / total) * 100)}%` : '0%'
+      }))
+    },
+    leads: monthLeads.slice(0, 50)
+  }
+}
+
+

@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import {
   generateDailyProductionReport,
   generateWeeklyExecutiveSummary,
+  generateMonthlyExecutiveSummary,
   getConsolidatedLeads
 } from '@/lib/services/executive-reporting'
 
 /**
- * GET /api/reports - Retrieve Production Daily & Weekly Reports (Strictly filtered)
- * Query params: ?type=daily | weekly | audit
+ * GET /api/reports - Retrieve Production Daily, Weekly & Monthly Reports
+ * Query params: ?type=daily | weekly | monthly | audit | leads
  */
 export async function GET(req: NextRequest) {
   try {
@@ -20,6 +21,14 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({
         success: true,
         report: weekly
+      })
+    }
+
+    if (reportType === 'monthly') {
+      const monthly = await generateMonthlyExecutiveSummary()
+      return NextResponse.json({
+        success: true,
+        report: monthly
       })
     }
 

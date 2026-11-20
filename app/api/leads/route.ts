@@ -9,6 +9,8 @@ import { sendWhatsAppLeadAlert } from '@/lib/services/whatsapp'
 import { sendTelegramLeadAlert } from '@/lib/services/telegram'
 import { sendCustomerResponseEmail } from '@/lib/services/lead-response-email'
 import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
+import { trackRedisEvent } from '@/lib/redis-analytics'
+import { getDatabase } from '@/lib/db'
 
 // In-memory lead repository for runtime monitoring, deduplication, and retry management
 export interface StoredLeadRecord {
@@ -487,6 +489,32 @@ export async function POST(req: NextRequest) {
       createdAt: isoTimestamp,
       retryCount: 0
     })
+
+    // 8. Register Conversion in Redis Telemetry & SQLite Session Store
+    try {
+      const sessionId = (body as any).sessionId || (body as any).session_id || `sess_${Date.now()}`
+      await trackRedisEvent({
+        event_id: `ev_conv_${Date.now()}`,
+        event_type: 'form_success',
+        session_id: sessionId,
+        timestamp: isoTimestamp,
+        page_path: normalized.pageUrl || '/',
+        page_title: `Lead Conversion - ${normalized.channelAttribution || 'Inbound'}`,
+        traffic_source: normalized.utmSource ? `${normalized.utmSource} / ${normalized.utmMedium || 'cpc'}` : (normalized.channelAttribution || 'Direct'),
+        utm_source: normalized.utmSource,
+        utm_medium: normalized.utmMedium,
+        utm_campaign: normalized.utmCampaign,
+        cta_name: normalized.leadTypeLabel || 'Lead Form',
+        device_type: (body as any).device_type || 'Desktop'
+      })
+
+      const db = getDatabase()
+      if (sessionId) {
+        db.prepare(`UPDATE analytics_sessions SET converted = 1 WHERE session_id = ?`).run(sessionId)
+      }
+    } catch (telemetryErr) {
+      // Non-blocking telemetry
+    }
 
     return NextResponse.json({
       success: true,

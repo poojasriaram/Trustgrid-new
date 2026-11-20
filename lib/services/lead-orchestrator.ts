@@ -7,6 +7,9 @@
 import { supabaseInsert, getSupabaseConfig } from './supabase-leads'
 import { getJiraConfig, calculateDueDate, DEFAULT_LEAD_WORKFLOW } from '../jira-service'
 import { isValidEmail, isValidPhone } from '../validation'
+import { calculateLeadScore } from '../lead-scoring'
+import { trackRedisEvent } from '../redis-analytics'
+import { getDatabase } from '../db'
 
 export type LeadSource =
   | 'Website Forms'
@@ -317,7 +320,26 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
   }
 
   const leadId = input.leadId || `LEAD-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`
-  const nowIso = new Date().toISOString()
+  const now = new Date()
+  const nowIso = now.toISOString()
+  const captureDate = now.toISOString().slice(0, 10)
+  const captureTime = now.toTimeString().slice(0, 8)
+
+  // 2.5 Automated Lead Scoring & Qualification
+  const scoreResult = calculateLeadScore({
+    email: input.email,
+    company: input.company,
+    designation: input.rawPayload?.designation || input.rawPayload?.role,
+    requirement: input.serviceInterest || input.message,
+    message: input.message,
+    phone: input.phone,
+    pageUrl: input.pageUrl,
+    source: input.source,
+    formType: input.source,
+    serviceInterest: input.serviceInterest
+  })
+
+  const derivedPriority = input.priority || scoreResult.priority
 
   // 3. Dual-Write Target 1: Supabase
   const supaPayload = {
@@ -342,9 +364,13 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
     visitor_id: input.visitorId || '',
     session_id: input.sessionId || '',
     status: input.status || 'NEW',
-    priority: input.priority || 'MEDIUM',
-    estimated_value: input.estimatedValue || 0,
-    metadata_json: input.rawPayload || {},
+    priority: derivedPriority,
+    lead_score: scoreResult.score,
+    estimated_value: input.estimatedValue || (scoreResult.score >= 70 ? 50000 : 15000),
+    metadata_json: {
+      ...(input.rawPayload || {}),
+      scoring: scoreResult
+    },
     created_at: nowIso,
     updated_at: nowIso
   }
@@ -353,7 +379,7 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
   const isSupabaseOk = supaResult.success
   if (isSupabaseOk) {
     metricsStore.supabaseSuccessCount++
-    pushMonitoringLog('SUPABASE', 'SUCCESS', `Saved lead ${leadId} to Supabase`)
+    pushMonitoringLog('SUPABASE', 'SUCCESS', `Saved lead ${leadId} to Supabase (Score: ${scoreResult.score})`)
 
     // Also record raw form submission in audit table
     await supabaseInsert('form_submissions', {
@@ -373,8 +399,48 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
     pushMonitoringLog('SUPABASE', 'ERROR', `Failed lead ${leadId}: ${supaResult.error}`)
   }
 
-  // 4. Dual-Write Target 2: Google Sheets (with automated retry backoff)
+  // 4. Dual-Write Target 2: Google Sheets (31-Column LEADS_MASTER Architecture)
+  const assignedTo = scoreResult.priority === 'HIGH' ? 'Principal Solutions Architect' : 'Engineering Advisory Team'
   const sheetPayload = {
+    // Top-level sheet destination
+    sheetName: 'LEADS_MASTER',
+    sheet_name: 'LEADS_MASTER',
+    fallbackSheetName: input.source || 'Form_Submissions',
+
+    // 31-Column LEADS_MASTER Exact Schema
+    Lead_ID: leadId,
+    Capture_Date: captureDate,
+    Capture_Time: captureTime,
+    Full_Name: input.name,
+    Business_Email: input.email,
+    Phone_Number: input.phone || '',
+    Company: input.company || '',
+    Designation: input.rawPayload?.designation || input.rawPayload?.role || '',
+    Industry: input.rawPayload?.industry || '',
+    Location: input.rawPayload?.location || input.rawPayload?.country || '',
+    Service_Interest: input.serviceInterest || 'Enterprise AI Infrastructure',
+    Message: input.message || '',
+    Source: input.source,
+    Source_Page: input.pageUrl || '',
+    Landing_Page: input.rawPayload?.landing_page || input.rawPayload?.landingPage || input.pageUrl || '',
+    UTM_Source: input.utmSource || '',
+    UTM_Medium: input.utmMedium || '',
+    UTM_Campaign: input.utmCampaign || '',
+    UTM_Term: input.utmTerm || '',
+    UTM_Content: input.utmContent || '',
+    Device_Type: input.rawPayload?.device_type || input.rawPayload?.deviceType || 'Desktop',
+    Session_ID: input.sessionId || '',
+    CTA_Source: input.rawPayload?.ctaSource || input.rawPayload?.cta_source || '',
+    Lead_Status: input.status || 'NEW',
+    Lead_Score: scoreResult.score,
+    Assigned_To: assignedTo,
+    JIRA_Issue_ID: '', // Populated after Jira sync
+    Email_Status: 'Pending',
+    Followup_Status: 'Pending',
+    Notes: scoreResult.reasons.join('; '),
+    Last_Updated: nowIso,
+
+    // Backward compatibility fields for existing Apps Script
     leadId,
     timestamp: nowIso,
     name: input.name,
@@ -382,7 +448,7 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
     phone: input.phone || '',
     company: input.company || '',
     source: input.source,
-    service: input.serviceInterest || 'AI Infrastructure',
+    service: input.serviceInterest || 'Enterprise AI Infrastructure',
     message: input.message || '',
     utm_source: input.utmSource || '',
     utm_medium: input.utmMedium || '',
@@ -390,20 +456,25 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
     page_url: input.pageUrl || '',
     status: input.status || 'NEW'
   }
+
+  // 5. CRM Target 3: Jira Enterprise DealFlow Sync
+  const jiraRes = await syncToJiraCrm(input, leadId)
+  const isJiraOk = jiraRes.success
+  if (isJiraOk && jiraRes.issueKey) {
+    sheetPayload.JIRA_Issue_ID = jiraRes.issueKey
+  }
+
+  // Send to Google Sheets
   const isSheetOk = await syncToGoogleSheetsWithRetry(sheetPayload)
 
   // Log sheet sync result in Supabase
   await supabaseInsert('google_sheet_sync_logs', {
     lead_id: leadId,
-    sheet_name: 'Sheet1',
+    sheet_name: 'LEADS_MASTER',
     status: isSheetOk ? 'SUCCESS' : 'FAILED',
     error_message: isSheetOk ? '' : 'Failed after retries',
     created_at: nowIso
   }).catch(() => {})
-
-  // 5. CRM Target 3: Jira Enterprise DealFlow Sync
-  const jiraRes = await syncToJiraCrm(input, leadId)
-  const isJiraOk = jiraRes.success
 
   // Log Jira sync result in Supabase
   await supabaseInsert('jira_sync_logs', {
@@ -415,13 +486,75 @@ export async function processInboundLead(input: CentralLeadInput): Promise<Orche
     created_at: nowIso
   }).catch(() => {})
 
-  // Log master audit record
+  // 6. Analytics Event & Conversion Registration (Fixes 0 leads discrepancy!)
+  try {
+    // A. Redis Cloud High-Throughput Store
+    await trackRedisEvent({
+      event_id: `ev_conv_${Date.now()}`,
+      event_type: 'form_success',
+      session_id: input.sessionId || `sess_${Date.now()}`,
+      timestamp: nowIso,
+      page_path: input.pageUrl || '/',
+      page_title: `Lead Conversion - ${input.source}`,
+      traffic_source: input.utmSource ? `${input.utmSource} / ${input.utmMedium || 'cpc'}` : (input.source || 'Direct'),
+      utm_source: input.utmSource || '',
+      utm_medium: input.utmMedium || '',
+      utm_campaign: input.utmCampaign || '',
+      cta_name: input.source,
+      device_type: input.rawPayload?.device_type || 'Desktop'
+    })
+  } catch (redisErr) {
+    console.warn('[Lead Orchestrator Redis Warning]', redisErr)
+  }
+
+  try {
+    // B. SQLite Relational Store
+    const db = getDatabase()
+    if (input.sessionId) {
+      db.prepare(`UPDATE analytics_sessions SET converted = 1 WHERE session_id = ?`).run(input.sessionId)
+    }
+    db.prepare(`
+      INSERT INTO analytics_events (
+        event_id, event_name, event_category, event_action, session_id, user_id,
+        timestamp_utc, page_path, page_title, traffic_source, utm_source, utm_medium, utm_campaign,
+        is_conversion, conversion_goal, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?)
+    `).run(
+      `ev_conv_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      'form_submit_success',
+      'conversion',
+      'lead_generated',
+      input.sessionId || `sess_${Date.now()}`,
+      input.visitorId || `usr_${Date.now()}`,
+      nowIso,
+      input.pageUrl || '/',
+      `Lead Generated: ${input.source}`,
+      input.utmSource ? `${input.utmSource} / ${input.utmMedium || 'cpc'}` : (input.source || 'Direct'),
+      input.utmSource || '',
+      input.utmMedium || '',
+      input.utmCampaign || '',
+      input.source || 'Inbound Lead',
+      nowIso
+    )
+  } catch (sqliteErr) {
+    // Non-blocking
+  }
+
+  // 7. Master Audit Record
   await supabaseInsert('audit_logs', {
     entity_type: 'LEAD',
     entity_id: leadId,
     action: 'CREATE',
     actor: 'LeadOrchestrator',
-    new_state: { leadId, isSupabaseOk, isSheetOk, isJiraOk, jiraKey: jiraRes.issueKey },
+    new_state: {
+      leadId,
+      score: scoreResult.score,
+      priority: scoreResult.priority,
+      isSupabaseOk,
+      isSheetOk,
+      isJiraOk,
+      jiraKey: jiraRes.issueKey
+    },
     created_at: nowIso
   }).catch(() => {})
 
