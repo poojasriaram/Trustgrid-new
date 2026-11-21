@@ -350,7 +350,7 @@ export default function HomePage() {
             />
             <ConversionCTA
               ctaName="Discuss Your Enterprise AI Project"
-              href="/book-ai-diagnostic#diagnostic-form-section"
+              href="/book"
               variant="secondary"
               ctaPosition="Middle"
               ctaType="Primary"
@@ -591,7 +591,7 @@ export default function HomePage() {
           </div>
           <ConversionCTA
             ctaName="Discover Your AI Opportunity"
-            href="/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section"
+            href="/book?topic=ai-value-engineering"
             variant="primary"
             ctaPosition="Middle"
             ctaType="Primary"
@@ -740,15 +740,15 @@ export default function HomePage() {
           <div className="cta-actions">
             <ConversionCTA
               ctaName="Talk to an AI Architect"
-              href="/talk-to-ai-architect"
+              href="/book"
               variant="light"
               size="lg"
               ctaPosition="Footer"
               ctaType="Primary"
             />
             <ConversionCTA
-              ctaName="Book a Free AI Consultation"
-              href="/book-ai-diagnostic#diagnostic-form-section"
+              ctaName="Quick Inbound Proposal"
+              href="/forms"
               variant="ghost"
               size="lg"
               ctaPosition="Footer"

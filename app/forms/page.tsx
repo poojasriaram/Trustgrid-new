@@ -9,7 +9,12 @@ import {
   Send,
   Loader2,
   Calendar,
-  MessageSquare
+  MessageSquare,
+  Zap,
+  ArrowRight,
+  Clock,
+  Phone,
+  FileText
 } from 'lucide-react'
 import { insertLeadToSupabase } from '@/lib/services/supabase-leads'
 import { dispatchDirectToGoogleSheets } from '@/lib/form-submission'
@@ -35,6 +40,7 @@ const INDUSTRY_OPTIONS = [
 ]
 
 function StandaloneGeneralFormContent() {
+  const [formMode, setFormMode] = useState<'quick' | 'detailed'>('quick')
   const [fullName, setFullName] = useState('')
   const [company, setCompany] = useState('')
   const [email, setEmail] = useState('')
@@ -51,13 +57,14 @@ function StandaloneGeneralFormContent() {
     setErrorMsg('')
 
     if (!fullName.trim() || !company.trim() || !email.trim() || !phone.trim()) {
-      setErrorMsg('Please enter all required fields.')
+      setErrorMsg('Please enter all required fields (Name, Company, Work Email, Phone).')
       return
     }
 
     setIsSubmitting(true)
     try {
       const leadId = `TG-${new Date().toISOString().slice(0, 10).replace(/-/g, '')}-${Math.floor(1000 + Math.random() * 9000)}`
+      const leadSource = formMode === 'quick' ? 'Quick Fast-Track Form (/forms)' : 'Detailed Proposal Form (/forms)'
       const payload = {
         submissionId: leadId,
         leadId,
@@ -67,10 +74,10 @@ function StandaloneGeneralFormContent() {
         company: company.trim(),
         role: serviceInterestedIn,
         industry,
-        message: message.trim() || `Enterprise Inquiry for ${serviceInterestedIn} (${industry})`,
-        source: 'General Enterprise Form (/forms)',
-        formName: 'Enterprise Lead Capture Form',
-        leadType: 'GENERAL_FORM',
+        message: message.trim() || (formMode === 'quick' ? `Fast-track enquiry for ${serviceInterestedIn}` : `Enterprise Proposal for ${serviceInterestedIn} (${industry})`),
+        source: leadSource,
+        formName: formMode === 'quick' ? 'Quick 30-Second Inbound Form' : 'Enterprise Proposal Intake Form',
+        leadType: formMode === 'quick' ? 'QUICK_ENQUIRY' : 'DETAILED_PROPOSAL',
         service: serviceInterestedIn,
         website: 'TRUSTGRID.AI',
         directDispatched: true
@@ -91,7 +98,7 @@ function StandaloneGeneralFormContent() {
       if (supaRes.success || sheetOk || (apiRes && apiRes.success)) {
         setSubmittedLeadId(apiRes?.leadId || leadId)
       } else {
-        setErrorMsg('Failed to register inquiry. Please try again.')
+        setErrorMsg('Failed to register inquiry. Please try again or call our direct helpline.')
       }
     } catch {
       setErrorMsg('Connection error. Please try again.')
@@ -104,25 +111,35 @@ function StandaloneGeneralFormContent() {
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
       <header className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur px-4 md:px-8 flex items-center justify-between sticky top-0 z-30">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm">
-            TG
-          </div>
-          <span className="font-bold text-slate-100 text-sm tracking-wide">
-            TRUSTGRID.AI • Enterprise Inquiries
-          </span>
+          <Link href="/" className="flex items-center gap-2.5 no-underline">
+            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-black text-white text-sm shadow-sm">
+              TG
+            </div>
+            <span className="font-bold text-slate-100 text-sm tracking-wide">
+              TRUSTGRID.AI &bull; Quick Forms Portal
+            </span>
+          </Link>
         </div>
         <div className="flex items-center gap-3 text-xs">
+          <span className="text-slate-400 hidden sm:inline">
+            Direct Helpline:{' '}
+            <a href="tel:+919513088612" className="text-blue-400 font-semibold no-underline">
+              +91 95130 88612
+            </a>
+          </span>
           <Link
-            href="/booking"
-            className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition no-underline"
+            href="/book"
+            className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-semibold transition no-underline flex items-center gap-1.5"
           >
-            Book a Meeting
+            <Calendar className="w-3.5 h-3.5" />
+            <span>Book Consultation</span>
           </Link>
           <Link
             href="/chat"
-            className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white transition no-underline"
+            className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 transition no-underline hidden sm:flex items-center gap-1.5"
           >
-            Live AI Chat
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>AI Architect</span>
           </Link>
         </div>
       </header>
@@ -135,29 +152,31 @@ function StandaloneGeneralFormContent() {
             </div>
             <div>
               <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-full">
-                Proposal Request Logged
+                Enquiry Registered &bull; SLA Active
               </span>
-              <h2 className="text-2xl font-bold text-white mt-3">Inquiry Successfully Registered</h2>
+              <h2 className="text-2xl font-bold text-white mt-3">Inquiry Successfully Logged</h2>
               <p className="text-slate-400 text-xs mt-1">
                 Your dossier reference:{' '}
                 <strong className="text-blue-400 font-mono">{submittedLeadId}</strong>
               </p>
             </div>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Our principal AI systems architect will review your infrastructure parameters and deliver an initial architecture scope &amp; proposal within 24 business hours.
+              Our principal AI systems engineering team has received your details. A lead architect will contact you within &lt; 2 business hours under mutual NDA.
             </p>
             <div className="pt-2 flex flex-col gap-2">
               <Link
-                href="/booking"
-                className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition no-underline"
+                href="/book"
+                className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium transition no-underline flex items-center justify-center gap-2"
               >
-                Schedule an Immediate Advisory Call
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Lock Exact Time Slot on Google Calendar</span>
               </Link>
               <Link
                 href="/chat"
-                className="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition no-underline"
+                className="w-full py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition no-underline flex items-center justify-center gap-2"
               >
-                Open AI Architect Chat Desk
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Chat Live with Aegis AI Architect</span>
               </Link>
             </div>
           </div>
@@ -166,14 +185,14 @@ function StandaloneGeneralFormContent() {
             <div className="lg:col-span-5 space-y-6">
               <div className="space-y-3">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-900/40 text-blue-300 border border-blue-700/50">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Request Official Proposal
+                  <Zap className="w-3.5 h-3.5 text-blue-400" />
+                  Direct Technical Ingestion &bull; &lt;2h SLA
                 </span>
                 <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-                  Engineer Your Enterprise AI Infrastructure &amp; Agentic Stack
+                  Fast-Track Your Enterprise AI Infrastructure
                 </h1>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  Submit your compute, networking, or autonomous agent requirements. Our principal systems engineering group will prepare a tailored techno-commercial blueprint within 24 hours.
+                  Submit your compute, networking, or agentic requirements. Connected directly to on-call principal architects, our engineering desk reviews and responds in under 2 hours.
                 </p>
               </div>
 
@@ -191,8 +210,8 @@ function StandaloneGeneralFormContent() {
                   <div className="text-[11px] text-slate-400">Lossless RoCEv2 Fabrics</div>
                 </div>
                 <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800">
-                  <div className="text-xl font-bold text-amber-400">24/7/365</div>
-                  <div className="text-[11px] text-slate-400">Autonomous Fleet Ops</div>
+                  <div className="text-xl font-bold text-amber-400">&lt; 2 Hours</div>
+                  <div className="text-[11px] text-slate-400">Architect Callback SLA</div>
                 </div>
               </div>
 
@@ -202,9 +221,51 @@ function StandaloneGeneralFormContent() {
                   All inquiries are processed under ISO 27001 &amp; Quantum-Safe data security guidelines. Your architectural details remain strictly confidential under mutual NDA.
                 </p>
               </div>
+
+              <div className="p-4 rounded-xl bg-blue-950/30 border border-blue-800/40 text-xs text-slate-300 flex items-center justify-between">
+                <div>
+                  <span className="font-semibold block text-white">Prefer to pick an exact calendar slot?</span>
+                  <span className="text-slate-400 text-[11px]">Book a 45-min technical briefing directly</span>
+                </div>
+                <Link
+                  href="/book"
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs no-underline inline-flex items-center gap-1"
+                >
+                  <span>/book</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
             </div>
 
             <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+              {/* FORM MODE SELECTOR TABS */}
+              <div className="flex items-center gap-2 mb-6 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setFormMode('quick')}
+                  className={`flex-1 py-2 px-3 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                    formMode === 'quick'
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <Zap className="w-3.5 h-3.5" />
+                  <span>30-Sec Fast-Track</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormMode('detailed')}
+                  className={`flex-1 py-2 px-3 rounded-lg font-semibold transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                    formMode === 'detailed'
+                      ? 'bg-blue-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-slate-200'
+                  }`}
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Full Project Proposal</span>
+                </button>
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-4">
                 {errorMsg && (
                   <div className="p-3 rounded-lg bg-rose-950/50 border border-rose-500/40 text-xs text-rose-200">
@@ -259,52 +320,55 @@ function StandaloneGeneralFormContent() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                  <div>
-                    <label className="text-slate-300 block mb-1">Service Interested In *</label>
-                    <select
-                      value={serviceInterestedIn}
-                      onChange={(e) => setServiceInterestedIn(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
-                    >
-                      {SERVICE_OPTIONS.map((srv, idx) => (
-                        <option key={idx} value={srv}>
-                          {srv}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-slate-300 block mb-1">Industry Vertical *</label>
-                    <select
-                      value={industry}
-                      onChange={(e) => setIndustry(e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
-                    >
-                      {INDUSTRY_OPTIONS.map((ind, idx) => (
-                        <option key={idx} value={ind}>
-                          {ind}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="text-xs">
+                  <label className="text-slate-300 block mb-1">Primary Area of Interest *</label>
+                  <select
+                    value={serviceInterestedIn}
+                    onChange={(e) => setServiceInterestedIn(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                  >
+                    {SERVICE_OPTIONS.map((srv, idx) => (
+                      <option key={idx} value={srv}>
+                        {srv}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
-                <div className="text-xs">
-                  <label className="text-slate-300 block mb-1">Detailed Message / Project Scope</label>
-                  <textarea
-                    rows={3}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Describe your GPU cluster capacity, agentic workflow objectives, network topology, or timeline..."
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:border-blue-500 focus:outline-none"
-                  />
-                </div>
+                {formMode === 'detailed' && (
+                  <>
+                    <div className="text-xs">
+                      <label className="text-slate-300 block mb-1">Industry Vertical *</label>
+                      <select
+                        value={industry}
+                        onChange={(e) => setIndustry(e.target.value)}
+                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2.5 text-slate-100 focus:border-blue-500 focus:outline-none"
+                      >
+                        {INDUSTRY_OPTIONS.map((ind, idx) => (
+                          <option key={idx} value={ind}>
+                            {ind}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="text-xs">
+                      <label className="text-slate-300 block mb-1">Detailed Message / Project Scope</label>
+                      <textarea
+                        rows={3}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Describe your GPU cluster capacity, agentic workflow objectives, network topology, or timeline..."
+                        className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-slate-100 focus:border-blue-500 focus:outline-none"
+                      />
+                    </div>
+                  </>
+                )}
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 cursor-pointer"
+                  className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-600/25 cursor-pointer mt-2"
                 >
                   {isSubmitting ? (
                     <>
@@ -313,7 +377,7 @@ function StandaloneGeneralFormContent() {
                     </>
                   ) : (
                     <>
-                      <span>Submit Proposal Request</span>
+                      <span>{formMode === 'quick' ? 'Submit Fast-Track Request (< 2h Callback)' : 'Submit Official Proposal Request'}</span>
                       <Send className="w-4 h-4" />
                     </>
                   )}
@@ -329,7 +393,7 @@ function StandaloneGeneralFormContent() {
 
 export default function FormsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-slate-400 flex items-center justify-center text-sm">Loading Enterprise Inquiry Portal...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-slate-950 text-slate-400 flex items-center justify-center text-sm">Loading Enterprise Forms Portal...</div>}>
       <StandaloneGeneralFormContent />
     </Suspense>
   )

@@ -3934,7 +3934,7 @@ export function SiteHeader() {
         {/* 9. PRIMARY HEADER CONVERSION CTA */}
         <ConversionCTA
           ctaName="Book a Free AI Consultation"
-          href="/book-ai-diagnostic#diagnostic-form-section"
+          href="/book"
           ctaPosition="Header"
           ctaType="Primary"
           className="nav-cta"
@@ -4605,7 +4605,7 @@ export function SiteHeader() {
               </div>
               <ConversionCTA
                 ctaName="Book a Free AI Consultation"
-                href="/book-ai-diagnostic#diagnostic-form-section"
+                href="/book"
                 variant="primary"
                 size="full"
                 ctaPosition="MobileDrawer"

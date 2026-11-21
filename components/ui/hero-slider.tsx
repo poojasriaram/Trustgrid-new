@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
@@ -55,7 +55,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'TRUSTGRID.AI is the engineering and value realization partner that global enterprises trust to design, deploy, secure, and operate the complete AI lifecycle — from high-density GPU factories with direct-to-chip liquid cooling to low-latency inference serving.',
     thesisHighlight: 'Strategic Core: Purpose-engineered AI Factories delivering maximum intelligence per dollar and watt with 30–70% higher accelerator utilization.',
     primaryCtaText: 'Book a Free AI Consultation',
-    primaryCtaLink: '/book-ai-diagnostic#diagnostic-form-section',
+    primaryCtaLink: '/book',
     secondaryCtaText: 'Explore Our AI Engineering Practices',
     secondaryCtaLink: '/#offerings',
     solutionSlug: 'ai-infra-engineering',
@@ -79,7 +79,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'Architect, deploy, and govern production multi-agent systems with deterministic reasoning DAGs, persistent memory fabrics, tool sandboxing, and native Model Context Protocol (MCP) integrations across enterprise systems.',
     thesisHighlight: 'Strategic Core: Turning autonomy into compounding enterprise capability with deterministic execution and strict SLA guarantees.',
     primaryCtaText: 'Explore Agentic AI Solutions',
-    primaryCtaLink: '/book-ai-diagnostic?solution=ai-agentic-factory#diagnostic-form-section',
+    primaryCtaLink: '/book?topic=ai-agentic-factory',
     secondaryCtaText: 'Explore Agentic Factory',
     secondaryCtaLink: '/solutions/ai-agentic-factory',
     solutionSlug: 'ai-agentic-factory',
@@ -103,7 +103,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'Ultra-low latency, non-blocking InfiniBand and RoCEv2 network fabrics engineered for zero packet loss, rail-optimized node alignment, and autonomous NOC telemetry for massive distributed AI training and inference.',
     thesisHighlight: 'Strategic Core: Eliminating tail jitter and silent network congestion that stall GPU clusters at line speed.',
     primaryCtaText: 'Discuss AI-Native Networking',
-    primaryCtaLink: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section',
+    primaryCtaLink: '/book?topic=ai-networking',
     secondaryCtaText: 'Explore AI Networking',
     secondaryCtaLink: '/solutions/ai-networking-cybersecurity',
     solutionSlug: 'ai-networking-cybersecurity',
@@ -127,7 +127,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'Comprehensive security engineering protecting autonomous agents with zero-trust permissions and runtime prompt firewalls while transitioning enterprise cryptography to NIST Post-Quantum Cryptographic standards.',
     thesisHighlight: 'Strategic Core: Neutralizing novel AI attack surfaces and Harvest Now Decrypt Later quantum threats across L1–L7.',
     primaryCtaText: 'Request an AI Security Assessment',
-    primaryCtaLink: '/book-ai-diagnostic?solution=ai-networking-cybersecurity#diagnostic-form-section',
+    primaryCtaLink: '/book?topic=quantum-safe',
     secondaryCtaText: 'Explore AI Cybersecurity',
     secondaryCtaLink: '/solutions/ai-networking-cybersecurity',
     solutionSlug: 'ai-networking-cybersecurity',
@@ -151,7 +151,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'Rigorous engineering of mathematical explainability (SHAP/LIME), continuous statistical process control (SPC), formal robustness verification, and immutable cryptographic decision audit trails for EU AI Act & NIST AI RMF compliance.',
     thesisHighlight: 'Strategic Core: Guaranteeing board oversight, mathematical verifiability, and regulatory assurance in high-stakes mission-critical workflows.',
     primaryCtaText: 'Request a Governance Assessment',
-    primaryCtaLink: '/book-ai-diagnostic?solution=trusted-ai-transformation#diagnostic-form-section',
+    primaryCtaLink: '/book?topic=trusted-ai',
     secondaryCtaText: 'Explore Trusted AI',
     secondaryCtaLink: '/solutions/trusted-ai-transformation',
     solutionSlug: 'trusted-ai-transformation',
@@ -175,7 +175,7 @@ export const heroSlidesData: HeroSlideData[] = [
     copy: 'Industrial operational excellence (Lean Thinking, Theory of Constraints, DMAIC) combined with AI FinOps to prioritize high-yield initiatives, eliminate token sprawl, and ensure compounding business ROI tied to CFO balance sheets.',
     thesisHighlight: 'Strategic Core: Bridging compute spend directly to enterprise revenue growth, unit cost reduction, and defensible ROI.',
     primaryCtaText: 'Identify Your AI Value Opportunity',
-    primaryCtaLink: '/book-ai-diagnostic?solution=ai-value-engineering#diagnostic-form-section',
+    primaryCtaLink: '/book?topic=value-engineering',
     secondaryCtaText: 'Explore Value Engineering',
     secondaryCtaLink: '/solutions/ai-value-engineering',
     solutionSlug: 'ai-value-engineering',
@@ -351,7 +351,7 @@ export function HeroSlider() {
             />
             <ConversionCTA
               ctaName="Talk to an AI Architect"
-              href="/talk-to-ai-architect"
+              href="/book"
               variant="text"
               ctaType="Tertiary"
               ctaPosition="Hero"

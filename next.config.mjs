@@ -183,9 +183,90 @@ const nextConfig = {
         destination: '/solutions/ai-networking-cybersecurity',
         permanent: true,
       },
+      // Simplified Canonical URLs (Session Booking, Quick Forms, ChatBot)
+      {
+        source: '/booking',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/book-session',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/book-consultation',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/quick-session',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/session-request',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/request-session',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/talk-to-ai-architect',
+        destination: '/book',
+        permanent: true,
+      },
       {
         source: '/talk-to-architect',
-        destination: '/talk-to-ai-architect',
+        destination: '/book',
+        permanent: true,
+      },
+      {
+        source: '/chatbot',
+        destination: '/chat',
+        permanent: true,
+      },
+      {
+        source: '/ai-chat',
+        destination: '/chat',
+        permanent: true,
+      },
+      {
+        source: '/aegis',
+        destination: '/chat',
+        permanent: true,
+      },
+      {
+        source: '/ai',
+        destination: '/chat',
+        permanent: true,
+      },
+      {
+        source: '/quick',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/quick-form',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/quick-forms',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/enquiry',
+        destination: '/forms',
+        permanent: true,
+      },
+      {
+        source: '/inquiry',
+        destination: '/forms',
         permanent: true,
       },
       {

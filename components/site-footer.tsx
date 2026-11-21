@@ -28,8 +28,8 @@ export function SiteFooter() {
             </div>
           </div>
           <div style={{ marginTop: '16px' }}>
-            <Link href="/book-ai-diagnostic#diagnostic-form-section" className="button button-primary button-sm">
-              <span>Book an AI Diagnostic</span>
+            <Link href="/book" className="button button-primary button-sm">
+              <span>Book a Consultation</span>
             </Link>
           </div>
         </div>
@@ -96,7 +96,9 @@ export function SiteFooter() {
             <li><Link href="/leadership">Leadership &amp; Advisory</Link></li>
             <li><Link href="/partners">Technology Ecosystem &amp; Partners</Link></li>
             <li><Link href="/careers">Careers</Link></li>
-            <li><Link href="/book-ai-diagnostic#diagnostic-form-section">AI Diagnostic Assessment</Link></li>
+            <li><Link href="/book" style={{ color: '#38bdf8', fontWeight: 600 }}>Book AI Consultation &bull; /book</Link></li>
+            <li><Link href="/forms" style={{ color: '#60a5fa' }}>Quick Forms &amp; Proposals &bull; /forms</Link></li>
+            <li><Link href="/chat" style={{ color: '#a78bfa' }}>Aegis AI Architect Desk &bull; /chat</Link></li>
             <li><Link href="/contact">Contact &amp; Global Offices</Link></li>
             <li><a href="https://www.linkedin.com/company/trustgridai/" target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', fontWeight: 600 }}>LinkedIn Official Page ↗</a></li>
             <li><Link href="/privacy-policy">Privacy Policy</Link></li>

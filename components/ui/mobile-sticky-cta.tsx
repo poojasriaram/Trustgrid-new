@@ -13,7 +13,9 @@ export function MobileStickyCTA() {
 
   // Pages where sticky CTA should NOT appear (forms already full screen)
   const isExcludedPage =
-    pathname.startsWith('/book-ai-diagnostic') ||
+    pathname.startsWith('/book') ||
+    pathname.startsWith('/forms') ||
+    pathname.startsWith('/chat') ||
     pathname.startsWith('/contact') ||
     pathname.startsWith('/talk-to-ai-architect') ||
     pathname.startsWith('/admin') ||
@@ -53,7 +55,7 @@ export function MobileStickyCTA() {
       <div className="flex-1 flex items-center gap-2">
         <ConversionCTA
           ctaName="Book a Consultation"
-          href="/book-ai-diagnostic#diagnostic-form-section"
+          href="/book"
           variant="primary"
           size="sm"
           ctaPosition="Middle"

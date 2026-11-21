@@ -19,7 +19,7 @@ export function BlogCta({
   title,
   description,
   buttonText = 'Discuss This AI Architecture',
-  buttonHref = '/book-ai-diagnostic#diagnostic-form-section',
+  buttonHref = '/book',
   secondaryButtonText = 'Explore Related Solutions',
   secondaryButtonHref = '/solutions'
 }: BlogCtaProps) {

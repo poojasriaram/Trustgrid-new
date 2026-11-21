@@ -58,20 +58,38 @@ export async function POST(req: NextRequest) {
     const nowIso = new Date().toISOString()
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || '0.0.***.***'
 
-    // Insert into public.website_events
-    await supabaseInsert('website_events', {
-      session_id: body.sessionId || 'anonymous-session',
-      visitor_id: body.visitorId || 'anonymous-visitor',
-      event_type: body.eventType,
-      page_path: body.pagePath || '/',
-      page_title: body.pageTitle || '',
-      element_id: body.elementId || '',
-      element_text: body.elementText || '',
-      scroll_depth_percent: body.scrollDepth || 0,
-      time_on_page_seconds: body.timeOnPage || 0,
-      metadata_json: body.metadata || {},
-      created_at: nowIso
-    }).catch(() => {})
+    // Dual-write into public.website_events and public.analytics_events for 100% data persistence
+    await Promise.allSettled([
+      supabaseInsert('website_events', {
+        session_id: body.sessionId || 'anonymous-session',
+        visitor_id: body.visitorId || 'anonymous-visitor',
+        event_type: body.eventType,
+        page_path: body.pagePath || '/',
+        page_title: body.pageTitle || '',
+        element_id: body.elementId || '',
+        element_text: body.elementText || '',
+        scroll_depth_percent: body.scrollDepth || 0,
+        time_on_page_seconds: body.timeOnPage || 0,
+        metadata_json: body.metadata || {},
+        created_at: nowIso
+      }),
+      supabaseInsert('analytics_events', {
+        event_name: body.eventType,
+        event_category: 'user_behavior',
+        event_action: body.eventType,
+        session_id: body.sessionId || 'anonymous-session',
+        user_id: body.visitorId || 'anonymous-visitor',
+        timestamp_utc: nowIso,
+        page_path: body.pagePath || '/',
+        page_title: body.pageTitle || '',
+        element_text: body.elementText || '',
+        device_type: body.deviceType || 'desktop',
+        operating_system: body.os || 'Windows',
+        browser: body.browser || 'Chrome',
+        ip_masked: ip,
+        metadata_json: body.metadata || {}
+      })
+    ]).catch(() => {})
 
     return NextResponse.json({ success: true, timestamp: nowIso })
   } catch (err: any) {
